@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Isaac / Omniverse generated files
+*.usd.bak
+*.usda.bak
+*.usdc.bak
+_build/
+logs/
+kit/logs/
+cache/
+
+# Data and model artifacts
+data/raw/
+data/processed/
+outputs/
+runs/
+weights/
+*.pt
+*.onnx
+*.engine
+
+# Local secrets
+.env
+*.secret
+cesium_token.txt
+
+# Editor / OS
+.vscode/settings.json
+.idea/
+Thumbs.db
+.DS_Store
+

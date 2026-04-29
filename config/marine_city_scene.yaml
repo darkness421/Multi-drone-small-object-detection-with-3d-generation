@@ -1,0 +1,31 @@
+scene:
+  name: haeundae_marine_city
+  description: Haeundae Marine City urban/coastal scene for multi-UAV small object detection.
+  origin:
+    latitude_deg: 35.1569
+    longitude_deg: 129.1456
+    height_m: 80.0
+  coordinate_system:
+    global: WGS84
+    local: ENU
+
+cesium:
+  ion_token_env: CESIUM_ION_TOKEN
+  tileset:
+    source: cesium_ion
+    asset_id: null
+    note: Set this after choosing the Cesium ion asset or custom 3D Tiles source.
+
+simulation:
+  renderer: raytraced_lighting
+  physics_dt: 0.0166667
+  render_dt: 0.0333333
+  duration_s: 120
+
+objects:
+  target_classes:
+    - person
+    - vehicle
+    - small_boat
+    - debris
+

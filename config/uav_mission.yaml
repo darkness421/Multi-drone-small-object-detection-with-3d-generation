@@ -1,0 +1,57 @@
+mission:
+  name: three_uav_marine_city_survey
+  frame_rate_hz: 10
+  output_dir: outputs/marine_city_run_001
+
+uavs:
+  - id: uav_01
+    start_pose:
+      east_m: -120
+      north_m: -80
+      up_m: 120
+      yaw_deg: 45
+      pitch_deg: -35
+      roll_deg: 0
+    camera:
+      width: 1920
+      height: 1080
+      fov_deg: 70
+
+  - id: uav_02
+    start_pose:
+      east_m: 0
+      north_m: -140
+      up_m: 135
+      yaw_deg: 0
+      pitch_deg: -40
+      roll_deg: 0
+    camera:
+      width: 1920
+      height: 1080
+      fov_deg: 65
+
+  - id: uav_03
+    start_pose:
+      east_m: 130
+      north_m: -70
+      up_m: 115
+      yaw_deg: -45
+      pitch_deg: -35
+      roll_deg: 0
+    camera:
+      width: 1920
+      height: 1080
+      fov_deg: 70
+
+pipeline:
+  detector:
+    family: yolo
+    weights: weights/small_object_yolo.pt
+    confidence_threshold: 0.25
+  fusion:
+    method: patch_wavelet_multiview
+    min_views: 2
+  reasoning:
+    use_meta_prompt: true
+    reobserve_uncertain_cases: true
+
