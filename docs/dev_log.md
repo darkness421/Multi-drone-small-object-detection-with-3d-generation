@@ -10,3 +10,5 @@
 - 최종 데모 목표를 정했습니다: `Isaac Sim`에서 Marine City 배경, 다중 UAV, 카메라 뷰, detection overlay, 3D fusion, re-observation 로직을 눈으로 확인하는 형태입니다.
 - `Isaac Sim` 구현 전에 dataset 선정이 먼저 필요하다고 정리했습니다.
 - Notion의 `04 Experiment Result` 열과 연결할 실험 결과 기록 문서 `docs/experiment_results.md`를 추가했습니다.
+- 다음 작업 순서를 정리했습니다: `VisDrone`을 첫 baseline dataset으로 잡고, `YOLO baseline` 학습/평가 구조를 준비한 뒤 `AI-TOD`, `SeaDronesSee`, `Isaac Sim synthetic data`로 확장합니다.
+- 채팅에서 논의한 내용은 자동으로 Notion에 저장되지 않으므로, 중요한 결정은 `docs/` Markdown 문서에 기록한 뒤 GitHub에 push하는 방식으로 관리하기로 했습니다.
