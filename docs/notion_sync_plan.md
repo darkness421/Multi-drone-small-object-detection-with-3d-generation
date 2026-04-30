@@ -2,6 +2,12 @@
 
 이 프로젝트는 나중에 `Notion API`를 이용해 GitHub/local 개발 기록을 기존 Notion 보드와 동기화할 수 있습니다.
 
+## Notion 보드
+
+- Project board: https://www.notion.so/377a56f7685383748586011fd1983a90?v=54ba56f7685383b886a28824de7950de&source=copy_link
+- Database/Page ID: `377a56f7685383748586011fd1983a90`
+- View ID: `54ba56f7685383b886a28824de7950de`
+
 ## 현재 Notion 보드 매핑
 
 | Notion Section | Local File | 목적 |
