@@ -4,9 +4,20 @@
 
 ## Notion 보드
 
-- Project board: https://www.notion.so/377a56f7685383748586011fd1983a90?v=54ba56f7685383b886a28824de7950de&source=copy_link
-- Database/Page ID: `377a56f7685383748586011fd1983a90`
-- View ID: `54ba56f7685383b886a28824de7950de`
+- Database URL: https://www.notion.so/377a56f7685383748586011fd1983a90
+- Data source URL: `collection://013a56f7-6853-834a-a96b-072eb1805f4f`
+- 기본 Board view: `view://54ba56f7-6853-83b8-86a2-8824de7950de`
+
+주의: 위 값은 현재 Notion workspace에서 확인한 보드/데이터 소스/뷰 URL입니다. `Notion Public API`에서 요구하는 `database_id`는 integration 설정 화면 또는 `Copy link`에서 요구하는 형식에 맞춰 별도로 확정합니다.
+
+## Notion View 목록
+
+| View | URL |
+| --- | --- |
+| Board (By Category) | `view://54ba56f7-6853-83b8-86a2-8824de7950de` |
+| Calendar | `view://307a56f7-6853-8373-9c2f-0862d48db107` |
+| Table (Upcoming) | `view://f8fa56f7-6853-839d-9bdc-8815af03d4d9` |
+| Table (Overdue) | `view://cf5a56f7-6853-824d-8fad-88a51af2e850` |
 
 ## 현재 Notion 보드 매핑
 
@@ -27,7 +38,8 @@
 ## 추후 API Sync에 필요한 것
 
 - `Notion integration token`
-- `Notion database ID` 또는 `page ID`
+- 연동 도구가 요구하는 정확한 식별자 입력값
+  - 예: `database_id`, `notion_database_id`, `view_id`, `page_id`
 - Notion page/database를 integration에 공유하는 권한 설정
 - secret을 저장할 `.env` 파일
 
