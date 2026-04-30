@@ -47,6 +47,11 @@ CARDS = (
         title="Development Log",
         source=ROOT / "docs" / "dev_log.md",
     ),
+    NotionCard(
+        section="환경 및 구현 과정",
+        title="Timeline to ACCV",
+        source=ROOT / "docs" / "timeline_to_accv.md",
+    ),
 )
 
 
@@ -112,4 +117,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
