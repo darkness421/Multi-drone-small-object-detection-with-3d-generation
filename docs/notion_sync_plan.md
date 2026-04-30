@@ -1,6 +1,6 @@
-# Notion 동기화 계획
+# Notion 기록 방식
 
-이 프로젝트는 나중에 `Notion API`를 이용해 GitHub/local 개발 기록을 기존 Notion 보드와 동기화할 수 있습니다.
+이 프로젝트는 당분간 `Notion API` 자동 연동을 사용하지 않습니다. 대신 GitHub/local Markdown 문서를 기준 기록으로 관리하고, 필요한 내용만 Notion에 직접 골라 붙여넣습니다.
 
 ## Notion 보드
 
@@ -29,35 +29,23 @@
 | Experiment Result | `docs/experiment_results.md` | 실험 설정, metric, output, 결과 해석 |
 | 환경 및 구현 과정 | `docs/dev_log.md` | setup history, implementation note, environment decision |
 
-## 추천 자동화 흐름
+## 추천 기록 흐름
 
 1. 중요한 project note는 먼저 `docs/` 안의 Markdown 파일에 기록합니다.
 2. 해당 문서를 commit/push해서 GitHub에 저장합니다.
-3. 이후 Markdown 파일을 읽어 Notion database item을 업데이트하는 sync script를 추가합니다.
+3. `scripts/export_notion_md.py`로 Notion에 붙여넣기 좋은 Markdown 파일을 생성합니다.
+4. 생성된 파일 중 필요한 것만 Notion 카드에 복사합니다.
 
-Sync script는 `scripts/sync_notion.py`에 있습니다. 현재 지원하는 실행 모드는 아래와 같습니다.
+Export script는 `scripts/export_notion_md.py`에 있습니다.
 
 ```powershell
-python scripts\sync_notion.py --dry-run
-python scripts\sync_notion.py --api-dry-run
-python scripts\sync_notion.py --sync
+python scripts\export_notion_md.py --export
 ```
 
-`--dry-run`은 token 없이 로컬 문서 매핑만 확인합니다. `--api-dry-run`과 `--sync`는 `.env`의 `NOTION_TOKEN`이 필요합니다.
+생성 결과는 `notion_exports/` 폴더에 저장됩니다.
 
-## 추후 API Sync에 필요한 것
+## API Sync를 보류하는 이유
 
-- `Notion integration token`
-- 연동 도구가 요구하는 정확한 식별자 입력값
-  - 예: `database_id`, `notion_database_id`, `view_id`, `page_id`
-- Notion page/database를 integration에 공유하는 권한 설정
-- secret을 저장할 `.env` 파일
-
-로컬 secret 예시:
-
-```text
-NOTION_TOKEN=...
-NOTION_DATA_SOURCE_ID=013a56f7-6853-834a-a96b-072eb1805f4f
-```
-
-Notion token은 절대 GitHub에 commit하면 안 됩니다.
+- 아직 Notion 보드 속성과 카드 구조가 계속 바뀔 수 있습니다.
+- 자동 sync는 중복 카드나 잘못된 section 업데이트를 만들 수 있습니다.
+- 지금은 GitHub 문서를 공식 기록으로 두고, Notion에는 선별해서 옮기는 방식이 안전합니다.
