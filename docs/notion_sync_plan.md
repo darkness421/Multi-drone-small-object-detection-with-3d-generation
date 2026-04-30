@@ -1,35 +1,34 @@
-# Notion Sync Plan
+# Notion 동기화 계획
 
-This project can sync GitHub/local development records into the existing Notion board later through the Notion API.
+이 프로젝트는 나중에 `Notion API`를 이용해 GitHub/local 개발 기록을 기존 Notion 보드와 동기화할 수 있습니다.
 
-## Current Notion Board Mapping
+## 현재 Notion 보드 매핑
 
-| Notion Section | Local File | Purpose |
+| Notion Section | Local File | 목적 |
 | --- | --- | --- |
-| Related Research | `docs/paper_plan.md` | Paper target, related research notes, survey links |
-| Proposed Method | `docs/idea_bank.md` | Method ideas and architecture notes |
-| Experiment Plan | `docs/dataset_plan.md` | Dataset choices, class mapping, experiment design |
-| 환경 및 구현 과정 | `docs/dev_log.md` | Setup history, implementation notes, environment decisions |
+| Related Research | `docs/paper_plan.md` | paper target, related research note, survey link |
+| Proposed Method | `docs/idea_bank.md` | method idea와 architecture note |
+| Experiment Plan | `docs/dataset_plan.md` | dataset 선정, class mapping, experiment design |
+| 환경 및 구현 과정 | `docs/dev_log.md` | setup history, implementation note, environment decision |
 
-## Recommended Automation
+## 추천 자동화 흐름
 
-1. Keep important project notes in Markdown inside `docs/`.
-2. Commit and push those docs to GitHub.
-3. Add a Notion sync script later that reads these Markdown files and updates Notion database items.
+1. 중요한 project note는 먼저 `docs/` 안의 Markdown 파일에 기록합니다.
+2. 해당 문서를 commit/push해서 GitHub에 저장합니다.
+3. 이후 Markdown 파일을 읽어 Notion database item을 업데이트하는 sync script를 추가합니다.
 
-## Required For API Sync Later
+## 추후 API Sync에 필요한 것
 
-- Notion integration token
-- Notion database ID or page ID
-- Shared access from the Notion page/database to the integration
-- `.env` file containing secrets, excluded from Git
+- `Notion integration token`
+- `Notion database ID` 또는 `page ID`
+- Notion page/database를 integration에 공유하는 권한 설정
+- secret을 저장할 `.env` 파일
 
-Example local secret:
+로컬 secret 예시:
 
 ```text
 NOTION_TOKEN=...
 NOTION_PROJECT_DATABASE_ID=...
 ```
 
-Never commit Notion tokens to GitHub.
-
+Notion token은 절대 GitHub에 commit하면 안 됩니다.

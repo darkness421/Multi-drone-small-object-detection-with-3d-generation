@@ -1,29 +1,28 @@
-# Idea Bank
+# 아이디어 뱅크
 
-Use this file for ideas that are not ready to become implementation tasks yet.
+아직 바로 구현 task로 만들기 전의 아이디어를 기록하는 문서입니다.
 
 ## Detection
 
-- Lightweight YOLO baseline for per-UAV object proposals.
-- Add patch-level features for small object preservation.
-- Add wavelet stem or multi-frequency branch to improve tiny target representation.
+- 각 UAV 카메라에서 object proposal을 만들기 위한 lightweight `YOLO` baseline을 사용합니다.
+- small object 표현을 보존하기 위해 patch-level feature를 추가합니다.
+- tiny target 표현력을 높이기 위해 wavelet stem 또는 multi-frequency branch를 검토합니다.
 
 ## Multi-UAV Fusion
 
-- Match detections across UAV views using timestamp, camera pose, object class, and projected 3D consistency.
-- Fuse object evidence across UAVs before final confidence scoring.
-- Use confidence disagreement as a trigger for re-observation.
+- timestamp, camera pose, object class, projected 3D consistency를 이용해 여러 UAV view의 detection을 매칭합니다.
+- 최종 confidence scoring 전에 여러 UAV의 object evidence를 fusion합니다.
+- UAV 간 confidence disagreement가 크면 re-observation trigger로 사용합니다.
 
-## Isaac Sim Demo
+## Isaac Sim 데모
 
-- Marine City scene with three UAV camera viewpoints.
-- Show detection boxes in each UAV camera stream.
-- Show a top-down 3D marker for fused object position.
-- Display re-observation request when object evidence is uncertain.
+- Marine City scene에 UAV camera viewpoint 3개를 배치합니다.
+- 각 UAV camera stream에 detection box를 표시합니다.
+- fusion된 object position을 top-down 3D marker로 표시합니다.
+- object evidence가 불확실하면 re-observation request를 표시합니다.
 
 ## Reasoning
 
-- Use a structured prompt to summarize evidence from multiple UAVs.
-- Separate geometric verification from language-model explanation.
-- Keep final decision traceable: class, confidence, 3D position, supporting UAVs, and next action.
-
+- 여러 UAV의 evidence를 요약하기 위해 structured prompt를 사용합니다.
+- geometric verification과 language-model explanation은 분리합니다.
+- 최종 판단은 class, confidence, 3D position, supporting UAVs, next action까지 추적 가능해야 합니다.
