@@ -35,7 +35,15 @@
 2. 해당 문서를 commit/push해서 GitHub에 저장합니다.
 3. 이후 Markdown 파일을 읽어 Notion database item을 업데이트하는 sync script를 추가합니다.
 
-초기 script 초안은 `scripts/sync_notion.py`에 있습니다. 지금은 `--dry-run`으로 동기화 예정 항목을 출력하는 단계입니다.
+Sync script는 `scripts/sync_notion.py`에 있습니다. 현재 지원하는 실행 모드는 아래와 같습니다.
+
+```powershell
+python scripts\sync_notion.py --dry-run
+python scripts\sync_notion.py --api-dry-run
+python scripts\sync_notion.py --sync
+```
+
+`--dry-run`은 token 없이 로컬 문서 매핑만 확인합니다. `--api-dry-run`과 `--sync`는 `.env`의 `NOTION_TOKEN`이 필요합니다.
 
 ## 추후 API Sync에 필요한 것
 
@@ -49,7 +57,7 @@
 
 ```text
 NOTION_TOKEN=...
-NOTION_PROJECT_DATABASE_ID=...
+NOTION_DATA_SOURCE_ID=013a56f7-6853-834a-a96b-072eb1805f4f
 ```
 
 Notion token은 절대 GitHub에 commit하면 안 됩니다.

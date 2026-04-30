@@ -16,9 +16,10 @@
 3. `Cooperative Multi-UAV Small Object Detection` 보드 또는 database를 integration에 공유합니다.
 4. `.env.example`을 복사해 `.env`를 만듭니다.
 5. `.env`에 `NOTION_TOKEN`을 넣습니다.
-6. 연동 도구가 요구하는 정확한 `NOTION_DATABASE_ID`를 확인합니다.
-7. `scripts/sync_notion.py --dry-run`으로 먼저 어떤 항목이 생성될지 확인합니다.
-8. 문제가 없으면 실제 sync를 실행합니다.
+6. `.env`에 `NOTION_DATA_SOURCE_ID`가 들어 있는지 확인합니다.
+7. `python scripts/sync_notion.py --dry-run`으로 로컬 문서 매핑을 확인합니다.
+8. `python scripts/sync_notion.py --api-dry-run`으로 Notion schema를 읽고 생성 payload를 확인합니다.
+9. 문제가 없으면 `python scripts/sync_notion.py --sync`로 실제 sync를 실행합니다.
 
 ## 동기화 대상
 
@@ -34,5 +35,4 @@
 
 - `.env`는 GitHub에 올리지 않습니다.
 - Notion token은 화면 공유나 문서에 직접 적지 않습니다.
-- 처음에는 `--dry-run`으로 확인한 뒤 실제 sync를 실행합니다.
-
+- 처음에는 `--dry-run`, `--api-dry-run` 순서로 확인한 뒤 실제 sync를 실행합니다.
