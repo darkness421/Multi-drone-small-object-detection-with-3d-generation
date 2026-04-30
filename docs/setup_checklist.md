@@ -10,7 +10,7 @@
   - `git remote add origin <github-repo-url>`
 - Push the first branch:
   - `git add .`
-  - `git commit -m "Initialize ACCV multi-UAV workspace"`
+  - `git commit -m "Initialize multi-UAV Marine City workspace"`
   - `git push -u origin master`
 
 ## 2. Visual Studio / VS Code
@@ -45,4 +45,3 @@
 - Add three UAV camera actors with synchronized timestamps.
 - Export RGB images, depth if available, camera intrinsics, camera extrinsics, and WGS84 poses.
 - Run the first object-detection pass.
-
