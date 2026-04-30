@@ -10,14 +10,17 @@
 
 개발과 논문 작성은 병행합니다. 매주 개발 산출물, 실험 산출물, 논문 산출물을 하나씩 남기는 방식으로 진행합니다. 코드가 늦어져도 논문 구조와 그림은 먼저 만들고, 실험 결과는 확보되는 즉시 표와 문장에 반영합니다.
 
+중요 기준: 2026-06-15 전후에는 서론, 관련 연구, 제안하는 방법이 최소 1차 완성되어 있어야 합니다. 6월 중순 이후에는 큰 구조를 새로 만들기보다 실험 결과, ablation, figure, abstract 압축에 집중합니다.
+
 ## 주요 마일스톤
 
 | 기간 | 목표 | 산출물 |
 | --- | --- | --- |
 | 2026-05-01 ~ 2026-05-10 | Dataset 확정 및 `YOLO baseline` 준비 | `VisDrone` 준비 계획, class mapping, baseline config |
 | 2026-05-11 ~ 2026-05-24 | 첫 baseline 학습/평가 | `mAP`, `AP_small`, `precision`, `recall`, `FPS` 초도 결과 |
-| 2026-05-25 ~ 2026-06-07 | small object 개선 모듈 설계 | patch-level feature, wavelet stem, ablation 계획 |
-| 2026-06-08 ~ 2026-06-21 | Multi-UAV fusion 및 3D reasoning 구조 정리 | fusion diagram, 3D grounding 흐름, re-observation logic |
+| 2026-05-25 ~ 2026-06-07 | small object 개선 모듈 설계 및 논문 본문 1차 작성 | patch-level feature, wavelet stem, ablation 계획, Introduction/Related Work 초안 |
+| 2026-06-08 ~ 2026-06-15 | 제안 방법과 핵심 본문 1차 완성 | Proposed Method 1차, fusion diagram, 3D grounding 흐름, re-observation logic |
+| 2026-06-16 ~ 2026-06-21 | 본문 구조 고정 및 실험/그림 보강 | Introduction/Related Work/Method freeze, 결과표와 figure 보강 |
 | 2026-06-22 ~ 2026-06-30 | 실험 결과 정리 및 figure 제작 | 결과표, method figure, failure case, demo screenshot 계획 |
 | 2026-07-01 ~ 2026-07-05 | ACCV 요약 제출 준비 | 최종 요약문, 핵심 그림, contribution bullet, 제출 체크 |
 
@@ -161,6 +164,7 @@
 - patch-level feature 또는 wavelet stem 개선 방향을 하나 선택합니다.
 - baseline 대비 개선 실험 설계를 만듭니다.
 - ablation 항목을 정리합니다.
+- Introduction과 Related Work를 1차 완성에 가깝게 끌어올립니다.
 
 개발 산출물:
 
@@ -175,6 +179,8 @@
 
 논문 산출물:
 
+- Introduction 2차 초안
+- Related Work 2차 초안
 - Proposed Method 섹션 구조
 - Method figure 1차
 - Ablation plan 문단
@@ -183,19 +189,20 @@
 
 | 날짜 | 개발 | 논문/문서 |
 | --- | --- | --- |
-| 2026-05-25 | 개선 방향 후보 비교 | Proposed Method outline |
-| 2026-05-26 | patch/wavelet 중 1차 선택 | Method figure 구성 |
-| 2026-05-27 | 구현 범위 확정 | 수식/알고리즘 표현 초안 |
-| 2026-05-28 | ablation config 작성 | Ablation plan 작성 |
-| 2026-05-29 | 실험 실행 준비 | Method 문단 작성 |
-| 2026-05-30 | 소규모 테스트 | figure 수정 |
-| 2026-05-31 | Week 5 회고 | Notion용 method 요약 |
+| 2026-05-25 | 개선 방향 후보 비교 | Introduction 2차 작성 |
+| 2026-05-26 | patch/wavelet 중 1차 선택 | Related Work 2차 작성 |
+| 2026-05-27 | 구현 범위 확정 | Proposed Method outline |
+| 2026-05-28 | ablation config 작성 | Method figure 구성 |
+| 2026-05-29 | 실험 실행 준비 | 수식/알고리즘 표현 초안 |
+| 2026-05-30 | 소규모 테스트 | Ablation plan 작성 |
+| 2026-05-31 | Week 5 회고 | Introduction/Related Work 점검 |
 
 ### Week 6: 2026-06-01 ~ 2026-06-07
 
 - small object 개선 모듈 1차 구현 또는 pseudo-code를 준비합니다.
 - baseline과 비교 가능한 실험 설정을 맞춥니다.
 - 결과가 부족하면 최소한 method figure와 실험 계획을 강하게 정리합니다.
+- Introduction과 Related Work는 이 주 안에 1차 완성 상태로 둡니다.
 
 개발 산출물:
 
@@ -212,6 +219,8 @@
 
 - Proposed Method 1차 초안
 - 방법론 그림 2차
+- Introduction 1차 완성
+- Related Work 1차 완성
 - 실험 결과가 부족할 경우 대체 presentation strategy 정리
 
 일일 계획:
@@ -219,18 +228,19 @@
 | 날짜 | 개발 | 논문/문서 |
 | --- | --- | --- |
 | 2026-06-01 | 개선 모듈 구현 시작 | Proposed Method 초안 |
-| 2026-06-02 | 학습 config 연결 | figure 보강 |
-| 2026-06-03 | 작은 subset 실험 | 결과 해석 문장 준비 |
+| 2026-06-02 | 학습 config 연결 | Introduction 완성도 점검 |
+| 2026-06-03 | 작은 subset 실험 | Related Work 완성도 점검 |
 | 2026-06-04 | 오류 수정 | Method 세부 설명 |
-| 2026-06-05 | 비교 실험 실행 | 표 업데이트 |
-| 2026-06-06 | 결과 정리 | 한계/리스크 정리 |
-| 2026-06-07 | Week 6 회고 | Notion용 결과 요약 |
+| 2026-06-05 | 비교 실험 실행 | figure 보강 |
+| 2026-06-06 | 결과 정리 | 결과 해석 문장 준비 |
+| 2026-06-07 | Week 6 회고 | Introduction/Related Work 1차 freeze |
 
 ### Week 7: 2026-06-08 ~ 2026-06-14
 
 - Multi-UAV fusion 구조를 구체화합니다.
 - UAV별 detection, camera pose, projected 3D consistency를 연결하는 pipeline diagram을 만듭니다.
 - `Isaac Sim` 데모는 full implementation보다 figure/demo plan 중심으로 준비합니다.
+- Proposed Method를 이 주 안에 1차 완성합니다.
 
 개발 산출물:
 
@@ -245,7 +255,8 @@
 
 논문 산출물:
 
-- Multi-UAV fusion 섹션 초안
+- Proposed Method 1차 완성
+- Multi-UAV fusion 섹션 완성 후보
 - 3D reasoning figure
 - demo scenario 설명 문단
 
@@ -259,12 +270,13 @@
 | 2026-06-11 | re-observation 조건 설계 | re-observation 문단 |
 | 2026-06-12 | Isaac demo 요구사항 정리 | demo scenario 작성 |
 | 2026-06-13 | pseudo-code 정리 | Method 통합 |
-| 2026-06-14 | Week 7 회고 | Notion용 fusion 요약 |
+| 2026-06-14 | Week 7 회고 | Proposed Method 1차 freeze |
 
 ### Week 8: 2026-06-15 ~ 2026-06-21
 
-- 3D grounding, confidence reasoning, re-observation logic을 정리합니다.
-- 제안 방법의 전체 흐름을 1장짜리 figure로 만듭니다.
+- Introduction, Related Work, Proposed Method의 큰 구조를 고정합니다.
+- 3D grounding, confidence reasoning, re-observation logic을 문장과 figure 수준에서 보강합니다.
+- 제안 방법의 전체 흐름을 1장짜리 figure로 확정합니다.
 - summary submission에 들어갈 contribution 문장을 다듬습니다.
 
 개발 산출물:
@@ -280,6 +292,7 @@
 
 논문 산출물:
 
+- Introduction/Related Work/Proposed Method freeze
 - Abstract 2차
 - Contribution 문장 확정
 - Method figure 최종 후보
@@ -288,10 +301,10 @@
 
 | 날짜 | 개발 | 논문/문서 |
 | --- | --- | --- |
-| 2026-06-15 | confidence rule 정리 | Abstract 2차 |
-| 2026-06-16 | re-observation flow 작성 | Contribution 문장 다듬기 |
-| 2026-06-17 | 결과표 업데이트 | figure 캡션 작성 |
-| 2026-06-18 | qualitative sample 정리 | Method section 연결 |
+| 2026-06-15 | confidence rule 정리 | Introduction/Related Work/Method freeze |
+| 2026-06-16 | re-observation flow 작성 | Abstract 2차 |
+| 2026-06-17 | 결과표 업데이트 | Contribution 문장 다듬기 |
+| 2026-06-18 | qualitative sample 정리 | figure 캡션 작성 |
 | 2026-06-19 | 남은 실험 실행 | Experiment section 초안 |
 | 2026-06-20 | 결과 검토 | 요약 제출 구조 점검 |
 | 2026-06-21 | Week 8 회고 | Notion용 제출 준비 요약 |
