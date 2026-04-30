@@ -1,4 +1,4 @@
-# ACCV Multi-UAV Small Object Detection
+# Multi-UAV Small Object Detection
 
 NVIDIA Isaac Sim, Cesium geospatial context, and a cooperative multi-UAV perception pipeline for small object detection around Haeundae Marine City.
 
