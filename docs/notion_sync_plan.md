@@ -35,6 +35,8 @@
 2. 해당 문서를 commit/push해서 GitHub에 저장합니다.
 3. 이후 Markdown 파일을 읽어 Notion database item을 업데이트하는 sync script를 추가합니다.
 
+초기 script 초안은 `scripts/sync_notion.py`에 있습니다. 지금은 `--dry-run`으로 동기화 예정 항목을 출력하는 단계입니다.
+
 ## 추후 API Sync에 필요한 것
 
 - `Notion integration token`
