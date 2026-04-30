@@ -35,10 +35,17 @@ Dataset은 UAV 기반 small object detection, multi-view reasoning, 그리고 �
 
 ## 다음 실무 작업
 
-- `data/README.md`를 추가해 dataset 저장 규칙을 정리합니다.
-- `config/datasets/visdrone.yaml`을 추가해 `YOLO` 학습 설정을 준비합니다.
-- `scripts/prepare_visdrone.py`를 추가해 VisDrone annotation을 `YOLO format`으로 변환하는 구조를 준비합니다.
+- `data/README.md`를 추가해 dataset 저장 규칙을 정리했습니다.
+- `config/datasets/visdrone.yaml`을 추가해 `YOLO` 학습 설정을 준비했습니다.
+- `scripts/prepare_visdrone.py`를 추가해 VisDrone annotation을 `YOLO format`으로 변환하는 구조를 준비했습니다.
 - 첫 실험 결과는 `docs/experiment_results.md`에 기록합니다.
+
+## VisDrone 변환 규칙
+
+- 원본 annotation 형식은 `bbox_left,bbox_top,bbox_width,bbox_height,score,object_category,truncation,occlusion`입니다.
+- `score=0` 또는 `object_category=0`인 ignored box는 학습 label에서 제외합니다.
+- source category `1-11`은 `YOLO` label `0-10`으로 변환합니다.
+- bbox는 image width/height로 normalize합니다.
 
 ## Class Mapping 초안
 

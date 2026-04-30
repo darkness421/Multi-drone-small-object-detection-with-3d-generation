@@ -1,0 +1,39 @@
+# Ultralytics YOLO dataset config for converted VisDrone DET data.
+
+path: data/processed/visdrone_yolo
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: pedestrian
+  1: people
+  2: bicycle
+  3: car
+  4: van
+  5: truck
+  6: tricycle
+  7: awning-tricycle
+  8: bus
+  9: motor
+  10: others
+
+visdrone_source_categories:
+  0: ignored-region
+  1: pedestrian
+  2: people
+  3: bicycle
+  4: car
+  5: van
+  6: truck
+  7: tricycle
+  8: awning-tricycle
+  9: bus
+  10: motor
+  11: others
+
+notes:
+  - Source category 0 is ignored during conversion.
+  - Source categories 1-11 are shifted to YOLO labels 0-10.
+  - First baseline uses all non-ignored VisDrone classes.
+
