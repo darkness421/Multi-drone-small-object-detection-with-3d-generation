@@ -1,0 +1,8 @@
+experiment:
+  id: exp01_single_uav
+  goal: Single-UAV baseline detection.
+inputs:
+  dataset: CoM3D-MarineCity
+outputs:
+  metrics: outputs/results/exp01_single_uav.json
+

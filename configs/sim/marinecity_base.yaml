@@ -1,0 +1,24 @@
+scene:
+  name: CoM3D-MarineCity
+  area: Busan Haeundae Marine City
+  digital_twin:
+    engine: NVIDIA Isaac Sim
+    geospatial: Cesium for Omniverse
+  origin:
+    latitude_deg: 35.1569
+    longitude_deg: 129.1456
+    height_m: 80.0
+
+objects:
+  fine_classes:
+    - sedan
+    - pickup
+    - van
+    - ambulance
+    - police_car
+    - truck
+    - pedestrian
+    - worker
+    - small_boat
+    - debris
+

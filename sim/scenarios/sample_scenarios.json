@@ -1,0 +1,632 @@
+[
+  {
+    "scene_id": "marinecity_000000",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -0.0,
+          "z": 150.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -0.0,
+          "z": 200.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -0.0,
+          "z": 100.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_000",
+        "coarse_class": "vehicle",
+        "fine_class": "van",
+        "ambiguity_pair": "van_vs_ambulance",
+        "occlusion_level": "none"
+      }
+    ],
+    "conditions": {
+      "weather": "clear",
+      "time_of_day": "morning"
+    },
+    "recommended_next_view": {
+      "view_type": "right_oblique",
+      "altitude_m": 80,
+      "reason": "Need missing evidence for van_vs_ambulance."
+    }
+  },
+  {
+    "scene_id": "marinecity_000001",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -15.0,
+          "z": 200.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -15.0,
+          "z": 100.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -15.0,
+          "z": 150.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_001",
+        "coarse_class": "vehicle",
+        "fine_class": "sedan",
+        "ambiguity_pair": "sedan_vs_pickup",
+        "occlusion_level": "partial"
+      }
+    ],
+    "conditions": {
+      "weather": "cloudy",
+      "time_of_day": "noon"
+    },
+    "recommended_next_view": {
+      "view_type": "rear_oblique",
+      "altitude_m": 100,
+      "reason": "Need missing evidence for sedan_vs_pickup."
+    }
+  },
+  {
+    "scene_id": "marinecity_000002",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -30.0,
+          "z": 100.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -30.0,
+          "z": 150.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -30.0,
+          "z": 200.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_002",
+        "coarse_class": "vehicle",
+        "fine_class": "truck",
+        "ambiguity_pair": "truck_vs_rescue_vehicle",
+        "occlusion_level": "heavy"
+      }
+    ],
+    "conditions": {
+      "weather": "hazy",
+      "time_of_day": "evening"
+    },
+    "recommended_next_view": {
+      "view_type": "side_oblique",
+      "altitude_m": 120,
+      "reason": "Need missing evidence for truck_vs_rescue_vehicle."
+    }
+  },
+  {
+    "scene_id": "marinecity_000003",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -45.0,
+          "z": 150.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -45.0,
+          "z": 200.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -45.0,
+          "z": 100.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_003",
+        "coarse_class": "vehicle",
+        "fine_class": "van",
+        "ambiguity_pair": "van_vs_ambulance",
+        "occlusion_level": "none"
+      }
+    ],
+    "conditions": {
+      "weather": "clear",
+      "time_of_day": "morning"
+    },
+    "recommended_next_view": {
+      "view_type": "right_oblique",
+      "altitude_m": 80,
+      "reason": "Need missing evidence for van_vs_ambulance."
+    }
+  },
+  {
+    "scene_id": "marinecity_000004",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -60.0,
+          "z": 200.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -60.0,
+          "z": 100.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -60.0,
+          "z": 150.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_004",
+        "coarse_class": "vehicle",
+        "fine_class": "sedan",
+        "ambiguity_pair": "sedan_vs_pickup",
+        "occlusion_level": "partial"
+      }
+    ],
+    "conditions": {
+      "weather": "cloudy",
+      "time_of_day": "noon"
+    },
+    "recommended_next_view": {
+      "view_type": "rear_oblique",
+      "altitude_m": 100,
+      "reason": "Need missing evidence for sedan_vs_pickup."
+    }
+  },
+  {
+    "scene_id": "marinecity_000005",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -75.0,
+          "z": 100.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -75.0,
+          "z": 150.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -75.0,
+          "z": 200.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_005",
+        "coarse_class": "vehicle",
+        "fine_class": "truck",
+        "ambiguity_pair": "truck_vs_rescue_vehicle",
+        "occlusion_level": "heavy"
+      }
+    ],
+    "conditions": {
+      "weather": "hazy",
+      "time_of_day": "evening"
+    },
+    "recommended_next_view": {
+      "view_type": "side_oblique",
+      "altitude_m": 120,
+      "reason": "Need missing evidence for truck_vs_rescue_vehicle."
+    }
+  },
+  {
+    "scene_id": "marinecity_000006",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -90.0,
+          "z": 150.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -90.0,
+          "z": 200.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -90.0,
+          "z": 100.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_006",
+        "coarse_class": "vehicle",
+        "fine_class": "van",
+        "ambiguity_pair": "van_vs_ambulance",
+        "occlusion_level": "none"
+      }
+    ],
+    "conditions": {
+      "weather": "clear",
+      "time_of_day": "morning"
+    },
+    "recommended_next_view": {
+      "view_type": "right_oblique",
+      "altitude_m": 80,
+      "reason": "Need missing evidence for van_vs_ambulance."
+    }
+  },
+  {
+    "scene_id": "marinecity_000007",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -105.0,
+          "z": 200.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -105.0,
+          "z": 100.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -105.0,
+          "z": 150.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_007",
+        "coarse_class": "vehicle",
+        "fine_class": "sedan",
+        "ambiguity_pair": "sedan_vs_pickup",
+        "occlusion_level": "partial"
+      }
+    ],
+    "conditions": {
+      "weather": "cloudy",
+      "time_of_day": "noon"
+    },
+    "recommended_next_view": {
+      "view_type": "rear_oblique",
+      "altitude_m": 100,
+      "reason": "Need missing evidence for sedan_vs_pickup."
+    }
+  },
+  {
+    "scene_id": "marinecity_000008",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -120.0,
+          "z": 100.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -120.0,
+          "z": 150.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -120.0,
+          "z": 200.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_008",
+        "coarse_class": "vehicle",
+        "fine_class": "truck",
+        "ambiguity_pair": "truck_vs_rescue_vehicle",
+        "occlusion_level": "heavy"
+      }
+    ],
+    "conditions": {
+      "weather": "hazy",
+      "time_of_day": "evening"
+    },
+    "recommended_next_view": {
+      "view_type": "side_oblique",
+      "altitude_m": 120,
+      "reason": "Need missing evidence for truck_vs_rescue_vehicle."
+    }
+  },
+  {
+    "scene_id": "marinecity_000009",
+    "area": "Busan Haeundae Marine City",
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 20.0,
+          "y": -135.0,
+          "z": 150.0,
+          "yaw_deg": 45.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 40.0,
+          "y": -135.0,
+          "z": 200.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": 60.0,
+          "y": -135.0,
+          "z": 100.0,
+          "yaw_deg": 135.0,
+          "pitch_deg": -40.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_009",
+        "coarse_class": "vehicle",
+        "fine_class": "van",
+        "ambiguity_pair": "van_vs_ambulance",
+        "occlusion_level": "none"
+      }
+    ],
+    "conditions": {
+      "weather": "clear",
+      "time_of_day": "morning"
+    },
+    "recommended_next_view": {
+      "view_type": "right_oblique",
+      "altitude_m": 80,
+      "reason": "Need missing evidence for van_vs_ambulance."
+    }
+  }
+]

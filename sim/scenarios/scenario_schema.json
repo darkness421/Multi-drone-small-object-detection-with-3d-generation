@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CoM3D-MarineCity Scenario",
+  "type": "object",
+  "required": [
+    "scene_id",
+    "area",
+    "uavs",
+    "objects",
+    "conditions",
+    "recommended_next_view"
+  ],
+  "properties": {
+    "scene_id": { "type": "string" },
+    "area": { "type": "string" },
+    "uavs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["uav_id", "altitude_m", "view_type", "camera_pose"],
+        "properties": {
+          "uav_id": { "type": "string" },
+          "altitude_m": { "type": "number" },
+          "view_type": {
+            "type": "string",
+            "enum": ["nadir", "front_oblique", "side_oblique", "rear_oblique", "left_oblique", "right_oblique"]
+          },
+          "camera_pose": {
+            "type": "object",
+            "required": ["x", "y", "z", "yaw_deg", "pitch_deg", "roll_deg"],
+            "properties": {
+              "x": { "type": "number" },
+              "y": { "type": "number" },
+              "z": { "type": "number" },
+              "yaw_deg": { "type": "number" },
+              "pitch_deg": { "type": "number" },
+              "roll_deg": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["object_id", "coarse_class", "fine_class", "ambiguity_pair", "occlusion_level"],
+        "properties": {
+          "object_id": { "type": "string" },
+          "coarse_class": { "type": "string" },
+          "fine_class": { "type": "string" },
+          "ambiguity_pair": { "type": "string" },
+          "occlusion_level": {
+            "type": "string",
+            "enum": ["none", "partial", "heavy"]
+          }
+        }
+      }
+    },
+    "conditions": {
+      "type": "object",
+      "properties": {
+        "weather": { "type": "string" },
+        "time_of_day": { "type": "string" }
+      }
+    },
+    "recommended_next_view": {
+      "type": "object",
+      "required": ["view_type", "altitude_m", "reason"],
+      "properties": {
+        "view_type": { "type": "string" },
+        "altitude_m": { "type": "number" },
+        "reason": { "type": "string" }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,8 @@
+experiment:
+  id: exp04_ace_full
+  goal: Full ambiguity-centric evidence completion pipeline.
+inputs:
+  dataset: CoM3D-MarineCity
+outputs:
+  metrics: outputs/results/exp04_ace_full.json
+

@@ -1,0 +1,11 @@
+model:
+  family: YOLO11
+  pretrained: true
+dataset:
+  name: VisDrone-DET
+  config: config/datasets/visdrone.yaml
+training:
+  image_size: 1024
+  epochs: 50
+  batch_size: 8
+

@@ -1,0 +1,11 @@
+model:
+  family: YOLO11
+  pretrained: true
+dataset:
+  name: CoM3D-MarineCity
+  config: datasets/splits/train.json
+training:
+  image_size: 1024
+  epochs: 50
+  batch_size: 8
+

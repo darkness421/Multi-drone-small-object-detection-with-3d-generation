@@ -1,0 +1,14 @@
+policy:
+  name: ambiguity_centric_reobservation
+  trigger_uncertainty_threshold: 0.55
+  allowed_next_views:
+    - right_oblique
+    - left_oblique
+    - front_oblique
+    - rear_oblique
+  altitude_candidates_m:
+    - 50
+    - 80
+    - 100
+    - 150
+

@@ -33,6 +33,11 @@ CARDS = (
         source=ROOT / "docs" / "idea_bank.md",
     ),
     NotionCard(
+        section="Proposed Method",
+        title="CoM3D-ACE System Specification",
+        source=ROOT / "NOTION_SYSTEM_SPEC.md",
+    ),
+    NotionCard(
         section="Experiment Plan",
         title="Dataset Plan",
         source=ROOT / "docs" / "dataset_plan.md",

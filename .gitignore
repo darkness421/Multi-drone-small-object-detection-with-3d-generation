@@ -19,6 +19,16 @@ cache/
 # Data and model artifacts
 data/raw/
 data/processed/
+datasets/marinecity/images/*
+datasets/marinecity/depth/*
+datasets/marinecity/poses/*
+datasets/marinecity/annotations/*
+datasets/marinecity/evidence_json/*
+!datasets/marinecity/images/.gitkeep
+!datasets/marinecity/depth/.gitkeep
+!datasets/marinecity/poses/.gitkeep
+!datasets/marinecity/annotations/.gitkeep
+!datasets/marinecity/evidence_json/.gitkeep
 outputs/
 runs/
 weights/
@@ -36,4 +46,3 @@ cesium_token.txt
 .idea/
 Thumbs.db
 .DS_Store
-

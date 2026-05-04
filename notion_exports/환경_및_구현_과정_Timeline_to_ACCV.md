@@ -3,7 +3,7 @@
 - Notion Section: `환경 및 구현 과정`
 - Status: `Not Started`
 - Source: `docs/timeline_to_accv.md`
-- Export Date: `2026-04-30`
+- Export Date: `2026-05-04`
 
 ---
 

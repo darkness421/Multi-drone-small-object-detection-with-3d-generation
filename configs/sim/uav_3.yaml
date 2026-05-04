@@ -1,0 +1,11 @@
+uavs:
+  - id: UAV_1
+    altitude_m: 150
+    view_type: nadir
+  - id: UAV_2
+    altitude_m: 90
+    view_type: right_oblique
+  - id: UAV_3
+    altitude_m: 120
+    view_type: left_oblique
+

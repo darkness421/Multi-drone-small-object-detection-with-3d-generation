@@ -3,7 +3,7 @@
 - Notion Section: `Proposed Method`
 - Status: `Not Started`
 - Source: `docs/idea_bank.md`
-- Export Date: `2026-04-30`
+- Export Date: `2026-05-04`
 
 ---
 

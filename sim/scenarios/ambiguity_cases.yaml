@@ -1,0 +1,18 @@
+ambiguity_cases:
+  - id: van_vs_ambulance
+    missing_evidence:
+      - side marking
+      - roof light bar
+      - vehicle side profile
+    recommended_view: right_oblique
+  - id: sedan_vs_pickup
+    missing_evidence:
+      - rear cargo bed
+      - side silhouette
+    recommended_view: rear_oblique
+  - id: truck_vs_rescue_vehicle
+    missing_evidence:
+      - emergency marking
+      - vehicle equipment outline
+    recommended_view: side_oblique
+

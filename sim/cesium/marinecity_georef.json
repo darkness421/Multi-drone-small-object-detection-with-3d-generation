@@ -1,0 +1,11 @@
+{
+  "name": "Busan Haeundae Marine City",
+  "coordinate_system": "WGS84",
+  "origin": {
+    "latitude_deg": 35.1569,
+    "longitude_deg": 129.1456,
+    "height_m": 80.0
+  },
+  "local_frame": "ENU"
+}
+

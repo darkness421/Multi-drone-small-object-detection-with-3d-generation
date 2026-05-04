@@ -1,0 +1,8 @@
+experiment:
+  id: exp02_2d_fusion
+  goal: Compare single-view detection with multi-view 2D fusion.
+inputs:
+  dataset: CoM3D-MarineCity
+outputs:
+  metrics: outputs/results/exp02_2d_fusion.json
+

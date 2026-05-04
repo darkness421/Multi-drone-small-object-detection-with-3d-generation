@@ -1,0 +1,8 @@
+experiment:
+  id: exp03_3d_graph
+  goal: Evaluate 3D object evidence graph.
+inputs:
+  dataset: CoM3D-MarineCity
+outputs:
+  metrics: outputs/results/exp03_3d_graph.json
+
