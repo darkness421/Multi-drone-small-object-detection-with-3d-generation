@@ -15,4 +15,15 @@ ambiguity_cases:
       - emergency marking
       - vehicle equipment outline
     recommended_view: side_oblique
-
+  - id: pedestrian_vs_worker
+    missing_evidence:
+      - safety vest
+      - helmet
+      - work zone context
+    recommended_view: front_oblique
+  - id: small_boat_vs_debris
+    missing_evidence:
+      - object shape
+      - wake pattern
+      - nearby sea context
+    recommended_view: left_oblique

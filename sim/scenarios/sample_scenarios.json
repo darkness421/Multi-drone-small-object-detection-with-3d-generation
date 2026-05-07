@@ -2,631 +2,1692 @@
   {
     "scene_id": "marinecity_000000",
     "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 1,
     "uavs": [
       {
         "uav_id": "UAV_1",
-        "altitude_m": 150,
+        "altitude_m": 80,
         "view_type": "right_oblique",
         "camera_pose": {
-          "x": 20.0,
-          "y": -0.0,
-          "z": 150.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_2",
-        "altitude_m": 200,
-        "view_type": "left_oblique",
-        "camera_pose": {
-          "x": 40.0,
-          "y": -0.0,
-          "z": 200.0,
+          "x": -60.0,
+          "y": -54.0,
+          "z": 80.0,
           "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_3",
-        "altitude_m": 100,
-        "view_type": "nadir",
-        "camera_pose": {
-          "x": 60.0,
-          "y": -0.0,
-          "z": 100.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
+          "pitch_deg": -42.0,
           "roll_deg": 0.0
         }
       }
     ],
     "objects": [
       {
-        "object_id": "vehicle_000",
+        "object_id": "vehicle_0000",
         "coarse_class": "vehicle",
         "fine_class": "van",
+        "candidate_fine_classes": [
+          "van",
+          "ambulance"
+        ],
         "ambiguity_pair": "van_vs_ambulance",
-        "occlusion_level": "none"
+        "ambiguity_type": "van_vs_ambulance",
+        "missing_evidence": [
+          "side marking",
+          "roof light bar",
+          "vehicle side profile"
+        ],
+        "occlusion_level": "none",
+        "context": "urban road near high-rise buildings",
+        "local_position": {
+          "east_m": -24.0,
+          "north_m": -30.0,
+          "up_m": 0.0
+        }
       }
     ],
     "conditions": {
       "weather": "clear",
-      "time_of_day": "morning"
+      "time_of_day": "morning",
+      "expected_failure_mode": "van_vs_ambulance"
     },
     "recommended_next_view": {
       "view_type": "right_oblique",
       "altitude_m": 80,
-      "reason": "Need missing evidence for van_vs_ambulance."
-    }
+      "reason": "Need side marking, roof light bar, vehicle side profile to resolve van vs ambulance."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "van_vs_ambulance"
+    ]
   },
   {
     "scene_id": "marinecity_000001",
     "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 2,
     "uavs": [
       {
         "uav_id": "UAV_1",
-        "altitude_m": 200,
-        "view_type": "left_oblique",
+        "altitude_m": 100,
+        "view_type": "nadir",
         "camera_pose": {
-          "x": 20.0,
-          "y": -15.0,
-          "z": 200.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
+          "x": -60.0,
+          "y": -36.0,
+          "z": 100.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
           "roll_deg": 0.0
         }
       },
       {
         "uav_id": "UAV_2",
-        "altitude_m": 100,
-        "view_type": "nadir",
+        "altitude_m": 80,
+        "view_type": "rear_oblique",
         "camera_pose": {
-          "x": 40.0,
-          "y": -15.0,
-          "z": 100.0,
-          "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_3",
-        "altitude_m": 150,
-        "view_type": "right_oblique",
-        "camera_pose": {
-          "x": 60.0,
-          "y": -15.0,
-          "z": 150.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
+          "x": -15.0,
+          "y": -36.0,
+          "z": 80.0,
+          "yaw_deg": 180.0,
+          "pitch_deg": -42.0,
           "roll_deg": 0.0
         }
       }
     ],
     "objects": [
       {
-        "object_id": "vehicle_001",
+        "object_id": "vehicle_0001",
         "coarse_class": "vehicle",
-        "fine_class": "sedan",
+        "fine_class": "pickup",
+        "candidate_fine_classes": [
+          "sedan",
+          "pickup"
+        ],
         "ambiguity_pair": "sedan_vs_pickup",
-        "occlusion_level": "partial"
+        "ambiguity_type": "sedan_vs_pickup",
+        "missing_evidence": [
+          "rear cargo bed",
+          "side silhouette"
+        ],
+        "occlusion_level": "partial",
+        "context": "roadside parking and shadowed lanes",
+        "local_position": {
+          "east_m": -12.0,
+          "north_m": -20.0,
+          "up_m": 0.0
+        }
       }
     ],
     "conditions": {
       "weather": "cloudy",
-      "time_of_day": "noon"
+      "time_of_day": "noon",
+      "expected_failure_mode": "sedan_vs_pickup"
     },
     "recommended_next_view": {
       "view_type": "rear_oblique",
-      "altitude_m": 100,
-      "reason": "Need missing evidence for sedan_vs_pickup."
-    }
+      "altitude_m": 80,
+      "reason": "Need rear cargo bed, side silhouette to resolve sedan vs pickup."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "sedan_vs_pickup"
+    ]
   },
   {
     "scene_id": "marinecity_000002",
     "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 3,
     "uavs": [
       {
         "uav_id": "UAV_1",
-        "altitude_m": 100,
+        "altitude_m": 150,
         "view_type": "nadir",
         "camera_pose": {
-          "x": 20.0,
-          "y": -30.0,
-          "z": 100.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
+          "x": -60.0,
+          "y": -18.0,
+          "z": 150.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
           "roll_deg": 0.0
         }
       },
       {
         "uav_id": "UAV_2",
-        "altitude_m": 150,
-        "view_type": "right_oblique",
+        "altitude_m": 200,
+        "view_type": "front_oblique",
         "camera_pose": {
-          "x": 40.0,
-          "y": -30.0,
-          "z": 150.0,
-          "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
+          "x": -15.0,
+          "y": -18.0,
+          "z": 200.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
           "roll_deg": 0.0
         }
       },
       {
         "uav_id": "UAV_3",
-        "altitude_m": 200,
-        "view_type": "left_oblique",
+        "altitude_m": 100,
+        "view_type": "side_oblique",
         "camera_pose": {
-          "x": 60.0,
-          "y": -30.0,
-          "z": 200.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
+          "x": 30.0,
+          "y": -18.0,
+          "z": 100.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
           "roll_deg": 0.0
         }
       }
     ],
     "objects": [
       {
-        "object_id": "vehicle_002",
+        "object_id": "vehicle_0002",
         "coarse_class": "vehicle",
         "fine_class": "truck",
+        "candidate_fine_classes": [
+          "truck",
+          "rescue_vehicle"
+        ],
         "ambiguity_pair": "truck_vs_rescue_vehicle",
-        "occlusion_level": "heavy"
+        "ambiguity_type": "truck_vs_rescue_vehicle",
+        "missing_evidence": [
+          "emergency marking",
+          "equipment outline",
+          "side profile"
+        ],
+        "occlusion_level": "heavy",
+        "context": "wide road next to waterfront buildings",
+        "local_position": {
+          "east_m": 0.0,
+          "north_m": -10.0,
+          "up_m": 0.0
+        }
       }
     ],
     "conditions": {
       "weather": "hazy",
-      "time_of_day": "evening"
+      "time_of_day": "evening",
+      "expected_failure_mode": "truck_vs_rescue_vehicle"
     },
     "recommended_next_view": {
       "view_type": "side_oblique",
-      "altitude_m": 120,
-      "reason": "Need missing evidence for truck_vs_rescue_vehicle."
-    }
+      "altitude_m": 100,
+      "reason": "Need emergency marking, equipment outline, side profile to resolve truck vs rescue_vehicle."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "truck_vs_rescue_vehicle"
+    ]
   },
   {
     "scene_id": "marinecity_000003",
     "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 5,
     "uavs": [
       {
         "uav_id": "UAV_1",
-        "altitude_m": 150,
-        "view_type": "right_oblique",
+        "altitude_m": 200,
+        "view_type": "nadir",
         "camera_pose": {
-          "x": 20.0,
-          "y": -45.0,
-          "z": 150.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
+          "x": -60.0,
+          "y": 0.0,
+          "z": 200.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
           "roll_deg": 0.0
         }
       },
       {
         "uav_id": "UAV_2",
-        "altitude_m": 200,
-        "view_type": "left_oblique",
+        "altitude_m": 50,
+        "view_type": "front_oblique",
         "camera_pose": {
-          "x": 40.0,
-          "y": -45.0,
-          "z": 200.0,
-          "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
+          "x": -15.0,
+          "y": 0.0,
+          "z": 50.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
           "roll_deg": 0.0
         }
       },
       {
         "uav_id": "UAV_3",
-        "altitude_m": 100,
-        "view_type": "nadir",
+        "altitude_m": 80,
+        "view_type": "left_oblique",
         "camera_pose": {
-          "x": 60.0,
-          "y": -45.0,
+          "x": 30.0,
+          "y": 0.0,
+          "z": 80.0,
+          "yaw_deg": -90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_4",
+        "altitude_m": 100,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 75.0,
+          "y": 0.0,
           "z": 100.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_5",
+        "altitude_m": 150,
+        "view_type": "rear_oblique",
+        "camera_pose": {
+          "x": 120.0,
+          "y": 0.0,
+          "z": 150.0,
+          "yaw_deg": 180.0,
+          "pitch_deg": -42.0,
           "roll_deg": 0.0
         }
       }
     ],
     "objects": [
       {
-        "object_id": "vehicle_003",
-        "coarse_class": "vehicle",
-        "fine_class": "van",
-        "ambiguity_pair": "van_vs_ambulance",
-        "occlusion_level": "none"
+        "object_id": "person_0003",
+        "coarse_class": "person",
+        "fine_class": "worker",
+        "candidate_fine_classes": [
+          "pedestrian",
+          "worker"
+        ],
+        "ambiguity_pair": "pedestrian_vs_worker",
+        "ambiguity_type": "pedestrian_vs_worker",
+        "missing_evidence": [
+          "safety vest",
+          "helmet",
+          "work zone context"
+        ],
+        "occlusion_level": "none",
+        "context": "construction or maintenance zone",
+        "local_position": {
+          "east_m": 12.0,
+          "north_m": 0.0,
+          "up_m": 0.0
+        }
       }
     ],
     "conditions": {
-      "weather": "clear",
-      "time_of_day": "morning"
+      "weather": "shadow-heavy",
+      "time_of_day": "morning",
+      "expected_failure_mode": "pedestrian_vs_worker"
     },
     "recommended_next_view": {
-      "view_type": "right_oblique",
-      "altitude_m": 80,
-      "reason": "Need missing evidence for van_vs_ambulance."
-    }
+      "view_type": "front_oblique",
+      "altitude_m": 50,
+      "reason": "Need safety vest, helmet, work zone context to resolve pedestrian vs worker."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "pedestrian_vs_worker"
+    ]
   },
   {
     "scene_id": "marinecity_000004",
     "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 1,
     "uavs": [
       {
         "uav_id": "UAV_1",
-        "altitude_m": 200,
+        "altitude_m": 100,
         "view_type": "left_oblique",
         "camera_pose": {
-          "x": 20.0,
-          "y": -60.0,
-          "z": 200.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_2",
-        "altitude_m": 100,
-        "view_type": "nadir",
-        "camera_pose": {
-          "x": 40.0,
-          "y": -60.0,
+          "x": -60.0,
+          "y": 18.0,
           "z": 100.0,
-          "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_3",
-        "altitude_m": 150,
-        "view_type": "right_oblique",
-        "camera_pose": {
-          "x": 60.0,
-          "y": -60.0,
-          "z": 150.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
+          "yaw_deg": -90.0,
+          "pitch_deg": -42.0,
           "roll_deg": 0.0
         }
       }
     ],
     "objects": [
       {
-        "object_id": "vehicle_004",
-        "coarse_class": "vehicle",
-        "fine_class": "sedan",
-        "ambiguity_pair": "sedan_vs_pickup",
-        "occlusion_level": "partial"
+        "object_id": "marine_object_0004",
+        "coarse_class": "marine_object",
+        "fine_class": "small_boat",
+        "candidate_fine_classes": [
+          "small_boat",
+          "debris"
+        ],
+        "ambiguity_pair": "small_boat_vs_debris",
+        "ambiguity_type": "small_boat_vs_debris",
+        "missing_evidence": [
+          "object shape",
+          "wake pattern",
+          "nearby sea context"
+        ],
+        "occlusion_level": "partial",
+        "context": "waterfront and marina edge",
+        "local_position": {
+          "east_m": 24.0,
+          "north_m": 10.0,
+          "up_m": 0.0
+        }
       }
     ],
     "conditions": {
-      "weather": "cloudy",
-      "time_of_day": "noon"
+      "weather": "clear",
+      "time_of_day": "noon",
+      "expected_failure_mode": "small_boat_vs_debris"
     },
     "recommended_next_view": {
-      "view_type": "rear_oblique",
+      "view_type": "left_oblique",
       "altitude_m": 100,
-      "reason": "Need missing evidence for sedan_vs_pickup."
-    }
+      "reason": "Need object shape, wake pattern, nearby sea context to resolve small_boat vs debris."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "small_boat_vs_debris"
+    ]
   },
   {
     "scene_id": "marinecity_000005",
     "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 2,
     "uavs": [
       {
         "uav_id": "UAV_1",
-        "altitude_m": 100,
+        "altitude_m": 80,
         "view_type": "nadir",
         "camera_pose": {
-          "x": 20.0,
-          "y": -75.0,
-          "z": 100.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
+          "x": -60.0,
+          "y": 36.0,
+          "z": 80.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
           "roll_deg": 0.0
         }
       },
       {
         "uav_id": "UAV_2",
-        "altitude_m": 150,
+        "altitude_m": 80,
         "view_type": "right_oblique",
         "camera_pose": {
-          "x": 40.0,
-          "y": -75.0,
-          "z": 150.0,
+          "x": -15.0,
+          "y": 36.0,
+          "z": 80.0,
           "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_3",
-        "altitude_m": 200,
-        "view_type": "left_oblique",
-        "camera_pose": {
-          "x": 60.0,
-          "y": -75.0,
-          "z": 200.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
+          "pitch_deg": -42.0,
           "roll_deg": 0.0
         }
       }
     ],
     "objects": [
       {
-        "object_id": "vehicle_005",
+        "object_id": "vehicle_0005",
         "coarse_class": "vehicle",
-        "fine_class": "truck",
-        "ambiguity_pair": "truck_vs_rescue_vehicle",
-        "occlusion_level": "heavy"
-      }
-    ],
-    "conditions": {
-      "weather": "hazy",
-      "time_of_day": "evening"
-    },
-    "recommended_next_view": {
-      "view_type": "side_oblique",
-      "altitude_m": 120,
-      "reason": "Need missing evidence for truck_vs_rescue_vehicle."
-    }
-  },
-  {
-    "scene_id": "marinecity_000006",
-    "area": "Busan Haeundae Marine City",
-    "uavs": [
-      {
-        "uav_id": "UAV_1",
-        "altitude_m": 150,
-        "view_type": "right_oblique",
-        "camera_pose": {
-          "x": 20.0,
-          "y": -90.0,
-          "z": 150.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_2",
-        "altitude_m": 200,
-        "view_type": "left_oblique",
-        "camera_pose": {
-          "x": 40.0,
-          "y": -90.0,
-          "z": 200.0,
-          "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_3",
-        "altitude_m": 100,
-        "view_type": "nadir",
-        "camera_pose": {
-          "x": 60.0,
-          "y": -90.0,
-          "z": 100.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      }
-    ],
-    "objects": [
-      {
-        "object_id": "vehicle_006",
-        "coarse_class": "vehicle",
-        "fine_class": "van",
+        "fine_class": "ambulance",
+        "candidate_fine_classes": [
+          "van",
+          "ambulance"
+        ],
         "ambiguity_pair": "van_vs_ambulance",
-        "occlusion_level": "none"
-      }
-    ],
-    "conditions": {
-      "weather": "clear",
-      "time_of_day": "morning"
-    },
-    "recommended_next_view": {
-      "view_type": "right_oblique",
-      "altitude_m": 80,
-      "reason": "Need missing evidence for van_vs_ambulance."
-    }
-  },
-  {
-    "scene_id": "marinecity_000007",
-    "area": "Busan Haeundae Marine City",
-    "uavs": [
-      {
-        "uav_id": "UAV_1",
-        "altitude_m": 200,
-        "view_type": "left_oblique",
-        "camera_pose": {
-          "x": 20.0,
-          "y": -105.0,
-          "z": 200.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
+        "ambiguity_type": "van_vs_ambulance",
+        "missing_evidence": [
+          "side marking",
+          "roof light bar",
+          "vehicle side profile"
+        ],
+        "occlusion_level": "heavy",
+        "context": "urban road near high-rise buildings",
+        "local_position": {
+          "east_m": -24.0,
+          "north_m": 20.0,
+          "up_m": 0.0
         }
-      },
-      {
-        "uav_id": "UAV_2",
-        "altitude_m": 100,
-        "view_type": "nadir",
-        "camera_pose": {
-          "x": 40.0,
-          "y": -105.0,
-          "z": 100.0,
-          "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_3",
-        "altitude_m": 150,
-        "view_type": "right_oblique",
-        "camera_pose": {
-          "x": 60.0,
-          "y": -105.0,
-          "z": 150.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      }
-    ],
-    "objects": [
-      {
-        "object_id": "vehicle_007",
-        "coarse_class": "vehicle",
-        "fine_class": "sedan",
-        "ambiguity_pair": "sedan_vs_pickup",
-        "occlusion_level": "partial"
       }
     ],
     "conditions": {
       "weather": "cloudy",
-      "time_of_day": "noon"
-    },
-    "recommended_next_view": {
-      "view_type": "rear_oblique",
-      "altitude_m": 100,
-      "reason": "Need missing evidence for sedan_vs_pickup."
-    }
-  },
-  {
-    "scene_id": "marinecity_000008",
-    "area": "Busan Haeundae Marine City",
-    "uavs": [
-      {
-        "uav_id": "UAV_1",
-        "altitude_m": 100,
-        "view_type": "nadir",
-        "camera_pose": {
-          "x": 20.0,
-          "y": -120.0,
-          "z": 100.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_2",
-        "altitude_m": 150,
-        "view_type": "right_oblique",
-        "camera_pose": {
-          "x": 40.0,
-          "y": -120.0,
-          "z": 150.0,
-          "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_3",
-        "altitude_m": 200,
-        "view_type": "left_oblique",
-        "camera_pose": {
-          "x": 60.0,
-          "y": -120.0,
-          "z": 200.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      }
-    ],
-    "objects": [
-      {
-        "object_id": "vehicle_008",
-        "coarse_class": "vehicle",
-        "fine_class": "truck",
-        "ambiguity_pair": "truck_vs_rescue_vehicle",
-        "occlusion_level": "heavy"
-      }
-    ],
-    "conditions": {
-      "weather": "hazy",
-      "time_of_day": "evening"
-    },
-    "recommended_next_view": {
-      "view_type": "side_oblique",
-      "altitude_m": 120,
-      "reason": "Need missing evidence for truck_vs_rescue_vehicle."
-    }
-  },
-  {
-    "scene_id": "marinecity_000009",
-    "area": "Busan Haeundae Marine City",
-    "uavs": [
-      {
-        "uav_id": "UAV_1",
-        "altitude_m": 150,
-        "view_type": "right_oblique",
-        "camera_pose": {
-          "x": 20.0,
-          "y": -135.0,
-          "z": 150.0,
-          "yaw_deg": 45.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_2",
-        "altitude_m": 200,
-        "view_type": "left_oblique",
-        "camera_pose": {
-          "x": 40.0,
-          "y": -135.0,
-          "z": 200.0,
-          "yaw_deg": 90.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      },
-      {
-        "uav_id": "UAV_3",
-        "altitude_m": 100,
-        "view_type": "nadir",
-        "camera_pose": {
-          "x": 60.0,
-          "y": -135.0,
-          "z": 100.0,
-          "yaw_deg": 135.0,
-          "pitch_deg": -40.0,
-          "roll_deg": 0.0
-        }
-      }
-    ],
-    "objects": [
-      {
-        "object_id": "vehicle_009",
-        "coarse_class": "vehicle",
-        "fine_class": "van",
-        "ambiguity_pair": "van_vs_ambulance",
-        "occlusion_level": "none"
-      }
-    ],
-    "conditions": {
-      "weather": "clear",
-      "time_of_day": "morning"
+      "time_of_day": "evening",
+      "expected_failure_mode": "van_vs_ambulance"
     },
     "recommended_next_view": {
       "view_type": "right_oblique",
       "altitude_m": 80,
-      "reason": "Need missing evidence for van_vs_ambulance."
-    }
+      "reason": "Need side marking, roof light bar, vehicle side profile to resolve van vs ambulance."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "van_vs_ambulance"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000006",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 3,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": 54.0,
+          "z": 100.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 150,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": 54.0,
+          "z": 150.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 80,
+        "view_type": "rear_oblique",
+        "camera_pose": {
+          "x": 30.0,
+          "y": 54.0,
+          "z": 80.0,
+          "yaw_deg": 180.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_0006",
+        "coarse_class": "vehicle",
+        "fine_class": "sedan",
+        "candidate_fine_classes": [
+          "sedan",
+          "pickup"
+        ],
+        "ambiguity_pair": "sedan_vs_pickup",
+        "ambiguity_type": "sedan_vs_pickup",
+        "missing_evidence": [
+          "rear cargo bed",
+          "side silhouette"
+        ],
+        "occlusion_level": "none",
+        "context": "roadside parking and shadowed lanes",
+        "local_position": {
+          "east_m": -12.0,
+          "north_m": -30.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "hazy",
+      "time_of_day": "morning",
+      "expected_failure_mode": "sedan_vs_pickup"
+    },
+    "recommended_next_view": {
+      "view_type": "rear_oblique",
+      "altitude_m": 80,
+      "reason": "Need rear cargo bed, side silhouette to resolve sedan vs pickup."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "sedan_vs_pickup"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000007",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 5,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 150,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": -54.0,
+          "z": 150.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 200,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": -54.0,
+          "z": 200.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 50,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 30.0,
+          "y": -54.0,
+          "z": 50.0,
+          "yaw_deg": -90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_4",
+        "altitude_m": 80,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 75.0,
+          "y": -54.0,
+          "z": 80.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_5",
+        "altitude_m": 100,
+        "view_type": "side_oblique",
+        "camera_pose": {
+          "x": 120.0,
+          "y": -54.0,
+          "z": 100.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_0007",
+        "coarse_class": "vehicle",
+        "fine_class": "rescue_vehicle",
+        "candidate_fine_classes": [
+          "truck",
+          "rescue_vehicle"
+        ],
+        "ambiguity_pair": "truck_vs_rescue_vehicle",
+        "ambiguity_type": "truck_vs_rescue_vehicle",
+        "missing_evidence": [
+          "emergency marking",
+          "equipment outline",
+          "side profile"
+        ],
+        "occlusion_level": "partial",
+        "context": "wide road next to waterfront buildings",
+        "local_position": {
+          "east_m": 0.0,
+          "north_m": -20.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "shadow-heavy",
+      "time_of_day": "noon",
+      "expected_failure_mode": "truck_vs_rescue_vehicle"
+    },
+    "recommended_next_view": {
+      "view_type": "side_oblique",
+      "altitude_m": 100,
+      "reason": "Need emergency marking, equipment outline, side profile to resolve truck vs rescue_vehicle."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "truck_vs_rescue_vehicle"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000008",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 1,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 50,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -60.0,
+          "y": -36.0,
+          "z": 50.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "person_0008",
+        "coarse_class": "person",
+        "fine_class": "pedestrian",
+        "candidate_fine_classes": [
+          "pedestrian",
+          "worker"
+        ],
+        "ambiguity_pair": "pedestrian_vs_worker",
+        "ambiguity_type": "pedestrian_vs_worker",
+        "missing_evidence": [
+          "safety vest",
+          "helmet",
+          "work zone context"
+        ],
+        "occlusion_level": "heavy",
+        "context": "construction or maintenance zone",
+        "local_position": {
+          "east_m": 12.0,
+          "north_m": -10.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "clear",
+      "time_of_day": "evening",
+      "expected_failure_mode": "pedestrian_vs_worker"
+    },
+    "recommended_next_view": {
+      "view_type": "front_oblique",
+      "altitude_m": 50,
+      "reason": "Need safety vest, helmet, work zone context to resolve pedestrian vs worker."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "pedestrian_vs_worker"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000009",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 2,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 50,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": -18.0,
+          "z": 50.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 100,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": -18.0,
+          "z": 100.0,
+          "yaw_deg": -90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "marine_object_0009",
+        "coarse_class": "marine_object",
+        "fine_class": "debris",
+        "candidate_fine_classes": [
+          "small_boat",
+          "debris"
+        ],
+        "ambiguity_pair": "small_boat_vs_debris",
+        "ambiguity_type": "small_boat_vs_debris",
+        "missing_evidence": [
+          "object shape",
+          "wake pattern",
+          "nearby sea context"
+        ],
+        "occlusion_level": "none",
+        "context": "waterfront and marina edge",
+        "local_position": {
+          "east_m": 24.0,
+          "north_m": 0.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "cloudy",
+      "time_of_day": "morning",
+      "expected_failure_mode": "small_boat_vs_debris"
+    },
+    "recommended_next_view": {
+      "view_type": "left_oblique",
+      "altitude_m": 100,
+      "reason": "Need object shape, wake pattern, nearby sea context to resolve small_boat vs debris."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "small_boat_vs_debris"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000010",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 3,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 80,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": 0.0,
+          "z": 80.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 100,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": 0.0,
+          "z": 100.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 80,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 30.0,
+          "y": 0.0,
+          "z": 80.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_0010",
+        "coarse_class": "vehicle",
+        "fine_class": "van",
+        "candidate_fine_classes": [
+          "van",
+          "ambulance"
+        ],
+        "ambiguity_pair": "van_vs_ambulance",
+        "ambiguity_type": "van_vs_ambulance",
+        "missing_evidence": [
+          "side marking",
+          "roof light bar",
+          "vehicle side profile"
+        ],
+        "occlusion_level": "partial",
+        "context": "urban road near high-rise buildings",
+        "local_position": {
+          "east_m": -24.0,
+          "north_m": 10.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "hazy",
+      "time_of_day": "noon",
+      "expected_failure_mode": "van_vs_ambulance"
+    },
+    "recommended_next_view": {
+      "view_type": "right_oblique",
+      "altitude_m": 80,
+      "reason": "Need side marking, roof light bar, vehicle side profile to resolve van vs ambulance."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "van_vs_ambulance"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000011",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 5,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 100,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": 18.0,
+          "z": 100.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 150,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": 18.0,
+          "z": 150.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 200,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 30.0,
+          "y": 18.0,
+          "z": 200.0,
+          "yaw_deg": -90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_4",
+        "altitude_m": 50,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 75.0,
+          "y": 18.0,
+          "z": 50.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_5",
+        "altitude_m": 80,
+        "view_type": "rear_oblique",
+        "camera_pose": {
+          "x": 120.0,
+          "y": 18.0,
+          "z": 80.0,
+          "yaw_deg": 180.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_0011",
+        "coarse_class": "vehicle",
+        "fine_class": "pickup",
+        "candidate_fine_classes": [
+          "sedan",
+          "pickup"
+        ],
+        "ambiguity_pair": "sedan_vs_pickup",
+        "ambiguity_type": "sedan_vs_pickup",
+        "missing_evidence": [
+          "rear cargo bed",
+          "side silhouette"
+        ],
+        "occlusion_level": "heavy",
+        "context": "roadside parking and shadowed lanes",
+        "local_position": {
+          "east_m": -12.0,
+          "north_m": 20.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "shadow-heavy",
+      "time_of_day": "evening",
+      "expected_failure_mode": "sedan_vs_pickup"
+    },
+    "recommended_next_view": {
+      "view_type": "rear_oblique",
+      "altitude_m": 80,
+      "reason": "Need rear cargo bed, side silhouette to resolve sedan vs pickup."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "sedan_vs_pickup"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000012",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 1,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 100,
+        "view_type": "side_oblique",
+        "camera_pose": {
+          "x": -60.0,
+          "y": 36.0,
+          "z": 100.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_0012",
+        "coarse_class": "vehicle",
+        "fine_class": "truck",
+        "candidate_fine_classes": [
+          "truck",
+          "rescue_vehicle"
+        ],
+        "ambiguity_pair": "truck_vs_rescue_vehicle",
+        "ambiguity_type": "truck_vs_rescue_vehicle",
+        "missing_evidence": [
+          "emergency marking",
+          "equipment outline",
+          "side profile"
+        ],
+        "occlusion_level": "none",
+        "context": "wide road next to waterfront buildings",
+        "local_position": {
+          "east_m": 0.0,
+          "north_m": -30.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "clear",
+      "time_of_day": "morning",
+      "expected_failure_mode": "truck_vs_rescue_vehicle"
+    },
+    "recommended_next_view": {
+      "view_type": "side_oblique",
+      "altitude_m": 100,
+      "reason": "Need emergency marking, equipment outline, side profile to resolve truck vs rescue_vehicle."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "truck_vs_rescue_vehicle"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000013",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 2,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 200,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": 54.0,
+          "z": 200.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 50,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": 54.0,
+          "z": 50.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "person_0013",
+        "coarse_class": "person",
+        "fine_class": "worker",
+        "candidate_fine_classes": [
+          "pedestrian",
+          "worker"
+        ],
+        "ambiguity_pair": "pedestrian_vs_worker",
+        "ambiguity_type": "pedestrian_vs_worker",
+        "missing_evidence": [
+          "safety vest",
+          "helmet",
+          "work zone context"
+        ],
+        "occlusion_level": "partial",
+        "context": "construction or maintenance zone",
+        "local_position": {
+          "east_m": 12.0,
+          "north_m": -20.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "cloudy",
+      "time_of_day": "noon",
+      "expected_failure_mode": "pedestrian_vs_worker"
+    },
+    "recommended_next_view": {
+      "view_type": "front_oblique",
+      "altitude_m": 50,
+      "reason": "Need safety vest, helmet, work zone context to resolve pedestrian vs worker."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "pedestrian_vs_worker"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000014",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 3,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 50,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": -54.0,
+          "z": 50.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 80,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": -54.0,
+          "z": 80.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 100,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 30.0,
+          "y": -54.0,
+          "z": 100.0,
+          "yaw_deg": -90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "marine_object_0014",
+        "coarse_class": "marine_object",
+        "fine_class": "small_boat",
+        "candidate_fine_classes": [
+          "small_boat",
+          "debris"
+        ],
+        "ambiguity_pair": "small_boat_vs_debris",
+        "ambiguity_type": "small_boat_vs_debris",
+        "missing_evidence": [
+          "object shape",
+          "wake pattern",
+          "nearby sea context"
+        ],
+        "occlusion_level": "heavy",
+        "context": "waterfront and marina edge",
+        "local_position": {
+          "east_m": 24.0,
+          "north_m": -10.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "hazy",
+      "time_of_day": "evening",
+      "expected_failure_mode": "small_boat_vs_debris"
+    },
+    "recommended_next_view": {
+      "view_type": "left_oblique",
+      "altitude_m": 100,
+      "reason": "Need object shape, wake pattern, nearby sea context to resolve small_boat vs debris."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "small_boat_vs_debris"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000015",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 5,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 80,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": -36.0,
+          "z": 80.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 100,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": -36.0,
+          "z": 100.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 150,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 30.0,
+          "y": -36.0,
+          "z": 150.0,
+          "yaw_deg": -90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_4",
+        "altitude_m": 80,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 75.0,
+          "y": -36.0,
+          "z": 80.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_5",
+        "altitude_m": 50,
+        "view_type": "rear_oblique",
+        "camera_pose": {
+          "x": 120.0,
+          "y": -36.0,
+          "z": 50.0,
+          "yaw_deg": 180.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_0015",
+        "coarse_class": "vehicle",
+        "fine_class": "ambulance",
+        "candidate_fine_classes": [
+          "van",
+          "ambulance"
+        ],
+        "ambiguity_pair": "van_vs_ambulance",
+        "ambiguity_type": "van_vs_ambulance",
+        "missing_evidence": [
+          "side marking",
+          "roof light bar",
+          "vehicle side profile"
+        ],
+        "occlusion_level": "none",
+        "context": "urban road near high-rise buildings",
+        "local_position": {
+          "east_m": -24.0,
+          "north_m": 0.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "shadow-heavy",
+      "time_of_day": "morning",
+      "expected_failure_mode": "van_vs_ambulance"
+    },
+    "recommended_next_view": {
+      "view_type": "right_oblique",
+      "altitude_m": 80,
+      "reason": "Need side marking, roof light bar, vehicle side profile to resolve van vs ambulance."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "van_vs_ambulance"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000016",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 1,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 80,
+        "view_type": "rear_oblique",
+        "camera_pose": {
+          "x": -60.0,
+          "y": -18.0,
+          "z": 80.0,
+          "yaw_deg": 180.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_0016",
+        "coarse_class": "vehicle",
+        "fine_class": "sedan",
+        "candidate_fine_classes": [
+          "sedan",
+          "pickup"
+        ],
+        "ambiguity_pair": "sedan_vs_pickup",
+        "ambiguity_type": "sedan_vs_pickup",
+        "missing_evidence": [
+          "rear cargo bed",
+          "side silhouette"
+        ],
+        "occlusion_level": "partial",
+        "context": "roadside parking and shadowed lanes",
+        "local_position": {
+          "east_m": -12.0,
+          "north_m": 10.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "clear",
+      "time_of_day": "noon",
+      "expected_failure_mode": "sedan_vs_pickup"
+    },
+    "recommended_next_view": {
+      "view_type": "rear_oblique",
+      "altitude_m": 80,
+      "reason": "Need rear cargo bed, side silhouette to resolve sedan vs pickup."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "sedan_vs_pickup"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000017",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 2,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 150,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": 0.0,
+          "z": 150.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 100,
+        "view_type": "side_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": 0.0,
+          "z": 100.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "vehicle_0017",
+        "coarse_class": "vehicle",
+        "fine_class": "rescue_vehicle",
+        "candidate_fine_classes": [
+          "truck",
+          "rescue_vehicle"
+        ],
+        "ambiguity_pair": "truck_vs_rescue_vehicle",
+        "ambiguity_type": "truck_vs_rescue_vehicle",
+        "missing_evidence": [
+          "emergency marking",
+          "equipment outline",
+          "side profile"
+        ],
+        "occlusion_level": "heavy",
+        "context": "wide road next to waterfront buildings",
+        "local_position": {
+          "east_m": 0.0,
+          "north_m": 20.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "cloudy",
+      "time_of_day": "evening",
+      "expected_failure_mode": "truck_vs_rescue_vehicle"
+    },
+    "recommended_next_view": {
+      "view_type": "side_oblique",
+      "altitude_m": 100,
+      "reason": "Need emergency marking, equipment outline, side profile to resolve truck vs rescue_vehicle."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "truck_vs_rescue_vehicle"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000018",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 3,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 200,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": 18.0,
+          "z": 200.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 50,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": 18.0,
+          "z": 50.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 80,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 30.0,
+          "y": 18.0,
+          "z": 80.0,
+          "yaw_deg": -90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "person_0018",
+        "coarse_class": "person",
+        "fine_class": "pedestrian",
+        "candidate_fine_classes": [
+          "pedestrian",
+          "worker"
+        ],
+        "ambiguity_pair": "pedestrian_vs_worker",
+        "ambiguity_type": "pedestrian_vs_worker",
+        "missing_evidence": [
+          "safety vest",
+          "helmet",
+          "work zone context"
+        ],
+        "occlusion_level": "none",
+        "context": "construction or maintenance zone",
+        "local_position": {
+          "east_m": 12.0,
+          "north_m": -30.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "hazy",
+      "time_of_day": "morning",
+      "expected_failure_mode": "pedestrian_vs_worker"
+    },
+    "recommended_next_view": {
+      "view_type": "front_oblique",
+      "altitude_m": 50,
+      "reason": "Need safety vest, helmet, work zone context to resolve pedestrian vs worker."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "pedestrian_vs_worker"
+    ]
+  },
+  {
+    "scene_id": "marinecity_000019",
+    "area": "Busan Haeundae Marine City",
+    "scenario_type": "ambiguity_controlled",
+    "uav_count": 5,
+    "uavs": [
+      {
+        "uav_id": "UAV_1",
+        "altitude_m": 50,
+        "view_type": "nadir",
+        "camera_pose": {
+          "x": -60.0,
+          "y": 36.0,
+          "z": 50.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -90.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_2",
+        "altitude_m": 80,
+        "view_type": "front_oblique",
+        "camera_pose": {
+          "x": -15.0,
+          "y": 36.0,
+          "z": 80.0,
+          "yaw_deg": 0.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_3",
+        "altitude_m": 100,
+        "view_type": "left_oblique",
+        "camera_pose": {
+          "x": 30.0,
+          "y": 36.0,
+          "z": 100.0,
+          "yaw_deg": -90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_4",
+        "altitude_m": 150,
+        "view_type": "right_oblique",
+        "camera_pose": {
+          "x": 75.0,
+          "y": 36.0,
+          "z": 150.0,
+          "yaw_deg": 90.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      },
+      {
+        "uav_id": "UAV_5",
+        "altitude_m": 200,
+        "view_type": "rear_oblique",
+        "camera_pose": {
+          "x": 120.0,
+          "y": 36.0,
+          "z": 200.0,
+          "yaw_deg": 180.0,
+          "pitch_deg": -42.0,
+          "roll_deg": 0.0
+        }
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "marine_object_0019",
+        "coarse_class": "marine_object",
+        "fine_class": "debris",
+        "candidate_fine_classes": [
+          "small_boat",
+          "debris"
+        ],
+        "ambiguity_pair": "small_boat_vs_debris",
+        "ambiguity_type": "small_boat_vs_debris",
+        "missing_evidence": [
+          "object shape",
+          "wake pattern",
+          "nearby sea context"
+        ],
+        "occlusion_level": "partial",
+        "context": "waterfront and marina edge",
+        "local_position": {
+          "east_m": 24.0,
+          "north_m": -20.0,
+          "up_m": 0.0
+        }
+      }
+    ],
+    "conditions": {
+      "weather": "shadow-heavy",
+      "time_of_day": "noon",
+      "expected_failure_mode": "small_boat_vs_debris"
+    },
+    "recommended_next_view": {
+      "view_type": "left_oblique",
+      "altitude_m": 100,
+      "reason": "Need object shape, wake pattern, nearby sea context to resolve small_boat vs debris."
+    },
+    "paper_tags": [
+      "CoM3D-MarineCity",
+      "ambiguity-centric",
+      "multi-uav",
+      "small_boat_vs_debris"
+    ]
   }
 ]

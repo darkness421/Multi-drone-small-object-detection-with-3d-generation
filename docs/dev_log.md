@@ -15,3 +15,4 @@
 - 2026-07-05 ACCV 요약 제출을 목표로 `docs/timeline_to_accv.md`에 2026-05-01부터 2026-07-05까지의 주차별 일정을 정리했습니다.
 - `VisDrone` baseline 준비를 위해 `data/README.md`, `config/datasets/visdrone.yaml`, `scripts/prepare_visdrone.py`를 추가했습니다.
 - 프로젝트 스펙을 `CoM3D-ACE`로 갱신하고, scenario schema, MarineCity converter, depth lifting, evidence graph, ambiguity prompt, experiment runner skeleton을 추가했습니다.
+- `generate_scenarios.py`를 ambiguity-centric controlled scenario generator로 확장했습니다. `van_vs_ambulance`, `sedan_vs_pickup`, `truck_vs_rescue_vehicle`, `pedestrian_vs_worker`, `small_boat_vs_debris` hard case를 생성합니다.

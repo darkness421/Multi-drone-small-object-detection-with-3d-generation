@@ -13,6 +13,8 @@
   "properties": {
     "scene_id": { "type": "string" },
     "area": { "type": "string" },
+    "scenario_type": { "type": "string" },
+    "uav_count": { "type": "integer" },
     "uavs": {
       "type": "array",
       "items": {
@@ -49,10 +51,28 @@
           "object_id": { "type": "string" },
           "coarse_class": { "type": "string" },
           "fine_class": { "type": "string" },
+          "candidate_fine_classes": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
           "ambiguity_pair": { "type": "string" },
+          "ambiguity_type": { "type": "string" },
+          "missing_evidence": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
           "occlusion_level": {
             "type": "string",
             "enum": ["none", "partial", "heavy"]
+          },
+          "context": { "type": "string" },
+          "local_position": {
+            "type": "object",
+            "properties": {
+              "east_m": { "type": "number" },
+              "north_m": { "type": "number" },
+              "up_m": { "type": "number" }
+            }
           }
         }
       }
@@ -72,7 +92,10 @@
         "altitude_m": { "type": "number" },
         "reason": { "type": "string" }
       }
+    },
+    "paper_tags": {
+      "type": "array",
+      "items": { "type": "string" }
     }
   }
 }
-
