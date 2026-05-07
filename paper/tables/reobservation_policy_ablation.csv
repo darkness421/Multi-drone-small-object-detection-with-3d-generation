@@ -1,0 +1,7 @@
+﻿Method,Final Acc ↑,Ambiguity Res. ↑,Reobs Success ↑,ΔEntropy ↓,Δ3D Error ↓,Reobs ↓,Flight Cost ↓,Energy Cost ↓,Communication Cost ↓,VLM Calls ↓,Latency ↓
+No re-observation,,,,,,0,0,0,0,0,
+Random re-observation,,,,,,,,,,,
+Density-guided crop style,,,,,,,,,,,
+Greedy uncertainty,,,,,,,,,,,
+Greedy information gain,,,,,,,,,,,
+CoM3D-ACE policy,,,,,,,,,,,

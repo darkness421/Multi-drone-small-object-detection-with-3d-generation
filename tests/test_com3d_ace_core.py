@@ -13,6 +13,8 @@ from evidence.lifting import lift_bbox_center_to_world
 from evidence.uncertainty import class_entropy, max_softmax_confidence
 from graph import build_evidence_graph
 from policy import select_action
+from evaluation.policy_compare import empty_reobservation_table
+from evaluation.vlm_compare import empty_vlm_table
 from vlm import build_sage_prompt, parse_sage_response
 
 
@@ -76,7 +78,18 @@ class TestCom3DAceCore(unittest.TestCase):
         parsed = parse_sage_response('{"decision":"verified","predicted_class":"van","confidence":0.8}')
         self.assertEqual(parsed["decision"], "verified")
 
+    def test_reobservation_table_template(self) -> None:
+        rows = empty_reobservation_table()
+        self.assertEqual(len(rows), 6)
+        self.assertEqual(rows[0]["Method"], "No re-observation")
+        self.assertEqual(rows[-1]["Method"], "CoM3D-ACE policy")
+
+    def test_vlm_table_template(self) -> None:
+        rows = empty_vlm_table()
+        self.assertEqual(len(rows), 5)
+        self.assertEqual(rows[0]["Method"], "No VLM")
+        self.assertEqual(rows[-1]["Method"], "SAGE-triggered VLM")
+
 
 if __name__ == "__main__":
     unittest.main()
-

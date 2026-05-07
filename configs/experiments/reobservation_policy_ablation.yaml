@@ -1,0 +1,51 @@
+name: reobservation_policy_ablation
+goal: Show whether active re-observation improves performance with reasonable cost.
+
+dataset:
+  primary: CoM3D-UAV-Sim
+  subset: ambiguous_objects
+  split: test_unseen
+
+methods:
+  - name: No re-observation
+    description: No active revisit.
+  - name: Random re-observation
+    description: Random viewpoint candidate.
+  - name: Density-guided crop style
+    description: Reprocess only 2D dense regions using crop/refinement style.
+  - name: Greedy uncertainty
+    description: Reobserve objects with highest uncertainty.
+  - name: Greedy information gain
+    description: Select view by expected information gain only.
+  - name: CoM3D-ACE policy
+    description: Ambiguity + expected gain + cost + safety.
+
+metrics:
+  quality:
+    - Final accuracy gain
+    - Ambiguity resolution rate
+    - Re-observation success rate
+    - Delta entropy
+    - Delta 3D error
+  cost:
+    - Number of re-observations
+    - Flight cost
+    - Energy cost
+    - Communication cost
+    - VLM calls
+    - End-to-end latency
+
+table_columns:
+  - Method
+  - Final Acc ↑
+  - Ambiguity Res. ↑
+  - Reobs Success ↑
+  - ΔEntropy ↓
+  - Δ3D Error ↓
+  - Reobs ↓
+  - Flight Cost ↓
+  - Energy Cost ↓
+  - Communication Cost ↓
+  - VLM Calls ↓
+  - Latency ↓
+

@@ -1,0 +1,46 @@
+name: selective_vlm_ablation
+goal: Show that calling a VLM only for highly ambiguous objects gives a better performance/cost balance than always-on VLM use.
+
+dataset:
+  primary: CoM3D-UAV-Sim
+  subset: ambiguous_objects
+  optional_real_crops:
+    - VisDrone2019-DET
+    - UAVDT
+
+methods:
+  - name: No VLM
+    description: Detector plus 3D evidence graph only.
+  - name: Always-on VLM
+    description: Call VLM for every object crop.
+  - name: Random VLM
+    description: Call VLM for a random object subset.
+  - name: Uncertainty-triggered VLM
+    description: Call VLM when uncertainty exceeds a threshold.
+  - name: SAGE-triggered VLM
+    description: Call VLM using ambiguity score, graph summary, and SAGE prompt.
+
+metrics:
+  quality:
+    - Ambiguous subset accuracy
+    - Correction rate
+    - Over-correction rate
+  cost:
+    - VLM call count
+    - Average tokens
+    - Average latency
+  stability:
+    - Explanation usefulness
+    - JSON parse success rate
+
+table_columns:
+  - Method
+  - Ambiguous Acc ↑
+  - Correction Rate ↑
+  - Over-correction ↓
+  - VLM Calls ↓
+  - Avg Tokens ↓
+  - Latency ↓
+  - Explanation Usefulness ↑
+  - JSON Parse Success ↑
+

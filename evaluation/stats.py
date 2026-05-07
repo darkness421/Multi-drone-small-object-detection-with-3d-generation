@@ -44,11 +44,15 @@ def wilcoxon_signed_rank(a: Sequence[float], b: Sequence[float]) -> dict[str, fl
         return {"statistic": 0.0, "pvalue": 1.0}
 
 
-def write_metrics_csv(rows: Sequence[Mapping[str, object]], path: str | Path) -> None:
+def write_metrics_csv(
+    rows: Sequence[Mapping[str, object]],
+    path: str | Path,
+    fieldnames: Sequence[str] | None = None,
+) -> None:
     Path(path).parent.mkdir(parents=True, exist_ok=True)
-    fieldnames = sorted({key for row in rows for key in row.keys()})
-    with Path(path).open("w", encoding="utf-8", newline="") as f:
+    if fieldnames is None:
+        fieldnames = list(rows[0].keys()) if rows else []
+    with Path(path).open("w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
-

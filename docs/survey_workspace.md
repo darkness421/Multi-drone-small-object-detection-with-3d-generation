@@ -183,8 +183,83 @@ Second, we build a synchronized multi-UAV simulation benchmark in Isaac Sim to e
 
 ## 4. Experiment Ideas
 
-- 아직 확정하지 않습니다.
-- survey가 끝난 뒤 최종 제안 시스템에 맞춰 다시 설계합니다.
+### 4.1 Re-observation Policy Ablation
+
+목적: 재관측이 실제로 성능을 올리고, 비용 대비 효과가 있는지 보여준다.
+
+비교 방법:
+
+| Method | 설명 |
+| --- | --- |
+| No re-observation | 재관측 없음 |
+| Random re-observation | 랜덤 viewpoint |
+| Density-guided crop style | 2D dense region만 다시 crop 처리 |
+| Greedy uncertainty | uncertainty 높은 object 재관측 |
+| Greedy information gain | expected information gain 기준 |
+| CoM3D-ACE policy | ambiguity + gain + cost + safety |
+
+지표:
+
+| 지표 | 의미 |
+| --- | --- |
+| Final accuracy gain | 재관측 전후 정확도 향상 |
+| Ambiguity resolution rate | ambiguity 해결률 |
+| Re-observation success rate | 재촬영 후 confidence 개선 |
+| ΔEntropy | class entropy 감소 |
+| Δ3D error | 3D 위치 오차 감소 |
+| Number of re-observations | 요청 횟수 |
+| Flight cost | 이동 거리 / 시간 |
+| Energy cost | battery proxy |
+| Communication cost | crop/frame 전송량 |
+| VLM calls | VLM 호출 횟수 |
+| End-to-end latency | 전체 시간 |
+
+핵심 표:
+
+| Method | Final Acc ↑ | Ambiguity Res. ↑ | 3D Error ↓ | Reobs ↓ | Cost ↓ | VLM Calls ↓ |
+| --- | --- | --- | --- | --- | --- | --- |
+| No reobs |  |  |  | 0 | 0 | 0 |
+| Random |  |  |  |  |  |  |
+| Density crop |  |  |  |  |  |  |
+| Uncertainty only |  |  |  |  |  |  |
+| Info gain only |  |  |  |  |  |  |
+| Ours |  |  |  |  |  |  |
+
+### 4.2 Selective VLM Verification Ablation
+
+목적: 모든 객체에 VLM을 쓰는 것이 아니라, ambiguity가 높은 경우에만 쓰는 것이 성능/비용 균형이 좋다는 점을 보여준다.
+
+비교 방법:
+
+| Method | 설명 |
+| --- | --- |
+| No VLM | detector + graph만 |
+| Always-on VLM | 모든 object crop에 VLM |
+| Random VLM | random subset |
+| Uncertainty-triggered VLM | uncertainty threshold |
+| SAGE-triggered VLM | ambiguity + graph summary + SAGE prompt |
+
+지표:
+
+| 지표 | 의미 |
+| --- | --- |
+| Ambiguous subset accuracy | 어려운 객체 정확도 |
+| Correction rate | 틀린 예측을 고친 비율 |
+| Over-correction rate | 맞는 예측을 틀리게 바꾼 비율 |
+| VLM call count | 비용 |
+| Average tokens / latency | 추론 비용 |
+| Explanation usefulness | 정성 평가 |
+| JSON parse success rate | 시스템 안정성 |
+
+핵심 표:
+
+| Method | Ambiguous Acc ↑ | Correction ↑ | Over-correction ↓ | VLM Calls ↓ | Tokens ↓ | Latency ↓ | JSON Parse ↑ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| No VLM |  |  |  | 0 | 0 |  |  |
+| Always-on VLM |  |  |  |  |  |  |  |
+| Random VLM |  |  |  |  |  |  |  |
+| Uncertainty-triggered VLM |  |  |  |  |  |  |  |
+| SAGE-triggered VLM |  |  |  |  |  |  |  |
 
 ## 5. Decisions To Make Later
 

@@ -1,0 +1,6 @@
+﻿Method,Ambiguous Acc ↑,Correction Rate ↑,Over-correction ↓,VLM Calls ↓,Avg Tokens ↓,Latency ↓,Explanation Usefulness ↑,JSON Parse Success ↑
+No VLM,,,,0,0,,,
+Always-on VLM,,,,,,,,
+Random VLM,,,,,,,,
+Uncertainty-triggered VLM,,,,,,,,
+SAGE-triggered VLM,,,,,,,,
