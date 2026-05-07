@@ -29,11 +29,6 @@ CARDS = (
     ),
     NotionCard(
         section="Proposed Method",
-        title="Idea Bank",
-        source=ROOT / "docs" / "idea_bank.md",
-    ),
-    NotionCard(
-        section="Proposed Method",
         title="Ambiguity-centric 3D object detection pipeline",
         source=ROOT / "docs" / "method_pipeline_card.md",
     ),
@@ -64,18 +59,18 @@ CARDS = (
     ),
     NotionCard(
         section="Experiment Result",
-        title="Experiment Results",
-        source=ROOT / "docs" / "experiment_results.md",
-    ),
-    NotionCard(
-        section="Experiment Result",
         title="실험 결과 템플릿",
         source=ROOT / "docs" / "experiment_result_template_card.md",
     ),
     NotionCard(
         section="환경 및 구현 과정",
-        title="Development Log",
-        source=ROOT / "docs" / "dev_log.md",
+        title="PROJECT_PLAN",
+        source=ROOT / "PROJECT_PLAN.md",
+    ),
+    NotionCard(
+        section="환경 및 구현 과정",
+        title="4월 개발 로그",
+        source=ROOT / "docs" / "april_2026_dev_log.md",
     ),
     NotionCard(
         section="환경 및 구현 과정",
@@ -86,11 +81,6 @@ CARDS = (
         section="환경 및 구현 과정",
         title="환경 및 구현 과정 기록 템플릿",
         source=ROOT / "docs" / "implementation_process_template.md",
-    ),
-    NotionCard(
-        section="환경 및 구현 과정",
-        title="Timeline to ACCV",
-        source=ROOT / "docs" / "timeline_to_accv.md",
     ),
 )
 
@@ -123,10 +113,13 @@ def card_markdown(card: NotionCard) -> str:
 
 def export_cards() -> None:
     EXPORT_DIR.mkdir(exist_ok=True)
+    for old_file in EXPORT_DIR.glob("*.md"):
+        old_file.unlink()
+
     index_lines = [
         "# Notion 붙여넣기용 Export",
         "",
-        "아래 파일들은 Notion 카드에 그대로 붙여넣기 좋게 정리된 Markdown입니다.",
+        "아래 파일만 Notion 보드에 붙여넣는 것을 추천합니다.",
         "",
     ]
 

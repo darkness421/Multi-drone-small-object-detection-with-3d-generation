@@ -27,3 +27,4 @@
 - `pipelines/run_dummy_evidence_pipeline.py`를 추가해 dummy MarineCity annotation에서 COCO/evidence, synthetic 3D lifting, evidence graph, summary JSON을 한 번에 생성하도록 연결했습니다.
 - Notion 보드 구조에 맞춰 `method_pipeline_card.md`, `may_2026_dev_log.md`, `experiment_result_template_card.md`를 추가했습니다.
 - Survey 이후 최종 시스템 수정에 대비해 `final_system_figure_template.md`, `module_figures_formulas_template.md`, `experiment_design_matrix.md`, `implementation_process_template.md`를 추가했습니다.
+- Notion export를 보드에 바로 넣을 핵심 카드 중심으로 정리했습니다. 중복되는 큰 로그/빈 결과/보조 아이디어 export는 제거하고, `4월 개발 로그`, `5월 개발 로그`, `PROJECT_PLAN` 중심으로 정리했습니다.
