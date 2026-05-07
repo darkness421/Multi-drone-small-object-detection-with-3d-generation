@@ -35,3 +35,4 @@
 - 다음 작업 후보는 `MarineCity annotation → COCO/evidence → 3D lifting placeholder → evidence graph`를 하나의 pipeline script로 연결하는 것입니다.
 - `pipelines/run_dummy_evidence_pipeline.py`를 추가해 dummy MarineCity annotation에서 COCO/evidence, synthetic 3D lifting, evidence graph, summary JSON을 한 번에 생성하도록 연결했습니다.
 - Notion 보드 구조에 맞춰 `method_pipeline_card.md`, `may_2026_dev_log.md`, `experiment_result_template_card.md`를 추가했습니다.
+- Survey 이후 최종 시스템 수정에 대비해 `final_system_figure_template.md`, `module_figures_formulas_template.md`, `experiment_design_matrix.md`, `implementation_process_template.md`를 추가했습니다.

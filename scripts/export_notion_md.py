@@ -43,9 +43,24 @@ CARDS = (
         source=ROOT / "NOTION_SYSTEM_SPEC.md",
     ),
     NotionCard(
+        section="Proposed Method",
+        title="최종 제안 시스템 그림 수정 템플릿",
+        source=ROOT / "docs" / "final_system_figure_template.md",
+    ),
+    NotionCard(
+        section="Proposed Method",
+        title="모듈별 그림 및 수식 정리 템플릿",
+        source=ROOT / "docs" / "module_figures_formulas_template.md",
+    ),
+    NotionCard(
         section="Experiment Plan",
         title="Dataset Plan",
         source=ROOT / "docs" / "dataset_plan.md",
+    ),
+    NotionCard(
+        section="Experiment Plan",
+        title="Experiment Design Matrix",
+        source=ROOT / "docs" / "experiment_design_matrix.md",
     ),
     NotionCard(
         section="Experiment Result",
@@ -66,6 +81,11 @@ CARDS = (
         section="환경 및 구현 과정",
         title="5월 개발 로그",
         source=ROOT / "docs" / "may_2026_dev_log.md",
+    ),
+    NotionCard(
+        section="환경 및 구현 과정",
+        title="환경 및 구현 과정 기록 템플릿",
+        source=ROOT / "docs" / "implementation_process_template.md",
     ),
     NotionCard(
         section="환경 및 구현 과정",
