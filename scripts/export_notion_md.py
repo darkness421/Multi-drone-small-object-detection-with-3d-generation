@@ -69,16 +69,6 @@ CARDS = (
     ),
     NotionCard(
         section="환경 및 구현 과정",
-        title="4월 개발 로그",
-        source=ROOT / "docs" / "april_2026_dev_log.md",
-    ),
-    NotionCard(
-        section="환경 및 구현 과정",
-        title="5월 개발 로그",
-        source=ROOT / "docs" / "may_2026_dev_log.md",
-    ),
-    NotionCard(
-        section="환경 및 구현 과정",
         title="환경 및 구현 과정 기록 템플릿",
         source=ROOT / "docs" / "implementation_process_template.md",
     ),

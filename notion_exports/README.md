@@ -11,6 +11,4 @@
 - `Experiment Plan`: [Experiment Design Matrix](Experiment_Plan_Experiment_Design_Matrix.md)
 - `Experiment Result`: [실험 결과 템플릿](Experiment_Result_실험_결과_템플릿.md)
 - `환경 및 구현 과정`: [PROJECT_PLAN](환경_및_구현_과정_PROJECT_PLAN.md)
-- `환경 및 구현 과정`: [4월 개발 로그](환경_및_구현_과정_4월_개발_로그.md)
-- `환경 및 구현 과정`: [5월 개발 로그](환경_및_구현_과정_5월_개발_로그.md)
 - `환경 및 구현 과정`: [환경 및 구현 과정 기록 템플릿](환경_및_구현_과정_환경_및_구현_과정_기록_템플릿.md)

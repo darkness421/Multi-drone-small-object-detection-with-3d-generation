@@ -58,7 +58,7 @@
 - `VisDrone` annotation을 `YOLO format`으로 변환하는 스크립트를 준비합니다.
 - `Ultralytics YOLO` baseline 학습 환경을 설정합니다.
 - 첫 dry-run 학습 또는 작은 subset 학습을 실행합니다.
-- 실패 로그와 환경 문제는 `docs/dev_log.md`에 기록합니다.
+- 실패 로그와 환경 문제는 `docs/implementation_process_template.md` 형식으로 기록합니다.
 
 개발 산출물:
 
@@ -392,7 +392,7 @@
 
 ## 매일 최소 기록
 
-매일 끝날 때 아래 4가지를 `docs/dev_log.md` 또는 해당 문서에 짧게 남깁니다.
+매일 끝날 때 아래 4가지를 해당 작업 문서나 `docs/implementation_process_template.md` 형식에 맞춰 짧게 남깁니다.
 
 - 오늘 한 일:
 - 막힌 점:

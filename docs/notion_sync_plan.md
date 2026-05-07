@@ -24,10 +24,10 @@
 | Notion Section | Local File | 목적 |
 | --- | --- | --- |
 | Related Research | `docs/paper_plan.md` | paper target, related research note, survey link |
-| Proposed Method | `docs/idea_bank.md` | method idea와 architecture note |
+| Proposed Method | `docs/method_pipeline_card.md` | method idea와 architecture note |
 | Experiment Plan | `docs/dataset_plan.md` | dataset 선정, class mapping, experiment design |
 | Experiment Result | `docs/experiment_results.md` | 실험 설정, metric, output, 결과 해석 |
-| 환경 및 구현 과정 | `docs/dev_log.md` | setup history, implementation note, environment decision |
+| 환경 및 구현 과정 | `docs/implementation_process_template.md` | setup history, implementation note, environment decision |
 
 ## 추천 기록 흐름
 
