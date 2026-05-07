@@ -1,0 +1,41 @@
+name: public_uav_frontend_benchmarks
+role: always_on_evidence_generator_validation
+
+minimum:
+  - VisDrone2019-DET
+  - UAVDT
+
+strong:
+  - VisDrone2019-DET
+  - UAVDT
+  - AI-TOD
+
+extended:
+  - VisDrone2019-DET
+  - UAVDT
+  - AI-TOD
+  - HIT-UAV
+
+datasets:
+  VisDrone2019-DET:
+    purpose: UAV small/dense object detection main benchmark
+    priority: required
+    expected_metrics: [AP, AP50, AP75, APsmall, recall, FPS]
+  UAVDT:
+    purpose: UAV vehicle detection and video-domain generalization
+    priority: required_or_strongly_recommended
+    expected_metrics: [AP, AP50, AP75, recall, association_readiness]
+  AI-TOD:
+    purpose: tiny object stress test
+    priority: recommended
+    expected_metrics: [APtiny, APsmall, recall]
+  TinyPerson:
+    purpose: extreme tiny person detection
+    priority: optional
+  HIT-UAV:
+    purpose: infrared and low-light UAV ambiguity extension
+    priority: optional_supplementary
+  DroneVehicle:
+    purpose: RGB-IR vehicle modality extension
+    priority: optional
+

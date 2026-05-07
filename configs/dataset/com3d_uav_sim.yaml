@@ -1,0 +1,96 @@
+name: CoM3D-UAV-Sim
+role: full_system_benchmark
+simulator: Isaac Sim
+optional_city_streaming:
+  cesium: true
+  osm: true
+  custom_usd_assets: true
+
+scene:
+  style: Haeundae-like coastal urban scene
+  split_by_scene: true
+  splits:
+    train: 0.60
+    val: 0.20
+    test_seen: 0.10
+    test_unseen: 0.10
+
+sensors:
+  rgb: true
+  depth: true
+  semantic_mask: true
+  instance_mask: true
+  camera_pose: true
+  uav_pose: true
+
+uav:
+  counts: [2, 3, 4]
+  altitudes_m: [30, 60, 100, 150]
+  view_types:
+    - nadir
+    - oblique
+    - side-view
+    - rear-view
+    - close-up
+
+conditions:
+  lighting:
+    - clear
+    - shadow
+    - sunset
+    - night
+    - fog-like degradation
+  object_density:
+    - sparse
+    - medium
+    - dense
+  occlusion:
+    - none
+    - partial
+    - heavy
+
+classes:
+  coarse:
+    - car
+    - van
+    - truck
+    - bus
+    - pedestrian
+    - small boat
+    - debris
+    - traffic cone
+  ambiguity_pairs:
+    - [sedan, van]
+    - [van, pickup]
+    - [pickup, delivery truck]
+    - [small boat, buoy]
+    - [pedestrian, pole]
+    - [car, occluded truck]
+
+annotations:
+  frame_fields:
+    - image_id
+    - uav_id
+    - timestamp
+    - camera_intrinsic
+    - camera_extrinsic
+    - uav_pose
+  object_fields:
+    - object_id
+    - class
+    - bbox_2d
+    - mask
+    - bbox_3d
+    - visibility
+    - occlusion_level
+    - view_angle
+    - pixel_size
+    - distance
+  policy_fields:
+    - ambiguity_reason
+    - recommended_next_view
+    - best_next_view_oracle
+    - reobservation_action
+    - travel_cost
+    - achieved_gain
+
