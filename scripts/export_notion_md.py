@@ -34,6 +34,11 @@ CARDS = (
     ),
     NotionCard(
         section="Proposed Method",
+        title="Ambiguity-centric 3D object detection pipeline",
+        source=ROOT / "docs" / "method_pipeline_card.md",
+    ),
+    NotionCard(
+        section="Proposed Method",
         title="CoM3D-ACE System Specification",
         source=ROOT / "NOTION_SYSTEM_SPEC.md",
     ),
@@ -48,9 +53,19 @@ CARDS = (
         source=ROOT / "docs" / "experiment_results.md",
     ),
     NotionCard(
+        section="Experiment Result",
+        title="실험 결과 템플릿",
+        source=ROOT / "docs" / "experiment_result_template_card.md",
+    ),
+    NotionCard(
         section="환경 및 구현 과정",
         title="Development Log",
         source=ROOT / "docs" / "dev_log.md",
+    ),
+    NotionCard(
+        section="환경 및 구현 과정",
+        title="5월 개발 로그",
+        source=ROOT / "docs" / "may_2026_dev_log.md",
     ),
     NotionCard(
         section="환경 및 구현 과정",
