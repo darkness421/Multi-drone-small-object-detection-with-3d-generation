@@ -24,53 +24,8 @@ class NotionCard:
 CARDS = (
     NotionCard(
         section="Related Research",
-        title="Paper Plan",
-        source=ROOT / "docs" / "paper_plan.md",
-    ),
-    NotionCard(
-        section="Proposed Method",
-        title="Ambiguity-centric 3D object detection pipeline",
-        source=ROOT / "docs" / "method_pipeline_card.md",
-    ),
-    NotionCard(
-        section="Proposed Method",
-        title="CoM3D-ACE System Specification",
-        source=ROOT / "NOTION_SYSTEM_SPEC.md",
-    ),
-    NotionCard(
-        section="Proposed Method",
-        title="최종 제안 시스템 그림 수정 템플릿",
-        source=ROOT / "docs" / "final_system_figure_template.md",
-    ),
-    NotionCard(
-        section="Proposed Method",
-        title="모듈별 그림 및 수식 정리 템플릿",
-        source=ROOT / "docs" / "module_figures_formulas_template.md",
-    ),
-    NotionCard(
-        section="Experiment Plan",
-        title="Dataset Plan",
-        source=ROOT / "docs" / "dataset_plan.md",
-    ),
-    NotionCard(
-        section="Experiment Plan",
-        title="Experiment Design Matrix",
-        source=ROOT / "docs" / "experiment_design_matrix.md",
-    ),
-    NotionCard(
-        section="Experiment Result",
-        title="실험 결과 템플릿",
-        source=ROOT / "docs" / "experiment_result_template_card.md",
-    ),
-    NotionCard(
-        section="환경 및 구현 과정",
-        title="PROJECT_PLAN",
-        source=ROOT / "PROJECT_PLAN.md",
-    ),
-    NotionCard(
-        section="환경 및 구현 과정",
-        title="환경 및 구현 과정 기록 템플릿",
-        source=ROOT / "docs" / "implementation_process_template.md",
+        title="Survey Workspace",
+        source=ROOT / "docs" / "survey_workspace.md",
     ),
 )
 
@@ -109,7 +64,7 @@ def export_cards() -> None:
     index_lines = [
         "# Notion 붙여넣기용 Export",
         "",
-        "아래 파일만 Notion 보드에 붙여넣는 것을 추천합니다.",
+        "서베이 단계에서는 아래 파일 하나만 Notion에 붙여넣는 것을 추천합니다.",
         "",
     ]
 
