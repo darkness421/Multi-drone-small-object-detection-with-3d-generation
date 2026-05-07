@@ -17,3 +17,4 @@
 - 프로젝트 스펙을 `CoM3D-ACE`로 갱신하고, scenario schema, MarineCity converter, depth lifting, evidence graph, ambiguity prompt, experiment runner skeleton을 추가했습니다.
 - `generate_scenarios.py`를 ambiguity-centric controlled scenario generator로 확장했습니다. `van_vs_ambulance`, `sedan_vs_pickup`, `truck_vs_rescue_vehicle`, `pedestrian_vs_worker`, `small_boat_vs_debris` hard case를 생성합니다.
 - `datasets/marinecity/annotation_schema.json`을 추가하고 `marinecity_to_coco.py`에 standard-library 기반 validation과 `--validate-only` 옵션을 추가했습니다.
+- scenario generation, MarineCity conversion, depth lifting, dummy experiment metrics를 검증하는 `unittest` 기반 최소 테스트를 추가했습니다.
