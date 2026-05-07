@@ -24,3 +24,4 @@
 - 오늘부터의 작업은 이전 scaffold 기록과 분리해서 이 섹션에 누적하기로 했습니다.
 - 현재까지의 기록은 `docs/dev_log.md`와 `notion_exports/환경_및_구현_과정_Development_Log.md`에 Notion 붙여넣기용으로 저장되어 있습니다.
 - 다음 작업 후보는 `MarineCity annotation → COCO/evidence → 3D lifting placeholder → evidence graph`를 하나의 pipeline script로 연결하는 것입니다.
+- `pipelines/run_dummy_evidence_pipeline.py`를 추가해 dummy MarineCity annotation에서 COCO/evidence, synthetic 3D lifting, evidence graph, summary JSON을 한 번에 생성하도록 연결했습니다.

@@ -82,5 +82,6 @@ notion_exports/       Notion에 붙여넣기 좋은 Markdown export
 python -m unittest discover tests
 python sim\scenarios\generate_scenarios.py --count 20
 python datasets\converters\marinecity_to_coco.py --input datasets\converters\dummy_marinecity_input.json --validate-only
+python pipelines\run_dummy_evidence_pipeline.py
 python experiments\run_exp01_single_uav.py --dummy
 ```
