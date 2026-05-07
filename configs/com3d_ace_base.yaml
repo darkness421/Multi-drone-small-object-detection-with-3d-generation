@@ -1,0 +1,37 @@
+project:
+  name: CoM3D-ACE
+  seed: 42
+
+detector:
+  family: yolo11
+  model: yolo11n.pt
+  image_size: 1280
+  confidence_threshold: 0.25
+
+alignment:
+  association_threshold: 2.0
+  lambda_app: 1.0
+  lambda_geo: 1.0
+  lambda_cls: 1.0
+  lambda_res: 0.5
+  lambda_time: 0.2
+  lambda_unc: 0.5
+
+ambiguity:
+  low_threshold: 0.35
+  high_threshold: 0.70
+
+policy:
+  lambda_cost: 0.2
+  lambda_risk: 1.0
+
+vlm:
+  enabled: false
+  prompt: SAGE
+  call_policy: selective
+
+outputs:
+  root: outputs
+  metrics_dir: outputs/results
+  tables_dir: paper/tables
+

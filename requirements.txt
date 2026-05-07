@@ -1,0 +1,7 @@
+numpy
+PyYAML
+torch
+ultralytics
+scipy
+scikit-learn
+

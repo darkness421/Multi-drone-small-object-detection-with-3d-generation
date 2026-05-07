@@ -53,3 +53,11 @@
 - multi-UAV fusion 방식
 - 3D reasoning 사용 범위
 - active re-observation 실험 여부
+
+## 6. Current Implementation Direction
+
+- Main codebase direction: `3D evidence graph + ambiguity diagnosis + re-observation + selective SAGE VLM`
+- Detector role: always-on front-end baseline, not the main novelty
+- Public datasets: `VisDrone`, `UAVDT`, `AI-TOD`
+- Full system validation: `Isaac Sim + Cesium` synthetic multi-UAV episodes
+- Core modules now scaffolded: `evidence`, `alignment`, `graph`, `ambiguity`, `policy`, `vlm`, `evaluation`, `simulation`

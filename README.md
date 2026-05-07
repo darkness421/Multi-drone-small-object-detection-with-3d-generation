@@ -10,6 +10,22 @@
 - `notion_exports/`: Notion에 붙여넣을 최소 Markdown export
 - 코드 scaffold: 나중에 확정된 시스템에 맞춰 수정할 초기 구현 뼈대
 
+## 현재 코드 모듈
+
+```text
+data/converters/     VisDrone, UAVDT, AI-TOD, CoM3D JSON conversion
+detectors/           YOLO/RT-DETR/D-FINE wrapper interfaces
+evidence/            EvidenceToken, uncertainty, 2D-to-3D lifting
+alignment/           cross-view / cross-resolution cost and matching
+graph/               3D evidence graph construction
+ambiguity/           ambiguity score and reason diagnosis
+policy/              re-observation candidate selection
+vlm/                 SAGE prompt builder and JSON parser
+simulation/          Isaac/Cesium episode manifest helpers
+evaluation/          metrics and statistical utilities
+scripts/             experiment entrypoint shell scripts
+```
+
 ## 나중에 다시 만들 것
 
 - 최종 제안 시스템 그림

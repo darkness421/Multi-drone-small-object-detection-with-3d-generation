@@ -1,0 +1,10 @@
+[project]
+name = "com3d-ace"
+version = "0.1.0"
+description = "Ambiguity-centric 3D evidence completion for cooperative multi-UAV small object detection."
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+

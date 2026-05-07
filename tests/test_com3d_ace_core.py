@@ -1,0 +1,82 @@
+"""Smoke tests for the CoM3D-ACE research scaffold."""
+
+from __future__ import annotations
+
+import unittest
+
+import numpy as np
+
+from alignment.costs import pairwise_evidence_cost, reliability_weight
+from ambiguity import diagnose_ambiguity
+from evidence import EvidenceToken
+from evidence.lifting import lift_bbox_center_to_world
+from evidence.uncertainty import class_entropy, max_softmax_confidence
+from graph import build_evidence_graph
+from policy import select_action
+from vlm import build_sage_prompt, parse_sage_response
+
+
+def make_token(token_id: str, uav_id: str, logits: list[float], center: list[float]) -> EvidenceToken:
+    return EvidenceToken(
+        token_id=token_id,
+        image_id=f"{uav_id}_frame",
+        uav_id=uav_id,
+        timestamp=1.0,
+        bbox_2d=[10.0, 20.0, 16.0, 12.0],
+        class_logits=logits,
+        confidence=max_softmax_confidence(logits),
+        uncertainty=class_entropy(logits),
+        crop_feature=[0.1, 0.2, 0.3],
+        resolution_level="p3",
+        camera_intrinsic=[[100.0, 0.0, 32.0], [0.0, 100.0, 32.0], [0.0, 0.0, 1.0]],
+        camera_extrinsic=np.eye(4).tolist(),
+        uav_pose=center,
+        depth_value=10.0,
+        metadata={"center_3d": center},
+    )
+
+
+class TestCom3DAceCore(unittest.TestCase):
+    def test_uncertainty(self) -> None:
+        logits = [4.0, 1.0, 0.0]
+        self.assertGreater(max_softmax_confidence(logits), 0.8)
+        self.assertLess(class_entropy(logits), 0.5)
+
+    def test_lifting(self) -> None:
+        depth = np.full((64, 64), 10.0)
+        result = lift_bbox_center_to_world(
+            [22.0, 22.0, 20.0, 20.0],
+            depth,
+            [[100.0, 0.0, 32.0], [0.0, 100.0, 32.0], [0.0, 0.0, 1.0]],
+            np.eye(4).tolist(),
+        )
+        self.assertEqual(len(result["center_3d"]), 3)
+        self.assertAlmostEqual(result["center_3d"][2], 10.0)
+
+    def test_alignment_graph_policy_vlm(self) -> None:
+        t1 = make_token("t1", "uav1", [3.0, 0.1], [0.0, 0.0, 10.0])
+        t2 = make_token("t2", "uav2", [2.8, 0.2], [0.1, 0.0, 10.1])
+        self.assertLess(pairwise_evidence_cost(t1, t2), 2.0)
+        self.assertGreater(reliability_weight(t1), 0.0)
+
+        graph = build_evidence_graph([t1, t2], association_threshold=2.0)
+        self.assertEqual(len(graph.objects), 1)
+        diagnosis = diagnose_ambiguity(graph.objects[0], cross_view_disagreement=0.1)
+        self.assertIn(diagnosis.level, {"low", "medium", "high"})
+        action = select_action(diagnosis)
+        self.assertIn(action["action"], {"finalize", "VLM verify", "active re-observe"})
+
+        prompt = build_sage_prompt(
+            scene_summary="urban road",
+            graph_summary=graph.to_dict(),
+            ambiguity_reasons=diagnosis.reasons,
+            candidate_classes=["van", "truck"],
+        )
+        self.assertIn("SAGE", prompt)
+        parsed = parse_sage_response('{"decision":"verified","predicted_class":"van","confidence":0.8}')
+        self.assertEqual(parsed["decision"], "verified")
+
+
+if __name__ == "__main__":
+    unittest.main()
+
