@@ -18,3 +18,9 @@
 - `generate_scenarios.py`를 ambiguity-centric controlled scenario generator로 확장했습니다. `van_vs_ambulance`, `sedan_vs_pickup`, `truck_vs_rescue_vehicle`, `pedestrian_vs_worker`, `small_boat_vs_debris` hard case를 생성합니다.
 - `datasets/marinecity/annotation_schema.json`을 추가하고 `marinecity_to_coco.py`에 standard-library 기반 validation과 `--validate-only` 옵션을 추가했습니다.
 - scenario generation, MarineCity conversion, depth lifting, dummy experiment metrics를 검증하는 `unittest` 기반 최소 테스트를 추가했습니다.
+
+## 2026-05-07
+
+- 오늘부터의 작업은 이전 scaffold 기록과 분리해서 이 섹션에 누적하기로 했습니다.
+- 현재까지의 기록은 `docs/dev_log.md`와 `notion_exports/환경_및_구현_과정_Development_Log.md`에 Notion 붙여넣기용으로 저장되어 있습니다.
+- 다음 작업 후보는 `MarineCity annotation → COCO/evidence → 3D lifting placeholder → evidence graph`를 하나의 pipeline script로 연결하는 것입니다.
