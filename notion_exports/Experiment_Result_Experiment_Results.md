@@ -3,7 +3,7 @@
 - Notion Section: `Experiment Result`
 - Status: `Not Started`
 - Source: `docs/experiment_results.md`
-- Export Date: `2026-05-04`
+- Export Date: `2026-05-07`
 
 ---
 

@@ -3,7 +3,7 @@
 - Notion Section: `Proposed Method`
 - Status: `Not Started`
 - Source: `NOTION_SYSTEM_SPEC.md`
-- Export Date: `2026-05-04`
+- Export Date: `2026-05-07`
 
 ---
 

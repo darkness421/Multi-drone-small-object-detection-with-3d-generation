@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CoM3D-MarineCity Multi-View Object Annotation",
+  "type": "object",
+  "required": [
+    "scene_id",
+    "timestamp",
+    "uav_group",
+    "object_id",
+    "coarse_class",
+    "fine_class",
+    "ambiguity_type",
+    "missing_evidence",
+    "recommended_next_view",
+    "views",
+    "location_3d",
+    "occlusion_level",
+    "difficulty"
+  ],
+  "properties": {
+    "scene_id": { "type": "string" },
+    "timestamp": { "type": "number" },
+    "uav_group": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "object_id": { "type": "string" },
+    "coarse_class": { "type": "string" },
+    "fine_class": {
+      "type": "string",
+      "enum": [
+        "sedan",
+        "pickup",
+        "van",
+        "ambulance",
+        "police_car",
+        "truck",
+        "rescue_vehicle",
+        "pedestrian",
+        "worker",
+        "small_boat",
+        "debris"
+      ]
+    },
+    "ambiguity_type": { "type": "string" },
+    "missing_evidence": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "recommended_next_view": {
+      "type": "object",
+      "required": ["view_type", "altitude", "reason"],
+      "properties": {
+        "view_type": { "type": "string" },
+        "altitude": { "type": "number" },
+        "reason": { "type": "string" }
+      }
+    },
+    "views": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "uav_id",
+          "view_type",
+          "altitude",
+          "image_path",
+          "depth_path",
+          "bbox_2d",
+          "camera_pose",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "uav_id": { "type": "string" },
+          "view_type": { "type": "string" },
+          "altitude": { "type": "number" },
+          "image_path": { "type": "string" },
+          "depth_path": { "type": "string" },
+          "bbox_2d": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": { "type": "number" }
+          },
+          "camera_pose": { "type": "string" },
+          "width": { "type": "integer" },
+          "height": { "type": "integer" }
+        }
+      }
+    },
+    "location_3d": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "type": "number" }
+    },
+    "occlusion_level": {
+      "type": "string",
+      "enum": ["none", "partial", "heavy"]
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["easy", "medium", "hard"]
+    }
+  }
+}
+
