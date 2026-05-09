@@ -30,12 +30,14 @@ scripts\18_eval_yolo_visible_terminal.bat outputs\detectors\...\best.pt
 
 ```bat
 scripts\16_make_visible_smoke_sample.bat
+scripts\19_preview_yolo_dataset.bat configs\detector\visdrone_yolo_data.yaml train
 scripts\15_run_visible_yolo_preview.bat data\sample_images yolo11n.pt
 ```
 
 출력:
 
 - `outputs\smoke\visible_sample\preview\index.html`
+- `outputs\preview\yolo_dataset\index.html`
 - `outputs\evidence\tokens.jsonl`
 - `outputs\crops\`
 - `outputs\preview\evidence_tokens\index.html`

@@ -67,6 +67,7 @@ Detector 테스트 결과를 눈으로 확인할 때:
 
 ```bat
 scripts\16_make_visible_smoke_sample.bat
+scripts\19_preview_yolo_dataset.bat configs\detector\visdrone_yolo_data.yaml train
 scripts\15_run_visible_yolo_preview.bat data\sample_images yolo11n.pt
 ```
 

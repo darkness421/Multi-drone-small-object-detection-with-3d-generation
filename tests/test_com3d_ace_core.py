@@ -31,6 +31,7 @@ from runtime.outputs import prepare_run_dir
 from scripts.check_dataset_readiness import inspect_dataset
 from scripts.check_training_readiness import inspect_data_yaml
 from scripts.make_visible_smoke_sample import create_visible_smoke_sample
+from scripts.preview_yolo_dataset import render_yolo_dataset_preview
 from scripts.run_core_pipeline import run_pipeline
 from scripts.run_detector_baselines import write_plan
 from simulation.isaac.export_rgb_depth_pose import build_dry_run_manifest
@@ -288,6 +289,36 @@ class TestCom3DAceCore(unittest.TestCase):
             self.assertTrue(result.preview_html.exists())
             self.assertTrue(result.summary_csv.exists())
             self.assertGreater(len(list(result.image_dir.glob("*.svg"))), 0)
+
+    def test_yolo_dataset_preview(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            yolo_root = tmp_path / "yolo"
+            (yolo_root / "images" / "train").mkdir(parents=True)
+            (yolo_root / "labels" / "train").mkdir(parents=True)
+            image_path = yolo_root / "images" / "train" / "sample.svg"
+            image_path.write_text(
+                '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480"><rect width="640" height="480" fill="#111827"/></svg>',
+                encoding="utf-8",
+            )
+            (yolo_root / "labels" / "train" / "sample.txt").write_text("0 0.500000 0.500000 0.250000 0.200000\n", encoding="utf-8")
+            data_yaml = tmp_path / "data.yaml"
+            data_yaml.write_text(
+                "\n".join(
+                    [
+                        f"path: {yolo_root.as_posix()}",
+                        "train: images/train",
+                        "names:",
+                        "  0: car",
+                        "",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            result = render_yolo_dataset_preview(data_yaml, tmp_path / "preview", split="train")
+            self.assertTrue(result.index_html.exists())
+            self.assertEqual(result.image_count, 1)
+            self.assertEqual(result.box_count, 1)
 
 
 if __name__ == "__main__":
