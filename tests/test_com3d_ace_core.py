@@ -12,7 +12,7 @@ from alignment.costs import pairwise_evidence_cost, reliability_weight
 from ambiguity.ambiguity_scorer import score_hypothesis
 from ambiguity import diagnose_ambiguity
 from data.converters.coco_to_yolo import convert_coco_to_yolo
-from evidence import EvidenceToken, extract_crop, load_tokens_jsonl, save_tokens_jsonl
+from evidence import EvidenceToken, extract_crop, load_tokens_jsonl, render_preview_html, save_tokens_jsonl
 from evidence.lifting import lift_bbox_center_to_world
 from evidence.uncertainty import class_entropy, max_softmax_confidence
 from graph import build_evidence_graph
@@ -268,6 +268,17 @@ class TestCom3DAceCore(unittest.TestCase):
             readiness = inspect_data_yaml(data_yaml)
             self.assertFalse(readiness.ready)
             self.assertGreater(readiness.splits[0].placeholder_count, 0)
+
+    def test_evidence_preview_html(self) -> None:
+        token = make_token("preview_1", "uav1", [3.0, 0.2], [0.0, 0.0, 10.0])
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            result = render_preview_html([token], tmp_path / "preview")
+            self.assertTrue(result.index_html.exists())
+            self.assertTrue(result.summary_csv.exists())
+            html_text = result.index_html.read_text(encoding="utf-8")
+            self.assertIn("CoM3D-ACE Evidence Preview", html_text)
+            self.assertEqual(result.token_count, 1)
 
 
 if __name__ == "__main__":

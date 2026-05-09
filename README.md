@@ -55,6 +55,26 @@ scripts\12_train_yolov8n_visdrone.bat 100
 scripts\13_eval_yolo_visdrone.bat outputs\detectors\...\best.pt
 ```
 
+Detector 테스트 결과를 눈으로 확인할 때:
+
+```bat
+scripts\15_run_visible_yolo_preview.bat data\sample_images yolo11n.pt
+```
+
+이미 생성된 EvidenceToken JSONL만 확인할 때:
+
+```bat
+scripts\14_preview_evidence_tokens.bat outputs\evidence\tokens.jsonl
+```
+
+Isaac Sim은 GUI에서 장면을 보면서 실행하는 흐름을 기본으로 합니다.
+
+```bat
+scripts\20_launch_isaac_visible.bat
+```
+
+상세한 visible 실행 원칙은 `docs/visible_execution_workflow.md`에 정리합니다.
+
 EvidenceToken 생성 예시:
 
 ```bat
