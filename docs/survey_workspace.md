@@ -282,6 +282,7 @@ Second, we build a synchronized multi-UAV simulation benchmark in Isaac Sim to e
 - Isaac dry-run check: `scripts/03_export_isaac_dataset.bat`
 - Core prototype check: `scripts/06_run_core_pipeline.bat`
 - Association metric check: `scripts/07_eval_association.bat`
+- System comparison check: `scripts/08_run_system_comparison.bat`
 
 ## 7. Windows 기준 구현 순서
 
