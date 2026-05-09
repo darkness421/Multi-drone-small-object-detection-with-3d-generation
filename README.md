@@ -58,6 +58,7 @@ scripts\13_eval_yolo_visdrone.bat outputs\detectors\...\best.pt
 Detector 테스트 결과를 눈으로 확인할 때:
 
 ```bat
+scripts\16_make_visible_smoke_sample.bat
 scripts\15_run_visible_yolo_preview.bat data\sample_images yolo11n.pt
 ```
 

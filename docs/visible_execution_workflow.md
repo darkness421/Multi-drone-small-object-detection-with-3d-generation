@@ -17,11 +17,13 @@ YOLO 학습 로그는 VS Code 터미널에서 그대로 확인한다. 학습 결
 추론 결과를 사람이 볼 수 있게 HTML preview로 만든다.
 
 ```bat
+scripts\16_make_visible_smoke_sample.bat
 scripts\15_run_visible_yolo_preview.bat data\sample_images yolo11n.pt
 ```
 
 출력:
 
+- `outputs\smoke\visible_sample\preview\index.html`
 - `outputs\evidence\tokens.jsonl`
 - `outputs\crops\`
 - `outputs\preview\evidence_tokens\index.html`

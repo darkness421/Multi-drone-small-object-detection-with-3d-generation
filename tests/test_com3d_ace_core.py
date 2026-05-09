@@ -30,6 +30,7 @@ from runtime.config import load_config
 from runtime.outputs import prepare_run_dir
 from scripts.check_dataset_readiness import inspect_dataset
 from scripts.check_training_readiness import inspect_data_yaml
+from scripts.make_visible_smoke_sample import create_visible_smoke_sample
 from scripts.run_core_pipeline import run_pipeline
 from scripts.run_detector_baselines import write_plan
 from simulation.isaac.export_rgb_depth_pose import build_dry_run_manifest
@@ -279,6 +280,14 @@ class TestCom3DAceCore(unittest.TestCase):
             html_text = result.index_html.read_text(encoding="utf-8")
             self.assertIn("CoM3D-ACE Evidence Preview", html_text)
             self.assertEqual(result.token_count, 1)
+
+    def test_visible_smoke_sample_generation(self) -> None:
+        with TemporaryDirectory() as tmp:
+            result = create_visible_smoke_sample(Path(tmp) / "smoke")
+            self.assertTrue(result.tokens_jsonl.exists())
+            self.assertTrue(result.preview_html.exists())
+            self.assertTrue(result.summary_csv.exists())
+            self.assertGreater(len(list(result.image_dir.glob("*.svg"))), 0)
 
 
 if __name__ == "__main__":
