@@ -292,6 +292,7 @@ Second, we build a synchronized multi-UAV simulation benchmark in Isaac Sim to e
 - Core prototype check: `scripts/06_run_core_pipeline.bat`
 - Association metric check: `scripts/07_eval_association.bat`
 - System comparison check: `scripts/08_run_system_comparison.bat`
+- Detector metric collection: `scripts/09_collect_detector_metrics.bat`
 
 ## 7. Windows 기준 구현 순서
 

@@ -21,6 +21,7 @@ from policy import select_action
 from policy.policy_simulator import simulate_policy
 from evaluation.policy_compare import empty_reobservation_table
 from evaluation.detector_compare import empty_detector_table
+from evaluation.detector_metrics_collector import collect_detector_metrics
 from evaluation.association_eval import evaluate_association, infer_gt_from_tokens
 from evaluation.system_level_runner import build_system_rows
 from evaluation.system_compare import empty_system_table
@@ -180,6 +181,23 @@ class TestCom3DAceCore(unittest.TestCase):
             rows = write_plan(tmp_path / "detector_plan.csv", "configs/detector/visdrone_yolo_data.yaml")
             self.assertGreaterEqual(len(rows), 1)
             self.assertIn(rows[0]["status"], {"ready", "skipped"})
+
+            metrics_dir = tmp_path / "metrics"
+            metrics_dir.mkdir()
+            (metrics_dir / "yolo.json").write_text(
+                __import__("json").dumps(
+                    {
+                        "Method": "YOLOv8n",
+                        "Dataset": "VisDrone2019-DET",
+                        "AP": 0.1,
+                        "AP50": 0.2,
+                        "FPS": 120,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            metric_rows = collect_detector_metrics(metrics_dir, ["VisDrone2019-DET"])
+            self.assertEqual(metric_rows[0]["AP ↑"], 0.1)
 
     def test_coco_to_yolo_converter(self) -> None:
         with TemporaryDirectory() as tmp:
