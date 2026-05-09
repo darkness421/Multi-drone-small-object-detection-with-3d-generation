@@ -31,12 +31,14 @@ scripts/             experiment entrypoint shell scripts
 ```bat
 conda env create -f environment.yml
 conda activate com3d-ace
-python scripts\check_env.py
+scripts\00_check_env.bat
+scripts\00_check_datasets.bat
 scripts\01_convert_datasets.bat
 scripts\04_train_detector_baselines.bat
 ```
 
 Dataset 경로는 `configs/dataset_roots.yaml`에서 수정합니다.
+`scripts\00_check_datasets.bat`를 먼저 실행하면 `VisDrone`, `UAVDT`, `AI-TOD` raw path 중 무엇이 아직 비어 있는지 바로 확인할 수 있습니다.
 
 EvidenceToken 생성 예시:
 

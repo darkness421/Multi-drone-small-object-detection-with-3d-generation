@@ -28,6 +28,7 @@ from evaluation.system_compare import empty_system_table
 from evaluation.vlm_compare import empty_vlm_table
 from runtime.config import load_config
 from runtime.outputs import prepare_run_dir
+from scripts.check_dataset_readiness import inspect_dataset
 from scripts.run_core_pipeline import run_pipeline
 from scripts.run_detector_baselines import write_plan
 from simulation.isaac.export_rgb_depth_pose import build_dry_run_manifest
@@ -219,6 +220,20 @@ class TestCom3DAceCore(unittest.TestCase):
             self.assertTrue(data_yaml.exists())
             label_files = list((tmp_path / "yolo" / "labels").rglob("*.txt"))
             self.assertEqual(len(label_files), 1)
+
+    def test_dataset_readiness_inspection(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            images = tmp_path / "images"
+            annotations = tmp_path / "annotations"
+            images.mkdir()
+            annotations.mkdir()
+            (images / "frame_0001.jpg").write_text("placeholder", encoding="utf-8")
+            (annotations / "frame_0001.txt").write_text("1,2,3,4", encoding="utf-8")
+            row = inspect_dataset("visdrone", {"images": images, "annotations": annotations})
+            self.assertTrue(row.ready)
+            self.assertEqual(row.counts["images"], 1)
+            self.assertEqual(row.counts["annotations"], 1)
 
 
 if __name__ == "__main__":
