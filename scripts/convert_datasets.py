@@ -13,6 +13,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from data.converters.aitod_to_coco import normalize_aitod
+from data.converters.coco_to_yolo import convert_coco_to_yolo
 from data.converters.common import write_json
 from data.converters.uavdt_to_coco import convert_uavdt
 from data.converters.visdrone_to_coco import convert_visdrone
@@ -32,6 +33,9 @@ def maybe_convert_visdrone(cfg: dict[str, str]) -> None:
         return
     write_json(convert_visdrone(images, annotations), output)
     print(f"[ok] VisDrone -> {output}")
+    yolo_output = resolve(cfg.get("yolo_output", "data/processed/visdrone_yolo"))
+    data_yaml = convert_coco_to_yolo(output, yolo_output)
+    print(f"[ok] VisDrone YOLO -> {data_yaml}")
 
 
 def maybe_convert_uavdt(cfg: dict[str, str]) -> None:
@@ -43,6 +47,9 @@ def maybe_convert_uavdt(cfg: dict[str, str]) -> None:
         return
     write_json(convert_uavdt(sequence_dir, annotations), output)
     print(f"[ok] UAVDT -> {output}")
+    yolo_output = resolve(cfg.get("yolo_output", "data/processed/uavdt_yolo"))
+    data_yaml = convert_coco_to_yolo(output, yolo_output)
+    print(f"[ok] UAVDT YOLO -> {data_yaml}")
 
 
 def maybe_convert_aitod(cfg: dict[str, str]) -> None:

@@ -11,6 +11,7 @@ import numpy as np
 from alignment.costs import pairwise_evidence_cost, reliability_weight
 from ambiguity.ambiguity_scorer import score_hypothesis
 from ambiguity import diagnose_ambiguity
+from data.converters.coco_to_yolo import convert_coco_to_yolo
 from evidence import EvidenceToken, extract_crop, load_tokens_jsonl, save_tokens_jsonl
 from evidence.lifting import lift_bbox_center_to_world
 from evidence.uncertainty import class_entropy, max_softmax_confidence
@@ -179,6 +180,27 @@ class TestCom3DAceCore(unittest.TestCase):
             rows = write_plan(tmp_path / "detector_plan.csv", "configs/detector/visdrone_yolo_data.yaml")
             self.assertGreaterEqual(len(rows), 1)
             self.assertIn(rows[0]["status"], {"ready", "skipped"})
+
+    def test_coco_to_yolo_converter(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            image_path = tmp_path / "image_0001.jpg"
+            image_path.write_text("placeholder", encoding="utf-8")
+            coco_path = tmp_path / "sample_coco.json"
+            coco_path.write_text(
+                __import__("json").dumps(
+                    {
+                        "images": [{"id": 1, "file_name": str(image_path), "width": 100, "height": 50}],
+                        "annotations": [{"id": 1, "image_id": 1, "category_id": 1, "bbox": [10, 5, 20, 10]}],
+                        "categories": [{"id": 1, "name": "car"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            data_yaml = convert_coco_to_yolo(coco_path, tmp_path / "yolo")
+            self.assertTrue(data_yaml.exists())
+            label_files = list((tmp_path / "yolo" / "labels").rglob("*.txt"))
+            self.assertEqual(len(label_files), 1)
 
 
 if __name__ == "__main__":
