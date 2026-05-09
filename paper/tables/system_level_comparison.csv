@@ -1,0 +1,11 @@
+﻿Method,Final Acc ↑,3D Error ↓,Assoc. F1 ↑,Ambiguity Res. ↑,Reobs ↓,VLM Calls ↓
+Single-view detector,,,-,-,0,0
+Multi-view average pooling,,,,-,0,0
+Multi-view max pooling,,,,-,0,0
+Naive 3D fusion,,,,-,0,0
+Graph-only,,,,,0,0
+Graph + cross-view alignment,,,,,0,0
+Graph + ambiguity diagnosis,,,,,0,0
+Graph + random re-observation,,,,,,0
+Graph + uncertainty re-observation,,,,,,0
+Full CoM3D-ACE,,,,,,

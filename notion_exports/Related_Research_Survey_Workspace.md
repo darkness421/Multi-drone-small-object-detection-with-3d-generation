@@ -287,3 +287,321 @@ Second, we build a synchronized multi-UAV simulation benchmark in Isaac Sim to e
 - Full system validation: `Isaac Sim + Cesium` synthetic multi-UAV episodes
 - Core modules now scaffolded: `evidence`, `alignment`, `graph`, `ambiguity`, `policy`, `vlm`, `evaluation`, `simulation`
 - Windows bootstrap priority: `pathlib`, `environment.yml`, `scripts/check_env.py`, `scripts/01_convert_datasets.bat`, EvidenceToken JSONL pipeline
+
+## 7. Windows 기준 구현 순서
+
+### Phase 0. 프로젝트 초기화
+
+목표: Windows에서 repo와 환경이 안정적으로 돌아가게 만든다.
+
+작업:
+
+```text
+1. Git repo 생성
+2. conda env 생성
+3. dataset root 경로 설정
+4. config loader 구현
+5. logging / output directory 규칙 설정
+```
+
+완료 기준:
+
+```powershell
+python -m scripts.check_env
+```
+
+출력에서 GPU, PyTorch, OpenCV, dataset path가 정상 확인되어야 한다.
+
+### Phase 1. Public Dataset 변환 및 Detector Baseline
+
+목표: `VisDrone` / `UAVDT`에서 detector baseline을 확보한다.
+
+순서:
+
+```text
+1. VisDrone -> COCO 변환
+2. UAVDT -> COCO 변환
+3. YOLOv8n / YOLOv11n 학습
+4. RT-DETR-R18 학습
+5. D-FINE-S 가능하면 추가
+6. AP, AP50, AP75, APsmall, FPS 기록
+```
+
+초기 baseline:
+
+```text
+YOLOv8n
+YOLOv11n
+YOLOv8n+P2
+RT-DETR-R18
+Ours AEG
+```
+
+### Phase 2. EvidenceToken 생성
+
+목표: detector 결과를 CoM3D-ACE 시스템 입력으로 바꾼다.
+
+초기 운영:
+
+```text
+VisDrone / UAVDT:
+  bbox, logits, confidence, crop_feature, uncertainty
+
+CoM3D-Sim:
+  bbox, logits, confidence, crop_feature, uncertainty, depth, pose
+```
+
+### Phase 3. Isaac Sim Dataset Export
+
+목표: `CoM3D-Sim` 생성.
+
+Windows에서는 Isaac을 별도로 실행해서 export한다.
+
+```powershell
+cd C:\isaacsim
+python.bat C:\Users\<USER>\CoM3D-ACE\simulation\isaac\export_rgb_depth_pose.py
+```
+
+초기에는 도시 전체가 아니라 작은 block scene 3개부터 시작한다.
+
+```text
+scene_001: sparse vehicles
+scene_002: dense vehicles + pedestrians
+scene_003: occlusion / side-view ambiguity
+```
+
+Export 항목:
+
+```text
+RGB image
+depth map
+semantic / instance mask
+camera intrinsic
+camera extrinsic
+UAV pose
+object 2D bbox
+object 3D bbox
+object ID
+visibility
+occlusion level
+view angle
+distance
+pixel size
+```
+
+### Phase 4. Cross-View Association + 2D-to-3D Lifting
+
+목표: 같은 객체를 여러 view에서 연결하고 3D 위치를 추정한다.
+
+처음에는 복잡한 GNN 대신 deterministic matching으로 시작한다.
+
+```text
+C(e_i, e_j)
+= lambda_app d_app
++ lambda_geo d_geo
++ lambda_cls d_cls
++ lambda_res d_res
++ lambda_time d_time
++ lambda_unc d_unc
+```
+
+Reliability:
+
+```text
+r_i = sigmoid(a * resolution_i + b * visibility_i - c * uncertainty_i - d * geometry_residual_i)
+```
+
+완료 기준:
+
+```text
+Association F1
+False merge rate
+False split rate
+3D center error
+```
+
+### Phase 5. 3D Evidence Graph
+
+목표: object hypothesis node 생성.
+
+처음에는 `PyG`가 아니라 custom graph로 간다.
+
+```json
+{
+  "observation_nodes": [],
+  "object_nodes": [],
+  "edges": []
+}
+```
+
+Edge type:
+
+```text
+visual similarity
+geometry consistency
+temporal consistency
+uncertainty relation
+```
+
+Object output:
+
+```text
+fine-grained class distribution
+3D position
+confidence
+support views
+graph consistency score
+```
+
+### Phase 6. Ambiguity Diagnosis
+
+목표: 어떤 object node가 틀릴 가능성이 높은지 예측한다.
+
+```text
+S(o)
+= w_H H_class
++ w_D D_view
++ w_M M_missing
++ w_O O_occ
++ w_R R_lowres
++ w_G G_geo
+```
+
+이 실험에서 ROC-AUC를 뽑는다.
+
+```text
+positive label = 최종 예측이 틀렸거나 insufficient evidence인 object
+score = S(o)
+metric = ROC-AUC, AUPRC, FPR@95TPR
+```
+
+### Phase 7. Evidence Completion Policy
+
+목표: `finalize` / `VLM verify` / `re-observe` 중 선택.
+
+```text
+a* = argmax_a EIG(a, o) - lambda_cost Cost(a) - lambda_risk Risk(a)
+```
+
+Candidate action:
+
+```text
+front view
+side view
+rear view
+top-down view
+closer view
+same position high-res crop
+```
+
+처음에는 실제 Isaac 재비행 없이, pre-generated candidate views 중 policy가 하나를 선택하게 만든다.
+
+### Phase 8. Selective VLM Verification
+
+목표: ambiguity가 높은 object node만 VLM에 보낸다.
+
+순서:
+
+```text
+1. SAGE prompt package 생성
+2. open-source VLM 또는 API로 subset만 테스트
+3. output JSON parser 구현
+4. graph confidence update
+5. always-on VLM 대비 call 수 / latency 비교
+```
+
+이름:
+
+```text
+SAGE = Scene-aware Ambiguity-guided Graph Evidence Prompt
+```
+
+## 8. 비교 실험 구조
+
+비교는 두 층으로 분리한다.
+
+```text
+A. 2D front-end detector 비교
+B. multi-view / graph / re-observation system 비교
+```
+
+이걸 분리하지 않으면 논문이 detector paper인지 system paper인지 흐려진다.
+
+### 8.1 2D Detector 비교 모델
+
+P0:
+
+| 모델 | 이유 |
+| --- | --- |
+| YOLOv8n/s | 기본 lightweight YOLO baseline |
+| YOLOv11n/s | 최신 계열 YOLO baseline |
+| YOLOv8n+P2 | small-object head 추가 baseline |
+| RT-DETR-R18 | DETR 계열 대표 baseline |
+| D-FINE-S | 최신 DETR-style detector baseline 가능 |
+| Ours Always-on Evidence Generator | 우리 front-end |
+
+P1:
+
+| 모델 | 이유 |
+| --- | --- |
+| UAVDet | CNN-Mamba 계열 강한 실시간 baseline |
+| LRDS-YOLO | lightweight YOLOv11 small-object 특화 |
+| BPD-YOLO / L-FPN | shallow-centric FPN baseline |
+| HF-D-FINE | high-resolution D-FINE tiny detector |
+
+P2:
+
+| 모델 | 이유 |
+| --- | --- |
+| CSFPR-RTDETR | spatial-frequency + position relation |
+| DG-TSOD | density-guided two-stage detector |
+| CFIA | coarse-fine feature alignment |
+
+최종 추천 detector set:
+
+```text
+YOLOv8n
+YOLOv11n
+YOLOv8n+P2
+RT-DETR-R18
+D-FINE-S
+UAVDet or LRDS-YOLO
+Ours AEG
+```
+
+### 8.2 System-Level 비교 Baseline
+
+| Baseline | 설명 |
+| --- | --- |
+| Single-view detector | 가장 confidence 높은 view만 사용 |
+| Multi-view average pooling | view별 class score 평균 |
+| Multi-view max pooling | 최고 confidence 선택 |
+| Naive 3D fusion | pose/depth로 3D 위치만 합침 |
+| Graph-only | 3D evidence graph만 사용 |
+| Graph + cross-view alignment | alignment 포함 |
+| Graph + ambiguity diagnosis | ambiguous object score 사용 |
+| Graph + random re-observation | 재관측은 랜덤 |
+| Graph + uncertainty re-observation | uncertainty 높은 객체 재관측 |
+| Full CoM3D-ACE | alignment + ambiguity + policy + selective VLM |
+
+최종 결과표:
+
+| Method | Final Acc ↑ | 3D Error ↓ | Assoc. F1 ↑ | Ambiguity Res. ↑ | Reobs ↓ | VLM Calls ↓ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Single-view |  |  | - | - | 0 | 0 |
+| Avg multi-view |  |  |  | - | 0 | 0 |
+| Naive 3D fusion |  |  |  | - | 0 | 0 |
+| Graph-only |  |  |  |  | 0 | 0 |
+| Graph + Alignment |  |  |  |  | 0 | 0 |
+| Graph + Random Reobs |  |  |  |  |  | 0 |
+| Graph + Uncertainty Reobs |  |  |  |  |  |  |
+| Full CoM3D-ACE |  |  |  |  |  |  |
+
+반드시 보여줘야 하는 결과:
+
+1. 2D detector 기본 성능: `VisDrone` / `UAVDT`에서 `APsmall`, `FPS`가 경쟁력 있어야 함.
+2. Multi-view graph가 single-view보다 좋다: final object accuracy, 3D error, association F1 개선.
+3. Cross-view / cross-resolution alignment가 필요하다: 고도/각도/해상도 다른 조건에서 naive fusion보다 우수.
+4. Ambiguity score가 실제 오류를 잘 예측한다: AUROC / AUPRC / ECE 제시.
+5. Re-observation이 성능을 올린다: random이나 uncertainty-only보다 cost 대비 우수.
+6. Selective VLM이 always-on VLM보다 효율적이다: 비슷하거나 더 좋은 ambiguous accuracy를 훨씬 적은 VLM call로 달성.

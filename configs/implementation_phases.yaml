@@ -1,0 +1,123 @@
+project: CoM3D-ACE
+platform: Windows
+goal: Reproducible implementation path from environment setup to full system ablation.
+
+phases:
+  - id: phase_0
+    name: Project bootstrap
+    goal: Make the repo and environment stable on Windows.
+    tasks:
+      - Git repo setup
+      - Conda environment setup
+      - Dataset root path configuration
+      - Config loader
+      - Logging and output directory rules
+    done_when:
+      - python -m scripts.check_env prints GPU, PyTorch, OpenCV, and dataset paths.
+
+  - id: phase_1
+    name: Public dataset conversion and detector baselines
+    goal: Establish VisDrone/UAVDT detector baselines.
+    tasks:
+      - VisDrone to COCO conversion
+      - UAVDT to COCO conversion
+      - YOLOv8n / YOLOv11n training
+      - RT-DETR-R18 training
+      - Optional D-FINE-S training
+      - AP, AP50, AP75, APsmall, FPS logging
+
+  - id: phase_2
+    name: EvidenceToken generation
+    goal: Convert detector outputs into CoM3D system inputs.
+    public_dataset_fields:
+      - bbox
+      - logits
+      - confidence
+      - crop_feature
+      - uncertainty
+    com3d_sim_fields:
+      - bbox
+      - logits
+      - confidence
+      - crop_feature
+      - uncertainty
+      - depth
+      - pose
+
+  - id: phase_3
+    name: Isaac Sim dataset export
+    goal: Generate CoM3D-Sim.
+    initial_scenes:
+      - scene_001_sparse_vehicles
+      - scene_002_dense_vehicles_pedestrians
+      - scene_003_occlusion_side_view_ambiguity
+    export_fields:
+      - RGB image
+      - depth map
+      - semantic / instance mask
+      - camera intrinsic
+      - camera extrinsic
+      - UAV pose
+      - object 2D bbox
+      - object 3D bbox
+      - object ID
+      - visibility
+      - occlusion level
+      - view angle
+      - distance
+      - pixel size
+
+  - id: phase_4
+    name: Cross-view association and 2D-to-3D lifting
+    goal: Associate same-object observations and estimate 3D location.
+    start_with: deterministic_matching
+    metrics:
+      - Association F1
+      - False merge rate
+      - False split rate
+      - 3D center error
+
+  - id: phase_5
+    name: 3D Evidence Graph
+    goal: Build object hypothesis nodes with a custom graph.
+    graph_schema:
+      - observation_nodes
+      - object_nodes
+      - edges
+    edge_types:
+      - visual similarity
+      - geometry consistency
+      - temporal consistency
+      - uncertainty relation
+
+  - id: phase_6
+    name: Ambiguity Diagnosis
+    goal: Predict object nodes likely to be wrong or insufficiently supported.
+    metrics:
+      - ROC-AUC
+      - AUPRC
+      - FPR@95TPR
+      - ECE
+
+  - id: phase_7
+    name: Evidence Completion Policy
+    goal: Select finalize, VLM verify, or re-observe.
+    initial_mode: pre_generated_candidate_views
+    candidate_actions:
+      - front view
+      - side view
+      - rear view
+      - top-down view
+      - closer view
+      - same position high-res crop
+
+  - id: phase_8
+    name: Selective VLM Verification
+    goal: Send only high-ambiguity object nodes to VLM.
+    steps:
+      - SAGE prompt package generation
+      - Subset test with open-source VLM or API
+      - JSON output parser
+      - Graph confidence update
+      - Call count / latency comparison versus always-on VLM
+

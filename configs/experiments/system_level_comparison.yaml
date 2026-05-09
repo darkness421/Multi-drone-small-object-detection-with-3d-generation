@@ -1,0 +1,48 @@
+name: system_level_comparison
+layer: multi_view_graph_reobservation_system
+purpose: Main paper comparison for CoM3D-ACE system contribution.
+
+dataset:
+  primary: CoM3D-UAV-Sim
+  splits:
+    - test_seen
+    - test_unseen
+
+baselines:
+  - name: Single-view detector
+    description: Use only the highest confidence view.
+  - name: Multi-view average pooling
+    description: Average class scores across views.
+  - name: Multi-view max pooling
+    description: Select the highest confidence view.
+  - name: Naive 3D fusion
+    description: Fuse 3D positions using pose/depth only.
+  - name: Graph-only
+    description: Use the 3D evidence graph without explicit alignment/re-observation/VLM.
+  - name: Graph + cross-view alignment
+    description: Add cross-view and cross-resolution alignment.
+  - name: Graph + ambiguity diagnosis
+    description: Add ambiguity score.
+  - name: Graph + random re-observation
+    description: Add random candidate view.
+  - name: Graph + uncertainty re-observation
+    description: Re-observe high-uncertainty objects.
+  - name: Full CoM3D-ACE
+    description: Alignment + ambiguity + policy + selective VLM.
+
+required_claims:
+  - 2D detector 기본 성능
+  - multi-view graph가 single-view보다 좋다
+  - cross-view / cross-resolution alignment가 필요하다
+  - ambiguity score가 실제 오류를 잘 예측한다
+  - re-observation이 성능을 올린다
+  - selective VLM이 always-on VLM보다 효율적이다
+
+metrics:
+  - Final Acc
+  - 3D Error
+  - Assoc. F1
+  - Ambiguity Res.
+  - Reobs
+  - VLM Calls
+

@@ -19,6 +19,8 @@ from graph.graph_builder import build_object_hypotheses
 from policy import select_action
 from policy.policy_simulator import simulate_policy
 from evaluation.policy_compare import empty_reobservation_table
+from evaluation.detector_compare import empty_detector_table
+from evaluation.system_compare import empty_system_table
 from evaluation.vlm_compare import empty_vlm_table
 from vlm import build_sage_prompt, parse_sage_response
 
@@ -94,6 +96,15 @@ class TestCom3DAceCore(unittest.TestCase):
         self.assertEqual(len(rows), 5)
         self.assertEqual(rows[0]["Method"], "No VLM")
         self.assertEqual(rows[-1]["Method"], "SAGE-triggered VLM")
+
+    def test_detector_and_system_table_templates(self) -> None:
+        detector_rows = empty_detector_table(["VisDrone2019-DET"])
+        self.assertEqual(detector_rows[0]["Method"], "YOLOv8n")
+        self.assertEqual(detector_rows[-1]["Method"], "Ours AEG")
+
+        system_rows = empty_system_table()
+        self.assertEqual(system_rows[0]["Method"], "Single-view detector")
+        self.assertEqual(system_rows[-1]["Method"], "Full CoM3D-ACE")
 
     def test_evidence_jsonl_and_fake_detection_crop(self) -> None:
         tokens = [

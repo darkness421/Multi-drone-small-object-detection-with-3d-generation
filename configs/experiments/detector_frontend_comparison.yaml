@@ -1,0 +1,48 @@
+name: detector_frontend_comparison
+layer: 2d_frontend_detector
+purpose: Keep detector comparison separate from multi-view graph/system comparison.
+
+datasets:
+  required:
+    - VisDrone2019-DET
+    - UAVDT
+  optional:
+    - AI-TOD
+
+p0_required:
+  - YOLOv8n/s
+  - YOLOv11n/s
+  - YOLOv8n+P2
+  - RT-DETR-R18
+  - D-FINE-S
+  - Ours Always-on Evidence Generator
+
+p1_if_possible:
+  - UAVDet
+  - LRDS-YOLO
+  - BPD-YOLO / L-FPN
+  - HF-D-FINE
+
+p2_time_permitting:
+  - CSFPR-RTDETR
+  - DG-TSOD
+  - CFIA
+
+final_recommended_set:
+  - YOLOv8n
+  - YOLOv11n
+  - YOLOv8n+P2
+  - RT-DETR-R18
+  - D-FINE-S
+  - UAVDet or LRDS-YOLO
+  - Ours AEG
+
+metrics:
+  - AP
+  - AP50
+  - AP75
+  - APsmall
+  - FPS
+  - Params
+  - GFLOPs
+
