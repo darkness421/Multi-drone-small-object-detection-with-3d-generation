@@ -29,6 +29,7 @@ from evaluation.vlm_compare import empty_vlm_table
 from runtime.config import load_config
 from runtime.outputs import prepare_run_dir
 from scripts.check_dataset_readiness import inspect_dataset
+from scripts.check_training_readiness import inspect_data_yaml
 from scripts.run_core_pipeline import run_pipeline
 from scripts.run_detector_baselines import write_plan
 from simulation.isaac.export_rgb_depth_pose import build_dry_run_manifest
@@ -234,6 +235,39 @@ class TestCom3DAceCore(unittest.TestCase):
             self.assertTrue(row.ready)
             self.assertEqual(row.counts["images"], 1)
             self.assertEqual(row.counts["annotations"], 1)
+
+    def test_training_readiness_detects_placeholder_images(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            yolo_root = tmp_path / "yolo"
+            for split in ("train", "val"):
+                (yolo_root / "images" / split).mkdir(parents=True)
+                (yolo_root / "labels" / split).mkdir(parents=True)
+                (yolo_root / "images" / split / "frame_0001.jpg").write_text(
+                    "image_placeholder=C:/raw/frame_0001.jpg\n",
+                    encoding="utf-8",
+                )
+                (yolo_root / "labels" / split / "frame_0001.txt").write_text(
+                    "0 0.5 0.5 0.1 0.1\n",
+                    encoding="utf-8",
+                )
+            data_yaml = tmp_path / "data.yaml"
+            data_yaml.write_text(
+                "\n".join(
+                    [
+                        f"path: {yolo_root.as_posix()}",
+                        "train: images/train",
+                        "val: images/val",
+                        "names:",
+                        "  0: car",
+                        "",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            readiness = inspect_data_yaml(data_yaml)
+            self.assertFalse(readiness.ready)
+            self.assertGreater(readiness.splits[0].placeholder_count, 0)
 
 
 if __name__ == "__main__":

@@ -34,7 +34,7 @@ def maybe_convert_visdrone(cfg: dict[str, str]) -> None:
     write_json(convert_visdrone(images, annotations), output)
     print(f"[ok] VisDrone -> {output}")
     yolo_output = resolve(cfg.get("yolo_output", "data/processed/visdrone_yolo"))
-    data_yaml = convert_coco_to_yolo(output, yolo_output)
+    data_yaml = convert_coco_to_yolo(output, yolo_output, copy_images=True)
     print(f"[ok] VisDrone YOLO -> {data_yaml}")
 
 
@@ -48,7 +48,7 @@ def maybe_convert_uavdt(cfg: dict[str, str]) -> None:
     write_json(convert_uavdt(sequence_dir, annotations), output)
     print(f"[ok] UAVDT -> {output}")
     yolo_output = resolve(cfg.get("yolo_output", "data/processed/uavdt_yolo"))
-    data_yaml = convert_coco_to_yolo(output, yolo_output)
+    data_yaml = convert_coco_to_yolo(output, yolo_output, copy_images=True)
     print(f"[ok] UAVDT YOLO -> {data_yaml}")
 
 
