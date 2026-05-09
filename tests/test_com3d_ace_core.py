@@ -22,6 +22,9 @@ from evaluation.policy_compare import empty_reobservation_table
 from evaluation.detector_compare import empty_detector_table
 from evaluation.system_compare import empty_system_table
 from evaluation.vlm_compare import empty_vlm_table
+from runtime.config import load_config
+from runtime.outputs import prepare_run_dir
+from simulation.isaac.export_rgb_depth_pose import build_dry_run_manifest
 from vlm import build_sage_prompt, parse_sage_response
 
 
@@ -140,6 +143,19 @@ class TestCom3DAceCore(unittest.TestCase):
         self.assertIn("ambiguity_score", scored)
         rows = simulate_policy([hypothesis.to_dict() for hypothesis in hypotheses], [scored])
         self.assertEqual({row["method"] for row in rows}, {"no-reobserve", "random", "uncertainty-only", "information-gain-only", "com3d-policy"})
+
+    def test_runtime_config_and_isaac_dry_manifest(self) -> None:
+        config = load_config("configs/sim/isaac_export.yaml")
+        self.assertEqual(config["name"], "com3d_uav_sim_export")
+        manifest = build_dry_run_manifest(config)
+        self.assertEqual(manifest["dataset"], "CoM3D-UAV-Sim")
+        self.assertGreaterEqual(len(manifest["frames"]), 3)
+
+        with TemporaryDirectory() as tmp:
+            run_dir = prepare_run_dir("unit_test", output_root=tmp)
+            self.assertTrue((run_dir / "logs").exists())
+            self.assertTrue((run_dir / "metrics").exists())
+            self.assertTrue((run_dir / "artifacts").exists())
 
 
 if __name__ == "__main__":

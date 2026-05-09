@@ -51,6 +51,19 @@ python -m ambiguity.ambiguity_scorer --hypotheses outputs\graph\hypotheses.json 
 python -m policy.policy_simulator --hypotheses outputs\graph\hypotheses.json --ambiguity outputs\ambiguity\scores.json --out outputs\policy\metrics.csv
 ```
 
+Isaac export dry-run:
+
+```bat
+scripts\03_export_isaac_dataset.bat
+```
+
+실제 Isaac Sim에서는 아래처럼 Isaac의 `python.bat`로 같은 entrypoint를 실행합니다.
+
+```bat
+cd C:\isaacsim
+python.bat C:\Users\jc\multi-uav-marine-city\simulation\isaac\export_rgb_depth_pose.py --config C:\Users\jc\multi-uav-marine-city\configs\sim\isaac_export.yaml
+```
+
 ## 나중에 다시 만들 것
 
 - 최종 제안 시스템 그림

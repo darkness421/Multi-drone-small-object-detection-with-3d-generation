@@ -1,0 +1,50 @@
+name: com3d_uav_sim_export
+output_root: outputs/isaac_exports
+
+scenes:
+  - scene_id: scene_001_sparse_vehicles
+    description: sparse vehicles
+    uav_count: 2
+  - scene_id: scene_002_dense_vehicles_pedestrians
+    description: dense vehicles + pedestrians
+    uav_count: 3
+  - scene_id: scene_003_occlusion_side_view_ambiguity
+    description: occlusion / side-view ambiguity
+    uav_count: 3
+
+sensors:
+  rgb: true
+  depth: true
+  semantic_mask: true
+  instance_mask: true
+  camera_intrinsic: true
+  camera_extrinsic: true
+  uav_pose: true
+
+objects:
+  classes:
+    - car
+    - van
+    - truck
+    - bus
+    - pedestrian
+    - small boat
+    - debris
+    - traffic cone
+
+export_fields:
+  - RGB image
+  - depth map
+  - semantic / instance mask
+  - camera intrinsic
+  - camera extrinsic
+  - UAV pose
+  - object 2D bbox
+  - object 3D bbox
+  - object ID
+  - visibility
+  - occlusion level
+  - view angle
+  - distance
+  - pixel size
+
