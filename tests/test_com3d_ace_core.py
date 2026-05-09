@@ -197,7 +197,7 @@ class TestCom3DAceCore(unittest.TestCase):
                 encoding="utf-8",
             )
             metric_rows = collect_detector_metrics(metrics_dir, ["VisDrone2019-DET"])
-            self.assertEqual(metric_rows[0]["AP ↑"], 0.1)
+            self.assertEqual(metric_rows[0]["AP"], 0.1)
 
     def test_coco_to_yolo_converter(self) -> None:
         with TemporaryDirectory() as tmp:

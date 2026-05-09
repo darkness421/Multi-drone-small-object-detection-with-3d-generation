@@ -6,7 +6,7 @@ channels:
 dependencies:
   - python=3.10
   - pip
-  - numpy
+  - "numpy<2.0"
   - scipy
   - scikit-learn
   - matplotlib
@@ -17,4 +17,3 @@ dependencies:
       - ultralytics
       - opencv-python
       - PyYAML
-

@@ -22,23 +22,39 @@ class PolicyOutcome:
     latency: float
 
 
+REOBSERVATION_COLUMNS = [
+    "Method",
+    "Final_Acc",
+    "Ambiguity_Res",
+    "Reobs_Success",
+    "Delta_Entropy",
+    "Delta_3D_Error",
+    "Reobs",
+    "Flight_Cost",
+    "Energy_Cost",
+    "Communication_Cost",
+    "VLM_Calls",
+    "Latency",
+]
+
+
 def compare_policy_outcomes(outcomes: Sequence[PolicyOutcome]) -> list[dict[str, float | str]]:
     """Return paper-table rows for re-observation policy ablations."""
 
     return [
         {
             "Method": outcome.name,
-            "Final Acc ↑": outcome.final_accuracy,
-            "Ambiguity Res. ↑": outcome.ambiguity_resolution_rate,
-            "Reobs Success ↑": outcome.reobservation_success_rate,
-            "ΔEntropy ↓": outcome.delta_entropy,
-            "Δ3D Error ↓": outcome.delta_3d_error,
-            "Reobs ↓": outcome.reobservation_count,
-            "Flight Cost ↓": outcome.flight_cost,
-            "Energy Cost ↓": outcome.energy_cost,
-            "Communication Cost ↓": outcome.communication_cost,
-            "VLM Calls ↓": outcome.vlm_call_count,
-            "Latency ↓": outcome.latency,
+            "Final_Acc": outcome.final_accuracy,
+            "Ambiguity_Res": outcome.ambiguity_resolution_rate,
+            "Reobs_Success": outcome.reobservation_success_rate,
+            "Delta_Entropy": outcome.delta_entropy,
+            "Delta_3D_Error": outcome.delta_3d_error,
+            "Reobs": outcome.reobservation_count,
+            "Flight_Cost": outcome.flight_cost,
+            "Energy_Cost": outcome.energy_cost,
+            "Communication_Cost": outcome.communication_cost,
+            "VLM_Calls": outcome.vlm_call_count,
+            "Latency": outcome.latency,
         }
         for outcome in outcomes
     ]
@@ -59,21 +75,21 @@ def empty_reobservation_table() -> list[dict[str, float | str]]:
 
     rows = []
     for method in REOBSERVATION_METHODS:
+        no_reobs = method == "No re-observation"
         rows.append(
             {
                 "Method": method,
-                "Final Acc ↑": "",
-                "Ambiguity Res. ↑": "",
-                "Reobs Success ↑": "",
-                "ΔEntropy ↓": "",
-                "Δ3D Error ↓": "",
-                "Reobs ↓": 0 if method == "No re-observation" else "",
-                "Flight Cost ↓": 0 if method == "No re-observation" else "",
-                "Energy Cost ↓": 0 if method == "No re-observation" else "",
-                "Communication Cost ↓": 0 if method == "No re-observation" else "",
-                "VLM Calls ↓": 0 if method == "No re-observation" else "",
-                "Latency ↓": "",
+                "Final_Acc": "",
+                "Ambiguity_Res": "",
+                "Reobs_Success": "",
+                "Delta_Entropy": "",
+                "Delta_3D_Error": "",
+                "Reobs": 0 if no_reobs else "",
+                "Flight_Cost": 0 if no_reobs else "",
+                "Energy_Cost": 0 if no_reobs else "",
+                "Communication_Cost": 0 if no_reobs else "",
+                "VLM_Calls": 0 if no_reobs else "",
+                "Latency": "",
             }
         )
     return rows
-

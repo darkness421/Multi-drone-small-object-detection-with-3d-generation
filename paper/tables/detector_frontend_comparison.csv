@@ -1,4 +1,4 @@
-﻿Method,Dataset,AP ↑,AP50 ↑,AP75 ↑,APsmall ↑,FPS ↑,Params ↓,GFLOPs ↓
+﻿Method,Dataset,AP,AP50,AP75,APsmall,FPS,Params,GFLOPs
 YOLOv8n,VisDrone2019-DET,,,,,,,
 YOLOv11n,VisDrone2019-DET,,,,,,,
 YOLOv8n+P2,VisDrone2019-DET,,,,,,,

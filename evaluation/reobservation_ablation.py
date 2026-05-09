@@ -5,24 +5,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from .policy_compare import empty_reobservation_table
+from .policy_compare import REOBSERVATION_COLUMNS, empty_reobservation_table
 from .stats import write_metrics_csv
-
-
-REOBSERVATION_COLUMNS = [
-    "Method",
-    "Final Acc ↑",
-    "Ambiguity Res. ↑",
-    "Reobs Success ↑",
-    "ΔEntropy ↓",
-    "Δ3D Error ↓",
-    "Reobs ↓",
-    "Flight Cost ↓",
-    "Energy Cost ↓",
-    "Communication Cost ↓",
-    "VLM Calls ↓",
-    "Latency ↓",
-]
 
 
 def write_reobservation_template(out_path: str | Path) -> None:

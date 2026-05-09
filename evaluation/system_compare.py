@@ -17,33 +17,46 @@ SYSTEM_METHODS = [
 ]
 
 
-SYSTEM_COLUMNS = ["Method", "Final Acc ↑", "3D Error ↓", "Assoc. F1 ↑", "Ambiguity Res. ↑", "Reobs ↓", "VLM Calls ↓"]
+SYSTEM_COLUMNS = [
+    "Method",
+    "Final_Acc",
+    "Center_3D_Error",
+    "Assoc_F1",
+    "Ambiguity_Res",
+    "Reobs",
+    "VLM_Calls",
+]
 
 
 def empty_system_table() -> list[dict[str, str | int]]:
+    """Return an empty system-level comparison table template."""
+
     rows: list[dict[str, str | int]] = []
+    zero_reobs_methods = {
+        "Single-view detector",
+        "Multi-view average pooling",
+        "Multi-view max pooling",
+        "Naive 3D fusion",
+        "Graph-only",
+        "Graph + cross-view alignment",
+        "Graph + ambiguity diagnosis",
+    }
+    no_ambiguity_methods = {
+        "Single-view detector",
+        "Multi-view average pooling",
+        "Multi-view max pooling",
+        "Naive 3D fusion",
+    }
     for method in SYSTEM_METHODS:
         rows.append(
             {
                 "Method": method,
-                "Final Acc ↑": "",
-                "3D Error ↓": "",
-                "Assoc. F1 ↑": "-" if method == "Single-view detector" else "",
-                "Ambiguity Res. ↑": "-" if method in {"Single-view detector", "Multi-view average pooling", "Multi-view max pooling", "Naive 3D fusion"} else "",
-                "Reobs ↓": 0
-                if method
-                in {
-                    "Single-view detector",
-                    "Multi-view average pooling",
-                    "Multi-view max pooling",
-                    "Naive 3D fusion",
-                    "Graph-only",
-                    "Graph + cross-view alignment",
-                    "Graph + ambiguity diagnosis",
-                }
-                else "",
-                "VLM Calls ↓": 0 if method != "Full CoM3D-ACE" else "",
+                "Final_Acc": "",
+                "Center_3D_Error": "",
+                "Assoc_F1": "-" if method == "Single-view detector" else "",
+                "Ambiguity_Res": "-" if method in no_ambiguity_methods else "",
+                "Reobs": 0 if method in zero_reobs_methods else "",
+                "VLM_Calls": 0 if method != "Full CoM3D-ACE" else "",
             }
         )
     return rows
-

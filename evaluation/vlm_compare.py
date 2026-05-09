@@ -27,38 +27,55 @@ VLM_METHODS = [
 ]
 
 
+VLM_COLUMNS = [
+    "Method",
+    "Ambiguous_Acc",
+    "Correction_Rate",
+    "Over_Correction",
+    "VLM_Calls",
+    "Avg_Tokens",
+    "Latency",
+    "Explanation_Usefulness",
+    "JSON_Parse_Success",
+]
+
+
 def compare_vlm_outcomes(outcomes: list[VLMOutcome]) -> list[dict[str, float | str]]:
+    """Return paper-table rows for selective VLM ablations."""
+
     return [
         {
             "Method": outcome.name,
-            "Ambiguous Acc ↑": outcome.ambiguous_subset_accuracy,
-            "Correction Rate ↑": outcome.correction_rate,
-            "Over-correction ↓": outcome.over_correction_rate,
-            "VLM Calls ↓": outcome.vlm_call_count,
-            "Avg Tokens ↓": outcome.average_tokens,
-            "Latency ↓": outcome.latency,
-            "Explanation Usefulness ↑": outcome.explanation_usefulness,
-            "JSON Parse Success ↑": outcome.json_parse_success_rate,
+            "Ambiguous_Acc": outcome.ambiguous_subset_accuracy,
+            "Correction_Rate": outcome.correction_rate,
+            "Over_Correction": outcome.over_correction_rate,
+            "VLM_Calls": outcome.vlm_call_count,
+            "Avg_Tokens": outcome.average_tokens,
+            "Latency": outcome.latency,
+            "Explanation_Usefulness": outcome.explanation_usefulness,
+            "JSON_Parse_Success": outcome.json_parse_success_rate,
         }
         for outcome in outcomes
     ]
 
 
 def empty_vlm_table() -> list[dict[str, float | str]]:
+    """Create an empty selective VLM comparison table."""
+
     rows = []
     for method in VLM_METHODS:
+        no_vlm = method == "No VLM"
         rows.append(
             {
                 "Method": method,
-                "Ambiguous Acc ↑": "",
-                "Correction Rate ↑": "",
-                "Over-correction ↓": "",
-                "VLM Calls ↓": 0 if method == "No VLM" else "",
-                "Avg Tokens ↓": 0 if method == "No VLM" else "",
-                "Latency ↓": "",
-                "Explanation Usefulness ↑": "",
-                "JSON Parse Success ↑": "",
+                "Ambiguous_Acc": "",
+                "Correction_Rate": "",
+                "Over_Correction": "",
+                "VLM_Calls": 0 if no_vlm else "",
+                "Avg_Tokens": 0 if no_vlm else "",
+                "Latency": "",
+                "Explanation_Usefulness": "",
+                "JSON_Parse_Success": "",
             }
         )
     return rows
-

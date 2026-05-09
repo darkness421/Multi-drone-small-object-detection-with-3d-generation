@@ -3,12 +3,11 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 from pathlib import Path
 from typing import Any
 
-from evaluation.detector_compare import DETECTOR_COLUMNS, DETECTOR_METHODS, empty_detector_table
+from evaluation.detector_compare import DETECTOR_COLUMNS, empty_detector_table
 from evaluation.stats import write_metrics_csv
 
 
@@ -19,18 +18,22 @@ def _read_json(path: Path) -> dict[str, Any]:
 
 
 def normalize_metric_payload(payload: dict[str, Any]) -> dict[str, str | float]:
+    """Normalize common detector metric aliases into paper-table columns."""
+
     return {
-        "AP ↑": payload.get("AP", payload.get("mAP50-95", "")),
-        "AP50 ↑": payload.get("AP50", payload.get("mAP50", "")),
-        "AP75 ↑": payload.get("AP75", payload.get("mAP75", "")),
-        "APsmall ↑": payload.get("APsmall", payload.get("APs", "")),
-        "FPS ↑": payload.get("FPS", payload.get("fps", "")),
-        "Params ↓": payload.get("Params", payload.get("params", "")),
-        "GFLOPs ↓": payload.get("GFLOPs", payload.get("gflops", "")),
+        "AP": payload.get("AP", payload.get("mAP50-95", "")),
+        "AP50": payload.get("AP50", payload.get("mAP50", "")),
+        "AP75": payload.get("AP75", payload.get("mAP75", "")),
+        "APsmall": payload.get("APsmall", payload.get("APs", "")),
+        "FPS": payload.get("FPS", payload.get("fps", "")),
+        "Params": payload.get("Params", payload.get("params", "")),
+        "GFLOPs": payload.get("GFLOPs", payload.get("gflops", "")),
     }
 
 
 def collect_detector_metrics(metrics_dir: str | Path, datasets: list[str] | None = None) -> list[dict[str, str | float]]:
+    """Fill detector comparison rows from one JSON file per measured run."""
+
     metrics_dir = Path(metrics_dir)
     datasets = datasets or ["VisDrone2019-DET", "UAVDT"]
     rows = empty_detector_table(datasets)
@@ -58,4 +61,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

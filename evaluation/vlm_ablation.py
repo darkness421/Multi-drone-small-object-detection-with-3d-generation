@@ -6,20 +6,7 @@ import argparse
 from pathlib import Path
 
 from .stats import write_metrics_csv
-from .vlm_compare import empty_vlm_table
-
-
-VLM_COLUMNS = [
-    "Method",
-    "Ambiguous Acc ↑",
-    "Correction Rate ↑",
-    "Over-correction ↓",
-    "VLM Calls ↓",
-    "Avg Tokens ↓",
-    "Latency ↓",
-    "Explanation Usefulness ↑",
-    "JSON Parse Success ↑",
-]
+from .vlm_compare import VLM_COLUMNS, empty_vlm_table
 
 
 def write_vlm_template(out_path: str | Path) -> None:
@@ -36,4 +23,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

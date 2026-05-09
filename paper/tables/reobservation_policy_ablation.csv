@@ -1,4 +1,4 @@
-﻿Method,Final Acc ↑,Ambiguity Res. ↑,Reobs Success ↑,ΔEntropy ↓,Δ3D Error ↓,Reobs ↓,Flight Cost ↓,Energy Cost ↓,Communication Cost ↓,VLM Calls ↓,Latency ↓
+﻿Method,Final_Acc,Ambiguity_Res,Reobs_Success,Delta_Entropy,Delta_3D_Error,Reobs,Flight_Cost,Energy_Cost,Communication_Cost,VLM_Calls,Latency
 No re-observation,,,,,,0,0,0,0,0,
 Random re-observation,,,,,,,,,,,
 Density-guided crop style,,,,,,,,,,,

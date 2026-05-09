@@ -14,24 +14,35 @@ DETECTOR_METHODS = [
 ]
 
 
-DETECTOR_COLUMNS = ["Method", "Dataset", "AP ↑", "AP50 ↑", "AP75 ↑", "APsmall ↑", "FPS ↑", "Params ↓", "GFLOPs ↓"]
+DETECTOR_COLUMNS = [
+    "Method",
+    "Dataset",
+    "AP",
+    "AP50",
+    "AP75",
+    "APsmall",
+    "FPS",
+    "Params",
+    "GFLOPs",
+]
 
 
 def empty_detector_table(datasets: list[str] | None = None) -> list[dict[str, str]]:
+    """Return an empty 2D detector comparison table template."""
+
     datasets = datasets or ["VisDrone2019-DET", "UAVDT"]
     return [
         {
             "Method": method,
             "Dataset": dataset,
-            "AP ↑": "",
-            "AP50 ↑": "",
-            "AP75 ↑": "",
-            "APsmall ↑": "",
-            "FPS ↑": "",
-            "Params ↓": "",
-            "GFLOPs ↓": "",
+            "AP": "",
+            "AP50": "",
+            "AP75": "",
+            "APsmall": "",
+            "FPS": "",
+            "Params": "",
+            "GFLOPs": "",
         }
         for dataset in datasets
         for method in DETECTOR_METHODS
     ]
-
