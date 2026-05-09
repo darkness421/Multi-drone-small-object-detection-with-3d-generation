@@ -48,6 +48,7 @@ Graph / ambiguity / policy prototype:
 
 ```bat
 scripts\06_run_core_pipeline.bat
+scripts\07_eval_association.bat
 python -m graph.graph_builder --tokens outputs\evidence\tokens.jsonl --out outputs\graph\hypotheses.json
 python -m ambiguity.ambiguity_scorer --hypotheses outputs\graph\hypotheses.json --out outputs\ambiguity\scores.json
 python -m policy.policy_simulator --hypotheses outputs\graph\hypotheses.json --ambiguity outputs\ambiguity\scores.json --out outputs\policy\metrics.csv

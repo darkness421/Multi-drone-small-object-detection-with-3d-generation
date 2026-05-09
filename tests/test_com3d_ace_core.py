@@ -20,6 +20,7 @@ from policy import select_action
 from policy.policy_simulator import simulate_policy
 from evaluation.policy_compare import empty_reobservation_table
 from evaluation.detector_compare import empty_detector_table
+from evaluation.association_eval import evaluate_association, infer_gt_from_tokens
 from evaluation.system_compare import empty_system_table
 from evaluation.vlm_compare import empty_vlm_table
 from runtime.config import load_config
@@ -166,6 +167,11 @@ class TestCom3DAceCore(unittest.TestCase):
             self.assertTrue(outputs["hypotheses"].exists())
             self.assertTrue(outputs["ambiguity"].exists())
             self.assertTrue(outputs["policy"].exists())
+            gt_by_obs, gt_centers = infer_gt_from_tokens(outputs["tokens"])
+            hypotheses = __import__("json").loads(outputs["hypotheses"].read_text(encoding="utf-8"))
+            metrics = evaluate_association(hypotheses, gt_by_obs, gt_centers)
+            self.assertIn("association_f1", metrics)
+            self.assertIn("false_merge_rate", metrics)
 
             rows = write_plan(tmp_path / "detector_plan.csv", "configs/detector/visdrone_yolo_data.yaml")
             self.assertGreaterEqual(len(rows), 1)

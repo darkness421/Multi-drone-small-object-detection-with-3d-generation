@@ -289,6 +289,8 @@ Second, we build a synchronized multi-UAV simulation benchmark in Isaac Sim to e
 - Windows bootstrap priority: `pathlib`, `environment.yml`, `scripts/check_env.py`, `scripts/01_convert_datasets.bat`, EvidenceToken JSONL pipeline
 - Isaac export entrypoint: `simulation/isaac/export_rgb_depth_pose.py`
 - Isaac dry-run check: `scripts/03_export_isaac_dataset.bat`
+- Core prototype check: `scripts/06_run_core_pipeline.bat`
+- Association metric check: `scripts/07_eval_association.bat`
 
 ## 7. Windows 기준 구현 순서
 
