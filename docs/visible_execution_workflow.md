@@ -11,6 +11,18 @@
 5. `scripts\11_train_yolo11n_visdrone.bat 100`
 
 YOLO 학습 로그는 VS Code 터미널에서 그대로 확인한다. 학습 결과는 `outputs/detectors/` 아래에 저장한다.
+사용자가 실시간으로 보기 쉽게 별도 터미널을 띄울 때는 아래 launcher를 사용한다.
+
+```bat
+scripts\17_train_yolo_visible_terminal.bat 100 yolo11n
+scripts\17_train_yolo_visible_terminal.bat 100 yolov8n
+```
+
+평가도 터미널이 닫히지 않게 보면서 실행할 수 있다.
+
+```bat
+scripts\18_eval_yolo_visible_terminal.bat outputs\detectors\...\best.pt
+```
 
 ## Detector Test Preview
 

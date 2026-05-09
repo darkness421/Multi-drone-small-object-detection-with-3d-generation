@@ -49,10 +49,18 @@ scripts\11_train_yolo11n_visdrone.bat 100
 scripts\12_train_yolov8n_visdrone.bat 100
 ```
 
+학습 로그를 새 터미널 창에서 실시간으로 보면서 실행:
+
+```bat
+scripts\17_train_yolo_visible_terminal.bat 100 yolo11n
+scripts\17_train_yolo_visible_terminal.bat 100 yolov8n
+```
+
 학습이 끝난 뒤 best weight를 평가할 때:
 
 ```bat
 scripts\13_eval_yolo_visdrone.bat outputs\detectors\...\best.pt
+scripts\18_eval_yolo_visible_terminal.bat outputs\detectors\...\best.pt
 ```
 
 Detector 테스트 결과를 눈으로 확인할 때:
