@@ -3,7 +3,7 @@
 - Notion Section: `Related Research`
 - Status: `Not Started`
 - Source: `docs/survey_workspace.md`
-- Export Date: `2026-05-07`
+- Export Date: `2026-05-09`
 
 ---
 
@@ -286,3 +286,4 @@ Second, we build a synchronized multi-UAV simulation benchmark in Isaac Sim to e
 - Public datasets: `VisDrone`, `UAVDT`, `AI-TOD`
 - Full system validation: `Isaac Sim + Cesium` synthetic multi-UAV episodes
 - Core modules now scaffolded: `evidence`, `alignment`, `graph`, `ambiguity`, `policy`, `vlm`, `evaluation`, `simulation`
+- Windows bootstrap priority: `pathlib`, `environment.yml`, `scripts/check_env.py`, `scripts/01_convert_datasets.bat`, EvidenceToken JSONL pipeline

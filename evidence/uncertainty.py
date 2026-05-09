@@ -42,6 +42,14 @@ def margin_confidence(logits: Sequence[float]) -> float:
     return probs[0] - probs[1]
 
 
+def uncertainty_score(logits: Sequence[float]) -> float:
+    """Combine entropy and confidence margin into a single uncertainty score."""
+
+    entropy = class_entropy(logits)
+    margin = margin_confidence(logits)
+    return float(max(0.0, min(1.0, 0.7 * entropy + 0.3 * (1.0 - margin))))
+
+
 def brier_score(probs: Sequence[float], target_index: int) -> float:
     return float(sum((p - (1.0 if i == target_index else 0.0)) ** 2 for i, p in enumerate(probs)))
 
@@ -80,4 +88,3 @@ def summarize_mc_dropout(prob_samples: Sequence[Sequence[float]]) -> MCDropoutSu
     mean = [sum(sample[i] for sample in prob_samples) / n for i in range(dim)]
     var = [sum((sample[i] - mean[i]) ** 2 for sample in prob_samples) / n for i in range(dim)]
     return MCDropoutSummary(mean, class_entropy(mean), var)
-

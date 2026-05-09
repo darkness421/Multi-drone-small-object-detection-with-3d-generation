@@ -17,6 +17,10 @@ SAGE_SCHEMA = {
 }
 
 
+def expected_json_schema() -> dict[str, object]:
+    return dict(SAGE_SCHEMA)
+
+
 def build_sage_prompt(
     *,
     scene_summary: str,
@@ -40,6 +44,21 @@ def build_sage_prompt(
             "Graph summary:",
             json.dumps(graph_summary, indent=2),
         ]
+    )
+
+
+def build_sage_prompt_from_paths(
+    *,
+    crop_paths: list[str],
+    graph_summary: dict[str, Any],
+    ambiguity_reasons: list[str],
+) -> str:
+    return build_sage_prompt(
+        scene_summary="Cooperative multi-UAV small-object evidence verification.",
+        graph_summary={**graph_summary, "multi_view_crop_paths": crop_paths},
+        ambiguity_reasons=ambiguity_reasons,
+        candidate_classes=list(graph_summary.get("candidate_classes", [])),
+        roi_hints=crop_paths,
     )
 
 
@@ -78,4 +97,3 @@ def parse_sage_response(text: str) -> dict[str, Any]:
     payload.setdefault("missing_evidence", "")
     payload.setdefault("recommended_action", "VLM verify")
     return payload
-

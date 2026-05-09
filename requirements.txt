@@ -1,7 +1,9 @@
 numpy
 PyYAML
 torch
+torchvision
 ultralytics
+opencv-python
 scipy
 scikit-learn
-
+matplotlib

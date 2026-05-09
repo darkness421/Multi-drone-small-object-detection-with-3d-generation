@@ -1,0 +1,13 @@
+datasets:
+  visdrone:
+    images: data/raw/VisDrone2019-DET/VisDrone2019-DET-train/images
+    annotations: data/raw/VisDrone2019-DET/VisDrone2019-DET-train/annotations
+    output: data/processed/visdrone_train_coco.json
+  uavdt:
+    sequence_dir: data/raw/UAVDT/images
+    annotations: data/raw/UAVDT/annotations/gt.txt
+    output: data/processed/uavdt_coco.json
+  aitod:
+    annotations: data/raw/AI-TOD/annotations/aitod_train.json
+    output: data/processed/aitod_train_coco.json
+

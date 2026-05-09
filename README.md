@@ -26,6 +26,31 @@ evaluation/          metrics and statistical utilities
 scripts/             experiment entrypoint shell scripts
 ```
 
+## Windows Quick Start
+
+```bat
+conda env create -f environment.yml
+conda activate com3d-ace
+python scripts\check_env.py
+scripts\01_convert_datasets.bat
+```
+
+Dataset 경로는 `configs/dataset_roots.yaml`에서 수정합니다.
+
+EvidenceToken 생성 예시:
+
+```bat
+python -m detectors.yolo_folder_infer --weights yolo11n.pt --images data\sample_images --out-jsonl outputs\evidence\tokens.jsonl --crop-dir outputs\crops
+```
+
+Graph / ambiguity / policy prototype:
+
+```bat
+python -m graph.graph_builder --tokens outputs\evidence\tokens.jsonl --out outputs\graph\hypotheses.json
+python -m ambiguity.ambiguity_scorer --hypotheses outputs\graph\hypotheses.json --out outputs\ambiguity\scores.json
+python -m policy.policy_simulator --hypotheses outputs\graph\hypotheses.json --ambiguity outputs\ambiguity\scores.json --out outputs\policy\metrics.csv
+```
+
 ## 나중에 다시 만들 것
 
 - 최종 제안 시스템 그림

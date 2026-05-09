@@ -3,16 +3,21 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
 
 from alignment.costs import pairwise_evidence_cost, reliability_weight
+from ambiguity.ambiguity_scorer import score_hypothesis
 from ambiguity import diagnose_ambiguity
-from evidence import EvidenceToken
+from evidence import EvidenceToken, extract_crop, load_tokens_jsonl, save_tokens_jsonl
 from evidence.lifting import lift_bbox_center_to_world
 from evidence.uncertainty import class_entropy, max_softmax_confidence
 from graph import build_evidence_graph
+from graph.graph_builder import build_object_hypotheses
 from policy import select_action
+from policy.policy_simulator import simulate_policy
 from evaluation.policy_compare import empty_reobservation_table
 from evaluation.vlm_compare import empty_vlm_table
 from vlm import build_sage_prompt, parse_sage_response
@@ -89,6 +94,41 @@ class TestCom3DAceCore(unittest.TestCase):
         self.assertEqual(len(rows), 5)
         self.assertEqual(rows[0]["Method"], "No VLM")
         self.assertEqual(rows[-1]["Method"], "SAGE-triggered VLM")
+
+    def test_evidence_jsonl_and_fake_detection_crop(self) -> None:
+        tokens = [
+            make_token("fake_1", "uav1", [3.0, 0.1], [0.0, 0.0, 10.0]),
+            make_token("fake_2", "uav2", [2.5, 0.2], [0.1, 0.0, 10.0]),
+        ]
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            jsonl_path = tmp_path / "tokens.jsonl"
+            save_tokens_jsonl(tokens, jsonl_path)
+            loaded = load_tokens_jsonl(jsonl_path)
+            self.assertEqual(len(loaded), 2)
+            self.assertEqual(loaded[0].token_id, "fake_1")
+
+            try:
+                import cv2
+            except ImportError:
+                return
+            image_path = tmp_path / "image.jpg"
+            cv2.imwrite(str(image_path), np.full((48, 64, 3), 255, dtype=np.uint8))
+            crop = extract_crop(image_path, [4, 5, 20, 10])
+            self.assertEqual(crop.shape[0], 10)
+            self.assertEqual(crop.shape[1], 20)
+
+    def test_graph_ambiguity_policy_prototypes(self) -> None:
+        tokens = [
+            make_token("fake_1", "uav1", [2.0, 1.8], [0.0, 0.0, 10.0]),
+            make_token("fake_2", "uav2", [1.9, 1.7], [0.2, 0.0, 10.0]),
+        ]
+        hypotheses = build_object_hypotheses(tokens, threshold=2.0)
+        self.assertGreaterEqual(len(hypotheses), 1)
+        scored = score_hypothesis(hypotheses[0].to_dict())
+        self.assertIn("ambiguity_score", scored)
+        rows = simulate_policy([hypothesis.to_dict() for hypothesis in hypotheses], [scored])
+        self.assertEqual({row["method"] for row in rows}, {"no-reobserve", "random", "uncertainty-only", "information-gain-only", "com3d-policy"})
 
 
 if __name__ == "__main__":

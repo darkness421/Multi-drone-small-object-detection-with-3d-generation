@@ -10,9 +10,9 @@ import argparse
 from pathlib import Path
 
 try:
-    from .common import bbox_area, coco_template, write_json
+    from .common import bbox_area, coco_template, image_size, write_json
 except ImportError:
-    from common import bbox_area, coco_template, write_json
+    from common import bbox_area, coco_template, image_size, write_json
 
 
 VISDRONE_CATEGORIES = [
@@ -37,7 +37,10 @@ def convert_visdrone(image_dir: str | Path, annotation_dir: str | Path) -> dict[
     for image_id, image_path in enumerate(sorted(image_dir.glob("*")), start=1):
         if image_path.suffix.lower() not in {".jpg", ".jpeg", ".png"}:
             continue
-        coco["images"].append({"id": image_id, "file_name": str(image_path), "metadata": {}})
+        width, height = image_size(image_path)
+        coco["images"].append(
+            {"id": image_id, "file_name": str(image_path), "width": width, "height": height, "metadata": {}}
+        )
         anno_path = annotation_dir / f"{image_path.stem}.txt"
         if not anno_path.exists():
             continue

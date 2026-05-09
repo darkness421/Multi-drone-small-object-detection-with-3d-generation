@@ -6,9 +6,9 @@ import argparse
 from pathlib import Path
 
 try:
-    from .common import bbox_area, coco_template, write_json
+    from .common import bbox_area, coco_template, image_size, write_json
 except ImportError:
-    from common import bbox_area, coco_template, write_json
+    from common import bbox_area, coco_template, image_size, write_json
 
 
 UAVDT_CATEGORIES = [
@@ -35,7 +35,16 @@ def convert_uavdt(sequence_dir: str | Path, annotations_file: str | Path) -> dic
         if frame_id not in image_id_by_frame:
             image_id_by_frame[frame_id] = len(image_id_by_frame) + 1
             image_path = sequence_dir / f"{frame_id:06d}.jpg"
-            coco["images"].append({"id": image_id_by_frame[frame_id], "file_name": str(image_path), "metadata": {}})
+            width, height = image_size(image_path)
+            coco["images"].append(
+                {
+                    "id": image_id_by_frame[frame_id],
+                    "file_name": str(image_path),
+                    "width": width,
+                    "height": height,
+                    "metadata": {},
+                }
+            )
         coco["annotations"].append(
             {
                 "id": ann_id,

@@ -40,3 +40,24 @@ def write_json(payload: dict[str, Any] | list[Any], path: str | Path) -> None:
 def bbox_area(bbox: list[float]) -> float:
     return max(0.0, float(bbox[2])) * max(0.0, float(bbox[3]))
 
+
+def image_size(path: str | Path) -> tuple[int | None, int | None]:
+    """Return image width/height when OpenCV or PIL is available."""
+
+    path = Path(path)
+    try:
+        import cv2
+
+        image = cv2.imread(str(path))
+        if image is not None:
+            height, width = image.shape[:2]
+            return int(width), int(height)
+    except Exception:
+        pass
+    try:
+        from PIL import Image
+
+        with Image.open(path) as image:
+            return int(image.width), int(image.height)
+    except Exception:
+        return None, None
