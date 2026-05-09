@@ -24,6 +24,8 @@ from evaluation.system_compare import empty_system_table
 from evaluation.vlm_compare import empty_vlm_table
 from runtime.config import load_config
 from runtime.outputs import prepare_run_dir
+from scripts.run_core_pipeline import run_pipeline
+from scripts.run_detector_baselines import write_plan
 from simulation.isaac.export_rgb_depth_pose import build_dry_run_manifest
 from vlm import build_sage_prompt, parse_sage_response
 
@@ -156,6 +158,18 @@ class TestCom3DAceCore(unittest.TestCase):
             self.assertTrue((run_dir / "logs").exists())
             self.assertTrue((run_dir / "metrics").exists())
             self.assertTrue((run_dir / "artifacts").exists())
+
+    def test_windows_pipeline_entrypoints(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            outputs = run_pipeline(tmp_path / "tokens.jsonl", tmp_path / "core", make_dummy=True)
+            self.assertTrue(outputs["hypotheses"].exists())
+            self.assertTrue(outputs["ambiguity"].exists())
+            self.assertTrue(outputs["policy"].exists())
+
+            rows = write_plan(tmp_path / "detector_plan.csv", "configs/detector/visdrone_yolo_data.yaml")
+            self.assertGreaterEqual(len(rows), 1)
+            self.assertIn(rows[0]["status"], {"ready", "skipped"})
 
 
 if __name__ == "__main__":

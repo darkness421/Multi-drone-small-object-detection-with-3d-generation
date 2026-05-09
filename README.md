@@ -33,6 +33,7 @@ conda env create -f environment.yml
 conda activate com3d-ace
 python scripts\check_env.py
 scripts\01_convert_datasets.bat
+scripts\04_train_detector_baselines.bat
 ```
 
 Dataset 경로는 `configs/dataset_roots.yaml`에서 수정합니다.
@@ -46,6 +47,7 @@ python -m detectors.yolo_folder_infer --weights yolo11n.pt --images data\sample_
 Graph / ambiguity / policy prototype:
 
 ```bat
+scripts\06_run_core_pipeline.bat
 python -m graph.graph_builder --tokens outputs\evidence\tokens.jsonl --out outputs\graph\hypotheses.json
 python -m ambiguity.ambiguity_scorer --hypotheses outputs\graph\hypotheses.json --out outputs\ambiguity\scores.json
 python -m policy.policy_simulator --hypotheses outputs\graph\hypotheses.json --ambiguity outputs\ambiguity\scores.json --out outputs\policy\metrics.csv

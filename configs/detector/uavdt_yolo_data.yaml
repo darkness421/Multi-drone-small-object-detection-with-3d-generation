@@ -1,0 +1,10 @@
+# Update these paths after UAVDT is converted/prepared in YOLO format.
+path: data/processed/uavdt_yolo
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: car
+  1: truck
+  2: bus
+
