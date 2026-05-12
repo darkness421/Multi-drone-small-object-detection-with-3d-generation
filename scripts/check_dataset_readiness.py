@@ -42,8 +42,11 @@ def _count_files(path: Path, suffixes: Iterable[str] | None = None) -> int:
     return total
 
 
-def _required_fields(name: str) -> tuple[str, ...]:
+def _required_fields(name: str, fields: dict[str, Path] | None = None) -> tuple[str, ...]:
     if name == "visdrone":
+        fields = fields or {}
+        if "train_images" in fields:
+            return ("train_images", "train_annotations", "val_images", "val_annotations")
         return ("images", "annotations")
     if name == "uavdt":
         return ("sequence_dir", "annotations")
@@ -61,7 +64,7 @@ def _count_field(field: str, path: Path) -> int:
 
 
 def inspect_dataset(name: str, fields: dict[str, Path]) -> DatasetReadiness:
-    required = _required_fields(name)
+    required = _required_fields(name, fields)
     missing = [field for field in required if not fields.get(field, Path()).exists()]
     existing = {field: str(path) for field, path in fields.items() if path.exists()}
     counts = {field: _count_field(field, path) for field, path in fields.items() if path.exists()}

@@ -13,7 +13,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from data.converters.aitod_to_coco import normalize_aitod
-from data.converters.coco_to_yolo import convert_coco_to_yolo
+from data.converters.coco_to_yolo import convert_coco_splits_to_yolo, convert_coco_to_yolo
 from data.converters.common import write_json
 from data.converters.uavdt_to_coco import convert_uavdt
 from data.converters.visdrone_to_coco import convert_visdrone
@@ -25,6 +25,32 @@ def resolve(path: str | Path) -> Path:
 
 
 def maybe_convert_visdrone(cfg: dict[str, str]) -> None:
+    if "train_images" in cfg:
+        split_outputs: dict[str, Path] = {}
+        split_specs = {
+            "train": ("train_images", "train_annotations", "train_output"),
+            "val": ("val_images", "val_annotations", "val_output"),
+            "test": ("test_images", "test_annotations", "test_output"),
+        }
+        for split, (images_key, annotations_key, output_key) in split_specs.items():
+            images = resolve(cfg.get(images_key, ""))
+            annotations = resolve(cfg.get(annotations_key, ""))
+            output = resolve(cfg.get(output_key, f"data/processed/visdrone_{split}_coco.json"))
+            if not images.exists() or not annotations.exists():
+                print(f"[skip] VisDrone {split} missing: images={images.exists()} annotations={annotations.exists()}")
+                continue
+            write_json(convert_visdrone(images, annotations), output)
+            split_outputs[split] = output
+            print(f"[ok] VisDrone {split} -> {output}")
+
+        if "train" in split_outputs and "val" in split_outputs:
+            yolo_output = resolve(cfg.get("yolo_output", "data/processed/visdrone_yolo"))
+            data_yaml = convert_coco_splits_to_yolo(split_outputs, yolo_output, copy_images=True)
+            print(f"[ok] VisDrone YOLO explicit splits -> {data_yaml}")
+        else:
+            print("[skip] VisDrone YOLO: train and val splits are required")
+        return
+
     images = resolve(cfg["images"])
     annotations = resolve(cfg["annotations"])
     output = resolve(cfg["output"])

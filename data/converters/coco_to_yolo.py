@@ -41,6 +41,67 @@ def _split_for_index(index: int, train_ratio: float, val_ratio: float) -> str:
     return "test"
 
 
+def _write_names_yaml(out_dir: Path, names: dict[int, str]) -> Path:
+    data_yaml = out_dir / "data.yaml"
+    names_block = "\n".join(f"  {idx}: {name}" for idx, name in names.items())
+    data_yaml.write_text(
+        "\n".join(
+            [
+                f"path: {out_dir.as_posix()}",
+                "train: images/train",
+                "val: images/val",
+                "test: images/test",
+                "names:",
+                names_block,
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return data_yaml
+
+
+def _write_yolo_split(payload: dict[str, Any], out_dir: Path, split: str, *, copy_images: bool) -> tuple[int, int]:
+    categories = payload.get("categories", [])
+    cat_to_idx = category_id_to_yolo_index(categories)
+    images = {int(image["id"]): image for image in payload.get("images", [])}
+    annotations_by_image: dict[int, list[dict[str, Any]]] = {}
+    for ann in payload.get("annotations", []):
+        annotations_by_image.setdefault(int(ann["image_id"]), []).append(ann)
+
+    image_count = 0
+    label_count = 0
+    (out_dir / "images" / split).mkdir(parents=True, exist_ok=True)
+    (out_dir / "labels" / split).mkdir(parents=True, exist_ok=True)
+
+    for image_id, image in sorted(images.items()):
+        file_name = Path(image["file_name"])
+        width = image.get("width")
+        height = image.get("height")
+        if width is None or height is None:
+            width, height = image_size(file_name)
+        if not width or not height:
+            width, height = 1, 1
+
+        target_image = out_dir / "images" / split / file_name.name
+        if copy_images and file_name.exists():
+            shutil.copy2(file_name, target_image)
+        elif not target_image.exists():
+            target_image.write_text(f"image_placeholder={file_name}\n", encoding="utf-8")
+
+        label_lines = []
+        for ann in annotations_by_image.get(image_id, []):
+            category_id = int(ann["category_id"])
+            if category_id not in cat_to_idx:
+                continue
+            bbox = normalize_bbox_xywh(ann["bbox"], float(width), float(height))
+            label_lines.append(" ".join([str(cat_to_idx[category_id])] + [f"{value:.6f}" for value in bbox]))
+        (out_dir / "labels" / split / f"{file_name.stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
+        image_count += 1
+        label_count += len(label_lines)
+    return image_count, label_count
+
+
 def convert_coco_to_yolo(
     coco_json: str | Path,
     out_dir: str | Path,
@@ -52,19 +113,17 @@ def convert_coco_to_yolo(
     coco_json = Path(coco_json)
     out_dir = Path(out_dir)
     payload = json.loads(coco_json.read_text(encoding="utf-8"))
-    categories = payload.get("categories", [])
-    cat_to_idx = category_id_to_yolo_index(categories)
-    names = category_names(categories)
-
-    images = {int(image["id"]): image for image in payload.get("images", [])}
-    annotations_by_image: dict[int, list[dict[str, Any]]] = {}
-    for ann in payload.get("annotations", []):
-        annotations_by_image.setdefault(int(ann["image_id"]), []).append(ann)
+    names = category_names(payload.get("categories", []))
 
     for split in ("train", "val", "test"):
         (out_dir / "images" / split).mkdir(parents=True, exist_ok=True)
         (out_dir / "labels" / split).mkdir(parents=True, exist_ok=True)
 
+    images = {int(image["id"]): image for image in payload.get("images", [])}
+    annotations_by_image: dict[int, list[dict[str, Any]]] = {}
+    for ann in payload.get("annotations", []):
+        annotations_by_image.setdefault(int(ann["image_id"]), []).append(ann)
+    cat_to_idx = category_id_to_yolo_index(payload.get("categories", []))
     for idx, (image_id, image) in enumerate(sorted(images.items())):
         file_name = Path(image["file_name"])
         split = _split_for_index(idx, train_ratio, val_ratio)
@@ -90,23 +149,30 @@ def convert_coco_to_yolo(
             label_lines.append(" ".join([str(cat_to_idx[category_id])] + [f"{value:.6f}" for value in bbox]))
         (out_dir / "labels" / split / f"{file_name.stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
 
-    data_yaml = out_dir / "data.yaml"
-    names_block = "\n".join(f"  {idx}: {name}" for idx, name in names.items())
-    data_yaml.write_text(
-        "\n".join(
-            [
-                f"path: {out_dir.as_posix()}",
-                "train: images/train",
-                "val: images/val",
-                "test: images/test",
-                "names:",
-                names_block,
-                "",
-            ]
-        ),
-        encoding="utf-8",
-    )
-    return data_yaml
+    return _write_names_yaml(out_dir, names)
+
+
+def convert_coco_splits_to_yolo(
+    split_coco_jsons: dict[str, str | Path],
+    out_dir: str | Path,
+    *,
+    copy_images: bool = False,
+) -> Path:
+    """Convert explicit COCO split files into one Ultralytics YOLO dataset."""
+
+    out_dir = Path(out_dir)
+    names: dict[int, str] | None = None
+    for split, coco_json in split_coco_jsons.items():
+        payload = json.loads(Path(coco_json).read_text(encoding="utf-8"))
+        current_names = category_names(payload.get("categories", []))
+        if names is None:
+            names = current_names
+        _write_yolo_split(payload, out_dir, split, copy_images=copy_images)
+
+    for split in ("train", "val", "test"):
+        (out_dir / "images" / split).mkdir(parents=True, exist_ok=True)
+        (out_dir / "labels" / split).mkdir(parents=True, exist_ok=True)
+    return _write_names_yaml(out_dir, names or {})
 
 
 def main() -> None:
@@ -129,4 +195,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

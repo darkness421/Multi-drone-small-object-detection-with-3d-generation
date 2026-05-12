@@ -11,7 +11,7 @@ import numpy as np
 from alignment.costs import pairwise_evidence_cost, reliability_weight
 from ambiguity.ambiguity_scorer import score_hypothesis
 from ambiguity import diagnose_ambiguity
-from data.converters.coco_to_yolo import convert_coco_to_yolo
+from data.converters.coco_to_yolo import convert_coco_splits_to_yolo, convert_coco_to_yolo
 from evidence import EvidenceToken, extract_crop, load_tokens_jsonl, render_preview_html, save_tokens_jsonl
 from evidence.lifting import lift_bbox_center_to_world
 from evidence.uncertainty import class_entropy, max_softmax_confidence
@@ -34,6 +34,7 @@ from scripts.make_visible_smoke_sample import create_visible_smoke_sample
 from scripts.preview_yolo_dataset import render_yolo_dataset_preview
 from scripts.run_core_pipeline import run_pipeline
 from scripts.run_detector_baselines import write_plan
+from scripts.stage_visdrone_dataset import stage_visdrone
 from simulation.isaac.export_rgb_depth_pose import build_dry_run_manifest
 from vlm import build_sage_prompt, parse_sage_response
 
@@ -224,6 +225,35 @@ class TestCom3DAceCore(unittest.TestCase):
             label_files = list((tmp_path / "yolo" / "labels").rglob("*.txt"))
             self.assertEqual(len(label_files), 1)
 
+    def test_coco_explicit_splits_to_yolo_converter(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            train_image = tmp_path / "train.jpg"
+            val_image = tmp_path / "val.jpg"
+            train_image.write_text("placeholder", encoding="utf-8")
+            val_image.write_text("placeholder", encoding="utf-8")
+
+            def write_coco(path: Path, image_path: Path) -> None:
+                path.write_text(
+                    __import__("json").dumps(
+                        {
+                            "images": [{"id": 1, "file_name": str(image_path), "width": 100, "height": 50}],
+                            "annotations": [{"id": 1, "image_id": 1, "category_id": 1, "bbox": [10, 5, 20, 10]}],
+                            "categories": [{"id": 1, "name": "car"}],
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+
+            train_coco = tmp_path / "train.json"
+            val_coco = tmp_path / "val.json"
+            write_coco(train_coco, train_image)
+            write_coco(val_coco, val_image)
+            data_yaml = convert_coco_splits_to_yolo({"train": train_coco, "val": val_coco}, tmp_path / "yolo")
+            self.assertTrue(data_yaml.exists())
+            self.assertTrue((tmp_path / "yolo" / "labels" / "train" / "train.txt").exists())
+            self.assertTrue((tmp_path / "yolo" / "labels" / "val" / "val.txt").exists())
+
     def test_dataset_readiness_inspection(self) -> None:
         with TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
@@ -319,6 +349,20 @@ class TestCom3DAceCore(unittest.TestCase):
             self.assertTrue(result.index_html.exists())
             self.assertEqual(result.image_count, 1)
             self.assertEqual(result.box_count, 1)
+
+    def test_stage_visdrone_dataset_from_extracted_dir(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            source = tmp_path / "downloads"
+            split = source / "VisDrone2019-DET-train"
+            (split / "images").mkdir(parents=True)
+            (split / "annotations").mkdir(parents=True)
+            (split / "images" / "sample.jpg").write_text("placeholder", encoding="utf-8")
+            (split / "annotations" / "sample.txt").write_text("1,2,3,4,1,4,0,0", encoding="utf-8")
+            raw_root = tmp_path / "raw" / "VisDrone2019-DET"
+            actions = stage_visdrone(source, raw_root, apply=True)
+            self.assertEqual(actions[0].action, "copy-dir")
+            self.assertTrue((raw_root / "VisDrone2019-DET-train" / "images" / "sample.jpg").exists())
 
 
 if __name__ == "__main__":

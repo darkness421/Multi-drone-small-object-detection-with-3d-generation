@@ -33,6 +33,7 @@ conda env create -f environment.yml
 conda activate com3d-ace
 scripts\00_check_env.bat
 scripts\00_check_datasets.bat
+scripts\21_stage_visdrone_from_downloads.bat
 scripts\01_convert_datasets.bat
 scripts\10_check_training_readiness.bat
 scripts\04_train_detector_baselines.bat
@@ -40,6 +41,7 @@ scripts\04_train_detector_baselines.bat
 
 Dataset 경로는 `configs/dataset_roots.yaml`에서 수정합니다.
 `scripts\00_check_datasets.bat`를 먼저 실행하면 `VisDrone`, `UAVDT`, `AI-TOD` raw path 중 무엇이 아직 비어 있는지 바로 확인할 수 있습니다.
+`scripts\21_stage_visdrone_from_downloads.bat`는 `Downloads`에 있는 VisDrone zip 또는 폴더를 repo raw 구조에 맞게 배치할 수 있는 dry-run 도구입니다. 실제 복사/압축해제는 `scripts\21_stage_visdrone_from_downloads.bat apply`로 실행합니다.
 `scripts\10_check_training_readiness.bat`는 YOLO용 `data.yaml`, image/label 폴더, placeholder 이미지 여부, active Python 환경의 `ultralytics` 설치 여부를 확인합니다.
 
 VisDrone YOLO baseline 학습:

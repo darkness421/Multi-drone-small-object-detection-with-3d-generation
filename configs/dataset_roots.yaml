@@ -2,7 +2,16 @@ datasets:
   visdrone:
     images: data/raw/VisDrone2019-DET/VisDrone2019-DET-train/images
     annotations: data/raw/VisDrone2019-DET/VisDrone2019-DET-train/annotations
+    train_images: data/raw/VisDrone2019-DET/VisDrone2019-DET-train/images
+    train_annotations: data/raw/VisDrone2019-DET/VisDrone2019-DET-train/annotations
+    val_images: data/raw/VisDrone2019-DET/VisDrone2019-DET-val/images
+    val_annotations: data/raw/VisDrone2019-DET/VisDrone2019-DET-val/annotations
+    test_images: data/raw/VisDrone2019-DET/VisDrone2019-DET-test-dev/images
+    test_annotations: data/raw/VisDrone2019-DET/VisDrone2019-DET-test-dev/annotations
     output: data/processed/visdrone_train_coco.json
+    train_output: data/processed/visdrone_train_coco.json
+    val_output: data/processed/visdrone_val_coco.json
+    test_output: data/processed/visdrone_test_coco.json
     yolo_output: data/processed/visdrone_yolo
   uavdt:
     sequence_dir: data/raw/UAVDT/images
