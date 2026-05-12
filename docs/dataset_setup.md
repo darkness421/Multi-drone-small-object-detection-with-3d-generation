@@ -46,6 +46,17 @@ preview HTML에서 image와 bbox가 맞으면 YOLOv11n 학습으로 넘어간다
 scripts\17_train_yolo_visible_terminal.bat 100 yolo11n
 ```
 
+원본 파일이 PC에 아직 없으면 아래 명령으로 다운로드부터 변환, readiness check, preview까지 한 번에 진행할 수 있다. 다운로드 용량은 train/val/test-dev 합쳐서 약 1.9GB이며, 새 터미널에서 진행률을 볼 수 있다.
+
+```bat
+scripts\23_prepare_visdrone_visible_terminal.bat
+```
+
+다운로드 source:
+
+- Official dataset index: `https://github.com/VisDrone/VisDrone-Dataset`
+- Mirror used by the setup script: `https://github.com/ultralytics/yolov5/releases/tag/v1.0`
+
 ## 현재 우선순위
 
 1. `VisDrone2019-DET-train`
