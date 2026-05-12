@@ -35,6 +35,7 @@ from scripts.preview_yolo_dataset import render_yolo_dataset_preview
 from scripts.run_core_pipeline import run_pipeline
 from scripts.run_detector_baselines import write_plan
 from scripts.stage_visdrone_dataset import stage_visdrone
+from scripts.track_training_experiment import finish_experiment, start_experiment, write_experiment_index
 from simulation.isaac.export_rgb_depth_pose import build_dry_run_manifest
 from vlm import build_sage_prompt, parse_sage_response
 
@@ -363,6 +364,50 @@ class TestCom3DAceCore(unittest.TestCase):
             actions = stage_visdrone(source, raw_root, apply=True)
             self.assertEqual(actions[0].action, "copy-dir")
             self.assertTrue((raw_root / "VisDrone2019-DET-train" / "images" / "sample.jpg").exists())
+
+    def test_training_experiment_tracker(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            output_root = tmp_path / "experiments"
+            detector_root = tmp_path / "detectors"
+            manifest = start_experiment(
+                model="yolo11n.pt",
+                dataset="VisDrone2019-DET",
+                epochs=2,
+                imgsz=640,
+                batch=2,
+                data_yaml="configs/detector/visdrone_yolo_data.yaml",
+                command="unit-test-train",
+                output_root=output_root,
+            )
+            run_id = manifest["run_id"]
+            results_dir = detector_root / "unit_run" / "ultralytics"
+            weights_dir = results_dir / "weights"
+            weights_dir.mkdir(parents=True)
+            (weights_dir / "best.pt").write_text("placeholder", encoding="utf-8")
+            results_csv = results_dir / "results.csv"
+            results_csv.write_text(
+                "\n".join(
+                    [
+                        "epoch,metrics/precision(B),metrics/recall(B),metrics/mAP50(B),metrics/mAP50-95(B),train/box_loss,val/box_loss",
+                        "1,0.71,0.62,0.55,0.32,1.2,1.4",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            finished = finish_experiment(
+                run_id=run_id,
+                status="completed",
+                output_root=output_root,
+                detector_root=detector_root,
+                results_csv=results_csv,
+            )
+            self.assertEqual(finished["status"], "completed")
+            self.assertAlmostEqual(finished["metrics"]["AP50"], 0.55)
+            self.assertTrue((output_root / run_id / "manifest.json").exists())
+            self.assertTrue((output_root / run_id / "experiment.md").exists())
+            index_path = write_experiment_index(output_root)
+            self.assertIn(run_id, index_path.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

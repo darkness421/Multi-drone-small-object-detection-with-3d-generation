@@ -58,6 +58,15 @@ scripts\17_train_yolo_visible_terminal.bat 100 yolo11n
 scripts\17_train_yolo_visible_terminal.bat 100 yolov8n
 ```
 
+학습 결과 기록까지 자동으로 남기려면 아래 launcher를 우선 사용합니다.
+
+```bat
+scripts\22_train_yolo_logged_visible_terminal.bat 100 yolo11n
+scripts\22_train_yolo_logged_visible_terminal.bat 100 yolov8n
+```
+
+결과는 `outputs\experiments\<run_id>\experiment.md`와 `outputs\experiments\training_experiment_index.csv`에 저장됩니다.
+
 학습이 끝난 뒤 best weight를 평가할 때:
 
 ```bat

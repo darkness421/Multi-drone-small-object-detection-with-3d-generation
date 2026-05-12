@@ -18,6 +18,19 @@ scripts\17_train_yolo_visible_terminal.bat 100 yolo11n
 scripts\17_train_yolo_visible_terminal.bat 100 yolov8n
 ```
 
+학습 결과까지 자동 기록하려면 아래 launcher를 우선 사용한다. 새 터미널이 열리고, 학습 시작/종료 시점에 `outputs\experiments\` 아래로 manifest, Markdown summary, index CSV가 저장된다.
+
+```bat
+scripts\22_train_yolo_logged_visible_terminal.bat 100 yolo11n
+scripts\22_train_yolo_logged_visible_terminal.bat 100 yolov8n
+```
+
+기록되는 파일:
+
+- `outputs\experiments\<run_id>\manifest.json`
+- `outputs\experiments\<run_id>\experiment.md`
+- `outputs\experiments\training_experiment_index.csv`
+
 평가도 터미널이 닫히지 않게 보면서 실행할 수 있다.
 
 ```bat
