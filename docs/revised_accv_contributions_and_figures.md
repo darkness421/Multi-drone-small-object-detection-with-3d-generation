@@ -22,6 +22,16 @@
 
 VisDrone, UAVDT 등 public UAV dataset에서 기존 SOTA detector를 기반으로 small object detection 성능을 개선함.
 
+이 contribution의 detector-side 제안 모델은 별도 문서 `docs/proposed_perception_prediction_model.md`의
+`CoM3D-ACE-P: Perception and Prediction Module`을 기준으로 구체화함.
+
+핵심 목표:
+
+```text
+고고도 관측에서 작은 목표 후보를 탐지하고,
+짧은 시간 동안 안정적으로 추적·예측함.
+```
+
 ### 기본 방향
 
 YOLOv11, YOLOv8, RT-DETR, D-FINE 등 detector를 baseline으로 두고, 여기에 UAV small object detection에 특화된 plug-in module 2개를 추가함.
