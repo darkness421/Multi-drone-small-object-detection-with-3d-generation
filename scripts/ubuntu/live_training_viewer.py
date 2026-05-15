@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import html
 import subprocess
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -34,10 +35,81 @@ def latest_log(log_dir: Path) -> tuple[Path | None, str]:
     return path, "\n".join(lines)
 
 
+def as_float(value: str | None) -> float | None:
+    if value is None or value == "":
+        return None
+    try:
+        return float(value)
+    except ValueError:
+        return None
+
+
+def latest_training_metrics(project_dir: Path) -> str:
+    rows: list[list[str]] = [
+        [
+            "run",
+            "epoch",
+            "precision",
+            "recall",
+            "F1",
+            "mAP50",
+            "mAP50-95",
+        ]
+    ]
+    csv_paths = sorted(
+        project_dir.glob("*/ultralytics/results.csv"),
+        key=lambda path: path.stat().st_mtime,
+        reverse=True,
+    )
+    for path in csv_paths[:12]:
+        try:
+            with path.open("r", encoding="utf-8-sig", newline="") as handle:
+                result_rows = list(csv.DictReader(handle))
+        except OSError:
+            continue
+        if not result_rows:
+            continue
+        last = result_rows[-1]
+        precision = as_float(last.get("metrics/precision(B)"))
+        recall = as_float(last.get("metrics/recall(B)"))
+        f1 = None
+        if precision is not None and recall is not None and precision + recall > 0:
+            f1 = 2 * precision * recall / (precision + recall)
+        rows.append(
+            [
+                path.parents[1].name,
+                last.get("epoch", ""),
+                format_metric(precision),
+                format_metric(recall),
+                format_metric(f1),
+                format_metric(as_float(last.get("metrics/mAP50(B)"))),
+                format_metric(as_float(last.get("metrics/mAP50-95(B)"))),
+            ]
+        )
+    if len(rows) == 1:
+        return "No live results.csv rows yet.\nDetector accuracy is not a standard detection metric; use mAP50, mAP50-95, precision, recall, and F1."
+    widths = [max(len(row[idx]) for row in rows) for idx in range(len(rows[0]))]
+    rendered = []
+    for row_idx, row in enumerate(rows):
+        rendered.append("  ".join(cell.ljust(widths[idx]) for idx, cell in enumerate(row)))
+        if row_idx == 0:
+            rendered.append("  ".join("-" * width for width in widths))
+    rendered.append("")
+    rendered.append("accuracy: N/A for detector baselines; report mAP/precision/recall/F1 instead.")
+    return "\n".join(rendered)
+
+
+def format_metric(value: float | None) -> str:
+    if value is None:
+        return "-"
+    return f"{value:.4f}"
+
+
 class LiveHandler(BaseHTTPRequestHandler):
     training_session = "server-visdrone-baselines"
     monitor_session = "server-baseline-monitor"
     log_dir = ROOT / "outputs" / "logs" / "server_baselines"
+    project_dir = ROOT / "outputs" / "detectors" / "server_baselines"
     dashboard = ROOT / "outputs" / "reports" / "server_baseline_dashboard.png"
 
     def log_message(self, format: str, *args: object) -> None:
@@ -74,6 +146,7 @@ class LiveHandler(BaseHTTPRequestHandler):
                         "--format=csv",
                     ]
                 ),
+                "metrics": latest_training_metrics(self.project_dir),
                 "log_name": str(log_path.relative_to(ROOT)) if log_path else "",
                 "log": log_text,
             }
@@ -124,6 +197,10 @@ class LiveHandler(BaseHTTPRequestHandler):
         <pre id="gpu"></pre>
       </section>
       <section>
+        <h2>Live Metrics</h2>
+        <pre id="metrics"></pre>
+      </section>
+      <section>
         <h2 id="log-title">Latest log</h2>
         <pre id="log"></pre>
       </section>
@@ -146,6 +223,7 @@ class LiveHandler(BaseHTTPRequestHandler):
       document.getElementById("pane-title").textContent = `Training pane GPU${{windowId}}`;
       document.getElementById("tmux").textContent = fields.tmux || "";
       document.getElementById("gpu").textContent = fields.gpu || "";
+      document.getElementById("metrics").textContent = fields.metrics || "";
       document.getElementById("log-title").textContent = fields.log_name ? `Latest log: ${{fields.log_name}}` : "Latest log";
       document.getElementById("log").textContent = fields.log || "";
       document.getElementById("dashboard").src = `/dashboard.png?t=${{Date.now()}}`;
