@@ -38,6 +38,8 @@ outputs/experiments/*
 !outputs/experiments/*.csv
 !outputs/experiments/*.json
 outputs/experiments/server_preflight.json
+outputs/experiments/server_baseline_commands.csv
+outputs/experiments/server_baseline_jobs/
 !outputs/reports/
 outputs/reports/*
 !outputs/reports/.gitkeep

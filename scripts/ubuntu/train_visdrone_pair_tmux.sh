@@ -40,19 +40,19 @@ run_one() {
   local physical_gpu=$2
   local run_name=${model%.pt}_visdrone_seed${SEED}
   local log_file="$LOG_DIR/${run_name}.log"
-  local command="CUDA_VISIBLE_DEVICES=$physical_gpu conda run --no-capture-output -n $CONDA_ENV python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $BATCH --device 0 --seed $SEED --project $PROJECT --name $run_name"
-  printf '"%s","%s","%s","%s","%s","0","%s","%s","%s","%s","%s","%s","queued","%s"\n' \
-    "$(date -Is)" "$SESSION" "$model" "$SEED" "$physical_gpu" "$IMGSZ" "$BATCH" "$EPOCHS" "$DATA_YAML" "$run_name" "$log_file" "$command" >> "$COMMAND_CSV"
-  CUDA_VISIBLE_DEVICES="$physical_gpu" MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
+  local command="CUDA_DEVICE_ORDER=PCI_BUS_ID conda run --no-capture-output -n $CONDA_ENV python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $BATCH --device $physical_gpu --seed $SEED --project $PROJECT --name $run_name"
+  printf '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","queued","%s"\n' \
+    "$(date -Is)" "$SESSION" "$model" "$SEED" "$physical_gpu" "$physical_gpu" "$IMGSZ" "$BATCH" "$EPOCHS" "$DATA_YAML" "$run_name" "$log_file" "$command" >> "$COMMAND_CSV"
+  CUDA_DEVICE_ORDER=PCI_BUS_ID MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
     bash -lc "$command 2>&1 | tee '$log_file'"
   if [[ "$RUN_EVAL" == "1" ]]; then
     run_dir=$(find "$PROJECT" -maxdepth 1 -type d -name "*_${run_name}" -printf "%T@ %p\n" | sort -nr | head -n 1 | cut -d" " -f2-)
     if [[ -n "${run_dir:-}" && -f "$run_dir/ultralytics/weights/best.pt" ]]; then
-      eval_args=(eval --model "$run_dir/ultralytics/weights/best.pt" --data-yaml "$DATA_YAML" --imgsz "$IMGSZ" --device 0 --project "$PROJECT" --name "eval_${run_name}")
+      eval_args=(eval --model "$run_dir/ultralytics/weights/best.pt" --data-yaml "$DATA_YAML" --imgsz "$IMGSZ" --device "$physical_gpu" --project "$PROJECT" --name "eval_${run_name}")
       if [[ "$ROC_AUC" == "1" ]]; then
         eval_args+=(--roc-auc)
       fi
-      CUDA_VISIBLE_DEVICES="$physical_gpu" MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
+      CUDA_DEVICE_ORDER=PCI_BUS_ID MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
         conda run --no-capture-output -n "$CONDA_ENV" python -m detectors.train_yolo "${eval_args[@]}" 2>&1 | tee -a "$log_file"
     fi
   fi
