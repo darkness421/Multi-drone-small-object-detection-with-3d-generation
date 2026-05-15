@@ -1,0 +1,47 @@
+{
+  "summary": {
+    "frame_count": 2,
+    "scene_count": 1,
+    "by_split": {
+      "test_unseen_angle": 1,
+      "train": 1
+    },
+    "by_angle": {
+      "nadir": 1,
+      "right_oblique": 1
+    },
+    "by_scene": {
+      "marinecity_000132": 2
+    }
+  },
+  "frames": [
+    {
+      "scene_id": "marinecity_000132",
+      "frame_id": "marinecity_000132_0000",
+      "image_path": "images/scene_000132/uav1_rgb.png",
+      "pose_path": "poses/scene_000132/uav1_pose.json",
+      "depth_path": "depth/scene_000132/uav1_depth.npy",
+      "uav_id": "UAV_1",
+      "timestamp": 103.25,
+      "view_angle": "nadir",
+      "altitude_m": 150.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {}
+    },
+    {
+      "scene_id": "marinecity_000132",
+      "frame_id": "marinecity_000132_0001",
+      "image_path": "images/scene_000132/uav2_rgb.png",
+      "pose_path": "poses/scene_000132/uav2_pose.json",
+      "depth_path": "depth/scene_000132/uav2_depth.npy",
+      "uav_id": "UAV_2",
+      "timestamp": 103.25,
+      "view_angle": "right_oblique",
+      "altitude_m": 90.0,
+      "split": "test_unseen_angle",
+      "holdout_reason": "held-out angle: right_oblique",
+      "metadata": {}
+    }
+  ]
+}

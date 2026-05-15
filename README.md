@@ -152,6 +152,27 @@ bash scripts/ubuntu/collect_server_results.sh
 
 Raw dataset, weights, raw runs, cache, training logs는 GitHub push 대상이 아닙니다. CSV/JSON summary와 report PNG만 작게 관리합니다.
 
+## 3D Generation And Final Reasoner
+
+Marine City multi-angle benchmark와 3D 생성형 모델 비교 실험은 별도 축으로 관리합니다.
+
+```bash
+bash scripts/ubuntu/prepare_marinecity_multiview_benchmark.sh
+bash scripts/ubuntu/train_3d_generators_tmux.sh
+bash scripts/ubuntu/collect_3d_generation_results.sh
+```
+
+비교 대상은 NeRF, Instant-NGP, Mip-NeRF 360, 3D Gaussian Splatting입니다. 계획은 `docs/3d_generation_experiment_plan.md`에 정리되어 있습니다.
+
+LLM/VLM final adjudicator는 detector, geometry, ambiguity score, 선택적 LLM 응답을 합쳐 최종 object class와 re-observation 필요 여부를 결정합니다.
+
+```bash
+python -m reasoning.final_adjudicator --hypotheses outputs/graph/hypotheses.json --ambiguity outputs/ambiguity/scores.json --llm outputs/reasoning/llm_responses.json --out outputs/reasoning/final_decisions.json
+python -m evaluation.reasoner_ablation --hypotheses outputs/graph/hypotheses.json --labels outputs/reasoning/final_labels.json --ambiguity outputs/ambiguity/scores.json --llm outputs/reasoning/llm_responses.json
+```
+
+장단점 및 ablation 계획은 `docs/llm_reasoner_adjudicator_plan.md`에 정리되어 있습니다.
+
 EvidenceToken 생성 예시:
 
 ```bat

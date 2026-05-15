@@ -9,6 +9,7 @@ EPOCHS=${5:-100}
 BATCH=${6:-8}
 IMGSZ=${7:-1280}
 DATA_YAML=${DATA_YAML:-configs/detector/visdrone_yolo_data.yaml}
+CONDA_ENV=${CONDA_ENV:-com3d-ace}
 PROJECT=${PROJECT:-outputs/detectors/server_baselines}
 LOG_DIR=${LOG_DIR:-outputs/logs/server_baselines}
 COMMAND_CSV=${COMMAND_CSV:-outputs/experiments/server_baseline_commands.csv}
@@ -28,7 +29,7 @@ if tmux has-session -t "$SESSION" 2>/dev/null; then
   exit 1
 fi
 
-python -m scripts.check_dataset_ready --paths-config configs/paths.ubuntu.yaml --data-yaml "$DATA_YAML" --strict
+conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.check_dataset_ready --paths-config configs/paths.ubuntu.yaml --data-yaml "$DATA_YAML" --strict
 mkdir -p "$PROJECT" "$LOG_DIR" "$(dirname "$COMMAND_CSV")" .cache/matplotlib .cache/ultralytics
 if [[ ! -f "$COMMAND_CSV" ]]; then
   echo "created_at,session,model,seed,physical_gpu,ultralytics_device,imgsz,batch,epochs,data_yaml,run_name,log_file,status,command" > "$COMMAND_CSV"
@@ -39,7 +40,7 @@ run_one() {
   local physical_gpu=$2
   local run_name=${model%.pt}_visdrone_seed${SEED}
   local log_file="$LOG_DIR/${run_name}.log"
-  local command="CUDA_VISIBLE_DEVICES=$physical_gpu python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $BATCH --device 0 --seed $SEED --project $PROJECT --name $run_name"
+  local command="CUDA_VISIBLE_DEVICES=$physical_gpu conda run --no-capture-output -n $CONDA_ENV python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $BATCH --device 0 --seed $SEED --project $PROJECT --name $run_name"
   printf '"%s","%s","%s","%s","%s","0","%s","%s","%s","%s","%s","%s","queued","%s"\n' \
     "$(date -Is)" "$SESSION" "$model" "$SEED" "$physical_gpu" "$IMGSZ" "$BATCH" "$EPOCHS" "$DATA_YAML" "$run_name" "$log_file" "$command" >> "$COMMAND_CSV"
   CUDA_VISIBLE_DEVICES="$physical_gpu" MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
@@ -52,12 +53,12 @@ run_one() {
         eval_args+=(--roc-auc)
       fi
       CUDA_VISIBLE_DEVICES="$physical_gpu" MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
-        python -m detectors.train_yolo "${eval_args[@]}" 2>&1 | tee -a "$log_file"
+        conda run --no-capture-output -n "$CONDA_ENV" python -m detectors.train_yolo "${eval_args[@]}" 2>&1 | tee -a "$log_file"
     fi
   fi
 }
 
-TMUX_ENV="export DATA_YAML='$DATA_YAML' PROJECT='$PROJECT' LOG_DIR='$LOG_DIR' COMMAND_CSV='$COMMAND_CSV' SEED='$SEED' EPOCHS='$EPOCHS' BATCH='$BATCH' IMGSZ='$IMGSZ' SESSION='$SESSION' RUN_EVAL='$RUN_EVAL' ROC_AUC='$ROC_AUC'"
+TMUX_ENV="export DATA_YAML='$DATA_YAML' CONDA_ENV='$CONDA_ENV' PROJECT='$PROJECT' LOG_DIR='$LOG_DIR' COMMAND_CSV='$COMMAND_CSV' SEED='$SEED' EPOCHS='$EPOCHS' BATCH='$BATCH' IMGSZ='$IMGSZ' SESSION='$SESSION' RUN_EVAL='$RUN_EVAL' ROC_AUC='$ROC_AUC'"
 tmux new-session -d -s "$SESSION" -n gpu0 "cd '$PWD' && $TMUX_ENV; $(declare -f run_one); run_one '$MODEL_GPU0' 0"
 tmux new-window -t "$SESSION" -n gpu1 "cd '$PWD' && $TMUX_ENV; $(declare -f run_one); run_one '$MODEL_GPU1' 1"
 

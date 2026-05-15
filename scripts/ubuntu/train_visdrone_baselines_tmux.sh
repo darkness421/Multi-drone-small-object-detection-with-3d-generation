@@ -8,6 +8,7 @@ IMGSZ=${4:-1280}
 SEEDS=${SEEDS:-42,123,2026}
 MODELS=${MODELS:-yolov8n.pt,yolov8s.pt,yolo11n.pt,yolo11s.pt,yolo12n.pt,yolo12s.pt,rtdetr-l.pt}
 DATA_YAML=${DATA_YAML:-configs/detector/visdrone_yolo_data.yaml}
+CONDA_ENV=${CONDA_ENV:-com3d-ace}
 PROJECT=${PROJECT:-outputs/detectors/server_baselines}
 EXPERIMENT_ROOT=${EXPERIMENT_ROOT:-outputs/experiments}
 LOG_DIR=${LOG_DIR:-outputs/logs/server_baselines}
@@ -31,7 +32,7 @@ if tmux has-session -t "$SESSION" 2>/dev/null; then
   exit 1
 fi
 
-python -m scripts.check_dataset_ready --paths-config configs/paths.ubuntu.yaml --data-yaml "$DATA_YAML" --strict
+conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.check_dataset_ready --paths-config configs/paths.ubuntu.yaml --data-yaml "$DATA_YAML" --strict
 
 mkdir -p "$JOB_ROOT" "$LOG_DIR" "$PROJECT" "$EXPERIMENT_ROOT"
 if [[ ! -f "$COMMAND_CSV" ]]; then
@@ -45,6 +46,7 @@ for gpu in 0 1; do
     echo "set -euo pipefail"
     printf 'cd %q\n' "$ROOT"
     printf 'export CUDA_VISIBLE_DEVICES=%q\n' "$gpu"
+    printf 'export CONDA_ENV=%q\n' "$CONDA_ENV"
     printf 'export MPLCONFIGDIR=%q\n' "$ROOT/.cache/matplotlib"
     printf 'export YOLO_CONFIG_DIR=%q\n' "$ROOT/.cache/ultralytics"
     echo 'mkdir -p "$MPLCONFIGDIR" "$YOLO_CONFIG_DIR"'
@@ -69,19 +71,19 @@ for model in "${model_list[@]}"; do
     run_name="${model_slug}_visdrone_seed${seed}"
     log_file="$LOG_DIR/${run_name}.log"
     job_script="$JOB_ROOT/gpu${gpu}.sh"
-    command="CUDA_VISIBLE_DEVICES=$gpu python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $BATCH --device 0 --seed $seed --project $PROJECT --name $run_name"
+    command="CUDA_VISIBLE_DEVICES=$gpu conda run --no-capture-output -n $CONDA_ENV python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $BATCH --device 0 --seed $seed --project $PROJECT --name $run_name"
     printf '"%s","%s","%s","%s","%s","0","%s","%s","%s","%s","%s","%s","queued","%s"\n' \
       "$(date -Is)" "$SESSION" "$model" "$seed" "$gpu" "$IMGSZ" "$BATCH" "$EPOCHS" "$DATA_YAML" "$run_name" "$log_file" "$command" >> "$COMMAND_CSV"
     {
       printf 'echo "START model=%s seed=%s physical_gpu=%s at $(date -Is)"\n' "$model" "$seed" "$gpu"
-      printf 'python -m detectors.train_yolo train --model %q --data-yaml %q --epochs %q --imgsz %q --batch %q --device 0 --seed %q --project %q --name %q 2>&1 | tee %q\n' \
-        "$model" "$DATA_YAML" "$EPOCHS" "$IMGSZ" "$BATCH" "$seed" "$PROJECT" "$run_name" "$log_file"
+      printf 'conda run --no-capture-output -n %q python -m detectors.train_yolo train --model %q --data-yaml %q --epochs %q --imgsz %q --batch %q --device 0 --seed %q --project %q --name %q 2>&1 | tee %q\n' \
+        "$CONDA_ENV" "$model" "$DATA_YAML" "$EPOCHS" "$IMGSZ" "$BATCH" "$seed" "$PROJECT" "$run_name" "$log_file"
       printf 'if [[ %q == 1 ]]; then\n' "$RUN_EVAL"
       printf '  run_dir=$(find %q -maxdepth 1 -type d -name "*_%s" -printf "%%T@ %%p\\n" | sort -nr | head -n 1 | cut -d" " -f2-)\n' "$PROJECT" "$run_name"
       printf '  if [[ -n "${run_dir:-}" && -f "$run_dir/ultralytics/weights/best.pt" ]]; then\n'
       printf '    eval_args=(eval --model "$run_dir/ultralytics/weights/best.pt" --data-yaml %q --imgsz %q --device 0 --project %q --name %q)\n' "$DATA_YAML" "$IMGSZ" "$PROJECT" "eval_${run_name}"
       printf '    if [[ %q == 1 ]]; then eval_args+=(--roc-auc); fi\n' "$ROC_AUC"
-      printf '    python -m detectors.train_yolo "${eval_args[@]}" 2>&1 | tee -a %q\n' "$log_file"
+      printf '    conda run --no-capture-output -n %q python -m detectors.train_yolo "${eval_args[@]}" 2>&1 | tee -a %q\n' "$CONDA_ENV" "$log_file"
       printf '  fi\n'
       printf 'fi\n'
       printf 'echo "DONE model=%s seed=%s physical_gpu=%s at $(date -Is)"\n' "$model" "$seed" "$gpu"

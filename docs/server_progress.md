@@ -13,6 +13,8 @@ Completed:
 - Added detector ROC-AUC utilities separated from future ambiguity ROC-AUC.
 - Added dashboard, qualitative examples, and Grad-CAM preparation entrypoints.
 - Added proposed small-object perception module skeleton and config.
+- Added Marine City multi-angle benchmark and 3D generative model comparison scaffolds.
+- Added LLM-assisted final adjudicator and ablation evaluation scaffolds.
 
 Not run:
 
@@ -26,3 +28,4 @@ Next:
 3. Collect CSV/PNG summaries.
 4. Extend top models to 5 seeds for main statistical analysis.
 5. Add the proposed module to the best overall or best lightweight baseline.
+6. Build Marine City multi-angle benchmark splits for 3D generation and reasoner ablations.

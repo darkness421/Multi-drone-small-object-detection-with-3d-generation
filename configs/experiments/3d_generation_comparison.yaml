@@ -1,0 +1,28 @@
+name: marinecity_3d_generation_comparison
+dataset: MarineCity-MultiView
+benchmark_manifest: outputs/experiments/marinecity_multiview_benchmark.json
+
+models:
+  - key: nerf
+    display_name: NeRF
+  - key: instant_ngp
+    display_name: Instant-NGP
+  - key: mip_nerf_360
+    display_name: Mip-NeRF 360
+  - key: gaussian_splatting
+    display_name: 3D Gaussian Splatting
+
+splits:
+  train: seen camera angles
+  val: side-view validation angle
+  test_unseen_angle: rear/right oblique held-out angles
+
+metrics:
+  quality: [PSNR, SSIM, LPIPS]
+  efficiency: [FPS, train_time_min, VRAM_GB, disk_GB]
+  downstream: [detector_AP_on_rendered_views, adjudicator_accuracy_gain]
+
+outputs:
+  result_dir: outputs/experiments/3d_generation
+  comparison_csv: outputs/experiments/3d_generation_comparison.csv
+  report_png: outputs/reports/3d_generation_comparison.png
