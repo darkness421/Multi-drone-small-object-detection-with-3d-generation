@@ -37,6 +37,7 @@ outputs/experiments/*
 !outputs/experiments/.gitkeep
 !outputs/experiments/*.csv
 !outputs/experiments/*.json
+outputs/experiments/server_preflight.json
 !outputs/reports/
 outputs/reports/*
 !outputs/reports/.gitkeep

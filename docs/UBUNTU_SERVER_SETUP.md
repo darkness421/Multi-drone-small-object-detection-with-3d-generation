@@ -23,6 +23,7 @@ OpenCV/numpy/scipy/sklearn/ultralytics versions, dataset roots, and output paths
 ```bash
 bash scripts/ubuntu/check_dataset_ready.sh
 bash scripts/ubuntu/check_dataset_ready.sh --strict
+bash scripts/ubuntu/preflight_baseline.sh
 ```
 
 Required VisDrone paths:
@@ -33,6 +34,10 @@ Required VisDrone paths:
 
 UAVDT is tracked as the second dataset target, but the first server baseline
 sweep is VisDrone2019-DET.
+
+`preflight_baseline.sh` writes `outputs/experiments/server_preflight.json` and
+`outputs/experiments/server_preflight.md`. It blocks long training when GPU,
+PyTorch CUDA, tmux, raw data, or converted YOLO data are not ready.
 
 ## Output Policy
 

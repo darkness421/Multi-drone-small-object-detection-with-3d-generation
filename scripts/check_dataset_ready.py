@@ -19,6 +19,7 @@ class PathStatus:
     exists: bool
     file_count: int
     required: bool
+    ready: bool
     note: str
 
 
@@ -57,6 +58,7 @@ def inspect_paths(config: str | Path = "configs/paths.ubuntu.yaml") -> list[Path
                 exists=bool(value) and path.exists(),
                 file_count=_count(path) if value else 0,
                 required=required,
+                ready=bool(value) and path.exists() and (not required or _count(path) > 0),
                 note=note,
             )
         )
@@ -67,10 +69,15 @@ def print_report(rows: list[PathStatus], data_yamls: list[str]) -> None:
     print("Dataset readiness for Ubuntu server")
     print("-" * 80)
     for row in rows:
-        status = "OK" if row.exists else ("MISSING" if row.required else "optional-missing")
+        if row.ready:
+            status = "OK"
+        elif row.required:
+            status = "MISSING"
+        else:
+            status = "optional-missing"
         print(f"{status:16s} {row.name}: {row.path}")
         print(f"  files: {row.file_count}")
-        if not row.exists:
+        if not row.ready:
             print(f"  next: {row.note}")
 
     print("")
@@ -117,7 +124,7 @@ def main() -> None:
     else:
         print_report(rows, args.data_yaml)
 
-    required_missing = any(row.required and not row.exists for row in rows)
+    required_missing = any(row.required and not row.ready for row in rows)
     training_missing = any(not row.ready for row in training_rows)
     if args.strict and (required_missing or training_missing):
         raise SystemExit(1)

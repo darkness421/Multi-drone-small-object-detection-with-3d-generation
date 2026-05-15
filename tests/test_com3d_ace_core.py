@@ -32,6 +32,7 @@ from reasoning.final_adjudicator import adjudicate_object
 from runtime.config import load_config
 from runtime.outputs import prepare_run_dir
 from scripts.check_dataset_readiness import inspect_dataset
+from scripts.check_dataset_ready import inspect_paths
 from scripts.check_training_readiness import inspect_data_yaml
 from scripts.make_visible_smoke_sample import create_visible_smoke_sample
 from scripts.preview_yolo_dataset import render_yolo_dataset_preview
@@ -271,6 +272,30 @@ class TestCom3DAceCore(unittest.TestCase):
             self.assertTrue(row.ready)
             self.assertEqual(row.counts["images"], 1)
             self.assertEqual(row.counts["annotations"], 1)
+
+    def test_server_dataset_ready_requires_files_for_required_paths(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            raw = tmp_path / "raw" / "VisDrone2019-DET"
+            yolo = tmp_path / "processed" / "visdrone_yolo"
+            raw.mkdir(parents=True)
+            yolo.mkdir(parents=True)
+            config = tmp_path / "paths.yaml"
+            config.write_text(
+                "\n".join(
+                    [
+                        "datasets:",
+                        f"  visdrone_raw: {raw.as_posix()}",
+                        f"  visdrone_yolo: {yolo.as_posix()}",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            rows = {row.name: row for row in inspect_paths(config)}
+            self.assertFalse(rows["visdrone_raw"].ready)
+            (raw / "sample.txt").write_text("placeholder", encoding="utf-8")
+            rows = {row.name: row for row in inspect_paths(config)}
+            self.assertTrue(rows["visdrone_raw"].ready)
 
     def test_training_readiness_detects_placeholder_images(self) -> None:
         with TemporaryDirectory() as tmp:

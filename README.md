@@ -127,6 +127,7 @@ bash scripts/ubuntu/check_dataset_ready.sh
 데이터셋 readiness가 통과한 뒤에만 긴 학습을 tmux에서 시작합니다.
 
 ```bash
+bash scripts/ubuntu/preflight_baseline.sh
 bash scripts/ubuntu/train_visdrone_pair_tmux.sh visdrone-pair yolov8n.pt yolo11n.pt 42 100 8 1280
 bash scripts/ubuntu/watch_training.sh visdrone-pair
 ```
