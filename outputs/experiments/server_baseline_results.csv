@@ -1,0 +1,1 @@
+﻿method,model,dataset,seed,status,run_dir,results_csv,best_weight,best_epoch,best_AP,best_AP50,best_AP75,best_APsmall,best_precision,best_recall,best_F1,final_epoch,final_AP,final_AP50,final_AP75,final_APsmall,final_precision,final_recall,final_F1,ROC-AUC,latency_ms,FPS,Params,GFLOPs

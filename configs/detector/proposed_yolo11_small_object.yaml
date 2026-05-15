@@ -1,0 +1,47 @@
+# Proposed small-object perception module experiment scaffold.
+
+base_model: yolo11n.pt
+dataset: VisDrone2019-DET
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+
+training:
+  imgsz: 1280
+  epochs: 100
+  batch: 8
+  preliminary_seeds: [42, 123, 2026]
+  main_seeds: [42, 123, 2026, 7, 3407]
+  deterministic: true
+
+modules:
+  wavelet_stem:
+    enabled: false
+    family: haar
+  partial_deformable_neck:
+    enabled: false
+    stages: [p3, p4]
+  tiling_inference:
+    enabled: false
+    tile_size: 1024
+    overlap: 0.2
+
+ablations:
+  - name: baseline
+    wavelet_stem: false
+    partial_deformable_neck: false
+    tiling_inference: false
+  - name: wavelet_stem
+    wavelet_stem: true
+    partial_deformable_neck: false
+    tiling_inference: false
+  - name: partial_deformable_neck
+    wavelet_stem: false
+    partial_deformable_neck: true
+    tiling_inference: false
+  - name: tiling_inference
+    wavelet_stem: false
+    partial_deformable_neck: false
+    tiling_inference: true
+  - name: full_proposed
+    wavelet_stem: true
+    partial_deformable_neck: true
+    tiling_inference: true

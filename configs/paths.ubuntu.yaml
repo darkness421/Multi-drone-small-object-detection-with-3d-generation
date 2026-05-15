@@ -1,0 +1,26 @@
+# Ubuntu server path map for CoM3D-ACE.
+# Keep large data, weights, caches, and raw runs under ignored directories.
+
+project_root: /home/oem/projects/multi-uav-marine-city
+
+datasets:
+  visdrone_raw: data/raw/VisDrone2019-DET
+  visdrone_yolo: data/processed/visdrone_yolo
+  visdrone_coco_train: data/processed/visdrone_train_coco.json
+  visdrone_coco_val: data/processed/visdrone_val_coco.json
+  uavdt_raw: data/raw/UAVDT
+  uavdt_yolo: data/processed/uavdt_yolo
+  uavdt_coco: data/processed/uavdt_coco.json
+
+outputs:
+  detectors: outputs/detectors/server_baselines
+  experiments: outputs/experiments
+  reports: outputs/reports
+  qualitative: outputs/qualitative
+
+logs:
+  server_baselines: outputs/logs/server_baselines
+
+cache:
+  matplotlib: .cache/matplotlib
+  ultralytics: .cache/ultralytics

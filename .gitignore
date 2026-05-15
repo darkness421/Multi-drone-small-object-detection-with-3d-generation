@@ -15,6 +15,7 @@ _build/
 logs/
 kit/logs/
 cache/
+.cache/
 
 # Data and model artifacts
 data/raw/
@@ -29,10 +30,38 @@ datasets/marinecity/evidence_json/*
 !datasets/marinecity/poses/.gitkeep
 !datasets/marinecity/annotations/.gitkeep
 !datasets/marinecity/evidence_json/.gitkeep
-outputs/
+outputs/*
+!outputs/.gitkeep
+!outputs/experiments/
+outputs/experiments/*
+!outputs/experiments/.gitkeep
+!outputs/experiments/*.csv
+!outputs/experiments/*.json
+!outputs/reports/
+outputs/reports/*
+!outputs/reports/.gitkeep
+!outputs/reports/*.png
+!outputs/logs/
+outputs/logs/*
+!outputs/logs/.gitkeep
+!outputs/logs/server_baselines/
+outputs/logs/server_baselines/*
+!outputs/logs/server_baselines/.gitkeep
+!outputs/qualitative/
+outputs/qualitative/*
+!outputs/qualitative/.gitkeep
+!outputs/qualitative/detection_examples/
+outputs/qualitative/detection_examples/*
+!outputs/qualitative/detection_examples/.gitkeep
+!outputs/qualitative/gradcam/
+outputs/qualitative/gradcam/*
+!outputs/qualitative/gradcam/.gitkeep
 runs/
 weights/
 *.pt
+*.pth
+*.ckpt
+*.safetensors
 *.onnx
 *.engine
 

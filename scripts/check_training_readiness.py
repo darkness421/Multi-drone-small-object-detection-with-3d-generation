@@ -121,7 +121,7 @@ def inspect_data_yaml(data_yaml: str | Path) -> TrainingReadiness:
             ready=False,
             issues=[f"missing data yaml: {data_yaml}"],
             splits=[],
-            next_action="run scripts\\01_convert_datasets.bat after raw datasets are copied",
+            next_action="convert raw datasets, then rerun training readiness check",
         )
 
     config = load_config(data_yaml)
@@ -146,7 +146,7 @@ def inspect_data_yaml(data_yaml: str | Path) -> TrainingReadiness:
             issues.append(f"{split.split} images without matching label files: {split.missing_label_count}")
 
     ready = not issues and all(split.ready for split in splits)
-    next_action = "ready: run scripts\\11_train_yolo11n_visdrone.bat" if ready else "fix issues, then rerun scripts\\10_check_training_readiness.bat"
+    next_action = "ready: launch the OS-specific detector training script" if ready else "fix issues, then rerun training readiness check"
     return TrainingReadiness(
         data_yaml=str(data_yaml),
         dataset_root=str(root),

@@ -1,0 +1,28 @@
+dataset: VisDrone2019-DET
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+
+models:
+  - yolov8n.pt
+  - yolov8s.pt
+  - yolo11n.pt
+  - yolo11s.pt
+  - yolo12n.pt
+  - yolo12s.pt
+  - rtdetr-l.pt
+
+seeds:
+  preliminary: [42, 123, 2026]
+  main: [42, 123, 2026, 7, 3407]
+
+training:
+  imgsz: 1280
+  epochs: 100
+  batch: 8
+  deterministic: true
+
+outputs:
+  detector_root: outputs/detectors/server_baselines
+  results_csv: outputs/experiments/server_baseline_results.csv
+  summary_csv: outputs/experiments/server_baseline_summary.csv
+  pvalues_csv: outputs/experiments/server_baseline_pvalues.csv
+  dashboard_png: outputs/reports/server_baseline_dashboard.png

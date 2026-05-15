@@ -25,6 +25,7 @@ def normalize_metric_payload(payload: dict[str, Any]) -> dict[str, str | float]:
         "AP50": payload.get("AP50", payload.get("mAP50", "")),
         "AP75": payload.get("AP75", payload.get("mAP75", "")),
         "APsmall": payload.get("APsmall", payload.get("APs", "")),
+        "ROC-AUC": payload.get("ROC-AUC", payload.get("roc_auc", payload.get("AUROC", ""))),
         "FPS": payload.get("FPS", payload.get("fps", "")),
         "Params": payload.get("Params", payload.get("params", "")),
         "GFLOPs": payload.get("GFLOPs", payload.get("gflops", "")),
