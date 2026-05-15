@@ -1,0 +1,5 @@
+﻿metric,baseline_method,candidate_method,paired_seeds,seed_count,analysis_level,baseline_mean,candidate_mean,delta_candidate_minus_baseline,paired_t_statistic,paired_t_pvalue,wilcoxon_statistic,wilcoxon_pvalue
+best_AP,YOLOv8n,YOLOv11n,42,1,preliminary,0.06303,0.06183,-0.0011999999999999997,nan,nan,0.0,1.0
+best_AP50,YOLOv8n,YOLOv11n,42,1,preliminary,0.11966,0.11761,-0.0020499999999999963,nan,nan,0.0,1.0
+best_recall,YOLOv8n,YOLOv11n,42,1,preliminary,0.18338,0.1773,-0.006079999999999974,nan,nan,0.0,1.0
+best_F1,YOLOv8n,YOLOv11n,42,1,preliminary,0.19604968780141124,0.24718217293991016,0.05113248513849891,nan,nan,0.0,1.0
