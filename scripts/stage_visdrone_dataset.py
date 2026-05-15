@@ -63,6 +63,12 @@ def _extract_zip(zip_path: Path, raw_root: Path) -> None:
         archive.extractall(raw_root)
 
 
+def _split_file_count(split_dir: Path) -> int:
+    if not split_dir.exists():
+        return 0
+    return sum(1 for path in split_dir.rglob("*") if path.is_file())
+
+
 def stage_visdrone(source: str | Path, raw_root: str | Path, *, apply: bool = False) -> list[StageAction]:
     source = Path(source).resolve()
     raw_root = Path(raw_root).resolve()
@@ -70,7 +76,7 @@ def stage_visdrone(source: str | Path, raw_root: str | Path, *, apply: bool = Fa
 
     for split in SPLIT_DIRS:
         target_dir = raw_root / split
-        existing_ready = (target_dir / "images").exists() and (target_dir / "annotations").exists()
+        existing_ready = (target_dir / "images").exists() and (target_dir / "annotations").exists() and _split_file_count(target_dir) > 0
         if existing_ready:
             actions.append(StageAction(split, str(target_dir), str(target_dir), "already-ready", False))
             continue

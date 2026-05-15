@@ -42,9 +42,16 @@ VISDRONE_SPLITS = [
 ]
 
 
+def split_file_count(raw_root: Path, split_name: str) -> int:
+    split_dir = raw_root / split_name
+    if not split_dir.exists():
+        return 0
+    return sum(1 for path in split_dir.rglob("*") if path.is_file())
+
+
 def has_extracted_split(raw_root: Path, split_name: str) -> bool:
     split_dir = raw_root / split_name
-    return (split_dir / "images").exists() and (split_dir / "annotations").exists()
+    return (split_dir / "images").exists() and (split_dir / "annotations").exists() and split_file_count(raw_root, split_name) > 0
 
 
 def format_bytes(value: int) -> str:
