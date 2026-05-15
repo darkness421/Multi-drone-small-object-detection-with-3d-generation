@@ -32,6 +32,21 @@ Required VisDrone paths:
 - `data/processed/visdrone_yolo/images/{train,val,test}`
 - `data/processed/visdrone_yolo/labels/{train,val,test}`
 
+Prepare VisDrone from a local source directory:
+
+```bash
+SOURCE=/path/to/downloads bash scripts/ubuntu/prepare_visdrone_dataset_tmux.sh
+```
+
+Or let the script use the configured download mirror:
+
+```bash
+bash scripts/ubuntu/prepare_visdrone_dataset_tmux.sh
+```
+
+The script stages local zips/folders when `SOURCE` is set, downloads missing
+splits into `data/raw/downloads`, converts to COCO/YOLO, and reruns preflight.
+
 UAVDT is tracked as the second dataset target, but the first server baseline
 sweep is VisDrone2019-DET.
 

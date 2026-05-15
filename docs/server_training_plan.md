@@ -78,6 +78,7 @@ ambiguity scorer and report AUROC/AUPRC/ECE/Brier.
 Generate and run a two-GPU baseline queue:
 
 ```bash
+bash scripts/ubuntu/prepare_visdrone_dataset_tmux.sh
 bash scripts/ubuntu/preflight_baseline.sh --strict
 bash scripts/ubuntu/train_visdrone_baselines_tmux.sh server-visdrone-baselines 100 8 1280
 ```

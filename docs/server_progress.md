@@ -15,6 +15,7 @@ Completed:
 - Added proposed small-object perception module skeleton and config.
 - Added Marine City multi-angle benchmark and 3D generative model comparison scaffolds.
 - Added LLM-assisted final adjudicator and ablation evaluation scaffolds.
+- Added Ubuntu VisDrone dataset preparation scripts for staging/downloading, conversion, and preflight.
 
 Not run:
 

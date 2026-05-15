@@ -128,6 +128,7 @@ bash scripts/ubuntu/check_dataset_ready.sh
 
 ```bash
 bash scripts/ubuntu/preflight_baseline.sh
+bash scripts/ubuntu/prepare_visdrone_dataset_tmux.sh
 bash scripts/ubuntu/train_visdrone_pair_tmux.sh visdrone-pair yolov8n.pt yolo11n.pt 42 100 8 1280
 bash scripts/ubuntu/watch_training.sh visdrone-pair
 ```
