@@ -133,12 +133,13 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
     eval_summary = read_json(run_dir / "metrics" / "eval_summary.json")
     model = str(train_summary.get("requested_model") or train_summary.get("model") or run_dir.name.split("_visdrone")[0])
     best_weight = results_csv.parent / "weights" / "best.pt"
+    train_summary_path = run_dir / "metrics" / "train_summary.json"
     payload: dict[str, Any] = {
         "method": train_summary.get("method") or infer_method(model),
         "model": model,
         "dataset": "VisDrone2019-DET",
         "seed": infer_seed(run_dir, train_summary),
-        "status": "completed" if best_weight.exists() else "incomplete",
+        "status": "completed" if train_summary_path.exists() and best_weight.exists() else "incomplete",
         "run_dir": str(run_dir),
         "results_csv": str(results_csv),
         "best_weight": str(best_weight) if best_weight.exists() else "",

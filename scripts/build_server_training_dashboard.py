@@ -50,6 +50,9 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
     import matplotlib.pyplot as plt
 
     rows = read_rows(results_csv)
+    completed_rows = [row for row in rows if row.get("status", "completed") == "completed"]
+    incomplete_count = len(rows) - len(completed_rows)
+    rows = completed_rows
     out_path = resolve_path(out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -60,6 +63,8 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         for ax in axes.ravel():
             ax.axis("off")
         axes[0, 0].text(0.5, 0.5, "No completed result rows yet", ha="center", va="center", fontsize=14)
+        if incomplete_count:
+            axes[0, 0].text(0.5, 0.38, f"{incomplete_count} incomplete/failed rows excluded", ha="center", va="center", fontsize=11)
         fig.savefig(out_path, dpi=180)
         plt.close(fig)
         return out_path
@@ -100,6 +105,8 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         scatter_ax.legend(by_label.values(), by_label.keys(), fontsize=8)
     else:
         scatter_ax.text(0.5, 0.5, "FPS not collected yet", ha="center", va="center", transform=scatter_ax.transAxes)
+    if incomplete_count:
+        fig.text(0.01, 0.01, f"Excluded incomplete/failed runs: {incomplete_count}", fontsize=9)
 
     fig.savefig(out_path, dpi=180)
     plt.close(fig)

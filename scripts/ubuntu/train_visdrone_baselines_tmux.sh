@@ -46,6 +46,7 @@ for gpu in 0 1; do
     echo "set -euo pipefail"
     printf 'cd %q\n' "$ROOT"
     echo 'export CUDA_DEVICE_ORDER=PCI_BUS_ID'
+    echo 'export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"'
     printf 'export CONDA_ENV=%q\n' "$CONDA_ENV"
     printf 'export MPLCONFIGDIR=%q\n' "$ROOT/.cache/matplotlib"
     printf 'export YOLO_CONFIG_DIR=%q\n' "$ROOT/.cache/ultralytics"

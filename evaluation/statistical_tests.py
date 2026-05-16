@@ -33,6 +33,8 @@ def read_rows(path: str | Path) -> list[dict[str, str]]:
 def group_metric_by_seed(rows: list[dict[str, str]], metric: str) -> dict[str, dict[int, float]]:
     grouped: dict[str, dict[int, float]] = defaultdict(dict)
     for row in rows:
+        if row.get("status", "completed") != "completed":
+            continue
         method = row.get("method") or row.get("model") or ""
         seed_value = row.get("seed")
         value = as_float(row.get(metric))

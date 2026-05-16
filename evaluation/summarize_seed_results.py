@@ -36,6 +36,8 @@ def describe(values: list[float]) -> tuple[float, float, int]:
 def summarize(rows: list[dict[str, str]], metrics: list[str]) -> list[dict[str, Any]]:
     groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
     for row in rows:
+        if row.get("status", "completed") != "completed":
+            continue
         groups[(row.get("method", ""), row.get("model", ""), row.get("dataset", ""))].append(row)
 
     summary_rows: list[dict[str, Any]] = []

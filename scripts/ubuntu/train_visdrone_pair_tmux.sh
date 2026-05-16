@@ -43,7 +43,7 @@ run_one() {
   local command="CUDA_DEVICE_ORDER=PCI_BUS_ID conda run --no-capture-output -n $CONDA_ENV python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $BATCH --device $physical_gpu --seed $SEED --project $PROJECT --name $run_name"
   printf '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","queued","%s"\n' \
     "$(date -Is)" "$SESSION" "$model" "$SEED" "$physical_gpu" "$physical_gpu" "$IMGSZ" "$BATCH" "$EPOCHS" "$DATA_YAML" "$run_name" "$log_file" "$command" >> "$COMMAND_CSV"
-  CUDA_DEVICE_ORDER=PCI_BUS_ID MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
+  CUDA_DEVICE_ORDER=PCI_BUS_ID PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}" MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
     bash -lc "$command 2>&1 | tee '$log_file'"
   if [[ "$RUN_EVAL" == "1" ]]; then
     run_dir=$(find "$PROJECT" -maxdepth 1 -type d -name "*_${run_name}" -printf "%T@ %p\n" | sort -nr | head -n 1 | cut -d" " -f2-)
@@ -52,7 +52,7 @@ run_one() {
       if [[ "$ROC_AUC" == "1" ]]; then
         eval_args+=(--roc-auc)
       fi
-      CUDA_DEVICE_ORDER=PCI_BUS_ID MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
+      CUDA_DEVICE_ORDER=PCI_BUS_ID PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}" MPLCONFIGDIR="$PWD/.cache/matplotlib" YOLO_CONFIG_DIR="$PWD/.cache/ultralytics" \
         conda run --no-capture-output -n "$CONDA_ENV" python -m detectors.train_yolo "${eval_args[@]}" 2>&1 | tee -a "$log_file"
     fi
   fi
