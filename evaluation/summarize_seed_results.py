@@ -12,7 +12,7 @@ from typing import Any
 from runtime.config import resolve_path
 
 
-DEFAULT_METRICS = ["best_AP", "best_AP50", "best_APsmall", "best_recall", "best_F1", "ROC-AUC", "FPS"]
+DEFAULT_METRICS = ["best_AP", "best_AP50", "best_APsmall", "best_recall", "best_F1", "ROC-AUC", "FPS", "Params", "GFLOPs"]
 
 
 def as_float(value: Any) -> float | None:
@@ -34,18 +34,19 @@ def describe(values: list[float]) -> tuple[float, float, int]:
 
 
 def summarize(rows: list[dict[str, str]], metrics: list[str]) -> list[dict[str, Any]]:
-    groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
+    groups: dict[tuple[str, str, str, str], list[dict[str, str]]] = defaultdict(list)
     for row in rows:
         if row.get("status", "completed") != "completed":
             continue
-        groups[(row.get("method", ""), row.get("model", ""), row.get("dataset", ""))].append(row)
+        groups[(row.get("method", ""), row.get("model", ""), row.get("size_group", ""), row.get("dataset", ""))].append(row)
 
     summary_rows: list[dict[str, Any]] = []
-    for (method, model, dataset), group_rows in sorted(groups.items()):
+    for (method, model, size_group, dataset), group_rows in sorted(groups.items()):
         seeds = sorted({row.get("seed", "") for row in group_rows if row.get("seed", "")})
         out: dict[str, Any] = {
             "method": method,
             "model": model,
+            "size_group": size_group,
             "dataset": dataset,
             "seed_count": len(seeds),
             "seeds": ",".join(seeds),
@@ -66,7 +67,7 @@ def summarize(rows: list[dict[str, str]], metrics: list[str]) -> list[dict[str, 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    fieldnames: list[str] = ["method", "model", "dataset", "seed_count", "seeds", "analysis_level"]
+    fieldnames: list[str] = ["method", "model", "size_group", "dataset", "seed_count", "seeds", "analysis_level"]
     for row in rows:
         for key in row:
             if key not in fieldnames:

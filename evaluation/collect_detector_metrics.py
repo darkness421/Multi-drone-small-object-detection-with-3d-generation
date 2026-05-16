@@ -15,6 +15,7 @@ from runtime.config import resolve_path
 METRIC_COLUMNS = [
     "method",
     "model",
+    "size_group",
     "dataset",
     "seed",
     "status",
@@ -115,6 +116,23 @@ def infer_method(model: str) -> str:
     return aliases.get(stem, stem)
 
 
+def infer_size_group(model: str) -> str:
+    stem = Path(model).stem.lower()
+    if stem.endswith("n"):
+        return "nano"
+    if stem.endswith("s"):
+        return "small"
+    if stem.endswith("m"):
+        return "medium"
+    if stem.endswith("l"):
+        return "large"
+    if stem.endswith("x"):
+        return "xlarge"
+    if "r18" in stem:
+        return "r18"
+    return "unknown"
+
+
 def read_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {}
@@ -122,6 +140,40 @@ def read_json(path: Path) -> dict[str, Any]:
         return json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return {}
+
+
+def strip_timestamp(run_name: str) -> str:
+    return re.sub(r"^\d{8}_\d{6}_", "", run_name)
+
+
+def parse_complexity_from_log(path: Path) -> tuple[int | None, float | None]:
+    if not path.exists():
+        return None, None
+    pattern = re.compile(r"summary(?!(?: \(fused\))):.*?([\d,]+) parameters.*?([\d.]+) GFLOPs", re.IGNORECASE)
+    try:
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            match = pattern.search(line)
+            if not match:
+                continue
+            params = int(match.group(1).replace(",", ""))
+            gflops = float(match.group(2))
+            return params, gflops
+    except OSError:
+        return None, None
+    return None, None
+
+
+def model_complexity(run_dir: Path) -> tuple[int | None, float | None]:
+    run_name = strip_timestamp(run_dir.name)
+    candidate_logs = [
+        resolve_path("outputs/logs/server_baselines") / f"{run_name}.log",
+        run_dir / "logs" / "train.log",
+    ]
+    for path in candidate_logs:
+        params, gflops = parse_complexity_from_log(path)
+        if params is not None or gflops is not None:
+            return params, gflops
+    return None, None
 
 
 def collect_one(results_csv: Path) -> dict[str, Any]:
@@ -134,9 +186,11 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
     model = str(train_summary.get("requested_model") or train_summary.get("model") or run_dir.name.split("_visdrone")[0])
     best_weight = results_csv.parent / "weights" / "best.pt"
     train_summary_path = run_dir / "metrics" / "train_summary.json"
+    params, gflops = model_complexity(run_dir)
     payload: dict[str, Any] = {
         "method": train_summary.get("method") or infer_method(model),
         "model": model,
+        "size_group": infer_size_group(model),
         "dataset": "VisDrone2019-DET",
         "seed": infer_seed(run_dir, train_summary),
         "status": "completed" if train_summary_path.exists() and best_weight.exists() else "incomplete",
@@ -144,6 +198,8 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
         "results_csv": str(results_csv),
         "best_weight": str(best_weight) if best_weight.exists() else "",
         "ROC-AUC": (eval_summary.get("metrics") or {}).get("ROC-AUC", (eval_summary.get("roc_auc") or {}).get("macro")),
+        "Params": params,
+        "GFLOPs": gflops,
     }
     payload.update(metric_payload(best, "best"))
     payload.update(metric_payload(final, "final"))

@@ -90,21 +90,26 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
     dist_ax.tick_params(axis="x", labelrotation=35)
 
     scatter_ax = axes[1, 1]
+    x_metric = "FPS" if any(as_float(row.get("FPS")) is not None for row in rows) else "GFLOPs"
     for row in rows:
         ap = as_float(row.get("best_AP"))
-        fps = as_float(row.get("FPS"))
-        if ap is None or fps is None:
+        x_value = as_float(row.get(x_metric))
+        if ap is None or x_value is None:
             continue
-        scatter_ax.scatter(fps, ap, label=row.get("method") or row.get("model"))
-    scatter_ax.set_title("Speed / Accuracy Tradeoff")
-    scatter_ax.set_xlabel("FPS")
+        label = row.get("method") or row.get("model")
+        size_group = row.get("size_group")
+        if size_group:
+            label = f"{label} ({size_group})"
+        scatter_ax.scatter(x_value, ap, label=label)
+    scatter_ax.set_title("Complexity / Accuracy Tradeoff" if x_metric == "GFLOPs" else "Speed / Accuracy Tradeoff")
+    scatter_ax.set_xlabel(x_metric)
     scatter_ax.set_ylabel("AP")
     handles, labels = scatter_ax.get_legend_handles_labels()
     if handles:
         by_label = dict(zip(labels, handles))
         scatter_ax.legend(by_label.values(), by_label.keys(), fontsize=8)
     else:
-        scatter_ax.text(0.5, 0.5, "FPS not collected yet", ha="center", va="center", transform=scatter_ax.transAxes)
+        scatter_ax.text(0.5, 0.5, f"{x_metric} not collected yet", ha="center", va="center", transform=scatter_ax.transAxes)
     if incomplete_count:
         fig.text(0.01, 0.01, f"Excluded incomplete/failed runs: {incomplete_count}", fontsize=9)
 
