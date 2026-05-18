@@ -143,12 +143,18 @@ bash scripts/ubuntu/train_visdrone_baselines_tmux.sh server-visdrone-baselines 1
 
 ```bash
 bash scripts/ubuntu/collect_server_results.sh
+bash scripts/ubuntu/check_detector_stage_gate.sh
 ```
 
 결과 CSV는 YOLO 세대, non-YOLO detector family, checkpoint scale, measured
 parameter-size group을 별도 컬럼으로 분리합니다. 예를 들어 YOLOv12s는
 `detector_family=YOLO`, `yolo_version=v12`, `model_scale=small`로 기록되고,
 RT-DETR 계열은 `architecture_group=non_yolo`로 분리됩니다.
+
+Detector 흐름은 stage gate로 관리합니다. 모든 baseline/comparison 모델을
+먼저 끝내고, best overall 및 best lightweight baseline을 고정한 뒤
+proposed perception module을 수정합니다. Proposed model이 두 비교 기준을
+넘으면 3D generation과 Marine City multi-angle benchmark 단계로 이동합니다.
 
 주요 산출물:
 

@@ -7,6 +7,8 @@ RESULTS_CSV=${RESULTS_CSV:-outputs/experiments/server_baseline_results.csv}
 SUMMARY_CSV=${SUMMARY_CSV:-outputs/experiments/server_baseline_summary.csv}
 PVALUES_CSV=${PVALUES_CSV:-outputs/experiments/server_baseline_pvalues.csv}
 DASHBOARD=${DASHBOARD:-outputs/reports/server_baseline_dashboard.png}
+STAGE_GATE_JSON=${STAGE_GATE_JSON:-outputs/experiments/detector_stage_gate.json}
+STAGE_GATE_MD=${STAGE_GATE_MD:-outputs/experiments/detector_stage_gate.md}
 
 cd "$(dirname "$0")/../.."
 
@@ -19,8 +21,11 @@ conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.collect_detec
 conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.summarize_seed_results --results-csv "$RESULTS_CSV" --out "$SUMMARY_CSV"
 conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.statistical_tests --results-csv "$RESULTS_CSV" --out "$PVALUES_CSV"
 conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.build_server_training_dashboard --results-csv "$RESULTS_CSV" --summary-csv "$SUMMARY_CSV" --out "$DASHBOARD"
+conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.detector_stage_gate --summary-csv "$SUMMARY_CSV" --out-json "$STAGE_GATE_JSON" --out-md "$STAGE_GATE_MD"
 
 echo "Results: $RESULTS_CSV"
 echo "Summary: $SUMMARY_CSV"
 echo "P-values: $PVALUES_CSV"
 echo "Dashboard: $DASHBOARD"
+echo "Stage gate JSON: $STAGE_GATE_JSON"
+echo "Stage gate report: $STAGE_GATE_MD"

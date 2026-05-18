@@ -61,10 +61,18 @@ used for the main statistical result.
 
 ## Strategy
 
-1. Train all baseline models with 3 seeds.
-2. Extend the top 2-3 models to 5 seeds.
-3. Add the proposed perception module to the best overall baseline or best
-   lightweight baseline.
+1. Train all YOLO and non-YOLO baseline/comparison models with the preliminary
+   3-seed set.
+2. Extend the top 2-3 models to the 5-seed main statistical set.
+3. Freeze the best overall baseline and best lightweight baseline as the
+   comparison targets.
+4. Modify the proposed perception model around the selected base detector.
+5. Continue to 3D generation and Marine City benchmark construction only after
+   the proposed detector outperforms both the best overall and best lightweight
+   comparison targets on the agreed detector metrics.
+
+This stage order avoids tuning the proposed module against an incomplete
+comparison set.
 
 ## Core Metrics
 
@@ -139,6 +147,17 @@ Collect after training:
 ```bash
 bash scripts/ubuntu/collect_server_results.sh
 ```
+
+Check the detector stage gate:
+
+```bash
+bash scripts/ubuntu/check_detector_stage_gate.sh
+```
+
+The gate writes:
+
+- `outputs/experiments/detector_stage_gate.json`
+- `outputs/experiments/detector_stage_gate.md`
 
 Queue the expanded comparison sweep after the current top-3 seed extension:
 

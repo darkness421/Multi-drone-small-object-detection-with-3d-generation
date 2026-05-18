@@ -6,6 +6,12 @@ Build a Marine City multi-angle benchmark and compare 3D scene representations
 for novel-view synthesis, downstream detector robustness, and qualitative
 inspection.
 
+This stage starts after the detector stage gate recommends
+`proceed_to_3d_benchmark`. Until then, the priority is to finish the detector
+baseline/comparison sweep, implement the proposed detector ablations, and verify
+that the proposed detector beats the best overall and best lightweight
+comparison targets.
+
 ## Reference Methods
 
 The comparison set uses four methods:
@@ -37,6 +43,13 @@ Split principle:
 The benchmark should include RGB, pose, optional depth, UAV ID, altitude, view
 angle, scene ID, and timestamp. This makes view synthesis and downstream object
 recognition comparable across methods.
+
+Detector handoff:
+
+- freeze the detector checkpoint selected by the proposed-model gate
+- use the same detector for rendered-view downstream AP comparisons
+- report whether 3D reconstruction improves final adjudicator decisions or only
+  improves qualitative inspection
 
 ## Metrics
 

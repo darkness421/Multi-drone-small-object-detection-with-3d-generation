@@ -48,11 +48,18 @@ Baseline execution status:
 - Split detector result metadata into YOLO generation, detector family,
   checkpoint scale, measured parameter-size group, and YOLO/non-YOLO
   architecture group for clearer comparison plots and CSV summaries.
+- Added a detector stage-gate plan: finish all baseline/comparison models first,
+  tune the proposed detector only after the comparison set is stable, and move
+  to Marine City 3D generation/benchmark work only after the proposed detector
+  outperforms the best overall and best lightweight baselines.
 
 Next:
 
 1. Let `server-top3-seed5` finish.
 2. Run the expanded comparison queue.
 3. Recollect CSV, p-values, and dashboard.
-4. Select best overall and best lightweight baselines for qualitative analysis
+4. Run `bash scripts/ubuntu/check_detector_stage_gate.sh`.
+5. Select best overall and best lightweight baselines for qualitative analysis
    and proposed-module experiments.
+6. Start 3D generation and benchmark construction only after the detector gate
+   recommends `proceed_to_3d_benchmark`.

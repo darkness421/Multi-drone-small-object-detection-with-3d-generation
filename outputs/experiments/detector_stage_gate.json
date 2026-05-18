@@ -1,0 +1,41 @@
+{
+  "metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "candidate_regex": "(?i)(proposed|com3d|ace|wavelet|deformable|tiling|ours)",
+  "lightweight_max_params": 15000000,
+  "min_delta": 0.0,
+  "require_main": false,
+  "baseline_count": 7,
+  "candidate_count": 0,
+  "best_overall_baseline": {
+    "method": "YOLOv8s",
+    "model": "yolov8s.pt",
+    "detector_family": "YOLO",
+    "model_version": "v8",
+    "model_scale": "small",
+    "param_size_group": "small",
+    "seed_count": 3,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.33286666666666664,
+    "best_AP50_mean": 0.54006,
+    "Params_mean": 11139470.0,
+    "GFLOPs_mean": 28.7
+  },
+  "best_lightweight_baseline": {
+    "method": "YOLOv8s",
+    "model": "yolov8s.pt",
+    "detector_family": "YOLO",
+    "model_version": "v8",
+    "model_scale": "small",
+    "param_size_group": "small",
+    "seed_count": 3,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.33286666666666664,
+    "best_AP50_mean": 0.54006,
+    "Params_mean": 11139470.0,
+    "GFLOPs_mean": 28.7
+  },
+  "best_proposed_candidate": null,
+  "recommended_next_stage": "finish_baselines_then_build_proposed",
+  "rationale": "Baseline/comparison models are being established; proposed detector rows are not present yet."
+}
