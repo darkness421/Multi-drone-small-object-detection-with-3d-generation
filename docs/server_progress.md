@@ -45,6 +45,9 @@ Baseline execution status:
 - Added optional YOLOv6s/YOLOv7 legacy checkpoints to the queue with automatic
   availability checks, because those names are not bundled as loadable weights
   in the current Ultralytics environment.
+- Split detector result metadata into YOLO generation, detector family,
+  checkpoint scale, measured parameter-size group, and YOLO/non-YOLO
+  architecture group for clearer comparison plots and CSV summaries.
 
 Next:
 

@@ -4,12 +4,45 @@ from __future__ import annotations
 
 import argparse
 import csv
+import re
 from collections import defaultdict
 from pathlib import Path
 from statistics import mean, stdev
 from typing import Any
 
 from runtime.config import resolve_path
+
+
+FAMILY_COLORS = {
+    "YOLO": "#4C78A8",
+    "RT-DETR": "#F58518",
+    "D-FINE": "#54A24B",
+    "DETR": "#B279A2",
+    "Other": "#9D755D",
+}
+
+SIZE_MARKERS = {
+    "nano": "o",
+    "small": "s",
+    "medium": "^",
+    "large": "D",
+    "xlarge": "X",
+    "base": "P",
+    "r18": "v",
+    "unknown": "o",
+}
+
+SIZE_ORDER = {
+    "nano": 0,
+    "small": 1,
+    "medium": 2,
+    "large": 3,
+    "xlarge": 4,
+    "base": 5,
+    "r18": 6,
+    "unknown": 99,
+    "": 99,
+}
 
 
 def as_float(value: Any) -> float | None:
@@ -39,8 +72,46 @@ def grouped_values(rows: list[dict[str, str]], metric: str) -> dict[str, list[fl
     return dict(groups)
 
 
-def means_and_stds(groups: dict[str, list[float]]) -> tuple[list[str], list[float], list[float]]:
-    labels = sorted(groups)
+def metadata_by_method(rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
+    meta: dict[str, dict[str, str]] = {}
+    for row in rows:
+        method = row.get("method") or row.get("model") or "unknown"
+        meta.setdefault(method, row)
+    return meta
+
+
+def version_number(value: str) -> int:
+    match = re.search(r"(\d+)", value or "")
+    return int(match.group(1)) if match else 999
+
+
+def sort_methods(labels: list[str], meta: dict[str, dict[str, str]]) -> list[str]:
+    def key(label: str) -> tuple[int, int, int, str]:
+        row = meta.get(label, {})
+        family = row.get("detector_family", "")
+        family_order = 0 if family == "YOLO" else 1
+        version = row.get("yolo_version") or row.get("model_version") or ""
+        size = row.get("param_size_group") or row.get("model_scale") or ""
+        return (family_order, version_number(version), SIZE_ORDER.get(size, 99), label)
+
+    return sorted(labels, key=key)
+
+
+def label_with_size(label: str, meta: dict[str, dict[str, str]]) -> str:
+    row = meta.get(label, {})
+    size = row.get("param_size_group") or row.get("model_scale") or ""
+    if size:
+        return f"{label}\n{size}"
+    return label
+
+
+def family_color(label: str, meta: dict[str, dict[str, str]]) -> str:
+    family = meta.get(label, {}).get("detector_family", "Other") or "Other"
+    return FAMILY_COLORS.get(family, FAMILY_COLORS["Other"])
+
+
+def means_and_stds(groups: dict[str, list[float]], meta: dict[str, dict[str, str]]) -> tuple[list[str], list[float], list[float]]:
+    labels = sort_methods(list(groups), meta)
     means = [float(mean(groups[label])) for label in labels]
     stds = [float(stdev(groups[label])) if len(groups[label]) > 1 else 0.0 for label in labels]
     return labels, means, stds
@@ -69,24 +140,34 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         plt.close(fig)
         return out_path
 
+    meta = metadata_by_method(rows)
+
     for ax, metric, title in [
         (axes[0, 0], "best_AP", "AP / mAP50-95"),
         (axes[0, 1], "best_AP50", "AP50"),
     ]:
         groups = grouped_values(rows, metric)
-        labels, values, errors = means_and_stds(groups)
-        ax.bar(labels, values, yerr=errors, capsize=4, color="#4C78A8")
+        labels, values, errors = means_and_stds(groups, meta)
+        colors = [family_color(label, meta) for label in labels]
+        bars = ax.bar(labels, values, yerr=errors, capsize=4, color=colors)
         ax.set_title(title)
         ax.set_ylim(0, max(values + [1.0]) * 1.15)
         ax.tick_params(axis="x", labelrotation=35)
         if values:
             best_idx = max(range(len(values)), key=values.__getitem__)
-            ax.bar(labels[best_idx], values[best_idx], yerr=errors[best_idx], capsize=4, color="#F58518")
+            bars[best_idx].set_edgecolor("#111827")
+            bars[best_idx].set_linewidth(2)
 
     dist_ax = axes[1, 0]
     groups = grouped_values(rows, "best_AP")
-    dist_ax.boxplot([groups[label] for label in sorted(groups)], labels=sorted(groups), showmeans=True)
-    dist_ax.set_title("Seed Distribution: AP")
+    labels = sort_methods(list(groups), meta)
+    box_values = [groups[label] for label in labels]
+    box_labels = [label_with_size(label, meta) for label in labels]
+    try:
+        dist_ax.boxplot(box_values, tick_labels=box_labels, showmeans=True)
+    except TypeError:
+        dist_ax.boxplot(box_values, labels=box_labels, showmeans=True)
+    dist_ax.set_title("Seed Distribution: AP by Model and Parameter Size")
     dist_ax.tick_params(axis="x", labelrotation=35)
 
     scatter_ax = axes[1, 1]
@@ -97,11 +178,12 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         if ap is None or x_value is None:
             continue
         label = row.get("method") or row.get("model")
-        size_group = row.get("size_group")
-        if size_group:
-            label = f"{label} ({size_group})"
-        scatter_ax.scatter(x_value, ap, label=label)
-    scatter_ax.set_title("Complexity / Accuracy Tradeoff" if x_metric == "GFLOPs" else "Speed / Accuracy Tradeoff")
+        family = row.get("detector_family", "Other") or "Other"
+        size_group = row.get("param_size_group") or row.get("model_scale") or "unknown"
+        marker = SIZE_MARKERS.get(size_group, "o")
+        color = FAMILY_COLORS.get(family, FAMILY_COLORS["Other"])
+        scatter_ax.scatter(x_value, ap, label=f"{label} ({family}, {size_group})", marker=marker, color=color, alpha=0.75)
+    scatter_ax.set_title("Complexity / Accuracy by Family and Parameter Size" if x_metric == "GFLOPs" else "Speed / Accuracy by Family and Size")
     scatter_ax.set_xlabel(x_metric)
     scatter_ax.set_ylabel("AP")
     handles, labels = scatter_ax.get_legend_handles_labels()

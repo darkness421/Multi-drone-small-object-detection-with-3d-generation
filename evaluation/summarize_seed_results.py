@@ -34,19 +34,28 @@ def describe(values: list[float]) -> tuple[float, float, int]:
 
 
 def summarize(rows: list[dict[str, str]], metrics: list[str]) -> list[dict[str, Any]]:
-    groups: dict[tuple[str, str, str, str], list[dict[str, str]]] = defaultdict(list)
+    groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
     for row in rows:
         if row.get("status", "completed") != "completed":
             continue
-        groups[(row.get("method", ""), row.get("model", ""), row.get("size_group", ""), row.get("dataset", ""))].append(row)
+        groups[(row.get("method", ""), row.get("model", ""), row.get("dataset", ""))].append(row)
 
     summary_rows: list[dict[str, Any]] = []
-    for (method, model, size_group, dataset), group_rows in sorted(groups.items()):
+    for (method, model, dataset), group_rows in sorted(groups.items()):
+        first = group_rows[0]
         seeds = sorted({row.get("seed", "") for row in group_rows if row.get("seed", "")})
         out: dict[str, Any] = {
             "method": method,
             "model": model,
-            "size_group": size_group,
+            "detector_family": first.get("detector_family", ""),
+            "architecture_group": first.get("architecture_group", ""),
+            "model_version": first.get("model_version", ""),
+            "yolo_version": first.get("yolo_version", ""),
+            "is_yolo": first.get("is_yolo", ""),
+            "model_scale": first.get("model_scale", ""),
+            "name_size_tag": first.get("name_size_tag", ""),
+            "param_size_group": first.get("param_size_group", ""),
+            "size_group": first.get("size_group", ""),
             "dataset": dataset,
             "seed_count": len(seeds),
             "seeds": ",".join(seeds),
@@ -67,13 +76,29 @@ def summarize(rows: list[dict[str, str]], metrics: list[str]) -> list[dict[str, 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    fieldnames: list[str] = ["method", "model", "size_group", "dataset", "seed_count", "seeds", "analysis_level"]
+    fieldnames: list[str] = [
+        "method",
+        "model",
+        "detector_family",
+        "architecture_group",
+        "model_version",
+        "yolo_version",
+        "is_yolo",
+        "model_scale",
+        "name_size_tag",
+        "param_size_group",
+        "size_group",
+        "dataset",
+        "seed_count",
+        "seeds",
+        "analysis_level",
+    ]
     for row in rows:
         for key in row:
             if key not in fieldnames:
                 fieldnames.append(key)
     with path.open("w", encoding="utf-8-sig", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

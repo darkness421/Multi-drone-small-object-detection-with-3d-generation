@@ -145,6 +145,11 @@ bash scripts/ubuntu/train_visdrone_baselines_tmux.sh server-visdrone-baselines 1
 bash scripts/ubuntu/collect_server_results.sh
 ```
 
+결과 CSV는 YOLO 세대, non-YOLO detector family, checkpoint scale, measured
+parameter-size group을 별도 컬럼으로 분리합니다. 예를 들어 YOLOv12s는
+`detector_family=YOLO`, `yolo_version=v12`, `model_scale=small`로 기록되고,
+RT-DETR 계열은 `architecture_group=non_yolo`로 분리됩니다.
+
 주요 산출물:
 
 - `outputs/experiments/server_baseline_results.csv`

@@ -84,7 +84,18 @@ Model size is grouped by measured parameter count, not only by checkpoint suffix
 - `large`: 35M to < 75M params
 - `xlarge`: >= 75M params
 
-The checkpoint suffix is retained separately as `name_size_tag`.
+The result CSV separates identity and capacity so YOLO generation, model size,
+and non-YOLO detectors can be compared without mixing meanings:
+
+- `detector_family`: `YOLO`, `RT-DETR`, `D-FINE`, `DETR`, or `Other`
+- `architecture_group`: `yolo` or `non_yolo`
+- `model_version`: detector generation such as `v8`, `v12`, `v26`, or `RT-DETR`
+- `yolo_version`: YOLO generation only, blank for non-YOLO models
+- `model_scale` / `name_size_tag`: checkpoint-name scale such as `nano`,
+  `small`, `medium`, `large`, `xlarge`, `base`, or `r18`
+- `param_size_group`: measured parameter-count bin
+- `size_group`: measured parameter-count bin when available, otherwise the
+  checkpoint-name scale
 
 Seed statistics and p-values are computed from repeated seed results. The main
 p-value table focuses on AP, AP50, recall, and F1.

@@ -56,11 +56,14 @@ if not rows:
     raise SystemExit
 for row in rows:
     method = row.get("method") or row.get("model") or "unknown"
+    family = row.get("detector_family") or "?"
+    version = row.get("yolo_version") or row.get("model_version") or "?"
+    size = row.get("param_size_group") or row.get("model_scale") or "?"
     ap = row.get("best_AP_mean_std") or row.get("best_AP_mean") or ""
     ap50 = row.get("best_AP50_mean_std") or row.get("best_AP50_mean") or ""
     seeds = row.get("seeds") or ""
     level = row.get("analysis_level") or ""
-    print(f"  {method:12s} AP={ap:16s} AP50={ap50:16s} seeds={seeds} ({level})")
+    print(f"  {method:12s} {family:7s} {version:8s} size={size:7s} AP={ap:16s} AP50={ap50:16s} seeds={seeds} ({level})")
 PY
   echo ""
   sleep "$INTERVAL"

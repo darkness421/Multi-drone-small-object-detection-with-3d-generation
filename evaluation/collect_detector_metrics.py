@@ -15,6 +15,12 @@ from runtime.config import resolve_path
 METRIC_COLUMNS = [
     "method",
     "model",
+    "detector_family",
+    "architecture_group",
+    "model_version",
+    "yolo_version",
+    "is_yolo",
+    "model_scale",
     "name_size_tag",
     "param_size_group",
     "size_group",
@@ -127,31 +133,98 @@ def infer_method(model: str) -> str:
     return aliases.get(stem, stem)
 
 
-def infer_name_size_tag(model: str) -> str:
-    stem = Path(model).stem.lower()
-    if stem.endswith(("nu", "n6")):
+def scale_from_suffix(suffix: str) -> str:
+    if suffix in {"n", "nu", "n6"}:
         return "nano"
-    if stem.endswith(("su", "s6")):
+    if suffix in {"s", "su", "s6"}:
         return "small"
-    if stem.endswith(("mu", "m6")):
+    if suffix in {"m", "mu", "m6"}:
         return "medium"
-    if stem.endswith(("lu", "l6")):
+    if suffix in {"l", "lu", "l6"}:
         return "large"
-    if stem.endswith(("xu", "x6")):
+    if suffix in {"x", "xu", "x6"}:
         return "xlarge"
-    if stem.endswith("n"):
-        return "nano"
-    if stem.endswith("s"):
-        return "small"
-    if stem.endswith("m"):
-        return "medium"
-    if stem.endswith("l"):
-        return "large"
-    if stem.endswith("x"):
-        return "xlarge"
-    if "r18" in stem:
-        return "r18"
     return "unknown"
+
+
+def infer_model_metadata(model: str) -> dict[str, str]:
+    """Split model identity into family, version, and size fields.
+
+    The checkpoint suffix is useful, but not enough for fair comparison.
+    YOLOv7, RT-DETR-R18, and other non-YOLO checkpoints do not map cleanly to
+    nano/small/medium suffixes, so measured parameter bins are kept separately.
+    """
+
+    stem = Path(model).stem.lower()
+    metadata = {
+        "detector_family": "Other",
+        "architecture_group": "non_yolo",
+        "model_version": "unknown",
+        "yolo_version": "",
+        "is_yolo": "false",
+        "model_scale": "unknown",
+    }
+
+    yolo_match = re.match(r"^yolo(?:v)?(?P<version>\d+)(?P<suffix>[nsmxl](?:u|6)?)?$", stem)
+    if yolo_match:
+        version = f"v{yolo_match.group('version')}"
+        suffix = yolo_match.group("suffix") or ""
+        metadata.update(
+            {
+                "detector_family": "YOLO",
+                "architecture_group": "yolo",
+                "model_version": version,
+                "yolo_version": version,
+                "is_yolo": "true",
+                "model_scale": scale_from_suffix(suffix) if suffix else "base",
+            }
+        )
+        return metadata
+
+    if stem.startswith("rtdetr") or stem.startswith("rt-detr"):
+        metadata.update(
+            {
+                "detector_family": "RT-DETR",
+                "architecture_group": "non_yolo",
+                "model_version": "RT-DETR",
+                "model_scale": "unknown",
+            }
+        )
+        if "r18" in stem:
+            metadata["model_scale"] = "r18"
+        elif stem.endswith("-l") or stem.endswith("_l") or stem.endswith("l"):
+            metadata["model_scale"] = "large"
+        elif stem.endswith("-x") or stem.endswith("_x") or stem.endswith("x"):
+            metadata["model_scale"] = "xlarge"
+        return metadata
+
+    if stem.startswith("dfine") or stem.startswith("d-fine"):
+        metadata.update(
+            {
+                "detector_family": "D-FINE",
+                "architecture_group": "non_yolo",
+                "model_version": "D-FINE",
+            }
+        )
+        return metadata
+
+    if stem.startswith("detr"):
+        metadata.update(
+            {
+                "detector_family": "DETR",
+                "architecture_group": "non_yolo",
+                "model_version": "DETR",
+            }
+        )
+        return metadata
+
+    if "r18" in stem:
+        metadata["model_scale"] = "r18"
+    return metadata
+
+
+def infer_name_size_tag(model: str) -> str:
+    return infer_model_metadata(model)["model_scale"]
 
 
 def infer_param_size_group(params: int | None) -> str:
@@ -219,15 +292,20 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
     best = best_row(rows) if rows else {}
     train_summary = read_json(run_dir / "metrics" / "train_summary.json")
     eval_summary = read_json(run_dir / "metrics" / "eval_summary.json")
-    model = str(train_summary.get("requested_model") or train_summary.get("model") or run_dir.name.split("_visdrone")[0])
+    fallback_model = strip_timestamp(run_dir.name.split("_visdrone")[0])
+    if "." not in Path(fallback_model).name and infer_model_metadata(fallback_model)["detector_family"] != "Other":
+        fallback_model = f"{fallback_model}.pt"
+    model = str(train_summary.get("requested_model") or train_summary.get("model") or fallback_model)
     best_weight = results_csv.parent / "weights" / "best.pt"
     train_summary_path = run_dir / "metrics" / "train_summary.json"
     params, gflops = model_complexity(run_dir)
-    name_size_tag = infer_name_size_tag(model)
+    metadata = infer_model_metadata(model)
+    name_size_tag = metadata["model_scale"]
     param_size_group = infer_param_size_group(params)
     payload: dict[str, Any] = {
         "method": train_summary.get("method") or infer_method(model),
         "model": model,
+        **metadata,
         "name_size_tag": name_size_tag,
         "param_size_group": param_size_group,
         "size_group": param_size_group if param_size_group != "unknown" else name_size_tag,
@@ -254,7 +332,7 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
             if key not in fieldnames:
                 fieldnames.append(key)
     with path.open("w", encoding="utf-8-sig", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

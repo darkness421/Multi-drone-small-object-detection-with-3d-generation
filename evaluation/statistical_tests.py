@@ -56,8 +56,30 @@ def best_method(rows: list[dict[str, str]], metric: str) -> str:
     return max(means, key=means.get)
 
 
+def metadata_by_method(rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
+    metadata: dict[str, dict[str, str]] = {}
+    for row in rows:
+        method = row.get("method") or row.get("model") or ""
+        if method:
+            metadata.setdefault(method, row)
+    return metadata
+
+
+def method_fields(metadata: dict[str, dict[str, str]], method: str, prefix: str) -> dict[str, str]:
+    row = metadata.get(method, {})
+    return {
+        f"{prefix}_detector_family": row.get("detector_family", ""),
+        f"{prefix}_model_version": row.get("model_version", ""),
+        f"{prefix}_yolo_version": row.get("yolo_version", ""),
+        f"{prefix}_model_scale": row.get("model_scale", ""),
+        f"{prefix}_param_size_group": row.get("param_size_group", ""),
+        f"{prefix}_size_group": row.get("size_group", ""),
+    }
+
+
 def compare_against_baseline(rows: list[dict[str, str]], metrics: list[str], baseline_method: str | None = None) -> list[dict[str, Any]]:
     baseline_method = baseline_method or best_method(rows, metrics[0])
+    metadata = metadata_by_method(rows)
     out: list[dict[str, Any]] = []
     for metric in metrics:
         grouped = group_metric_by_seed(rows, metric)
@@ -72,23 +94,24 @@ def compare_against_baseline(rows: list[dict[str, str]], metrics: list[str], bas
             candidate_values = [candidate[seed] for seed in seeds]
             t_test = paired_t_test(candidate_values, baseline_values)
             wilcoxon = wilcoxon_signed_rank(candidate_values, baseline_values)
-            out.append(
-                {
-                    "metric": metric,
-                    "baseline_method": baseline_method,
-                    "candidate_method": method,
-                    "paired_seeds": ",".join(str(seed) for seed in seeds),
-                    "seed_count": len(seeds),
-                    "analysis_level": "main" if len(seeds) >= 5 else "preliminary",
-                    "baseline_mean": mean(baseline_values),
-                    "candidate_mean": mean(candidate_values),
-                    "delta_candidate_minus_baseline": mean([b - a for a, b in zip(baseline_values, candidate_values)]),
-                    "paired_t_statistic": t_test["statistic"],
-                    "paired_t_pvalue": t_test["pvalue"],
-                    "wilcoxon_statistic": wilcoxon["statistic"],
-                    "wilcoxon_pvalue": wilcoxon["pvalue"],
-                }
-            )
+            result = {
+                "metric": metric,
+                "baseline_method": baseline_method,
+                "candidate_method": method,
+                "paired_seeds": ",".join(str(seed) for seed in seeds),
+                "seed_count": len(seeds),
+                "analysis_level": "main" if len(seeds) >= 5 else "preliminary",
+                "baseline_mean": mean(baseline_values),
+                "candidate_mean": mean(candidate_values),
+                "delta_candidate_minus_baseline": mean([b - a for a, b in zip(baseline_values, candidate_values)]),
+                "paired_t_statistic": t_test["statistic"],
+                "paired_t_pvalue": t_test["pvalue"],
+                "wilcoxon_statistic": wilcoxon["statistic"],
+                "wilcoxon_pvalue": wilcoxon["pvalue"],
+            }
+            result.update(method_fields(metadata, baseline_method, "baseline"))
+            result.update(method_fields(metadata, method, "candidate"))
+            out.append(result)
     return out
 
 
@@ -97,7 +120,19 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     fieldnames: list[str] = [
         "metric",
         "baseline_method",
+        "baseline_detector_family",
+        "baseline_model_version",
+        "baseline_yolo_version",
+        "baseline_model_scale",
+        "baseline_param_size_group",
+        "baseline_size_group",
         "candidate_method",
+        "candidate_detector_family",
+        "candidate_model_version",
+        "candidate_yolo_version",
+        "candidate_model_scale",
+        "candidate_param_size_group",
+        "candidate_size_group",
         "paired_seeds",
         "seed_count",
         "analysis_level",
@@ -114,7 +149,7 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
             if key not in fieldnames:
                 fieldnames.append(key)
     with path.open("w", encoding="utf-8-sig", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
