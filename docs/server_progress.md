@@ -30,3 +30,23 @@ Next:
 4. Extend top models to 5 seeds for main statistical analysis.
 5. Add the proposed module to the best overall or best lightweight baseline.
 6. Build Marine City multi-angle benchmark splits for 3D generation and reasoner ablations.
+
+## 2026-05-18
+
+Baseline execution status:
+
+- Completed the initial 3-seed baseline sweep for YOLOv8n/s, YOLOv11n/s,
+  YOLOv12n/s, and RT-DETR-L.
+- Extended the current top-3 models to the 5-seed main statistical set:
+  YOLOv8s, YOLOv12s, and YOLOv11s.
+- Added parameter-count based model size grouping to the result collector.
+- Planned an expanded comparison sweep with YOLOv9s, YOLOv10s, YOLOv26n,
+  YOLOv26s, and YOLOv12m after the top-3 seed extension completes.
+
+Next:
+
+1. Let `server-top3-seed5` finish.
+2. Run the expanded comparison queue.
+3. Recollect CSV, p-values, and dashboard.
+4. Select best overall and best lightweight baselines for qualitative analysis
+   and proposed-module experiments.

@@ -16,7 +16,7 @@ Default training settings:
 - `imgsz`: 1280
 - `epochs`: 100
 - `batch`: script argument
-- `device`: script argument, with physical GPU split through `CUDA_VISIBLE_DEVICES`
+- `device`: script argument, using physical GPU ids with `CUDA_DEVICE_ORDER=PCI_BUS_ID`
 - deterministic mode is recorded unless `--non-deterministic` is passed
 
 ## Models
@@ -30,6 +30,17 @@ Baseline sweep:
 - YOLOv12n
 - YOLOv12s
 - RT-DETR family, defaulting to an Ultralytics RT-DETR checkpoint until R18 is available
+
+Expanded comparison sweep after the top-3 seed extension:
+
+- YOLOv9s
+- YOLOv10s
+- YOLOv26n
+- YOLOv26s
+- YOLOv12m
+
+The expanded sweep fills comparison gaps across older YOLO generations, YOLO26,
+and a medium-capacity model. These runs use the preliminary 3-seed set first.
 
 ## Seeds
 
@@ -60,6 +71,16 @@ Detector baseline ranking focuses on:
 - APsmall when available
 - FPS or inference latency
 - params / GFLOPs when available
+
+Model size is grouped by measured parameter count, not only by checkpoint suffix:
+
+- `nano`: < 5M params
+- `small`: 5M to < 15M params
+- `medium`: 15M to < 35M params
+- `large`: 35M to < 75M params
+- `xlarge`: >= 75M params
+
+The checkpoint suffix is retained separately as `name_size_tag`.
 
 Seed statistics and p-values are computed from repeated seed results. The main
 p-value table focuses on AP, AP50, recall, and F1.
@@ -102,4 +123,10 @@ Collect after training:
 
 ```bash
 bash scripts/ubuntu/collect_server_results.sh
+```
+
+Queue the expanded comparison sweep after the current top-3 seed extension:
+
+```bash
+bash scripts/ubuntu/train_extra_comparison_models_after_session.sh
 ```

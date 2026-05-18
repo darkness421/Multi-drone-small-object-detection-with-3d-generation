@@ -6,7 +6,7 @@ TRAIN_SESSION=${2:-server-visdrone-baselines}
 INTERVAL=${3:-60}
 LOG_DIR=${LOG_DIR:-outputs/logs/server_baselines}
 COMMAND_CSV=${COMMAND_CSV:-outputs/experiments/server_baseline_commands.csv}
-DASHBOARD=${DASHBOARD:-outputs/reports/server_baseline_dashboard.png}
+DASHBOARD=${DASHBOARD:-outputs/reports/live/server_baseline_dashboard.png}
 
 cd "$(dirname "$0")/../.."
 
@@ -33,7 +33,7 @@ tmux new-window -t "$MONITOR_SESSION" -n logs \
   "cd '$PWD' && while true; do latest=\$(find '$LOG_DIR' -type f -name '*.log' -printf '%T@ %p\n' 2>/dev/null | sort -nr | head -n 1 | cut -d' ' -f2-); if [[ -n \"\${latest:-}\" ]]; then echo \"Tailing \$latest\"; tail -n 80 -F \"\$latest\"; else echo 'Waiting for logs...'; sleep 5; fi; done"
 
 tmux new-window -t "$MONITOR_SESSION" -n metrics \
-  "cd '$PWD' && while true; do clear; date -Is; echo; echo 'Command queue:'; tail -n 12 '$COMMAND_CSV' 2>/dev/null || true; echo; echo 'Summary:'; column -s, -t outputs/experiments/server_baseline_summary.csv 2>/dev/null | tail -n 20 || true; echo; echo 'Dashboard: $DASHBOARD'; ls -lh '$DASHBOARD' 2>/dev/null || true; sleep 10; done"
+  "cd '$PWD' && while true; do clear; date -Is; echo; echo 'Command queue:'; tail -n 12 '$COMMAND_CSV' 2>/dev/null || true; echo; echo 'Summary:'; column -s, -t outputs/experiments/live/server_baseline_summary.csv 2>/dev/null | tail -n 20 || true; echo; echo 'Dashboard: $DASHBOARD'; ls -lh '$DASHBOARD' 2>/dev/null || true; sleep 10; done"
 
 tmux new-window -t "$MONITOR_SESSION" -n dashboard \
   "cd '$PWD' && bash scripts/ubuntu/live_server_dashboard.sh '$INTERVAL'"

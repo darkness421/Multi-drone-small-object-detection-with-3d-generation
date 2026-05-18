@@ -111,6 +111,7 @@ class LiveHandler(BaseHTTPRequestHandler):
     log_dir = ROOT / "outputs" / "logs" / "server_baselines"
     project_dir = ROOT / "outputs" / "detectors" / "server_baselines"
     dashboard = ROOT / "outputs" / "reports" / "server_baseline_dashboard.png"
+    live_dashboard = ROOT / "outputs" / "reports" / "live" / "server_baseline_dashboard.png"
 
     def log_message(self, format: str, *args: object) -> None:
         return
@@ -126,8 +127,9 @@ class LiveHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
         if parsed.path == "/dashboard.png":
-            if self.dashboard.exists():
-                self.send_bytes(self.dashboard.read_bytes(), "image/png")
+            dashboard = self.live_dashboard if self.live_dashboard.exists() else self.dashboard
+            if dashboard.exists():
+                self.send_bytes(dashboard.read_bytes(), "image/png")
             else:
                 self.send_error(404, "dashboard not found")
             return

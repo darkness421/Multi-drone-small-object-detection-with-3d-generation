@@ -15,6 +15,8 @@ from runtime.config import resolve_path
 METRIC_COLUMNS = [
     "method",
     "model",
+    "name_size_tag",
+    "param_size_group",
     "size_group",
     "dataset",
     "seed",
@@ -116,7 +118,7 @@ def infer_method(model: str) -> str:
     return aliases.get(stem, stem)
 
 
-def infer_size_group(model: str) -> str:
+def infer_name_size_tag(model: str) -> str:
     stem = Path(model).stem.lower()
     if stem.endswith("n"):
         return "nano"
@@ -131,6 +133,21 @@ def infer_size_group(model: str) -> str:
     if "r18" in stem:
         return "r18"
     return "unknown"
+
+
+def infer_param_size_group(params: int | None) -> str:
+    if params is None:
+        return "unknown"
+    params_m = params / 1_000_000
+    if params_m < 5:
+        return "nano"
+    if params_m < 15:
+        return "small"
+    if params_m < 35:
+        return "medium"
+    if params_m < 75:
+        return "large"
+    return "xlarge"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -187,10 +204,14 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
     best_weight = results_csv.parent / "weights" / "best.pt"
     train_summary_path = run_dir / "metrics" / "train_summary.json"
     params, gflops = model_complexity(run_dir)
+    name_size_tag = infer_name_size_tag(model)
+    param_size_group = infer_param_size_group(params)
     payload: dict[str, Any] = {
         "method": train_summary.get("method") or infer_method(model),
         "model": model,
-        "size_group": infer_size_group(model),
+        "name_size_tag": name_size_tag,
+        "param_size_group": param_size_group,
+        "size_group": param_size_group if param_size_group != "unknown" else name_size_tag,
         "dataset": "VisDrone2019-DET",
         "seed": infer_seed(run_dir, train_summary),
         "status": "completed" if train_summary_path.exists() and best_weight.exists() else "incomplete",

@@ -4,10 +4,10 @@ set -euo pipefail
 INTERVAL=${1:-60}
 DETECTOR_ROOT=${DETECTOR_ROOT:-outputs/detectors/server_baselines}
 CONDA_ENV=${CONDA_ENV:-com3d-ace}
-RESULTS_CSV=${RESULTS_CSV:-outputs/experiments/server_baseline_results.csv}
-SUMMARY_CSV=${SUMMARY_CSV:-outputs/experiments/server_baseline_summary.csv}
-PVALUES_CSV=${PVALUES_CSV:-outputs/experiments/server_baseline_pvalues.csv}
-DASHBOARD=${DASHBOARD:-outputs/reports/server_baseline_dashboard.png}
+RESULTS_CSV=${RESULTS_CSV:-outputs/experiments/live/server_baseline_results.csv}
+SUMMARY_CSV=${SUMMARY_CSV:-outputs/experiments/live/server_baseline_summary.csv}
+PVALUES_CSV=${PVALUES_CSV:-outputs/experiments/live/server_baseline_pvalues.csv}
+DASHBOARD=${DASHBOARD:-outputs/reports/live/server_baseline_dashboard.png}
 
 cd "$(dirname "$0")/../.."
 
@@ -46,7 +46,7 @@ while true; do
 import csv
 from pathlib import Path
 
-path = Path("outputs/experiments/server_baseline_summary.csv")
+path = Path("outputs/experiments/live/server_baseline_summary.csv")
 if not path.exists():
     print("  no summary yet")
     raise SystemExit
