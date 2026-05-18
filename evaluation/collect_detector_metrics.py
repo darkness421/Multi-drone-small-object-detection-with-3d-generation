@@ -106,12 +106,21 @@ def infer_seed(run_dir: Path, summary: dict[str, Any]) -> str:
 def infer_method(model: str) -> str:
     stem = Path(model).stem
     aliases = {
+        "yolov5s": "YOLOv5s",
+        "yolov5su": "YOLOv5su",
+        "yolov6s": "YOLOv6s",
+        "yolov7": "YOLOv7",
+        "yolov9s": "YOLOv9s",
+        "yolov10s": "YOLOv10s",
         "yolov8n": "YOLOv8n",
         "yolov8s": "YOLOv8s",
         "yolo11n": "YOLOv11n",
         "yolo11s": "YOLOv11s",
         "yolo12n": "YOLOv12n",
         "yolo12s": "YOLOv12s",
+        "yolo12m": "YOLOv12m",
+        "yolo26n": "YOLOv26n",
+        "yolo26s": "YOLOv26s",
         "rtdetr-l": "RT-DETR-L",
         "rtdetr-r18": "RT-DETR-R18",
     }
@@ -120,6 +129,16 @@ def infer_method(model: str) -> str:
 
 def infer_name_size_tag(model: str) -> str:
     stem = Path(model).stem.lower()
+    if stem.endswith(("nu", "n6")):
+        return "nano"
+    if stem.endswith(("su", "s6")):
+        return "small"
+    if stem.endswith(("mu", "m6")):
+        return "medium"
+    if stem.endswith(("lu", "l6")):
+        return "large"
+    if stem.endswith(("xu", "x6")):
+        return "xlarge"
     if stem.endswith("n"):
         return "nano"
     if stem.endswith("s"):

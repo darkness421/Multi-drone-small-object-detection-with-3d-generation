@@ -33,6 +33,7 @@ Baseline sweep:
 
 Expanded comparison sweep after the top-3 seed extension:
 
+- YOLOv5su
 - YOLOv9s
 - YOLOv10s
 - YOLOv26n
@@ -41,6 +42,9 @@ Expanded comparison sweep after the top-3 seed extension:
 
 The expanded sweep fills comparison gaps across older YOLO generations, YOLO26,
 and a medium-capacity model. These runs use the preliminary 3-seed set first.
+YOLOv6s and YOLOv7 are treated as optional legacy checkpoints: the queue checks
+whether the weights are loadable in the current Ultralytics environment and
+skips them automatically if no compatible checkpoint is available.
 
 ## Seeds
 

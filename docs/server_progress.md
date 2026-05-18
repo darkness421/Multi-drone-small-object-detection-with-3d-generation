@@ -40,8 +40,11 @@ Baseline execution status:
 - Extended the current top-3 models to the 5-seed main statistical set:
   YOLOv8s, YOLOv12s, and YOLOv11s.
 - Added parameter-count based model size grouping to the result collector.
-- Planned an expanded comparison sweep with YOLOv9s, YOLOv10s, YOLOv26n,
-  YOLOv26s, and YOLOv12m after the top-3 seed extension completes.
+- Planned an expanded comparison sweep with YOLOv5su, YOLOv9s, YOLOv10s,
+  YOLOv26n, YOLOv26s, and YOLOv12m after the top-3 seed extension completes.
+- Added optional YOLOv6s/YOLOv7 legacy checkpoints to the queue with automatic
+  availability checks, because those names are not bundled as loadable weights
+  in the current Ultralytics environment.
 
 Next:
 
