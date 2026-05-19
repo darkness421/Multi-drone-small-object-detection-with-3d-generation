@@ -22,6 +22,23 @@ FAMILY_COLORS = {
     "Other": "#9D755D",
 }
 
+MODEL_VERSION_COLORS = {
+    "v5": "#0072B2",
+    "v6": "#56B4E9",
+    "v7": "#009E73",
+    "v8": "#E69F00",
+    "v9": "#D55E00",
+    "v10": "#CC79A7",
+    "v11": "#6A3D9A",
+    "v12": "#1B9E77",
+    "v26": "#E7298A",
+    "RT-DETR": "#4B5563",
+    "LRDS-YOLO": "#A6761D",
+    "D-FINE": "#66A61E",
+    "DETR": "#7570B3",
+    "unknown": "#6B7280",
+}
+
 SIZE_MARKERS = {
     "nano": "o",
     "small": "s",
@@ -131,6 +148,18 @@ def family_color(label: str, meta: dict[str, dict[str, str]]) -> str:
     return FAMILY_COLORS.get(family, FAMILY_COLORS["Other"])
 
 
+def model_color_from_row(row: dict[str, str]) -> str:
+    family = row.get("detector_family", "") or ""
+    version = row.get("yolo_version") or row.get("model_version") or "unknown"
+    if family == "YOLO" and version:
+        return MODEL_VERSION_COLORS.get(version, MODEL_VERSION_COLORS["unknown"])
+    return MODEL_VERSION_COLORS.get(version, FAMILY_COLORS.get(family, FAMILY_COLORS["Other"]))
+
+
+def model_color(label: str, meta: dict[str, dict[str, str]]) -> str:
+    return model_color_from_row(meta.get(label, {}))
+
+
 def means_and_stds(groups: dict[str, list[float]], meta: dict[str, dict[str, str]]) -> tuple[list[str], list[float], list[float]]:
     labels = sort_methods(list(groups), meta)
     means = [float(mean(groups[label])) for label in labels]
@@ -141,6 +170,17 @@ def means_and_stds(groups: dict[str, list[float]], meta: dict[str, dict[str, str
 def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str | Path, dataset: str | None = None) -> Path:
     import matplotlib.pyplot as plt
 
+    plt.rcParams.update(
+        {
+            "axes.grid": True,
+            "axes.axisbelow": True,
+            "grid.alpha": 0.22,
+            "font.size": 10,
+            "axes.titlesize": 12,
+            "axes.labelsize": 10,
+            "legend.fontsize": 8,
+        }
+    )
     rows = read_rows(results_csv)
     if dataset:
         rows = [row for row in rows if row.get("dataset") == dataset]
@@ -175,7 +215,7 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
     ]:
         groups = grouped_values(rows, metric, include_dataset=include_dataset)
         labels, values, errors = means_and_stds(groups, meta)
-        colors = [family_color(label, meta) for label in labels]
+        colors = [model_color(label, meta) for label in labels]
         plot_labels = [label_with_size(label, meta) if include_dataset else label for label in labels]
         bars = ax.bar(plot_labels, values, yerr=errors, capsize=4, color=colors)
         ax.set_title(title)
@@ -211,9 +251,10 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         family = row.get("detector_family", "Other") or "Other"
         size_group = row.get("param_size_group") or row.get("model_scale") or "unknown"
         marker = SIZE_MARKERS.get(size_group, "o")
-        color = FAMILY_COLORS.get(family, FAMILY_COLORS["Other"])
+        color = model_color_from_row(row)
         legend_label = f"{dataset_label}: {method} ({family}, {size_group})" if include_dataset else f"{method} ({family}, {size_group})"
-        scatter_ax.scatter(x_value, ap, label=legend_label, marker=marker, color=color, alpha=0.75)
+        scatter_ax.scatter(x_value, ap, label=legend_label, marker=marker, color=color, edgecolor="#111827", linewidth=0.6, alpha=0.82, s=56)
+        scatter_ax.annotate(method, (x_value, ap), xytext=(5, 4), textcoords="offset points", fontsize=7)
     scatter_ax.set_title("Complexity / Accuracy by Family and Parameter Size" if x_metric == "GFLOPs" else "Speed / Accuracy by Family and Size")
     scatter_ax.set_xlabel(x_metric)
     scatter_ax.set_ylabel("AP")

@@ -9,10 +9,10 @@ from typing import Any
 
 from runtime.config import resolve_path
 from scripts.build_server_training_dashboard import (
-    FAMILY_COLORS,
     SIZE_MARKERS,
     SIZE_ORDER,
     as_float,
+    model_color_from_row,
     read_rows,
 )
 
@@ -26,6 +26,17 @@ FIGURE_SPECS = [
     ("speed_vs_ap.png", "FPS vs AP"),
 ]
 
+LABEL_OFFSETS = {
+    "YOLOv8n": (8, -12),
+    "YOLOv11n": (8, -22),
+    "YOLOv12n": (8, 12),
+    "YOLOv12s": (-78, 22),
+    "YOLOv5su": (8, 10),
+    "YOLOv11s": (8, -18),
+    "YOLOv8s": (8, -10),
+    "YOLOv9s": (-82, -20),
+}
+
 
 def method_label(row: dict[str, str]) -> str:
     method = row.get("method") or row.get("model") or "unknown"
@@ -33,6 +44,10 @@ def method_label(row: dict[str, str]) -> str:
     seeds = row.get("seed_count") or ""
     detail = ", ".join(part for part in [size, f"n={seeds}" if seeds else ""] if part)
     return f"{method}\n{detail}" if detail else method
+
+
+def short_label(row: dict[str, str]) -> str:
+    return row.get("method") or row.get("model") or "unknown"
 
 
 def method_key(row: dict[str, str]) -> tuple[float, int, str]:
@@ -57,7 +72,7 @@ def result_rows(rows: list[dict[str, str]], dataset: str | None) -> list[dict[st
 
 
 def colors_for(rows: list[dict[str, str]]) -> list[str]:
-    return [FAMILY_COLORS.get(row.get("detector_family") or "Other", FAMILY_COLORS["Other"]) for row in rows]
+    return [model_color_from_row(row) for row in rows]
 
 
 def setup_matplotlib() -> Any:
@@ -68,11 +83,14 @@ def setup_matplotlib() -> Any:
     plt.rcParams.update(
         {
             "axes.grid": True,
+            "axes.axisbelow": True,
             "grid.alpha": 0.25,
             "font.size": 10,
             "axes.titlesize": 13,
             "axes.labelsize": 10,
             "legend.fontsize": 9,
+            "figure.facecolor": "white",
+            "axes.facecolor": "white",
         }
     )
     return plt
@@ -80,6 +98,29 @@ def setup_matplotlib() -> Any:
 
 def figure_size(count: int, height: float = 5.5) -> tuple[float, float]:
     return (max(9.0, min(18.0, 0.95 * count + 4.5)), height)
+
+
+def polish_axes(ax: Any) -> None:
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.grid(axis="y", alpha=0.22)
+
+
+def add_value_labels(ax: Any, bars: Any, values: list[float], fmt: str = "{:.3f}") -> None:
+    if len(values) > 12:
+        return
+    for bar, value in zip(bars, values):
+        if value == 0:
+            continue
+        ax.annotate(
+            fmt.format(value),
+            xy=(bar.get_x() + bar.get_width() / 2, bar.get_height()),
+            xytext=(0, 3),
+            textcoords="offset points",
+            ha="center",
+            va="bottom",
+            fontsize=8,
+        )
 
 
 def save_empty(out: Path, title: str, message: str) -> Path:
@@ -105,14 +146,17 @@ def plot_ap_ap50(rows: list[dict[str, str]], out: Path) -> Path:
     ap_err = [as_float(row.get("best_AP_std")) or 0.0 for row in rows]
     ap50_err = [as_float(row.get("best_AP50_std")) or 0.0 for row in rows]
     fig, ax = plt.subplots(figsize=figure_size(len(rows)), constrained_layout=True)
-    ax.bar([x - width / 2 for x in x_values], ap, width, yerr=ap_err, capsize=3, label="AP (mAP50-95)", color="#4C78A8")
-    ax.bar([x + width / 2 for x in x_values], ap50, width, yerr=ap50_err, capsize=3, label="AP50", color="#F58518")
+    ap_bars = ax.bar([x - width / 2 for x in x_values], ap, width, yerr=ap_err, capsize=3, label="AP (mAP50-95)", color="#2563EB")
+    ap50_bars = ax.bar([x + width / 2 for x in x_values], ap50, width, yerr=ap50_err, capsize=3, label="AP50", color="#F97316", alpha=0.86)
     ax.set_title("AP / AP50 by Model")
     ax.set_ylabel("score")
     ax.set_xticks(x_values)
     ax.set_xticklabels(labels, rotation=35, ha="right")
     ax.set_ylim(0, max(ap50 + ap + [1.0]) * 1.1)
     ax.legend()
+    polish_axes(ax)
+    add_value_labels(ax, ap_bars, ap)
+    add_value_labels(ax, ap50_bars, ap50)
     fig.savefig(out, dpi=180)
     plt.close(fig)
     return out
@@ -140,6 +184,7 @@ def plot_prf(rows: list[dict[str, str]], out: Path) -> Path:
     ax.set_xticklabels(labels, rotation=35, ha="right")
     ax.set_ylim(0, 1.0)
     ax.legend()
+    polish_axes(ax)
     fig.savefig(out, dpi=180)
     plt.close(fig)
     return out
@@ -170,6 +215,7 @@ def plot_seed_distribution(rows: list[dict[str, str]], summary: list[dict[str, s
     ax.set_title("Seed AP Distribution by Model")
     ax.set_ylabel("AP (mAP50-95)")
     ax.tick_params(axis="x", labelrotation=35)
+    polish_axes(ax)
     fig.savefig(out, dpi=180)
     plt.close(fig)
     return out
@@ -180,35 +226,74 @@ def plot_tradeoff(rows: list[dict[str, str]], out: Path, x_metric: str, x_label:
     if not available:
         return save_empty(out, f"{x_label} vs AP", f"{x_label} not collected yet")
     plt = setup_matplotlib()
-    fig, ax = plt.subplots(figsize=(8.5, 5.8), constrained_layout=True)
-    seen_labels: set[str] = set()
-    for row in available:
-        method = row.get("method") or row.get("model") or "unknown"
+    from matplotlib.lines import Line2D
+
+    fig, ax = plt.subplots(figsize=(9.4, 6.2), constrained_layout=True)
+    available = sorted(available, key=lambda row: ((as_float(row.get(x_metric)) or 0.0), short_label(row)))
+    label_offsets = [(7, 6), (7, -11), (-42, 7), (-42, -12), (10, 14), (-55, 14)]
+    used_versions: dict[str, str] = {}
+    used_sizes: set[str] = set()
+    best_ap = max(as_float(row.get("best_AP_mean")) or 0.0 for row in available)
+    for idx, row in enumerate(available):
+        method = short_label(row)
         family = row.get("detector_family") or "Other"
+        version = row.get("yolo_version") or row.get("model_version") or family or "unknown"
         size = row.get("param_size_group") or row.get("model_scale") or "unknown"
         x_value = (as_float(row.get(x_metric)) or 0.0) / scale
         ap = as_float(row.get("best_AP_mean")) or 0.0
-        legend_label = f"{family}, {size}"
-        ax.scatter(
+        ap_std = as_float(row.get("best_AP_std")) or 0.0
+        x_std = (as_float(row.get(x_metric.replace("_mean", "_std"))) or 0.0) / scale if "_mean" in x_metric else 0.0
+        color = model_color_from_row(row)
+        marker = SIZE_MARKERS.get(size, "o")
+        ax.errorbar(
             x_value,
             ap,
-            s=90,
-            marker=SIZE_MARKERS.get(size, "o"),
-            color=FAMILY_COLORS.get(family, FAMILY_COLORS["Other"]),
-            edgecolor="#111827",
-            linewidth=0.7,
-            alpha=0.82,
-            label=legend_label if legend_label not in seen_labels else None,
+            xerr=x_std if x_std > 0 else None,
+            yerr=ap_std if ap_std > 0 else None,
+            fmt=marker,
+            markersize=9,
+            color=color,
+            markeredgecolor="#111827",
+            markeredgewidth=0.8,
+            ecolor="#94A3B8",
+            elinewidth=1.0,
+            capsize=3,
+            alpha=0.9,
         )
-        seen_labels.add(legend_label)
-        ax.annotate(method, (x_value, ap), xytext=(5, 5), textcoords="offset points", fontsize=8)
+        used_versions.setdefault(version, color)
+        used_sizes.add(size)
+        offset = LABEL_OFFSETS.get(method, label_offsets[idx % len(label_offsets)])
+        ax.annotate(
+            method,
+            (x_value, ap),
+            xytext=offset,
+            textcoords="offset points",
+            fontsize=8.5,
+            weight="bold",
+            color="#111827",
+            arrowprops={"arrowstyle": "-", "color": "#94A3B8", "lw": 0.8, "alpha": 0.65},
+        )
+    if best_ap > 0:
+        ax.axhline(best_ap, color="#CBD5E1", linestyle="--", linewidth=1.2, zorder=0)
     ax.set_title(f"{x_label} vs AP")
     ax.set_xlabel(x_label)
     ax.set_ylabel("AP (mAP50-95)")
-    handles, labels = ax.get_legend_handles_labels()
-    if handles:
-        ax.legend(handles, labels, title="family, size")
-    fig.savefig(out, dpi=180)
+    ax.margins(x=0.08, y=0.12)
+    polish_axes(ax)
+    version_handles = [
+        Line2D([0], [0], marker="o", color="none", markerfacecolor=color, markeredgecolor="#111827", markersize=8, label=version)
+        for version, color in sorted(used_versions.items(), key=lambda item: item[0])
+    ]
+    size_handles = [
+        Line2D([0], [0], marker=SIZE_MARKERS.get(size, "o"), color="#111827", linestyle="none", markersize=8, label=size)
+        for size in sorted(used_sizes, key=lambda item: SIZE_ORDER.get(item, 99))
+    ]
+    if version_handles:
+        legend1 = ax.legend(handles=version_handles, title="model version", loc="lower right", frameon=True)
+        ax.add_artist(legend1)
+    if size_handles:
+        ax.legend(handles=size_handles, title="param size", loc="upper left", frameon=True)
+    fig.savefig(out, dpi=220)
     plt.close(fig)
     return out
 
