@@ -30,11 +30,11 @@ LABEL_OFFSETS = {
     "YOLOv8n": (8, -12),
     "YOLOv11n": (8, -22),
     "YOLOv12n": (8, 12),
-    "YOLOv12s": (-86, 28),
+    "YOLOv12s": (-104, -12),
     "YOLOv5su": (-72, -2),
     "YOLOv11s": (10, -24),
     "YOLOv8s": (12, 6),
-    "YOLOv9s": (12, 12),
+    "YOLOv9s": (24, 24),
     "RT-DETR-L": (-88, 16),
 }
 
