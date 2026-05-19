@@ -292,7 +292,7 @@ def plot_tradeoff(rows: list[dict[str, str]], out: Path, x_metric: str, x_label:
         legend1 = ax.legend(handles=version_handles, title="model version", loc="lower right", frameon=True)
         ax.add_artist(legend1)
     if size_handles:
-        ax.legend(handles=size_handles, title="param size", loc="upper left", frameon=True)
+        ax.legend(handles=size_handles, title="param size", loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=len(size_handles), frameon=True)
     fig.savefig(out, dpi=220)
     plt.close(fig)
     return out
