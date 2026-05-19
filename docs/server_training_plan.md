@@ -35,13 +35,17 @@ Expanded comparison sweep after the top-3 seed extension:
 
 - YOLOv5su
 - YOLOv9s
+- YOLOv10n
 - YOLOv10s
 - YOLOv26n
 - YOLOv26s
 - YOLOv12m
+- LRDS-YOLO, as an external paper-specific UAV small-object detector if a
+  loadable implementation/checkpoint is available
 
 The expanded sweep fills comparison gaps across older YOLO generations, YOLO26,
-and a medium-capacity model. These runs use the preliminary 3-seed set first.
+YOLOv10, paper-specific UAV detectors, and medium-capacity models. These runs
+use the preliminary 3-seed set first.
 YOLOv6s and YOLOv7 are treated as optional legacy checkpoints: the queue checks
 whether the weights are loadable in the current Ultralytics environment and
 skips them automatically if no compatible checkpoint is available.
@@ -207,6 +211,18 @@ Queue the proposed detector ablation supervisor after the comparison queues:
 ```bash
 bash scripts/ubuntu/train_proposed_ablation_after_session.sh
 ```
+
+Queue paper-driven additions such as YOLOv10n and LRDS-YOLO after the main
+comparison queues:
+
+```bash
+bash scripts/ubuntu/train_paper_comparison_models_after_session.sh
+```
+
+LRDS-YOLO is not assumed to be an Ultralytics built-in checkpoint. The script
+checks `weights/lrds-yolo.pt` and `lrds-yolo.pt` by default, or a user-provided
+`LRDS_MODELS=/path/to/checkpoint.pt`, and skips it if the current environment
+cannot load it.
 
 The proposed queue defaults to `WAIT_FOR=server-uavdt-comparisons-pending`.
 If UAVDT is not ready, that supervisor exits safely and the proposed queue can

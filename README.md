@@ -168,6 +168,16 @@ stem, partial deformable neck, tiling inference, full proposed 항목은
 `skipped_not_implemented`로 기록해서 baseline을 proposed로 잘못 보고하지
 않도록 했습니다.
 
+Paper-driven extra detector additions:
+
+```bash
+bash scripts/ubuntu/train_paper_comparison_models_after_session.sh
+```
+
+이 큐는 YOLOv10n을 추가해 YOLOv10 n/s/m 비교를 맞추고, LRDS-YOLO는
+`weights/lrds-yolo.pt` 또는 `LRDS_MODELS=/path/to/checkpoint.pt`가 현재
+환경에서 load 가능할 때만 실행합니다.
+
 UAVDT를 cross-dataset baseline으로 추가할 때:
 
 ```bash

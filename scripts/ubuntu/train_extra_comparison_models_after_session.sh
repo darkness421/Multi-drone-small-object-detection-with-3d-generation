@@ -14,7 +14,7 @@ VIEWER_SESSION=${VIEWER_SESSION:-server-live-viewer}
 VIEWER_PORT=${VIEWER_PORT:-8766}
 
 SMALL_SESSION=${SMALL_SESSION:-server-extra-comparison-small}
-SMALL_MODELS=${SMALL_MODELS:-yolov5su.pt,yolov9s.pt,yolov10s.pt,yolo26n.pt,yolo26s.pt}
+SMALL_MODELS=${SMALL_MODELS:-yolov5su.pt,yolov9s.pt,yolov10n.pt,yolov10s.pt,yolo26n.pt,yolo26s.pt}
 OPTIONAL_LEGACY_MODELS=${OPTIONAL_LEGACY_MODELS:-yolov6s.pt,yolov7.pt}
 SMALL_BATCH=${SMALL_BATCH:-8}
 CHECK_MODELS=${CHECK_MODELS:-1}

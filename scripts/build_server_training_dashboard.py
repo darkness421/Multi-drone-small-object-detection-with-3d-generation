@@ -15,6 +15,7 @@ from runtime.config import resolve_path
 
 FAMILY_COLORS = {
     "YOLO": "#4C78A8",
+    "LRDS-YOLO": "#72B7B2",
     "RT-DETR": "#F58518",
     "D-FINE": "#54A24B",
     "DETR": "#B279A2",
@@ -40,6 +41,7 @@ SIZE_ORDER = {
     "xlarge": 4,
     "base": 5,
     "r18": 6,
+    "lightweight": 1,
     "unknown": 99,
     "": 99,
 }

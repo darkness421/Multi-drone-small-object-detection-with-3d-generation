@@ -1,0 +1,43 @@
+name: paper_detector_comparison_additions
+description: >
+  Extra paper-driven detector comparisons requested after reviewing recent
+  UAV/small-object detection papers. These are queued after the main VisDrone
+  comparison sweep to avoid disrupting active baselines.
+
+dataset: VisDrone2019-DET
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+project: outputs/detectors/server_baselines
+
+models:
+  - name: YOLOv10n
+    weights: yolov10n.pt
+    family: YOLO
+    size: nano
+    status: ultralytics_available_check
+    rationale: Completes YOLOv10 nano/small/medium coverage for size-based comparisons.
+
+  - name: YOLOv10s
+    weights: yolov10s.pt
+    family: YOLO
+    size: small
+    status: already_in_queue
+    rationale: Already queued in the expanded small-model comparison sweep.
+
+  - name: YOLOv10m
+    weights: yolov10m.pt
+    family: YOLO
+    size: medium
+    status: already_in_queue
+    rationale: Already queued in the expanded medium-model comparison sweep.
+
+  - name: LRDS-YOLO
+    weights: weights/lrds-yolo.pt
+    fallback_weights: lrds-yolo.pt
+    family: LRDS-YOLO
+    size: lightweight
+    status: external_required
+    source: https://www.nature.com/articles/s41598-025-07021-6
+    rationale: Recent UAV small-object detector using LAD, Re-Calibration FPN, SegNext Attention, and DyHead.
+    note: >
+      Queue only runs this model if the checkpoint/config is loadable by the
+      current environment. Otherwise it is skipped and documented.

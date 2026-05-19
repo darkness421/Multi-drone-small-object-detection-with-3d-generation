@@ -123,6 +123,8 @@ def infer_method(model: str) -> str:
     if stem.lower().startswith(("rtdetr", "rt-detr")):
         scale = stem.split("-")[-1].upper() if "-" in stem else stem.replace("rtdetr", "").upper()
         return f"RT-DETR-{scale}" if scale else "RT-DETR"
+    if stem.lower() in {"lrds-yolo", "lrdsyolo", "lrds_yolo"}:
+        return "LRDS-YOLO"
     return stem
 
 
@@ -189,6 +191,19 @@ def infer_model_metadata(model: str) -> dict[str, str]:
             metadata["model_scale"] = "large"
         elif stem.endswith("-x") or stem.endswith("_x") or stem.endswith("x"):
             metadata["model_scale"] = "xlarge"
+        return metadata
+
+    if stem in {"lrds-yolo", "lrdsyolo", "lrds_yolo"}:
+        metadata.update(
+            {
+                "detector_family": "LRDS-YOLO",
+                "architecture_group": "yolo",
+                "model_version": "LRDS-YOLO",
+                "yolo_version": "",
+                "is_yolo": "true",
+                "model_scale": "lightweight",
+            }
+        )
         return metadata
 
     if stem.startswith("dfine") or stem.startswith("d-fine"):

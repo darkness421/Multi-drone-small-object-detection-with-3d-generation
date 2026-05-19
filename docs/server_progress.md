@@ -124,3 +124,15 @@ Commands:
 bash scripts/ubuntu/train_proposed_ablation_after_session.sh
 bash scripts/ubuntu/collect_proposed_results.sh
 ```
+
+## 2026-05-19 Paper Comparison Additions
+
+- YOLOv10 was already represented by YOLOv10s and YOLOv10m in the comparison
+  queues.
+- Added YOLOv10n so the YOLOv10 family has nano/small/medium coverage for
+  parameter-size comparisons.
+- Added LRDS-YOLO to the paper-driven comparison list as an external UAV
+  small-object detector. It is only run if a loadable checkpoint/config is
+  available; otherwise the queue skips it and documents the missing model.
+- Added `scripts/ubuntu/train_paper_comparison_models_after_session.sh` to run
+  these additions after the main comparison supervisors.

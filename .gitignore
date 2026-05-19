@@ -63,7 +63,8 @@ outputs/qualitative/detection_examples/*
 outputs/qualitative/gradcam/*
 !outputs/qualitative/gradcam/.gitkeep
 runs/
-weights/
+weights/*
+!weights/.gitkeep
 *.pt
 *.pth
 *.ckpt
