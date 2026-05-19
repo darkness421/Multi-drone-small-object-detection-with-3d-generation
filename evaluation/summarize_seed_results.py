@@ -12,7 +12,19 @@ from typing import Any
 from runtime.config import resolve_path
 
 
-DEFAULT_METRICS = ["best_AP", "best_AP50", "best_APsmall", "best_recall", "best_F1", "ROC-AUC", "FPS", "Params", "GFLOPs"]
+DEFAULT_METRICS = [
+    "best_AP",
+    "best_AP50",
+    "best_APsmall",
+    "best_precision",
+    "best_recall",
+    "best_F1",
+    "ROC-AUC",
+    "latency_ms",
+    "FPS",
+    "Params",
+    "GFLOPs",
+]
 
 
 def as_float(value: Any) -> float | None:

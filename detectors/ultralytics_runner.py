@@ -217,6 +217,15 @@ def extract_ultralytics_val_metrics(metrics: Any) -> dict[str, float]:
             payload[out_key] = float(value)
         except (TypeError, ValueError):
             continue
+    speed = getattr(metrics, "speed", None)
+    if isinstance(speed, dict):
+        inference_ms = speed.get("inference")
+        try:
+            if inference_ms is not None and float(inference_ms) > 0:
+                payload["latency_ms"] = float(inference_ms)
+                payload["FPS"] = 1000.0 / float(inference_ms)
+        except (TypeError, ValueError):
+            pass
     return payload
 
 

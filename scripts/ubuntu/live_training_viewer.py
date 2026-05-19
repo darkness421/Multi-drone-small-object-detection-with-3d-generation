@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import argparse
-import csv
-import html
 import subprocess
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
+
+from scripts.live_metrics_report import build_html_report, build_text_report
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -35,74 +35,12 @@ def latest_log(log_dir: Path) -> tuple[Path | None, str]:
     return path, "\n".join(lines)
 
 
-def as_float(value: str | None) -> float | None:
-    if value is None or value == "":
-        return None
-    try:
-        return float(value)
-    except ValueError:
-        return None
-
-
 def latest_training_metrics(project_dir: Path) -> str:
-    rows: list[list[str]] = [
-        [
-            "run",
-            "epoch",
-            "precision",
-            "recall",
-            "F1",
-            "mAP50",
-            "mAP50-95",
-        ]
-    ]
-    csv_paths = sorted(
-        project_dir.glob("*/ultralytics/results.csv"),
-        key=lambda path: path.stat().st_mtime,
-        reverse=True,
-    )
-    for path in csv_paths[:12]:
-        try:
-            with path.open("r", encoding="utf-8-sig", newline="") as handle:
-                result_rows = list(csv.DictReader(handle))
-        except OSError:
-            continue
-        if not result_rows:
-            continue
-        last = result_rows[-1]
-        precision = as_float(last.get("metrics/precision(B)"))
-        recall = as_float(last.get("metrics/recall(B)"))
-        f1 = None
-        if precision is not None and recall is not None and precision + recall > 0:
-            f1 = 2 * precision * recall / (precision + recall)
-        rows.append(
-            [
-                path.parents[1].name,
-                last.get("epoch", ""),
-                format_metric(precision),
-                format_metric(recall),
-                format_metric(f1),
-                format_metric(as_float(last.get("metrics/mAP50(B)"))),
-                format_metric(as_float(last.get("metrics/mAP50-95(B)"))),
-            ]
-        )
-    if len(rows) == 1:
-        return "No live results.csv rows yet.\nDetector accuracy is not a standard detection metric; use mAP50, mAP50-95, precision, recall, and F1."
-    widths = [max(len(row[idx]) for row in rows) for idx in range(len(rows[0]))]
-    rendered = []
-    for row_idx, row in enumerate(rows):
-        rendered.append("  ".join(cell.ljust(widths[idx]) for idx, cell in enumerate(row)))
-        if row_idx == 0:
-            rendered.append("  ".join("-" * width for width in widths))
-    rendered.append("")
-    rendered.append("accuracy: N/A for detector baselines; report mAP/precision/recall/F1 instead.")
-    return "\n".join(rendered)
+    return build_text_report(project_dir=project_dir)
 
 
-def format_metric(value: float | None) -> str:
-    if value is None:
-        return "-"
-    return f"{value:.4f}"
+def latest_training_metrics_html(project_dir: Path) -> str:
+    return build_html_report(project_dir=project_dir)
 
 
 class LiveHandler(BaseHTTPRequestHandler):
@@ -149,6 +87,7 @@ class LiveHandler(BaseHTTPRequestHandler):
                     ]
                 ),
                 "metrics": latest_training_metrics(self.project_dir),
+                "metrics_html": latest_training_metrics_html(self.project_dir),
                 "log_name": str(log_path.relative_to(ROOT)) if log_path else "",
                 "log": log_text,
             }
@@ -178,6 +117,14 @@ class LiveHandler(BaseHTTPRequestHandler):
     img {{ display: block; width: 100%; background: #fff; }}
     .stack {{ display: grid; gap: 12px; }}
     .muted {{ color: #a9b0bd; }}
+    .metric-panel {{ padding: 10px 12px 14px; overflow: auto; max-height: 56vh; }}
+    .metric-panel h3 {{ margin: 12px 0 8px; font-size: 14px; color: #eef2f7; }}
+    .note {{ margin: 2px 0 10px; color: #c6d0df; font-size: 13px; }}
+    table {{ border-collapse: collapse; width: 100%; font-size: 13px; }}
+    th, td {{ border-bottom: 1px solid #30343d; padding: 6px 8px; text-align: right; white-space: nowrap; }}
+    th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) {{ text-align: left; }}
+    th {{ position: sticky; top: 0; background: #252933; color: #e9eef7; z-index: 1; }}
+    tbody tr:nth-child(even) {{ background: #1d2027; }}
   </style>
 </head>
 <body>
@@ -200,7 +147,7 @@ class LiveHandler(BaseHTTPRequestHandler):
       </section>
       <section>
         <h2>Live Metrics</h2>
-        <pre id="metrics"></pre>
+        <div class="metric-panel" id="metrics-html"></div>
       </section>
       <section>
         <h2 id="log-title">Latest log</h2>
@@ -225,7 +172,7 @@ class LiveHandler(BaseHTTPRequestHandler):
       document.getElementById("pane-title").textContent = `Training pane GPU${{windowId}}`;
       document.getElementById("tmux").textContent = fields.tmux || "";
       document.getElementById("gpu").textContent = fields.gpu || "";
-      document.getElementById("metrics").textContent = fields.metrics || "";
+      document.getElementById("metrics-html").innerHTML = fields.metrics_html || "";
       document.getElementById("log-title").textContent = fields.log_name ? `Latest log: ${{fields.log_name}}` : "Latest log";
       document.getElementById("log").textContent = fields.log || "";
       document.getElementById("dashboard").src = `/dashboard.png?t=${{Date.now()}}`;
