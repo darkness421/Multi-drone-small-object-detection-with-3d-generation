@@ -68,3 +68,37 @@ Next:
 6. Prepare UAVDT raw data and run cross-dataset baselines.
 7. Start 3D generation and benchmark construction only after the detector gate
    recommends `proceed_to_3d_benchmark`.
+
+## 2026-05-19
+
+Comparison and extra-dataset preparation status:
+
+- The expanded VisDrone comparison queue is running in tmux with both RTX 5090
+  GPUs active.
+- The pending queues cover small, medium, and non-YOLO baselines before moving
+  to the proposed perception module.
+- UAVDT conversion and comparison scripts are in place, but raw UAVDT files are
+  not present yet under `data/raw/UAVDT`, so the UAVDT queue will wait/fail safe
+  at readiness instead of starting an invalid run.
+- The common tmux training script now tags run names by dataset, so UAVDT runs
+  are written as `*_uavdt_seed*` instead of `*_visdrone_seed*`.
+- Metric collection now infers `dataset` from the training/eval summary, data
+  YAML, or run path and can collect multiple detector roots into one CSV.
+- Seed p-values are computed within each dataset to avoid mixing VisDrone and
+  UAVDT repeated-seed results.
+- The cross-dataset collector filters the detector stage gate to
+  `VisDrone2019-DET` by default, so UAVDT remains validation rather than the
+  primary go/no-go criterion for proposed-module work.
+- A cross-dataset collection wrapper was added:
+  `bash scripts/ubuntu/collect_cross_dataset_results.sh`.
+
+Current next actions:
+
+1. Let the active VisDrone comparison queues finish.
+2. Place or stage UAVDT raw data, then run
+   `SOURCE=/path/to/UAVDT bash scripts/ubuntu/prepare_uavdt_dataset.sh`.
+3. Keep the UAVDT comparison queue behind the VisDrone queues, or rerun
+   `bash scripts/ubuntu/train_uavdt_comparisons_after_session.sh` after
+   readiness passes.
+4. Rebuild both the VisDrone-only and cross-dataset dashboards after completed
+   runs are available.

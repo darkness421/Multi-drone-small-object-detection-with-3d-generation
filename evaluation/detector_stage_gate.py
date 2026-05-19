@@ -167,6 +167,7 @@ def write_markdown(path: Path, decision: dict[str, Any]) -> None:
         "",
         f"- Primary metric: `{metric}`",
         f"- Secondary metric: `{secondary_metric}`",
+        f"- Dataset filter: `{decision.get('dataset') or 'all'}`",
         f"- Baseline rows: `{decision['baseline_count']}`",
         f"- Proposed/candidate rows: `{decision['candidate_count']}`",
         f"- Lightweight threshold: `{decision['lightweight_max_params']}` params",
@@ -196,6 +197,7 @@ def write_json(path: Path, decision: dict[str, Any]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Check whether detector experiments are ready for the next stage.")
     parser.add_argument("--summary-csv", default="outputs/experiments/server_baseline_summary.csv")
+    parser.add_argument("--dataset", default=None, help="Optional dataset filter for the stage gate.")
     parser.add_argument("--candidate-regex", default=DEFAULT_CANDIDATE_REGEX)
     parser.add_argument("--metric", default="best_AP_mean")
     parser.add_argument("--secondary-metric", default="best_AP50_mean")
@@ -206,8 +208,11 @@ def main() -> None:
     parser.add_argument("--out-md", default="outputs/experiments/detector_stage_gate.md")
     args = parser.parse_args()
 
+    rows = read_rows(args.summary_csv)
+    if args.dataset:
+        rows = [row for row in rows if row.get("dataset") == args.dataset]
     decision = decide_stage(
-        read_rows(args.summary_csv),
+        rows,
         args.candidate_regex,
         args.metric,
         args.secondary_metric,
@@ -215,6 +220,7 @@ def main() -> None:
         args.min_delta,
         args.require_main,
     )
+    decision["dataset"] = args.dataset or "all"
     write_json(resolve_path(args.out_json), decision)
     write_markdown(resolve_path(args.out_md), decision)
     print(f"Recommended next stage: {decision['recommended_next_stage']}")

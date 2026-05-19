@@ -69,6 +69,7 @@ def train_yolo(
     summary = {
         "model": train_model,
         "requested_model": model,
+        "dataset": infer_dataset_name(data_yaml),
         "from_scratch": from_scratch,
         "data": str(data_yaml),
         "epochs": epochs,
@@ -123,6 +124,7 @@ def eval_yolo(
             metric_values["ROC-AUC"] = float(roc_auc_payload["macro"])
     summary = {
         "model": model,
+        "dataset": infer_dataset_name(data_yaml),
         "data": str(data_yaml),
         "imgsz": imgsz,
         "device": device or "auto",
@@ -143,6 +145,19 @@ def scratch_model_name(model: str) -> str:
     if path.suffix.lower() == ".pt":
         return str(path.with_suffix(".yaml"))
     return model
+
+
+def infer_dataset_name(data_yaml: str | Path) -> str:
+    """Infer a readable dataset label from the detector data YAML path."""
+
+    value = str(data_yaml).lower()
+    if "uavdt" in value:
+        return "UAVDT"
+    if "visdrone" in value:
+        return "VisDrone2019-DET"
+    if "marine" in value or "com3d" in value:
+        return "CoM3D-MarineCity"
+    return Path(data_yaml).stem
 
 
 def mirror_eval_summary_to_training_run(model: str, summary: dict[str, Any]) -> None:

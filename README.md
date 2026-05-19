@@ -161,11 +161,14 @@ UAVDT를 cross-dataset baseline으로 추가할 때:
 ```bash
 SOURCE=/path/to/UAVDT bash scripts/ubuntu/prepare_uavdt_dataset.sh
 bash scripts/ubuntu/train_uavdt_comparisons_after_session.sh
+bash scripts/ubuntu/collect_cross_dataset_results.sh
 ```
 
 UAVDT는 `data/raw/UAVDT/images/<sequence>/*.jpg`와
 `data/raw/UAVDT/annotations/<sequence>.txt` 형태를 우선 기대합니다.
 데이터가 준비되지 않았으면 학습 queue는 시작하지 않고 readiness 안내만 남깁니다.
+Cross-dataset 결과 CSV와 dashboard는 `dataset` 컬럼을 기준으로 VisDrone과
+UAVDT를 분리하며, p-value도 dataset별 seed pairing으로 계산합니다.
 
 주요 산출물:
 

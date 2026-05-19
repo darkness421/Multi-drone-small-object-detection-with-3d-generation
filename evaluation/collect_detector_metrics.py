@@ -111,26 +111,14 @@ def infer_seed(run_dir: Path, summary: dict[str, Any]) -> str:
 
 def infer_method(model: str) -> str:
     stem = Path(model).stem
-    aliases = {
-        "yolov5s": "YOLOv5s",
-        "yolov5su": "YOLOv5su",
-        "yolov6s": "YOLOv6s",
-        "yolov7": "YOLOv7",
-        "yolov9s": "YOLOv9s",
-        "yolov10s": "YOLOv10s",
-        "yolov8n": "YOLOv8n",
-        "yolov8s": "YOLOv8s",
-        "yolo11n": "YOLOv11n",
-        "yolo11s": "YOLOv11s",
-        "yolo12n": "YOLOv12n",
-        "yolo12s": "YOLOv12s",
-        "yolo12m": "YOLOv12m",
-        "yolo26n": "YOLOv26n",
-        "yolo26s": "YOLOv26s",
-        "rtdetr-l": "RT-DETR-L",
-        "rtdetr-r18": "RT-DETR-R18",
-    }
-    return aliases.get(stem, stem)
+    yolo_match = re.match(r"^yolo(?:v)?(?P<version>\d+)(?P<suffix>[nsmxl](?:u|6)?)?$", stem.lower())
+    if yolo_match:
+        suffix = yolo_match.group("suffix") or ""
+        return f"YOLOv{yolo_match.group('version')}{suffix}"
+    if stem.lower().startswith(("rtdetr", "rt-detr")):
+        scale = stem.split("-")[-1].upper() if "-" in stem else stem.replace("rtdetr", "").upper()
+        return f"RT-DETR-{scale}" if scale else "RT-DETR"
+    return stem
 
 
 def scale_from_suffix(suffix: str) -> str:
@@ -285,6 +273,28 @@ def model_complexity(run_dir: Path) -> tuple[int | None, float | None]:
     return None, None
 
 
+def infer_dataset(train_summary: dict[str, Any], eval_summary: dict[str, Any], run_dir: Path, results_csv: Path) -> str:
+    for summary in (train_summary, eval_summary):
+        dataset = summary.get("dataset")
+        if dataset:
+            return str(dataset)
+    haystack = " ".join(
+        [
+            str(train_summary.get("data", "")),
+            str(eval_summary.get("data", "")),
+            str(run_dir),
+            str(results_csv),
+        ]
+    ).lower()
+    if "uavdt" in haystack:
+        return "UAVDT"
+    if "visdrone" in haystack:
+        return "VisDrone2019-DET"
+    if "marine" in haystack or "com3d" in haystack:
+        return "CoM3D-MarineCity"
+    return "unknown"
+
+
 def collect_one(results_csv: Path) -> dict[str, Any]:
     run_dir = results_csv.parent.parent if results_csv.parent.name == "ultralytics" else results_csv.parent
     rows = read_csv_rows(results_csv)
@@ -309,7 +319,7 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
         "name_size_tag": name_size_tag,
         "param_size_group": param_size_group,
         "size_group": param_size_group if param_size_group != "unknown" else name_size_tag,
-        "dataset": "VisDrone2019-DET",
+        "dataset": infer_dataset(train_summary, eval_summary, run_dir, results_csv),
         "seed": infer_seed(run_dir, train_summary),
         "status": "completed" if train_summary_path.exists() and best_weight.exists() else "incomplete",
         "run_dir": str(run_dir),
@@ -337,18 +347,35 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
-def collect(detector_root: str | Path) -> list[dict[str, Any]]:
-    root = resolve_path(detector_root)
-    return [collect_one(path) for path in sorted(root.rglob("results.csv"))]
+def collect(detector_roots: list[str | Path]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    seen: set[Path] = set()
+    for detector_root in detector_roots:
+        root = resolve_path(detector_root)
+        if not root.exists():
+            continue
+        for path in sorted(root.rglob("results.csv")):
+            resolved = path.resolve()
+            if resolved in seen:
+                continue
+            seen.add(resolved)
+            rows.append(collect_one(path))
+    return rows
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Collect server detector baseline metrics.")
-    parser.add_argument("--detector-root", default="outputs/detectors/server_baselines")
+    parser.add_argument(
+        "--detector-root",
+        action="append",
+        dest="detector_roots",
+        help="Detector run root. May be passed more than once.",
+    )
     parser.add_argument("--out", default="outputs/experiments/server_baseline_results.csv")
     args = parser.parse_args()
 
-    rows = collect(args.detector_root)
+    detector_roots = args.detector_roots or ["outputs/detectors/server_baselines"]
+    rows = collect(detector_roots)
     out_path = resolve_path(args.out)
     write_csv(out_path, rows)
     print(f"Wrote {out_path} ({len(rows)} rows)")

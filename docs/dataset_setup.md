@@ -65,3 +65,31 @@ scripts\23_prepare_visdrone_visible_terminal.bat
 4. `AI-TOD`
 
 VisDrone train/val이 준비되면 detector baseline 학습을 시작할 수 있다.
+
+## UAVDT
+
+UAVDT는 VisDrone baseline이 안정화된 뒤 cross-dataset validation으로 쓴다.
+서버에서는 아래 구조를 우선 기대한다.
+
+```text
+data/raw/UAVDT/
+  images/<sequence>/*.jpg
+  annotations/<sequence>.txt
+```
+
+로컬 폴더나 zip이 있으면 `SOURCE`로 넘겨 staged raw data, COCO JSON, YOLO
+labels를 한 번에 준비한다.
+
+```bash
+SOURCE=/path/to/UAVDT bash scripts/ubuntu/prepare_uavdt_dataset.sh
+```
+
+준비가 끝나면 VisDrone queue 뒤에 UAVDT 비교 baseline을 붙인다.
+
+```bash
+bash scripts/ubuntu/train_uavdt_comparisons_after_session.sh
+bash scripts/ubuntu/collect_cross_dataset_results.sh
+```
+
+UAVDT raw 파일이 비어 있으면 readiness check가 실패하고 학습은 시작하지
+않는다.

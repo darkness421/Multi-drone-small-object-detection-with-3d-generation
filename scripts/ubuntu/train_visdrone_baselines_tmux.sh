@@ -8,6 +8,7 @@ IMGSZ=${4:-1280}
 SEEDS=${SEEDS:-42,123,2026}
 MODELS=${MODELS:-yolov8n.pt,yolov8s.pt,yolo11n.pt,yolo11s.pt,yolo12n.pt,yolo12s.pt,rtdetr-l.pt}
 DATA_YAML=${DATA_YAML:-configs/detector/visdrone_yolo_data.yaml}
+DATASET_TAG=${DATASET_TAG:-}
 CONDA_ENV=${CONDA_ENV:-com3d-ace}
 PROJECT=${PROJECT:-outputs/detectors/server_baselines}
 EXPERIMENT_ROOT=${EXPERIMENT_ROOT:-outputs/experiments}
@@ -20,6 +21,14 @@ ROOT=$PWD
 STAMP=$(date +%Y%m%d_%H%M%S)
 JOB_ROOT="$EXPERIMENT_ROOT/server_baseline_jobs/$STAMP"
 COMMAND_CSV="$EXPERIMENT_ROOT/server_baseline_commands.csv"
+
+if [[ -z "$DATASET_TAG" ]]; then
+  data_base=$(basename "$DATA_YAML")
+  DATASET_TAG=${data_base%_yolo_data.yaml}
+  DATASET_TAG=${DATASET_TAG%_data.yaml}
+  DATASET_TAG=${DATASET_TAG%.yaml}
+fi
+DATASET_TAG=${DATASET_TAG//[^[:alnum:]_-]/_}
 
 if ! command -v tmux >/dev/null 2>&1; then
   echo "tmux is not installed. Install tmux or run the generated job scripts manually."
@@ -69,7 +78,7 @@ for model in "${model_list[@]}"; do
     seed=${seed//[[:space:]]/}
     [[ -z "$seed" ]] && continue
     gpu=$((job_index % 2))
-    run_name="${model_slug}_visdrone_seed${seed}"
+    run_name="${model_slug}_${DATASET_TAG}_seed${seed}"
     log_file="$LOG_DIR/${run_name}.log"
     job_script="$JOB_ROOT/gpu${gpu}.sh"
     command="CUDA_DEVICE_ORDER=PCI_BUS_ID conda run --no-capture-output -n $CONDA_ENV python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $BATCH --device $gpu --seed $seed --project $PROJECT --name $run_name"
@@ -97,6 +106,7 @@ tmux new-session -d -s "$SESSION" -n gpu0 "$JOB_ROOT/gpu0.sh"
 tmux new-window -t "$SESSION" -n gpu1 "$JOB_ROOT/gpu1.sh"
 
 echo "Started tmux session: $SESSION"
+echo "Dataset tag: $DATASET_TAG"
 echo "Attach: tmux attach -t $SESSION"
 echo "Job scripts: $JOB_ROOT"
 echo "Command CSV: $COMMAND_CSV"

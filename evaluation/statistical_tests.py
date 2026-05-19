@@ -30,11 +30,12 @@ def read_rows(path: str | Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
-def group_metric_by_seed(rows: list[dict[str, str]], metric: str) -> dict[str, dict[int, float]]:
-    grouped: dict[str, dict[int, float]] = defaultdict(dict)
+def group_metric_by_seed(rows: list[dict[str, str]], metric: str) -> dict[tuple[str, str], dict[int, float]]:
+    grouped: dict[tuple[str, str], dict[int, float]] = defaultdict(dict)
     for row in rows:
         if row.get("status", "completed") != "completed":
             continue
+        dataset = row.get("dataset") or "unknown"
         method = row.get("method") or row.get("model") or ""
         seed_value = row.get("seed")
         value = as_float(row.get(metric))
@@ -44,29 +45,30 @@ def group_metric_by_seed(rows: list[dict[str, str]], metric: str) -> dict[str, d
             seed = int(float(seed_value))
         except ValueError:
             continue
-        grouped[method][seed] = value
+        grouped[(dataset, method)][seed] = value
     return grouped
 
 
-def best_method(rows: list[dict[str, str]], metric: str) -> str:
+def best_method(rows: list[dict[str, str]], metric: str, dataset: str) -> str:
     grouped = group_metric_by_seed(rows, metric)
-    means = {method: mean(values.values()) for method, values in grouped.items() if values}
+    means = {method: mean(values.values()) for (row_dataset, method), values in grouped.items() if row_dataset == dataset and values}
     if not means:
         return ""
     return max(means, key=means.get)
 
 
-def metadata_by_method(rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
-    metadata: dict[str, dict[str, str]] = {}
+def metadata_by_method(rows: list[dict[str, str]]) -> dict[tuple[str, str], dict[str, str]]:
+    metadata: dict[tuple[str, str], dict[str, str]] = {}
     for row in rows:
+        dataset = row.get("dataset") or "unknown"
         method = row.get("method") or row.get("model") or ""
         if method:
-            metadata.setdefault(method, row)
+            metadata.setdefault((dataset, method), row)
     return metadata
 
 
-def method_fields(metadata: dict[str, dict[str, str]], method: str, prefix: str) -> dict[str, str]:
-    row = metadata.get(method, {})
+def method_fields(metadata: dict[tuple[str, str], dict[str, str]], dataset: str, method: str, prefix: str) -> dict[str, str]:
+    row = metadata.get((dataset, method), {})
     return {
         f"{prefix}_detector_family": row.get("detector_family", ""),
         f"{prefix}_model_version": row.get("model_version", ""),
@@ -78,46 +80,52 @@ def method_fields(metadata: dict[str, dict[str, str]], method: str, prefix: str)
 
 
 def compare_against_baseline(rows: list[dict[str, str]], metrics: list[str], baseline_method: str | None = None) -> list[dict[str, Any]]:
-    baseline_method = baseline_method or best_method(rows, metrics[0])
     metadata = metadata_by_method(rows)
+    datasets = sorted({row.get("dataset") or "unknown" for row in rows if row.get("status", "completed") == "completed"})
     out: list[dict[str, Any]] = []
-    for metric in metrics:
-        grouped = group_metric_by_seed(rows, metric)
-        baseline = grouped.get(baseline_method, {})
-        for method, candidate in sorted(grouped.items()):
-            if method == baseline_method:
-                continue
-            seeds = sorted(set(baseline) & set(candidate))
-            if not seeds:
-                continue
-            baseline_values = [baseline[seed] for seed in seeds]
-            candidate_values = [candidate[seed] for seed in seeds]
-            t_test = paired_t_test(candidate_values, baseline_values)
-            wilcoxon = wilcoxon_signed_rank(candidate_values, baseline_values)
-            result = {
-                "metric": metric,
-                "baseline_method": baseline_method,
-                "candidate_method": method,
-                "paired_seeds": ",".join(str(seed) for seed in seeds),
-                "seed_count": len(seeds),
-                "analysis_level": "main" if len(seeds) >= 5 else "preliminary",
-                "baseline_mean": mean(baseline_values),
-                "candidate_mean": mean(candidate_values),
-                "delta_candidate_minus_baseline": mean([b - a for a, b in zip(baseline_values, candidate_values)]),
-                "paired_t_statistic": t_test["statistic"],
-                "paired_t_pvalue": t_test["pvalue"],
-                "wilcoxon_statistic": wilcoxon["statistic"],
-                "wilcoxon_pvalue": wilcoxon["pvalue"],
-            }
-            result.update(method_fields(metadata, baseline_method, "baseline"))
-            result.update(method_fields(metadata, method, "candidate"))
-            out.append(result)
+    for dataset in datasets:
+        dataset_baseline_method = baseline_method or best_method(rows, metrics[0], dataset)
+        if not dataset_baseline_method:
+            continue
+        for metric in metrics:
+            grouped = group_metric_by_seed(rows, metric)
+            baseline = grouped.get((dataset, dataset_baseline_method), {})
+            for (candidate_dataset, method), candidate in sorted(grouped.items()):
+                if candidate_dataset != dataset or method == dataset_baseline_method:
+                    continue
+                seeds = sorted(set(baseline) & set(candidate))
+                if not seeds:
+                    continue
+                baseline_values = [baseline[seed] for seed in seeds]
+                candidate_values = [candidate[seed] for seed in seeds]
+                t_test = paired_t_test(candidate_values, baseline_values)
+                wilcoxon = wilcoxon_signed_rank(candidate_values, baseline_values)
+                result = {
+                    "dataset": dataset,
+                    "metric": metric,
+                    "baseline_method": dataset_baseline_method,
+                    "candidate_method": method,
+                    "paired_seeds": ",".join(str(seed) for seed in seeds),
+                    "seed_count": len(seeds),
+                    "analysis_level": "main" if len(seeds) >= 5 else "preliminary",
+                    "baseline_mean": mean(baseline_values),
+                    "candidate_mean": mean(candidate_values),
+                    "delta_candidate_minus_baseline": mean([b - a for a, b in zip(baseline_values, candidate_values)]),
+                    "paired_t_statistic": t_test["statistic"],
+                    "paired_t_pvalue": t_test["pvalue"],
+                    "wilcoxon_statistic": wilcoxon["statistic"],
+                    "wilcoxon_pvalue": wilcoxon["pvalue"],
+                }
+                result.update(method_fields(metadata, dataset, dataset_baseline_method, "baseline"))
+                result.update(method_fields(metadata, dataset, method, "candidate"))
+                out.append(result)
     return out
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fieldnames: list[str] = [
+        "dataset",
         "metric",
         "baseline_method",
         "baseline_detector_family",

@@ -39,6 +39,7 @@ outputs/experiments/*
 !outputs/experiments/*.json
 outputs/experiments/server_preflight.json
 outputs/experiments/server_baseline_commands.csv
+outputs/experiments/uavdt_prepare_summary.json
 outputs/experiments/server_baseline_jobs/
 !outputs/reports/
 outputs/reports/*

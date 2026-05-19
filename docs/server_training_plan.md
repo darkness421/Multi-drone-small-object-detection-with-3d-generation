@@ -201,3 +201,24 @@ Queue UAVDT cross-dataset baselines after the VisDrone queues:
 ```bash
 bash scripts/ubuntu/train_uavdt_comparisons_after_session.sh
 ```
+
+Collect VisDrone and UAVDT together after both detector roots have completed
+runs:
+
+```bash
+bash scripts/ubuntu/collect_cross_dataset_results.sh
+```
+
+This writes a dataset-aware table and dashboard:
+
+- `outputs/experiments/server_cross_dataset_results.csv`
+- `outputs/experiments/server_cross_dataset_summary.csv`
+- `outputs/experiments/server_cross_dataset_pvalues.csv`
+- `outputs/reports/server_cross_dataset_dashboard.png`
+
+All result rows include `dataset`, YOLO generation, detector family, checkpoint
+scale, measured parameter-size group, params, and GFLOPs when logs expose them.
+Paired p-values are computed within each dataset, not by pooling VisDrone and
+UAVDT seeds. The cross-dataset wrapper keeps the stage gate filtered to the
+primary `VisDrone2019-DET` rows by default; UAVDT is used as cross-dataset
+validation rather than as the primary proposed-module gate.

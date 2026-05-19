@@ -45,6 +45,15 @@ SIZE_ORDER = {
 }
 
 
+DATASET_ORDER = {
+    "VisDrone2019-DET": 0,
+    "UAVDT": 1,
+    "CoM3D-MarineCity": 2,
+    "unknown": 99,
+    "": 99,
+}
+
+
 def as_float(value: Any) -> float | None:
     if value is None or value == "":
         return None
@@ -62,21 +71,26 @@ def read_rows(path: str | Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
-def grouped_values(rows: list[dict[str, str]], metric: str) -> dict[str, list[float]]:
+def row_key(row: dict[str, str], include_dataset: bool) -> str:
+    method = row.get("method") or row.get("model") or "unknown"
+    if include_dataset:
+        return f"{row.get('dataset') or 'unknown'}::{method}"
+    return method
+
+
+def grouped_values(rows: list[dict[str, str]], metric: str, include_dataset: bool = False) -> dict[str, list[float]]:
     groups: dict[str, list[float]] = defaultdict(list)
     for row in rows:
-        method = row.get("method") or row.get("model") or "unknown"
         value = as_float(row.get(metric))
         if value is not None:
-            groups[method].append(value)
+            groups[row_key(row, include_dataset)].append(value)
     return dict(groups)
 
 
-def metadata_by_method(rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
+def metadata_by_method(rows: list[dict[str, str]], include_dataset: bool = False) -> dict[str, dict[str, str]]:
     meta: dict[str, dict[str, str]] = {}
     for row in rows:
-        method = row.get("method") or row.get("model") or "unknown"
-        meta.setdefault(method, row)
+        meta.setdefault(row_key(row, include_dataset), row)
     return meta
 
 
@@ -86,23 +100,28 @@ def version_number(value: str) -> int:
 
 
 def sort_methods(labels: list[str], meta: dict[str, dict[str, str]]) -> list[str]:
-    def key(label: str) -> tuple[int, int, int, str]:
+    def key(label: str) -> tuple[int, int, int, int, str]:
         row = meta.get(label, {})
+        dataset = row.get("dataset", "")
         family = row.get("detector_family", "")
         family_order = 0 if family == "YOLO" else 1
         version = row.get("yolo_version") or row.get("model_version") or ""
         size = row.get("param_size_group") or row.get("model_scale") or ""
-        return (family_order, version_number(version), SIZE_ORDER.get(size, 99), label)
+        return (DATASET_ORDER.get(dataset, 50), family_order, version_number(version), SIZE_ORDER.get(size, 99), label)
 
     return sorted(labels, key=key)
 
 
 def label_with_size(label: str, meta: dict[str, dict[str, str]]) -> str:
     row = meta.get(label, {})
+    method = row.get("method") or row.get("model") or label.split("::")[-1]
+    dataset = row.get("dataset") or ""
     size = row.get("param_size_group") or row.get("model_scale") or ""
+    if "::" in label and dataset:
+        return f"{dataset}\n{method}\n{size}" if size else f"{dataset}\n{method}"
     if size:
-        return f"{label}\n{size}"
-    return label
+        return f"{method}\n{size}"
+    return method
 
 
 def family_color(label: str, meta: dict[str, dict[str, str]]) -> str:
@@ -117,18 +136,24 @@ def means_and_stds(groups: dict[str, list[float]], meta: dict[str, dict[str, str
     return labels, means, stds
 
 
-def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str | Path) -> Path:
+def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str | Path, dataset: str | None = None) -> Path:
     import matplotlib.pyplot as plt
 
     rows = read_rows(results_csv)
+    if dataset:
+        rows = [row for row in rows if row.get("dataset") == dataset]
     completed_rows = [row for row in rows if row.get("status", "completed") == "completed"]
     incomplete_count = len(rows) - len(completed_rows)
     rows = completed_rows
     out_path = resolve_path(out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    fig, axes = plt.subplots(2, 2, figsize=(14, 9), constrained_layout=True)
-    fig.suptitle("CoM3D-ACE Server Detector Baselines", fontsize=16)
+    datasets = sorted({row.get("dataset") or "unknown" for row in rows}, key=lambda item: DATASET_ORDER.get(item, 50))
+    include_dataset = len(datasets) > 1
+    title_suffix = f" ({dataset})" if dataset else (" (cross-dataset)" if include_dataset else "")
+    fig_width = 16 if include_dataset else 14
+    fig, axes = plt.subplots(2, 2, figsize=(fig_width, 9), constrained_layout=True)
+    fig.suptitle(f"CoM3D-ACE Server Detector Baselines{title_suffix}", fontsize=16)
 
     if not rows:
         for ax in axes.ravel():
@@ -140,16 +165,17 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         plt.close(fig)
         return out_path
 
-    meta = metadata_by_method(rows)
+    meta = metadata_by_method(rows, include_dataset=include_dataset)
 
     for ax, metric, title in [
         (axes[0, 0], "best_AP", "AP / mAP50-95"),
         (axes[0, 1], "best_AP50", "AP50"),
     ]:
-        groups = grouped_values(rows, metric)
+        groups = grouped_values(rows, metric, include_dataset=include_dataset)
         labels, values, errors = means_and_stds(groups, meta)
         colors = [family_color(label, meta) for label in labels]
-        bars = ax.bar(labels, values, yerr=errors, capsize=4, color=colors)
+        plot_labels = [label_with_size(label, meta) if include_dataset else label for label in labels]
+        bars = ax.bar(plot_labels, values, yerr=errors, capsize=4, color=colors)
         ax.set_title(title)
         ax.set_ylim(0, max(values + [1.0]) * 1.15)
         ax.tick_params(axis="x", labelrotation=35)
@@ -159,7 +185,7 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
             bars[best_idx].set_linewidth(2)
 
     dist_ax = axes[1, 0]
-    groups = grouped_values(rows, "best_AP")
+    groups = grouped_values(rows, "best_AP", include_dataset=include_dataset)
     labels = sort_methods(list(groups), meta)
     box_values = [groups[label] for label in labels]
     box_labels = [label_with_size(label, meta) for label in labels]
@@ -177,12 +203,15 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         x_value = as_float(row.get(x_metric))
         if ap is None or x_value is None:
             continue
-        label = row.get("method") or row.get("model")
+        label = row_key(row, include_dataset)
+        method = row.get("method") or row.get("model")
+        dataset_label = row.get("dataset") or "unknown"
         family = row.get("detector_family", "Other") or "Other"
         size_group = row.get("param_size_group") or row.get("model_scale") or "unknown"
         marker = SIZE_MARKERS.get(size_group, "o")
         color = FAMILY_COLORS.get(family, FAMILY_COLORS["Other"])
-        scatter_ax.scatter(x_value, ap, label=f"{label} ({family}, {size_group})", marker=marker, color=color, alpha=0.75)
+        legend_label = f"{dataset_label}: {method} ({family}, {size_group})" if include_dataset else f"{method} ({family}, {size_group})"
+        scatter_ax.scatter(x_value, ap, label=legend_label, marker=marker, color=color, alpha=0.75)
     scatter_ax.set_title("Complexity / Accuracy by Family and Parameter Size" if x_metric == "GFLOPs" else "Speed / Accuracy by Family and Size")
     scatter_ax.set_xlabel(x_metric)
     scatter_ax.set_ylabel("AP")
@@ -205,8 +234,9 @@ def main() -> None:
     parser.add_argument("--results-csv", default="outputs/experiments/server_baseline_results.csv")
     parser.add_argument("--summary-csv", default="outputs/experiments/server_baseline_summary.csv")
     parser.add_argument("--out", default="outputs/reports/server_baseline_dashboard.png")
+    parser.add_argument("--dataset", default=None, help="Optional dataset filter, for example UAVDT or VisDrone2019-DET.")
     args = parser.parse_args()
-    print(build_dashboard(args.results_csv, args.summary_csv, args.out))
+    print(build_dashboard(args.results_csv, args.summary_csv, args.out, dataset=args.dataset))
 
 
 if __name__ == "__main__":
