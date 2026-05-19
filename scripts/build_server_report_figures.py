@@ -30,11 +30,12 @@ LABEL_OFFSETS = {
     "YOLOv8n": (8, -12),
     "YOLOv11n": (8, -22),
     "YOLOv12n": (8, 12),
-    "YOLOv12s": (-78, 22),
-    "YOLOv5su": (8, 10),
-    "YOLOv11s": (8, -18),
-    "YOLOv8s": (8, -10),
-    "YOLOv9s": (-82, -20),
+    "YOLOv12s": (-86, 28),
+    "YOLOv5su": (-72, -2),
+    "YOLOv11s": (10, -24),
+    "YOLOv8s": (12, 6),
+    "YOLOv9s": (12, 12),
+    "RT-DETR-L": (-88, 16),
 }
 
 
@@ -271,6 +272,7 @@ def plot_tradeoff(rows: list[dict[str, str]], out: Path, x_metric: str, x_label:
             fontsize=8.5,
             weight="bold",
             color="#111827",
+            annotation_clip=False,
             arrowprops={"arrowstyle": "-", "color": "#94A3B8", "lw": 0.8, "alpha": 0.65},
         )
     if best_ap > 0:
@@ -278,7 +280,7 @@ def plot_tradeoff(rows: list[dict[str, str]], out: Path, x_metric: str, x_label:
     ax.set_title(f"{x_label} vs AP")
     ax.set_xlabel(x_label)
     ax.set_ylabel("AP (mAP50-95)")
-    ax.margins(x=0.08, y=0.12)
+    ax.margins(x=0.16, y=0.12)
     polish_axes(ax)
     version_handles = [
         Line2D([0], [0], marker="o", color="none", markerfacecolor=color, markeredgecolor="#111827", markersize=8, label=version)
@@ -288,12 +290,29 @@ def plot_tradeoff(rows: list[dict[str, str]], out: Path, x_metric: str, x_label:
         Line2D([0], [0], marker=SIZE_MARKERS.get(size, "o"), color="#111827", linestyle="none", markersize=8, label=size)
         for size in sorted(used_sizes, key=lambda item: SIZE_ORDER.get(item, 99))
     ]
+    extra_artists = []
     if version_handles:
-        legend1 = ax.legend(handles=version_handles, title="model version", loc="lower right", frameon=True)
+        legend1 = ax.legend(
+            handles=version_handles,
+            title="model version",
+            loc="upper center",
+            bbox_to_anchor=(0.5, -0.12),
+            ncol=min(len(version_handles), 6),
+            frameon=True,
+        )
         ax.add_artist(legend1)
+        extra_artists.append(legend1)
     if size_handles:
-        ax.legend(handles=size_handles, title="param size", loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=len(size_handles), frameon=True)
-    fig.savefig(out, dpi=220)
+        legend2 = ax.legend(
+            handles=size_handles,
+            title="param size",
+            loc="upper center",
+            bbox_to_anchor=(0.5, -0.26),
+            ncol=len(size_handles),
+            frameon=True,
+        )
+        extra_artists.append(legend2)
+    fig.savefig(out, dpi=220, bbox_inches="tight", bbox_extra_artists=extra_artists)
     plt.close(fig)
     return out
 
