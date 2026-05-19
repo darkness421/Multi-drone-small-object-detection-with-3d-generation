@@ -167,6 +167,19 @@ starts one `server-fresh-baselines` queue with GPU0/GPU1 workers, opens a
 side-by-side viewer, and points the live dashboard at a run-specific detector
 root.
 
+Realtime monitoring after the fresh queue starts:
+
+```bash
+tmux attach -t server-training-dual-view
+tmux attach -t server-fresh-baselines
+tmux attach -t server-baseline-monitor
+```
+
+The browser viewer refreshes the current training log, live metric table,
+combined dashboard, and separated report figures for AP/AP50,
+precision/recall/F1, seed AP distribution, Params-vs-AP, GFLOPs-vs-AP, and
+FPS-vs-AP.
+
 The queue runs validation after each training job by default. Set
 `RUN_EVAL=0` to train only, or `ROC_AUC=0` to skip detector confidence ROC-AUC.
 

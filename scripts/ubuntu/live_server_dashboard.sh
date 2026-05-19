@@ -8,13 +8,14 @@ RESULTS_CSV=${RESULTS_CSV:-outputs/experiments/live/server_baseline_results.csv}
 SUMMARY_CSV=${SUMMARY_CSV:-outputs/experiments/live/server_baseline_summary.csv}
 PVALUES_CSV=${PVALUES_CSV:-outputs/experiments/live/server_baseline_pvalues.csv}
 DASHBOARD=${DASHBOARD:-outputs/reports/live/server_baseline_dashboard.png}
+FIGURES_DIR=${FIGURES_DIR:-outputs/reports/live/server_baseline_figures}
 
 cd "$(dirname "$0")/../.."
 
 export MPLCONFIGDIR="${MPLCONFIGDIR:-$PWD/.cache/matplotlib}"
 export YOLO_CONFIG_DIR="${YOLO_CONFIG_DIR:-$PWD/.cache/ultralytics}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$PWD/.cache}"
-mkdir -p "$MPLCONFIGDIR" "$YOLO_CONFIG_DIR" "$XDG_CACHE_HOME" "$(dirname "$RESULTS_CSV")" "$(dirname "$DASHBOARD")"
+mkdir -p "$MPLCONFIGDIR" "$YOLO_CONFIG_DIR" "$XDG_CACHE_HOME" "$(dirname "$RESULTS_CSV")" "$(dirname "$DASHBOARD")" "$FIGURES_DIR"
 
 echo "Live dashboard loop"
 echo "  detector root: $DETECTOR_ROOT"
@@ -22,6 +23,7 @@ echo "  results csv:   $RESULTS_CSV"
 echo "  summary csv:   $SUMMARY_CSV"
 echo "  p-values csv:  $PVALUES_CSV"
 echo "  dashboard png: $DASHBOARD"
+echo "  figures dir:   $FIGURES_DIR"
 echo "  interval:      ${INTERVAL}s"
 echo ""
 
@@ -41,6 +43,10 @@ while true; do
     --results-csv "$RESULTS_CSV" \
     --summary-csv "$SUMMARY_CSV" \
     --out "$DASHBOARD"
+  conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.build_server_report_figures \
+    --results-csv "$RESULTS_CSV" \
+    --summary-csv "$SUMMARY_CSV" \
+    --out-dir "$FIGURES_DIR" || true
   echo "Latest summary:"
   SUMMARY_CSV="$SUMMARY_CSV" conda run --no-capture-output -n "$CONDA_ENV" python - <<'PY'
 import csv

@@ -166,6 +166,12 @@ bash scripts/ubuntu/collect_proposed_results.sh
 - Fresh live monitoring uses a run-specific detector root, CSVs, dashboard PNG,
   browser viewer, and side-by-side tmux viewer instead of mixing with older
   baseline outputs.
+- The live browser viewer now shows separated report figures in addition to the
+  combined dashboard: AP/AP50, precision/recall/F1, seed AP distribution,
+  Params-vs-AP, GFLOPs-vs-AP, and FPS-vs-AP.
+- The monitor tmux session also lists the separated live figures so failed,
+  incomplete, and completed runs can be checked without opening the final report
+  bundle.
 
 Fresh restart command:
 

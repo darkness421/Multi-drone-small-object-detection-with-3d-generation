@@ -34,6 +34,7 @@ LIVE_RESULTS_CSV=${LIVE_RESULTS_CSV:-$EXPERIMENT_ROOT/live/server_baseline_resul
 LIVE_SUMMARY_CSV=${LIVE_SUMMARY_CSV:-$EXPERIMENT_ROOT/live/server_baseline_summary.csv}
 LIVE_PVALUES_CSV=${LIVE_PVALUES_CSV:-$EXPERIMENT_ROOT/live/server_baseline_pvalues.csv}
 LIVE_DASHBOARD=${LIVE_DASHBOARD:-outputs/reports/live/${RUN_ID}_server_baseline_dashboard.png}
+LIVE_FIGURES_DIR=${LIVE_FIGURES_DIR:-outputs/reports/live/${RUN_ID}_figures}
 FINAL_RESULTS_CSV=${FINAL_RESULTS_CSV:-$EXPERIMENT_ROOT/server_baseline_results.csv}
 FINAL_SUMMARY_CSV=${FINAL_SUMMARY_CSV:-$EXPERIMENT_ROOT/server_baseline_summary.csv}
 FINAL_PVALUES_CSV=${FINAL_PVALUES_CSV:-$EXPERIMENT_ROOT/server_baseline_pvalues.csv}
@@ -80,7 +81,7 @@ if [[ "$STOP_EXISTING" == "1" ]]; then
   done
 fi
 
-mkdir -p "$PROJECT" "$EXPERIMENT_ROOT" "$LOG_DIR" "$REPORT_DIR/figures" "$JOB_ROOT" \
+mkdir -p "$PROJECT" "$EXPERIMENT_ROOT" "$LOG_DIR" "$REPORT_DIR/figures" "$LIVE_FIGURES_DIR" "$JOB_ROOT" \
   "$(dirname "$LIVE_RESULTS_CSV")" "$(dirname "$LIVE_DASHBOARD")"
 
 MODEL_SPECS="$MODEL_SPECS" CHECK_MODELS="$CHECK_MODELS" CONDA_ENV="$CONDA_ENV" \
@@ -229,10 +230,11 @@ tmux new-window -t "$SESSION" -n collect "$collector"
 
 PROJECT_DIR="$PROJECT" RESULTS_CSV="$LIVE_RESULTS_CSV" SUMMARY_CSV="$LIVE_SUMMARY_CSV" PVALUES_CSV="$LIVE_PVALUES_CSV" \
   LOG_DIR="$LOG_DIR" COMMAND_CSV="$COMMAND_CSV" DASHBOARD="$LIVE_DASHBOARD" CONDA_ENV="$CONDA_ENV" \
+  FIGURES_DIR="$LIVE_FIGURES_DIR" \
   bash scripts/ubuntu/monitor_server_baselines_tmux.sh "$MONITOR_SESSION" "$SESSION" "$LIVE_INTERVAL"
 
 tmux new-session -d -s "$VIEWER_SESSION" -n viewer \
-  "cd '$ROOT' && conda run --no-capture-output -n '$CONDA_ENV' python -m scripts.ubuntu.live_training_viewer --host 0.0.0.0 --port '$VIEWER_PORT' --training-session '$SESSION' --project-dir '$PROJECT' --summary-csv '$LIVE_SUMMARY_CSV' --log-dir '$LOG_DIR' --dashboard '$FINAL_DASHBOARD' --live-dashboard '$LIVE_DASHBOARD'"
+  "cd '$ROOT' && conda run --no-capture-output -n '$CONDA_ENV' python -m scripts.ubuntu.live_training_viewer --host 0.0.0.0 --port '$VIEWER_PORT' --training-session '$SESSION' --project-dir '$PROJECT' --summary-csv '$LIVE_SUMMARY_CSV' --log-dir '$LOG_DIR' --dashboard '$FINAL_DASHBOARD' --live-dashboard '$LIVE_DASHBOARD' --figure-dir '$LIVE_FIGURES_DIR'"
 
 tmux new-session -d -s "$DUAL_VIEW_SESSION" -n both \
   "cd '$ROOT' && while true; do clear; echo 'GPU0 / fresh queue'; date -Is; echo; tmux capture-pane -p -S -22 -t '$SESSION:0.0'; sleep 2; done"
@@ -252,5 +254,6 @@ Browser viewer:  http://$(hostname -I | awk '{print $1}'):$VIEWER_PORT/
 Detector root:   $PROJECT
 Command CSV:     $COMMAND_CSV
 Live summary:    $LIVE_SUMMARY_CSV
+Live figures:    $LIVE_FIGURES_DIR
 Final report:    $REPORT_DIR/README.md
 EOF

@@ -51,6 +51,7 @@ class LiveHandler(BaseHTTPRequestHandler):
     summary_csv = ROOT / "outputs" / "experiments" / "live" / "server_baseline_summary.csv"
     dashboard = ROOT / "outputs" / "reports" / "server_baseline_dashboard.png"
     live_dashboard = ROOT / "outputs" / "reports" / "live" / "server_baseline_dashboard.png"
+    figure_dir = ROOT / "outputs" / "reports" / "live" / "server_baseline_figures"
 
     def log_message(self, format: str, *args: object) -> None:
         return
@@ -71,6 +72,14 @@ class LiveHandler(BaseHTTPRequestHandler):
                 self.send_bytes(dashboard.read_bytes(), "image/png")
             else:
                 self.send_error(404, "dashboard not found")
+            return
+        if parsed.path.startswith("/figure/"):
+            filename = Path(parsed.path).name
+            figure = self.figure_dir / filename
+            if filename.endswith(".png") and figure.exists():
+                self.send_bytes(figure.read_bytes(), "image/png")
+            else:
+                self.send_error(404, "figure not found")
             return
         if parsed.path == "/api":
             query = parse_qs(parsed.query)
@@ -118,6 +127,9 @@ class LiveHandler(BaseHTTPRequestHandler):
     img {{ display: block; width: 100%; background: #fff; }}
     .stack {{ display: grid; gap: 12px; }}
     .muted {{ color: #a9b0bd; }}
+    .figure-grid {{ display: grid; grid-template-columns: 1fr; gap: 10px; padding: 10px; }}
+    .figure-item {{ background: #f8fafc; border-radius: 6px; overflow: hidden; }}
+    .figure-item img {{ min-height: 180px; object-fit: contain; }}
     .metric-panel {{ padding: 10px 12px 14px; overflow: auto; max-height: 56vh; }}
     .metric-panel h3 {{ margin: 12px 0 8px; font-size: 14px; color: #eef2f7; }}
     .note {{ margin: 2px 0 10px; color: #c6d0df; font-size: 13px; }}
@@ -155,7 +167,18 @@ class LiveHandler(BaseHTTPRequestHandler):
         <pre id="log"></pre>
       </section>
       <section>
-        <h2>Dashboard</h2>
+        <h2>Separated Report Figures</h2>
+        <div class="figure-grid">
+          <div class="figure-item"><img data-figure="ap_ap50_by_model.png" alt="AP and AP50 by model"></div>
+          <div class="figure-item"><img data-figure="precision_recall_f1_by_model.png" alt="Precision recall F1 by model"></div>
+          <div class="figure-item"><img data-figure="seed_ap_distribution_by_model.png" alt="Seed AP distribution"></div>
+          <div class="figure-item"><img data-figure="params_vs_ap.png" alt="Parameter count versus AP"></div>
+          <div class="figure-item"><img data-figure="gflops_vs_ap.png" alt="GFLOPs versus AP"></div>
+          <div class="figure-item"><img data-figure="speed_vs_ap.png" alt="FPS versus AP"></div>
+        </div>
+      </section>
+      <section>
+        <h2>Combined Overview</h2>
         <img id="dashboard" src="/dashboard.png" alt="server baseline dashboard">
       </section>
     </div>
@@ -177,6 +200,9 @@ class LiveHandler(BaseHTTPRequestHandler):
       document.getElementById("log-title").textContent = fields.log_name ? `Latest log: ${{fields.log_name}}` : "Latest log";
       document.getElementById("log").textContent = fields.log || "";
       document.getElementById("dashboard").src = `/dashboard.png?t=${{Date.now()}}`;
+      document.querySelectorAll("img[data-figure]").forEach(img => {{
+        img.src = `/figure/${{img.dataset.figure}}?t=${{Date.now()}}`;
+      }});
       document.getElementById("status").textContent = `updated ${{new Date().toLocaleTimeString()}}`;
     }}
     refresh();
@@ -198,6 +224,7 @@ def main() -> None:
     parser.add_argument("--log-dir", default=str(LiveHandler.log_dir))
     parser.add_argument("--dashboard", default=str(LiveHandler.dashboard))
     parser.add_argument("--live-dashboard", default=str(LiveHandler.live_dashboard))
+    parser.add_argument("--figure-dir", default=str(LiveHandler.figure_dir))
     args = parser.parse_args()
     LiveHandler.training_session = args.training_session
     LiveHandler.monitor_session = args.monitor_session
@@ -206,6 +233,7 @@ def main() -> None:
     LiveHandler.log_dir = Path(args.log_dir)
     LiveHandler.dashboard = Path(args.dashboard)
     LiveHandler.live_dashboard = Path(args.live_dashboard)
+    LiveHandler.figure_dir = Path(args.figure_dir)
     server = ThreadingHTTPServer((args.host, args.port), LiveHandler)
     print(f"Serving live training viewer at http://{args.host}:{args.port}/")
     server.serve_forever()
