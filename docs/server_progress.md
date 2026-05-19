@@ -52,6 +52,10 @@ Baseline execution status:
   tune the proposed detector only after the comparison set is stable, and move
   to Marine City 3D generation/benchmark work only after the proposed detector
   outperforms the best overall and best lightweight baselines.
+- Added UAVDT preparation and cross-dataset comparison scripts. UAVDT currently
+  needs actual raw files before conversion/training can start.
+- Queued UAVDT comparison behind the VisDrone comparison supervisors; it will
+  start only if UAVDT readiness passes.
 
 Next:
 
@@ -61,5 +65,6 @@ Next:
 4. Run `bash scripts/ubuntu/check_detector_stage_gate.sh`.
 5. Select best overall and best lightweight baselines for qualitative analysis
    and proposed-module experiments.
-6. Start 3D generation and benchmark construction only after the detector gate
+6. Prepare UAVDT raw data and run cross-dataset baselines.
+7. Start 3D generation and benchmark construction only after the detector gate
    recommends `proceed_to_3d_benchmark`.

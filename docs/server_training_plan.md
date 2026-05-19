@@ -74,6 +74,31 @@ used for the main statistical result.
 This stage order avoids tuning the proposed module against an incomplete
 comparison set.
 
+## Cross-Dataset Baselines
+
+After the VisDrone comparison sweep is stable, run a smaller representative
+baseline set on UAVDT for cross-dataset validation:
+
+- YOLOv8s
+- YOLOv12s
+- YOLOv11s
+- YOLOv9s
+- YOLOv10s
+- YOLOv26s
+- RT-DETR-L
+
+UAVDT is not trained until the dataset readiness check passes. Expected raw
+layout:
+
+```text
+data/raw/UAVDT/
+  images/<sequence>/*.jpg
+  annotations/<sequence>.txt
+```
+
+The converter also accepts common frame names such as `img000001.jpg` and
+`000001.jpg`.
+
 ## Core Metrics
 
 Detector baseline ranking focuses on:
@@ -163,4 +188,16 @@ Queue the expanded comparison sweep after the current top-3 seed extension:
 
 ```bash
 bash scripts/ubuntu/train_extra_comparison_models_after_session.sh
+```
+
+Prepare UAVDT after placing or staging the dataset:
+
+```bash
+SOURCE=/path/to/UAVDT bash scripts/ubuntu/prepare_uavdt_dataset.sh
+```
+
+Queue UAVDT cross-dataset baselines after the VisDrone queues:
+
+```bash
+bash scripts/ubuntu/train_uavdt_comparisons_after_session.sh
 ```

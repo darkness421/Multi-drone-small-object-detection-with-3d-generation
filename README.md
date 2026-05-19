@@ -156,6 +156,17 @@ Detector 흐름은 stage gate로 관리합니다. 모든 baseline/comparison 모
 proposed perception module을 수정합니다. Proposed model이 두 비교 기준을
 넘으면 3D generation과 Marine City multi-angle benchmark 단계로 이동합니다.
 
+UAVDT를 cross-dataset baseline으로 추가할 때:
+
+```bash
+SOURCE=/path/to/UAVDT bash scripts/ubuntu/prepare_uavdt_dataset.sh
+bash scripts/ubuntu/train_uavdt_comparisons_after_session.sh
+```
+
+UAVDT는 `data/raw/UAVDT/images/<sequence>/*.jpg`와
+`data/raw/UAVDT/annotations/<sequence>.txt` 형태를 우선 기대합니다.
+데이터가 준비되지 않았으면 학습 queue는 시작하지 않고 readiness 안내만 남깁니다.
+
 주요 산출물:
 
 - `outputs/experiments/server_baseline_results.csv`

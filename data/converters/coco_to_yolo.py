@@ -32,6 +32,16 @@ def category_names(categories: list[dict[str, Any]]) -> dict[int, str]:
     return {idx: category["name"] for idx, category in enumerate(sorted(categories, key=lambda row: int(row["id"])))}
 
 
+def target_image_name(image: dict[str, Any], file_name: Path) -> str:
+    """Return the YOLO image filename, allowing converters to avoid collisions."""
+
+    metadata = image.get("metadata") or {}
+    yolo_stem = metadata.get("yolo_stem")
+    if yolo_stem:
+        return f"{yolo_stem}{file_name.suffix}"
+    return file_name.name
+
+
 def _split_for_index(index: int, train_ratio: float, val_ratio: float) -> str:
     bucket = (index * 9973 % 10000) / 10000.0
     if bucket < train_ratio:
@@ -83,7 +93,8 @@ def _write_yolo_split(payload: dict[str, Any], out_dir: Path, split: str, *, cop
         if not width or not height:
             width, height = 1, 1
 
-        target_image = out_dir / "images" / split / file_name.name
+        target_name = target_image_name(image, file_name)
+        target_image = out_dir / "images" / split / target_name
         if copy_images and file_name.exists():
             shutil.copy2(file_name, target_image)
         elif not target_image.exists():
@@ -96,7 +107,7 @@ def _write_yolo_split(payload: dict[str, Any], out_dir: Path, split: str, *, cop
                 continue
             bbox = normalize_bbox_xywh(ann["bbox"], float(width), float(height))
             label_lines.append(" ".join([str(cat_to_idx[category_id])] + [f"{value:.6f}" for value in bbox]))
-        (out_dir / "labels" / split / f"{file_name.stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
+        (out_dir / "labels" / split / f"{Path(target_name).stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
         image_count += 1
         label_count += len(label_lines)
     return image_count, label_count
@@ -134,7 +145,8 @@ def convert_coco_to_yolo(
         if not width or not height:
             width, height = 1, 1
 
-        target_image = out_dir / "images" / split / file_name.name
+        target_name = target_image_name(image, file_name)
+        target_image = out_dir / "images" / split / target_name
         if copy_images and file_name.exists():
             shutil.copy2(file_name, target_image)
         elif not target_image.exists():
@@ -147,7 +159,7 @@ def convert_coco_to_yolo(
                 continue
             bbox = normalize_bbox_xywh(ann["bbox"], float(width), float(height))
             label_lines.append(" ".join([str(cat_to_idx[category_id])] + [f"{value:.6f}" for value in bbox]))
-        (out_dir / "labels" / split / f"{file_name.stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
+        (out_dir / "labels" / split / f"{Path(target_name).stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
 
     return _write_names_yaml(out_dir, names)
 
