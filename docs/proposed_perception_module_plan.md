@@ -49,10 +49,13 @@ all baseline and comparison models are collected.
 Config scaffold:
 
 - `configs/detector/proposed_yolo11_small_object.yaml`
+- `configs/experiments/proposed_detector_ablation.yaml`
 
 Code scaffold:
 
 - `detectors/proposed/`
+- `scripts/proposed_ablation_jobs.py`
+- `scripts/ubuntu/train_proposed_ablation_after_session.sh`
 
 ## Evaluation
 
@@ -75,3 +78,31 @@ The gate recommends one of:
 - `finish_baselines_then_build_proposed`
 - `iterate_proposed_detector`
 - `proceed_to_3d_benchmark`
+
+## Queue Policy
+
+The proposed-ablation queue is attached after the VisDrone/UAVDT comparison
+supervisors so it does not steal GPUs from baseline runs:
+
+```bash
+bash scripts/ubuntu/train_proposed_ablation_after_session.sh
+```
+
+Default behavior is conservative:
+
+- `control` is implemented and can be queued as a real YOLO11s control run.
+- `wavelet_stem`, `partial_deformable_neck`, `tiling_inference`, and
+  `full_proposed` are recorded as `skipped_not_implemented` until the real
+  module/config/evaluator files exist.
+- Planned modules are not trained by silently reusing the unchanged base model.
+
+After the module implementations are added and verified, set `enabled: true` in
+`configs/experiments/proposed_detector_ablation.yaml` for that ablation and
+rerun the queue. `ENABLE_PLANNED=1` is available only for explicit development
+smoke tests after the required files exist.
+
+Collect baseline plus proposed rows:
+
+```bash
+bash scripts/ubuntu/collect_proposed_results.sh
+```

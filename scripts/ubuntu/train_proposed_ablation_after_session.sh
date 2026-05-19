@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WAIT_FOR=${WAIT_FOR:-server-uavdt-comparisons-pending}
+POLL_SECONDS=${POLL_SECONDS:-300}
+SESSION=${SESSION:-server-proposed-ablation}
+CONDA_ENV=${CONDA_ENV:-com3d-ace}
+CONFIG=${CONFIG:-configs/experiments/proposed_detector_ablation.yaml}
+DATA_YAML=${DATA_YAML:-configs/detector/visdrone_yolo_data.yaml}
+EPOCHS=${EPOCHS:-100}
+BATCH=${BATCH:-8}
+IMGSZ=${IMGSZ:-1280}
+SEEDS=${SEEDS:-42,123,2026}
+GPUS=${GPUS:-0,1}
+ENABLE_PLANNED=${ENABLE_PLANNED:-0}
+RESTART_VIEWER=${RESTART_VIEWER:-1}
+VIEWER_SESSION=${VIEWER_SESSION:-server-live-viewer}
+VIEWER_PORT=${VIEWER_PORT:-8766}
+WAIT_AFTER_START=${WAIT_AFTER_START:-1}
+
+cd "$(dirname "$0")/../.."
+ROOT=$PWD
+STAMP=$(date +%Y%m%d_%H%M%S)
+JOB_ROOT="outputs/experiments/proposed_ablation_jobs/$STAMP"
+MANIFEST="$JOB_ROOT/manifest.json"
+
+wait_for_session() {
+  local session=$1
+  if [[ -z "$session" ]]; then
+    return
+  fi
+  while tmux has-session -t "$session" 2>/dev/null; do
+    echo "Waiting for tmux session to finish: $session at $(date -Is)"
+    sleep "$POLL_SECONDS"
+  done
+}
+
+restart_viewer() {
+  if [[ "$RESTART_VIEWER" != "1" ]]; then
+    return
+  fi
+  tmux kill-session -t "$VIEWER_SESSION" 2>/dev/null || true
+  tmux new-session -d -s "$VIEWER_SESSION" \
+    "cd '$ROOT' && python scripts/ubuntu/live_training_viewer.py --host 0.0.0.0 --port '$VIEWER_PORT' --training-session '$SESSION'"
+}
+
+wait_for_session "$WAIT_FOR"
+
+conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.check_dataset_ready \
+  --paths-config configs/paths.ubuntu.yaml \
+  --data-yaml "$DATA_YAML" \
+  --strict
+
+GEN_ARGS=(
+  --config "$CONFIG"
+  --job-root "$JOB_ROOT"
+  --manifest "$MANIFEST"
+  --session "$SESSION"
+  --conda-env "$CONDA_ENV"
+  --gpus "$GPUS"
+  --epochs "$EPOCHS"
+  --batch "$BATCH"
+  --imgsz "$IMGSZ"
+  --seeds "$SEEDS"
+)
+if [[ "$ENABLE_PLANNED" == "1" ]]; then
+  GEN_ARGS+=(--enable-planned)
+fi
+
+conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.proposed_ablation_jobs "${GEN_ARGS[@]}"
+
+QUEUED_COUNT=$(python - "$MANIFEST" <<'PY'
+import json
+import sys
+
+print(json.loads(open(sys.argv[1], encoding="utf-8").read())["queued_count"])
+PY
+)
+
+if [[ "$QUEUED_COUNT" == "0" ]]; then
+  echo "No implemented proposed ablation jobs are queued."
+  echo "Manifest: $MANIFEST"
+  echo "Planned ablations were recorded as skipped_not_implemented."
+  exit 0
+fi
+
+if tmux has-session -t "$SESSION" 2>/dev/null; then
+  echo "tmux session already exists: $SESSION"
+  echo "Attach with: tmux attach -t $SESSION"
+else
+  IFS=',' read -r -a gpu_list <<< "$GPUS"
+  first_gpu=${gpu_list[0]//[[:space:]]/}
+  tmux new-session -d -s "$SESSION" -n "gpu${first_gpu}" "$JOB_ROOT/gpu${first_gpu}.sh"
+  for gpu in "${gpu_list[@]:1}"; do
+    gpu=${gpu//[[:space:]]/}
+    [[ -z "$gpu" ]] && continue
+    tmux new-window -t "$SESSION" -n "gpu${gpu}" "$JOB_ROOT/gpu${gpu}.sh"
+  done
+  echo "Started proposed ablation tmux session: $SESSION"
+  echo "Attach: tmux attach -t $SESSION"
+  echo "Manifest: $MANIFEST"
+fi
+
+restart_viewer
+
+if [[ "$WAIT_AFTER_START" == "1" ]]; then
+  wait_for_session "$SESSION"
+  echo "Proposed ablation queue complete at $(date -Is)"
+fi

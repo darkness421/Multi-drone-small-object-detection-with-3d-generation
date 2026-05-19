@@ -156,6 +156,18 @@ Detector 흐름은 stage gate로 관리합니다. 모든 baseline/comparison 모
 proposed perception module을 수정합니다. Proposed model이 두 비교 기준을
 넘으면 3D generation과 Marine City multi-angle benchmark 단계로 이동합니다.
 
+Proposed detector ablation queue:
+
+```bash
+bash scripts/ubuntu/train_proposed_ablation_after_session.sh
+bash scripts/ubuntu/collect_proposed_results.sh
+```
+
+기본 큐는 실제 구현된 ablation만 학습합니다. 아직 구현되지 않은 wavelet
+stem, partial deformable neck, tiling inference, full proposed 항목은
+`skipped_not_implemented`로 기록해서 baseline을 proposed로 잘못 보고하지
+않도록 했습니다.
+
 UAVDT를 cross-dataset baseline으로 추가할 때:
 
 ```bash

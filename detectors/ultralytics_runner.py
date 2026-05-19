@@ -38,6 +38,11 @@ def train_yolo(
     seed: int | None = None,
     deterministic: bool = True,
     from_scratch: bool = False,
+    method: str | None = None,
+    ablation: str | None = None,
+    base_model: str | None = None,
+    proposed_module: str | None = None,
+    implementation_status: str | None = None,
     project: str | Path = "outputs/detectors",
     name: str | None = None,
 ) -> dict[str, Any]:
@@ -69,6 +74,11 @@ def train_yolo(
     summary = {
         "model": train_model,
         "requested_model": model,
+        "method": method,
+        "ablation": ablation,
+        "base_model": base_model or model,
+        "proposed_module": proposed_module,
+        "implementation_status": implementation_status or "implemented",
         "dataset": infer_dataset_name(data_yaml),
         "from_scratch": from_scratch,
         "data": str(data_yaml),
@@ -93,6 +103,11 @@ def eval_yolo(
     roc_auc: bool = False,
     roc_auc_split: str = "val",
     roc_auc_max_images: int | None = None,
+    method: str | None = None,
+    ablation: str | None = None,
+    base_model: str | None = None,
+    proposed_module: str | None = None,
+    implementation_status: str | None = None,
     project: str | Path = "outputs/detectors",
     name: str | None = None,
 ) -> dict[str, Any]:
@@ -124,6 +139,11 @@ def eval_yolo(
             metric_values["ROC-AUC"] = float(roc_auc_payload["macro"])
     summary = {
         "model": model,
+        "method": method,
+        "ablation": ablation,
+        "base_model": base_model,
+        "proposed_module": proposed_module,
+        "implementation_status": implementation_status,
         "dataset": infer_dataset_name(data_yaml),
         "data": str(data_yaml),
         "imgsz": imgsz,
@@ -212,6 +232,11 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--non-deterministic", action="store_true")
     parser.add_argument("--from-scratch", action="store_true", help="Use model YAML and disable pretrained weights.")
+    parser.add_argument("--method", default=None, help="Optional method label written to run summaries.")
+    parser.add_argument("--ablation", default=None, help="Optional ablation label written to run summaries.")
+    parser.add_argument("--base-model", default=None, help="Optional base model label for proposed ablations.")
+    parser.add_argument("--proposed-module", default=None, help="Optional proposed module label.")
+    parser.add_argument("--implementation-status", default=None, help="Optional implementation status label.")
     parser.add_argument("--roc-auc", action="store_true", help="During eval, also compute image-level ROC-AUC.")
     parser.add_argument("--roc-auc-split", default="val")
     parser.add_argument("--roc-auc-max-images", type=int, default=None)

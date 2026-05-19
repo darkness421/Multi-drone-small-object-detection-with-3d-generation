@@ -1,0 +1,76 @@
+name: proposed_yolo11_small_object_ablation
+description: >
+  Preliminary proposed perception-module ablation queue. The queue must not
+  pretend that planned architecture modules are implemented; unavailable
+  modules are logged as skipped until their model code/config is present.
+
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+dataset_tag: visdrone
+project: outputs/detectors/server_proposed_ablation
+log_dir: outputs/logs/server_baselines
+experiment_root: outputs/experiments
+command_csv: outputs/experiments/proposed_ablation_commands.csv
+
+training:
+  imgsz: 1280
+  epochs: 100
+  batch: 8
+  seeds: [42, 123, 2026]
+  deterministic: true
+  run_eval: true
+  roc_auc: true
+
+base_models:
+  - yolo11s.pt
+
+ablations:
+  - name: control
+    method_template: Proposed-Control-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: control
+    enabled: true
+    notes: Same training protocol as baselines, isolated in the proposed-ablation root.
+
+  - name: wavelet_stem
+    method_template: Proposed-WaveletStem-{base_slug}
+    train_model_template: configs/detector/proposed/{base_slug}_wavelet_stem.yaml
+    implementation_status: planned
+    proposed_module: wavelet_stem
+    enabled: false
+    requires:
+      - detectors/proposed/modules.py
+      - configs/detector/proposed/{base_slug}_wavelet_stem.yaml
+    skip_reason: Custom wavelet stem module is planned but not registered with Ultralytics yet.
+
+  - name: partial_deformable_neck
+    method_template: Proposed-DeformableNeck-{base_slug}
+    train_model_template: configs/detector/proposed/{base_slug}_partial_deformable_neck.yaml
+    implementation_status: planned
+    proposed_module: partial_deformable_neck
+    enabled: false
+    requires:
+      - detectors/proposed/modules.py
+      - configs/detector/proposed/{base_slug}_partial_deformable_neck.yaml
+    skip_reason: Partial deformable neck blocks need a real module implementation before training.
+
+  - name: tiling_inference
+    method_template: Proposed-TilingInference-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: planned_eval_only
+    proposed_module: tiling_inference
+    enabled: false
+    requires:
+      - evaluation/tiled_detector_eval.py
+    skip_reason: Tiling inference should be evaluated with a tiled detector evaluator, not by retraining the unchanged base model.
+
+  - name: full_proposed
+    method_template: Proposed-Full-{base_slug}
+    train_model_template: configs/detector/proposed/{base_slug}_wavelet_deformable.yaml
+    implementation_status: planned
+    proposed_module: wavelet_stem+partial_deformable_neck+tiling_inference
+    enabled: false
+    requires:
+      - configs/detector/proposed/{base_slug}_wavelet_deformable.yaml
+      - evaluation/tiled_detector_eval.py
+    skip_reason: Full module waits for wavelet stem, deformable neck, and tiled evaluation implementation.

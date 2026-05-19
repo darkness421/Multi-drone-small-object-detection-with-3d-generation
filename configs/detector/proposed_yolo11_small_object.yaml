@@ -3,6 +3,7 @@
 base_model: yolo11n.pt
 dataset: VisDrone2019-DET
 data_yaml: configs/detector/visdrone_yolo_data.yaml
+queue_config: configs/experiments/proposed_detector_ablation.yaml
 
 training:
   imgsz: 1280
@@ -26,22 +27,27 @@ modules:
 
 ablations:
   - name: baseline
+    implementation_status: implemented
     wavelet_stem: false
     partial_deformable_neck: false
     tiling_inference: false
   - name: wavelet_stem
+    implementation_status: planned
     wavelet_stem: true
     partial_deformable_neck: false
     tiling_inference: false
   - name: partial_deformable_neck
+    implementation_status: planned
     wavelet_stem: false
     partial_deformable_neck: true
     tiling_inference: false
   - name: tiling_inference
+    implementation_status: planned_eval_only
     wavelet_stem: false
     partial_deformable_neck: false
     tiling_inference: true
   - name: full_proposed
+    implementation_status: planned
     wavelet_stem: true
     partial_deformable_neck: true
     tiling_inference: true

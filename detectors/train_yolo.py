@@ -23,6 +23,11 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--non-deterministic", action="store_true")
     parser.add_argument("--from-scratch", action="store_true", help="Train from model YAML instead of pretrained .pt weights.")
+    parser.add_argument("--method", default=None, help="Optional method label written to run summaries.")
+    parser.add_argument("--ablation", default=None, help="Optional ablation label written to run summaries.")
+    parser.add_argument("--base-model", default=None, help="Optional base model label for proposed ablations.")
+    parser.add_argument("--proposed-module", default=None, help="Optional proposed module label.")
+    parser.add_argument("--implementation-status", default=None, help="Optional implementation status label.")
     parser.add_argument("--roc-auc", action="store_true", help="During eval, also compute image-level ROC-AUC.")
     parser.add_argument("--roc-auc-split", default="val")
     parser.add_argument("--roc-auc-max-images", type=int, default=None)
@@ -41,6 +46,11 @@ def main() -> None:
             seed=args.seed,
             deterministic=not args.non_deterministic,
             from_scratch=args.from_scratch,
+            method=args.method,
+            ablation=args.ablation,
+            base_model=args.base_model,
+            proposed_module=args.proposed_module,
+            implementation_status=args.implementation_status,
             project=args.project,
             name=args.name,
         )
@@ -53,6 +63,11 @@ def main() -> None:
             roc_auc=args.roc_auc,
             roc_auc_split=args.roc_auc_split,
             roc_auc_max_images=args.roc_auc_max_images,
+            method=args.method,
+            ablation=args.ablation,
+            base_model=args.base_model,
+            proposed_module=args.proposed_module,
+            implementation_status=args.implementation_status,
             project=args.project,
             name=args.name,
         )

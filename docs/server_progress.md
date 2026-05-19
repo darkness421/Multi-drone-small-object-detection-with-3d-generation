@@ -102,3 +102,25 @@ Current next actions:
    readiness passes.
 4. Rebuild both the VisDrone-only and cross-dataset dashboards after completed
    runs are available.
+
+## 2026-05-19 Proposed Queue Update
+
+- Added a proposed detector ablation queue scaffold behind the comparison
+  supervisors.
+- The queue writes real method/ablation metadata into training summaries so
+  result collection can identify proposed rows separately from YOLO baselines.
+- Default implemented run: `control` on `yolo11s.pt` with the same VisDrone
+  protocol and 3 preliminary seeds.
+- Planned ablations are present in the queue config but skipped until the real
+  module/evaluator exists:
+  `wavelet_stem`, `partial_deformable_neck`, `tiling_inference`, and
+  `full_proposed`.
+- This avoids accidentally reporting unchanged baseline training as a proposed
+  architecture.
+
+Commands:
+
+```bash
+bash scripts/ubuntu/train_proposed_ablation_after_session.sh
+bash scripts/ubuntu/collect_proposed_results.sh
+```

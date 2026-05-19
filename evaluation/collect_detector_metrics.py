@@ -15,6 +15,11 @@ from runtime.config import resolve_path
 METRIC_COLUMNS = [
     "method",
     "model",
+    "base_model",
+    "ablation",
+    "proposed_module",
+    "is_proposed",
+    "implementation_status",
     "detector_family",
     "architecture_group",
     "model_version",
@@ -315,6 +320,17 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
     payload: dict[str, Any] = {
         "method": train_summary.get("method") or infer_method(model),
         "model": model,
+        "base_model": train_summary.get("base_model") or model,
+        "ablation": train_summary.get("ablation") or "",
+        "proposed_module": train_summary.get("proposed_module") or "",
+        "is_proposed": "true"
+        if any(
+            token in str(train_summary.get(key, "")).lower()
+            for key in ("method", "ablation", "proposed_module")
+            for token in ("proposed", "wavelet", "deformable", "tiling", "ours", "com3d", "ace")
+        )
+        else "false",
+        "implementation_status": train_summary.get("implementation_status") or "",
         **metadata,
         "name_size_tag": name_size_tag,
         "param_size_group": param_size_group,

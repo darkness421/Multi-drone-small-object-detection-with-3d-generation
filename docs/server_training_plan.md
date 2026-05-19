@@ -202,11 +202,30 @@ Queue UAVDT cross-dataset baselines after the VisDrone queues:
 bash scripts/ubuntu/train_uavdt_comparisons_after_session.sh
 ```
 
+Queue the proposed detector ablation supervisor after the comparison queues:
+
+```bash
+bash scripts/ubuntu/train_proposed_ablation_after_session.sh
+```
+
+The proposed queue defaults to `WAIT_FOR=server-uavdt-comparisons-pending`.
+If UAVDT is not ready, that supervisor exits safely and the proposed queue can
+continue. The queue only runs implemented ablations; planned modules are logged
+as `skipped_not_implemented` in
+`outputs/experiments/proposed_ablation_commands.csv` until their real
+implementation files are present.
+
 Collect VisDrone and UAVDT together after both detector roots have completed
 runs:
 
 ```bash
 bash scripts/ubuntu/collect_cross_dataset_results.sh
+```
+
+Collect baseline plus proposed ablation rows:
+
+```bash
+bash scripts/ubuntu/collect_proposed_results.sh
 ```
 
 This writes a dataset-aware table and dashboard:
