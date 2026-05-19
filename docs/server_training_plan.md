@@ -137,6 +137,23 @@ and non-YOLO detectors can be compared without mixing meanings:
 Seed statistics and p-values are computed from repeated seed results. The main
 p-value table focuses on AP, AP50, recall, and F1.
 
+## Official Result Inclusion
+
+Main-paper detector tables only include runs that match the official VisDrone
+protocol:
+
+- data YAML: `configs/detector/visdrone_yolo_data.yaml`
+- `imgsz`: 1280
+- `epochs`: 100
+- `batch`: 8, unless a separate memory-adjusted table is explicitly declared
+- deterministic: `true`
+
+Older preliminary runs are preserved for sanity checks, but they are discarded
+from the official CSV if any of the protocol fields differ. When an older run
+and a fresh run share the same dataset, model, and seed, the official collector
+keeps one logical row and lets the newer fresh run replace the older row once it
+is complete.
+
 ## ROC-AUC Definitions
 
 Detector ROC-AUC is confidence based. Object-level detector ROC-AUC labels a
@@ -199,6 +216,12 @@ Collect after training:
 
 ```bash
 bash scripts/ubuntu/collect_server_results.sh
+```
+
+Collect strict official results, excluding protocol mismatches:
+
+```bash
+bash scripts/ubuntu/collect_official_server_results.sh
 ```
 
 Check the detector stage gate:

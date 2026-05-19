@@ -11,6 +11,11 @@ from typing import Any
 
 from runtime.config import resolve_path
 
+try:
+    import yaml
+except ImportError:  # pragma: no cover - guarded by runtime error only when needed.
+    yaml = None
+
 
 METRIC_COLUMNS = [
     "method",
@@ -30,6 +35,13 @@ METRIC_COLUMNS = [
     "param_size_group",
     "size_group",
     "dataset",
+    "protocol_data_yaml",
+    "protocol_imgsz",
+    "protocol_epochs",
+    "protocol_batch",
+    "protocol_deterministic",
+    "protocol_match",
+    "protocol_mismatch_reason",
     "seed",
     "status",
     "run_dir",
@@ -259,6 +271,121 @@ def read_json(path: Path) -> dict[str, Any]:
         return {}
 
 
+def read_yaml(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    if yaml is None:
+        raise RuntimeError("PyYAML is required to read Ultralytics args.yaml files.")
+    payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def read_run_args(run_dir: Path) -> dict[str, Any]:
+    return read_yaml(run_dir / "ultralytics" / "args.yaml")
+
+
+def first_present(*values: Any) -> Any:
+    for value in values:
+        if value is not None and value != "":
+            return value
+    return ""
+
+
+def as_bool(value: Any) -> bool | None:
+    if isinstance(value, bool):
+        return value
+    if value is None or value == "":
+        return None
+    text = str(value).strip().lower()
+    if text in {"1", "true", "yes", "y"}:
+        return True
+    if text in {"0", "false", "no", "n"}:
+        return False
+    return None
+
+
+def as_int(value: Any) -> int | None:
+    if value is None or value == "":
+        return None
+    try:
+        return int(float(str(value)))
+    except (TypeError, ValueError):
+        return None
+
+
+def path_matches(value: Any, expected: str | None) -> bool:
+    if expected is None or expected == "":
+        return True
+    if value is None or value == "":
+        return False
+    left = Path(str(value))
+    right = resolve_path(expected)
+    if not left.is_absolute():
+        left = resolve_path(left)
+    try:
+        return left.resolve() == right.resolve()
+    except OSError:
+        return str(left) == str(right)
+
+
+def protocol_mismatches(row: dict[str, Any], criteria: dict[str, Any]) -> list[str]:
+    reasons: list[str] = []
+    if criteria.get("data_yaml") and not path_matches(row.get("protocol_data_yaml"), criteria["data_yaml"]):
+        reasons.append(f"data_yaml={row.get('protocol_data_yaml')}")
+    for key, label in [("imgsz", "protocol_imgsz"), ("epochs", "protocol_epochs"), ("batch", "protocol_batch")]:
+        expected = criteria.get(key)
+        if expected is None:
+            continue
+        if as_int(row.get(label)) != int(expected):
+            reasons.append(f"{key}={row.get(label)}")
+    if criteria.get("deterministic") is not None:
+        actual = as_bool(row.get("protocol_deterministic"))
+        if actual is not bool(criteria["deterministic"]):
+            reasons.append(f"deterministic={row.get('protocol_deterministic')}")
+    return reasons
+
+
+def apply_protocol_filter(
+    rows: list[dict[str, Any]],
+    criteria: dict[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    if not any(value is not None and value != "" for value in criteria.values()):
+        return rows, []
+
+    kept: list[dict[str, Any]] = []
+    excluded: list[dict[str, Any]] = []
+    for row in rows:
+        reasons = protocol_mismatches(row, criteria)
+        row["protocol_match"] = "false" if reasons else "true"
+        row["protocol_mismatch_reason"] = "; ".join(reasons)
+        if reasons:
+            excluded.append(row)
+        else:
+            kept.append(row)
+    return kept, excluded
+
+
+def dedupe_rows(rows: list[dict[str, Any]], key_fields: list[str]) -> list[dict[str, Any]]:
+    if not key_fields:
+        return rows
+
+    selected: dict[tuple[str, ...], tuple[int, dict[str, Any]]] = {}
+    for index, row in enumerate(rows):
+        key = tuple(str(row.get(field, "")) for field in key_fields)
+        current = selected.get(key)
+        if current is None:
+            selected[key] = (index, row)
+            continue
+        _, current_row = current
+        current_complete = current_row.get("status") == "completed"
+        row_complete = row.get("status") == "completed"
+        if row_complete and not current_complete:
+            selected[key] = (index, row)
+        elif row_complete == current_complete:
+            selected[key] = (index, row)
+    return [row for _, row in sorted(selected.values(), key=lambda item: item[0])]
+
+
 def strip_timestamp(run_name: str) -> str:
     return re.sub(r"^\d{8}_\d{6}_", "", run_name)
 
@@ -322,6 +449,7 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
     best = best_row(rows) if rows else {}
     train_summary = read_json(run_dir / "metrics" / "train_summary.json")
     eval_summary = read_json(run_dir / "metrics" / "eval_summary.json")
+    run_args = read_run_args(run_dir)
     fallback_model = strip_timestamp(run_dir.name.split("_visdrone")[0])
     if "." not in Path(fallback_model).name and infer_model_metadata(fallback_model)["detector_family"] != "Other":
         fallback_model = f"{fallback_model}.pt"
@@ -351,6 +479,13 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
         "param_size_group": param_size_group,
         "size_group": param_size_group if param_size_group != "unknown" else name_size_tag,
         "dataset": infer_dataset(train_summary, eval_summary, run_dir, results_csv),
+        "protocol_data_yaml": first_present(train_summary.get("data"), run_args.get("data"), eval_summary.get("data")),
+        "protocol_imgsz": first_present(train_summary.get("imgsz"), run_args.get("imgsz"), eval_summary.get("imgsz")),
+        "protocol_epochs": first_present(train_summary.get("epochs"), run_args.get("epochs")),
+        "protocol_batch": first_present(train_summary.get("batch"), run_args.get("batch")),
+        "protocol_deterministic": first_present(train_summary.get("deterministic"), run_args.get("deterministic")),
+        "protocol_match": "",
+        "protocol_mismatch_reason": "",
         "seed": infer_seed(run_dir, train_summary),
         "status": "completed" if train_summary_path.exists() and best_weight.exists() else "incomplete",
         "run_dir": str(run_dir),
@@ -403,13 +538,39 @@ def main() -> None:
         help="Detector run root. May be passed more than once.",
     )
     parser.add_argument("--out", default="outputs/experiments/server_baseline_results.csv")
+    parser.add_argument("--require-data-yaml", default=None)
+    parser.add_argument("--require-imgsz", type=int, default=None)
+    parser.add_argument("--require-epochs", type=int, default=None)
+    parser.add_argument("--require-batch", type=int, default=None)
+    parser.add_argument("--require-deterministic", default=None, choices=["true", "false"])
+    parser.add_argument("--excluded-out", default=None, help="Optional CSV for rows discarded by protocol filtering.")
+    parser.add_argument(
+        "--dedupe-key",
+        default="",
+        help="Comma-separated fields used to keep one row per logical run, for example dataset,method,seed.",
+    )
     args = parser.parse_args()
 
     detector_roots = args.detector_roots or ["outputs/detectors/server_baselines"]
     rows = collect(detector_roots)
+    criteria = {
+        "data_yaml": args.require_data_yaml,
+        "imgsz": args.require_imgsz,
+        "epochs": args.require_epochs,
+        "batch": args.require_batch,
+        "deterministic": as_bool(args.require_deterministic),
+    }
+    rows, excluded = apply_protocol_filter(rows, criteria)
+    if args.dedupe_key:
+        key_fields = [field.strip() for field in args.dedupe_key.split(",") if field.strip()]
+        rows = dedupe_rows(rows, key_fields)
     out_path = resolve_path(args.out)
     write_csv(out_path, rows)
     print(f"Wrote {out_path} ({len(rows)} rows)")
+    if args.excluded_out:
+        excluded_path = resolve_path(args.excluded_out)
+        write_csv(excluded_path, excluded)
+        print(f"Wrote {excluded_path} ({len(excluded)} excluded rows)")
 
 
 if __name__ == "__main__":

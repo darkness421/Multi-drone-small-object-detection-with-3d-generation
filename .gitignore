@@ -59,6 +59,17 @@ outputs/reports/server_baselines/tables/*
 !outputs/reports/server_baselines/figures/
 outputs/reports/server_baselines/figures/*
 !outputs/reports/server_baselines/figures/*.png
+!outputs/reports/server_official/
+outputs/reports/server_official/*
+!outputs/reports/server_official/README.md
+!outputs/reports/server_official/stage_gate.md
+!outputs/reports/server_official/stage_gate.json
+!outputs/reports/server_official/tables/
+outputs/reports/server_official/tables/*
+!outputs/reports/server_official/tables/*.csv
+!outputs/reports/server_official/figures/
+outputs/reports/server_official/figures/*
+!outputs/reports/server_official/figures/*.png
 !outputs/logs/
 outputs/logs/*
 !outputs/logs/.gitkeep

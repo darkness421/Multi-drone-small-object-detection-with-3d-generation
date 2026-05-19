@@ -172,9 +172,22 @@ bash scripts/ubuntu/collect_proposed_results.sh
 - The monitor tmux session also lists the separated live figures so failed,
   incomplete, and completed runs can be checked without opening the final report
   bundle.
+- Added strict official-result collection. The official CSV now keeps only runs
+  matching the VisDrone protocol (`imgsz=1280`, `epochs=100`, `batch=8`,
+  deterministic training, and the VisDrone data YAML). Mismatched rows are
+  written to an excluded CSV instead of being mixed into the main table.
+- Older completed runs can still be used when they match the same protocol, but
+  duplicate dataset/model/seed rows are deduplicated so fresh runs replace older
+  rows once complete.
 
 Fresh restart command:
 
 ```bash
 bash scripts/ubuntu/restart_fresh_server_queue.sh
+```
+
+Strict official collection command:
+
+```bash
+bash scripts/ubuntu/collect_official_server_results.sh
 ```
