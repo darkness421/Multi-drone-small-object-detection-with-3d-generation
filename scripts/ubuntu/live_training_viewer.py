@@ -36,11 +36,11 @@ def latest_log(log_dir: Path) -> tuple[Path | None, str]:
 
 
 def latest_training_metrics(project_dir: Path) -> str:
-    return build_text_report(project_dir=project_dir)
+    return build_text_report(project_dir=project_dir, summary_csv=LiveHandler.summary_csv)
 
 
 def latest_training_metrics_html(project_dir: Path) -> str:
-    return build_html_report(project_dir=project_dir)
+    return build_html_report(project_dir=project_dir, summary_csv=LiveHandler.summary_csv)
 
 
 class LiveHandler(BaseHTTPRequestHandler):
@@ -48,6 +48,7 @@ class LiveHandler(BaseHTTPRequestHandler):
     monitor_session = "server-baseline-monitor"
     log_dir = ROOT / "outputs" / "logs" / "server_baselines"
     project_dir = ROOT / "outputs" / "detectors" / "server_baselines"
+    summary_csv = ROOT / "outputs" / "experiments" / "live" / "server_baseline_summary.csv"
     dashboard = ROOT / "outputs" / "reports" / "server_baseline_dashboard.png"
     live_dashboard = ROOT / "outputs" / "reports" / "live" / "server_baseline_dashboard.png"
 
@@ -192,9 +193,19 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=8766)
     parser.add_argument("--training-session", default="server-visdrone-baselines")
     parser.add_argument("--monitor-session", default="server-baseline-monitor")
+    parser.add_argument("--project-dir", default=str(LiveHandler.project_dir))
+    parser.add_argument("--summary-csv", default=str(LiveHandler.summary_csv))
+    parser.add_argument("--log-dir", default=str(LiveHandler.log_dir))
+    parser.add_argument("--dashboard", default=str(LiveHandler.dashboard))
+    parser.add_argument("--live-dashboard", default=str(LiveHandler.live_dashboard))
     args = parser.parse_args()
     LiveHandler.training_session = args.training_session
     LiveHandler.monitor_session = args.monitor_session
+    LiveHandler.project_dir = Path(args.project_dir)
+    LiveHandler.summary_csv = Path(args.summary_csv)
+    LiveHandler.log_dir = Path(args.log_dir)
+    LiveHandler.dashboard = Path(args.dashboard)
+    LiveHandler.live_dashboard = Path(args.live_dashboard)
     server = ThreadingHTTPServer((args.host, args.port), LiveHandler)
     print(f"Serving live training viewer at http://{args.host}:{args.port}/")
     server.serve_forever()

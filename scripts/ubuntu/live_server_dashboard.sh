@@ -42,11 +42,12 @@ while true; do
     --summary-csv "$SUMMARY_CSV" \
     --out "$DASHBOARD"
   echo "Latest summary:"
-  conda run --no-capture-output -n "$CONDA_ENV" python - <<'PY'
+  SUMMARY_CSV="$SUMMARY_CSV" conda run --no-capture-output -n "$CONDA_ENV" python - <<'PY'
 import csv
+import os
 from pathlib import Path
 
-path = Path("outputs/experiments/live/server_baseline_summary.csv")
+path = Path(os.environ["SUMMARY_CSV"])
 if not path.exists():
     print("  no summary yet")
     raise SystemExit

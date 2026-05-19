@@ -151,3 +151,24 @@ bash scripts/ubuntu/collect_proposed_results.sh
   FPS-vs-AP instead of relying only on the combined dashboard.
 - Current report entry point:
   `outputs/reports/server_baselines/README.md`.
+
+## 2026-05-19 Fresh Unified Queue Restart
+
+- Added `scripts/ubuntu/restart_fresh_server_queue.sh` for a clean
+  from-scratch comparison restart.
+- The script stops old training/pending monitor sessions, preserves previous
+  outputs, then starts one `server-fresh-baselines` tmux session with GPU0/GPU1
+  workers and a collector window.
+- The default order starts with `yolov10s.pt` so the first visible runs match
+  the current comparison focus, then continues through YOLOv10n, YOLOv9s,
+  YOLOv5su, YOLOv8/11/12 nano/small, YOLO26 nano/small, RT-DETR-L, YOLOv10m,
+  and YOLO12m when checkpoints are loadable.
+- Fresh live monitoring uses a run-specific detector root, CSVs, dashboard PNG,
+  browser viewer, and side-by-side tmux viewer instead of mixing with older
+  baseline outputs.
+
+Fresh restart command:
+
+```bash
+bash scripts/ubuntu/restart_fresh_server_queue.sh
+```

@@ -156,6 +156,17 @@ bash scripts/ubuntu/preflight_baseline.sh --strict
 bash scripts/ubuntu/train_visdrone_baselines_tmux.sh server-visdrone-baselines 100 8 1280
 ```
 
+For a clean from-scratch server comparison restart, use the unified fresh queue:
+
+```bash
+bash scripts/ubuntu/restart_fresh_server_queue.sh
+```
+
+This stops older training/pending tmux sessions, preserves existing outputs,
+starts one `server-fresh-baselines` queue with GPU0/GPU1 workers, opens a
+side-by-side viewer, and points the live dashboard at a run-specific detector
+root.
+
 The queue runs validation after each training job by default. Set
 `RUN_EVAL=0` to train only, or `ROC_AUC=0` to skip detector confidence ROC-AUC.
 

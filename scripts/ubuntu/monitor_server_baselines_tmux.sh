@@ -7,6 +7,8 @@ INTERVAL=${3:-60}
 LOG_DIR=${LOG_DIR:-outputs/logs/server_baselines}
 COMMAND_CSV=${COMMAND_CSV:-outputs/experiments/server_baseline_commands.csv}
 DASHBOARD=${DASHBOARD:-outputs/reports/live/server_baseline_dashboard.png}
+PROJECT_DIR=${PROJECT_DIR:-outputs/detectors/server_baselines}
+SUMMARY_CSV=${SUMMARY_CSV:-outputs/experiments/live/server_baseline_summary.csv}
 
 cd "$(dirname "$0")/../.."
 
@@ -33,10 +35,10 @@ tmux new-window -t "$MONITOR_SESSION" -n logs \
   "cd '$PWD' && while true; do latest=\$(find '$LOG_DIR' -type f -name '*.log' -printf '%T@ %p\n' 2>/dev/null | sort -nr | head -n 1 | cut -d' ' -f2-); if [[ -n \"\${latest:-}\" ]]; then echo \"Tailing \$latest\"; tail -n 80 -F \"\$latest\"; else echo 'Waiting for logs...'; sleep 5; fi; done"
 
 tmux new-window -t "$MONITOR_SESSION" -n metrics \
-  "cd '$PWD' && while true; do clear; date -Is; echo; conda run --no-capture-output -n '${CONDA_ENV:-com3d-ace}' python -m scripts.live_metrics_report --project-dir outputs/detectors/server_baselines --summary-csv outputs/experiments/live/server_baseline_summary.csv 2>/dev/null || true; echo; echo 'Command queue:'; tail -n 8 '$COMMAND_CSV' 2>/dev/null || true; echo; echo 'Dashboard: $DASHBOARD'; ls -lh '$DASHBOARD' 2>/dev/null || true; sleep 10; done"
+  "cd '$PWD' && while true; do clear; date -Is; echo; conda run --no-capture-output -n '${CONDA_ENV:-com3d-ace}' python -m scripts.live_metrics_report --project-dir '$PROJECT_DIR' --summary-csv '$SUMMARY_CSV' 2>/dev/null || true; echo; echo 'Command queue:'; tail -n 8 '$COMMAND_CSV' 2>/dev/null || true; echo; echo 'Dashboard: $DASHBOARD'; ls -lh '$DASHBOARD' 2>/dev/null || true; sleep 10; done"
 
 tmux new-window -t "$MONITOR_SESSION" -n dashboard \
-  "cd '$PWD' && bash scripts/ubuntu/live_server_dashboard.sh '$INTERVAL'"
+  "cd '$PWD' && DETECTOR_ROOT='$PROJECT_DIR' RESULTS_CSV='${RESULTS_CSV:-outputs/experiments/live/server_baseline_results.csv}' SUMMARY_CSV='$SUMMARY_CSV' PVALUES_CSV='${PVALUES_CSV:-outputs/experiments/live/server_baseline_pvalues.csv}' DASHBOARD='$DASHBOARD' bash scripts/ubuntu/live_server_dashboard.sh '$INTERVAL'"
 
 tmux select-window -t "$MONITOR_SESSION:gpu"
 
