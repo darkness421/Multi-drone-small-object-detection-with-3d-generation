@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Figure 2. Proposed Detector Module</title>
+  <desc id="desc">Detector-side proposed small-object perception module and ablation structure.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#1f2937"/></marker>
+    <style>
+      .bg{fill:#f8fafc}.title{font:700 28px Arial, sans-serif;fill:#0f172a}.sub{font:400 15px Arial, sans-serif;fill:#475569}
+      .box{fill:#fff;stroke:#1f2937;stroke-width:2;rx:12}.base{fill:#e0f2fe;stroke:#0369a1}.mod{fill:#dcfce7;stroke:#15803d}.head{fill:#fef3c7;stroke:#b45309}.risk{fill:#fee2e2;stroke:#b91c1c}
+      .label{font:700 17px Arial, sans-serif;fill:#111827}.small{font:400 13px Arial, sans-serif;fill:#374151}.tiny{font:400 12px Arial, sans-serif;fill:#475569}
+      .arrow{stroke:#1f2937;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.dash{stroke:#64748b;stroke-width:2;stroke-dasharray:6 5;fill:none}
+      .tableHead{fill:#334155}.tableText{font:700 13px Arial, sans-serif;fill:#fff}.cellText{font:400 13px Arial, sans-serif;fill:#111827}
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="675"/>
+  <text class="title" x="60" y="56">Proposed Small-Object Perception Module</text>
+  <text class="sub" x="60" y="84">Same detector protocol; ablate each component before the full proposed model.</text>
+
+  <rect class="box" x="70" y="160" width="130" height="105"/>
+  <text class="label" x="103" y="195">UAV</text>
+  <text class="label" x="94" y="217">Image</text>
+  <text class="small" x="94" y="242">1280 px</text>
+
+  <rect class="box mod" x="245" y="150" width="165" height="125"/>
+  <text class="label" x="282" y="185">Wavelet</text>
+  <text class="label" x="300" y="207">Stem</text>
+  <text class="small" x="273" y="238">high-frequency</text>
+  <text class="small" x="273" y="258">small-object cue</text>
+
+  <rect class="box base" x="455" y="150" width="165" height="125"/>
+  <text class="label" x="503" y="185">YOLO</text>
+  <text class="label" x="485" y="207">Backbone</text>
+  <text class="small" x="486" y="238">v10/v11/v12</text>
+  <text class="small" x="486" y="258">nano/small base</text>
+
+  <rect class="box mod" x="665" y="150" width="180" height="125"/>
+  <text class="label" x="700" y="185">Partial</text>
+  <text class="label" x="690" y="207">Deformable</text>
+  <text class="label" x="730" y="229">Neck</text>
+  <text class="small" x="695" y="258">adaptive local context</text>
+
+  <rect class="box head" x="890" y="150" width="160" height="125"/>
+  <text class="label" x="930" y="185">Detect</text>
+  <text class="label" x="940" y="207">Head</text>
+  <text class="small" x="915" y="238">bbox, class</text>
+  <text class="small" x="915" y="258">confidence</text>
+
+  <rect class="box mod" x="455" y="370" width="165" height="115"/>
+  <text class="label" x="493" y="407">Patch /</text>
+  <text class="label" x="493" y="429">Tiling</text>
+  <text class="small" x="485" y="460">small-object recall</text>
+
+  <rect class="box risk" x="690" y="370" width="180" height="115"/>
+  <text class="label" x="718" y="407">Ambiguity</text>
+  <text class="label" x="733" y="429">Token</text>
+  <text class="small" x="718" y="460">risk, crop, view ID</text>
+
+  <path class="arrow" d="M200 212 L245 212"/>
+  <path class="arrow" d="M410 212 L455 212"/>
+  <path class="arrow" d="M620 212 L665 212"/>
+  <path class="arrow" d="M845 212 L890 212"/>
+  <path class="dash" d="M537 275 L537 370"/>
+  <path class="arrow" d="M620 427 L690 427"/>
+  <path class="arrow" d="M780 370 C820 315 900 290 970 275"/>
+
+  <rect x="85" y="545" width="1030" height="44" rx="8" class="tableHead"/>
+  <text class="tableText" x="105" y="572">Ablation</text>
+  <text class="tableText" x="345" y="572">Wavelet stem</text>
+  <text class="tableText" x="540" y="572">Deformable neck</text>
+  <text class="tableText" x="760" y="572">Tiling inference</text>
+  <text class="tableText" x="980" y="572">Evidence token</text>
+  <rect x="85" y="589" width="1030" height="46" rx="8" fill="#fff" stroke="#cbd5e1"/>
+  <text class="cellText" x="105" y="616">baseline / +A / +B / +T / full</text>
+  <text class="cellText" x="370" y="616">optional</text>
+  <text class="cellText" x="575" y="616">optional</text>
+  <text class="cellText" x="795" y="616">optional</text>
+  <text class="cellText" x="1010" y="616">optional</text>
+</svg>

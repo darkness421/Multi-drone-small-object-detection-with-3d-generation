@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Figure 4. Weather Restoration and 3D Reconstruction Pipeline</title>
+  <desc id="desc">Weather-degraded UAV images are restored, reconstructed by 3D generative models, and evaluated with detection and reasoning metrics.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#334155"/></marker>
+    <style>
+      .bg{fill:#f8fafc}.title{font:700 28px Arial, sans-serif;fill:#0f172a}.sub{font:400 15px Arial, sans-serif;fill:#475569}.label{font:700 16px Arial, sans-serif;fill:#0f172a}.small{font:400 13px Arial, sans-serif;fill:#334155}
+      .box{fill:#fff;stroke:#334155;stroke-width:2;rx:12}.weather{fill:#dbeafe;stroke:#1d4ed8}.restore{fill:#dcfce7;stroke:#15803d}.model{fill:#fef3c7;stroke:#b45309}.ours{fill:#ede9fe;stroke:#6d28d9}.eval{fill:#fee2e2;stroke:#b91c1c}
+      .arrow{stroke:#334155;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.dash{stroke:#64748b;stroke-width:2;stroke-dasharray:6 5;fill:none}.rain{stroke:#60a5fa;stroke-width:2}.snow{fill:#ffffff;stroke:#93c5fd}
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="675"/>
+  <text class="title" x="60" y="56">3D Reconstruction with Weather Restoration</text>
+  <text class="sub" x="60" y="84">Deep unrolling is treated as a restoration/refinement ablation before 3D benchmark generation.</text>
+
+  <rect class="box weather" x="65" y="155" width="190" height="170"/>
+  <text class="label" x="100" y="190">Rain / Snow</text>
+  <text class="label" x="112" y="212">UAV Views</text>
+  <line class="rain" x1="105" y1="245" x2="90" y2="275"/><line class="rain" x1="145" y1="238" x2="130" y2="270"/><line class="rain" x1="195" y1="245" x2="180" y2="275"/>
+  <circle class="snow" cx="120" cy="290" r="5"/><circle class="snow" cx="168" cy="280" r="5"/><circle class="snow" cx="210" cy="294" r="5"/>
+
+  <rect class="box restore" x="315" y="155" width="210" height="170"/>
+  <text class="label" x="354" y="190">Restoration</text>
+  <text class="label" x="350" y="212">Preprocessor</text>
+  <text class="small" x="345" y="248">Desnow / derain</text>
+  <text class="small" x="345" y="272">deep unrolling</text>
+  <text class="small" x="345" y="296">artifact control</text>
+
+  <rect class="box model" x="585" y="130" width="225" height="220"/>
+  <text class="label" x="630" y="164">3D Baselines</text>
+  <text class="small" x="620" y="202">NeRF</text>
+  <text class="small" x="620" y="228">Instant-NGP</text>
+  <text class="small" x="620" y="254">Mip-NeRF style</text>
+  <text class="small" x="620" y="280">3D Gaussian Splatting</text>
+  <text class="small" x="620" y="306">weather-restored input</text>
+
+  <rect class="box ours" x="875" y="130" width="240" height="220"/>
+  <text class="label" x="925" y="164">Ours: Object</text>
+  <text class="label" x="907" y="186">Evidence-Aware 3D</text>
+  <text class="small" x="910" y="226">detection evidence tokens</text>
+  <text class="small" x="910" y="250">view confidence weights</text>
+  <text class="small" x="910" y="274">missing-view completion</text>
+  <text class="small" x="910" y="298">hard-case labels</text>
+
+  <rect class="box eval" x="305" y="445" width="235" height="130"/>
+  <text class="label" x="350" y="480">Outputs</text>
+  <text class="small" x="335" y="512">novel views</text>
+  <text class="small" x="335" y="536">3D representation</text>
+  <text class="small" x="335" y="560">object evidence completion</text>
+
+  <rect class="box eval" x="660" y="445" width="300" height="130"/>
+  <text class="label" x="720" y="480">Metrics and Ablations</text>
+  <text class="small" x="695" y="512">AP / APsmall on generated views</text>
+  <text class="small" x="695" y="536">PSNR / SSIM / LPIPS when GT exists</text>
+  <text class="small" x="695" y="560">ambiguity resolution and re-view need</text>
+
+  <path class="arrow" d="M255 240 L315 240"/>
+  <path class="arrow" d="M525 240 L585 240"/>
+  <path class="arrow" d="M810 240 L875 240"/>
+  <path class="arrow" d="M995 350 C995 415 520 390 425 445"/>
+  <path class="arrow" d="M540 510 L660 510"/>
+  <path class="dash" d="M420 325 C425 370 720 390 810 445"/>
+</svg>

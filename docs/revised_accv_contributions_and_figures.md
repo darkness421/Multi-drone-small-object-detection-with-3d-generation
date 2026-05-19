@@ -262,6 +262,16 @@ CoM3D-MarineCity Benchmark
 기존 그림은 detection pipeline 중심이었음.  
 수정 그림은 3개 contribution이 한눈에 보이도록 구성함.
 
+Editable figure drafts are stored in `paper/figures/`:
+
+| Figure | Draft source |
+| --- | --- |
+| Figure 1. Overall Framework | `paper/figures/fig01_overall_framework.svg` |
+| Figure 2. Detector Module Figure | `paper/figures/fig02_detector_module.svg` |
+| Figure 3. Isaac Sim MarineCity Multi-UAV Benchmark | `paper/figures/fig03_isaac_multiuav_benchmark.svg` |
+| Figure 4. Weather Restoration and 3D Reconstruction | `paper/figures/fig04_3d_weather_reconstruction.svg` |
+| Figure 5. LLM Reasoner and Re-observation Policy | `paper/figures/fig05_llm_reobservation_policy.svg` |
+
 ### Figure 1. Overall Framework
 
 그림 흐름:

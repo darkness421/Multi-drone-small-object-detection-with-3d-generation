@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Figure 5. LLM Reasoner and Active Re-observation Policy</title>
+  <desc id="desc">LLM reasoner receives ambiguous multi-view evidence and decides whether to accept, fuse, verify, or request a new drone viewpoint.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2,2 L10,6 L2,10 Z" fill="#334155"/></marker>
+    <style>
+      .bg{fill:#f8fafc}.title{font:700 28px Arial, sans-serif;fill:#0f172a}.sub{font:400 15px Arial, sans-serif;fill:#475569}.label{font:700 16px Arial, sans-serif;fill:#0f172a}.small{font:400 13px Arial, sans-serif;fill:#334155}
+      .box{fill:#fff;stroke:#334155;stroke-width:2;rx:12}.evidence{fill:#e0f2fe;stroke:#0369a1}.risk{fill:#fee2e2;stroke:#b91c1c}.llm{fill:#ede9fe;stroke:#6d28d9}.cmd{fill:#dcfce7;stroke:#15803d}.out{fill:#fef3c7;stroke:#b45309}
+      .arrow{stroke:#334155;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.loop{stroke:#64748b;stroke-width:2.5;stroke-dasharray:7 6;fill:none;marker-end:url(#arrow)}
+      .prompt{font:400 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;fill:#334155}
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="675"/>
+  <text class="title" x="60" y="56">LLM Reasoner for Ambiguity-Aware Re-observation</text>
+  <text class="sub" x="60" y="84">The LLM is a selective final adjudicator, not a replacement for detector or geometry modules.</text>
+
+  <rect class="box evidence" x="70" y="150" width="225" height="175"/>
+  <text class="label" x="105" y="184">Multi-view Evidence</text>
+  <text class="small" x="100" y="220">view A: car 0.42</text>
+  <text class="small" x="100" y="244">view B: truck 0.39</text>
+  <text class="small" x="100" y="268">depth / pose / crop</text>
+  <text class="small" x="100" y="292">object size and occlusion</text>
+
+  <rect class="box risk" x="350" y="150" width="215" height="175"/>
+  <text class="label" x="394" y="184">Trigger Rules</text>
+  <text class="small" x="382" y="220">low confidence</text>
+  <text class="small" x="382" y="244">cross-view conflict</text>
+  <text class="small" x="382" y="268">small-object risk</text>
+  <text class="small" x="382" y="292">missing view / occlusion</text>
+
+  <rect class="box llm" x="625" y="130" width="260" height="220"/>
+  <text class="label" x="688" y="164">Meta Prompt</text>
+  <text class="prompt" x="650" y="204">Given evidence tokens,</text>
+  <text class="prompt" x="650" y="226">estimate final class,</text>
+  <text class="prompt" x="650" y="248">explain uncertainty,</text>
+  <text class="prompt" x="650" y="270">and choose action:</text>
+  <text class="prompt" x="650" y="292">accept / fuse / verify</text>
+  <text class="prompt" x="650" y="314">/ re-observe.</text>
+
+  <rect class="box out" x="945" y="150" width="195" height="175"/>
+  <text class="label" x="986" y="184">Decision</text>
+  <text class="small" x="980" y="220">final class</text>
+  <text class="small" x="980" y="244">confidence</text>
+  <text class="small" x="980" y="268">rationale</text>
+  <text class="small" x="980" y="292">next action</text>
+
+  <rect class="box cmd" x="350" y="440" width="250" height="135"/>
+  <text class="label" x="400" y="474">Re-observation</text>
+  <text class="small" x="385" y="510">target drone: UAV-B</text>
+  <text class="small" x="385" y="534">altitude: 40 m to 25 m</text>
+  <text class="small" x="385" y="558">yaw +15 deg, pitch -10 deg</text>
+
+  <rect class="box evidence" x="690" y="440" width="250" height="135"/>
+  <text class="label" x="735" y="474">New Evidence</text>
+  <text class="small" x="725" y="510">new crop and detection</text>
+  <text class="small" x="725" y="534">updated pose/depth</text>
+  <text class="small" x="725" y="558">re-run ambiguity scorer</text>
+
+  <path class="arrow" d="M295 238 L350 238"/>
+  <path class="arrow" d="M565 238 L625 238"/>
+  <path class="arrow" d="M885 238 L945 238"/>
+  <path class="arrow" d="M1040 325 C1040 390 525 390 475 440"/>
+  <path class="arrow" d="M600 508 L690 508"/>
+  <path class="loop" d="M815 440 C820 375 455 370 455 325"/>
+
+  <rect x="70" y="605" width="1070" height="34" rx="17" fill="#334155"/>
+  <text x="100" y="627" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">Evaluation: final accuracy, ambiguity resolution, re-observation success, extra flight cost, LLM call rate, and failure-case analysis.</text>
+</svg>
