@@ -136,3 +136,15 @@ bash scripts/ubuntu/collect_proposed_results.sh
   available; otherwise the queue skips it and documents the missing model.
 - Added `scripts/ubuntu/train_paper_comparison_models_after_session.sh` to run
   these additions after the main comparison supervisors.
+
+## 2026-05-19 Report Organization
+
+- Added `scripts/organize_server_reports.py` to build a compact report bundle
+  under `outputs/reports/server_baselines/`.
+- `bash scripts/ubuntu/collect_server_results.sh` now refreshes that bundle
+  after metrics, statistics, dashboard, and stage-gate collection.
+- The report bundle includes a Markdown index, copied CSV tables, dashboard
+  figure, and stage-gate files while keeping datasets, weights, raw runs, logs,
+  and caches ignored.
+- Current report entry point:
+  `outputs/reports/server_baselines/README.md`.

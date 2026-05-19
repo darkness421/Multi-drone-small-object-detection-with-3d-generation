@@ -63,6 +63,15 @@ PNGs:
 - `outputs/experiments/*.csv`
 - `outputs/experiments/*.json`
 - `outputs/reports/*.png`
+- `outputs/reports/server_baselines/README.md`
+- `outputs/reports/server_baselines/tables/*.csv`
+- `outputs/reports/server_baselines/figures/*.png`
+- `outputs/reports/server_baselines/stage_gate.*`
 
 Large artifacts remain ignored under `data/`, `outputs/detectors/`, `runs/`,
 `weights/`, `.cache/`, and model weight extensions.
+
+After collecting server results, the compact report bundle is available at
+`outputs/reports/server_baselines/README.md`. It mirrors the dashboard,
+summary/results/p-value CSVs, and detector stage gate in one Git-friendly
+folder.
