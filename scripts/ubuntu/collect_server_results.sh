@@ -37,6 +37,11 @@ if [[ -n "$STAGE_GATE_DATASET" ]]; then
   STAGE_GATE_ARGS+=(--dataset "$STAGE_GATE_DATASET")
 fi
 conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.detector_stage_gate "${STAGE_GATE_ARGS[@]}"
+FIGURE_ARGS=(--results-csv "$RESULTS_CSV" --summary-csv "$SUMMARY_CSV" --out-dir "$REPORT_DIR/figures")
+if [[ -n "$STAGE_GATE_DATASET" ]]; then
+  FIGURE_ARGS+=(--dataset "$STAGE_GATE_DATASET")
+fi
+conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.build_server_report_figures "${FIGURE_ARGS[@]}"
 conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.organize_server_reports \
   --report-dir "$REPORT_DIR" \
   --results-csv "$RESULTS_CSV" \

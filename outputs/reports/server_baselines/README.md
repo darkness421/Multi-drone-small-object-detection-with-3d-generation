@@ -1,6 +1,6 @@
 # Server Baseline Report Bundle
 
-Generated: `2026-05-19T12:13:44+09:00`
+Generated: `2026-05-19T12:22:37+09:00`
 
 This folder is the compact, Git-friendly report bundle for server detector baselines.
 Raw datasets, model weights, raw training runs, and caches stay outside Git.
@@ -20,6 +20,18 @@ Raw datasets, model weights, raw training runs, and caches stay outside Git.
 | [Results CSV](tables/server_baseline_results.csv) | Per-run detector metrics and status |
 | [P-values CSV](tables/server_baseline_pvalues.csv) | Paired t-test and Wilcoxon comparisons |
 | [Stage Gate](stage_gate.md) | Current decision gate for baseline/proposed/3D next stage |
+
+## Figures
+
+| Figure | Purpose |
+| --- | --- |
+| [ap_ap50_by_model.png](figures/ap_ap50_by_model.png) | Separated AP and AP50 bar chart |
+| [gflops_vs_ap.png](figures/gflops_vs_ap.png) | GFLOPs and AP tradeoff |
+| [params_vs_ap.png](figures/params_vs_ap.png) | Parameter-count and AP tradeoff |
+| [precision_recall_f1_by_model.png](figures/precision_recall_f1_by_model.png) | Separated precision, recall, and F1 chart |
+| [seed_ap_distribution_by_model.png](figures/seed_ap_distribution_by_model.png) | Seed-level AP distribution |
+| [server_baseline_dashboard.png](figures/server_baseline_dashboard.png) | Combined overview dashboard for quick monitoring |
+| [speed_vs_ap.png](figures/speed_vs_ap.png) | FPS and AP tradeoff, or placeholder until FPS is collected |
 
 ## Top Models
 

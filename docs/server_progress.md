@@ -146,5 +146,8 @@ bash scripts/ubuntu/collect_proposed_results.sh
 - The report bundle includes a Markdown index, copied CSV tables, dashboard
   figure, and stage-gate files while keeping datasets, weights, raw runs, logs,
   and caches ignored.
+- The report figures are now split into separate PNGs for AP/AP50,
+  precision/recall/F1, seed AP distribution, Params-vs-AP, GFLOPs-vs-AP, and
+  FPS-vs-AP instead of relying only on the combined dashboard.
 - Current report entry point:
   `outputs/reports/server_baselines/README.md`.

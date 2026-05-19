@@ -7,7 +7,9 @@ This directory contains compact, Git-friendly report artifacts only.
 - `server_baselines/README.md` is the main entry point for server detector
   baseline reporting.
 - `server_baselines/tables/` contains copied summary/results/p-value CSVs.
-- `server_baselines/figures/` contains the dashboard PNG snapshot.
+- `server_baselines/figures/` contains both the combined dashboard and
+  separated report figures for AP/AP50, P/R/F1, seed distribution,
+  Params-vs-AP, GFLOPs-vs-AP, and FPS-vs-AP.
 - `server_baselines/stage_gate.*` records the detector stage-gate decision.
 
 ## Compatibility Files

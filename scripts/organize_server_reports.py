@@ -146,6 +146,26 @@ def pvalue_table(rows: list[dict[str, str]], limit: int = 12) -> str:
     return markdown_table(headers, body)
 
 
+def figure_table(report_dir: Path, copied: dict[str, Path]) -> str:
+    figure_dir = report_dir / "figures"
+    descriptions = {
+        "server_baseline_dashboard.png": "Combined overview dashboard for quick monitoring",
+        "ap_ap50_by_model.png": "Separated AP and AP50 bar chart",
+        "precision_recall_f1_by_model.png": "Separated precision, recall, and F1 chart",
+        "seed_ap_distribution_by_model.png": "Seed-level AP distribution",
+        "params_vs_ap.png": "Parameter-count and AP tradeoff",
+        "gflops_vs_ap.png": "GFLOPs and AP tradeoff",
+        "speed_vs_ap.png": "FPS and AP tradeoff, or placeholder until FPS is collected",
+    }
+    rows = []
+    for path in sorted(figure_dir.glob("*.png")):
+        rel = path.relative_to(report_dir)
+        rows.append([f"[{path.name}]({rel.as_posix()})", descriptions.get(path.name, "Report figure")])
+    if not rows and copied.get("dashboard"):
+        rows.append([f"[Dashboard]({copied['dashboard'].as_posix()})", descriptions["server_baseline_dashboard.png"]])
+    return markdown_table(["Figure", "Purpose"], rows)
+
+
 def write_readme(
     report_dir: Path,
     copied: dict[str, Path],
@@ -187,6 +207,10 @@ def write_readme(
                 [f"[Stage Gate](stage_gate.md)", "Current decision gate for baseline/proposed/3D next stage"],
             ],
         ),
+        "",
+        "## Figures",
+        "",
+        figure_table(report_dir, copied),
         "",
         "## Top Models",
         "",
