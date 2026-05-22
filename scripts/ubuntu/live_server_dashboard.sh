@@ -3,6 +3,8 @@ set -euo pipefail
 
 INTERVAL=${1:-60}
 DETECTOR_ROOT=${DETECTOR_ROOT:-outputs/detectors/server_baselines}
+DETECTOR_ROOTS=${DETECTOR_ROOTS:-$DETECTOR_ROOT}
+DEDUPE_KEY=${DEDUPE_KEY:-}
 CONDA_ENV=${CONDA_ENV:-com3d-ace}
 RESULTS_CSV=${RESULTS_CSV:-outputs/experiments/live/server_baseline_results.csv}
 SUMMARY_CSV=${SUMMARY_CSV:-outputs/experiments/live/server_baseline_summary.csv}
@@ -18,7 +20,10 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$PWD/.cache}"
 mkdir -p "$MPLCONFIGDIR" "$YOLO_CONFIG_DIR" "$XDG_CACHE_HOME" "$(dirname "$RESULTS_CSV")" "$(dirname "$DASHBOARD")" "$FIGURES_DIR"
 
 echo "Live dashboard loop"
-echo "  detector root: $DETECTOR_ROOT"
+echo "  detector roots: $DETECTOR_ROOTS"
+if [[ -n "$DEDUPE_KEY" ]]; then
+  echo "  dedupe key:    $DEDUPE_KEY"
+fi
 echo "  results csv:   $RESULTS_CSV"
 echo "  summary csv:   $SUMMARY_CSV"
 echo "  p-values csv:  $PVALUES_CSV"
@@ -30,8 +35,18 @@ echo ""
 while true; do
   started_at=$(date -Is)
   echo "== Refresh at $started_at =="
+  ROOT_ARGS=()
+  IFS=',' read -r -a root_list <<< "$DETECTOR_ROOTS"
+  for root in "${root_list[@]}"; do
+    root=${root//[[:space:]]/}
+    [[ -z "$root" ]] && continue
+    ROOT_ARGS+=(--detector-root "$root")
+  done
+  if [[ -n "$DEDUPE_KEY" ]]; then
+    ROOT_ARGS+=(--dedupe-key "$DEDUPE_KEY")
+  fi
   conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.collect_detector_metrics \
-    --detector-root "$DETECTOR_ROOT" \
+    "${ROOT_ARGS[@]}" \
     --out "$RESULTS_CSV"
   conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.summarize_seed_results \
     --results-csv "$RESULTS_CSV" \

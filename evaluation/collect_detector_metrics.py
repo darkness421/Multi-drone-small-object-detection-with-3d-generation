@@ -413,6 +413,14 @@ def model_complexity(run_dir: Path) -> tuple[int | None, float | None]:
         resolve_path("outputs/logs/server_baselines") / f"{run_name}.log",
         run_dir / "logs" / "train.log",
     ]
+    for root_name in [
+        "outputs/logs/server_baselines",
+        "outputs/logs/server_fresh_baselines",
+        "outputs/logs/server_proposed_ablation",
+    ]:
+        root = resolve_path(root_name)
+        if root.exists():
+            candidate_logs.extend(sorted(root.glob(f"**/{run_name}.log")))
     for path in candidate_logs:
         params, gflops = parse_complexity_from_log(path)
         if params is not None or gflops is not None:

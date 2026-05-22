@@ -3,6 +3,7 @@ set -euo pipefail
 
 DETECTOR_ROOT=${1:-outputs/detectors/server_baselines}
 DETECTOR_ROOTS=${DETECTOR_ROOTS:-$DETECTOR_ROOT}
+DEDUPE_KEY=${DEDUPE_KEY:-}
 CONDA_ENV=${CONDA_ENV:-com3d-ace}
 RESULTS_CSV=${RESULTS_CSV:-outputs/experiments/server_baseline_results.csv}
 SUMMARY_CSV=${SUMMARY_CSV:-outputs/experiments/server_baseline_summary.csv}
@@ -27,6 +28,9 @@ for root in "${root_list[@]}"; do
   [[ -z "$root" ]] && continue
   ROOT_ARGS+=(--detector-root "$root")
 done
+if [[ -n "$DEDUPE_KEY" ]]; then
+  ROOT_ARGS+=(--dedupe-key "$DEDUPE_KEY")
+fi
 
 conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.collect_detector_metrics "${ROOT_ARGS[@]}" --out "$RESULTS_CSV"
 conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.summarize_seed_results --results-csv "$RESULTS_CSV" --out "$SUMMARY_CSV"
@@ -53,6 +57,9 @@ conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.organize_server_
 
 echo "Results: $RESULTS_CSV"
 echo "Detector roots: $DETECTOR_ROOTS"
+if [[ -n "$DEDUPE_KEY" ]]; then
+  echo "Dedupe key: $DEDUPE_KEY"
+fi
 echo "Summary: $SUMMARY_CSV"
 echo "P-values: $PVALUES_CSV"
 echo "Dashboard: $DASHBOARD"
