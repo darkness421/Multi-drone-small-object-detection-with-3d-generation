@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+SESSION=${1:-server-training-dual-view}
+
+case "${1:-view}" in
+  view|dual|"")
+    SESSION=server-training-dual-view
+    ;;
+  train|raw)
+    SESSION=server-fresh-baselines-resume
+    ;;
+  mon|monitor)
+    SESSION=server-baseline-monitor
+    ;;
+  gpu)
+    exec watch -n 2 nvidia-smi
+    ;;
+  help|-h|--help)
+    cat <<'EOF'
+Short training monitor commands:
+
+  ./see          split GPU0/GPU1 live training view
+  ./see train    raw training tmux session
+  ./see mon      monitor dashboard/logs/resources
+  ./see gpu      GPU usage only
+
+Detach without stopping training:
+  Ctrl+b, then d
+EOF
+    exit 0
+    ;;
+  *)
+    SESSION=$1
+    ;;
+esac
+
+if ! tmux has-session -t "$SESSION" 2>/dev/null; then
+  echo "No tmux session named: $SESSION"
+  echo "Available sessions:"
+  tmux ls 2>/dev/null || true
+  exit 1
+fi
+
+exec tmux attach -t "$SESSION"
