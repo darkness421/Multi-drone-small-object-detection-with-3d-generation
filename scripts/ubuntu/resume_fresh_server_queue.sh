@@ -16,6 +16,13 @@ ROC_AUC=${ROC_AUC:-1}
 LIVE_INTERVAL=${LIVE_INTERVAL:-60}
 GPUS=${GPUS:-0,1}
 DEDUP_KEY=${DEDUP_KEY:-dataset,model,seed,ablation,proposed_module}
+WORKERS=${WORKERS:-4}
+RESOURCE_GUARD=${RESOURCE_GUARD:-1}
+MIN_FREE_GB=${MIN_FREE_GB:-100}
+MAX_DISK_USE_PERCENT=${MAX_DISK_USE_PERCENT:-92}
+MIN_RAM_GB=${MIN_RAM_GB:-16}
+MIN_GPU_FREE_GB=${MIN_GPU_FREE_GB:-6}
+GUARD_WAIT_SECONDS=${GUARD_WAIT_SECONDS:-60}
 
 BASE_PROJECT=${BASE_PROJECT:-outputs/detectors/server_fresh_baselines/$BASE_RUN_ID}
 RESUME_PROJECT=${RESUME_PROJECT:-outputs/detectors/server_fresh_baselines/${BASE_RUN_ID}_${RESUME_ID}}
@@ -54,6 +61,8 @@ echo "  session:        $SESSION"
 echo "  base project:   $BASE_PROJECT"
 echo "  resume project: $RESUME_PROJECT"
 echo "  detector roots: $DETECTOR_ROOTS"
+echo "  workers:        $WORKERS"
+echo "  guard:          $RESOURCE_GUARD (disk >= ${MIN_FREE_GB}GB, disk <= ${MAX_DISK_USE_PERCENT}%, RAM >= ${MIN_RAM_GB}GB, GPU free >= ${MIN_GPU_FREE_GB}GB)"
 echo ""
 
 if [[ ! -f "$COMMAND_CSV" ]]; then
@@ -88,7 +97,7 @@ conda run --no-capture-output -n "$CONDA_ENV" python -m evaluation.collect_detec
   --out "$PRECHECK_RESULTS_CSV"
 
 COMMAND_CSV="$COMMAND_CSV" PRECHECK_RESULTS_CSV="$PRECHECK_RESULTS_CSV" JOB_TSV="$JOB_TSV" \
-RESUME_COMMAND_CSV="$RESUME_COMMAND_CSV" RESUME_ID="$RESUME_ID" LOG_DIR="$LOG_DIR" GPUS="$GPUS" \
+RESUME_COMMAND_CSV="$RESUME_COMMAND_CSV" RESUME_ID="$RESUME_ID" LOG_DIR="$LOG_DIR" GPUS="$GPUS" WORKERS="$WORKERS" \
 conda run --no-capture-output -n "$CONDA_ENV" python - <<'PY'
 import csv
 import os
@@ -101,6 +110,7 @@ resume_command_csv = Path(os.environ["RESUME_COMMAND_CSV"])
 resume_id = os.environ["RESUME_ID"]
 log_dir = Path(os.environ["LOG_DIR"])
 gpus = [gpu.strip() for gpu in os.environ.get("GPUS", "0,1").split(",") if gpu.strip()]
+default_workers = os.environ.get("WORKERS", "4")
 if not gpus:
     raise SystemExit("GPUS must contain at least one GPU id")
 
@@ -130,6 +140,7 @@ fields = [
     "gpu",
     "imgsz",
     "batch",
+    "workers",
     "epochs",
     "data_yaml",
     "run_name",
@@ -149,6 +160,7 @@ with job_tsv.open("w", encoding="utf-8", newline="") as handle:
                 "gpu": gpus[index % len(gpus)],
                 "imgsz": row.get("imgsz") or "1280",
                 "batch": row.get("batch") or "8",
+                "workers": row.get("workers") or default_workers,
                 "epochs": row.get("epochs") or "100",
                 "data_yaml": row.get("data_yaml") or "configs/detector/visdrone_yolo_data.yaml",
                 "run_name": run_name,
@@ -168,6 +180,7 @@ with resume_command_csv.open("w", encoding="utf-8", newline="") as handle:
             "ultralytics_device",
             "imgsz",
             "batch",
+            "workers",
             "epochs",
             "data_yaml",
             "run_name",
@@ -183,7 +196,7 @@ with resume_command_csv.open("w", encoding="utf-8", newline="") as handle:
             "CUDA_DEVICE_ORDER=PCI_BUS_ID conda run --no-capture-output "
             f"-n $CONDA_ENV python -m detectors.train_yolo train --model {row['model']} "
             f"--data-yaml {row['data_yaml']} --epochs {row['epochs']} --imgsz {row['imgsz']} "
-            f"--batch {row['batch']} --device {row['gpu']} --seed {row['seed']} "
+            f"--batch {row['batch']} --workers {row['workers']} --device {row['gpu']} --seed {row['seed']} "
             f"--project $RESUME_PROJECT --name {row['run_name']}"
         )
         writer.writerow(
@@ -196,6 +209,7 @@ with resume_command_csv.open("w", encoding="utf-8", newline="") as handle:
                 "ultralytics_device": row["gpu"],
                 "imgsz": row["imgsz"],
                 "batch": row["batch"],
+                "workers": row["workers"],
                 "epochs": row["epochs"],
                 "data_yaml": row["data_yaml"],
                 "run_name": row["run_name"],
@@ -230,6 +244,12 @@ for gpu in "${gpu_list[@]}"; do
     printf 'cd %q\n' "$ROOT"
     echo 'export CUDA_DEVICE_ORDER=PCI_BUS_ID'
     echo 'export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"'
+    printf 'export RESOURCE_GUARD=%q\n' "$RESOURCE_GUARD"
+    printf 'export MIN_FREE_GB=%q\n' "$MIN_FREE_GB"
+    printf 'export MAX_DISK_USE_PERCENT=%q\n' "$MAX_DISK_USE_PERCENT"
+    printf 'export MIN_RAM_GB=%q\n' "$MIN_RAM_GB"
+    printf 'export MIN_GPU_FREE_GB=%q\n' "$MIN_GPU_FREE_GB"
+    printf 'export GUARD_WAIT_SECONDS=%q\n' "$GUARD_WAIT_SECONDS"
     printf 'export MPLCONFIGDIR=%q\n' "$MPLCONFIGDIR"
     printf 'export YOLO_CONFIG_DIR=%q\n' "$YOLO_CONFIG_DIR"
     printf 'export XDG_CACHE_HOME=%q\n' "$XDG_CACHE_HOME"
@@ -239,19 +259,20 @@ for gpu in "${gpu_list[@]}"; do
   chmod +x "$script"
 done
 
-while IFS=$'\t' read -r model seed gpu imgsz batch epochs data_yaml run_name log_file; do
+while IFS=$'\t' read -r model seed gpu imgsz batch workers epochs data_yaml run_name log_file; do
   [[ "$model" == "model" ]] && continue
   [[ -z "$model" ]] && continue
   job_script="$JOB_ROOT/gpu${gpu}.sh"
   {
     printf '\necho "START resume model=%s seed=%s gpu=%s batch=%s at $(date -Is)"\n' "$model" "$seed" "$gpu" "$batch"
-    printf 'if conda run --no-capture-output -n %q python -m detectors.train_yolo train --model %q --data-yaml %q --epochs %q --imgsz %q --batch %q --device %q --seed %q --project %q --name %q 2>&1 | tee %q; then\n' \
-      "$CONDA_ENV" "$model" "$data_yaml" "$epochs" "$imgsz" "$batch" "$gpu" "$seed" "$RESUME_PROJECT" "$run_name" "$log_file"
+    printf 'if [[ "${RESOURCE_GUARD:-1}" == "1" ]]; then bash scripts/ubuntu/check_resource_margin.sh --path %q --gpu %q --min-free-gb "$MIN_FREE_GB" --max-disk-use-percent "$MAX_DISK_USE_PERCENT" --min-ram-gb "$MIN_RAM_GB" --min-gpu-free-gb "$MIN_GPU_FREE_GB" --wait-seconds "$GUARD_WAIT_SECONDS" 2>&1 | tee -a %q; fi\n' "$ROOT" "$gpu" "$log_file"
+    printf 'if conda run --no-capture-output -n %q python -m detectors.train_yolo train --model %q --data-yaml %q --epochs %q --imgsz %q --batch %q --workers %q --device %q --seed %q --project %q --name %q 2>&1 | tee %q; then\n' \
+      "$CONDA_ENV" "$model" "$data_yaml" "$epochs" "$imgsz" "$batch" "$workers" "$gpu" "$seed" "$RESUME_PROJECT" "$run_name" "$log_file"
     printf '  echo "TRAIN_OK model=%s seed=%s gpu=%s at $(date -Is)" | tee -a %q\n' "$model" "$seed" "$gpu" "$log_file"
     printf '  if [[ %q == 1 ]]; then\n' "$RUN_EVAL"
     printf '    run_dir=$(find %q -maxdepth 1 -type d \\( -name %q -o -name %q \\) -printf "%%T@ %%p\\n" | sort -nr | head -n 1 | cut -d" " -f2-)\n' "$RESUME_PROJECT" "$run_name" "*_${run_name}"
     printf '    if [[ -n "${run_dir:-}" && -f "$run_dir/ultralytics/weights/best.pt" ]]; then\n'
-    printf '      eval_args=(eval --model "$run_dir/ultralytics/weights/best.pt" --data-yaml %q --imgsz %q --device %q --project %q --name %q)\n' "$data_yaml" "$imgsz" "$gpu" "$RESUME_PROJECT" "eval_${run_name}"
+    printf '      eval_args=(eval --model "$run_dir/ultralytics/weights/best.pt" --data-yaml %q --imgsz %q --workers %q --device %q --project %q --name %q)\n' "$data_yaml" "$imgsz" "$workers" "$gpu" "$RESUME_PROJECT" "eval_${run_name}"
     printf '      if [[ %q == 1 ]]; then eval_args+=(--roc-auc); fi\n' "$ROC_AUC"
     printf '      conda run --no-capture-output -n %q python -m detectors.train_yolo "${eval_args[@]}" 2>&1 | tee -a %q || echo "EVAL_FAILED model=%s seed=%s at $(date -Is)" | tee -a %q\n' "$CONDA_ENV" "$log_file" "$model" "$seed" "$log_file"
     printf '    else\n'

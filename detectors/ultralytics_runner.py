@@ -34,6 +34,7 @@ def train_yolo(
     epochs: int = 100,
     imgsz: int = 1280,
     batch: int = 8,
+    workers: int = 4,
     device: str | None = None,
     seed: int | None = None,
     deterministic: bool = True,
@@ -61,6 +62,7 @@ def train_yolo(
         "epochs": epochs,
         "imgsz": imgsz,
         "batch": batch,
+        "workers": workers,
         "project": str(run_dir),
         "name": "ultralytics",
         "pretrained": not from_scratch,
@@ -85,6 +87,7 @@ def train_yolo(
         "epochs": epochs,
         "imgsz": imgsz,
         "batch": batch,
+        "workers": workers,
         "device": device or "auto",
         "seed": seed,
         "deterministic": deterministic,
@@ -99,6 +102,7 @@ def eval_yolo(
     model: str,
     data_yaml: str | Path,
     imgsz: int = 1280,
+    workers: int = 4,
     device: str | None = None,
     roc_auc: bool = False,
     roc_auc_split: str = "val",
@@ -120,7 +124,13 @@ def eval_yolo(
     logger = setup_logging(run_dir / "logs" / "eval.log")
     logger.info("Evaluating %s on %s", model, data_yaml)
     yolo = YOLO(model)
-    val_kwargs: dict[str, Any] = {"data": str(data_yaml), "imgsz": imgsz, "project": str(run_dir), "name": "ultralytics"}
+    val_kwargs: dict[str, Any] = {
+        "data": str(data_yaml),
+        "imgsz": imgsz,
+        "workers": workers,
+        "project": str(run_dir),
+        "name": "ultralytics",
+    }
     if device:
         val_kwargs["device"] = device
     metrics = yolo.val(**val_kwargs)
@@ -147,6 +157,7 @@ def eval_yolo(
         "dataset": infer_dataset_name(data_yaml),
         "data": str(data_yaml),
         "imgsz": imgsz,
+        "workers": workers,
         "device": device or "auto",
         "run_dir": str(run_dir),
         "metrics": metric_values,
@@ -237,6 +248,7 @@ def main() -> None:
     parser.add_argument("--epochs", type=int, default=100)
     parser.add_argument("--imgsz", type=int, default=1280)
     parser.add_argument("--batch", type=int, default=8)
+    parser.add_argument("--workers", type=int, default=4, help="Dataloader workers. Keep modest on shared servers.")
     parser.add_argument("--device", default=None, help="Ultralytics device string, for example '0' or '0,1'.")
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--non-deterministic", action="store_true")

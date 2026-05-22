@@ -20,6 +20,13 @@ RUN_EVAL=${RUN_EVAL:-1}
 ROC_AUC=${ROC_AUC:-1}
 CHECK_MODELS=${CHECK_MODELS:-1}
 LIVE_INTERVAL=${LIVE_INTERVAL:-60}
+WORKERS=${WORKERS:-4}
+RESOURCE_GUARD=${RESOURCE_GUARD:-1}
+MIN_FREE_GB=${MIN_FREE_GB:-100}
+MAX_DISK_USE_PERCENT=${MAX_DISK_USE_PERCENT:-92}
+MIN_RAM_GB=${MIN_RAM_GB:-16}
+MIN_GPU_FREE_GB=${MIN_GPU_FREE_GB:-6}
+GUARD_WAIT_SECONDS=${GUARD_WAIT_SECONDS:-60}
 
 # Order is intentional: YOLOv10s starts first so the immediately visible run
 # matches the current comparison focus. Batch can be set per model with
@@ -57,6 +64,8 @@ echo "  detector root:$PROJECT"
 echo "  report dir:   $REPORT_DIR"
 echo "  model specs:  $MODEL_SPECS"
 echo "  seeds:        $SEEDS"
+echo "  workers:      $WORKERS"
+echo "  guard:        $RESOURCE_GUARD (disk >= ${MIN_FREE_GB}GB, disk <= ${MAX_DISK_USE_PERCENT}%, RAM >= ${MIN_RAM_GB}GB, GPU free >= ${MIN_GPU_FREE_GB}GB)"
 echo ""
 
 conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.check_dataset_ready \
@@ -120,7 +129,7 @@ fi
 
 echo "Available model specs: $AVAILABLE_MODEL_SPECS"
 
-echo "created_at,session,model,seed,physical_gpu,ultralytics_device,imgsz,batch,epochs,data_yaml,run_name,log_file,status,command" > "$COMMAND_CSV"
+echo "created_at,session,model,seed,physical_gpu,ultralytics_device,imgsz,batch,workers,epochs,data_yaml,run_name,log_file,status,command" > "$COMMAND_CSV"
 
 IFS=',' read -r -a gpu_list <<< "$GPUS"
 for gpu in "${gpu_list[@]}"; do
@@ -133,6 +142,12 @@ for gpu in "${gpu_list[@]}"; do
     printf 'cd %q\n' "$ROOT"
     echo 'export CUDA_DEVICE_ORDER=PCI_BUS_ID'
     echo 'export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"'
+    printf 'export RESOURCE_GUARD=%q\n' "$RESOURCE_GUARD"
+    printf 'export MIN_FREE_GB=%q\n' "$MIN_FREE_GB"
+    printf 'export MAX_DISK_USE_PERCENT=%q\n' "$MAX_DISK_USE_PERCENT"
+    printf 'export MIN_RAM_GB=%q\n' "$MIN_RAM_GB"
+    printf 'export MIN_GPU_FREE_GB=%q\n' "$MIN_GPU_FREE_GB"
+    printf 'export GUARD_WAIT_SECONDS=%q\n' "$GUARD_WAIT_SECONDS"
     printf 'export MPLCONFIGDIR=%q\n' "$MPLCONFIGDIR"
     printf 'export YOLO_CONFIG_DIR=%q\n' "$YOLO_CONFIG_DIR"
     printf 'export XDG_CACHE_HOME=%q\n' "$XDG_CACHE_HOME"
@@ -165,18 +180,19 @@ for spec in "${spec_list[@]}"; do
     run_name="${model_slug}_${DATASET_TAG}_fresh_${RUN_ID}_seed${seed}"
     log_file="$LOG_DIR/${run_name}.log"
     job_script="$JOB_ROOT/gpu${gpu}.sh"
-    command="CUDA_DEVICE_ORDER=PCI_BUS_ID conda run --no-capture-output -n $CONDA_ENV python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $batch --device $gpu --seed $seed --project $PROJECT --name $run_name"
-    printf '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","queued","%s"\n' \
-      "$(date -Is)" "$SESSION" "$model" "$seed" "$gpu" "$gpu" "$IMGSZ" "$batch" "$EPOCHS" "$DATA_YAML" "$run_name" "$log_file" "$command" >> "$COMMAND_CSV"
+    command="CUDA_DEVICE_ORDER=PCI_BUS_ID conda run --no-capture-output -n $CONDA_ENV python -m detectors.train_yolo train --model $model --data-yaml $DATA_YAML --epochs $EPOCHS --imgsz $IMGSZ --batch $batch --workers $WORKERS --device $gpu --seed $seed --project $PROJECT --name $run_name"
+    printf '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","queued","%s"\n' \
+      "$(date -Is)" "$SESSION" "$model" "$seed" "$gpu" "$gpu" "$IMGSZ" "$batch" "$WORKERS" "$EPOCHS" "$DATA_YAML" "$run_name" "$log_file" "$command" >> "$COMMAND_CSV"
     {
       printf '\necho "START model=%s seed=%s gpu=%s batch=%s at $(date -Is)"\n' "$model" "$seed" "$gpu" "$batch"
-      printf 'if conda run --no-capture-output -n %q python -m detectors.train_yolo train --model %q --data-yaml %q --epochs %q --imgsz %q --batch %q --device %q --seed %q --project %q --name %q 2>&1 | tee %q; then\n' \
-        "$CONDA_ENV" "$model" "$DATA_YAML" "$EPOCHS" "$IMGSZ" "$batch" "$gpu" "$seed" "$PROJECT" "$run_name" "$log_file"
+      printf 'if [[ "${RESOURCE_GUARD:-1}" == "1" ]]; then bash scripts/ubuntu/check_resource_margin.sh --path %q --gpu %q --min-free-gb "$MIN_FREE_GB" --max-disk-use-percent "$MAX_DISK_USE_PERCENT" --min-ram-gb "$MIN_RAM_GB" --min-gpu-free-gb "$MIN_GPU_FREE_GB" --wait-seconds "$GUARD_WAIT_SECONDS" 2>&1 | tee -a %q; fi\n' "$ROOT" "$gpu" "$log_file"
+      printf 'if conda run --no-capture-output -n %q python -m detectors.train_yolo train --model %q --data-yaml %q --epochs %q --imgsz %q --batch %q --workers %q --device %q --seed %q --project %q --name %q 2>&1 | tee %q; then\n' \
+        "$CONDA_ENV" "$model" "$DATA_YAML" "$EPOCHS" "$IMGSZ" "$batch" "$WORKERS" "$gpu" "$seed" "$PROJECT" "$run_name" "$log_file"
       printf '  echo "TRAIN_OK model=%s seed=%s gpu=%s at $(date -Is)" | tee -a %q\n' "$model" "$seed" "$gpu" "$log_file"
       printf '  if [[ %q == 1 ]]; then\n' "$RUN_EVAL"
       printf '    run_dir=$(find %q -maxdepth 1 -type d \\( -name %q -o -name %q \\) -printf "%%T@ %%p\\n" | sort -nr | head -n 1 | cut -d" " -f2-)\n' "$PROJECT" "$run_name" "*_${run_name}"
       printf '    if [[ -n "${run_dir:-}" && -f "$run_dir/ultralytics/weights/best.pt" ]]; then\n'
-      printf '      eval_args=(eval --model "$run_dir/ultralytics/weights/best.pt" --data-yaml %q --imgsz %q --device %q --project %q --name %q)\n' "$DATA_YAML" "$IMGSZ" "$gpu" "$PROJECT" "eval_${run_name}"
+      printf '      eval_args=(eval --model "$run_dir/ultralytics/weights/best.pt" --data-yaml %q --imgsz %q --workers %q --device %q --project %q --name %q)\n' "$DATA_YAML" "$IMGSZ" "$WORKERS" "$gpu" "$PROJECT" "eval_${run_name}"
       printf '      if [[ %q == 1 ]]; then eval_args+=(--roc-auc); fi\n' "$ROC_AUC"
       printf '      conda run --no-capture-output -n %q python -m detectors.train_yolo "${eval_args[@]}" 2>&1 | tee -a %q || echo "EVAL_FAILED model=%s seed=%s at $(date -Is)" | tee -a %q\n' "$CONDA_ENV" "$log_file" "$model" "$seed" "$log_file"
       printf '    else\n'

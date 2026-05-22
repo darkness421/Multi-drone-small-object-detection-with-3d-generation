@@ -19,6 +19,7 @@ def main() -> None:
     parser.add_argument("--epochs", type=int, default=100)
     parser.add_argument("--imgsz", type=int, default=1280)
     parser.add_argument("--batch", type=int, default=8)
+    parser.add_argument("--workers", type=int, default=4, help="Dataloader workers. Keep modest on shared servers.")
     parser.add_argument("--device", default=None, help="Ultralytics device string, for example '0' or '0,1'.")
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--non-deterministic", action="store_true")
@@ -42,6 +43,7 @@ def main() -> None:
             epochs=args.epochs,
             imgsz=args.imgsz,
             batch=args.batch,
+            workers=args.workers,
             device=args.device,
             seed=args.seed,
             deterministic=not args.non_deterministic,
@@ -59,6 +61,7 @@ def main() -> None:
             model=args.model,
             data_yaml=args.data_yaml,
             imgsz=args.imgsz,
+            workers=args.workers,
             device=args.device,
             roc_auc=args.roc_auc,
             roc_auc_split=args.roc_auc_split,
