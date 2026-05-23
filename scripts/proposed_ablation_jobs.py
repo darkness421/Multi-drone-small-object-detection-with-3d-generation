@@ -148,7 +148,11 @@ def build_jobs(
                     ]
                     if not deterministic:
                         command_parts.append("--non-deterministic")
-                    command = " ".join(shlex.quote(part) for part in command_parts)
+                    command_parts[command_parts.index("--device") + 1] = "0"
+                    command = (
+                        f"CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES={sh(gpu)} "
+                        + " ".join(shlex.quote(part) for part in command_parts)
+                    )
                     status = "queued"
                     job_index += 1
                 else:
@@ -187,6 +191,7 @@ def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_ya
         "implementation_status",
         "seed",
         "physical_gpu",
+        "ultralytics_device",
         "imgsz",
         "batch",
         "epochs",
@@ -216,6 +221,7 @@ def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_ya
                     "implementation_status": job.implementation_status,
                     "seed": job.seed,
                     "physical_gpu": job.gpu if job.gpu >= 0 else "",
+                    "ultralytics_device": "0" if job.gpu >= 0 else "",
                     "imgsz": imgsz,
                     "batch": batch,
                     "epochs": epochs,
@@ -245,6 +251,7 @@ def write_job_scripts(job_root: Path, jobs: list[ProposedJob], config: dict[str,
             "set -euo pipefail",
             f"cd {sh(root)}",
             "export CUDA_DEVICE_ORDER=PCI_BUS_ID",
+            f"export CUDA_VISIBLE_DEVICES={sh(gpu)}",
             'export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"',
             f"export MPLCONFIGDIR={sh(root / '.cache/matplotlib')}",
             f"export YOLO_CONFIG_DIR={sh(root / '.cache/ultralytics')}",
@@ -264,7 +271,7 @@ def write_job_scripts(job_root: Path, jobs: list[ProposedJob], config: dict[str,
                     'if [[ -n "${run_dir:-}" && -f "$run_dir/ultralytics/weights/best.pt" ]]; then',
                     "  eval_args=("
                     f"eval --model \"$run_dir/ultralytics/weights/best.pt\" --data-yaml {sh(data_yaml)} "
-                    f"--imgsz {sh(imgsz)} --device {sh(job.gpu)} --project {sh(project)} --name {sh('eval_' + job.run_name)} "
+                    f"--imgsz {sh(imgsz)} --device 0 --project {sh(project)} --name {sh('eval_' + job.run_name)} "
                     f"--method {sh(job.method)} --ablation {sh(job.ablation)} --base-model {sh(job.base_model)} "
                     f"--proposed-module {sh(job.proposed_module)} --implementation-status {sh(job.implementation_status)})",
                     "  if [[ " + sh("1" if roc_auc else "0") + ' == "1" ]]; then eval_args+=(--roc-auc); fi',

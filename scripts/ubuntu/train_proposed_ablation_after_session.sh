@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WAIT_FOR=${WAIT_FOR:-server-uavdt-comparisons-pending}
+WAIT_FOR=${WAIT_FOR:-server-fresh-baselines-resume,server-gpu1-recovery,server-isolated-continuation}
 POLL_SECONDS=${POLL_SECONDS:-300}
 SESSION=${SESSION:-server-proposed-ablation}
 CONDA_ENV=${CONDA_ENV:-com3d-ace}
@@ -24,13 +24,24 @@ STAMP=$(date +%Y%m%d_%H%M%S)
 JOB_ROOT="outputs/experiments/proposed_ablation_jobs/$STAMP"
 MANIFEST="$JOB_ROOT/manifest.json"
 
-wait_for_session() {
-  local session=$1
-  if [[ -z "$session" ]]; then
-    return
-  fi
-  while tmux has-session -t "$session" 2>/dev/null; do
-    echo "Waiting for tmux session to finish: $session at $(date -Is)"
+wait_for_sessions() {
+  local sessions=$1
+  [[ -z "$sessions" ]] && return
+
+  while true; do
+    local active=()
+    IFS=',' read -r -a session_list <<< "$sessions"
+    for session in "${session_list[@]}"; do
+      session=${session//[[:space:]]/}
+      [[ -z "$session" ]] && continue
+      if tmux has-session -t "$session" 2>/dev/null; then
+        active+=("$session")
+      fi
+    done
+    if [[ "${#active[@]}" -eq 0 ]]; then
+      return
+    fi
+    echo "Waiting for tmux sessions to finish: ${active[*]} at $(date -Is)"
     sleep "$POLL_SECONDS"
   done
 }
@@ -44,7 +55,7 @@ restart_viewer() {
     "cd '$ROOT' && python scripts/ubuntu/live_training_viewer.py --host 0.0.0.0 --port '$VIEWER_PORT' --training-session '$SESSION'"
 }
 
-wait_for_session "$WAIT_FOR"
+wait_for_sessions "$WAIT_FOR"
 
 conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.check_dataset_ready \
   --paths-config configs/paths.ubuntu.yaml \
@@ -104,6 +115,6 @@ fi
 restart_viewer
 
 if [[ "$WAIT_AFTER_START" == "1" ]]; then
-  wait_for_session "$SESSION"
+  wait_for_sessions "$SESSION"
   echo "Proposed ablation queue complete at $(date -Is)"
 fi
