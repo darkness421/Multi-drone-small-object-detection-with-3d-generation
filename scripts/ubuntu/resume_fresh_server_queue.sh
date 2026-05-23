@@ -193,10 +193,10 @@ with resume_command_csv.open("w", encoding="utf-8", newline="") as handle:
     writer.writeheader()
     for row in csv.DictReader(job_tsv.open("r", encoding="utf-8", newline=""), delimiter="\t"):
         command = (
-            "CUDA_DEVICE_ORDER=PCI_BUS_ID conda run --no-capture-output "
+            f"CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES={row['gpu']} conda run --no-capture-output "
             f"-n $CONDA_ENV python -m detectors.train_yolo train --model {row['model']} "
             f"--data-yaml {row['data_yaml']} --epochs {row['epochs']} --imgsz {row['imgsz']} "
-            f"--batch {row['batch']} --workers {row['workers']} --device {row['gpu']} --seed {row['seed']} "
+            f"--batch {row['batch']} --workers {row['workers']} --device 0 --seed {row['seed']} "
             f"--project $RESUME_PROJECT --name {row['run_name']}"
         )
         writer.writerow(
@@ -206,7 +206,7 @@ with resume_command_csv.open("w", encoding="utf-8", newline="") as handle:
                 "model": row["model"],
                 "seed": row["seed"],
                 "physical_gpu": row["gpu"],
-                "ultralytics_device": row["gpu"],
+                "ultralytics_device": "0",
                 "imgsz": row["imgsz"],
                 "batch": row["batch"],
                 "workers": row["workers"],
@@ -243,6 +243,7 @@ for gpu in "${gpu_list[@]}"; do
     echo "set -uo pipefail"
     printf 'cd %q\n' "$ROOT"
     echo 'export CUDA_DEVICE_ORDER=PCI_BUS_ID'
+    printf 'export CUDA_VISIBLE_DEVICES=%q\n' "$gpu"
     echo 'export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"'
     printf 'export RESOURCE_GUARD=%q\n' "$RESOURCE_GUARD"
     printf 'export MIN_FREE_GB=%q\n' "$MIN_FREE_GB"
@@ -266,13 +267,13 @@ while IFS=$'\t' read -r model seed gpu imgsz batch workers epochs data_yaml run_
   {
     printf '\necho "START resume model=%s seed=%s gpu=%s batch=%s at $(date -Is)"\n' "$model" "$seed" "$gpu" "$batch"
     printf 'if [[ "${RESOURCE_GUARD:-1}" == "1" ]]; then bash scripts/ubuntu/check_resource_margin.sh --path %q --gpu %q --min-free-gb "$MIN_FREE_GB" --max-disk-use-percent "$MAX_DISK_USE_PERCENT" --min-ram-gb "$MIN_RAM_GB" --min-gpu-free-gb "$MIN_GPU_FREE_GB" --wait-seconds "$GUARD_WAIT_SECONDS" 2>&1 | tee -a %q; fi\n' "$ROOT" "$gpu" "$log_file"
-    printf 'if conda run --no-capture-output -n %q python -m detectors.train_yolo train --model %q --data-yaml %q --epochs %q --imgsz %q --batch %q --workers %q --device %q --seed %q --project %q --name %q 2>&1 | tee %q; then\n' \
-      "$CONDA_ENV" "$model" "$data_yaml" "$epochs" "$imgsz" "$batch" "$workers" "$gpu" "$seed" "$RESUME_PROJECT" "$run_name" "$log_file"
+    printf 'if conda run --no-capture-output -n %q python -m detectors.train_yolo train --model %q --data-yaml %q --epochs %q --imgsz %q --batch %q --workers %q --device 0 --seed %q --project %q --name %q 2>&1 | tee %q; then\n' \
+      "$CONDA_ENV" "$model" "$data_yaml" "$epochs" "$imgsz" "$batch" "$workers" "$seed" "$RESUME_PROJECT" "$run_name" "$log_file"
     printf '  echo "TRAIN_OK model=%s seed=%s gpu=%s at $(date -Is)" | tee -a %q\n' "$model" "$seed" "$gpu" "$log_file"
     printf '  if [[ %q == 1 ]]; then\n' "$RUN_EVAL"
     printf '    run_dir=$(find %q -maxdepth 1 -type d \\( -name %q -o -name %q \\) -printf "%%T@ %%p\\n" | sort -nr | head -n 1 | cut -d" " -f2-)\n' "$RESUME_PROJECT" "$run_name" "*_${run_name}"
     printf '    if [[ -n "${run_dir:-}" && -f "$run_dir/ultralytics/weights/best.pt" ]]; then\n'
-    printf '      eval_args=(eval --model "$run_dir/ultralytics/weights/best.pt" --data-yaml %q --imgsz %q --workers %q --device %q --project %q --name %q)\n' "$data_yaml" "$imgsz" "$workers" "$gpu" "$RESUME_PROJECT" "eval_${run_name}"
+    printf '      eval_args=(eval --model "$run_dir/ultralytics/weights/best.pt" --data-yaml %q --imgsz %q --workers %q --device 0 --project %q --name %q)\n' "$data_yaml" "$imgsz" "$workers" "$RESUME_PROJECT" "eval_${run_name}"
     printf '      if [[ %q == 1 ]]; then eval_args+=(--roc-auc); fi\n' "$ROC_AUC"
     printf '      conda run --no-capture-output -n %q python -m detectors.train_yolo "${eval_args[@]}" 2>&1 | tee -a %q || echo "EVAL_FAILED model=%s seed=%s at $(date -Is)" | tee -a %q\n' "$CONDA_ENV" "$log_file" "$model" "$seed" "$log_file"
     printf '    else\n'
