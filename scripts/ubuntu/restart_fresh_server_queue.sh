@@ -253,11 +253,16 @@ PROJECT_DIR="$PROJECT" RESULTS_CSV="$LIVE_RESULTS_CSV" SUMMARY_CSV="$LIVE_SUMMAR
 tmux new-session -d -s "$VIEWER_SESSION" -n viewer \
   "cd '$ROOT' && conda run --no-capture-output -n '$CONDA_ENV' python -m scripts.ubuntu.live_training_viewer --host 0.0.0.0 --port '$VIEWER_PORT' --training-session '$SESSION' --project-dir '$PROJECT' --summary-csv '$LIVE_SUMMARY_CSV' --log-dir '$LOG_DIR' --dashboard '$FINAL_DASHBOARD' --live-dashboard '$LIVE_DASHBOARD' --figure-dir '$LIVE_FIGURES_DIR'"
 
+first_gpu=${gpu_list[0]//[[:space:]]/}
 tmux new-session -d -s "$DUAL_VIEW_SESSION" -n both \
-  "cd '$ROOT' && while true; do clear; echo 'GPU0 / fresh queue'; date -Is; echo; tmux capture-pane -p -S -22 -t '$SESSION:0.0'; sleep 2; done"
-tmux split-window -h -t "$DUAL_VIEW_SESSION:0" \
-  "cd '$ROOT' && while true; do clear; echo 'GPU1 / fresh queue'; date -Is; echo; tmux capture-pane -p -S -22 -t '$SESSION:1.0'; sleep 2; done"
-tmux select-layout -t "$DUAL_VIEW_SESSION:0" even-horizontal
+  "cd '$ROOT' && while true; do clear; echo 'GPU${first_gpu} / fresh queue'; date -Is; echo; tmux capture-pane -p -S -22 -t '$SESSION:0.0' 2>/dev/null || true; sleep 2; done"
+
+if [[ "${#gpu_list[@]}" -gt 1 ]]; then
+  second_gpu=${gpu_list[1]//[[:space:]]/}
+  tmux split-window -h -t "$DUAL_VIEW_SESSION:0" \
+    "cd '$ROOT' && while true; do clear; echo 'GPU${second_gpu} / fresh queue'; date -Is; echo; tmux capture-pane -p -S -22 -t '$SESSION:1.0' 2>/dev/null || true; sleep 2; done"
+  tmux select-layout -t "$DUAL_VIEW_SESSION:0" even-horizontal
+fi
 
 cat <<EOF
 Started fresh server queue.

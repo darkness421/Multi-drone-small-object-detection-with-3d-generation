@@ -207,6 +207,9 @@ Server reboot recovery and final collection status:
   YOLOv12n/s/m, and YOLOv26n/s.
 - Current best overall baseline is `YOLOv12m`; current best lightweight
   baseline is `YOLOv9s`.
+- Large YOLO checkpoints have not yet been run as a full comparison tier.
+  Representative L-size anchors are now planned separately: YOLOv8l, YOLOv10l,
+  YOLO11l, YOLO12l, YOLO26l, and RT-DETR-L seed completion.
 - RT-DETR-L is not a complete repeated-seed comparison yet. The retry at
   `batch=2` still hit CUDA OOM, so it should be reported as incomplete or
   rerun with a lower-memory setting before being used as a statistical
@@ -279,3 +282,19 @@ Next:
 3. After completion, run `bash scripts/ubuntu/collect_proposed_results.sh`.
 4. Use the updated dashboard and stage gate to choose the best proposed variant
    before moving to qualitative/Grad-CAM and Marine City 3D benchmark work.
+
+## 2026-05-24 Large-Model Comparison Anchors
+
+Added a follow-up queue for reviewer-facing L-size baseline coverage:
+
+- Config: `configs/experiments/large_detector_comparison.yaml`
+- Launcher: `scripts/ubuntu/train_large_comparison_after_session.sh`
+- Default wait target: `server-proposed-ablation`
+- Default GPU policy: GPU0 only until the GPU1 CUDA allocation issue is fixed.
+- Default model specs:
+  `yolov8l.pt:2,yolov10l.pt:2,yolo11l.pt:2,yolo12l.pt:2,yolo26l.pt:2,rtdetr-l.pt:2`
+
+This queue should run after proposed ablations, or during an idle window, so
+the server keeps enough memory and disk margin. L-size results should be
+reported as a capacity anchor tier, while the main proposed lightweight claim
+continues to compare against the best lightweight and best overall baselines.

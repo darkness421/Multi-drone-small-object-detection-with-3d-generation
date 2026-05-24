@@ -148,6 +148,22 @@ protocol:
 - `batch`: 8, unless a separate memory-adjusted table is explicitly declared
 - deterministic: `true`
 
+Large-model anchors are treated as a memory-adjusted comparison tier when
+needed. Use `configs/experiments/large_detector_comparison.yaml` and
+`scripts/ubuntu/train_large_comparison_after_session.sh` to run representative
+L-size models after active proposed-ablation training:
+
+- YOLOv8l
+- YOLOv10l
+- YOLO11l
+- YOLO12l
+- YOLO26l
+- RT-DETR-L with complete seed coverage when memory allows
+
+These large anchors are mainly for reviewer-facing capacity coverage. The
+primary proposed-module claim should still compare against the best overall
+baseline and best lightweight baseline under the same VisDrone protocol.
+
 Older preliminary runs are preserved for sanity checks, but they are discarded
 from the official CSV if any of the protocol fields differ. When an older run
 and a fresh run share the same dataset, model, and seed, the official collector
