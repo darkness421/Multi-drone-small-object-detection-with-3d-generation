@@ -1,8 +1,8 @@
 name: proposed_yolo11_small_object_ablation
 description: >
-  Preliminary proposed perception-module ablation queue. The queue must not
-  pretend that planned architecture modules are implemented; unavailable
-  modules are logged as skipped until their model code/config is present.
+  Proposed perception-module ablation queue. Runnable variants use runtime
+  patches on top of the selected YOLO11 checkpoint so SE/CBAM/wavelet/deformable
+  modules are trained and logged separately from the unchanged control model.
 
 data_yaml: configs/detector/visdrone_yolo_data.yaml
 dataset_tag: visdrone
@@ -29,30 +29,75 @@ ablations:
     train_model_template: "{base_model}"
     implementation_status: implemented
     proposed_module: control
+    model_patches: ""
     enabled: true
     notes: Same training protocol as baselines, isolated in the proposed-ablation root.
 
   - name: wavelet_stem
     method_template: Proposed-WaveletStem-{base_slug}
-    train_model_template: configs/detector/proposed/{base_slug}_wavelet_stem.yaml
-    implementation_status: planned
+    train_model_template: "{base_model}"
+    implementation_status: implemented
     proposed_module: wavelet_stem
-    enabled: false
+    model_patches: wavelet_stem
+    enabled: true
     requires:
       - detectors/proposed/modules.py
-      - configs/detector/proposed/{base_slug}_wavelet_stem.yaml
-    skip_reason: Custom wavelet stem module is planned but not registered with Ultralytics yet.
+    notes: High-frequency residual pre-filter before the first YOLO stem conv.
+
+  - name: se_neck
+    method_template: Proposed-SE-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: se_neck
+    model_patches: se_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Squeeze-and-excitation gates on P3/P4/P5 neck outputs.
+
+  - name: cbam_neck
+    method_template: Proposed-CBAM-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: cbam_neck
+    model_patches: cbam_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: CBAM channel+spatial attention on P3/P4/P5 neck outputs.
 
   - name: partial_deformable_neck
     method_template: Proposed-DeformableNeck-{base_slug}
-    train_model_template: configs/detector/proposed/{base_slug}_partial_deformable_neck.yaml
-    implementation_status: planned
+    train_model_template: "{base_model}"
+    implementation_status: implemented
     proposed_module: partial_deformable_neck
-    enabled: false
+    model_patches: partial_deformable_neck
+    enabled: true
     requires:
       - detectors/proposed/modules.py
-      - configs/detector/proposed/{base_slug}_partial_deformable_neck.yaml
-    skip_reason: Partial deformable neck blocks need a real module implementation before training.
+    notes: Partial-channel deformable refinement on P3/P4/P5 neck outputs.
+
+  - name: wavelet_se
+    method_template: Proposed-WaveletSE-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: wavelet_stem+se_neck
+    model_patches: wavelet_stem,se_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Tests whether high-frequency stem and SE are complementary.
+
+  - name: wavelet_cbam
+    method_template: Proposed-WaveletCBAM-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: wavelet_stem+cbam_neck
+    model_patches: wavelet_stem,cbam_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Tests high-frequency stem with spatial/channel attention.
 
   - name: tiling_inference
     method_template: Proposed-TilingInference-{base_slug}
@@ -66,11 +111,11 @@ ablations:
 
   - name: full_proposed
     method_template: Proposed-Full-{base_slug}
-    train_model_template: configs/detector/proposed/{base_slug}_wavelet_deformable.yaml
-    implementation_status: planned
-    proposed_module: wavelet_stem+partial_deformable_neck+tiling_inference
-    enabled: false
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: wavelet_stem+cbam_neck+partial_deformable_neck
+    model_patches: wavelet_stem,cbam_neck,partial_deformable_neck
+    enabled: true
     requires:
-      - configs/detector/proposed/{base_slug}_wavelet_deformable.yaml
-      - evaluation/tiled_detector_eval.py
-    skip_reason: Full module waits for wavelet stem, deformable neck, and tiled evaluation implementation.
+      - detectors/proposed/modules.py
+    notes: Trainable full detector-side proposal; tiling remains eval-only after checkpoint selection.

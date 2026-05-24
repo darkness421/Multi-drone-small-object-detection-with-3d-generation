@@ -29,6 +29,7 @@ def main() -> None:
     parser.add_argument("--base-model", default=None, help="Optional base model label for proposed ablations.")
     parser.add_argument("--proposed-module", default=None, help="Optional proposed module label.")
     parser.add_argument("--implementation-status", default=None, help="Optional implementation status label.")
+    parser.add_argument("--model-patches", default=None, help="Comma-separated runtime patches, e.g. wavelet_stem,cbam_neck.")
     parser.add_argument("--roc-auc", action="store_true", help="During eval, also compute image-level ROC-AUC.")
     parser.add_argument("--roc-auc-split", default="val")
     parser.add_argument("--roc-auc-max-images", type=int, default=None)
@@ -53,6 +54,7 @@ def main() -> None:
             base_model=args.base_model,
             proposed_module=args.proposed_module,
             implementation_status=args.implementation_status,
+            model_patches=args.model_patches,
             project=args.project,
             name=args.name,
         )
@@ -71,6 +73,7 @@ def main() -> None:
             base_model=args.base_model,
             proposed_module=args.proposed_module,
             implementation_status=args.implementation_status,
+            model_patches=args.model_patches,
             project=args.project,
             name=args.name,
         )

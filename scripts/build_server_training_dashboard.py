@@ -40,6 +40,17 @@ MODEL_VERSION_COLORS = {
     "unknown": "#6B7280",
 }
 
+PROPOSED_COLORS = {
+    "full": "#111827",
+    "cbam": "#7C3AED",
+    "se": "#059669",
+    "wavelet": "#D97706",
+    "deformable": "#DC2626",
+    "tiling": "#0891B2",
+    "control": "#64748B",
+    "proposed": "#BE123C",
+}
+
 SIZE_MARKERS = {
     "nano": "o",
     "small": "s",
@@ -150,6 +161,19 @@ def family_color(label: str, meta: dict[str, dict[str, str]]) -> str:
 
 
 def model_color_from_row(row: dict[str, str]) -> str:
+    method_blob = " ".join(
+        [
+            row.get("method", ""),
+            row.get("ablation", ""),
+            row.get("proposed_module", ""),
+            row.get("is_proposed", ""),
+        ]
+    ).lower()
+    if "proposed" in method_blob or row.get("is_proposed") == "true":
+        for token, color in PROPOSED_COLORS.items():
+            if token in method_blob:
+                return color
+        return PROPOSED_COLORS["proposed"]
     family = row.get("detector_family", "") or ""
     version = row.get("yolo_version") or row.get("model_version") or "unknown"
     if family == "YOLO" and version:

@@ -34,6 +34,8 @@ all baseline and comparison models are collected.
 ## Module Ideas
 
 - Wavelet stem for small-object high-frequency detail.
+- SE neck attention as a low-cost channel recalibration baseline.
+- CBAM neck attention as a stronger channel+spatial attention baseline.
 - Partial deformable neck for limited geometric flexibility without making the
   model too heavy.
 - Patch / tiling inference for dense small-object scenes.
@@ -42,9 +44,18 @@ all baseline and comparison models are collected.
 
 - baseline
 - + Wavelet stem
+- + SE neck
+- + CBAM neck
 - + partial deformable neck
+- + Wavelet stem + SE neck
+- + Wavelet stem + CBAM neck
 - + patch/tiling inference
-- full proposed perception module
+- full trainable proposed perception module:
+  Wavelet stem + CBAM neck + partial deformable neck
+
+The dashboard/stage gate should select the best proposed variant after all
+implemented ablations finish. The final proposed model name should not be fixed
+before comparing AP/AP50/APsmall/FPS/Params/GFLOPs across these variants.
 
 Config scaffold:
 
@@ -91,15 +102,17 @@ bash scripts/ubuntu/train_proposed_ablation_after_session.sh
 Default behavior is conservative:
 
 - `control` is implemented and can be queued as a real YOLO11s control run.
-- `wavelet_stem`, `partial_deformable_neck`, `tiling_inference`, and
-  `full_proposed` are recorded as `skipped_not_implemented` until the real
-  module/config/evaluator files exist.
-- Planned modules are not trained by silently reusing the unchanged base model.
+- `wavelet_stem`, `se_neck`, `cbam_neck`, `partial_deformable_neck`,
+  `wavelet_se`, `wavelet_cbam`, and `full_proposed` are implemented as runtime
+  model patches and can be queued.
+- `tiling_inference` remains eval-only until the tiled detector evaluator is
+  complete.
+- Planned eval-only modules are not trained by silently reusing the unchanged
+  base model.
 
-After the module implementations are added and verified, set `enabled: true` in
-`configs/experiments/proposed_detector_ablation.yaml` for that ablation and
-rerun the queue. `ENABLE_PLANNED=1` is available only for explicit development
-smoke tests after the required files exist.
+The queue records the exact `model_patches` string in the command CSV and run
+summary, so result collection can separate SE, CBAM, wavelet, deformable, and
+full proposed variants in the dashboard.
 
 Collect baseline plus proposed rows:
 

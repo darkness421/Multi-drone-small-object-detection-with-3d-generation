@@ -22,6 +22,7 @@ class ProposedJob:
     base_model: str
     train_model: str
     proposed_module: str
+    model_patches: str
     implementation_status: str
     seed: int
     gpu: int
@@ -87,6 +88,7 @@ def build_jobs(
             ablation = str(ablation_cfg["name"])
             method = fmt_template(str(ablation_cfg.get("method_template", f"Proposed-{ablation}-{{base_slug}}")), base_model)
             proposed_module = str(ablation_cfg.get("proposed_module", ablation))
+            model_patches = str(ablation_cfg.get("model_patches", "") or "")
             implementation_status = str(ablation_cfg.get("implementation_status", "planned"))
             enabled = bool(ablation_cfg.get("enabled", False))
             train_model = fmt_template(str(ablation_cfg.get("train_model_template", "{base_model}")), base_model)
@@ -143,9 +145,14 @@ def build_jobs(
                         base_model,
                         "--proposed-module",
                         proposed_module,
+                        "--model-patches",
+                        model_patches,
                         "--implementation-status",
                         implementation_status,
                     ]
+                    if not model_patches:
+                        index = command_parts.index("--model-patches")
+                        del command_parts[index : index + 2]
                     if not deterministic:
                         command_parts.append("--non-deterministic")
                     command_parts[command_parts.index("--device") + 1] = "0"
@@ -165,6 +172,7 @@ def build_jobs(
                         base_model=base_model,
                         train_model=train_model,
                         proposed_module=proposed_module,
+                        model_patches=model_patches,
                         implementation_status=implementation_status,
                         seed=int(seed),
                         gpu=gpu,
@@ -188,6 +196,7 @@ def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_ya
         "base_model",
         "train_model",
         "proposed_module",
+        "model_patches",
         "implementation_status",
         "seed",
         "physical_gpu",
@@ -218,6 +227,7 @@ def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_ya
                     "base_model": job.base_model,
                     "train_model": job.train_model,
                     "proposed_module": job.proposed_module,
+                    "model_patches": job.model_patches,
                     "implementation_status": job.implementation_status,
                     "seed": job.seed,
                     "physical_gpu": job.gpu if job.gpu >= 0 else "",

@@ -12,8 +12,10 @@ from runtime.config import resolve_path
 
 try:
     from .roc_auc import compute_image_level_roc_auc
+    from .proposed.modules import apply_proposed_patches
 except ImportError:
     from roc_auc import compute_image_level_roc_auc
+    from proposed.modules import apply_proposed_patches
 
 
 def require_ultralytics() -> Any:
@@ -44,6 +46,7 @@ def train_yolo(
     base_model: str | None = None,
     proposed_module: str | None = None,
     implementation_status: str | None = None,
+    model_patches: str | None = None,
     project: str | Path = "outputs/detectors",
     name: str | None = None,
 ) -> dict[str, Any]:
@@ -57,6 +60,22 @@ def train_yolo(
     train_model = scratch_model_name(model) if from_scratch else model
     logger.info("Training %s on %s", train_model, data_yaml)
     yolo = YOLO(train_model)
+    patch_summary: list[str] = []
+    trainer = None
+    if model_patches:
+        patch_summary_holder: dict[str, list[str]] = {}
+        try:
+            from ultralytics.models.yolo.detect import DetectionTrainer
+        except ImportError as exc:
+            raise RuntimeError("Ultralytics DetectionTrainer is required for proposed model patches.") from exc
+
+        class ProposedPatchTrainer(DetectionTrainer):  # type: ignore[misc]
+            def get_model(self, cfg: str | None = None, weights: str | None = None, verbose: bool = True):
+                model_obj = super().get_model(cfg=cfg, weights=weights, verbose=verbose)
+                patch_summary_holder["applied"] = apply_proposed_patches(model_obj, model_patches)
+                return model_obj
+
+        trainer = ProposedPatchTrainer
     train_kwargs: dict[str, Any] = {
         "data": str(data_yaml),
         "epochs": epochs,
@@ -72,7 +91,9 @@ def train_yolo(
         train_kwargs["device"] = device
     if seed is not None:
         train_kwargs["seed"] = seed
-    result = yolo.train(**train_kwargs)
+    result = yolo.train(trainer=trainer, **train_kwargs) if trainer else yolo.train(**train_kwargs)
+    if model_patches:
+        patch_summary = patch_summary_holder.get("applied", [])
     summary = {
         "model": train_model,
         "requested_model": model,
@@ -81,6 +102,8 @@ def train_yolo(
         "base_model": base_model or model,
         "proposed_module": proposed_module,
         "implementation_status": implementation_status or "implemented",
+        "model_patches": model_patches or "",
+        "patch_summary": patch_summary,
         "dataset": infer_dataset_name(data_yaml),
         "from_scratch": from_scratch,
         "data": str(data_yaml),
@@ -112,6 +135,7 @@ def eval_yolo(
     base_model: str | None = None,
     proposed_module: str | None = None,
     implementation_status: str | None = None,
+    model_patches: str | None = None,
     project: str | Path = "outputs/detectors",
     name: str | None = None,
 ) -> dict[str, Any]:
@@ -124,6 +148,7 @@ def eval_yolo(
     logger = setup_logging(run_dir / "logs" / "eval.log")
     logger.info("Evaluating %s on %s", model, data_yaml)
     yolo = YOLO(model)
+    patch_summary = apply_proposed_patches(yolo.model, model_patches) if model_patches else []
     val_kwargs: dict[str, Any] = {
         "data": str(data_yaml),
         "imgsz": imgsz,
@@ -154,6 +179,8 @@ def eval_yolo(
         "base_model": base_model,
         "proposed_module": proposed_module,
         "implementation_status": implementation_status,
+        "model_patches": model_patches or "",
+        "patch_summary": patch_summary,
         "dataset": infer_dataset_name(data_yaml),
         "data": str(data_yaml),
         "imgsz": imgsz,
@@ -258,6 +285,7 @@ def main() -> None:
     parser.add_argument("--base-model", default=None, help="Optional base model label for proposed ablations.")
     parser.add_argument("--proposed-module", default=None, help="Optional proposed module label.")
     parser.add_argument("--implementation-status", default=None, help="Optional implementation status label.")
+    parser.add_argument("--model-patches", default=None, help="Comma-separated runtime patches, e.g. wavelet_stem,cbam_neck.")
     parser.add_argument("--roc-auc", action="store_true", help="During eval, also compute image-level ROC-AUC.")
     parser.add_argument("--roc-auc-split", default="val")
     parser.add_argument("--roc-auc-max-images", type=int, default=None)

@@ -273,10 +273,14 @@ cannot load it.
 
 The proposed queue defaults to `WAIT_FOR=server-uavdt-comparisons-pending`.
 If UAVDT is not ready, that supervisor exits safely and the proposed queue can
-continue. The queue only runs implemented ablations; planned modules are logged
-as `skipped_not_implemented` in
-`outputs/experiments/proposed_ablation_commands.csv` until their real
-implementation files are present.
+continue. The queue now runs the implemented detector-side ablations:
+`control`, `wavelet_stem`, `se_neck`, `cbam_neck`,
+`partial_deformable_neck`, `wavelet_se`, `wavelet_cbam`, and
+`full_proposed`. Each run records `model_patches` in
+`outputs/experiments/proposed_ablation_commands.csv`, then collection merges
+fresh baseline rows with proposed rows so the dashboard/stage gate can identify
+the best proposed variant. `tiling_inference` remains eval-only until the tiled
+detector evaluator is complete.
 
 Collect VisDrone and UAVDT together after both detector roots have completed
 runs:

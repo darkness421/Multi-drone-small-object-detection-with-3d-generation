@@ -23,6 +23,7 @@ METRIC_COLUMNS = [
     "base_model",
     "ablation",
     "proposed_module",
+    "model_patches",
     "is_proposed",
     "implementation_status",
     "detector_family",
@@ -474,11 +475,12 @@ def collect_one(results_csv: Path) -> dict[str, Any]:
         "base_model": train_summary.get("base_model") or model,
         "ablation": train_summary.get("ablation") or "",
         "proposed_module": train_summary.get("proposed_module") or "",
+        "model_patches": train_summary.get("model_patches") or "",
         "is_proposed": "true"
         if any(
             token in str(train_summary.get(key, "")).lower()
-            for key in ("method", "ablation", "proposed_module")
-            for token in ("proposed", "wavelet", "deformable", "tiling", "ours", "com3d", "ace")
+            for key in ("method", "ablation", "proposed_module", "model_patches")
+            for token in ("proposed", "wavelet", "deformable", "tiling", "cbam", "se_neck", "ours", "com3d", "ace")
         )
         else "false",
         "implementation_status": train_summary.get("implementation_status") or "",

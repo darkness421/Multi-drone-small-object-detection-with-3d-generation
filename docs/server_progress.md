@@ -247,3 +247,35 @@ Next:
 5. Recollect with `bash scripts/ubuntu/collect_proposed_results.sh` and use the
    detector stage gate to decide whether to proceed to Marine City 3D benchmark
    construction.
+
+## 2026-05-24 Proposed Ablation Expansion
+
+Implemented the next proposed-detector experiment structure:
+
+- Added runtime model patches for `wavelet_stem`, `se_neck`, `cbam_neck`, and
+  `partial_deformable_neck`.
+- Added runnable ablations for `control`, `wavelet_stem`, `se_neck`,
+  `cbam_neck`, `partial_deformable_neck`, `wavelet_se`, `wavelet_cbam`, and
+  `full_proposed`.
+- `full_proposed` currently means Wavelet stem + CBAM neck + partial
+  deformable neck. Tiling remains a later eval-only stage after a checkpoint is
+  selected.
+- The train wrapper records `model_patches` and `patch_summary` in each run
+  summary.
+- Result collection and summary CSVs now keep `model_patches`, so SE/CBAM and
+  full proposed variants can be separated in the dashboard and p-value tables.
+- Proposed variants receive distinct dashboard colors instead of being hidden
+  under the same YOLO version color.
+- `collect_proposed_results.sh` now defaults to the fresh baseline roots plus
+  `outputs/detectors/server_proposed_ablation`, so the next dashboard compares
+  baselines and proposed ablations in one report.
+
+Next:
+
+1. Start the proposed ablation queue in tmux when ready:
+   `WAIT_AFTER_START=0 bash scripts/ubuntu/train_proposed_ablation_after_session.sh`.
+2. Monitor with `./see`, `./see train`, or the browser viewer printed by the
+   launcher.
+3. After completion, run `bash scripts/ubuntu/collect_proposed_results.sh`.
+4. Use the updated dashboard and stage gate to choose the best proposed variant
+   before moving to qualitative/Grad-CAM and Marine City 3D benchmark work.
