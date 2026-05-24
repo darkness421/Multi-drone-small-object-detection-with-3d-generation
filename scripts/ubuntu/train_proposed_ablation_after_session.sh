@@ -16,6 +16,13 @@ ENABLE_PLANNED=${ENABLE_PLANNED:-0}
 RESTART_VIEWER=${RESTART_VIEWER:-1}
 VIEWER_SESSION=${VIEWER_SESSION:-server-live-viewer}
 VIEWER_PORT=${VIEWER_PORT:-8766}
+RESTART_DUAL_VIEW=${RESTART_DUAL_VIEW:-1}
+DUAL_VIEW_SESSION=${DUAL_VIEW_SESSION:-server-training-dual-view}
+PROJECT_DIR=${PROJECT_DIR:-outputs/detectors/server_proposed_ablation}
+LOG_DIR=${LOG_DIR:-outputs/logs/server_baselines}
+LIVE_SUMMARY_CSV=${LIVE_SUMMARY_CSV:-outputs/experiments/server_fresh/fresh_20260519_131739/server_baseline_summary.csv}
+LIVE_DASHBOARD=${LIVE_DASHBOARD:-outputs/reports/server_fresh_baselines/fresh_20260519_131739/figures/server_baseline_dashboard.png}
+LIVE_FIGURES_DIR=${LIVE_FIGURES_DIR:-outputs/reports/server_fresh_baselines/fresh_20260519_131739/figures}
 WAIT_AFTER_START=${WAIT_AFTER_START:-1}
 
 cd "$(dirname "$0")/../.."
@@ -52,7 +59,29 @@ restart_viewer() {
   fi
   tmux kill-session -t "$VIEWER_SESSION" 2>/dev/null || true
   tmux new-session -d -s "$VIEWER_SESSION" \
-    "cd '$ROOT' && python scripts/ubuntu/live_training_viewer.py --host 0.0.0.0 --port '$VIEWER_PORT' --training-session '$SESSION'"
+    "cd '$ROOT' && conda run --no-capture-output -n '$CONDA_ENV' python -m scripts.ubuntu.live_training_viewer --host 0.0.0.0 --port '$VIEWER_PORT' --training-session '$SESSION' --project-dir '$PROJECT_DIR' --summary-csv '$LIVE_SUMMARY_CSV' --log-dir '$LOG_DIR' --dashboard '$LIVE_DASHBOARD' --live-dashboard '$LIVE_DASHBOARD' --figure-dir '$LIVE_FIGURES_DIR'"
+}
+
+restart_dual_view() {
+  if [[ "$RESTART_DUAL_VIEW" != "1" ]]; then
+    return
+  fi
+  IFS=',' read -r -a gpu_list <<< "$GPUS"
+  local first_gpu=${gpu_list[0]//[[:space:]]/}
+  [[ -z "$first_gpu" ]] && return
+
+  tmux kill-session -t "$DUAL_VIEW_SESSION" 2>/dev/null || true
+  tmux new-session -d -s "$DUAL_VIEW_SESSION" -n both \
+    "cd '$ROOT' && while true; do clear; echo 'GPU${first_gpu} / proposed queue'; date -Is; echo; tmux capture-pane -p -S -24 -t '$SESSION:0.0' 2>/dev/null || true; sleep 2; done"
+
+  if [[ "${#gpu_list[@]}" -gt 1 ]]; then
+    local second_gpu=${gpu_list[1]//[[:space:]]/}
+    if [[ -n "$second_gpu" ]]; then
+      tmux split-window -h -t "$DUAL_VIEW_SESSION:0" \
+        "cd '$ROOT' && while true; do clear; echo 'GPU${second_gpu} / proposed queue'; date -Is; echo; tmux capture-pane -p -S -24 -t '$SESSION:1.0' 2>/dev/null || true; sleep 2; done"
+      tmux select-layout -t "$DUAL_VIEW_SESSION:0" even-horizontal
+    fi
+  fi
 }
 
 wait_for_sessions "$WAIT_FOR"
@@ -113,6 +142,10 @@ else
 fi
 
 restart_viewer
+restart_dual_view
+
+echo "Dual view: tmux attach -t $DUAL_VIEW_SESSION"
+echo "Browser viewer: http://$(hostname -I | awk '{print $1}'):$VIEWER_PORT/"
 
 if [[ "$WAIT_AFTER_START" == "1" ]]; then
   wait_for_sessions "$SESSION"

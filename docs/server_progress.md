@@ -191,3 +191,59 @@ Strict official collection command:
 ```bash
 bash scripts/ubuntu/collect_official_server_results.sh
 ```
+
+## 2026-05-24 Baseline Collection Status
+
+Server reboot recovery and final collection status:
+
+- No long detector training process is currently running.
+- Both RTX 5090 GPUs are available for the next queue.
+- VisDrone dataset readiness passes for raw, YOLO, and COCO-style processed
+  paths.
+- The fresh VisDrone comparison result table contains 45 run rows and 15 model
+  summary rows.
+- Completed 3-seed summaries are available for the YOLO comparison set,
+  including YOLOv5su, YOLOv8n/s, YOLOv9s, YOLOv10n/s/m, YOLOv11n/s,
+  YOLOv12n/s/m, and YOLOv26n/s.
+- Current best overall baseline is `YOLOv12m`; current best lightweight
+  baseline is `YOLOv9s`.
+- RT-DETR-L is not a complete repeated-seed comparison yet. The retry at
+  `batch=2` still hit CUDA OOM, so it should be reported as incomplete or
+  rerun with a lower-memory setting before being used as a statistical
+  comparison.
+- `rtdetr-r18` is not bundled in the current Ultralytics model config set; the
+  available RT-DETR configs are larger variants such as `rtdetr-l`,
+  `rtdetr-x`, `rtdetr-resnet50`, and `rtdetr-resnet101`.
+- The final server report bundle was regenerated under
+  `outputs/reports/server_fresh_baselines/fresh_20260519_131739/`.
+- The detector stage gate still recommends
+  `finish_baselines_then_build_proposed` because no real proposed detector
+  candidate rows exist yet.
+- `./see train` now attaches to whichever active training session exists,
+  instead of pointing at a stale resume session.
+- The proposed-ablation launcher now restarts the side-by-side tmux view and
+  browser viewer when a proposed queue starts.
+
+Current report files:
+
+```bash
+outputs/experiments/server_fresh/fresh_20260519_131739/server_baseline_results.csv
+outputs/experiments/server_fresh/fresh_20260519_131739/server_baseline_summary.csv
+outputs/experiments/server_fresh/fresh_20260519_131739/server_baseline_pvalues.csv
+outputs/reports/server_fresh_baselines/fresh_20260519_131739/README.md
+```
+
+Next:
+
+1. Do not start the placeholder `full_proposed` run as if it were the final
+   proposed detector.
+2. Either mark RT-DETR-L as incomplete or rerun a lower-memory non-YOLO
+   comparison if a complete non-YOLO baseline is required.
+3. Implement the real proposed detector pieces before the ablation queue:
+   wavelet/high-frequency stem, partial deformable/lightweight adaptive neck,
+   and tiled small-object inference.
+4. Start the proposed ablation queue only after those implementations are
+   enabled in `configs/experiments/proposed_detector_ablation.yaml`.
+5. Recollect with `bash scripts/ubuntu/collect_proposed_results.sh` and use the
+   detector stage gate to decide whether to proceed to Marine City 3D benchmark
+   construction.

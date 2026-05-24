@@ -66,6 +66,8 @@ def copy_if_exists(src: Path, dst: Path) -> Path | None:
     if not src.exists():
         return None
     dst.parent.mkdir(parents=True, exist_ok=True)
+    if src.resolve() == dst.resolve():
+        return dst
     shutil.copy2(src, dst)
     return dst
 
