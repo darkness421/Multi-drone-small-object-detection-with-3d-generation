@@ -1,0 +1,86 @@
+name: marinecity_windows_multiuav_export
+dataset_name: CoM3D-MarineCity
+output_root: outputs/isaac_exports/marinecity_windows
+
+windows:
+  isaac_root_env: ISAAC_ROOT
+  default_isaac_root: C:\isaacsim
+  visible_first: true
+  notes:
+    - Run dry-run from normal Python first.
+    - Launch Isaac Sim GUI next and load the Marine City USD scene.
+    - Use Isaac python.bat smoke mode before long RGB/depth export.
+
+scene:
+  name: CoM3D-MarineCity
+  area: Busan Haeundae Marine City
+  digital_twin:
+    engine: NVIDIA Isaac Sim
+    geospatial: Cesium for Omniverse
+  origin:
+    latitude_deg: 35.1569
+    longitude_deg: 129.1456
+    height_m: 80.0
+  usd_stage: assets/marinecity/marinecity_base.usd
+
+camera:
+  width: 1920
+  height: 1080
+  focal_px: 1200
+  output_format: png
+
+capture:
+  default_uav_count: 3
+  timestamps: [0.0, 1.0, 2.0]
+  altitudes_m: [60, 100, 150]
+  view_angles: [nadir, front_oblique, side_view, rear_oblique]
+  weather: [clear, rain, snow]
+  lighting: [day, shadow, sunset]
+  radius_scale: 0.9
+  export_rgb: true
+  export_depth: true
+  export_masks: true
+  export_2d_bbox: true
+  export_3d_bbox: true
+  export_camera_params: true
+
+scenes:
+  - scene_id: scene_001_sparse_vehicles
+    description: Sparse coastal-road vehicles with broad UAV overlap.
+    uav_count: 2
+    object_density: sparse
+  - scene_id: scene_002_dense_vehicles_pedestrians
+    description: Dense vehicles and pedestrians near high-rise shadows.
+    uav_count: 3
+    object_density: dense
+  - scene_id: scene_003_occlusion_side_view_ambiguity
+    description: Occluded van/pickup and pedestrian/pole ambiguity cases.
+    uav_count: 4
+    object_density: medium
+  - scene_id: scene_004_weather_degraded_small_objects
+    description: Rain/snow degraded small objects for restoration and reasoning tests.
+    uav_count: 3
+    object_density: medium
+
+objects:
+  classes:
+    - sedan
+    - pickup
+    - van
+    - ambulance
+    - police_car
+    - truck
+    - pedestrian
+    - worker
+    - small_boat
+    - debris
+  ambiguity_pairs:
+    - [sedan, van]
+    - [van, pickup]
+    - [pickup, delivery_truck]
+    - [small_boat, buoy]
+    - [pedestrian, pole]
+
+splits:
+  val_angles: [side_view]
+  test_angles: [rear_oblique, right_oblique]

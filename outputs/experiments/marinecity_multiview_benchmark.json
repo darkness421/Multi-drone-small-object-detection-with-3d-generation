@@ -1,47 +1,781 @@
 {
   "summary": {
-    "frame_count": 2,
-    "scene_count": 1,
+    "frame_count": 36,
+    "scene_count": 4,
     "by_split": {
-      "test_unseen_angle": 1,
-      "train": 1
+      "test_unseen_angle": 3,
+      "train": 24,
+      "val": 9
     },
     "by_angle": {
-      "nadir": 1,
-      "right_oblique": 1
+      "front_oblique": 12,
+      "nadir": 12,
+      "rear_oblique": 3,
+      "side_view": 9
     },
     "by_scene": {
-      "marinecity_000132": 2
+      "scene_001_sparse_vehicles": 6,
+      "scene_002_dense_vehicles_pedestrians": 9,
+      "scene_003_occlusion_side_view_ambiguity": 12,
+      "scene_004_weather_degraded_small_objects": 9
     }
   },
   "frames": [
     {
-      "scene_id": "marinecity_000132",
-      "frame_id": "marinecity_000132_0000",
-      "image_path": "images/scene_000132/uav1_rgb.png",
-      "pose_path": "poses/scene_000132/uav1_pose.json",
-      "depth_path": "depth/scene_000132/uav1_depth.npy",
-      "uav_id": "UAV_1",
-      "timestamp": 103.25,
+      "scene_id": "scene_001_sparse_vehicles",
+      "frame_id": "scene_001_sparse_vehicles_uav_01_t000_nadir",
+      "image_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t000_nadir_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t000_nadir_pose.json",
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t000_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 0.0,
       "view_angle": "nadir",
-      "altitude_m": 150.0,
+      "altitude_m": 60.0,
       "split": "train",
       "holdout_reason": "",
-      "metadata": {}
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "sparse",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
     },
     {
-      "scene_id": "marinecity_000132",
-      "frame_id": "marinecity_000132_0001",
-      "image_path": "images/scene_000132/uav2_rgb.png",
-      "pose_path": "poses/scene_000132/uav2_pose.json",
-      "depth_path": "depth/scene_000132/uav2_depth.npy",
-      "uav_id": "UAV_2",
-      "timestamp": 103.25,
-      "view_angle": "right_oblique",
-      "altitude_m": 90.0,
+      "scene_id": "scene_001_sparse_vehicles",
+      "frame_id": "scene_001_sparse_vehicles_uav_02_t000_front_oblique",
+      "image_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t000_front_oblique_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t000_front_oblique_pose.json",
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t000_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 0.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "sparse",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_001_sparse_vehicles",
+      "frame_id": "scene_001_sparse_vehicles_uav_01_t001_nadir",
+      "image_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t001_nadir_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t001_nadir_pose.json",
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t001_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 1.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "sparse",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_001_sparse_vehicles",
+      "frame_id": "scene_001_sparse_vehicles_uav_02_t001_front_oblique",
+      "image_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t001_front_oblique_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t001_front_oblique_pose.json",
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t001_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 1.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "sparse",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_001_sparse_vehicles",
+      "frame_id": "scene_001_sparse_vehicles_uav_01_t002_nadir",
+      "image_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t002_nadir_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t002_nadir_pose.json",
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t002_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 2.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "sparse",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_001_sparse_vehicles",
+      "frame_id": "scene_001_sparse_vehicles_uav_02_t002_front_oblique",
+      "image_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t002_front_oblique_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t002_front_oblique_pose.json",
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t002_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 2.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "sparse",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir",
+      "image_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir_pose.json",
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 0.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "dense",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique",
+      "image_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique_pose.json",
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 0.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "dense",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view",
+      "image_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view_pose.json",
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view_depth.npy",
+      "uav_id": "uav_03",
+      "timestamp": 0.0,
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "split": "val",
+      "holdout_reason": "validation angle: side_view",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "dense",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      }
+    },
+    {
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_01_t001_nadir",
+      "image_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t001_nadir_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t001_nadir_pose.json",
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t001_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 1.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "dense",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_02_t001_front_oblique",
+      "image_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t001_front_oblique_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t001_front_oblique_pose.json",
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t001_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 1.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "dense",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_03_t001_side_view",
+      "image_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t001_side_view_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t001_side_view_pose.json",
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t001_side_view_depth.npy",
+      "uav_id": "uav_03",
+      "timestamp": 1.0,
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "split": "val",
+      "holdout_reason": "validation angle: side_view",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "dense",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      }
+    },
+    {
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir",
+      "image_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir_pose.json",
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 2.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "dense",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique",
+      "image_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique_pose.json",
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 2.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "dense",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view",
+      "image_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view_pose.json",
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view_depth.npy",
+      "uav_id": "uav_03",
+      "timestamp": 2.0,
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "split": "val",
+      "holdout_reason": "validation angle: side_view",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "dense",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 0.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 0.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view_depth.npy",
+      "uav_id": "uav_03",
+      "timestamp": 0.0,
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "split": "val",
+      "holdout_reason": "validation angle: side_view",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique_depth.npy",
+      "uav_id": "uav_04",
+      "timestamp": 0.0,
+      "view_angle": "rear_oblique",
+      "altitude_m": 60.0,
       "split": "test_unseen_angle",
-      "holdout_reason": "held-out angle: right_oblique",
-      "metadata": {}
+      "holdout_reason": "held-out angle: rear_oblique",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "rear_oblique",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t001_nadir",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t001_nadir_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t001_nadir_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t001_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 1.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t001_front_oblique",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t001_front_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t001_front_oblique_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t001_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 1.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t001_side_view",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t001_side_view_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t001_side_view_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t001_side_view_depth.npy",
+      "uav_id": "uav_03",
+      "timestamp": 1.0,
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "split": "val",
+      "holdout_reason": "validation angle: side_view",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t001_rear_oblique",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t001_rear_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t001_rear_oblique_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t001_rear_oblique_depth.npy",
+      "uav_id": "uav_04",
+      "timestamp": 1.0,
+      "view_angle": "rear_oblique",
+      "altitude_m": 60.0,
+      "split": "test_unseen_angle",
+      "holdout_reason": "held-out angle: rear_oblique",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "rear_oblique",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t002_nadir",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t002_nadir_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t002_nadir_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t002_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 2.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t002_front_oblique",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t002_front_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t002_front_oblique_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t002_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 2.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t002_side_view",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t002_side_view_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t002_side_view_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t002_side_view_depth.npy",
+      "uav_id": "uav_03",
+      "timestamp": 2.0,
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "split": "val",
+      "holdout_reason": "validation angle: side_view",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      }
+    },
+    {
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t002_rear_oblique",
+      "image_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t002_rear_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t002_rear_oblique_pose.json",
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t002_rear_oblique_depth.npy",
+      "uav_id": "uav_04",
+      "timestamp": 2.0,
+      "view_angle": "rear_oblique",
+      "altitude_m": 60.0,
+      "split": "test_unseen_angle",
+      "holdout_reason": "held-out angle: rear_oblique",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "rear_oblique",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_01_t000_nadir",
+      "image_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t000_nadir_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t000_nadir_pose.json",
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t000_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 0.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique",
+      "image_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique_pose.json",
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 0.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_03_t000_side_view",
+      "image_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t000_side_view_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t000_side_view_pose.json",
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t000_side_view_depth.npy",
+      "uav_id": "uav_03",
+      "timestamp": 0.0,
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "split": "val",
+      "holdout_reason": "validation angle: side_view",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      }
+    },
+    {
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_01_t001_nadir",
+      "image_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t001_nadir_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t001_nadir_pose.json",
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t001_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 1.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_02_t001_front_oblique",
+      "image_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t001_front_oblique_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t001_front_oblique_pose.json",
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t001_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 1.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_03_t001_side_view",
+      "image_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t001_side_view_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t001_side_view_pose.json",
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t001_side_view_depth.npy",
+      "uav_id": "uav_03",
+      "timestamp": 1.0,
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "split": "val",
+      "holdout_reason": "validation angle: side_view",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      }
+    },
+    {
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_01_t002_nadir",
+      "image_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t002_nadir_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t002_nadir_pose.json",
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t002_nadir_depth.npy",
+      "uav_id": "uav_01",
+      "timestamp": 2.0,
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique",
+      "image_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique_pose.json",
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique_depth.npy",
+      "uav_id": "uav_02",
+      "timestamp": 2.0,
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "split": "train",
+      "holdout_reason": "",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_03_t002_side_view",
+      "image_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t002_side_view_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t002_side_view_pose.json",
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t002_side_view_depth.npy",
+      "uav_id": "uav_03",
+      "timestamp": 2.0,
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "split": "val",
+      "holdout_reason": "validation angle: side_view",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      }
     }
   ]
 }

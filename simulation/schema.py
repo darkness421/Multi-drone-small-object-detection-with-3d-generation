@@ -48,10 +48,20 @@ class SimFrameAnnotation:
     objects: list[SimObjectAnnotation] = field(default_factory=list)
     depth_path: str | None = None
     rgb_path: str | None = None
+    scene_id: str = ""
+    frame_id: str = ""
+    pose_path: str | None = None
+    view_angle: str = "unknown"
+    altitude_m: float | None = None
+    weather: str = "clear"
+    lighting: str = "day"
+    metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "image_id": self.image_id,
+            "frame_id": self.frame_id or self.image_id,
+            "scene_id": self.scene_id,
             "uav_id": self.uav_id,
             "timestamp": self.timestamp,
             "camera_intrinsic": self.camera_intrinsic,
@@ -59,6 +69,11 @@ class SimFrameAnnotation:
             "uav_pose": asdict(self.uav_pose),
             "depth_path": self.depth_path,
             "rgb_path": self.rgb_path,
+            "pose_path": self.pose_path,
+            "view_angle": self.view_angle,
+            "altitude_m": self.altitude_m,
+            "weather": self.weather,
+            "lighting": self.lighting,
+            "metadata": self.metadata,
             "objects": [obj.to_dict() for obj in self.objects],
         }
-

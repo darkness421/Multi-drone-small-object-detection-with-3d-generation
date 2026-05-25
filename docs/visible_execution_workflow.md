@@ -78,3 +78,16 @@ scripts\20_launch_isaac_visible.bat
 ```
 
 나중에 실제 export runner는 Isaac GUI에서 장면, UAV camera, bbox, re-observation viewpoint가 보이는 상태로 실행한다.
+
+MarineCity multi-UAV benchmark 준비는 Windows dry-run부터 실행한다.
+
+```bat
+scripts\25_prepare_marinecity_windows_benchmark.bat
+```
+
+Isaac GUI와 Isaac Python smoke check를 같이 띄우려면:
+
+```bat
+set ISAAC_ROOT=C:\path\to\isaacsim
+scripts\26_launch_isaac_marinecity_visible.bat
+```

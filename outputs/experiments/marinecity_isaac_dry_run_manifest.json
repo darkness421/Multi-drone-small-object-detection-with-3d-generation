@@ -1,0 +1,4758 @@
+{
+  "dataset": "CoM3D-MarineCity",
+  "mode": "dry_run",
+  "config_name": "marinecity_windows_multiuav_export",
+  "summary": {
+    "planned_frame_count": 36,
+    "scene_count": 4,
+    "by_scene": {
+      "scene_001_sparse_vehicles": 6,
+      "scene_002_dense_vehicles_pedestrians": 9,
+      "scene_003_occlusion_side_view_ambiguity": 12,
+      "scene_004_weather_degraded_small_objects": 9
+    },
+    "by_view_angle": {
+      "front_oblique": 12,
+      "nadir": 12,
+      "rear_oblique": 3,
+      "side_view": 9
+    },
+    "by_weather": {
+      "clear": 12,
+      "rain": 12,
+      "snow": 12
+    },
+    "by_altitude": {
+      "100m": 12,
+      "150m": 9,
+      "60m": 15
+    }
+  },
+  "frames": [
+    {
+      "image_id": "scene_001_sparse_vehicles_uav_01_t000_nadir",
+      "frame_id": "scene_001_sparse_vehicles_uav_01_t000_nadir",
+      "scene_id": "scene_001_sparse_vehicles",
+      "uav_id": "uav_01",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t000_nadir_depth.npy",
+      "rgb_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t000_nadir_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t000_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "sparse",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_001_sparse_vehicles_uav_02_t000_front_oblique",
+      "frame_id": "scene_001_sparse_vehicles_uav_02_t000_front_oblique",
+      "scene_id": "scene_001_sparse_vehicles",
+      "uav_id": "uav_02",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -84.572
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -30.782
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -84.572,
+        "y": -30.782,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": 20.0
+      },
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t000_front_oblique_depth.npy",
+      "rgb_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t000_front_oblique_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t000_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "sparse",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_001_sparse_vehicles_uav_01_t001_nadir",
+      "frame_id": "scene_001_sparse_vehicles_uav_01_t001_nadir",
+      "scene_id": "scene_001_sparse_vehicles",
+      "uav_id": "uav_01",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t001_nadir_depth.npy",
+      "rgb_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t001_nadir_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t001_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "sparse",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_001_sparse_vehicles_uav_02_t001_front_oblique",
+      "frame_id": "scene_001_sparse_vehicles_uav_02_t001_front_oblique",
+      "scene_id": "scene_001_sparse_vehicles",
+      "uav_id": "uav_02",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -84.572
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -30.782
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -84.572,
+        "y": -30.782,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": 20.0
+      },
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t001_front_oblique_depth.npy",
+      "rgb_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t001_front_oblique_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t001_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "sparse",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_001_sparse_vehicles_uav_01_t002_nadir",
+      "frame_id": "scene_001_sparse_vehicles_uav_01_t002_nadir",
+      "scene_id": "scene_001_sparse_vehicles",
+      "uav_id": "uav_01",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t002_nadir_depth.npy",
+      "rgb_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t002_nadir_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_01_t002_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "sparse",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_001_sparse_vehicles_uav_02_t002_front_oblique",
+      "frame_id": "scene_001_sparse_vehicles_uav_02_t002_front_oblique",
+      "scene_id": "scene_001_sparse_vehicles",
+      "uav_id": "uav_02",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -84.572
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -30.782
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -84.572,
+        "y": -30.782,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": 20.0
+      },
+      "depth_path": "depth/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t002_front_oblique_depth.npy",
+      "rgb_path": "images/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t002_front_oblique_rgb.png",
+      "pose_path": "poses/scene_001_sparse_vehicles/scene_001_sparse_vehicles_uav_02_t002_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Sparse coastal-road vehicles with broad UAV overlap.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "sparse",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir",
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "uav_id": "uav_01",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir_depth.npy",
+      "rgb_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "dense",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        },
+        {
+          "object_id": "obj_0003",
+          "bbox_2d": [
+            596.0,
+            369.0,
+            30.0,
+            22.0
+          ],
+          "bbox_3d": [
+            2.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.48,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 30.0,
+          "distance": 98.3,
+          "ambiguity_reason": "pickup_vs_delivery_truck",
+          "recommended_next_view": "closer side view",
+          "class": "van"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique",
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "uav_id": "uav_02",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -68.944
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          57.851
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -68.944,
+        "y": 57.851,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -40.0
+      },
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique_depth.npy",
+      "rgb_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "dense",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        },
+        {
+          "object_id": "obj_0003",
+          "bbox_2d": [
+            596.0,
+            369.0,
+            30.0,
+            22.0
+          ],
+          "bbox_3d": [
+            2.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.48,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 30.0,
+          "distance": 98.3,
+          "ambiguity_reason": "pickup_vs_delivery_truck",
+          "recommended_next_view": "closer side view",
+          "class": "van"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view",
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "uav_id": "uav_03",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -28.131
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -159.539
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -28.131,
+        "y": -159.539,
+        "z": 150.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 80.0
+      },
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view_depth.npy",
+      "rgb_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view_pose.json",
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "dense",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        },
+        {
+          "object_id": "obj_0003",
+          "bbox_2d": [
+            596.0,
+            369.0,
+            30.0,
+            22.0
+          ],
+          "bbox_3d": [
+            2.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.48,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 30.0,
+          "distance": 98.3,
+          "ambiguity_reason": "pickup_vs_delivery_truck",
+          "recommended_next_view": "closer side view",
+          "class": "van"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_002_dense_vehicles_pedestrians_uav_01_t001_nadir",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_01_t001_nadir",
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "uav_id": "uav_01",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t001_nadir_depth.npy",
+      "rgb_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t001_nadir_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t001_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "dense",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        },
+        {
+          "object_id": "obj_0003",
+          "bbox_2d": [
+            596.0,
+            369.0,
+            30.0,
+            22.0
+          ],
+          "bbox_3d": [
+            2.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.48,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 30.0,
+          "distance": 98.3,
+          "ambiguity_reason": "pickup_vs_delivery_truck",
+          "recommended_next_view": "closer side view",
+          "class": "van"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_002_dense_vehicles_pedestrians_uav_02_t001_front_oblique",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_02_t001_front_oblique",
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "uav_id": "uav_02",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -68.944
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          57.851
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -68.944,
+        "y": 57.851,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -40.0
+      },
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t001_front_oblique_depth.npy",
+      "rgb_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t001_front_oblique_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t001_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "dense",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        },
+        {
+          "object_id": "obj_0003",
+          "bbox_2d": [
+            596.0,
+            369.0,
+            30.0,
+            22.0
+          ],
+          "bbox_3d": [
+            2.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.48,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 30.0,
+          "distance": 98.3,
+          "ambiguity_reason": "pickup_vs_delivery_truck",
+          "recommended_next_view": "closer side view",
+          "class": "van"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_002_dense_vehicles_pedestrians_uav_03_t001_side_view",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_03_t001_side_view",
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "uav_id": "uav_03",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -28.131
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -159.539
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -28.131,
+        "y": -159.539,
+        "z": 150.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 80.0
+      },
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t001_side_view_depth.npy",
+      "rgb_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t001_side_view_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t001_side_view_pose.json",
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "dense",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        },
+        {
+          "object_id": "obj_0003",
+          "bbox_2d": [
+            596.0,
+            369.0,
+            30.0,
+            22.0
+          ],
+          "bbox_3d": [
+            2.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.48,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 30.0,
+          "distance": 98.3,
+          "ambiguity_reason": "pickup_vs_delivery_truck",
+          "recommended_next_view": "closer side view",
+          "class": "van"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir",
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "uav_id": "uav_01",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir_depth.npy",
+      "rgb_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "dense",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        },
+        {
+          "object_id": "obj_0003",
+          "bbox_2d": [
+            596.0,
+            369.0,
+            30.0,
+            22.0
+          ],
+          "bbox_3d": [
+            2.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.48,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 30.0,
+          "distance": 98.3,
+          "ambiguity_reason": "pickup_vs_delivery_truck",
+          "recommended_next_view": "closer side view",
+          "class": "van"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique",
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "uav_id": "uav_02",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -68.944
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          57.851
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -68.944,
+        "y": 57.851,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -40.0
+      },
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique_depth.npy",
+      "rgb_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "dense",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        },
+        {
+          "object_id": "obj_0003",
+          "bbox_2d": [
+            596.0,
+            369.0,
+            30.0,
+            22.0
+          ],
+          "bbox_3d": [
+            2.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.48,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 30.0,
+          "distance": 98.3,
+          "ambiguity_reason": "pickup_vs_delivery_truck",
+          "recommended_next_view": "closer side view",
+          "class": "van"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view",
+      "frame_id": "scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view",
+      "scene_id": "scene_002_dense_vehicles_pedestrians",
+      "uav_id": "uav_03",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -28.131
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -159.539
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -28.131,
+        "y": -159.539,
+        "z": 150.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 80.0
+      },
+      "depth_path": "depth/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view_depth.npy",
+      "rgb_path": "images/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view_rgb.png",
+      "pose_path": "poses/scene_002_dense_vehicles_pedestrians/scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view_pose.json",
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Dense vehicles and pedestrians near high-rise shadows.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "dense",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        },
+        {
+          "object_id": "obj_0003",
+          "bbox_2d": [
+            596.0,
+            369.0,
+            30.0,
+            22.0
+          ],
+          "bbox_3d": [
+            2.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.48,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 30.0,
+          "distance": 98.3,
+          "ambiguity_reason": "pickup_vs_delivery_truck",
+          "recommended_next_view": "closer side view",
+          "class": "van"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_01",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_02",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -30.782
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          84.572
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -30.782,
+        "y": 84.572,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -70.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_03",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -152.23
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -55.407
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -152.23,
+        "y": -55.407,
+        "z": 150.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 20.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view_pose.json",
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_04",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          18.469
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -50.743
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 18.469,
+        "y": -50.743,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": 110.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique_pose.json",
+      "view_angle": "rear_oblique",
+      "altitude_m": 60.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "rear_oblique",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t001_nadir",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t001_nadir",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_01",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t001_nadir_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t001_nadir_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t001_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t001_front_oblique",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t001_front_oblique",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_02",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -30.782
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          84.572
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -30.782,
+        "y": 84.572,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -70.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t001_front_oblique_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t001_front_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t001_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t001_side_view",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t001_side_view",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_03",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -152.23
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -55.407
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -152.23,
+        "y": -55.407,
+        "z": 150.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 20.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t001_side_view_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t001_side_view_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t001_side_view_pose.json",
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t001_rear_oblique",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t001_rear_oblique",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_04",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          18.469
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -50.743
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 18.469,
+        "y": -50.743,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": 110.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t001_rear_oblique_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t001_rear_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t001_rear_oblique_pose.json",
+      "view_angle": "rear_oblique",
+      "altitude_m": 60.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "rear_oblique",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t002_nadir",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t002_nadir",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_01",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t002_nadir_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t002_nadir_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_01_t002_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t002_front_oblique",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t002_front_oblique",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_02",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -30.782
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          84.572
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -30.782,
+        "y": 84.572,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -70.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t002_front_oblique_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t002_front_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_02_t002_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t002_side_view",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t002_side_view",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_03",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -152.23
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -55.407
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -152.23,
+        "y": -55.407,
+        "z": 150.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 20.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t002_side_view_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t002_side_view_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_03_t002_side_view_pose.json",
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t002_rear_oblique",
+      "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t002_rear_oblique",
+      "scene_id": "scene_003_occlusion_side_view_ambiguity",
+      "uav_id": "uav_04",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          18.469
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -50.743
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 18.469,
+        "y": -50.743,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": 110.0
+      },
+      "depth_path": "depth/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t002_rear_oblique_depth.npy",
+      "rgb_path": "images/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t002_rear_oblique_rgb.png",
+      "pose_path": "poses/scene_003_occlusion_side_view_ambiguity/scene_003_occlusion_side_view_ambiguity_uav_04_t002_rear_oblique_pose.json",
+      "view_angle": "rear_oblique",
+      "altitude_m": 60.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Occluded van/pickup and pedestrian/pole ambiguity cases.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "rear_oblique",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_004_weather_degraded_small_objects_uav_01_t000_nadir",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_01_t000_nadir",
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "uav_id": "uav_01",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t000_nadir_depth.npy",
+      "rgb_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t000_nadir_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t000_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique",
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "uav_id": "uav_02",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -68.944
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          57.851
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -68.944,
+        "y": 57.851,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -40.0
+      },
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique_depth.npy",
+      "rgb_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_004_weather_degraded_small_objects_uav_03_t000_side_view",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_03_t000_side_view",
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "uav_id": "uav_03",
+      "timestamp": 0.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -28.131
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -159.539
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -28.131,
+        "y": -159.539,
+        "z": 150.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 80.0
+      },
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t000_side_view_depth.npy",
+      "rgb_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t000_side_view_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t000_side_view_pose.json",
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "weather": "clear",
+      "lighting": "day",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_004_weather_degraded_small_objects_uav_01_t001_nadir",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_01_t001_nadir",
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "uav_id": "uav_01",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t001_nadir_depth.npy",
+      "rgb_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t001_nadir_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t001_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_004_weather_degraded_small_objects_uav_02_t001_front_oblique",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_02_t001_front_oblique",
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "uav_id": "uav_02",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -68.944
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          57.851
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -68.944,
+        "y": 57.851,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -40.0
+      },
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t001_front_oblique_depth.npy",
+      "rgb_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t001_front_oblique_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t001_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_004_weather_degraded_small_objects_uav_03_t001_side_view",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_03_t001_side_view",
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "uav_id": "uav_03",
+      "timestamp": 1.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -28.131
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -159.539
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -28.131,
+        "y": -159.539,
+        "z": 150.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 80.0
+      },
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t001_side_view_depth.npy",
+      "rgb_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t001_side_view_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t001_side_view_pose.json",
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "weather": "rain",
+      "lighting": "shadow",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "rain",
+        "lighting": "shadow",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_004_weather_degraded_small_objects_uav_01_t002_nadir",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_01_t002_nadir",
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "uav_id": "uav_01",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          10.149
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.694
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": 10.149,
+        "y": 3.694,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t002_nadir_depth.npy",
+      "rgb_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t002_nadir_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_01_t002_nadir_pose.json",
+      "view_angle": "nadir",
+      "altitude_m": 60.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique",
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "uav_id": "uav_02",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -68.944
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          57.851
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -68.944,
+        "y": 57.851,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -40.0
+      },
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique_depth.npy",
+      "rgb_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique_pose.json",
+      "view_angle": "front_oblique",
+      "altitude_m": 100.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    },
+    {
+      "image_id": "scene_004_weather_degraded_small_objects_uav_03_t002_side_view",
+      "frame_id": "scene_004_weather_degraded_small_objects_uav_03_t002_side_view",
+      "scene_id": "scene_004_weather_degraded_small_objects",
+      "uav_id": "uav_03",
+      "timestamp": 2.0,
+      "camera_intrinsic": [
+        [
+          1200.0,
+          0.0,
+          960.0
+        ],
+        [
+          0.0,
+          1200.0,
+          540.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -28.131
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -159.539
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "uav_pose": {
+        "x": -28.131,
+        "y": -159.539,
+        "z": 150.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 80.0
+      },
+      "depth_path": "depth/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t002_side_view_depth.npy",
+      "rgb_path": "images/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t002_side_view_rgb.png",
+      "pose_path": "poses/scene_004_weather_degraded_small_objects/scene_004_weather_degraded_small_objects_uav_03_t002_side_view_pose.json",
+      "view_angle": "side_view",
+      "altitude_m": 150.0,
+      "weather": "snow",
+      "lighting": "sunset",
+      "metadata": {
+        "scene_description": "Rain/snow degraded small objects for restoration and reasoning tests.",
+        "weather": "snow",
+        "lighting": "sunset",
+        "object_density": "medium",
+        "view_angle": "side_view",
+        "altitude_m": 150.0
+      },
+      "objects": [
+        {
+          "object_id": "obj_0001",
+          "bbox_2d": [
+            512.0,
+            331.0,
+            24.0,
+            18.0
+          ],
+          "bbox_3d": [
+            0.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.72,
+          "occlusion_level": "low",
+          "view_angle": "planned",
+          "pixel_size": 24.0,
+          "distance": 82.3,
+          "ambiguity_reason": "sedan_vs_van",
+          "recommended_next_view": "closer side view",
+          "class": "sedan"
+        },
+        {
+          "object_id": "obj_0002",
+          "bbox_2d": [
+            554.0,
+            350.0,
+            27.0,
+            20.0
+          ],
+          "bbox_3d": [
+            1.0,
+            0.0,
+            0.0,
+            4.5,
+            1.8,
+            1.7,
+            0.0
+          ],
+          "mask": null,
+          "visibility": 0.6,
+          "occlusion_level": "medium",
+          "view_angle": "planned",
+          "pixel_size": 27.0,
+          "distance": 90.3,
+          "ambiguity_reason": "van_vs_pickup",
+          "recommended_next_view": "closer side view",
+          "class": "pickup"
+        }
+      ]
+    }
+  ]
+}

@@ -83,6 +83,23 @@ bash scripts/ubuntu/prepare_marinecity_multiview_benchmark.sh \
   outputs/experiments/marinecity_multiview_benchmark.json
 ```
 
+Windows dry-run preparation:
+
+```bat
+scripts\25_prepare_marinecity_windows_benchmark.bat
+```
+
+Visible Isaac Sim smoke check:
+
+```bat
+set ISAAC_ROOT=C:\path\to\isaacsim
+scripts\26_launch_isaac_marinecity_visible.bat
+```
+
+The Windows dry-run writes a schema-valid Isaac manifest, a capture plan, a
+Replicator template, and `outputs\experiments\marinecity_multiview_benchmark.json`
+without exporting large RGB/depth files.
+
 Generate tmux jobs for the four methods:
 
 ```bash
