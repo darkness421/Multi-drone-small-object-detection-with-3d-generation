@@ -115,3 +115,55 @@ models:
     note: >
       Track as a paper-facing comparison candidate; run only after a compatible
       checkpoint/config is available.
+
+  - name: UAVDet
+    weights: weights/uavdet.pt
+    fallback_weights: uavdet.pt
+    family: UAVDet
+    size: lightweight
+    architecture_group: non_yolo
+    status: external_required
+    source: https://doi.org/10.1016/j.cviu.2026.104637
+    rationale: 2026 CNN-Mamba hybrid UAV small-object detector from the Notion research list; reports VisDrone/UAVDT/DroneVehicle evaluation and strong parameter/FPS tradeoff.
+    note: >
+      Non-YOLO RTMDet-style implementation. Run only if a compatible adapter or
+      checkpoint/export path is prepared.
+
+  - name: HF-D-FINE
+    weights: weights/hf-d-fine.pt
+    fallback_weights: hf-d-fine.pt
+    family: D-FINE
+    size: small
+    architecture_group: non_yolo
+    status: external_required
+    source: https://doi.org/10.1016/j.imavis.2025.105834
+    rationale: 2026 high-resolution-feature D-FINE variant for UAV tiny-object detection from the Notion research list; useful as a recent non-YOLO real-time detector comparison.
+    note: >
+      Prefer as the D-FINE family comparison if authors release weights or if we
+      implement a D-FINE adapter.
+
+  - name: CSFPR-RTDETR
+    weights: weights/csfpr-rtdetr.pt
+    fallback_weights: csfpr-rtdetr.pt
+    family: RT-DETR
+    size: small
+    architecture_group: non_yolo
+    status: external_required
+    source: https://github.com/HuLei-JXNU/CSFPR-RTDETR
+    rationale: RT-DETR-style UAV small-object detector based on cross spatial-frequency domain and position relation, matching the frequency/detail theme of our proposed module.
+    note: >
+      Use after confirming the repository training/evaluation format can be
+      bridged to our VisDrone metrics collector.
+
+  - name: UFO-DETR
+    weights: weights/ufo-detr.pt
+    fallback_weights: ufo-detr.pt
+    family: DETR
+    size: lightweight
+    architecture_group: non_yolo
+    status: external_required
+    source: https://arxiv.org/abs/2602.22712
+    rationale: 2026 frequency-guided end-to-end detector for UAV tiny objects from the Notion research list; useful as a recent DETR/frequency-domain comparison target.
+    note: >
+      Track as a paper-facing candidate first. Queue only after public code or a
+      compatible checkpoint becomes available.

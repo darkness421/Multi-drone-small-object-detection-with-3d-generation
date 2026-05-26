@@ -10,6 +10,7 @@ Start here when the repo feels crowded.
 - `3d_generation_experiment_plan.md`: Marine City multi-view, NeRF/Instant-NGP/Mip-NeRF/3DGS plan.
 - `llm_reasoner_adjudicator_plan.md`: final LLM/VLM adjudicator and re-observation policy plan.
 - `revised_accv_contributions_and_figures.md`: paper contribution and figure story.
+- `notion_research_comparison_notes.md`: extracted Notion research shortlist for comparison models.
 
 ## Setup Docs
 

@@ -351,9 +351,32 @@ Recent paper comparison candidates added to the comparison plan:
 - MASF-YOLO
 - TOE-YOLO
 - MFR-YOLO
+- UAVDet
+- HF-D-FINE
+- CSFPR-RTDETR
+- UFO-DETR
 
 These are marked `external_required`; they should be run only if compatible
 checkpoints/configs are staged locally or adapters are implemented.
+
+The Notion research database shared on 2026-05-26 was readable through the
+public Notion collection API. It contains 70 rows; the detector-related rows
+include recent YOLO, RT-DETR/DETR, D-FINE, Mamba, coarse-fine alignment,
+density-guided, and frequency-domain UAV small-object papers. For experiment
+planning, the key additions are:
+
+- `UAVDet`: CNN-Mamba hybrid detector, useful as a non-YOLO efficient model.
+- `HF-D-FINE`: D-FINE family tiny-object detector with high-resolution feature
+  enhancement.
+- `CSFPR-RTDETR`: RT-DETR-style frequency/position relation detector.
+- `UFO-DETR`: frequency-guided end-to-end DETR candidate.
+
+Priority for actual runs:
+
+1. Finish current YOLO/RT-DETR baselines and top-3 proposed ablation.
+2. Add only 2-3 external paper models that provide runnable code or weights.
+3. Prefer one YOLO-specialized model, one DETR/RT-DETR model, and one Mamba or
+   D-FINE model so the comparison table is not just another YOLO size sweep.
 
 ## 2026-05-26 Report And Result Cleanup
 
