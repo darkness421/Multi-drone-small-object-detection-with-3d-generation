@@ -68,6 +68,7 @@ def build_jobs(
     imgsz: int | None,
     seeds: list[int] | None,
     enable_planned: bool,
+    completed_keys: set[tuple[str, str, str, int]] | None = None,
 ) -> list[ProposedJob]:
     training = config.get("training", {})
     data_yaml = str(config["data_yaml"])
@@ -105,9 +106,34 @@ def build_jobs(
                     skip_reason = "planned ablation; pass --enable-planned to queue after implementation is verified"
 
             for seed in selected_seeds:
-                gpu = gpus[job_index % len(gpus)] if should_queue else -1
                 run_name = f"proposed_{ablation}_{slug(base_model)}_{dataset_tag}_seed{seed}"
                 log_file = log_dir / f"{run_name}.log"
+                completed_key = (base_model, ablation, proposed_module, int(seed))
+                if should_queue and completed_keys and completed_key in completed_keys:
+                    gpu = -1
+                    command = ""
+                    status = "skipped_completed"
+                    completed_reason = "completed in results CSV"
+                    jobs.append(
+                        ProposedJob(
+                            ablation=ablation,
+                            method=method,
+                            base_model=base_model,
+                            train_model=train_model,
+                            proposed_module=proposed_module,
+                            model_patches=model_patches,
+                            implementation_status=implementation_status,
+                            seed=int(seed),
+                            gpu=gpu,
+                            run_name=run_name,
+                            log_file=log_file,
+                            status=status,
+                            skip_reason=completed_reason,
+                            command=command,
+                        )
+                    )
+                    continue
+                gpu = gpus[job_index % len(gpus)] if should_queue else -1
                 if should_queue:
                     command_parts = [
                         "conda",
@@ -184,6 +210,28 @@ def build_jobs(
                     )
                 )
     return jobs
+
+
+def load_completed_keys(paths: list[Path]) -> set[tuple[str, str, str, int]]:
+    completed: set[tuple[str, str, str, int]] = set()
+    for path in paths:
+        if not path.exists():
+            continue
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            for row in csv.DictReader(handle):
+                if str(row.get("status", "")).strip().lower() != "completed":
+                    continue
+                base_model = str(row.get("base_model") or row.get("model") or "").strip()
+                ablation = str(row.get("ablation") or "").strip()
+                proposed_module = str(row.get("proposed_module") or "").strip()
+                if not base_model or not ablation or not proposed_module:
+                    continue
+                try:
+                    seed = int(float(str(row.get("seed", "")).strip()))
+                except ValueError:
+                    continue
+                completed.add((base_model, ablation, proposed_module, seed))
+    return completed
 
 
 def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_yaml: str, epochs: int, batch: int, imgsz: int) -> None:
@@ -310,6 +358,13 @@ def main() -> None:
     parser.add_argument("--seeds", default=None)
     parser.add_argument("--enable-planned", action="store_true")
     parser.add_argument("--manifest", default=None)
+    parser.add_argument(
+        "--completed-results-csv",
+        action="append",
+        default=[],
+        help="Results CSV with completed proposed ablation rows to skip. Can be passed multiple times.",
+    )
+    parser.add_argument("--skip-completed", action="store_true", help="Skip completed ablation/base/seed keys.")
     args = parser.parse_args()
 
     config = read_yaml(args.config)
@@ -317,6 +372,11 @@ def main() -> None:
     if not gpus:
         raise ValueError("--gpus must contain at least one GPU id")
     seeds = [int(item.strip()) for item in args.seeds.split(",") if item.strip()] if args.seeds else None
+    completed_keys = (
+        load_completed_keys([resolve_path(path) for path in args.completed_results_csv])
+        if args.skip_completed
+        else None
+    )
     jobs = build_jobs(
         config,
         conda_env=args.conda_env,
@@ -327,6 +387,7 @@ def main() -> None:
         imgsz=args.imgsz,
         seeds=seeds,
         enable_planned=args.enable_planned,
+        completed_keys=completed_keys,
     )
     training = config.get("training", {})
     selected_epochs = int(args.epochs if args.epochs is not None else training.get("epochs", 100))
@@ -348,11 +409,21 @@ def main() -> None:
         "job_root": str(job_root),
         "queued_count": sum(1 for job in jobs if job.status == "queued"),
         "skipped_count": sum(1 for job in jobs if job.status != "queued"),
+        "skipped_completed_count": sum(1 for job in jobs if job.status == "skipped_completed"),
         "jobs": [job.__dict__ | {"log_file": str(job.log_file)} for job in jobs],
     }
     manifest_path = resolve_path(args.manifest) if args.manifest else job_root / "manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    print(json.dumps({"manifest": str(manifest_path), "queued_count": manifest["queued_count"], "skipped_count": manifest["skipped_count"]}))
+    print(
+        json.dumps(
+            {
+                "manifest": str(manifest_path),
+                "queued_count": manifest["queued_count"],
+                "skipped_count": manifest["skipped_count"],
+                "skipped_completed_count": manifest["skipped_completed_count"],
+            }
+        )
+    )
 
 
 if __name__ == "__main__":
