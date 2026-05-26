@@ -6,6 +6,9 @@
 
 ## 지금 남겨둘 것
 
+- `docs/README.md`: 현재 봐야 할 문서와 archive 위치
+- `outputs/reports/README.md`: 최신 report, live dashboard, progress PPT 위치
+- `outputs/experiments/README.md`: 현재 CSV/JSON 결과와 archive 위치
 - `docs/survey_workspace.md`: 서베이 결과, 아이디어, dataset 후보, 최종 시스템 후보를 임시 정리
 - `notion_exports/`: Notion에 붙여넣을 최소 Markdown export
 - `docs/server_training_plan.md`: Ubuntu 서버 baseline 학습 계획
@@ -194,10 +197,11 @@ UAVDT를 분리하며, p-value도 dataset별 seed pairing으로 계산합니다.
 
 주요 산출물:
 
-- `outputs/experiments/server_baseline_results.csv`
-- `outputs/experiments/server_baseline_summary.csv`
-- `outputs/experiments/server_baseline_pvalues.csv`
-- `outputs/reports/server_baseline_dashboard.png`
+- `outputs/experiments/server_with_proposed_results.csv`
+- `outputs/experiments/server_with_proposed_summary.csv`
+- `outputs/experiments/server_with_proposed_pvalues.csv`
+- `outputs/reports/server_with_proposed/README.md`
+- `outputs/reports/server_with_proposed/figures/server_baseline_dashboard.png`
 
 Raw dataset, weights, raw runs, cache, training logs는 GitHub push 대상이 아닙니다. CSV/JSON summary와 report PNG만 작게 관리합니다.
 

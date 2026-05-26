@@ -23,8 +23,8 @@ DUAL_VIEW_SESSION=${DUAL_VIEW_SESSION:-server-training-dual-view}
 PROJECT_DIR=${PROJECT_DIR:-outputs/detectors/server_proposed_ablation}
 LOG_DIR=${LOG_DIR:-outputs/logs/server_baselines}
 LIVE_SUMMARY_CSV=${LIVE_SUMMARY_CSV:-outputs/experiments/server_fresh/fresh_20260519_131739/server_baseline_summary.csv}
-LIVE_DASHBOARD=${LIVE_DASHBOARD:-outputs/reports/server_fresh_baselines/fresh_20260519_131739/figures/server_baseline_dashboard.png}
-LIVE_FIGURES_DIR=${LIVE_FIGURES_DIR:-outputs/reports/server_fresh_baselines/fresh_20260519_131739/figures}
+LIVE_DASHBOARD=${LIVE_DASHBOARD:-outputs/reports/server_with_proposed/figures/server_baseline_dashboard.png}
+LIVE_FIGURES_DIR=${LIVE_FIGURES_DIR:-outputs/reports/server_with_proposed/figures}
 WAIT_AFTER_START=${WAIT_AFTER_START:-1}
 
 cd "$(dirname "$0")/../.."

@@ -22,7 +22,7 @@
 
 VisDrone, UAVDT 등 public UAV dataset에서 기존 SOTA detector를 기반으로 small object detection 성능을 개선함.
 
-이 contribution의 detector-side 제안 모델은 별도 문서 `docs/proposed_perception_prediction_model.md`의
+이 contribution의 detector-side 제안 모델은 보관 문서 `docs/archive/proposed_perception_prediction_model.md`의
 `CoM3D-ACE-P: Perception and Prediction Module`을 기준으로 구체화함.
 
 핵심 목표:

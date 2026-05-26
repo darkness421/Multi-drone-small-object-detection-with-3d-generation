@@ -217,8 +217,8 @@ Server reboot recovery and final collection status:
 - `rtdetr-r18` is not bundled in the current Ultralytics model config set; the
   available RT-DETR configs are larger variants such as `rtdetr-l`,
   `rtdetr-x`, `rtdetr-resnet50`, and `rtdetr-resnet101`.
-- The final server report bundle was regenerated under
-  `outputs/reports/server_fresh_baselines/fresh_20260519_131739/`.
+- The current consolidated server report bundle is under
+  `outputs/reports/server_with_proposed/`.
 - The detector stage gate still recommends
   `finish_baselines_then_build_proposed` because no real proposed detector
   candidate rows exist yet.
@@ -233,7 +233,7 @@ Current report files:
 outputs/experiments/server_fresh/fresh_20260519_131739/server_baseline_results.csv
 outputs/experiments/server_fresh/fresh_20260519_131739/server_baseline_summary.csv
 outputs/experiments/server_fresh/fresh_20260519_131739/server_baseline_pvalues.csv
-outputs/reports/server_fresh_baselines/fresh_20260519_131739/README.md
+outputs/reports/server_with_proposed/README.md
 ```
 
 Next:
@@ -354,3 +354,32 @@ Recent paper comparison candidates added to the comparison plan:
 
 These are marked `external_required`; they should be run only if compatible
 checkpoints/configs are staged locally or adapters are implemented.
+
+## 2026-05-26 Report And Result Cleanup
+
+The report/result tree was reorganized so the next paper-writing pass has a
+clear entry point:
+
+- `docs/README.md` is now the documentation index.
+- `outputs/reports/README.md` points to the current report, live dashboard, PPT,
+  and archive.
+- `outputs/experiments/README.md` points to the current result CSV/JSON files
+  and archive.
+- Superseded report bundles moved to `outputs/reports/archive/`.
+- Smoke tests, old official snapshots, and initial baseline summaries moved to
+  `outputs/experiments/archive/`.
+- Older docs moved to `docs/archive/`.
+
+Current paper-facing detector report:
+
+```bash
+outputs/reports/server_with_proposed/README.md
+outputs/reports/server_with_proposed/figures/
+outputs/reports/server_with_proposed/tables/
+```
+
+Live training monitoring remains separate:
+
+```bash
+outputs/reports/live/
+```
