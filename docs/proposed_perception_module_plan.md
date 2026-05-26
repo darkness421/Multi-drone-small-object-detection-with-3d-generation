@@ -20,6 +20,12 @@ Initial candidates:
 - YOLO11n
 - YOLO11s
 
+Current baseline-driven candidates after the 2026-05-19/24 VisDrone results:
+
+- YOLOv12m: current best overall baseline
+- YOLOv10m: current second-best medium baseline
+- YOLOv9s: current best lightweight/small baseline
+
 Current selection rule:
 
 - use the best overall baseline if the goal is maximum detector quality
@@ -57,10 +63,23 @@ The dashboard/stage gate should select the best proposed variant after all
 implemented ablations finish. The final proposed model name should not be fixed
 before comparing AP/AP50/APsmall/FPS/Params/GFLOPs across these variants.
 
+Top-3 proposed-module screening:
+
+- Run one seed on YOLOv12m, YOLOv10m, and YOLOv9s.
+- Attach the same module set to each backbone:
+  SE neck, CBAM neck, partial deformable neck, Wavelet+CBAM, and full proposed.
+- Use the existing baseline rows as the `baseline/control` ablation reference.
+- Select the best backbone/module pair by AP first, AP50/recall/F1 second, and
+  Params/GFLOPs/FPS as the deployability tie-breaker.
+- Expand only the winner to 3 seeds, then 5 seeds if it becomes the final paper
+  candidate.
+
 Config scaffold:
 
 - `configs/detector/proposed_yolo11_small_object.yaml`
 - `configs/experiments/proposed_detector_ablation.yaml`
+- `configs/experiments/top3_proposed_detector_screening.yaml`
+- `configs/experiments/top3_proposed_detector_main.yaml`
 
 Code scaffold:
 
@@ -97,6 +116,12 @@ supervisors so it does not steal GPUs from baseline runs:
 
 ```bash
 bash scripts/ubuntu/train_proposed_ablation_after_session.sh
+```
+
+Top-3 screening queue:
+
+```bash
+bash scripts/ubuntu/train_top3_proposed_ablation_after_session.sh
 ```
 
 Default behavior is conservative:

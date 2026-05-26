@@ -141,7 +141,7 @@ class PatchedLayer(nn.Module):
         return self.patch(self.base(x))
 
 
-NECK_LAYER_INDICES = (16, 19, 22)
+FALLBACK_NECK_LAYER_INDICES = (16, 19, 22)
 
 
 def infer_out_channels(module: nn.Module) -> int:
@@ -174,12 +174,29 @@ def parse_patch_spec(spec: str | None) -> list[str]:
     return tokens
 
 
+def detect_neck_layer_indices(model: nn.Module) -> tuple[int, ...]:
+    """Return the feature layers consumed by the Ultralytics detection head."""
+
+    layers = getattr(model, "model", None)
+    if layers is None:
+        raise ValueError("Expected an Ultralytics DetectionModel with a .model layer list")
+    for index in range(len(layers) - 1, -1, -1):
+        layer = layers[index]
+        layer_type = str(getattr(layer, "type", type(layer).__name__)).lower()
+        if "detect" not in layer_type:
+            continue
+        from_indices = getattr(layer, "f", None)
+        if isinstance(from_indices, (list, tuple)) and from_indices:
+            return tuple(int(item) for item in from_indices)
+    return FALLBACK_NECK_LAYER_INDICES
+
+
 def wrap_neck(model: nn.Module, patch_name: str, patch_factory: Any) -> list[str]:
     applied: list[str] = []
     layers = getattr(model, "model", None)
     if layers is None:
         raise ValueError("Expected an Ultralytics DetectionModel with a .model layer list")
-    for index in NECK_LAYER_INDICES:
+    for index in detect_neck_layer_indices(model):
         base = layers[index]
         channels = infer_out_channels(base)
         layers[index] = PatchedLayer(base, patch_factory(channels), patch_name, out_channels=channels)

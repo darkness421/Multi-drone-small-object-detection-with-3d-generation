@@ -306,11 +306,17 @@ def write_job_scripts(job_root: Path, jobs: list[ProposedJob], config: dict[str,
     for gpu in gpus:
         scripts[gpu] = [
             "#!/usr/bin/env bash",
-            "set -euo pipefail",
+            "set -uo pipefail",
             f"cd {sh(root)}",
             "export CUDA_DEVICE_ORDER=PCI_BUS_ID",
             f"export CUDA_VISIBLE_DEVICES={sh(gpu)}",
             'export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"',
+            'export RESOURCE_GUARD="${RESOURCE_GUARD:-1}"',
+            'export MIN_FREE_GB="${MIN_FREE_GB:-80}"',
+            'export MAX_DISK_USE_PERCENT="${MAX_DISK_USE_PERCENT:-94}"',
+            'export MIN_RAM_GB="${MIN_RAM_GB:-12}"',
+            'export MIN_GPU_FREE_GB="${MIN_GPU_FREE_GB:-8}"',
+            'export GUARD_WAIT_SECONDS="${GUARD_WAIT_SECONDS:-120}"',
             f"export MPLCONFIGDIR={sh(root / '.cache/matplotlib')}",
             f"export YOLO_CONFIG_DIR={sh(root / '.cache/ultralytics')}",
             'mkdir -p "$MPLCONFIGDIR" "$YOLO_CONFIG_DIR"',
@@ -321,22 +327,34 @@ def write_job_scripts(job_root: Path, jobs: list[ProposedJob], config: dict[str,
             continue
         lines = scripts[job.gpu]
         lines.append(f'echo "START ablation={job.ablation} method={job.method} seed={job.seed} gpu={job.gpu} at $(date -Is)"')
-        lines.append(f"{job.command} 2>&1 | tee {sh(job.log_file)}")
+        lines.append(
+            f'if [[ "${{RESOURCE_GUARD:-1}}" == "1" ]]; then '
+            "bash scripts/ubuntu/check_resource_margin.sh "
+            f"--path {sh(root)} --gpu {sh(job.gpu)} "
+            '--min-free-gb "$MIN_FREE_GB" --max-disk-use-percent "$MAX_DISK_USE_PERCENT" '
+            '--min-ram-gb "$MIN_RAM_GB" --min-gpu-free-gb "$MIN_GPU_FREE_GB" '
+            f'--wait-seconds "$GUARD_WAIT_SECONDS" 2>&1 | tee -a {sh(job.log_file)}; fi'
+        )
+        lines.append(f"if {job.command} 2>&1 | tee {sh(job.log_file)}; then")
+        lines.append(f'  echo "TRAIN_OK ablation={job.ablation} method={job.method} seed={job.seed} gpu={job.gpu} at $(date -Is)" | tee -a {sh(job.log_file)}')
         if run_eval:
             lines.extend(
                 [
-                    f'run_dir=$(find {sh(project)} -maxdepth 1 -type d -name "*_{job.run_name}" -printf "%T@ %p\\n" | sort -nr | head -n 1 | cut -d" " -f2-)',
-                    'if [[ -n "${run_dir:-}" && -f "$run_dir/ultralytics/weights/best.pt" ]]; then',
+                    f'  run_dir=$(find {sh(project)} -maxdepth 1 -type d -name "*_{job.run_name}" -printf "%T@ %p\\n" | sort -nr | head -n 1 | cut -d" " -f2-)',
+                    '  if [[ -n "${run_dir:-}" && -f "$run_dir/ultralytics/weights/best.pt" ]]; then',
                     "  eval_args=("
                     f"eval --model \"$run_dir/ultralytics/weights/best.pt\" --data-yaml {sh(data_yaml)} "
                     f"--imgsz {sh(imgsz)} --device 0 --project {sh(project)} --name {sh('eval_' + job.run_name)} "
                     f"--method {sh(job.method)} --ablation {sh(job.ablation)} --base-model {sh(job.base_model)} "
                     f"--proposed-module {sh(job.proposed_module)} --implementation-status {sh(job.implementation_status)})",
-                    "  if [[ " + sh("1" if roc_auc else "0") + ' == "1" ]]; then eval_args+=(--roc-auc); fi',
-                    f"  conda run --no-capture-output -n {sh(conda_env)} python -m detectors.train_yolo \"${{eval_args[@]}}\" 2>&1 | tee -a {sh(job.log_file)}",
-                    "fi",
+                    "    if [[ " + sh("1" if roc_auc else "0") + ' == "1" ]]; then eval_args+=(--roc-auc); fi',
+                    f"    conda run --no-capture-output -n {sh(conda_env)} python -m detectors.train_yolo \"${{eval_args[@]}}\" 2>&1 | tee -a {sh(job.log_file)} || echo \"EVAL_FAILED ablation={job.ablation} method={job.method} seed={job.seed} at $(date -Is)\" | tee -a {sh(job.log_file)}",
+                    "  fi",
                 ]
             )
+        lines.append("else")
+        lines.append(f'  echo "TRAIN_FAILED ablation={job.ablation} method={job.method} seed={job.seed} gpu={job.gpu} at $(date -Is)" | tee -a {sh(job.log_file)}')
+        lines.append("fi")
         lines.append(f'echo "DONE ablation={job.ablation} method={job.method} seed={job.seed} gpu={job.gpu} at $(date -Is)"')
 
     for gpu, lines in scripts.items():

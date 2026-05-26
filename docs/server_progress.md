@@ -298,3 +298,59 @@ This queue should run after proposed ablations, or during an idle window, so
 the server keeps enough memory and disk margin. L-size results should be
 reported as a capacity anchor tier, while the main proposed lightweight claim
 continues to compare against the best lightweight and best overall baselines.
+
+## 2026-05-26 Top-3 Proposed Module Pivot
+
+Baseline/proposed collection now shows:
+
+- Best overall baseline: `YOLOv12m`
+- Second strong medium baseline: `YOLOv10m`
+- Best lightweight/small baseline: `YOLOv9s`
+- Best current proposed candidate on the old YOLO11s base:
+  `Proposed-CBAM-yolo11s`
+
+Decision:
+
+- Move proposed-module experiments from YOLO11s-only to a top-3 backbone
+  screening stage.
+- Queue candidate modules on `yolo12m.pt`, `yolov10m.pt`, and `yolov9s.pt`:
+  `se_neck`, `cbam_neck`, `partial_deformable_neck`, `wavelet_cbam`, and
+  `full_proposed`.
+- Use existing baseline rows as the baseline/control ablation reference instead
+  of retraining duplicate control runs for every backbone.
+- Select the best backbone/module pair, then expand only that winner to 3 seeds
+  or 5 seeds for final paper statistics.
+
+Implementation updates:
+
+- `detectors/proposed/modules.py` now detects the actual detection-head feature
+  layers instead of assuming fixed YOLO11-style neck indices. This makes the
+  patch system compatible with YOLOv12m, YOLOv10m, YOLOv9s, and YOLO11s-style
+  heads.
+- `scripts/proposed_ablation_jobs.py` now supports `--skip-completed` and
+  continues to later jobs if one ablation fails/OOMs.
+- Added top-3 configs:
+  `configs/experiments/top3_proposed_detector_screening.yaml` and
+  `configs/experiments/top3_proposed_detector_main.yaml`.
+- Added launcher:
+  `scripts/ubuntu/train_top3_proposed_ablation_after_session.sh`.
+
+Current queue policy:
+
+- Keep the active `server-large-comparison` run alive.
+- Do not use GPU1 for training until the CUDA allocation issue is fixed.
+- After `server-large-comparison` finishes, start the top-3 proposed screening
+  queue on GPU0.
+
+Recent paper comparison candidates added to the comparison plan:
+
+- LRDS-YOLO
+- SOD-YOLO
+- DR-YOLO
+- LSOD-YOLO
+- MASF-YOLO
+- TOE-YOLO
+- MFR-YOLO
+
+These are marked `external_required`; they should be run only if compatible
+checkpoints/configs are staged locally or adapters are implemented.
