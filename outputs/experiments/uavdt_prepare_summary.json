@@ -1,0 +1,6 @@
+{
+  "ready": false,
+  "raw_root": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT",
+  "sequence_count": 0,
+  "message": "No UAVDT image/annotation pairs found. Expected images under data/raw/UAVDT/images/<sequence>/ and annotations under data/raw/UAVDT/annotations/<sequence>.txt."
+}
