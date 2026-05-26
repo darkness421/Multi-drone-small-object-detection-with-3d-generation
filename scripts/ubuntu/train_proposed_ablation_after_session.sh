@@ -13,6 +13,8 @@ IMGSZ=${IMGSZ:-1280}
 SEEDS=${SEEDS:-42,123,2026}
 GPUS=${GPUS:-0,1}
 ENABLE_PLANNED=${ENABLE_PLANNED:-0}
+SKIP_COMPLETED=${SKIP_COMPLETED:-0}
+COMPLETED_RESULTS_CSV=${COMPLETED_RESULTS_CSV:-}
 RESTART_VIEWER=${RESTART_VIEWER:-1}
 VIEWER_SESSION=${VIEWER_SESSION:-server-live-viewer}
 VIEWER_PORT=${VIEWER_PORT:-8766}
@@ -105,6 +107,17 @@ GEN_ARGS=(
 )
 if [[ "$ENABLE_PLANNED" == "1" ]]; then
   GEN_ARGS+=(--enable-planned)
+fi
+if [[ "$SKIP_COMPLETED" == "1" ]]; then
+  GEN_ARGS+=(--skip-completed)
+  if [[ -n "$COMPLETED_RESULTS_CSV" ]]; then
+    IFS=',' read -r -a completed_csvs <<< "$COMPLETED_RESULTS_CSV"
+    for completed_csv in "${completed_csvs[@]}"; do
+      completed_csv=${completed_csv//[[:space:]]/}
+      [[ -z "$completed_csv" ]] && continue
+      GEN_ARGS+=(--completed-results-csv "$completed_csv")
+    done
+  fi
 fi
 
 conda run --no-capture-output -n "$CONDA_ENV" python -m scripts.proposed_ablation_jobs "${GEN_ARGS[@]}"
