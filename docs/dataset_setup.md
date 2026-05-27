@@ -84,6 +84,14 @@ labels를 한 번에 준비한다.
 SOURCE=/path/to/UAVDT bash scripts/ubuntu/prepare_uavdt_dataset.sh
 ```
 
+서버에서 공식 Google Drive 원본 zip을 받을 때는 tmux 다운로드를 사용한다.
+기본값은 먼저 zip만 받고, 완료 후 구조 확인/압축 해제/변환을 이어서 한다.
+
+```bash
+bash scripts/ubuntu/download_uavdt_dataset_tmux.sh
+tmux attach -t server-uavdt-download
+```
+
 준비가 끝나면 VisDrone queue 뒤에 UAVDT 비교 baseline을 붙인다.
 
 ```bash
