@@ -226,9 +226,11 @@ def dashboard_model_label(row: dict[str, str], include_dataset: bool = False) ->
     method = row.get("method") or row.get("model") or "unknown"
     size = row.get("param_size_group") or row.get("model_scale") or ""
     seeds = row.get("seed_count") or ""
-    prefix = f"{row.get('dataset')}\n" if include_dataset and row.get("dataset") else ""
     detail = ", ".join(part for part in [size, f"n={seeds}" if seeds else ""] if part)
-    return f"{prefix}{method}\n{detail}" if detail else f"{prefix}{method}"
+    label = f"{method} ({detail})" if detail else method
+    if include_dataset and row.get("dataset"):
+        return f"{row.get('dataset')} | {label}"
+    return label
 
 
 def summary_sort_key(row: dict[str, str]) -> tuple[float, int, str]:
@@ -267,6 +269,35 @@ def dashboard_label_offset(method: str) -> tuple[int, int]:
         "RT-DETR-L": (-90, 18),
     }
     return offsets.get(method, (8, 8))
+
+
+def scatter_label_offset(index: int, method: str, x_value: float, ap: float, rows: list[dict[str, str]]) -> tuple[int, int]:
+    """Return a deterministic offset that spreads crowded scatter labels."""
+
+    explicit = {
+        "YOLOv12m": (14, 14),
+        "YOLOv10m": (18, 12),
+        "YOLOv9s": (18, 22),
+        "RT-DETR-L": (-90, 18),
+    }
+    if method in explicit:
+        return explicit[method]
+
+    # Cluster-aware offsets for low-complexity models, where most label collisions happen.
+    close_count = 0
+    for row in rows:
+        other_x = summary_metric(row, "FPS") or summary_metric(row, "GFLOPs")
+        other_ap = summary_metric(row, "best_AP")
+        if other_x is None or other_ap is None:
+            continue
+        if abs(other_x - x_value) <= 8 and abs(other_ap - ap) <= 0.018:
+            close_count += 1
+    if close_count >= 4:
+        offsets = [(-72, 18), (18, 20), (-76, -6), (20, -12), (-52, 34), (28, 34), (-64, -28), (22, -30)]
+        return offsets[index % len(offsets)]
+
+    offsets = [(12, 10), (14, -14), (-72, 12), (-76, -14), (18, 24), (20, -26)]
+    return offsets[index % len(offsets)]
 
 
 def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str | Path, dataset: str | None = None) -> Path:
@@ -309,9 +340,11 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         summary_rows = summary_from_results(completed_rows, include_dataset=include_dataset)
     summary_rows = sorted(summary_rows, key=summary_sort_key)
 
-    fig_width = 16.5 if include_dataset else 15.5
-    fig, axes = plt.subplots(2, 2, figsize=(fig_width, 10.5), constrained_layout=False)
-    fig.subplots_adjust(left=0.14, right=0.985, top=0.90, bottom=0.18, hspace=0.38, wspace=0.24)
+    row_count = len(summary_rows)
+    fig_width = 17.5 if include_dataset else 16.5
+    fig_height = max(11.0, min(18.0, 6.8 + row_count * 0.42))
+    fig, axes = plt.subplots(2, 2, figsize=(fig_width, fig_height), constrained_layout=False)
+    fig.subplots_adjust(left=0.16, right=0.985, top=0.91, bottom=0.15, hspace=0.38, wspace=0.24)
     fig.suptitle(f"CoM3D-ACE Server Detector Baselines{title_suffix}", fontsize=17, y=0.965)
 
     if not summary_rows:
@@ -338,6 +371,7 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
     ap_ax.barh([y - bar_height / 2 for y in y_values], ap50_values, bar_height, xerr=ap50_errors, capsize=3, color="#F97316", alpha=0.88, label="AP50")
     ap_ax.set_yticks(y_values)
     ap_ax.set_yticklabels(labels)
+    ap_ax.tick_params(axis="y", labelsize=8.5, pad=3)
     ap_ax.invert_yaxis()
     ap_ax.set_title("Detection Accuracy")
     ap_ax.set_xlabel("score")
@@ -358,6 +392,7 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         prf_ax.barh([y + offset for y in y_values], values, pr_height, color=color, label=label, alpha=0.94)
     prf_ax.set_yticks(y_values)
     prf_ax.set_yticklabels(labels)
+    prf_ax.tick_params(axis="y", labelsize=8.5, pad=3)
     prf_ax.invert_yaxis()
     prf_ax.set_title("Precision / Recall / F1")
     prf_ax.set_xlabel("score")
@@ -376,6 +411,7 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
             stability_ax.text(ap + 0.0015, y, f"n={seed_count}", va="center", fontsize=7.5, color="#374151")
     stability_ax.set_yticks(y_values)
     stability_ax.set_yticklabels(labels)
+    stability_ax.tick_params(axis="y", labelsize=8.5, pad=3)
     stability_ax.invert_yaxis()
     stability_ax.set_title("Seed Stability: AP mean +/- std")
     stability_ax.set_xlabel("AP (mAP50-95)")
@@ -387,7 +423,7 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
     x_metric = "FPS" if any(summary_metric(row, "FPS") is not None for row in summary_rows) else "GFLOPs"
     x_label = "FPS" if x_metric == "FPS" else "GFLOPs"
     plotted = False
-    for row in summary_rows:
+    for scatter_index, row in enumerate(summary_rows):
         ap = summary_metric(row, "best_AP")
         x_value = summary_metric(row, x_metric)
         if ap is None or x_value is None:
@@ -415,9 +451,9 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
         scatter_ax.annotate(
             method,
             (x_value, ap),
-            xytext=dashboard_label_offset(method),
+            xytext=scatter_label_offset(scatter_index, method, x_value, ap, summary_rows),
             textcoords="offset points",
-            fontsize=8.0,
+            fontsize=7.8,
             weight="bold",
             color="#111827",
             annotation_clip=False,
