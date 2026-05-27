@@ -407,6 +407,13 @@ Live training monitoring remains separate:
 outputs/reports/live/
 ```
 
+The quick status page for the active queue, dataset readiness, top detector
+rows, and paper-model availability is:
+
+```bash
+outputs/reports/detector_experiment_status.md
+```
+
 ## 2026-05-27 UAVDT Cross-Dataset Preparation
 
 UAVDT is now ready as the second detector dataset:

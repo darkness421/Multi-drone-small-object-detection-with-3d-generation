@@ -210,6 +210,16 @@ def write_readme(
             ],
         ),
         "",
+        "## Companion Reports",
+        "",
+        markdown_table(
+            ["File", "Purpose"],
+            [
+                ["[Paper Model Availability](paper_model_availability.md)", "Runnable/external-required status for recent paper comparison models"],
+                ["[Detector Experiment Status](../detector_experiment_status.md)", "Queue, dataset readiness, top rows, and next actions"],
+            ],
+        ),
+        "",
         "## Figures",
         "",
         figure_table(report_dir, copied),

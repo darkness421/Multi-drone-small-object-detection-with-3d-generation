@@ -20,6 +20,13 @@ The proposed detector does not yet beat the selected baseline thresholds.
 | Best lightweight baseline | YOLOv9s | YOLO | v9 | small | 3 | 0.3433466666666667 | 0.5544333333333333 |
 | Best proposed candidate | Proposed-CBAM-yolo11s | YOLO | v11 | small | 3 | 0.32772 | 0.53078 |
 
+## Gate Gaps
+
+| Threshold | Baseline | Candidate | Primary Delta | Secondary Delta |
+| --- | --- | --- | --- | --- |
+| Best overall baseline | YOLOv12m | Proposed-CBAM-yolo11s | -0.0392 | -0.0540 |
+| Best lightweight baseline | YOLOv9s | Proposed-CBAM-yolo11s | -0.0156 | -0.0237 |
+
 ## Interpretation
 
 - If the recommended stage is `finish_baselines_then_build_proposed`, complete all baseline and comparison sweeps before changing the proposed detector.

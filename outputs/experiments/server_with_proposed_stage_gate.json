@@ -49,6 +49,18 @@
     "Params_mean": 9431662.0,
     "GFLOPs_mean": 21.6
   },
+  "candidate_vs_best_overall": {
+    "baseline_method": "YOLOv12m",
+    "candidate_method": "Proposed-CBAM-yolo11s",
+    "best_AP_mean_delta": -0.03915666666666667,
+    "best_AP50_mean_delta": -0.05403999999999998
+  },
+  "candidate_vs_best_lightweight": {
+    "baseline_method": "YOLOv9s",
+    "candidate_method": "Proposed-CBAM-yolo11s",
+    "best_AP_mean_delta": -0.015626666666666678,
+    "best_AP50_mean_delta": -0.023653333333333304
+  },
   "recommended_next_stage": "iterate_proposed_detector",
   "rationale": "The proposed detector does not yet beat the selected baseline thresholds.",
   "dataset": "VisDrone2019-DET"

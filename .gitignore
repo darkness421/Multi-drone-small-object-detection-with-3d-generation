@@ -61,6 +61,7 @@ outputs/experiments/archive/*
 outputs/reports/*
 !outputs/reports/.gitkeep
 !outputs/reports/README.md
+!outputs/reports/detector_experiment_status.md
 !outputs/reports/*.png
 !outputs/reports/archive/
 outputs/reports/archive/*
@@ -73,6 +74,7 @@ outputs/reports/archive/*
 !outputs/reports/server_with_proposed/
 outputs/reports/server_with_proposed/*
 !outputs/reports/server_with_proposed/README.md
+!outputs/reports/server_with_proposed/paper_model_availability.md
 !outputs/reports/server_with_proposed/stage_gate.md
 !outputs/reports/server_with_proposed/stage_gate.json
 !outputs/reports/server_with_proposed/tables/

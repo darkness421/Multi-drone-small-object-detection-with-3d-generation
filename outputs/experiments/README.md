@@ -10,6 +10,8 @@ Raw detector runs, weights, datasets, caches, and large logs stay outside Git.
 - `server_with_proposed_pvalues.csv`: seed statistics and p-values.
 - `server_with_proposed_stage_gate.*`: detector stage-gate decision.
 - `top3_proposed_ablation_commands.csv`: pending top-3 proposed-module screening queue.
+- `paper_model_availability.csv`: local runnable/external-required status for
+  recent paper comparison detector candidates.
 
 ## Current Planning Artifacts
 

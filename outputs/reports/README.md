@@ -7,6 +7,8 @@ training output or an archived run.
 ## Current Report
 
 - `server_with_proposed/README.md`: current consolidated detector report.
+- `detector_experiment_status.md`: current queue, dataset readiness, top rows,
+  and paper-comparison availability.
 - `server_with_proposed/tables/`: results, summary, and p-value CSVs.
 - `server_with_proposed/figures/`: paper-facing plots split by metric.
 - `server_with_proposed/stage_gate.*`: current detector stage-gate decision.

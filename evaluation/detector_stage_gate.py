@@ -84,6 +84,28 @@ def metric_value(row: dict[str, str] | None, metric: str) -> float | None:
     return as_float(row.get(metric))
 
 
+def candidate_gap(
+    candidate: dict[str, str] | None,
+    baseline: dict[str, str] | None,
+    metric: str,
+    secondary_metric: str,
+) -> dict[str, Any] | None:
+    if candidate is None or baseline is None:
+        return None
+    candidate_metric = metric_value(candidate, metric)
+    baseline_metric = metric_value(baseline, metric)
+    candidate_secondary = metric_value(candidate, secondary_metric)
+    baseline_secondary = metric_value(baseline, secondary_metric)
+    return {
+        "baseline_method": baseline.get("method", "") or baseline.get("model", ""),
+        "candidate_method": candidate.get("method", "") or candidate.get("model", ""),
+        f"{metric}_delta": None if candidate_metric is None or baseline_metric is None else candidate_metric - baseline_metric,
+        f"{secondary_metric}_delta": None
+        if candidate_secondary is None or baseline_secondary is None
+        else candidate_secondary - baseline_secondary,
+    }
+
+
 def decide_stage(
     rows: list[dict[str, str]],
     candidate_regex: str,
@@ -136,6 +158,8 @@ def decide_stage(
         "best_overall_baseline": compact_row(best_baseline, metric, secondary_metric),
         "best_lightweight_baseline": compact_row(best_lightweight, metric, secondary_metric),
         "best_proposed_candidate": compact_row(best_candidate, metric, secondary_metric),
+        "candidate_vs_best_overall": candidate_gap(best_candidate, best_baseline, metric, secondary_metric),
+        "candidate_vs_best_lightweight": candidate_gap(best_candidate, best_lightweight, metric, secondary_metric),
         "recommended_next_stage": next_stage,
         "rationale": rationale,
     }
@@ -179,6 +203,10 @@ def write_markdown(path: Path, decision: dict[str, Any]) -> None:
         f"| Best lightweight baseline | {format_model_cells(decision['best_lightweight_baseline'], metric, secondary_metric)} |",
         f"| Best proposed candidate | {format_model_cells(decision['best_proposed_candidate'], metric, secondary_metric)} |",
         "",
+        "## Gate Gaps",
+        "",
+        format_gap_table(decision, metric, secondary_metric),
+        "",
         "## Interpretation",
         "",
         "- If the recommended stage is `finish_baselines_then_build_proposed`, complete all baseline and comparison sweeps before changing the proposed detector.",
@@ -187,6 +215,46 @@ def write_markdown(path: Path, decision: dict[str, Any]) -> None:
         "",
     ]
     path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def format_gap(value: Any) -> str:
+    parsed = as_float(value)
+    if parsed is None:
+        return "n/a"
+    return f"{parsed:+.4f}"
+
+
+def format_gap_table(decision: dict[str, Any], metric: str, secondary_metric: str) -> str:
+    rows = []
+    for label, key in [
+        ("Best overall baseline", "candidate_vs_best_overall"),
+        ("Best lightweight baseline", "candidate_vs_best_lightweight"),
+    ]:
+        gap = decision.get(key)
+        if not gap:
+            continue
+        rows.append(
+            "| "
+            + " | ".join(
+                [
+                    label,
+                    str(gap.get("baseline_method") or "n/a"),
+                    str(gap.get("candidate_method") or "n/a"),
+                    format_gap(gap.get(f"{metric}_delta")),
+                    format_gap(gap.get(f"{secondary_metric}_delta")),
+                ]
+            )
+            + " |"
+        )
+    if not rows:
+        return "_No proposed candidate gap is available yet._"
+    return "\n".join(
+        [
+            "| Threshold | Baseline | Candidate | Primary Delta | Secondary Delta |",
+            "| --- | --- | --- | --- | --- |",
+            *rows,
+        ]
+    )
 
 
 def write_json(path: Path, decision: dict[str, Any]) -> None:

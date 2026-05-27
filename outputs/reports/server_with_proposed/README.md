@@ -1,6 +1,6 @@
 # Server Baseline Report Bundle
 
-Generated: `2026-05-26T16:08:48+09:00`
+Generated: `2026-05-27T22:36:31+09:00`
 
 This folder is the compact, Git-friendly report bundle for server detector baselines.
 Raw datasets, model weights, raw training runs, and caches stay outside Git.
@@ -20,6 +20,13 @@ Raw datasets, model weights, raw training runs, and caches stay outside Git.
 | [Results CSV](tables/server_baseline_results.csv) | Per-run detector metrics and status |
 | [P-values CSV](tables/server_baseline_pvalues.csv) | Paired t-test and Wilcoxon comparisons |
 | [Stage Gate](stage_gate.md) | Current decision gate for baseline/proposed/3D next stage |
+
+## Companion Reports
+
+| File | Purpose |
+| --- | --- |
+| [Paper Model Availability](paper_model_availability.md) | Runnable/external-required status for recent paper comparison models |
+| [Detector Experiment Status](../detector_experiment_status.md) | Queue, dataset readiness, top rows, and next actions |
 
 ## Figures
 
