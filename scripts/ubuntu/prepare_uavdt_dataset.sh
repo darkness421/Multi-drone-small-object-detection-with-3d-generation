@@ -7,7 +7,8 @@ RAW_ROOT=${RAW_ROOT:-data/raw/UAVDT}
 COCO_OUT=${COCO_OUT:-data/processed/uavdt_coco.json}
 YOLO_OUT=${YOLO_OUT:-data/processed/uavdt_yolo}
 SUMMARY=${SUMMARY:-outputs/experiments/uavdt_prepare_summary.json}
-COPY_IMAGES=${COPY_IMAGES:-1}
+COPY_IMAGES=${COPY_IMAGES:-0}
+LINK_IMAGES=${LINK_IMAGES:-1}
 STRICT=${STRICT:-0}
 
 cd "$(dirname "$0")/../.."
@@ -24,6 +25,9 @@ if [[ -n "$SOURCE" ]]; then
 fi
 if [[ "$COPY_IMAGES" == "1" ]]; then
   args+=(--copy-images)
+fi
+if [[ "$LINK_IMAGES" == "1" ]]; then
+  args+=(--link-images)
 fi
 if [[ "$STRICT" == "1" ]]; then
   args+=(--strict)

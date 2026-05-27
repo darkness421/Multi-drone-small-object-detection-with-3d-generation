@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 from pathlib import Path
 from typing import Any
@@ -71,7 +72,29 @@ def _write_names_yaml(out_dir: Path, names: dict[int, str]) -> Path:
     return data_yaml
 
 
-def _write_yolo_split(payload: dict[str, Any], out_dir: Path, split: str, *, copy_images: bool) -> tuple[int, int]:
+def materialize_image(source: Path, target: Path, *, copy_images: bool, link_images: bool) -> None:
+    if target.exists():
+        return
+    if copy_images and source.exists():
+        shutil.copy2(source, target)
+        return
+    if link_images and source.exists():
+        try:
+            os.link(source, target)
+        except OSError:
+            target.symlink_to(source.resolve())
+        return
+    target.write_text(f"image_placeholder={source}\n", encoding="utf-8")
+
+
+def _write_yolo_split(
+    payload: dict[str, Any],
+    out_dir: Path,
+    split: str,
+    *,
+    copy_images: bool,
+    link_images: bool,
+) -> tuple[int, int]:
     categories = payload.get("categories", [])
     cat_to_idx = category_id_to_yolo_index(categories)
     images = {int(image["id"]): image for image in payload.get("images", [])}
@@ -95,10 +118,7 @@ def _write_yolo_split(payload: dict[str, Any], out_dir: Path, split: str, *, cop
 
         target_name = target_image_name(image, file_name)
         target_image = out_dir / "images" / split / target_name
-        if copy_images and file_name.exists():
-            shutil.copy2(file_name, target_image)
-        elif not target_image.exists():
-            target_image.write_text(f"image_placeholder={file_name}\n", encoding="utf-8")
+        materialize_image(file_name, target_image, copy_images=copy_images, link_images=link_images)
 
         label_lines = []
         for ann in annotations_by_image.get(image_id, []):
@@ -118,6 +138,7 @@ def convert_coco_to_yolo(
     out_dir: str | Path,
     *,
     copy_images: bool = False,
+    link_images: bool = False,
     train_ratio: float = 0.8,
     val_ratio: float = 0.1,
 ) -> Path:
@@ -147,10 +168,7 @@ def convert_coco_to_yolo(
 
         target_name = target_image_name(image, file_name)
         target_image = out_dir / "images" / split / target_name
-        if copy_images and file_name.exists():
-            shutil.copy2(file_name, target_image)
-        elif not target_image.exists():
-            target_image.write_text(f"image_placeholder={file_name}\n", encoding="utf-8")
+        materialize_image(file_name, target_image, copy_images=copy_images, link_images=link_images)
 
         label_lines = []
         for ann in annotations_by_image.get(image_id, []):
@@ -169,6 +187,7 @@ def convert_coco_splits_to_yolo(
     out_dir: str | Path,
     *,
     copy_images: bool = False,
+    link_images: bool = False,
 ) -> Path:
     """Convert explicit COCO split files into one Ultralytics YOLO dataset."""
 
@@ -179,7 +198,7 @@ def convert_coco_splits_to_yolo(
         current_names = category_names(payload.get("categories", []))
         if names is None:
             names = current_names
-        _write_yolo_split(payload, out_dir, split, copy_images=copy_images)
+        _write_yolo_split(payload, out_dir, split, copy_images=copy_images, link_images=link_images)
 
     for split in ("train", "val", "test"):
         (out_dir / "images" / split).mkdir(parents=True, exist_ok=True)
@@ -192,6 +211,7 @@ def main() -> None:
     parser.add_argument("--coco", required=True)
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--copy-images", action="store_true")
+    parser.add_argument("--link-images", action="store_true", help="Hardlink images into the YOLO tree, falling back to symlinks.")
     parser.add_argument("--train-ratio", type=float, default=0.8)
     parser.add_argument("--val-ratio", type=float, default=0.1)
     args = parser.parse_args()
@@ -199,6 +219,7 @@ def main() -> None:
         args.coco,
         args.out_dir,
         copy_images=args.copy_images,
+        link_images=args.link_images,
         train_ratio=args.train_ratio,
         val_ratio=args.val_ratio,
     )

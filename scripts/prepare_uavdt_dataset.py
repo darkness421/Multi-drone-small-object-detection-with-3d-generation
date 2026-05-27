@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import zipfile
 from pathlib import Path
@@ -12,6 +13,9 @@ from data.converters.coco_to_yolo import convert_coco_to_yolo
 from data.converters.common import write_json
 from data.converters.uavdt_to_coco import IMAGE_SUFFIXES, convert_uavdt, merge_coco_sequences
 from runtime.config import resolve_path
+
+
+UAVDT_SEQUENCE_RE = re.compile(r"^M\d{4}$", re.IGNORECASE)
 
 
 def maybe_stage_source(source: Path, raw_root: Path) -> None:
@@ -40,29 +44,56 @@ def contains_images(path: Path) -> bool:
 def discover_sequence_dirs(images_root: Path) -> list[Path]:
     if not images_root.exists():
         return []
-    sequence_dirs = [path for path in images_root.rglob("*") if path.is_dir() and contains_images(path)]
-    if contains_images(images_root):
+    sequence_dirs = [
+        path
+        for path in images_root.rglob("*")
+        if path.is_dir() and UAVDT_SEQUENCE_RE.match(path.name) and contains_images(path)
+    ]
+    if UAVDT_SEQUENCE_RE.match(images_root.name) and contains_images(images_root):
         sequence_dirs.append(images_root)
     return sorted(set(sequence_dirs))
 
 
 def annotation_candidates(annotations_root: Path, sequence_name: str) -> list[Path]:
+    sequence_key = sequence_name.lower()
     names = [
-        f"{sequence_name}.txt",
         f"{sequence_name}_gt.txt",
-        f"{sequence_name}_gt_whole.txt",
-        f"gt_{sequence_name}.txt",
+        f"{sequence_name}.txt",
         f"{sequence_name}/gt.txt",
         f"{sequence_name}/gt/gt.txt",
+        f"gt_{sequence_name}.txt",
+        f"{sequence_name}_gt_whole.txt",
     ]
     candidates = [annotations_root / name for name in names]
     if annotations_root.exists():
         candidates.extend(
             path
             for path in annotations_root.rglob("*.txt")
-            if sequence_name.lower() in path.stem.lower() or path.parent.name.lower() == sequence_name.lower()
+            if sequence_key in path.stem.lower() or path.parent.name.lower() == sequence_key
         )
-    return [path for path in candidates if path.exists()]
+    unique = {path.resolve(): path for path in candidates if path.exists()}
+    return sorted(unique.values(), key=lambda path: annotation_priority(path, sequence_name))
+
+
+def annotation_priority(path: Path, sequence_name: str) -> tuple[int, str]:
+    sequence_key = sequence_name.lower()
+    stem = path.stem.lower()
+    parent = path.parent.name.lower()
+    if stem == f"{sequence_key}_gt":
+        priority = 0
+    elif stem == sequence_key:
+        priority = 1
+    elif parent == sequence_key and stem == "gt":
+        priority = 2
+    elif stem == f"gt_{sequence_key}":
+        priority = 3
+    elif stem == f"{sequence_key}_gt_whole":
+        priority = 80
+    elif "ignore" in stem:
+        priority = 90
+    else:
+        priority = 50
+    return priority, str(path)
 
 
 def discover_pairs(raw_root: Path) -> list[tuple[str, Path, Path]]:
@@ -88,6 +119,7 @@ def prepare_uavdt(
     yolo_out: Path,
     *,
     copy_images: bool,
+    link_images: bool,
     train_ratio: float,
     val_ratio: float,
 ) -> dict[str, object]:
@@ -121,7 +153,14 @@ def prepare_uavdt(
 
     merged = merge_coco_sequences(payloads)
     write_json(merged, coco_out)
-    data_yaml = convert_coco_to_yolo(coco_out, yolo_out, copy_images=copy_images, train_ratio=train_ratio, val_ratio=val_ratio)
+    data_yaml = convert_coco_to_yolo(
+        coco_out,
+        yolo_out,
+        copy_images=copy_images,
+        link_images=link_images,
+        train_ratio=train_ratio,
+        val_ratio=val_ratio,
+    )
     return {
         "ready": True,
         "raw_root": str(raw_root),
@@ -142,6 +181,7 @@ def main() -> None:
     parser.add_argument("--coco-out", default="data/processed/uavdt_coco.json")
     parser.add_argument("--yolo-out", default="data/processed/uavdt_yolo")
     parser.add_argument("--copy-images", action="store_true")
+    parser.add_argument("--link-images", action="store_true", help="Hardlink YOLO images to raw frames to save disk space.")
     parser.add_argument("--train-ratio", type=float, default=0.8)
     parser.add_argument("--val-ratio", type=float, default=0.1)
     parser.add_argument("--summary", default="outputs/experiments/uavdt_prepare_summary.json")
@@ -157,6 +197,7 @@ def main() -> None:
         resolve_path(args.coco_out),
         resolve_path(args.yolo_out),
         copy_images=args.copy_images,
+        link_images=args.link_images,
         train_ratio=args.train_ratio,
         val_ratio=args.val_ratio,
     )
