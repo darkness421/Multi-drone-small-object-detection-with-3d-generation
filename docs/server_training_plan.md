@@ -266,8 +266,15 @@ SOURCE=/path/to/UAVDT bash scripts/ubuntu/prepare_uavdt_dataset.sh
 Queue UAVDT cross-dataset baselines after the VisDrone queues:
 
 ```bash
-bash scripts/ubuntu/train_uavdt_comparisons_after_session.sh
+bash scripts/ubuntu/start_uavdt_comparisons_pending.sh
 ```
+
+By default this pending session waits for
+`server-large-comparison,server-top3-proposed-pending`, then launches the UAVDT
+YOLO and RT-DETR comparison sessions. UAVDT command CSV/job scripts are kept
+under `outputs/experiments/uavdt/`, logs under
+`outputs/logs/server_uavdt_baselines/`, and detector runs under
+`outputs/detectors/server_uavdt_baselines/`.
 
 Queue the proposed detector ablation supervisor after the comparison queues:
 

@@ -106,7 +106,7 @@ RAW_ROOT=data/raw/UAVDT/_official_extract bash scripts/ubuntu/prepare_uavdt_data
 준비가 끝나면 VisDrone queue 뒤에 UAVDT 비교 baseline을 붙인다.
 
 ```bash
-bash scripts/ubuntu/train_uavdt_comparisons_after_session.sh
+bash scripts/ubuntu/start_uavdt_comparisons_pending.sh
 bash scripts/ubuntu/collect_cross_dataset_results.sh
 ```
 

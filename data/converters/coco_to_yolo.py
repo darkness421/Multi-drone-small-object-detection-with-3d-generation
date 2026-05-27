@@ -73,6 +73,7 @@ def _write_names_yaml(out_dir: Path, names: dict[int, str]) -> Path:
 
 
 def materialize_image(source: Path, target: Path, *, copy_images: bool, link_images: bool) -> None:
+    target.parent.mkdir(parents=True, exist_ok=True)
     if target.exists():
         return
     if copy_images and source.exists():
@@ -82,8 +83,13 @@ def materialize_image(source: Path, target: Path, *, copy_images: bool, link_ima
         try:
             os.link(source, target)
         except OSError:
-            target.symlink_to(source.resolve())
-        return
+            try:
+                target.symlink_to(source.resolve())
+                return
+            except OSError:
+                pass
+        else:
+            return
     target.write_text(f"image_placeholder={source}\n", encoding="utf-8")
 
 

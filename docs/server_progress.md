@@ -406,3 +406,31 @@ Live training monitoring remains separate:
 ```bash
 outputs/reports/live/
 ```
+
+## 2026-05-27 UAVDT Cross-Dataset Preparation
+
+UAVDT is now ready as the second detector dataset:
+
+- Raw/extracted official data: `data/raw/UAVDT/_official_extract`
+- YOLO data: `data/processed/uavdt_yolo`
+- COCO JSON: `data/processed/uavdt_coco.json`
+- Readiness check: passed for train/val/test with no placeholders or missing
+  labels.
+
+The converter now keeps only official `M####` UAVDT sequences and prioritizes
+`*_gt.txt` over `*_gt_whole.txt` and `*_gt_ignore.txt`, so evaluation toolkit
+folders do not leak into the detector dataset.
+
+Next queued step:
+
+```bash
+bash scripts/ubuntu/start_uavdt_comparisons_pending.sh
+```
+
+This pending session waits for `server-large-comparison` and
+`server-top3-proposed-pending`, then starts UAVDT YOLO and RT-DETR comparison
+runs with organized outputs:
+
+- Commands/jobs: `outputs/experiments/uavdt/`
+- Logs: `outputs/logs/server_uavdt_baselines/`
+- Runs: `outputs/detectors/server_uavdt_baselines/`
