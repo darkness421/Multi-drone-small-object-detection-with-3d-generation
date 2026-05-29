@@ -1,6 +1,7 @@
 # Server Baseline Report Bundle
 
 Generated: `2026-05-27T22:36:31+09:00`
+Last organized: `2026-05-30`
 
 This folder is the compact, Git-friendly report bundle for server detector baselines.
 Raw datasets, model weights, raw training runs, and caches stay outside Git.

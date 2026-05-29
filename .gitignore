@@ -71,6 +71,9 @@ outputs/reports/archive/*
 !outputs/reports/archive/**/*.json
 !outputs/reports/archive/**/*.csv
 !outputs/reports/archive/**/*.png
+!outputs/reports/live/
+outputs/reports/live/*
+!outputs/reports/live/README.md
 !outputs/reports/server_with_proposed/
 outputs/reports/server_with_proposed/*
 !outputs/reports/server_with_proposed/README.md
@@ -83,12 +86,6 @@ outputs/reports/server_with_proposed/tables/*
 !outputs/reports/server_with_proposed/figures/
 outputs/reports/server_with_proposed/figures/*
 !outputs/reports/server_with_proposed/figures/*.png
-!outputs/reports/progress_ppt/
-outputs/reports/progress_ppt/*
-!outputs/reports/progress_ppt/*.pptx
-!outputs/reports/progress_ppt_assets/
-outputs/reports/progress_ppt_assets/*
-!outputs/reports/progress_ppt_assets/*.png
 !outputs/reports/server_baselines/
 outputs/reports/server_baselines/*
 !outputs/reports/server_baselines/README.md

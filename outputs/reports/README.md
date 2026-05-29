@@ -1,36 +1,43 @@
 # Reports Index
 
-This directory contains compact, Git-friendly report artifacts only. Start with
-`server_with_proposed/README.md` unless you are intentionally checking live
-training output or an archived run.
+Last organized: `2026-05-30`
 
-## Current Report
+This folder is the small, Git-friendly report area. It should contain only
+Markdown, CSV tables, JSON summaries, and compact PNG figures. Raw datasets,
+weights, raw training runs, logs, and caches stay outside Git.
 
-- `server_with_proposed/README.md`: current consolidated detector report.
-- `detector_experiment_status.md`: current queue, dataset readiness, top rows,
-  and paper-comparison availability.
-- `server_with_proposed/tables/`: results, summary, and p-value CSVs.
-- `server_with_proposed/figures/`: paper-facing plots split by metric.
-- `server_with_proposed/stage_gate.*`: current detector stage-gate decision.
+## Open First
+
+| Path | Use |
+| --- | --- |
+| `server_with_proposed/README.md` | Current consolidated detector report for paper writing |
+| `detector_experiment_status.md` | Current queue status, dataset readiness, model availability, and next actions |
+| `live/README.md` | Live dashboard files generated while tmux training is running |
+| `archive/README.md` | Older report bundles and presentation-only assets |
+
+## Current Paper Report
+
+| Path | Contents |
+| --- | --- |
+| `server_with_proposed/figures/` | Paper-facing plots split by AP/AP50, PR/F1, params, GFLOPs, speed, and seed spread |
+| `server_with_proposed/tables/` | Results, summary, and p-value CSVs |
+| `server_with_proposed/stage_gate.md` | Current detector stage-gate decision |
+| `server_with_proposed/paper_model_availability.md` | Runnable or external-required status for recent comparison models |
 
 ## Live Monitoring
 
-- `live/`: live-refresh dashboard and figures for the active tmux training run.
-  These are useful for monitoring, not for final reporting.
-
-## Presentation
-
-- `progress_ppt/com3d_ace_progress_plan_20260526.pptx`: current progress deck.
-- `progress_ppt_assets/`: figures used by the progress deck.
+`live/` is for active training visibility only. Treat those files as temporary
+monitoring artifacts until the collector promotes a clean snapshot into
+`server_with_proposed/`.
 
 ## Archive
 
-- `archive/`: superseded report bundles kept for traceability.
+`archive/` holds superseded snapshots and non-current presentation assets. Do
+not use archive files as the current paper result unless the README explicitly
+points to them.
 
-Regenerate the organized detector report with:
+## Regenerate
 
 ```bash
 bash scripts/ubuntu/collect_proposed_results.sh
 ```
-
-This should not include raw datasets, weights, raw runs, logs, or caches.
