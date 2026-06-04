@@ -34,6 +34,7 @@ def train_yolo(
     model: str,
     data_yaml: str | Path,
     epochs: int = 100,
+    patience: int | None = None,
     imgsz: int = 1280,
     batch: int = 8,
     workers: int = 4,
@@ -91,6 +92,8 @@ def train_yolo(
         "pretrained": not from_scratch,
         "deterministic": deterministic,
     }
+    if patience is not None:
+        train_kwargs["patience"] = patience
     if device:
         train_kwargs["device"] = device
     if seed is not None:
@@ -113,6 +116,7 @@ def train_yolo(
         "init_weights": init_weights,
         "data": str(data_yaml),
         "epochs": epochs,
+        "patience": patience,
         "imgsz": imgsz,
         "batch": batch,
         "workers": workers,
@@ -278,6 +282,7 @@ def main() -> None:
     parser.add_argument("--model", default="yolo11n.pt")
     parser.add_argument("--data-yaml", required=True)
     parser.add_argument("--epochs", type=int, default=100)
+    parser.add_argument("--patience", type=int, default=None, help="Early-stopping patience in epochs. Leave unset for Ultralytics default.")
     parser.add_argument("--imgsz", type=int, default=1280)
     parser.add_argument("--batch", type=int, default=8)
     parser.add_argument("--workers", type=int, default=4, help="Dataloader workers. Keep modest on shared servers.")
@@ -308,6 +313,7 @@ def main() -> None:
         print(json.dumps(train_yolo(**payload), indent=2))
     else:
         payload.pop("epochs")
+        payload.pop("patience")
         payload.pop("batch")
         payload.pop("seed")
         payload.pop("deterministic")

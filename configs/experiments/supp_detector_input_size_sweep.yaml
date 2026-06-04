@@ -14,6 +14,7 @@ command_csv: outputs/experiments/supp_detector_input_size_sweep_commands.csv
 training:
   imgsz_list: [960, 1280, 1536]
   epochs: 100
+  patience: 30
   seeds: [42]
   deterministic: true
   run_eval: true
@@ -25,6 +26,7 @@ training:
 
 final_statistical_expansion:
   seeds: [42, 123, 2026]
+  patience: 50
   trigger: >
     Expand only the strongest baseline and strongest proposed detector after
     the one-seed resolution pilot identifies the useful input size range.

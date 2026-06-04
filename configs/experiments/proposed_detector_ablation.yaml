@@ -14,6 +14,7 @@ command_csv: outputs/experiments/proposed_ablation_commands.csv
 training:
   imgsz: 1280
   epochs: 100
+  patience: 30
   batch: 8
   seeds: [42, 123, 2026]
   deterministic: true

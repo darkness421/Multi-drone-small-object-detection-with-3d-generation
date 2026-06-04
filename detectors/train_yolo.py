@@ -17,6 +17,7 @@ def main() -> None:
     parser.add_argument("--model", default="yolo11n.pt", help="Example: yolo11n.pt or yolov8n.pt")
     parser.add_argument("--data-yaml", default="configs/detector/visdrone_yolo_data.yaml")
     parser.add_argument("--epochs", type=int, default=100)
+    parser.add_argument("--patience", type=int, default=None, help="Early-stopping patience in epochs. Leave unset for Ultralytics default.")
     parser.add_argument("--imgsz", type=int, default=1280)
     parser.add_argument("--batch", type=int, default=8)
     parser.add_argument("--workers", type=int, default=4, help="Dataloader workers. Keep modest on shared servers.")
@@ -43,6 +44,7 @@ def main() -> None:
             model=args.model,
             data_yaml=args.data_yaml,
             epochs=args.epochs,
+            patience=args.patience,
             imgsz=args.imgsz,
             batch=args.batch,
             workers=args.workers,

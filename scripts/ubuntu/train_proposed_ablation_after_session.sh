@@ -10,8 +10,9 @@ DATA_YAML=${DATA_YAML:-configs/detector/visdrone_yolo_data.yaml}
 EPOCHS=${EPOCHS:-100}
 BATCH=${BATCH:-8}
 IMGSZ=${IMGSZ:-1280}
+PATIENCE=${PATIENCE:-}
 SEEDS=${SEEDS:-42,123,2026}
-GPUS=${GPUS:-0,1}
+GPUS=${GPUS:-0}
 ENABLE_PLANNED=${ENABLE_PLANNED:-0}
 SKIP_COMPLETED=${SKIP_COMPLETED:-0}
 COMPLETED_RESULTS_CSV=${COMPLETED_RESULTS_CSV:-}
@@ -105,6 +106,9 @@ GEN_ARGS=(
   --imgsz "$IMGSZ"
   --seeds "$SEEDS"
 )
+if [[ -n "$PATIENCE" ]]; then
+  GEN_ARGS+=(--patience "$PATIENCE")
+fi
 if [[ "$ENABLE_PLANNED" == "1" ]]; then
   GEN_ARGS+=(--enable-planned)
 fi

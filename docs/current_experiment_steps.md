@@ -99,7 +99,20 @@ weak medium seeds and move to Step 3b.
 
 ## Step 3b. YOLOv11/P2/Tiny-Activation Next-Step Screen
 
-Status: configured, pending decision after current screening signal.
+Status: pending session active; waits for `server-top3-proposed-screening` to
+finish before launching.
+
+Pending session:
+
+```bash
+tmux attach -t server-yolov11-p2-next-step-pending
+```
+
+Launch session after the wait clears:
+
+```bash
+tmux attach -t server-yolov11-p2-next-step
+```
 
 Config:
 
@@ -125,10 +138,19 @@ One-seed candidates:
 - `YOLOv11l-P2 + wavelet + CBAM + tiny_frelu_neck`, initialized from
   `yolo11l.pt`
 
+Early stopping policy:
+
+- Screening and supplementary pilot runs use `patience=30`.
+- Final statistical confirmation runs use `patience=50`.
+- The current in-progress top-3 run was launched with Ultralytics default
+  `patience=100`; do not restart it only for patience unless the metric plateaus
+  clearly below the gate.
+
 Efficiency reference:
 
 - YOLOv11l baseline: 25.32M params / 87.3 GFLOPs.
-- YOLOv11l-P2: 26.12M params / 113.6 GFLOPs.
+- YOLOv11l-P2 smoke test: 26.12M params; YAML alias loads successfully from
+  `configs/detector/yolo11l-p2.yaml`.
 - YOLOv11m-P2: 20.59M params / 88.9 GFLOPs; use this if `yolo11m.pt` is
   downloaded or otherwise available for partial initialization.
 

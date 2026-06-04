@@ -27,6 +27,7 @@ class ProposedJob:
     implementation_status: str
     seed: int
     gpu: int
+    patience: int | None
     run_name: str
     log_file: Path
     status: str
@@ -67,6 +68,7 @@ def build_jobs(
     epochs: int | None,
     batch: int | None,
     imgsz: int | None,
+    patience: int | None,
     seeds: list[int] | None,
     enable_planned: bool,
     completed_keys: set[tuple[str, str, str, int]] | None = None,
@@ -79,6 +81,8 @@ def build_jobs(
     selected_epochs = int(epochs if epochs is not None else training.get("epochs", 100))
     selected_batch = int(batch if batch is not None else training.get("batch", 8))
     selected_imgsz = int(imgsz if imgsz is not None else training.get("imgsz", 1280))
+    selected_patience = patience if patience is not None else training.get("patience")
+    selected_patience = int(selected_patience) if selected_patience is not None else None
     selected_seeds = seeds or [int(seed) for seed in training.get("seeds", [42, 123, 2026])]
     deterministic = bool(training.get("deterministic", True))
 
@@ -128,6 +132,7 @@ def build_jobs(
                             implementation_status=implementation_status,
                             seed=int(seed),
                             gpu=gpu,
+                            patience=selected_patience,
                             run_name=run_name,
                             log_file=log_file,
                             status=status,
@@ -179,6 +184,8 @@ def build_jobs(
                         "--implementation-status",
                         implementation_status,
                     ]
+                    if selected_patience is not None:
+                        command_parts.extend(["--patience", str(selected_patience)])
                     if init_weights:
                         command_parts.extend(["--init-weights", init_weights])
                     if not model_patches:
@@ -208,6 +215,7 @@ def build_jobs(
                         implementation_status=implementation_status,
                         seed=int(seed),
                         gpu=gpu,
+                        patience=selected_patience,
                         run_name=run_name,
                         log_file=log_file,
                         status=status,
@@ -240,7 +248,16 @@ def load_completed_keys(paths: list[Path]) -> set[tuple[str, str, str, int]]:
     return completed
 
 
-def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_yaml: str, epochs: int, batch: int, imgsz: int) -> None:
+def write_command_csv(
+    path: Path,
+    jobs: list[ProposedJob],
+    session: str,
+    data_yaml: str,
+    epochs: int,
+    batch: int,
+    imgsz: int,
+    patience: int | None,
+) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fieldnames = [
         "created_at",
@@ -259,6 +276,7 @@ def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_ya
         "imgsz",
         "batch",
         "epochs",
+        "patience",
         "data_yaml",
         "run_name",
         "log_file",
@@ -267,8 +285,17 @@ def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_ya
         "command",
     ]
     exists = path.exists()
+    active_fieldnames = fieldnames
+    if exists:
+        with path.open("r", encoding="utf-8", newline="") as existing_handle:
+            try:
+                existing_header = next(csv.reader(existing_handle))
+            except StopIteration:
+                existing_header = []
+        if existing_header:
+            active_fieldnames = existing_header
     with path.open("a", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
+        writer = csv.DictWriter(handle, fieldnames=active_fieldnames, extrasaction="ignore", lineterminator="\n")
         if not exists:
             writer.writeheader()
         created_at = datetime.now().astimezone().isoformat(timespec="seconds")
@@ -291,6 +318,7 @@ def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_ya
                     "imgsz": imgsz,
                     "batch": batch,
                     "epochs": epochs,
+                    "patience": patience if patience is not None else "",
                     "data_yaml": data_yaml,
                     "run_name": job.run_name,
                     "log_file": str(job.log_file),
@@ -381,6 +409,7 @@ def main() -> None:
     parser.add_argument("--epochs", type=int, default=None)
     parser.add_argument("--batch", type=int, default=None)
     parser.add_argument("--imgsz", type=int, default=None)
+    parser.add_argument("--patience", type=int, default=None)
     parser.add_argument("--seeds", default=None)
     parser.add_argument("--enable-planned", action="store_true")
     parser.add_argument("--manifest", default=None)
@@ -411,6 +440,7 @@ def main() -> None:
         epochs=args.epochs,
         batch=args.batch,
         imgsz=args.imgsz,
+        patience=args.patience,
         seeds=seeds,
         enable_planned=args.enable_planned,
         completed_keys=completed_keys,
@@ -419,6 +449,8 @@ def main() -> None:
     selected_epochs = int(args.epochs if args.epochs is not None else training.get("epochs", 100))
     selected_batch = int(args.batch if args.batch is not None else training.get("batch", 8))
     selected_imgsz = int(args.imgsz if args.imgsz is not None else training.get("imgsz", 1280))
+    selected_patience = args.patience if args.patience is not None else training.get("patience")
+    selected_patience = int(selected_patience) if selected_patience is not None else None
     write_command_csv(
         resolve_path(config.get("command_csv", "outputs/experiments/proposed_ablation_commands.csv")),
         jobs,
@@ -427,6 +459,7 @@ def main() -> None:
         selected_epochs,
         selected_batch,
         selected_imgsz,
+        selected_patience,
     )
     job_root = resolve_path(args.job_root)
     write_job_scripts(job_root, jobs, config, args.conda_env, gpus, selected_imgsz)
@@ -436,6 +469,7 @@ def main() -> None:
         "queued_count": sum(1 for job in jobs if job.status == "queued"),
         "skipped_count": sum(1 for job in jobs if job.status != "queued"),
         "skipped_completed_count": sum(1 for job in jobs if job.status == "skipped_completed"),
+        "patience": selected_patience,
         "jobs": [job.__dict__ | {"log_file": str(job.log_file)} for job in jobs],
     }
     manifest_path = resolve_path(args.manifest) if args.manifest else job_root / "manifest.json"

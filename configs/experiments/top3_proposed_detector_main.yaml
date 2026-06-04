@@ -15,6 +15,7 @@ command_csv: outputs/experiments/top3_proposed_main_commands.csv
 training:
   imgsz: 1280
   epochs: 100
+  patience: 50
   batch: 8
   seeds: [42, 123, 2026]
   deterministic: true
