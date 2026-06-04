@@ -22,6 +22,7 @@ Start here when the repo feels crowded.
 - `revised_accv_contributions_and_figures.md`: paper contribution and figure story.
 - `notion_research_comparison_notes.md`: extracted Notion research shortlist plus 2026-05-30 public-code availability notes.
 - `github_overleaf_automation.md`: guarded GitHub, Overleaf, and Notion publication workflow, including the 48-hour loop.
+- `supplementary_small_object_analysis_plan.md`: supplementary ablation heat-map and input pixel-size sweep plan for small-object reviewer evidence.
 
 ## Setup Docs
 

@@ -1,0 +1,81 @@
+name: supp_detector_input_size_sweep
+description: >
+  Supplementary-only detector input pixel-size sweep. The goal is to separate
+  architectural gains from plain resolution gains for UAV small-object
+  detection.
+
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+dataset_tag: visdrone_input_size_sweep
+project: outputs/detectors/server_input_size_sweep
+log_dir: outputs/logs/server_baselines
+experiment_root: outputs/experiments
+command_csv: outputs/experiments/supp_detector_input_size_sweep_commands.csv
+
+training:
+  imgsz_list: [960, 1280, 1536]
+  epochs: 100
+  seeds: [42]
+  deterministic: true
+  run_eval: true
+  roc_auc: true
+  batch_by_imgsz:
+    960: 6
+    1280: 4
+    1536: 2
+
+final_statistical_expansion:
+  seeds: [42, 123, 2026]
+  trigger: >
+    Expand only the strongest baseline and strongest proposed detector after
+    the one-seed resolution pilot identifies the useful input size range.
+
+base_models:
+  - yolo11l.pt
+
+ablations:
+  - name: resolution_control
+    method_template: InputSize-YOLOv11l-{base_slug}
+    train_model_template: "{base_model}"
+    init_weights_template: ""
+    implementation_status: implemented
+    proposed_module: resolution_control
+    model_patches: ""
+    enabled: true
+    notes: >
+      Strongest current baseline family. This row tells reviewers how much of
+      the gain is due to input pixels alone.
+
+  - name: p2_tiny_frelu
+    method_template: InputSize-P2TinyFReLU-{base_slug}
+    train_model_template: configs/detector/yolo11l-p2.yaml
+    init_weights_template: yolo11l.pt
+    implementation_status: implemented
+    proposed_module: p2_head+tiny_frelu_neck
+    model_patches: tiny_frelu_neck
+    enabled: true
+    requires:
+      - configs/detector/yolo11-p2.yaml
+      - yolo11l.pt
+      - detectors/proposed/modules.py
+    notes: >
+      Proposed small-object detector candidate. Compare against the resolution
+      control at the same input size, not only against the 1280 baseline.
+
+supplementary_reporting:
+  figures:
+    - input_size_ap_ap50.png
+    - input_size_efficiency.png
+    - ablation_delta_heatmap.png
+  metrics:
+    - AP
+    - AP50
+    - recall
+    - F1
+    - FPS
+    - latency_ms
+    - Params
+    - GFLOPs
+  reviewer_question_answered: >
+    Does the proposed detector improve small-object evidence beyond the
+    expected AP increase from high-resolution input scaling around the official
+    1280 protocol?

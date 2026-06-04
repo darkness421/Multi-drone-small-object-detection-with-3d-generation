@@ -14,13 +14,14 @@ DO_OVERLEAF_COMMIT=${DO_OVERLEAF_COMMIT:-0}
 DO_OVERLEAF_PUSH=${DO_OVERLEAF_PUSH:-0}
 UPDATE_RESULTS_SECTION=${UPDATE_RESULTS_SECTION:-1}
 TOP_K=${TOP_K:-8}
+DO_SUPPLEMENTARY_ANALYSIS=${DO_SUPPLEMENTARY_ANALYSIS:-1}
 DO_NOTION_EXPORT=${DO_NOTION_EXPORT:-1}
 DO_NOTION_UPDATE=${DO_NOTION_UPDATE:-0}
 NOTION_EXPORT_DIR=${NOTION_EXPORT_DIR:-notion_exports/bidaily}
 NOTION_MARKDOWN_PATH=${NOTION_MARKDOWN_PATH:-}
 NOTION_NO_IMAGES=${NOTION_NO_IMAGES:-1}
 
-PUBLISH_PATHS=${PUBLISH_PATHS:-docs/24h_experiment_orchestrator.md,docs/github_overleaf_automation.md,scripts/ubuntu/run_24h_experiment_orchestrator.sh,scripts/ubuntu/run_bidaily_publication_update.sh,scripts/ubuntu/publish_experiment_update.sh,scripts/export_overleaf_results.py,scripts/build_bidaily_update_markdown.py,notion_exports/bidaily,outputs/experiments/server_with_proposed,outputs/reports/server_with_proposed,outputs/experiments/server_fresh/large_20260524_140922,outputs/reports/server_fresh_baselines/large_20260524_140922}
+PUBLISH_PATHS=${PUBLISH_PATHS:-docs/24h_experiment_orchestrator.md,docs/github_overleaf_automation.md,docs/qualitative_gradcam_plan.md,docs/supplementary_small_object_analysis_plan.md,configs/experiments/supp_detector_input_size_sweep.yaml,scripts/ubuntu/run_24h_experiment_orchestrator.sh,scripts/ubuntu/run_bidaily_publication_update.sh,scripts/ubuntu/train_input_size_sweep.sh,scripts/ubuntu/publish_experiment_update.sh,scripts/export_overleaf_results.py,scripts/build_bidaily_update_markdown.py,scripts/build_supplementary_detector_analysis.py,notion_exports/bidaily,outputs/experiments/server_with_proposed,outputs/reports/server_with_proposed,outputs/reports/supplementary_detector,outputs/experiments/server_fresh/large_20260524_140922,outputs/reports/server_fresh_baselines/large_20260524_140922}
 
 log() {
   printf '[%s] %s\n' "$(date -Is)" "$*"
@@ -47,6 +48,10 @@ maybe_push() {
     log "No upstream configured for $(git -C "$repo" rev-parse --abbrev-ref HEAD); skipping push"
   fi
 }
+
+if [[ "$DO_SUPPLEMENTARY_ANALYSIS" == "1" ]]; then
+  python -m scripts.build_supplementary_detector_analysis
+fi
 
 if [[ "$DO_OVERLEAF_SYNC" == "1" ]]; then
   update_flag=()

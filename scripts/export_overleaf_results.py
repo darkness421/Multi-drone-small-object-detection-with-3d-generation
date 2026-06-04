@@ -20,6 +20,7 @@ DEFAULT_FIGURE_DIRS = [
     Path("outputs/reports/server_with_proposed/figures"),
     Path("outputs/reports/server_fresh_baselines/large_20260524_140922/figures"),
     Path("outputs/reports/live/large_20260524_140922_figures"),
+    Path("outputs/reports/supplementary_detector/figures"),
 ]
 
 
