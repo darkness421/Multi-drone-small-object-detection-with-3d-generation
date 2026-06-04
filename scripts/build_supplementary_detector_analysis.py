@@ -243,11 +243,17 @@ def group_resolution_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
     return sorted(out, key=lambda row: (row["method"], int(row["imgsz"])))
 
 
-def plot_resolution_scores(rows: list[dict[str, Any]], out: Path) -> Path:
+def write_resolution_note(out_dir: Path, message: str) -> Path:
+    path = out_dir / "input_size_sweep_status.md"
+    path.write_text(message.rstrip() + "\n", encoding="utf-8")
+    return path
+
+
+def plot_resolution_scores(rows: list[dict[str, Any]], out: Path) -> Path | None:
     methods = sorted({row["method"] for row in rows})
     sizes = sorted({int(row["imgsz"]) for row in rows})
     if len(sizes) < 2:
-        return save_empty(out, "Input Size vs AP/AP50", "Need at least two input sizes")
+        return None
     plt = setup_matplotlib()
     fig, ax = plt.subplots(figsize=(9.2, 5.6), constrained_layout=True)
     for method in methods:
@@ -272,11 +278,11 @@ def plot_resolution_scores(rows: list[dict[str, Any]], out: Path) -> Path:
     return out
 
 
-def plot_resolution_efficiency(rows: list[dict[str, Any]], out: Path) -> Path:
+def plot_resolution_efficiency(rows: list[dict[str, Any]], out: Path) -> Path | None:
     methods = sorted({row["method"] for row in rows})
     sizes = sorted({int(row["imgsz"]) for row in rows})
     if len(sizes) < 2:
-        return save_empty(out, "Input Size vs Efficiency", "Need at least two input sizes")
+        return None
     plt = setup_matplotlib()
     fig, ax1 = plt.subplots(figsize=(9.2, 5.6), constrained_layout=True)
     ax2 = ax1.twinx()
@@ -317,11 +323,26 @@ def build_resolution_sweep(results_rows: list[dict[str, str]], out_dir: Path) ->
         writer.writeheader()
         for row in rows:
             writer.writerow({key: row.get(key, "") for key in fieldnames})
-    return [
-        csv_path,
-        plot_resolution_scores(rows, out_dir / "figures" / "input_size_ap_ap50.png"),
-        plot_resolution_efficiency(rows, out_dir / "figures" / "input_size_efficiency.png"),
-    ]
+    written = [csv_path]
+    score_plot = plot_resolution_scores(rows, out_dir / "figures" / "input_size_ap_ap50.png")
+    efficiency_plot = plot_resolution_efficiency(rows, out_dir / "figures" / "input_size_efficiency.png")
+    if score_plot and efficiency_plot:
+        written.extend([score_plot, efficiency_plot])
+    else:
+        for stale in [
+            out_dir / "figures" / "input_size_ap_ap50.png",
+            out_dir / "figures" / "input_size_efficiency.png",
+        ]:
+            if stale.exists():
+                stale.unlink()
+        written.append(
+            write_resolution_note(
+                out_dir,
+                "Input-size figures are intentionally withheld until at least two "
+                "high-resolution settings have completed.",
+            )
+        )
+    return written
 
 
 def main() -> None:

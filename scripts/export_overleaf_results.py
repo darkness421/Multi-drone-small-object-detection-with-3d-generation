@@ -138,6 +138,8 @@ def write_detector_table(summary_rows: list[dict[str, str]], out_path: Path, top
 def copy_figures(figure_dirs: list[Path], overleaf_repo: Path) -> list[str]:
     figure_out = overleaf_repo / "figures" / "auto"
     figure_out.mkdir(parents=True, exist_ok=True)
+    for stale in figure_out.glob("*.png"):
+        stale.unlink()
     copied: list[str] = []
     seen: set[str] = set()
     for figure_dir in figure_dirs:
