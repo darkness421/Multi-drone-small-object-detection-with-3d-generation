@@ -12,8 +12,8 @@
     </style>
   </defs>
   <rect class="bg" width="1200" height="675"/>
-  <text class="title" x="60" y="56">Proposed Small-Object Perception Module</text>
-  <text class="sub" x="60" y="84">Same detector protocol; ablate each component before the full proposed model.</text>
+  <text class="title" x="60" y="56">Proposed YOLO Evidence Generator</text>
+  <text class="sub" x="60" y="84">Current drawing uses honest placeholders until the detector gate selects the final active module.</text>
 
   <rect class="box" x="70" y="160" width="130" height="105"/>
   <text class="label" x="103" y="195">UAV</text>
@@ -21,22 +21,22 @@
   <text class="small" x="94" y="242">1280 px</text>
 
   <rect class="box mod" x="245" y="150" width="165" height="125"/>
-  <text class="label" x="282" y="185">Wavelet</text>
-  <text class="label" x="300" y="207">Stem</text>
-  <text class="small" x="273" y="238">high-frequency</text>
-  <text class="small" x="273" y="258">small-object cue</text>
+  <text class="label" x="283" y="185">P2 /</text>
+  <text class="label" x="280" y="207">Stride-4</text>
+  <text class="small" x="273" y="238">high-res feature</text>
+  <text class="small" x="273" y="258">tiny-object cue</text>
 
   <rect class="box base" x="455" y="150" width="165" height="125"/>
   <text class="label" x="503" y="185">YOLO</text>
   <text class="label" x="485" y="207">Backbone</text>
-  <text class="small" x="486" y="238">v10/v11/v12</text>
-  <text class="small" x="486" y="258">nano/small base</text>
+  <text class="small" x="486" y="238">YOLOv11l gate</text>
+  <text class="small" x="486" y="258">backbone: TBD</text>
 
   <rect class="box mod" x="665" y="150" width="180" height="125"/>
-  <text class="label" x="700" y="185">Partial</text>
-  <text class="label" x="690" y="207">Deformable</text>
-  <text class="label" x="730" y="229">Neck</text>
-  <text class="small" x="695" y="258">adaptive local context</text>
+  <text class="label" x="705" y="185">TinyFReLU</text>
+  <text class="label" x="730" y="207">Neck</text>
+  <text class="small" x="695" y="238">spatial activation</text>
+  <text class="small" x="695" y="258">edge/texture residual</text>
 
   <rect class="box head" x="890" y="150" width="160" height="125"/>
   <text class="label" x="930" y="185">Detect</text>
@@ -45,14 +45,14 @@
   <text class="small" x="915" y="258">confidence</text>
 
   <rect class="box mod" x="455" y="370" width="165" height="115"/>
-  <text class="label" x="493" y="407">Patch /</text>
-  <text class="label" x="493" y="429">Tiling</text>
-  <text class="small" x="485" y="460">small-object recall</text>
+  <text class="label" x="500" y="407">NMS</text>
+  <text class="label" x="485" y="429">Variants</text>
+  <text class="small" x="485" y="460">adjacent objects</text>
 
   <rect class="box risk" x="690" y="370" width="180" height="115"/>
-  <text class="label" x="718" y="407">Ambiguity</text>
+  <text class="label" x="722" y="407">Evidence</text>
   <text class="label" x="733" y="429">Token</text>
-  <text class="small" x="718" y="460">risk, crop, view ID</text>
+  <text class="small" x="718" y="460">box, class, u, desc.</text>
 
   <path class="arrow" d="M200 212 L245 212"/>
   <path class="arrow" d="M410 212 L455 212"/>
@@ -64,14 +64,14 @@
 
   <rect x="85" y="545" width="1030" height="44" rx="8" class="tableHead"/>
   <text class="tableText" x="105" y="572">Ablation</text>
-  <text class="tableText" x="345" y="572">Wavelet stem</text>
-  <text class="tableText" x="540" y="572">Deformable neck</text>
-  <text class="tableText" x="760" y="572">Tiling inference</text>
+  <text class="tableText" x="345" y="572">P2 branch</text>
+  <text class="tableText" x="540" y="572">TinyFReLU</text>
+  <text class="tableText" x="760" y="572">NMS policy</text>
   <text class="tableText" x="980" y="572">Evidence token</text>
   <rect x="85" y="589" width="1030" height="46" rx="8" fill="#fff" stroke="#cbd5e1"/>
-  <text class="cellText" x="105" y="616">baseline / +A / +B / +T / full</text>
-  <text class="cellText" x="370" y="616">optional</text>
-  <text class="cellText" x="575" y="616">optional</text>
-  <text class="cellText" x="795" y="616">optional</text>
-  <text class="cellText" x="1010" y="616">optional</text>
+  <text class="cellText" x="105" y="616">YOLOv11l / +P2 / +TinyFReLU / +NMS / full</text>
+  <text class="cellText" x="370" y="616">under test</text>
+  <text class="cellText" x="575" y="616">under test</text>
+  <text class="cellText" x="795" y="616">under test</text>
+  <text class="cellText" x="1010" y="616">graph input</text>
 </svg>
