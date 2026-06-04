@@ -23,16 +23,17 @@ DEFAULT_FIGURE_DIRS = [
 ]
 
 
-def first_existing(paths: list[Path]) -> Path | None:
-    for path in paths:
-        if path.exists():
-            return path
-    return None
-
-
 def read_rows(path: Path) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
         return list(csv.DictReader(handle))
+
+
+def read_rows_many(paths: list[Path]) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    for path in paths:
+        if path.exists():
+            rows.extend(read_rows(path))
+    return rows
 
 
 def as_float(value: str | None) -> float:
@@ -85,8 +86,22 @@ def compact_name(row: dict[str, str]) -> str:
     return method
 
 
-def write_detector_table(summary_csv: Path, out_path: Path, top_k: int) -> None:
-    rows = read_rows(summary_csv)
+def dedupe_summary_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    best: dict[tuple[str, str, str], dict[str, str]] = {}
+    for row in rows:
+        key = (
+            row.get("dataset", ""),
+            row.get("method") or row.get("model") or "",
+            row.get("ablation") or row.get("proposed_module") or "",
+        )
+        old = best.get(key)
+        if old is None or as_float(row.get("best_AP_mean")) > as_float(old.get("best_AP_mean")):
+            best[key] = row
+    return list(best.values())
+
+
+def write_detector_table(summary_rows: list[dict[str, str]], out_path: Path, top_k: int) -> None:
+    rows = dedupe_summary_rows(summary_rows)
     rows = sorted(rows, key=lambda row: as_float(row.get("best_AP_mean")), reverse=True)[:top_k]
     out_path.parent.mkdir(parents=True, exist_ok=True)
     lines = [
@@ -140,7 +155,7 @@ def copy_figures(figure_dirs: list[Path], overleaf_repo: Path) -> list[str]:
 
 def write_status_section(
     out_path: Path,
-    summary_csv: Path,
+    summary_paths: list[Path],
     copied_figures: list[str],
     stage_gate_md: Path | None,
     proposed_gate_md: Path | None,
@@ -167,7 +182,7 @@ def write_status_section(
                 "",
             ]
         )
-    lines.append(f"% Source summary CSV: {summary_csv}")
+    lines.append("% Source summary CSVs: " + ", ".join(path.as_posix() for path in summary_paths))
     if stage_gate_md:
         lines.append(f"% Stage gate report: {stage_gate_md}")
     if proposed_gate_md:
@@ -192,7 +207,7 @@ def ensure_section_input(results_tex: Path, input_line: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--overleaf-repo", default="/tmp/accv-overleaf")
-    parser.add_argument("--summary-csv", default=None)
+    parser.add_argument("--summary-csv", action="append", default=[])
     parser.add_argument("--top-k", type=int, default=8)
     parser.add_argument("--figure-dir", action="append", default=[])
     parser.add_argument("--stage-gate-md", default=None)
@@ -204,19 +219,21 @@ def main() -> None:
     if not overleaf_repo.exists():
         raise SystemExit(f"Missing Overleaf repo: {overleaf_repo}")
 
-    summary_csv = Path(args.summary_csv) if args.summary_csv else first_existing(DEFAULT_SUMMARY_CANDIDATES)
-    if summary_csv is None or not summary_csv.exists():
+    summary_paths = [Path(item) for item in args.summary_csv] if args.summary_csv else DEFAULT_SUMMARY_CANDIDATES
+    summary_paths = [path for path in summary_paths if path.exists()]
+    summary_rows = read_rows_many(summary_paths)
+    if not summary_rows:
         raise SystemExit("No summary CSV found. Run result collection first or pass --summary-csv.")
 
     figure_dirs = [Path(item) for item in args.figure_dir] if args.figure_dir else DEFAULT_FIGURE_DIRS
     stage_gate_md = Path(args.stage_gate_md) if args.stage_gate_md else None
     proposed_gate_md = Path(args.proposed_gate_md) if args.proposed_gate_md else None
 
-    write_detector_table(summary_csv, overleaf_repo / "tables" / "auto_detector_results.tex", args.top_k)
+    write_detector_table(summary_rows, overleaf_repo / "tables" / "auto_detector_results.tex", args.top_k)
     copied_figures = copy_figures(figure_dirs, overleaf_repo)
     write_status_section(
         overleaf_repo / "sections" / "auto_experiment_status.tex",
-        summary_csv,
+        summary_paths,
         copied_figures,
         stage_gate_md if stage_gate_md and stage_gate_md.exists() else None,
         proposed_gate_md if proposed_gate_md and proposed_gate_md.exists() else None,
@@ -228,7 +245,7 @@ def main() -> None:
         )
 
     print(f"Overleaf export complete: {overleaf_repo}")
-    print(f"Summary CSV: {summary_csv}")
+    print("Summary CSVs: " + ", ".join(path.as_posix() for path in summary_paths))
     print("Generated: tables/auto_detector_results.tex")
     print("Generated: sections/auto_experiment_status.tex")
     if copied_figures:
