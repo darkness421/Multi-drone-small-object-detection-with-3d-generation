@@ -1,0 +1,118 @@
+name: yolov11_p2_tiny_activation_next_step
+description: >
+  Next-step detector sweep after the first top-3 screening: use the strongest
+  baseline family (YOLOv11) and test a stride-4 P2 small-object head,
+  small-object spatial activation, and crowded-object NMS follow-up.
+
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+dataset_tag: visdrone_yolov11_p2_next
+project: outputs/detectors/server_yolov11_p2_next_step
+log_dir: outputs/logs/server_baselines
+experiment_root: outputs/experiments
+command_csv: outputs/experiments/yolov11_p2_tiny_activation_next_step_commands.csv
+
+training:
+  imgsz: 1280
+  epochs: 100
+  batch: 4
+  seeds: [42]
+  deterministic: true
+  run_eval: true
+  roc_auc: true
+
+baseline_reference:
+  method: YOLOv11l
+  model: yolo11l.pt
+  AP: 0.3776566666666667
+  AP50: 0.59809
+  F1: 0.624751330466615
+  Params_M: 25.32
+  GFLOPs: 87.3
+
+base_models:
+  - yolo11l.pt
+
+ablations:
+  - name: tiny_frelu_neck
+    method_template: ProposedNext-TinyFReLU-{base_slug}
+    train_model_template: "{base_model}"
+    init_weights_template: ""
+    implementation_status: implemented
+    proposed_module: tiny_frelu_neck
+    model_patches: tiny_frelu_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: >
+      FReLU-style spatial activation with a learnable high-frequency residual.
+      Tests whether spatially conditioned activation improves tiny/adjacent
+      targets without changing the detector head.
+
+  - name: cbam_tiny_frelu
+    method_template: ProposedNext-CBAMTinyFReLU-{base_slug}
+    train_model_template: "{base_model}"
+    init_weights_template: ""
+    implementation_status: implemented
+    proposed_module: cbam_neck+tiny_frelu_neck
+    model_patches: cbam_neck,tiny_frelu_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Spatial/channel attention plus tiny-object spatial activation.
+
+  - name: p2_tiny_frelu
+    method_template: ProposedNext-P2TinyFReLU-{base_slug}
+    train_model_template: configs/detector/yolo11l-p2.yaml
+    init_weights_template: yolo11l.pt
+    implementation_status: implemented
+    proposed_module: p2_head+tiny_frelu_neck
+    model_patches: tiny_frelu_neck
+    enabled: true
+    requires:
+      - configs/detector/yolo11-p2.yaml
+      - yolo11l.pt
+      - detectors/proposed/modules.py
+    notes: >
+      Adds a stride-4 P2 detection branch initialized from YOLOv11l weights
+      where shapes match. P2 branch is newly initialized; neck activation uses
+      the tiny-object FReLU variant.
+
+  - name: p2_full_light
+    method_template: ProposedNext-P2FullLight-{base_slug}
+    train_model_template: configs/detector/yolo11l-p2.yaml
+    init_weights_template: yolo11l.pt
+    implementation_status: implemented
+    proposed_module: p2_head+wavelet_stem+cbam_neck+tiny_frelu_neck
+    model_patches: wavelet_stem,cbam_neck,tiny_frelu_neck
+    enabled: true
+    requires:
+      - configs/detector/yolo11-p2.yaml
+      - yolo11l.pt
+      - detectors/proposed/modules.py
+    notes: >
+      Full lightweight small-object variant for crowded UAV scenes. Keep this
+      as a one-seed screen first because P2 increases GFLOPs.
+
+postprocess_follow_up:
+  nms_variants:
+    - standard_nms
+    - soft_nms_linear
+    - soft_nms_gaussian
+    - diou_nms
+    - wbf_for_tta_or_ensembles
+  iou_thresholds: [0.45, 0.55, 0.65, 0.75]
+  conf_thresholds: [0.001, 0.01, 0.05]
+  subsets:
+    - all_val
+    - tiny_objects
+    - adjacent_or_overlapping_objects
+    - high_density_frames
+
+decision_rule:
+  minimum_success: >
+    Proposed best AP must exceed YOLOv11l AP=0.3777 while keeping Params near
+    or below the YOLOv11l scale. If AP is tied, prefer fewer Params/GFLOPs and
+    better adjacent-object recall.
+  strong_success: >
+    AP >= 0.382 with Params <= 26.2M, or AP >= 0.378 with Params <= 25.3M and
+    lower crowded-object false suppression after NMS tuning.

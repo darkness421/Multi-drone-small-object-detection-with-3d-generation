@@ -41,6 +41,7 @@ def train_yolo(
     seed: int | None = None,
     deterministic: bool = True,
     from_scratch: bool = False,
+    init_weights: str | None = None,
     method: str | None = None,
     ablation: str | None = None,
     base_model: str | None = None,
@@ -60,6 +61,9 @@ def train_yolo(
     train_model = scratch_model_name(model) if from_scratch else model
     logger.info("Training %s on %s", train_model, data_yaml)
     yolo = YOLO(train_model)
+    if init_weights:
+        logger.info("Loading initialization weights from %s", init_weights)
+        yolo.load(init_weights)
     patch_summary: list[str] = []
     trainer = None
     if model_patches:
@@ -106,6 +110,7 @@ def train_yolo(
         "patch_summary": patch_summary,
         "dataset": infer_dataset_name(data_yaml),
         "from_scratch": from_scratch,
+        "init_weights": init_weights,
         "data": str(data_yaml),
         "epochs": epochs,
         "imgsz": imgsz,

@@ -87,6 +87,29 @@ class CBAMBlock(nn.Module):
         return channel_refined * (1.0 + torch.tanh(self.gain) * (spatial_gate - 0.5))
 
 
+class TinySpatialFReLU(nn.Module):
+    """FReLU-style spatial activation with a tiny-object high-frequency condition.
+
+    The activation keeps the FReLU idea of max(x, spatial_condition(x)), but
+    adds a small learnable high-frequency residual to preserve weak edges and
+    texture cues that are easy to erase for UAV tiny objects.
+    """
+
+    def __init__(self, channels: int, initial_edge_gain: float = 0.05) -> None:
+        super().__init__()
+        self.condition = nn.Sequential(
+            nn.Conv2d(channels, channels, kernel_size=3, stride=1, padding=1, groups=channels, bias=False),
+            nn.BatchNorm2d(channels),
+        )
+        self.blur = nn.AvgPool2d(kernel_size=3, stride=1, padding=1, count_include_pad=False)
+        self.edge_gain = nn.Parameter(torch.tensor(float(initial_edge_gain)))
+
+    def forward(self, x: Tensor) -> Tensor:
+        edge = x - self.blur(x)
+        condition = self.condition(x) + torch.tanh(self.edge_gain) * edge
+        return torch.maximum(x, condition)
+
+
 class PartialDeformableRefine(nn.Module):
     """Partial-channel deformable refinement for YOLO neck features."""
 
@@ -223,6 +246,8 @@ def apply_proposed_patches(model: nn.Module, patch_spec: str | None) -> list[str
             applied.extend(wrap_neck(model, patch, lambda channels: SEBlock(channels)))
         elif patch == "cbam_neck":
             applied.extend(wrap_neck(model, patch, lambda channels: CBAMBlock(channels)))
+        elif patch in {"frelu_neck", "tiny_frelu_neck"}:
+            applied.extend(wrap_neck(model, patch, lambda channels: TinySpatialFReLU(channels)))
         elif patch == "partial_deformable_neck":
             applied.extend(wrap_neck(model, patch, lambda channels: PartialDeformableRefine(channels)))
         else:

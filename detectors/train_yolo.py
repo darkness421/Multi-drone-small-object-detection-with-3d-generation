@@ -24,6 +24,7 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--non-deterministic", action="store_true")
     parser.add_argument("--from-scratch", action="store_true", help="Train from model YAML instead of pretrained .pt weights.")
+    parser.add_argument("--init-weights", default=None, help="Optional pretrained weights to load into a YAML architecture.")
     parser.add_argument("--method", default=None, help="Optional method label written to run summaries.")
     parser.add_argument("--ablation", default=None, help="Optional ablation label written to run summaries.")
     parser.add_argument("--base-model", default=None, help="Optional base model label for proposed ablations.")
@@ -49,6 +50,7 @@ def main() -> None:
             seed=args.seed,
             deterministic=not args.non_deterministic,
             from_scratch=args.from_scratch,
+            init_weights=args.init_weights,
             method=args.method,
             ablation=args.ablation,
             base_model=args.base_model,

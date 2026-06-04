@@ -20,11 +20,14 @@ Initial candidates:
 - YOLO11n
 - YOLO11s
 
-Current baseline-driven candidates after the 2026-05-19/24 VisDrone results:
+Current baseline-driven candidates after the 2026-05-19/24 and 2026-06-04
+VisDrone results:
 
-- YOLOv12m: current best overall baseline
-- YOLOv10m: current second-best medium baseline
-- YOLOv9s: current best lightweight/small baseline
+- YOLOv11l: current best large baseline, AP 0.3777 / AP50 0.5981 /
+  F1 0.6248, 25.32M params, 87.3 GFLOPs.
+- YOLOv12l and YOLOv8l: nearly tied large anchors.
+- YOLOv12m and YOLOv10m: efficient medium anchors for screening.
+- YOLOv9s: lightweight/small fallback.
 
 Current selection rule:
 
@@ -37,7 +40,28 @@ Current selection rule:
 Selection depends on the final AP/AP50/APsmall/FPS/Params/GFLOPs tradeoff after
 all baseline and comparison models are collected.
 
+Updated next-step rule:
+
+- If a proposed module is attached to a medium model, it must either exceed
+  YOLOv11l or offer a clearly better efficiency tradeoff.
+- If the medium screening remains below YOLOv11l, move the next detector round
+  to the YOLOv11 family.
+- Primary success target: AP greater than 0.3777 while keeping parameters near
+  or below 25.32M. A small AP tie is only useful if Params/GFLOPs and crowded
+  small-object recall improve.
+
 ## Module Ideas
+
+Current paper-facing framing:
+
+```text
+Frequency-guided ambiguity-aware evidence completion for UAV small objects.
+```
+
+Detector-side modules should improve tiny-object evidence while producing
+structured uncertainty/evidence that can be consumed later by 3D reconstruction
+and the LLM/VLM reasoner. The detector claim remains AP/AP50/APsmall/FPS; the
+system claim is tested later through ambiguity resolution and re-observation.
 
 - Wavelet stem for small-object high-frequency detail.
 - SE neck attention as a low-cost channel recalibration baseline.
@@ -45,6 +69,23 @@ all baseline and comparison models are collected.
 - Partial deformable neck for limited geometric flexibility without making the
   model too heavy.
 - Patch / tiling inference for dense small-object scenes.
+- P2 / stride-4 small-object detection head. The motivation is that stride-32
+  features are too coarse for tiny UAV objects; a P2 branch preserves local
+  edges and texture before objects collapse to a sub-cell signal.
+- Tiny-object spatial activation. We add a FReLU-style activation with a
+  learnable high-frequency condition:
+
+```text
+h(x) = x - AvgPool3x3(x)
+c(x) = DWConv3x3(x) + BN(x) + tanh(gamma) h(x)
+y = max(x, c(x))
+```
+
+This keeps the spatially conditioned FReLU idea while biasing the condition
+toward small edge/texture evidence. The current implementation is
+`tiny_frelu_neck` in `detectors/proposed/modules.py`.
+- Crowded-object NMS ablation: standard NMS, Soft-NMS, DIoU/CIoU-NMS, WBF for
+  TTA/ensembles, and IoU/confidence sweeps on adjacent-object subsets.
 
 ## Ablation
 
@@ -74,12 +115,31 @@ Top-3 proposed-module screening:
 - Expand only the winner to 3 seeds, then 5 seeds if it becomes the final paper
   candidate.
 
+YOLOv11/P2 next-step screening:
+
+- Use `configs/experiments/yolov11_p2_tiny_activation_next_step.yaml`.
+- One-seed screen first:
+  - `YOLOv11l + tiny_frelu_neck`
+  - `YOLOv11l + CBAM + tiny_frelu_neck`
+  - `YOLOv11l-P2 + tiny_frelu_neck`, initialized from `yolo11l.pt`
+  - `YOLOv11l-P2 + wavelet + CBAM + tiny_frelu_neck`, initialized from
+    `yolo11l.pt`
+- The P2 architecture lives in `configs/detector/yolo11-p2.yaml`; calling
+  `configs/detector/yolo11l-p2.yaml` lets Ultralytics infer scale `l`.
+- Measured model sizes before training:
+  - YOLOv11l baseline: 25.32M params / 87.3 GFLOPs from collected runs.
+  - YOLOv11l-P2: 26.12M params / 113.6 GFLOPs.
+  - YOLOv11m-P2: 20.59M params / 88.9 GFLOPs, promising if `yolo11m.pt`
+    becomes available for partial initialization.
+
 Config scaffold:
 
 - `configs/detector/proposed_yolo11_small_object.yaml`
 - `configs/experiments/proposed_detector_ablation.yaml`
 - `configs/experiments/top3_proposed_detector_screening.yaml`
 - `configs/experiments/top3_proposed_detector_main.yaml`
+- `configs/experiments/yolov11_p2_tiny_activation_next_step.yaml`
+- `configs/detector/yolo11-p2.yaml`
 
 Code scaffold:
 
@@ -112,16 +172,17 @@ The gate recommends one of:
 ## Queue Policy
 
 The proposed-ablation queue is attached after the VisDrone/UAVDT comparison
-supervisors so it does not steal GPUs from baseline runs:
+supervisors and defaults to GPU0. GPU1 is reserved for 3D reconstruction,
+Isaac, and local VLM/LLM system experiments:
 
 ```bash
-bash scripts/ubuntu/train_proposed_ablation_after_session.sh
+GPUS=0 bash scripts/ubuntu/train_proposed_ablation_after_session.sh
 ```
 
 Top-3 screening queue:
 
 ```bash
-bash scripts/ubuntu/train_top3_proposed_ablation_after_session.sh
+GPUS=0 bash scripts/ubuntu/train_top3_proposed_ablation_after_session.sh
 ```
 
 Default behavior is conservative:

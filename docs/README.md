@@ -5,12 +5,21 @@ Start here when the repo feels crowded.
 ## Active Docs
 
 - `server_progress.md`: current experiment status and decisions.
+- `experiment_steps_and_progress_summary.md`: one-file summary of all experiment steps, completed work, active runs, and next gates.
+- `current_experiment_steps.md`: step-by-step execution tracker for active/pending experiments.
+- `24h_experiment_orchestrator.md`: tmux-based automation for chaining detector, proposed-module, optional UAVDT, and optional 3D experiments.
+- `github_overleaf_automation.md`: guarded GitHub commit/push and Overleaf LaTeX snapshot export workflow.
+- `auto_research_loop.md`: guarded auto-research workflow for turning performance gaps into reviewed experiment candidates.
+- `agentic_automation_stack.md`: Ollama/local operator, OpenAI analyst, and Codex/OpenCode editor role split.
 - `server_training_plan.md`: Ubuntu detector baseline and proposed-module plan.
+- `server_gpu_allocation.md`: GPU0 detector lane and GPU1 3D/system lane policy.
 - `proposed_perception_module_plan.md`: detector-side proposed module, top-3 ablation, and final model selection rule.
+- `../configs/experiments/yolov11_p2_tiny_activation_next_step.yaml`: next-step YOLOv11/P2/TinyFReLU detector sweep when medium proposed candidates stay below YOLOv11l.
+- `../notion_exports/Proposed_Method_Update_YOLOv11_P2_TinyFReLU_2026-06-04.md`: Notion-ready proposed method update for the YOLOv11/P2/TinyFReLU strategy.
 - `3d_generation_experiment_plan.md`: Marine City multi-view, NeRF/Instant-NGP/Mip-NeRF/3DGS plan.
 - `llm_reasoner_adjudicator_plan.md`: final LLM/VLM adjudicator and re-observation policy plan.
 - `revised_accv_contributions_and_figures.md`: paper contribution and figure story.
-- `notion_research_comparison_notes.md`: extracted Notion research shortlist for comparison models.
+- `notion_research_comparison_notes.md`: extracted Notion research shortlist plus 2026-05-30 public-code availability notes.
 
 ## Setup Docs
 

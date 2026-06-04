@@ -21,6 +21,7 @@ class ProposedJob:
     method: str
     base_model: str
     train_model: str
+    init_weights: str
     proposed_module: str
     model_patches: str
     implementation_status: str
@@ -93,6 +94,7 @@ def build_jobs(
             implementation_status = str(ablation_cfg.get("implementation_status", "planned"))
             enabled = bool(ablation_cfg.get("enabled", False))
             train_model = fmt_template(str(ablation_cfg.get("train_model_template", "{base_model}")), base_model)
+            init_weights = fmt_template(str(ablation_cfg.get("init_weights_template", "") or ""), base_model)
             requirements = [str(item) for item in ablation_cfg.get("requires", [])]
             requirements_ready, missing_reason = required_files_exist(requirements, base_model) if requirements else (True, "")
             should_queue = enabled and (implementation_status == "implemented" or enable_planned) and requirements_ready
@@ -120,6 +122,7 @@ def build_jobs(
                             method=method,
                             base_model=base_model,
                             train_model=train_model,
+                            init_weights=init_weights,
                             proposed_module=proposed_module,
                             model_patches=model_patches,
                             implementation_status=implementation_status,
@@ -176,6 +179,8 @@ def build_jobs(
                         "--implementation-status",
                         implementation_status,
                     ]
+                    if init_weights:
+                        command_parts.extend(["--init-weights", init_weights])
                     if not model_patches:
                         index = command_parts.index("--model-patches")
                         del command_parts[index : index + 2]
@@ -197,6 +202,7 @@ def build_jobs(
                         method=method,
                         base_model=base_model,
                         train_model=train_model,
+                        init_weights=init_weights,
                         proposed_module=proposed_module,
                         model_patches=model_patches,
                         implementation_status=implementation_status,
@@ -243,6 +249,7 @@ def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_ya
         "method",
         "base_model",
         "train_model",
+        "init_weights",
         "proposed_module",
         "model_patches",
         "implementation_status",
@@ -274,6 +281,7 @@ def write_command_csv(path: Path, jobs: list[ProposedJob], session: str, data_ya
                     "method": job.method,
                     "base_model": job.base_model,
                     "train_model": job.train_model,
+                    "init_weights": job.init_weights,
                     "proposed_module": job.proposed_module,
                     "model_patches": job.model_patches,
                     "implementation_status": job.implementation_status,
