@@ -1,6 +1,6 @@
 # Current Experiment Steps
 
-Updated: 2026-06-04
+Updated: 2026-06-11
 
 This page is the operational step tracker for the server experiments. It should
 be read together with `docs/server_progress.md`,
@@ -8,9 +8,14 @@ be read together with `docs/server_progress.md`,
 
 ## GPU Policy
 
-- GPU0: detector baselines, comparison models, proposed detector ablations, UAVDT.
-- GPU1: MarineCity 3D reconstruction, Isaac Sim smoke/export tasks, local VLM/LLM
-  reasoner tests.
+- Until the current detector queues finish, do not interrupt active tmux runs.
+- After the current queue clears, use GPU0 for proposed-detector follow-up around
+  `P2P4-SelfAttnFR-s123` while keeping the parameter budget near or below the
+  YOLOv11l baseline.
+- Use GPU1 for reviewer-facing comparison coverage: YOLO family scale sweeps and
+  runnable related-work models.
+- Start MarineCity/Isaac/LLM-reasoner GPU work after the detector comparison
+  queue is stable enough for the main ACCV table.
 
 ## Step 1. Finish Large Detector Anchors
 
@@ -99,8 +104,22 @@ weak medium seeds and move to Step 3b.
 
 ## Step 3b. YOLOv11/P2/Tiny-Activation Next-Step Screen
 
-Status: pending session active; waits for `server-top3-proposed-screening` to
-finish before launching.
+Status: active for the current under-parameter detector search.
+
+The detector search is now organized as three paper-facing core modules:
+
+- Core 1: compact capacity redistribution for reducing/controlling model size.
+- Core 2: multi-scale high-resolution evidence using P2/P3, TinyFReLU, and
+  DynFreq-C3 refinement. A new `P2/P3/P4-only` branch directly tests the
+  4x/8x/16x downsampling-head hypothesis from UAV small-object research.
+- Core 3: overlap-aware small-object decision through NMS/adjacent-object
+  analysis.
+
+Detailed module map:
+
+```text
+docs/proposed_detector_three_core_modules.md
+```
 
 Pending session:
 
@@ -137,6 +156,11 @@ One-seed candidates:
 - `YOLOv11l-P2 + tiny_frelu_neck`, initialized from `yolo11l.pt`
 - `YOLOv11l-P2 + wavelet + CBAM + tiny_frelu_neck`, initialized from
   `yolo11l.pt`
+- `P2BalV3 + dynfreq_c3_p2 + tiny_frelu_neck`
+- `P2BalV3 + dynfreq_c3_small + tiny_frelu_neck`
+- `P2P4 + tiny_frelu_neck`
+- `P2P4 + dynfreq_c3_p2 + tiny_frelu_neck`
+- `P2P4 + dynfreq_c3_small + tiny_frelu_neck`
 
 Early stopping policy:
 
@@ -151,12 +175,20 @@ Efficiency reference:
 - YOLOv11l baseline: 25.32M params / 87.3 GFLOPs.
 - YOLOv11l-P2 smoke test: 26.12M params; YAML alias loads successfully from
   `configs/detector/yolo11l-p2.yaml`.
+- `P2BalV3-FR`: about 25.28M params; current under-parameter balanced
+  candidate.
+- `P2CompV3-FR`: about 24.08M params; current compact-capacity candidate.
+- `P2EffV3-FR`: about 23.15M params; current efficiency candidate.
+- `dynfreq_c3_p2` adds only a small P2 C3/C3k2 refinement block, intended to
+  stay below the YOLOv11l parameter budget when used with `P2BalV3`.
+- `P2P4-FR`: 20.82M params / 109.3 GFLOPs at 640 reference size; detects only
+  from P2/4, P3/8, and P4/16.
 - YOLOv11m-P2: 20.59M params / 88.9 GFLOPs; use this if `yolo11m.pt` is
   downloaded or otherwise available for partial initialization.
 
 ## Step 4. Expand Winning Proposed Variant
 
-Status: pending Step 3.
+Status: pending final candidate freeze.
 
 Config:
 
@@ -166,9 +198,91 @@ configs/experiments/top3_proposed_detector_main.yaml
 
 Procedure:
 
-- edit config to keep only the winning backbone/module pair
-- run 3 seeds for preliminary statistics
-- expand to 5 seeds for main paper statistics if it is the final candidate
+- finish the current one-seed architecture search first
+- freeze one winning proposed detector family before statistical expansion
+- edit config to keep only the winning backbone/module pair and exact modules
+- run seeds `42`, `123`, and `2026` for the main comparison-consistent
+  statistics; do this after the winning model is fixed, not during exploratory
+  screening
+- use extra seeds only as optional supplementary robustness checks, not as the
+  main detector table
+
+Do not compute p-values from one-seed screening. After the final candidate is
+frozen, compute mean/std and paired p-values against the strongest baseline
+groups:
+
+- strongest YOLO large baseline, currently YOLOv11l
+- strongest compact/lightweight baseline
+- strongest runnable related-work comparison model, where protocol-compatible
+  results are available
+
+Primary statistical metrics:
+
+- AP
+- AP50
+- recall
+- F1
+
+Paper organization after the final detector is frozen:
+
+- main paper: one compact detector comparison table, one compact detector
+  ablation table, and one efficiency trade-off plot or table
+- supplementary: full per-seed table, p-values, all module ablations,
+  input-resolution sweep, per-category metrics, NMS variants, adjacent-object
+  subset, heat maps, and failure cases
+
+Current high-priority final-candidate families:
+
+- high-accuracy compact line: `P2CompV3-SEFR`
+- stronger compact trade-off line: `P2P4-SelfAttnFR`
+- keep `P2P4-SelfAttnFR-s123` running because it is already competitive while
+  using about `20.82M` params
+
+## Step 4b. Fill Reviewer-Facing YOLO Scale Coverage
+
+Status: queued after active detector runs.
+
+Rationale:
+
+- Reviewers may question whether the proposed detector was compared only against
+  convenient YOLO sizes.
+- Keep simple YOLO family baselines separate from prior-art paper models. A
+  model such as `LEAF-YOLO` is related work, not a plain YOLO scale baseline,
+  even though its name contains YOLO.
+- The main detector table should therefore include available nano/small/medium/
+  large anchors for each YOLO family where the checkpoint can be loaded fairly.
+- If a family does not provide the exact `n/s/m/l` naming convention, record the
+  practical scale anchors and mark unavailable variants clearly.
+
+Queue defaults:
+
+- YOLOv5u: `n/s/m/l`
+- YOLOv8: `n/s/m/l`
+- YOLOv9: `t/s/m/c/e` practical anchors, because `n/l` are not always exposed
+  as Ultralytics checkpoints
+- YOLOv10: `n/s/m/l`
+- YOLO11: `n/s/m/l`
+- YOLO12: `n/s/m/l`
+- YOLO26: `n/s/m/l`
+- RT-DETR-L as the non-YOLO large anchor
+
+Launcher:
+
+```bash
+bash scripts/ubuntu/train_extra_comparison_models_after_session.sh
+```
+
+The launcher uses `CHECK_MODELS=1`, so unavailable checkpoints are skipped and
+documented rather than blocking the queue.
+
+Paper/table grouping:
+
+- Group A: `Plain YOLO family baselines` for YOLOv5u/8/9/10/11/12/26 scale
+  comparisons trained under our protocol.
+- Group B: `Generic non-YOLO baselines` for RT-DETR-style stock baselines.
+- Group C: `Related-work prior models` for paper-proposed detectors such as
+  LEAF-YOLO, CSFPR-RTDETR, SFFEF-YOLO, LSOD-YOLO, UAVDet, and HF-D-FINE.
+- Group D: `Ours` for the selected proposed detector and its ablations.
 
 ## Step 5. Run UAVDT Cross-Dataset Validation
 

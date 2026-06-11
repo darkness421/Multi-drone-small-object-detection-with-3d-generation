@@ -1,0 +1,49 @@
+\subsection{Current Detector Search Status}
+\label{sec:current_detector_search_status}
+
+This section summarizes the detector experiments completed so far. The detector architecture is still being searched, and the final proposed detector may change after the compact-transfer experiments finish. Therefore, the current results are used to guide the next design step rather than to freeze the final method.
+
+\paragraph{Comparison baselines.}
+Among the collected plain YOLO-family baselines, YOLOv11l is currently the strongest baseline on the VisDrone validation protocol, with AP 0.3777 and AP50 0.5981. YOLOv12l and YOLOv8l are close, but remain slightly lower in AP. We keep these stock YOLO scale rows separate from prior-art detector models proposed by related papers. RT-DETR-L is reported as a generic non-YOLO baseline. CSFPR-RTDETR and LEAF-YOLO are related-work prior models evaluated at 640-pixel input resolution from repository-available assets; these rows are useful same-dataset sanity checks, but they should not be mixed directly with the 1280-pixel YOLO/proposed rows until the final comparison protocol is normalized.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Current detector comparison summary. Plain YOLO-family baselines, generic non-YOLO baselines, and related-work prior models are separated. P2P4-SelfAttnFR-s123 is the current selected trade-off detector candidate, but it is not yet the frozen final model until repeated-seed confirmation is complete.}
+\label{tab:current_detector_search}
+\begin{tabular}{llrrrrrl}
+\toprule
+Group & Model & AP & AP50 & Precision & Recall & Params & Status \\
+\midrule
+Ours & P2P4-SelfAttnFR-s123 & \textbf{0.3825} & \textbf{0.6061} & \textbf{0.6714} & 0.5867 & 20.82M & selected trade-off candidate \\
+Plain YOLO & YOLOv11l & 0.3777 & 0.5981 & 0.6666 & \textbf{0.5881} & 25.32M & strongest YOLO baseline \\
+Plain YOLO & YOLOv12l & 0.3771 & 0.5958 & 0.6698 & 0.5805 & 26.40M & 3-seed baseline \\
+Plain YOLO & YOLOv8l & 0.3765 & 0.5963 & 0.6695 & 0.5770 & 43.64M & 3-seed baseline \\
+Plain YOLO & YOLOv26l & 0.3732 & 0.5877 & 0.6602 & 0.5731 & 26.19M & 3-seed baseline \\
+Plain YOLO & YOLOv10l & 0.3728 & 0.5890 & 0.6677 & 0.5729 & 25.78M & 3-seed baseline \\
+Plain YOLO & YOLOv12m & 0.3669 & 0.5848 & 0.6646 & 0.5694 & 20.15M & 3-seed baseline \\
+Generic non-YOLO & RT-DETR-L & 0.3186 & 0.5279 & 0.6127 & 0.5382 & 32.83M & 1-seed baseline \\
+Related work & CSFPR-RTDETR (640-eval) & 0.3279 & 0.5253 & 0.6336 & 0.5145 & 14.09M & prior-art check \\
+Related work & LEAF-YOLO-S (640-eval) & 0.2810 & 0.4820 & 0.5770 & 0.4850 & 4.28M & prior-art check \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Current best candidate.}
+The current selected trade-off candidate is \textbf{P2P4-SelfAttnFR-s123}. It keeps the high-resolution P2/P3/P4 detection path and adds the SelfAttnFR refinement with TinySpatialFReLU. Compared with YOLOv11l, it improves AP from 0.3777 to 0.3825 and AP50 from 0.5981 to 0.6061, while reducing the parameter count from 25.32M to 20.82M. This is a useful trade-off result because it improves accuracy while using about 17.8\% fewer parameters.
+
+This result is still treated as a candidate rather than a frozen final detector. After the current queue finishes, the final model should be confirmed with seeds 42, 123, and 2026, and the paper should report mean, standard deviation, and significance tests against the strongest YOLO-family and runnable related-work comparison rows.
+
+\paragraph{Ablation trend.}
+The module-search results indicate that adding stride-4 evidence is helpful for small-object detection, but the final detector should control parameter growth. Earlier P2-CBAM-FR and DCT-FR candidates achieved slightly higher single-seed AP, but exceeded the YOLOv11l parameter budget. The P2P4-SelfAttnFR line is therefore more suitable for the current paper story because it keeps the detector compact while preserving high-resolution evidence. Follow-up ablations should test SelfAttnFR, TinySpatialFReLU, NMS variants, and frequency modules separately before the final repeated-seed run.
+
+\paragraph{Next detector experiments.}
+The active queue keeps the detector search separate from the later 3D reconstruction and reasoning experiments. GPU0 should continue compact proposed-detector follow-up around P2P4-SelfAttnFR, while GPU1 is used for reviewer-facing comparison coverage, including plain YOLO scale sweeps and runnable related-work prior models. Once the detector table is stable, the system-level reconstruction and reasoning components can be evaluated independently.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/fig02_detector_module}
+    \caption{Candidate detector structure used to summarize the current P2P4-SelfAttnFR trade-off result. This figure is a working schematic and should be updated if the final compact model changes after repeated-seed confirmation.}
+    \label{fig:current_p2p4_selfattnfr_candidate}
+\end{figure*}

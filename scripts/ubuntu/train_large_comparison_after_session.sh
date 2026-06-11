@@ -19,7 +19,8 @@ ROC_AUC=${ROC_AUC:-1}
 
 # L-size anchors for paper defense. Batch is conservative for 1280px training.
 # Keep RT-DETR-L here too because the current baseline only has partial seed coverage.
-MODEL_SPECS=${MODEL_SPECS:-yolov8l.pt:2,yolov10l.pt:2,yolo11l.pt:2,yolo12l.pt:2,yolo26l.pt:2,rtdetr-l.pt:2}
+# YOLOv9 commonly exposes c/e as larger practical anchors rather than an l file.
+MODEL_SPECS=${MODEL_SPECS:-yolov5lu.pt:2,yolov8l.pt:2,yolov9c.pt:2,yolov9e.pt:2,yolov10l.pt:2,yolo11l.pt:2,yolo12l.pt:2,yolo26l.pt:2,rtdetr-l.pt:2}
 
 STOP_EXISTING=${STOP_EXISTING:-0}
 RESOURCE_GUARD=${RESOURCE_GUARD:-1}
