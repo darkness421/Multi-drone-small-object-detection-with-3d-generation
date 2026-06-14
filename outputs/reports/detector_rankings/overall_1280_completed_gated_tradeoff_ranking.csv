@@ -1,0 +1,24 @@
+rank,name,group,method,ablation,seed,seeds,seed_count,n,status,AP,AP50,P,R,F1,ParamsM,GFLOPs,dAP,tradeoff,gated_tradeoff,note
+1,Ours: P2P4-SelfAttnFR,Ours final candidate,Ours: P2P4-SelfAttnFR,,,"42,123,2026",3,3,completed_3seed,0.382163,0.605173,0.673183,0.587247,0.627275,20.8200,109.3,0.004507,0.654483,1.228135,deduped latest official seed runs
+2,YOLOv11l,Best YOLO baseline,YOLOv11l,,,"123,2026,42",3,3,completed_3seed,0.377657,0.598090,0.666567,0.588063,0.624751,25.3182,87.3,0.000000,0.533499,1.000000,official comparison row
+3,YOLOv12l,YOLO large,YOLOv12l,,,"123,2026,42",3,3,completed_3seed,0.377103,0.595813,0.669787,0.580467,0.621920,26.3968,89.4,-0.000553,0.509890,,official comparison row
+4,YOLOv8l,YOLO large,YOLOv8l,,,"123,2026,42",3,3,completed_3seed,0.376543,0.596293,0.669493,0.576963,0.619767,43.6375,165.4,-0.001113,0.308006,,official comparison row
+5,YOLOv26l,YOLO large,YOLOv26l,,,"123,2026,42",3,3,completed_3seed,0.373177,0.587690,0.660237,0.573110,0.613562,26.1918,93.2,-0.004480,0.507305,,official comparison row
+6,YOLOv10l,YOLO large,YOLOv10l,,,"123,2026,42",3,3,completed_3seed,0.372783,0.588987,0.667653,0.572890,0.616625,25.7807,127.3,-0.004873,0.516693,,official comparison row
+7,YOLOv12m,YOLO medium,YOLOv12m,,,"123,2026,42",3,3,completed_3seed,0.366877,0.584820,0.664587,0.569390,0.613305,20.1452,67.8,-0.010780,0.655624,,official comparison row
+8,YOLOv10m,YOLO medium,YOLOv10m,,,"123,2026,42",3,3,completed_3seed,0.353930,0.567457,0.643103,0.557257,0.597102,16.4957,64.0,-0.023727,0.776877,,official comparison row
+9,YOLOv9s,YOLO small,YOLOv9s,,,"123,2026,42",3,3,completed_3seed,0.343347,0.554433,0.636240,0.544803,0.586945,7.2913,27.4,-0.034310,1.718512,,official comparison row
+10,YOLOv8s,YOLO small,YOLOv8s,,,"123,2026,42",3,3,completed_3seed,0.332867,0.540060,0.630173,0.531790,0.576809,11.1395,28.7,-0.044790,1.098335,,official comparison row
+11,YOLOv12s,YOLO small,YOLOv12s,,,"123,2026,42",3,3,completed_3seed,0.332183,0.538570,0.634110,0.526783,0.575485,9.2570,21.5,-0.045473,1.318502,,official comparison row
+12,YOLOv5su,YOLO small,YOLOv5su,,,"123,2026,42",3,3,completed_3seed,0.327877,0.533053,0.626120,0.522723,0.569745,9.1261,24.1,-0.049780,1.323022,,official comparison row
+13,YOLOv11s,YOLO small,YOLOv11s,,,"123,2026,42",3,3,completed_3seed,0.326203,0.528367,0.632117,0.516157,0.568232,9.4317,21.6,-0.051453,1.273110,,official comparison row
+14,YOLOv10s,YOLO small,YOLOv10s,,,"123,2026,42",3,3,completed_3seed,0.324783,0.526003,0.623867,0.513857,0.563538,8.0741,24.8,-0.052873,1.478312,,official comparison row
+15,YOLOv26s,YOLO small,YOLOv26s,,,"123,2026,42",3,3,completed_3seed,0.322903,0.522937,0.606133,0.512017,0.555112,9.9556,22.5,-0.054753,1.187592,,official comparison row
+16,RT-DETR-L,Transformer baseline,RT-DETR-L,,,"123,2026,42",3,3,completed_3seed,0.320073,0.535500,0.618860,0.541070,0.577350,32.8266,108.0,-0.057583,0.368390,,official comparison row
+17,YOLOv9t,YOLO nano,YOLOv9t,,,"123,2026,42",3,3,completed_3seed,0.304310,0.496913,0.595517,0.490470,0.537850,2.0074,7.9,-0.073347,5.629654,,"current 1280 comparison sweep, completed 3-seed"
+18,YOLOv12n,YOLO nano,YOLOv12n,,,"123,2026,42",3,3,completed_3seed,0.296183,0.486783,0.595560,0.479030,0.530851,2.5700,6.5,-0.081473,4.314328,,"current 1280 comparison sweep, completed 3-seed"
+19,YOLOv8n,YOLO nano,YOLOv8n,,,"123,2026,42",3,3,completed_3seed,0.292087,0.481850,0.581660,0.477073,0.524201,3.0128,8.2,-0.085570,3.636319,,"current 1280 comparison sweep, completed 3-seed"
+20,YOLOv11n,YOLO nano,YOLOv11n,,,"123,2026,42",3,3,completed_3seed,0.287920,0.473850,0.580713,0.470310,0.519696,2.5918,6.5,-0.089737,4.172698,,"current 1280 comparison sweep, completed 3-seed"
+21,YOLOv10n,YOLO nano,YOLOv10n,,,"123,2026,42",3,3,completed_3seed,0.285620,0.470273,0.576457,0.467090,0.516021,2.7109,8.4,-0.092037,3.959640,,"current 1280 comparison sweep, completed 3-seed"
+22,YOLOv5nu,YOLO nano,YOLOv5nu,,,"123,2026,42",3,3,completed_3seed,0.283477,0.469617,0.578067,0.459680,0.511971,2.5104,7.2,-0.094180,4.252862,,"current 1280 comparison sweep, completed 3-seed"
+23,YOLOv26n,YOLO nano,YOLOv26n,,,"123,2026,42",3,3,completed_3seed,0.283453,0.467260,0.570737,0.471503,0.516358,2.5077,5.8,-0.094203,4.264192,,"current 1280 comparison sweep, completed 3-seed"
