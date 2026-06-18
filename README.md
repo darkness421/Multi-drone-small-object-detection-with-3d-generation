@@ -1,8 +1,18 @@
 # CoM3D-ACE
 
 `CoM3D-ACE`는 cooperative multi-UAV small object detection 연구를 위한 작업 저장소입니다.
+현재 working expansion은 **Cooperative Multi-UAV 3D Ambiguity-Centric Evidence Completion**입니다.
 
 현재 단계는 Ubuntu 서버 detector baseline 재정비와 proposed perception module 준비입니다. 긴 학습은 tmux 스크립트로 수동 실행하고, repo에는 코드/config/docs/요약 CSV/보고서 PNG만 관리합니다.
+
+## Paper Naming Registry
+
+- 전체 시스템: **CoM3D-ACE** (`Cooperative Multi-UAV 3D Ambiguity-Centric Evidence Completion`)
+- 제안 2D detector: **SAFR-YOLO** (`Small-object Attention and Frequency Refinement YOLO`)
+- detector 구현/실험 내부명: `P2P4-SelfAttnFR`
+- reasoner 모듈: **ACE-Reasoner** (`Ambiguity-Centric Evidence Reasoner`)
+- 논문/그림에서는 `SAFR-YOLO`와 `ACE-Reasoner`를 public name으로 사용하고,
+  `P2P4-SelfAttnFR`는 reproducibility 또는 ablation 설명에만 사용합니다.
 
 ## 지금 남겨둘 것
 
@@ -25,7 +35,7 @@ alignment/           cross-view / cross-resolution cost and matching
 graph/               3D evidence graph construction
 ambiguity/           ambiguity score and reason diagnosis
 policy/              re-observation candidate selection
-vlm/                 SAGE prompt builder and JSON parser
+vlm/                 ACE-Reasoner prompt builder and JSON parser
 simulation/          Isaac/Cesium episode manifest helpers
 evaluation/          metrics and statistical utilities
 scripts/             experiment entrypoint shell scripts

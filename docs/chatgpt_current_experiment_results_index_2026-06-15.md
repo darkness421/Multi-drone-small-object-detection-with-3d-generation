@@ -32,7 +32,7 @@ Current paper-ready leader:
 
 | Method | AP | AP50 | Precision | Recall | F1 | Params | GFLOPs | Seeds |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| Ours: P2P4-SelfAttnFR | 0.3822 | 0.6052 | 0.6732 | 0.5872 | 0.6273 | 20.82M | 109.30 | 42,123,2026 |
+| Ours: SAFR-YOLO | 0.3822 | 0.6052 | 0.6732 | 0.5872 | 0.6273 | 20.82M | 109.30 | 42,123,2026 |
 | YOLOv11l | 0.3777 | 0.5981 | 0.6666 | 0.5881 | 0.6248 | 25.32M | 87.30 | 123,2026,42 |
 | YOLOv12l | 0.3771 | 0.5958 | 0.6698 | 0.5805 | 0.6219 | 26.40M | 89.40 | 123,2026,42 |
 | YOLOv8l | 0.3765 | 0.5963 | 0.6695 | 0.5770 | 0.6198 | 43.64M | 165.40 | 123,2026,42 |
@@ -53,7 +53,7 @@ Ours vs YOLOv11l:
 
 Important caveat:
 
-- The earlier internal strict target was AP `> 0.3835` with Params `< 25.32M`. The official deduped 3-seed mean for P2P4-SelfAttnFR is `0.3822`, so the stronger wording should be "best confirmed trade-off and statistically higher AP/AP50 than YOLOv11l", not "cleared the 0.3835 AP target."
+- The earlier internal strict target was AP `> 0.3835` with Params `< 25.32M`. The official deduped 3-seed mean for SAFR-YOLO is `0.3822`, so the stronger wording should be "best confirmed trade-off and statistically higher AP/AP50 than YOLOv11l", not "cleared the 0.3835 AP target."
 
 ## Files To Read First
 
@@ -135,9 +135,10 @@ The current main table already includes broad YOLO-family baselines at `1280 / 3
 
 ## Proposed Detector Structure Summary
 
-Current proposed detector candidate:
+Current proposed detector:
 
-- `P2P4-SelfAttnFR`
+- Public name: `SAFR-YOLO`
+- Implementation/run label: `P2P4-SelfAttnFR`
 
 High-level interpretation for text/figures:
 
@@ -147,7 +148,7 @@ High-level interpretation for text/figures:
 
 Safe wording:
 
-- "The current confirmed detector candidate is P2P4-SelfAttnFR."
+- "The current confirmed detector is SAFR-YOLO."
 - "The final detector name and module composition may still be refined after remaining queued experiments and ablation checks."
 - "Single-run P2-CBAM-FR and P2-DCT-FR have higher raw AP, but they are not yet confirmed with the same completed 3-seed protocol."
 
@@ -172,7 +173,7 @@ Do not claim speed improvement because Ours has higher GFLOPs than YOLOv11l.
 Avoid long full tables in the main paper figures. Make compact top-k tables or plots for the main paper, and move exhaustive rankings to supplementary.
 
 Current safe detector claim:
-Ours: P2P4-SelfAttnFR achieves AP 0.3822, AP50 0.6052, F1 0.6273, Params 20.82M, outperforming YOLOv11l on AP/AP50/F1 with fewer parameters under the completed 1280 / 3-seed protocol.
+Ours: SAFR-YOLO achieves AP 0.3822, AP50 0.6052, F1 0.6273, Params 20.82M, outperforming YOLOv11l on AP/AP50/F1 with fewer parameters under the completed 1280 / 3-seed protocol.
 
 Please generate a concise PPT/paper summary with:
 1. current detector status,

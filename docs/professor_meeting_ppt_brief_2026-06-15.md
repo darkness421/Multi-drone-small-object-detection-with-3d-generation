@@ -7,7 +7,7 @@ brief for a professor meeting about the ACCV 2026 project status.
 
 ## One-Line Status
 
-We have a strong 2D detector trade-off candidate, `Ours: P2P4-SelfAttnFR`,
+We have a strong 2D detector trade-off candidate, `Ours: SAFR-YOLO`,
 confirmed under the VisDrone 1280-resolution 3-seed protocol. It currently ranks
 first among the completed main-protocol detector results, but the absolute AP
 margin is still modest, so the remaining comparison, ablation, and heatmap
@@ -19,7 +19,7 @@ Protocol: VisDrone val, image size 1280, seeds 42/123/2026.
 
 | Method | AP | AP50 | Precision | Recall | F1 | Params | GFLOPs |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Ours: P2P4-SelfAttnFR | 0.3822 | 0.6052 | 0.6732 | 0.5872 | 0.6273 | 20.82M | 109.3 |
+| Ours: SAFR-YOLO | 0.3822 | 0.6052 | 0.6732 | 0.5872 | 0.6273 | 20.82M | 109.3 |
 | YOLOv11l baseline | 0.3777 | 0.5981 | 0.6666 | 0.5881 | 0.6248 | 25.32M | 87.3 |
 
 Delta vs YOLOv11l:
@@ -48,7 +48,7 @@ All rows below are completed 1280-resolution 3-seed results.
 
 | Rank | Method | AP | AP50 | F1 | Params |
 | ---: | --- | ---: | ---: | ---: | ---: |
-| 1 | Ours: P2P4-SelfAttnFR | 0.3822 | 0.6052 | 0.6273 | 20.82M |
+| 1 | Ours: SAFR-YOLO | 0.3822 | 0.6052 | 0.6273 | 20.82M |
 | 2 | YOLOv11l | 0.3777 | 0.5981 | 0.6248 | 25.32M |
 | 3 | YOLOv12l | 0.3771 | 0.5958 | 0.6219 | 26.40M |
 | 4 | YOLOv8l | 0.3765 | 0.5963 | 0.6198 | 43.64M |
@@ -141,7 +141,7 @@ Detector-side:
 Paper side:
 
 - Main paper: self-contained system, proposed detector, 3D benchmark idea,
-  LLM/SAGE reasoner, and key quantitative results.
+  ACE-Reasoner, and key quantitative results.
 - Supplementary: ablation details, hyperparameters, dataset details, heatmaps,
   extra qualitative/quantitative results, failure cases, and implementation
   details.
@@ -169,14 +169,14 @@ Use this prompt in ChatGPT when generating the slide deck:
 ```text
 Create a clean academic PowerPoint deck for a professor meeting.
 The project is an ACCV 2026 paper on multi-drone marine-city small object
-detection, 3D benchmark generation, and an LLM/SAGE reasoner.
+detection, 3D benchmark generation, and ACE-Reasoner.
 
 Audience: computer vision professor. Tone: concise, technical, honest.
 Style: white background, minimal color, readable tables, no marketing design.
 Use 10 slides.
 
 Important current result:
-- Proposed detector: Ours: P2P4-SelfAttnFR.
+- Proposed detector: Ours: SAFR-YOLO.
 - Protocol: VisDrone val, 1280 image size, 3 seeds 42/123/2026.
 - Ours: AP 0.3822, AP50 0.6052, F1 0.6273, Params 20.82M, GFLOPs 109.3.
 - YOLOv11l baseline: AP 0.3777, AP50 0.5981, F1 0.6248, Params 25.32M, GFLOPs 87.3.
@@ -215,7 +215,7 @@ Make the deck professor-meeting friendly:
 
 ## Decisions To Ask
 
-- Can `P2P4-SelfAttnFR` be treated as the working proposed detector?
+- Can `SAFR-YOLO` be treated as the working proposed detector?
 - Which related-work models are mandatory for the comparison section?
 - Should the next detector work prioritize a larger AP margin or lower model
   complexity?

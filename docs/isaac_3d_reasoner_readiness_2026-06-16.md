@@ -3,7 +3,7 @@
 Updated: 2026-06-16 22:12 KST
 
 This note is the short operational plan for starting the MarineCity Isaac Sim,
-3D reconstruction, and SAGE-style reasoner experiments in the next one to two
+3D reconstruction, and ACE-Reasoner experiments in the next one to two
 days while the 2D detector queue continues.
 
 ## Current Status
@@ -12,8 +12,9 @@ Detector lane:
 
 - GPU0 and GPU1 are currently occupied by detector/comparison queues.
 - Do not interrupt active detector runs just to start a long Isaac export.
-- The selected 2D detector candidate is still treated as
-  `P2P4-SelfAttnFR`; final numbers should use the confirmed 3-seed checkpoint.
+- The selected 2D detector is named `SAFR-YOLO`; the current implementation
+  label is `P2P4-SelfAttnFR`, and final numbers should use the confirmed
+  3-seed checkpoint.
 
 MarineCity/Isaac lane:
 
@@ -123,8 +124,8 @@ Reasoner smoke:
 - Run these methods:
   - detector-only
   - detector + 3D evidence graph
-  - detector + 3D graph + SAGE reasoner
-  - detector + 3D graph + SAGE reasoner + re-observation policy
+  - detector + 3D graph + ACE-Reasoner
+  - detector + 3D graph + ACE-Reasoner + re-observation policy
 - Cache all LLM/VLM responses before analysis.
 - Use API/closed LLM first if speed is important; use local VLM/LLM on GPU1 only
   when it will not block detector or 3D jobs.

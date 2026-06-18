@@ -1,0 +1,48 @@
+\subsection{Supplementary Detector Experiment Inventory}
+\label{sec:supp_detector_inventory}
+
+This supplementary section stores detector evidence that should not occupy the
+main-paper comparison table. These rows are useful for reviewer transparency, but
+they either expand the YOLO scale sweep, use a protocol that differs from the
+main 1280-pixel comparison, or come from design-search experiments rather than
+the selected detector.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{YOLO-family scale sweep for supplementary reporting. All completed rows use VisDrone2019-DET validation with 1280-pixel input and three seeds unless otherwise noted.}
+\label{tab:supp_yolo_scale_sweep}
+\begin{tabular}{llrrrrrr}
+\toprule
+Group & Method & AP & AP50 & F1 & Params(M) & GFLOPs & $\Delta$AP vs. YOLOv11l \\
+\midrule
+Ours & SAFR-YOLO & 0.3822 $\pm$ 0.0007 & 0.6052 $\pm$ 0.0012 & 0.6273 & 20.82 & 109.30 & +0.0045 \\
+YOLO large & YOLOv11l & 0.3777 $\pm$ 0.0004 & 0.5981 $\pm$ 0.0011 & 0.6248 & 25.32 & 87.30 & +0.0000 \\
+YOLO large & YOLOv12l & 0.3771 $\pm$ 0.0020 & 0.5958 $\pm$ 0.0025 & 0.6219 & 26.40 & 89.40 & -0.0006 \\
+YOLO large & YOLOv8l & 0.3765 $\pm$ 0.0003 & 0.5963 $\pm$ 0.0008 & 0.6198 & 43.64 & 165.40 & -0.0011 \\
+YOLO large & YOLOv26l & 0.3732 $\pm$ 0.0015 & 0.5877 $\pm$ 0.0010 & 0.6136 & 26.19 & 93.20 & -0.0045 \\
+YOLO large & YOLOv10l & 0.3728 $\pm$ 0.0019 & 0.5890 $\pm$ 0.0020 & 0.6166 & 25.78 & 127.30 & -0.0049 \\
+YOLO medium & YOLOv12m & 0.3669 $\pm$ 0.0009 & 0.5848 $\pm$ 0.0033 & 0.6133 & 20.15 & 67.80 & -0.0108 \\
+YOLO medium & YOLOv10m & 0.3539 $\pm$ 0.0020 & 0.5675 $\pm$ 0.0028 & 0.5971 & 16.50 & 64.00 & -0.0237 \\
+YOLO small & YOLOv9s & 0.3433 $\pm$ 0.0003 & 0.5544 $\pm$ 0.0004 & 0.5869 & 7.29 & 27.40 & -0.0343 \\
+YOLO small & YOLOv8s & 0.3329 $\pm$ 0.0030 & 0.5401 $\pm$ 0.0035 & 0.5768 & 11.14 & 28.70 & -0.0448 \\
+YOLO small & YOLOv12s & 0.3322 $\pm$ 0.0006 & 0.5386 $\pm$ 0.0007 & 0.5755 & 9.26 & 21.50 & -0.0455 \\
+YOLO small & YOLOv5su & 0.3279 $\pm$ 0.0022 & 0.5331 $\pm$ 0.0040 & 0.5697 & 9.13 & 24.10 & -0.0498 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Protocol-mismatched related-work checks.}
+CSFPR-RTDETR, LEAF-YOLO-S, and LEAF-YOLO-N have repository-backed 640-pixel
+evaluations. They should be shown in a separate supplementary table with the
+input-resolution note visible in the method name or caption. They should not be
+merged into the main detector comparison until a normalized 1280-pixel protocol
+or a defensible cross-resolution comparison is completed.
+
+\paragraph{Module-search rows.}
+Single-seed DCT, wavelet, CBAM, NMS, and activation-function probes should be
+reported as a design-search appendix, not as competing final methods. The final
+ablation table should be restricted to interpretable components of
+SAFR-YOLO: high-resolution P2/P3/P4 heads, TinySpatialFReLU, SelfAttnFR,
+and the final NMS setting.

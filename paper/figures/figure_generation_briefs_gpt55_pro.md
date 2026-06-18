@@ -37,12 +37,12 @@ Show the whole system path:
 
 ```text
 multi-UAV observations
--> P2P4-SelfAttnFR 2D evidence generator
+-> SAFR-YOLO 2D evidence generator
 -> EvidenceToken
 -> 2D-to-3D evidence graph
 -> ambiguity diagnosis
 -> 3D evidence completion / re-observation
--> graph-grounded SAGE reasoner
+-> graph-grounded ACE-Reasoner
 -> verified object state
 ```
 
@@ -54,7 +54,7 @@ Use a wide two-column pipeline, left to right.
    - Show small aerial image tiles, not just UAV icons.
    - Each tile should contain tiny object boxes.
    - Add small pose/depth/camera metadata icons beside the tiles.
-2. Detector panel: `P2P4-SelfAttnFR 2D Evidence Generator`.
+2. Detector panel: `SAFR-YOLO 2D Evidence Generator`.
    - Do not draw full YOLO here. Just show it as a subsystem.
    - Output: boxes, class scores, uncertainty, feature descriptor.
 3. EvidenceToken panel.
@@ -68,7 +68,7 @@ Use a wide two-column pipeline, left to right.
    - Include entropy, view disagreement, occlusion, missing evidence, crowding.
 6. Two right branches:
    - Top: `3D completion / re-observation`.
-   - Bottom: `SAGE reasoner`.
+   - Bottom: `ACE-Reasoner`.
 7. Final small box: `Verified object state`.
    - class belief, 3D position, uncertainty, final action.
 
@@ -77,13 +77,13 @@ Use a wide two-column pipeline, left to right.
 ```text
 Draw a clean two-column academic computer-vision pipeline figure for a method
 called CoM3D-ACE. The figure should show, from left to right: synchronized
-multi-UAV image observations with tiny object boxes; a P2P4-SelfAttnFR 2D
+multi-UAV image observations with tiny object boxes; a SAFR-YOLO 2D
 evidence generator; compact EvidenceToken outputs containing bbox, class/logits,
 feature descriptor, uncertainty, pose, and time; a 2D-to-3D evidence graph with
 camera nodes, observation nodes, object hypothesis nodes, teal support edges and
 amber conflict edges; ambiguity diagnosis using entropy, view disagreement,
 occlusion, missing evidence and crowding; two branches for 3D completion /
-re-observation and graph-grounded SAGE reasoner; and a final verified object
+re-observation and graph-grounded ACE-Reasoner; and a final verified object
 state. Use a restrained white-background CV-paper style, thin vector lines,
 blue for detector, teal for 3D graph, amber for ambiguity, green for verified
 completion. No logos, no institution names, no decorative gradients.
@@ -95,7 +95,7 @@ completion. No logos, no institution names, no decorative gradients.
 - Do not show the detector as the only main contribution.
 - Do not use a generic drone swarm illustration without the evidence graph.
 
-## Fig. 2: Proposed 2D Detector, P2P4-SelfAttnFR
+## Fig. 2: Proposed 2D Detector, SAFR-YOLO
 
 ### Main Message
 
@@ -113,10 +113,16 @@ YOLOv11l-P2P4 balanced small-object detector
 + overlap-aware NMS
 ```
 
-Use the label:
+Use the public model label:
 
 ```text
-P2P4-SelfAttnFR
+SAFR-YOLO
+```
+
+Mention the implementation name only in small text if needed:
+
+```text
+P2P4-SelfAttnFR implementation
 ```
 
 Where `SelfAttnFR` means:
@@ -174,7 +180,7 @@ architectures:
 
 ```text
 Draw a YOLO-family architecture diagram for a UAV small-object detector named
-P2P4-SelfAttnFR. The figure must use a standard backbone-neck-head layout, not a
+SAFR-YOLO. The figure must use a standard backbone-neck-head layout, not a
 generic pipeline. On the left, draw an input UAV crop with tiny adjacent object
 boxes. Draw a YOLOv11l backbone column with Conv P1/2, C3k2 P2/4, C3k2 P3/8,
 C3k2 P4/16, and SPPF/C2PSA P5/32 context. In the middle, draw a P2P4 balanced
@@ -252,7 +258,7 @@ No photorealistic city branding, no real map labels, no institution identity.
   chosen.
 - Do not imply real-world flight validation if we only have simulator data.
 
-## Supplementary Method Figure: SAGE Reasoner And Safety Verifier
+## Supplementary Method Figure: ACE-Reasoner And Safety Verifier
 
 ### Main Message
 
@@ -267,7 +273,7 @@ directly control the UAV.
    - graph summary
    - geometry residuals
    - allowed actions
-2. SAGE prompt builder:
+2. ACE-Reasoner prompt builder:
    - protected system rules
    - evidence summary
    - candidate action list
@@ -285,9 +291,9 @@ directly control the UAV.
 
 ```text
 Draw a supplementary method diagram for a graph-grounded VLM/LLM reasoner named
-SAGE. The figure should show that only high-ambiguity object hypotheses are sent
+ACE-Reasoner. The figure should show that only high-ambiguity object hypotheses are sent
 to the reasoner. Inputs include an ambiguous graph node, multi-view crops, graph
-summary, geometry residuals, and allowed actions. The SAGE prompt builder has
+summary, geometry residuals, and allowed actions. The ACE-Reasoner prompt builder has
 protected system rules, an evidence summary, and a candidate action list. The
 VLM/LLM returns a constrained JSON output with class, confidence, evidence clues,
 missing evidence, and recommended action. A graph and safety verifier checks
@@ -311,12 +317,12 @@ show the LLM directly controlling the drone.
 Recommended main paper:
 
 1. Fig. 1 Overall CoM3D-ACE system.
-2. Fig. 2 P2P4-SelfAttnFR detector architecture.
+2. Fig. 2 SAFR-YOLO detector architecture.
 3. Fig. 3 3D generation/restoration and evidence graph.
 
 Recommended supplementary:
 
-1. SAGE reasoner and safety verifier detailed figure.
+1. ACE-Reasoner and safety verifier detailed figure.
 2. Grad-CAM / heat-map figure for baseline vs proposed detector.
 3. Full detector leaderboard plots.
 4. Extra MarineCity layout, camera poses, qualitative cases, and failure cases.
@@ -327,7 +333,7 @@ The 2D heat-map/Grad-CAM figure should be generated after training from fixed
 checkpoints. No retraining is needed. Use the same validation images for:
 
 - YOLOv11l baseline.
-- P2P4-SelfAttnFR final proposed detector.
+- SAFR-YOLO final proposed detector.
 - Optional ablations: P2/P4 only, TinyFReLU only, SelfAttnFR without TinyFReLU.
 
 Main paper should include only 3-4 representative cases. Supplementary should

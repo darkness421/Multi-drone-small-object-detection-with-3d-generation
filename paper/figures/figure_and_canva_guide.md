@@ -1,6 +1,6 @@
 # ACCV Figure, Asset, And Canva Guide
 
-Updated: 2026-06-04 KST
+Updated: 2026-06-16 KST
 
 This guide defines what figures we need, where their source data should come
 from, which figures belong in the main paper vs supplementary material, and how
@@ -25,7 +25,7 @@ detector becomes a clear main contribution.
 | Source | Current Path | Use |
 | --- | --- | --- |
 | Overall framework draft | `paper/figures/fig01_overall_framework.svg` | Starting point for Main Fig. 1 |
-| Detector module draft | `paper/figures/fig02_detector_module.svg` | Main only if detector wins; otherwise supplement |
+| Detector module draft | `paper/figures/fig02_detector_module.svg` | Working schematic for the selected SAFR-YOLO detector; `P2P4-SelfAttnFR` remains the current implementation label |
 | MarineCity benchmark draft | `paper/figures/fig03_isaac_multiuav_benchmark.svg` | Main or supplement dataset figure |
 | 3D/weather reconstruction draft | `paper/figures/fig04_3d_weather_reconstruction.svg` | Candidate qualitative/system figure |
 | LLM re-observation draft | `paper/figures/fig05_llm_reobservation_policy.svg` | Candidate method subfigure or supplement |
@@ -41,7 +41,7 @@ detector becomes a clear main contribution.
 | Figure | Main Message | Source | Final Format | Canva Role |
 | --- | --- | --- | --- | --- |
 | Fig. 1: CoM3D-ACE Pipeline | Multi-UAV images become 3D evidence, ambiguity diagnosis, completion, and re-observation | `fig01_overall_framework.svg`, method text | PDF export, PNG preview | Redraw as clean pipeline |
-| Fig. 2: Proposed YOLO Evidence Generator | Shows the detector-side module without overclaiming final results | `fig02_detector_module.svg`, method text, final detector gate | PDF export, PNG preview | Draw now with TBD labels |
+| Fig. 2: Proposed YOLO Evidence Generator | Shows the detector-side module without overclaiming final results | `fig02_detector_module.svg`, method text, final detector table | PDF export, PNG preview | Draw with SAFR-YOLO labels |
 | Fig. 3: 3D Evidence Graph And Ambiguity | Nodes/edges/uncertainty explain the technical novelty | pose JSON, method equations, graph sketch | PDF export, PNG preview | Build graph diagram and ambiguity callouts |
 | Fig. 4: Dataset/Protocol Or Main Quantitative Result | Shows MarineCity protocol or the key system-level metric | MarineCity metadata or final CSV | PDF export, PNG preview | Use script-generated plots for numeric panels |
 | Fig. 5: Qualitative Multi-View / 3D Case | Show before/after ambiguity resolution, restoration, or re-observation | selected simulator/detector frames | PDF/PNG panels | Compose clean panel with callouts |
@@ -164,20 +164,23 @@ Canvas:
 Layout:
 
 1. Input UAV crop with small/adjacent objects.
-2. Selected YOLO backbone block with `Backbone: TBD`.
-3. High-resolution branch or P2/stride-4 path with `under test`.
-4. TinyFReLU/spatial activation block with a short formula label only if space
-   allows.
-5. NMS policy block with `NMS variant: TBD`.
+2. Selected YOLO backbone block with `YOLOv11l`.
+3. High-resolution P2/P3/P4 detection path with `P2P4 heads`.
+4. SelfAttnFR refinement and TinySpatialFReLU activation blocks with short
+   formula labels only if space allows.
+5. NMS policy block as a small eval-only side tag.
 6. Output `EvidenceToken`: box, class, confidence, uncertainty, descriptor,
    pose/time.
 
 Labeling rules:
 
-- Use `Proposed Evidence Generator` only after it beats the detector gate.
-- Until then, use `YOLO Evidence Generator / Candidate Module`.
+- Use `Proposed Evidence Generator` for the selected detector module, but keep
+  wording flexible enough to rename it if the final detector changes.
+- For the current draft, use `SAFR-YOLO`; add `P2P4-SelfAttnFR implementation`
+  only if the figure needs to match the experiment table.
 - Show ablation-only modules as side tags, not as if all modules are active.
-- Do not add AP/AP50/F1 values until the final approved table is available.
+- Use only the final approved AP/AP50/F1 values from the normalized 1280
+  three-seed table.
 
 Avoid:
 

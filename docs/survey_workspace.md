@@ -37,8 +37,8 @@
 | --- | --- | --- |
 | `VisDrone2019-DET` | UAV small/dense object detection main benchmark | 필수 |
 | `UAVDT` | UAV vehicle detection / video-domain generalization | 필수 또는 강력 추천 |
-| `AI-TOD` | high tiny-object ratio, `APtiny` / `APsmall` stress test | 추천 |
-| `TinyPerson` | extreme tiny person detection | 선택 |
+| `TinyPerson` | extreme tiny person / crowded tiny-object stress test | 강력 추천, supplementary 우선 |
+| `AI-TOD` | high tiny-object ratio, `APtiny` / `APsmall` stress test | 추천, 시간 되면 |
 | `HIT-UAV` | infrared / low-light UAV object detection | 선택, 좋음 |
 | `DroneVehicle` | RGB-IR vehicle dataset, modality extension 논의 | 선택 |
 
@@ -46,9 +46,14 @@
 
 ```text
 Minimum: VisDrone2019-DET + UAVDT
-Strong:  VisDrone2019-DET + UAVDT + AI-TOD
-Extend:  VisDrone2019-DET + UAVDT + AI-TOD + HIT-UAV
+Strong:  VisDrone2019-DET + UAVDT + TinyPerson
+Extend:  VisDrone2019-DET + UAVDT + TinyPerson + AI-TOD/HIT-UAV
 ```
+
+`TinyPerson`은 ACCV 2024 small-object YOLO 계열 논문에서도 쓰인 극소 객체
+검증 데이터셋이므로, 우리 detector-only supplementary validation으로 넣는 것이
+좋다. 다만 main detector gate는 VisDrone으로 유지하고, UAVDT/TinyPerson은
+generalization 및 stress-test evidence로 분리한다.
 
 `HIT-UAV`는 low-light / thermal ambiguity 주장을 만들 수 있지만, 시간이 부족하면 supplementary 또는 future extension으로 둔다.
 
@@ -237,7 +242,7 @@ Second, we build a synchronized multi-UAV simulation benchmark in Isaac Sim to e
 | Always-on VLM | 모든 object crop에 VLM |
 | Random VLM | random subset |
 | Uncertainty-triggered VLM | uncertainty threshold |
-| SAGE-triggered VLM | ambiguity + graph summary + SAGE prompt |
+| ACE-Reasoner-triggered VLM | ambiguity + graph summary + ACE-Reasoner prompt |
 
 지표:
 
@@ -259,7 +264,7 @@ Second, we build a synchronized multi-UAV simulation benchmark in Isaac Sim to e
 | Always-on VLM |  |  |  |  |  |  |  |
 | Random VLM |  |  |  |  |  |  |  |
 | Uncertainty-triggered VLM |  |  |  |  |  |  |  |
-| SAGE-triggered VLM |  |  |  |  |  |  |  |
+| ACE-Reasoner-triggered VLM |  |  |  |  |  |  |  |
 
 ## 5. Decisions To Make Later
 
@@ -272,7 +277,7 @@ Second, we build a synchronized multi-UAV simulation benchmark in Isaac Sim to e
 
 ## 6. Current Implementation Direction
 
-- Main codebase direction: `3D evidence graph + ambiguity diagnosis + re-observation + selective SAGE VLM`
+- Main codebase direction: `3D evidence graph + ambiguity diagnosis + re-observation + selective ACE-Reasoner VLM`
 - Detector role: always-on front-end baseline, not the main novelty
 - Public datasets: `VisDrone`, `UAVDT`, `AI-TOD`
 - Full system validation: `Isaac Sim + Cesium` synthetic multi-UAV episodes
@@ -318,20 +323,19 @@ python -m scripts.check_env
 ```text
 1. VisDrone -> COCO 변환
 2. UAVDT -> COCO 변환
-3. YOLOv8n / YOLOv11n 학습
-4. RT-DETR-R18 학습
-5. D-FINE-S 가능하면 추가
+3. YOLOv5/8/9/10/11/12/26 size-grouped baseline 학습
+4. RT-DETR-L/R18 학습, memory/code 허용 시
+5. LEAF-YOLO / CSFPR-RTDETR 등 paper 모델은 adapter 준비 후 추가
 6. AP, AP50, AP75, APsmall, FPS 기록
 ```
 
 초기 baseline:
 
 ```text
-YOLOv8n
-YOLOv11n
-YOLOv8n+P2
-RT-DETR-R18
-Ours AEG
+Best YOLO rows by size group
+RT-DETR-L/R18 if complete
+LEAF-YOLO or CSFPR-RTDETR if adapter is ready
+Ours detector proposal
 ```
 
 ### Phase 2. EvidenceToken 생성
@@ -500,7 +504,7 @@ same position high-res crop
 순서:
 
 ```text
-1. SAGE prompt package 생성
+1. ACE-Reasoner prompt package 생성
 2. open-source VLM 또는 API로 subset만 테스트
 3. output JSON parser 구현
 4. graph confidence update
@@ -510,7 +514,7 @@ same position high-res crop
 이름:
 
 ```text
-SAGE = Scene-aware Ambiguity-guided Graph Evidence Prompt
+ACE-Reasoner = Ambiguity-Centric Evidence Reasoner
 ```
 
 ## 8. 비교 실험 구조
@@ -530,26 +534,27 @@ P0:
 
 | 모델 | 이유 |
 | --- | --- |
-| YOLOv8n/s | 기본 lightweight YOLO baseline |
-| YOLOv11n/s | 최신 계열 YOLO baseline |
-| YOLOv8n+P2 | small-object head 추가 baseline |
-| RT-DETR-R18 | DETR 계열 대표 baseline |
-| D-FINE-S | 최신 DETR-style detector baseline 가능 |
-| Ours Always-on Evidence Generator | 우리 front-end |
+| YOLOv5/8/9/10/11/12/26 | 세대별 YOLO baseline, size-grouped 비교 |
+| RT-DETR-L/R18 | DETR 계열 대표 baseline, memory/code 허용 시 |
+| D-FINE-S / RF-DETR-B | 최신 non-YOLO detector sanity check |
+| Ours detector proposal | frequency-guided ambiguity-aware detector module |
 
 P1:
 
 | 모델 | 이유 |
 | --- | --- |
+| LEAF-YOLO | public lightweight edge-real-time UAV detector |
+| CSFPR-RTDETR | public RT-DETR-style spatial-frequency UAV detector |
 | UAVDet | CNN-Mamba 계열 강한 실시간 baseline |
 | LRDS-YOLO | lightweight YOLOv11 small-object 특화 |
-| BPD-YOLO / L-FPN | shallow-centric FPN baseline |
 | HF-D-FINE | high-resolution D-FINE tiny detector |
 
 P2:
 
 | 모델 | 이유 |
 | --- | --- |
+| SOD-YOLO / DR-YOLO | public repo exists, adapter/code availability must be checked |
+| UAVD-Mamba | Mamba/SSM 관련연구 후보, modality fairness 확인 필요 |
 | CSFPR-RTDETR | spatial-frequency + position relation |
 | DG-TSOD | density-guided two-stage detector |
 | CFIA | coarse-fine feature alignment |
@@ -557,14 +562,25 @@ P2:
 최종 추천 detector set:
 
 ```text
-YOLOv8n
-YOLOv11n
-YOLOv8n+P2
-RT-DETR-R18
-D-FINE-S
-UAVDet or LRDS-YOLO
-Ours AEG
+Best YOLO rows by size group
+RT-DETR-L/R18 if complete
+LEAF-YOLO if adapter is ready
+CSFPR-RTDETR if adapter is ready
+UAVDet/UAVD-Mamba or HF-D-FINE if fair and runnable
+Ours detector proposal
 ```
+
+Dataset별 비교 폭:
+
+| Dataset | 비교 폭 | 비교 모델 |
+| --- | --- | --- |
+| VisDrone2019-DET | full leaderboard | size-grouped YOLO, YOLOv11l/12l/8l, RT-DETR, runnable related-work detector, ours |
+| UAVDT | compact cross-dataset | YOLOv11l, best lightweight YOLO, best medium/large YOLO, RT-DETR if ready, ours |
+| TinyPerson | supplementary stress test | YOLOv11l, ours, Core 1+2 variant, easy external TinyPerson-related model if available |
+
+모든 관련연구 모델을 UAVDT/TinyPerson까지 전부 돌리지는 않는다. VisDrone에서
+충분한 비교 폭을 만들고, UAVDT/TinyPerson은 최종 모델의 generalization과
+tiny-object stress evidence를 보여주는 역할로 둔다.
 
 ### 8.2 System-Level 비교 Baseline
 
