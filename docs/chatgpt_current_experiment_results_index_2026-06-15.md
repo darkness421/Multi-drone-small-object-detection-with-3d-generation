@@ -1,6 +1,6 @@
 # ChatGPT 5.5 Current Experiment Results Index
 
-Updated: 2026-06-15 KST
+Updated: 2026-06-18 KST
 
 Use this file as the entry point when asking ChatGPT 5.5, GPT-5.5 Pro, or another paper-writing assistant to review the current ACCV detector experiments, generate PPT material, or update paper text.
 
@@ -98,9 +98,15 @@ Supplementary or appendix candidates:
 
 Current visual method figures:
 
-- `paper/figures/prof_meeting_fig01_proposed_system_overview.png`
-- `paper/figures/fig02_detector_module.png`
-- `paper/figures/prof_meeting_fig03_3d_reasoner_flow.png`
+- `paper/figures/fig01_com3d_ace_overall_framework.png`
+- `paper/figures/fig02_p2p4_safr_yolo.png`
+- `paper/figures/fig03_3d_evidence_reasoner.png`
+- `paper/figures/figS1_selfattnfr_module.png`
+- `paper/figures/figS2_tinyfrelu_activation.png`
+- `paper/figures/figS3_overlap_aware_nms.png`
+
+Legacy professor-meeting visual drafts remain available, but the six files
+above are the current paper/Overleaf figure exports.
 
 ## How To Separate Results
 

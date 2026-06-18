@@ -1,11 +1,22 @@
-# Paper Figure Drafts
+# Paper Figure Assets
 
-This folder stores small, editable figure sources that are safe to keep in Git.
-Large simulator captures, raw render dumps, model weights, and dataset images
-should stay outside Git and be copied into the final paper package only after
-selection.
+This folder stores the current paper figure assets and editable figure sources
+that are safe to keep in Git. Large simulator captures, raw render dumps, model
+weights, and dataset images should stay outside Git and be copied into the final
+paper package only after selection.
 
-Current draft figures:
+Current Overleaf-ready PNG exports:
+
+| File | Paper slot |
+| --- | --- |
+| `fig01_com3d_ace_overall_framework.png` | Main Fig. 1, overall CoM3D-ACE framework |
+| `fig02_p2p4_safr_yolo.png` | Main Fig. 2, SAFR-YOLO / P2P4-SelfAttnFR detector |
+| `fig03_3d_evidence_reasoner.png` | Main Fig. 3, 3D evidence completion and ACE-Reasoner |
+| `figS1_selfattnfr_module.png` | Supplementary Fig. S1, SelfAttnFR module |
+| `figS2_tinyfrelu_activation.png` | Supplementary Fig. S2, TinyFReLU activation |
+| `figS3_overlap_aware_nms.png` | Supplementary Fig. S3, overlap-aware NMS |
+
+Editable/source draft figures:
 
 | File | Purpose |
 | --- | --- |
