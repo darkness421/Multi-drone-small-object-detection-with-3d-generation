@@ -6,9 +6,10 @@ This guide defines what figures we need, where their source data should come
 from, which figures belong in the main paper vs supplementary material, and how
 to redraw them cleanly in Canva or another vector editor.
 
-For final detector redraws, use `final_detector_figure_update_brief.md` as the
-source of truth. It separates the confirmed SAFR-YOLO / P2P4-SelfAttnFR figure
-from the optional 22M receptive-field stretch candidate.
+For detector candidate redraws, use `detector_candidate_figure_update_brief.md`
+as the working guide. It separates the current SAFR-YOLO / P2P4-SelfAttnFR
+leading-candidate drawing target from the optional 22M receptive-field stretch
+candidate. The final detector combination is not frozen yet.
 
 ## Core Rule
 

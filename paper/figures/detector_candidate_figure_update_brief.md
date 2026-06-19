@@ -1,10 +1,14 @@
-# Final Detector Figure Update Brief
+# Detector Candidate Figure Update Brief
 
 Updated: 2026-06-19 KST
 
 Purpose: give GPT-5.5 Pro, a specialist figure-generation model, or a Canva
-artist a compact source of truth for updating the detector-related figures once
-the final 2D detector combination is frozen.
+artist a compact working guide for updating detector-related figures while the
+final 2D detector combination is still being decided.
+
+Important: the final proposed 2D detector combination is not frozen yet. Treat
+`P2P4-SelfAttnFR` as the current leading candidate / baseline drawing target,
+not as the final paper model.
 
 This document should be checked before redrawing:
 
@@ -14,9 +18,9 @@ This document should be checked before redrawing:
 - Supplementary Fig. S2 TinyFReLU activation
 - Supplementary Fig. S3 overlap-aware NMS
 
-## Current Detector Status
+## Current Leading Candidate Status
 
-Confirmed paper-ready detector:
+Current leading detector candidate, not final:
 
 ```text
 Public name: SAFR-YOLO
@@ -28,7 +32,7 @@ Core modules: high-resolution P2/P3/P4 heads + SelfAttnFR + TinyFReLU
 Post-processing: overlap-aware NMS / NMS sweep as eval-stage refinement
 ```
 
-Confirmed 1280 / 3-seed detector result:
+Current 1280 / 3-seed result for the leading candidate:
 
 | Model | AP | AP50 | F1 | Params | GFLOPs |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -44,14 +48,14 @@ Main interpretation:
 
 ```text
 YOLOv9e is a stronger high-capacity baseline, but it is much larger.
-SAFR-YOLO is the current best parameter-performance trade-off detector.
+SAFR-YOLO is the current strongest parameter-performance trade-off candidate.
 ```
 
 Do not write "outperforms all models" or "SOTA" in any figure.
 
-## Optional 22M Budget Candidate
+## Pending 22M Budget Stretch Candidate
 
-We may test one final stretch variant before freezing the detector figure:
+We may test stretch variants before freezing the detector figure:
 
 ```text
 Candidate label: P2P4-SelfAttnRF-FR
@@ -75,10 +79,10 @@ Visual explanation:
 - The branch should be visually small and lightweight.
 - Suggested label: `Dilated RF context (d=2,3 DWConv)`.
 
-Only promote this candidate into the main figures if it is confirmed by the
-same 1280 / 3-seed protocol or explicitly chosen as the final paper model.
-Before that, show it only as an optional / candidate note in supplementary or
-internal slides.
+Do not promote this candidate into the main paper figures unless it is confirmed
+by the same 1280 / 3-seed protocol and explicitly selected as the paper model.
+Before that, show it only as an optional / candidate note in supplementary,
+internal slides, or figure-redraw instructions.
 
 ## Figure-Level Update Rules
 
@@ -92,26 +96,27 @@ Detector panel label:
 SAFR-YOLO 2D Evidence Generator
 ```
 
-Small sublabel while current model is final:
+Small sublabel while using the current leading candidate:
 
 ```text
 P2P4-SelfAttnFR implementation
 ```
 
-If the 22M RF candidate becomes final:
+If the 22M RF candidate is selected later:
 
 ```text
 P2P4-SelfAttnRF-FR implementation
 ```
 
-Do not add CBAM, DCT, wavelet, SE, or DynFreq labels to Fig. 1 unless they
-become part of the final model.
+Do not add CBAM, DCT, wavelet, SE, or DynFreq labels to Fig. 1 unless they are
+selected after the detector freeze.
 
 ### Main Fig. 2: Proposed Detector
 
-This is the figure that should change if the final detector combination changes.
+This is the figure that should change if the selected detector combination
+changes.
 
-Current final figure should show:
+Current candidate figure should show:
 
 ```text
 Input UAV crop
@@ -126,7 +131,7 @@ Input UAV crop
 
 Required visual details:
 
-- P2/4, P3/8, and P4/16 are final detection heads.
+- P2/4, P3/8, and P4/16 are the current candidate detection heads.
 - P5/32 is context only.
 - SelfAttnFR sits before the detection heads.
 - TinyFReLU can be drawn inside SelfAttnFR or immediately after local
@@ -135,7 +140,7 @@ Required visual details:
 - EvidenceToken includes bbox, class/logits, confidence, uncertainty, view/pose,
   and time.
 
-If `P2P4-SelfAttnRF-FR` becomes final, update Fig. 2 by adding one small branch:
+If `P2P4-SelfAttnRF-FR` is selected later, update Fig. 2 by adding one small branch:
 
 ```text
 SelfAttnFR block:
@@ -224,7 +229,7 @@ Use these names consistently:
 | Reasoner | ACE-Reasoner |
 | Whole system | CoM3D-ACE |
 
-Avoid these names in final figures unless they become final:
+Avoid these names in candidate / paper figures unless they are selected:
 
 - CBAM
 - DCT
@@ -233,19 +238,20 @@ Avoid these names in final figures unless they become final:
 - DynFreq
 - Deformable
 
-They can appear in supplementary ablation tables, not in the final detector
-architecture figure.
+They can appear in supplementary ablation tables, not in the main detector
+architecture figure before selection.
 
 ## Prompt Snippet For Redrawing Fig. 2
 
-Use this prompt after the final detector is selected:
+Use this prompt for a current candidate redraw. After final detector freeze,
+replace the candidate branch with the selected combination:
 
 ```text
 Redraw Main Fig. 2 as a clean YOLO-family detector architecture diagram for
 SAFR-YOLO. Show a YOLOv11l-derived backbone, a P2P4 FPN/PAN neck, P2/4, P3/8,
 and P4/16 detection heads, and P5/32 as context only. Insert SelfAttnFR before
 the detection heads, with pooled-token self-attention and TinyFReLU local
-refinement. If the final model is P2P4-SelfAttnRF-FR, add a small lightweight
+refinement. If the selected model is P2P4-SelfAttnRF-FR, add a small lightweight
 dilated RF context branch inside SelfAttnFR, labeled "dilated RF context
 (d=2,3 DWConv)". Then show overlap-aware NMS and EvidenceToken output. Use a
 white academic computer-vision paper style, blue for detector backbone/neck,
@@ -254,9 +260,9 @@ amber for proposed refinement, green for outputs, and no logos or SOTA claims.
 
 ## Final Freeze Checklist
 
-Before updating the paper figures:
+Before freezing the paper figures:
 
-- Confirm whether final model is `P2P4-SelfAttnFR` or `P2P4-SelfAttnRF-FR`.
+- Confirm which detector combination is selected for the paper.
 - Confirm final 3-seed metrics and parameter count.
 - Confirm whether overlap-aware NMS is included in the final main result or only
   in supplementary.
