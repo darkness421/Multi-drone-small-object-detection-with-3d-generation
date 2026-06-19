@@ -6,6 +6,11 @@ Purpose: give a figure-generation model or Canva artist enough structure to draw
 the method figures correctly. These are not decorative prompts. Each figure must
 look like a computer-vision paper diagram and must preserve the technical story.
 
+Detector freeze note: before redrawing Fig. 2 or supplementary detector-module
+figures, also read `final_detector_figure_update_brief.md`. That file records
+the current SAFR-YOLO / P2P4-SelfAttnFR source of truth and the optional 22M
+P2P4-SelfAttnRF-FR receptive-field candidate.
+
 Double-blind rule: do not include university names, lab names, author names,
 real logos, real skyline brands, or identifiable map labels. Do not use official
 YOLO, NVIDIA, OpenAI, or model-provider logos in the submission figure.

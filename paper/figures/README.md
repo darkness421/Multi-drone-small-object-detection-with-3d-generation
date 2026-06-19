@@ -48,3 +48,9 @@ See `figure_and_canva_guide.md` for the full source, Canva, and export guide.
 Use `figure_generation_briefs_gpt55_pro.md` when asking GPT-5.5 Pro, a
 specialist figure-generation model, or a Canva artist to redraw the final method
 figures.
+
+Before redrawing the final detector figures, check
+`final_detector_figure_update_brief.md`. It records the current SAFR-YOLO /
+P2P4-SelfAttnFR figure source of truth, the optional 22M receptive-field
+candidate, and exactly which main/supplementary figures should change if the
+final detector combination changes.

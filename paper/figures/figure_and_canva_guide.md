@@ -6,6 +6,10 @@ This guide defines what figures we need, where their source data should come
 from, which figures belong in the main paper vs supplementary material, and how
 to redraw them cleanly in Canva or another vector editor.
 
+For final detector redraws, use `final_detector_figure_update_brief.md` as the
+source of truth. It separates the confirmed SAFR-YOLO / P2P4-SelfAttnFR figure
+from the optional 22M receptive-field stretch candidate.
+
 ## Core Rule
 
 The main paper figures should prove the system story, not just decorate it.
