@@ -1,0 +1,262 @@
+{
+  "ready": true,
+  "raw_root": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract",
+  "coco_out": "/home/oem/projects/multi-uav-marine-city/data/processed/uavdt_coco.json",
+  "yolo_out": "/home/oem/projects/multi-uav-marine-city/data/processed/uavdt_yolo",
+  "data_yaml": "/home/oem/projects/multi-uav-marine-city/data/processed/uavdt_yolo/data.yaml",
+  "sequence_count": 50,
+  "image_count": 40403,
+  "annotation_count": 763817,
+  "sequences": [
+    {
+      "name": "M0101",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0101",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0101_gt.txt"
+    },
+    {
+      "name": "M0201",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0201",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0201_gt.txt"
+    },
+    {
+      "name": "M0202",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0202",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0202_gt.txt"
+    },
+    {
+      "name": "M0203",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0203",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0203_gt.txt"
+    },
+    {
+      "name": "M0204",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0204",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0204_gt.txt"
+    },
+    {
+      "name": "M0205",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0205",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0205_gt.txt"
+    },
+    {
+      "name": "M0206",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0206",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0206_gt.txt"
+    },
+    {
+      "name": "M0207",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0207",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0207_gt.txt"
+    },
+    {
+      "name": "M0208",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0208",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0208_gt.txt"
+    },
+    {
+      "name": "M0209",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0209",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0209_gt.txt"
+    },
+    {
+      "name": "M0210",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0210",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0210_gt.txt"
+    },
+    {
+      "name": "M0301",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0301",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0301_gt.txt"
+    },
+    {
+      "name": "M0401",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0401",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0401_gt.txt"
+    },
+    {
+      "name": "M0402",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0402",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0402_gt.txt"
+    },
+    {
+      "name": "M0403",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0403",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0403_gt.txt"
+    },
+    {
+      "name": "M0501",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0501",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0501_gt.txt"
+    },
+    {
+      "name": "M0601",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0601",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0601_gt.txt"
+    },
+    {
+      "name": "M0602",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0602",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0602_gt.txt"
+    },
+    {
+      "name": "M0603",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0603",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0603_gt.txt"
+    },
+    {
+      "name": "M0604",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0604",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0604_gt.txt"
+    },
+    {
+      "name": "M0605",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0605",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0605_gt.txt"
+    },
+    {
+      "name": "M0606",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0606",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0606_gt.txt"
+    },
+    {
+      "name": "M0701",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0701",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0701_gt.txt"
+    },
+    {
+      "name": "M0702",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0702",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0702_gt.txt"
+    },
+    {
+      "name": "M0703",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0703",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0703_gt.txt"
+    },
+    {
+      "name": "M0704",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0704",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0704_gt.txt"
+    },
+    {
+      "name": "M0801",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0801",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0801_gt.txt"
+    },
+    {
+      "name": "M0802",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0802",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0802_gt.txt"
+    },
+    {
+      "name": "M0901",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0901",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0901_gt.txt"
+    },
+    {
+      "name": "M0902",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M0902",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M0902_gt.txt"
+    },
+    {
+      "name": "M1001",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1001",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1001_gt.txt"
+    },
+    {
+      "name": "M1002",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1002",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1002_gt.txt"
+    },
+    {
+      "name": "M1003",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1003",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1003_gt.txt"
+    },
+    {
+      "name": "M1004",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1004",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1004_gt.txt"
+    },
+    {
+      "name": "M1005",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1005",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1005_gt.txt"
+    },
+    {
+      "name": "M1006",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1006",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1006_gt.txt"
+    },
+    {
+      "name": "M1007",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1007",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1007_gt.txt"
+    },
+    {
+      "name": "M1008",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1008",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1008_gt.txt"
+    },
+    {
+      "name": "M1009",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1009",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1009_gt.txt"
+    },
+    {
+      "name": "M1101",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1101",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1101_gt.txt"
+    },
+    {
+      "name": "M1102",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1102",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1102_gt.txt"
+    },
+    {
+      "name": "M1201",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1201",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1201_gt.txt"
+    },
+    {
+      "name": "M1202",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1202",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1202_gt.txt"
+    },
+    {
+      "name": "M1301",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1301",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1301_gt.txt"
+    },
+    {
+      "name": "M1302",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1302",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1302_gt.txt"
+    },
+    {
+      "name": "M1303",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1303",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1303_gt.txt"
+    },
+    {
+      "name": "M1304",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1304",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1304_gt.txt"
+    },
+    {
+      "name": "M1305",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1305",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1305_gt.txt"
+    },
+    {
+      "name": "M1306",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1306",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1306_gt.txt"
+    },
+    {
+      "name": "M1401",
+      "images": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-M/M1401",
+      "annotations": "/home/oem/projects/multi-uav-marine-city/data/raw/UAVDT/_official_extract/UAV-benchmark-MOTD_v1.0/GT/M1401_gt.txt"
+    }
+  ]
+}

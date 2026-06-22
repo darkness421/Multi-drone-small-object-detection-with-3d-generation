@@ -1,0 +1,5 @@
+rank,section,group,method,protocol,seeds,seed_count,AP,AP_std,AP50,AP50_std,precision,recall,F1,params_m,gflops,delta_AP_vs_YOLOv11l,note
+1,nms_postprocess_snapshot,Postprocess/NMS snapshot,P2BalV2-FR-s42 + class-aware NMS,"VisDrone val, 1280, eval only",42,1,0.385633,,0.611860,,0.662555,0.601347,0.630469,24.4100,,0.007976,"single-seed eval, conf=0.001, iou=0.55, strict_pass=true"
+2,nms_postprocess_snapshot,Postprocess/NMS snapshot,P2BalV2-FR-s42 + class-aware NMS,"VisDrone val, 1280, eval only",42,1,0.384947,,0.607968,,0.669030,0.596326,0.630589,24.4100,,0.007290,"single-seed eval, conf=0.001, iou=0.65, strict_pass=true"
+3,nms_postprocess_snapshot,Postprocess/NMS snapshot,P2BalV2-FR-s42 + class-aware NMS,"VisDrone val, 1280, eval only",42,1,0.384917,,0.611760,,0.661094,0.603242,0.630844,24.4100,,0.007260,"single-seed eval, conf=0.001, iou=0.45, strict_pass=true"
+4,nms_postprocess_snapshot,Postprocess/NMS snapshot,P2BalV2-FR-s42 + class-aware NMS,"VisDrone val, 1280, eval only",42,1,0.383932,,0.608612,,0.662555,0.601347,0.630469,24.4100,,0.006275,"single-seed eval, conf=0.01, iou=0.55, strict_pass=true"

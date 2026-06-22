@@ -1,0 +1,34 @@
+name: llm_reasoner_final_adjudicator_ablation
+inputs:
+  hypotheses: outputs/graph/hypotheses.json
+  ambiguity: outputs/ambiguity/scores.json
+  llm: outputs/reasoning/llm_responses.json
+  labels: outputs/reasoning/final_labels.json
+
+methods:
+  - detector_only
+  - detector_geometry_ambiguity
+  - llm_final_adjudicator
+
+metrics:
+  - final_accuracy
+  - ambiguity_resolution_rate
+  - reobserve_rate
+  - llm_call_rate
+  - latency
+  - cost_proxy
+
+analysis:
+  advantages:
+    - semantic/contextual disambiguation
+    - explanation of detector disagreement
+    - selective final verification before re-observation
+  risks:
+    - latency and API/runtime cost
+    - prompt sensitivity
+    - hallucination under weak visual evidence
+    - privacy or deployment constraints
+
+outputs:
+  decisions: outputs/reasoning/final_decisions.json
+  ablation_csv: outputs/experiments/llm_reasoner_ablation.csv

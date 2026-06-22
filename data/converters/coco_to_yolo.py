@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 from pathlib import Path
 from typing import Any
@@ -30,6 +31,16 @@ def category_id_to_yolo_index(categories: list[dict[str, Any]]) -> dict[int, int
 
 def category_names(categories: list[dict[str, Any]]) -> dict[int, str]:
     return {idx: category["name"] for idx, category in enumerate(sorted(categories, key=lambda row: int(row["id"])))}
+
+
+def target_image_name(image: dict[str, Any], file_name: Path) -> str:
+    """Return the YOLO image filename, allowing converters to avoid collisions."""
+
+    metadata = image.get("metadata") or {}
+    yolo_stem = metadata.get("yolo_stem")
+    if yolo_stem:
+        return f"{yolo_stem}{file_name.suffix}"
+    return file_name.name
 
 
 def _split_for_index(index: int, train_ratio: float, val_ratio: float) -> str:
@@ -61,7 +72,35 @@ def _write_names_yaml(out_dir: Path, names: dict[int, str]) -> Path:
     return data_yaml
 
 
-def _write_yolo_split(payload: dict[str, Any], out_dir: Path, split: str, *, copy_images: bool) -> tuple[int, int]:
+def materialize_image(source: Path, target: Path, *, copy_images: bool, link_images: bool) -> None:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        return
+    if copy_images and source.exists():
+        shutil.copy2(source, target)
+        return
+    if link_images and source.exists():
+        try:
+            os.link(source, target)
+        except OSError:
+            try:
+                target.symlink_to(source.resolve())
+                return
+            except OSError:
+                pass
+        else:
+            return
+    target.write_text(f"image_placeholder={source}\n", encoding="utf-8")
+
+
+def _write_yolo_split(
+    payload: dict[str, Any],
+    out_dir: Path,
+    split: str,
+    *,
+    copy_images: bool,
+    link_images: bool,
+) -> tuple[int, int]:
     categories = payload.get("categories", [])
     cat_to_idx = category_id_to_yolo_index(categories)
     images = {int(image["id"]): image for image in payload.get("images", [])}
@@ -83,11 +122,9 @@ def _write_yolo_split(payload: dict[str, Any], out_dir: Path, split: str, *, cop
         if not width or not height:
             width, height = 1, 1
 
-        target_image = out_dir / "images" / split / file_name.name
-        if copy_images and file_name.exists():
-            shutil.copy2(file_name, target_image)
-        elif not target_image.exists():
-            target_image.write_text(f"image_placeholder={file_name}\n", encoding="utf-8")
+        target_name = target_image_name(image, file_name)
+        target_image = out_dir / "images" / split / target_name
+        materialize_image(file_name, target_image, copy_images=copy_images, link_images=link_images)
 
         label_lines = []
         for ann in annotations_by_image.get(image_id, []):
@@ -96,7 +133,7 @@ def _write_yolo_split(payload: dict[str, Any], out_dir: Path, split: str, *, cop
                 continue
             bbox = normalize_bbox_xywh(ann["bbox"], float(width), float(height))
             label_lines.append(" ".join([str(cat_to_idx[category_id])] + [f"{value:.6f}" for value in bbox]))
-        (out_dir / "labels" / split / f"{file_name.stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
+        (out_dir / "labels" / split / f"{Path(target_name).stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
         image_count += 1
         label_count += len(label_lines)
     return image_count, label_count
@@ -107,6 +144,7 @@ def convert_coco_to_yolo(
     out_dir: str | Path,
     *,
     copy_images: bool = False,
+    link_images: bool = False,
     train_ratio: float = 0.8,
     val_ratio: float = 0.1,
 ) -> Path:
@@ -134,11 +172,9 @@ def convert_coco_to_yolo(
         if not width or not height:
             width, height = 1, 1
 
-        target_image = out_dir / "images" / split / file_name.name
-        if copy_images and file_name.exists():
-            shutil.copy2(file_name, target_image)
-        elif not target_image.exists():
-            target_image.write_text(f"image_placeholder={file_name}\n", encoding="utf-8")
+        target_name = target_image_name(image, file_name)
+        target_image = out_dir / "images" / split / target_name
+        materialize_image(file_name, target_image, copy_images=copy_images, link_images=link_images)
 
         label_lines = []
         for ann in annotations_by_image.get(image_id, []):
@@ -147,7 +183,7 @@ def convert_coco_to_yolo(
                 continue
             bbox = normalize_bbox_xywh(ann["bbox"], float(width), float(height))
             label_lines.append(" ".join([str(cat_to_idx[category_id])] + [f"{value:.6f}" for value in bbox]))
-        (out_dir / "labels" / split / f"{file_name.stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
+        (out_dir / "labels" / split / f"{Path(target_name).stem}.txt").write_text("\n".join(label_lines), encoding="utf-8")
 
     return _write_names_yaml(out_dir, names)
 
@@ -157,6 +193,7 @@ def convert_coco_splits_to_yolo(
     out_dir: str | Path,
     *,
     copy_images: bool = False,
+    link_images: bool = False,
 ) -> Path:
     """Convert explicit COCO split files into one Ultralytics YOLO dataset."""
 
@@ -167,7 +204,7 @@ def convert_coco_splits_to_yolo(
         current_names = category_names(payload.get("categories", []))
         if names is None:
             names = current_names
-        _write_yolo_split(payload, out_dir, split, copy_images=copy_images)
+        _write_yolo_split(payload, out_dir, split, copy_images=copy_images, link_images=link_images)
 
     for split in ("train", "val", "test"):
         (out_dir / "images" / split).mkdir(parents=True, exist_ok=True)
@@ -180,6 +217,7 @@ def main() -> None:
     parser.add_argument("--coco", required=True)
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--copy-images", action="store_true")
+    parser.add_argument("--link-images", action="store_true", help="Hardlink images into the YOLO tree, falling back to symlinks.")
     parser.add_argument("--train-ratio", type=float, default=0.8)
     parser.add_argument("--val-ratio", type=float, default=0.1)
     args = parser.parse_args()
@@ -187,6 +225,7 @@ def main() -> None:
         args.coco,
         args.out_dir,
         copy_images=args.copy_images,
+        link_images=args.link_images,
         train_ratio=args.train_ratio,
         val_ratio=args.val_ratio,
     )

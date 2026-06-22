@@ -1,0 +1,40 @@
+name: top3_proposed_detector_main
+description: >
+  Main statistical follow-up for the best model found by
+  top3_proposed_detector_screening. Edit base_models/ablations to the winning
+  backbone and module pair, then run 3 seeds for preliminary statistics or 5
+  seeds for the main paper table.
+
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+dataset_tag: visdrone_top3_main
+project: outputs/detectors/server_top3_proposed_main
+log_dir: outputs/logs/server_baselines
+experiment_root: outputs/experiments
+command_csv: outputs/experiments/top3_proposed_main_commands.csv
+
+training:
+  imgsz: 1280
+  epochs: 100
+  patience: 50
+  batch: 8
+  seeds: [42, 123, 2026]
+  deterministic: true
+  run_eval: true
+  roc_auc: true
+
+base_models:
+  # Replace with the best screening backbone, for example yolo12m.pt.
+  - yolo12m.pt
+
+ablations:
+  # Replace/keep only the best screening module before starting the main queue.
+  - name: full_proposed
+    method_template: ProposedMain-Full-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: wavelet_stem+cbam_neck+partial_deformable_neck
+    model_patches: wavelet_stem,cbam_neck,partial_deformable_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Main candidate after screening. Expand seeds to [42, 123, 2026, 7, 3407] for final paper statistics.

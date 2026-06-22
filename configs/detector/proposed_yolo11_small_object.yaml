@@ -1,0 +1,99 @@
+# Proposed small-object perception module experiment scaffold.
+
+base_model: yolo11n.pt
+dataset: VisDrone2019-DET
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+queue_config: configs/experiments/proposed_detector_ablation.yaml
+
+training:
+  imgsz: 1280
+  epochs: 100
+  batch: 8
+  preliminary_seeds: [42, 123, 2026]
+  main_seeds: [42, 123, 2026, 7, 3407]
+  deterministic: true
+
+modules:
+  wavelet_stem:
+    enabled: true
+    family: high_frequency_residual
+  se_neck:
+    enabled: true
+    reduction: 16
+    target_layers: [p3, p4, p5]
+  cbam_neck:
+    enabled: true
+    reduction: 16
+    target_layers: [p3, p4, p5]
+  partial_deformable_neck:
+    enabled: true
+    stages: [p3, p4]
+  tiling_inference:
+    enabled: false
+    tile_size: 1024
+    overlap: 0.2
+
+ablations:
+  - name: baseline
+    implementation_status: implemented
+    wavelet_stem: false
+    se_neck: false
+    cbam_neck: false
+    partial_deformable_neck: false
+    tiling_inference: false
+  - name: wavelet_stem
+    implementation_status: implemented
+    wavelet_stem: true
+    se_neck: false
+    cbam_neck: false
+    partial_deformable_neck: false
+    tiling_inference: false
+  - name: se_neck
+    implementation_status: implemented
+    wavelet_stem: false
+    se_neck: true
+    cbam_neck: false
+    partial_deformable_neck: false
+    tiling_inference: false
+  - name: cbam_neck
+    implementation_status: implemented
+    wavelet_stem: false
+    se_neck: false
+    cbam_neck: true
+    partial_deformable_neck: false
+    tiling_inference: false
+  - name: partial_deformable_neck
+    implementation_status: implemented
+    wavelet_stem: false
+    se_neck: false
+    cbam_neck: false
+    partial_deformable_neck: true
+    tiling_inference: false
+  - name: wavelet_se
+    implementation_status: implemented
+    wavelet_stem: true
+    se_neck: true
+    cbam_neck: false
+    partial_deformable_neck: false
+    tiling_inference: false
+  - name: wavelet_cbam
+    implementation_status: implemented
+    wavelet_stem: true
+    se_neck: false
+    cbam_neck: true
+    partial_deformable_neck: false
+    tiling_inference: false
+  - name: tiling_inference
+    implementation_status: planned_eval_only
+    wavelet_stem: false
+    se_neck: false
+    cbam_neck: false
+    partial_deformable_neck: false
+    tiling_inference: true
+  - name: full_proposed
+    implementation_status: implemented
+    wavelet_stem: true
+    se_neck: false
+    cbam_neck: true
+    partial_deformable_neck: true
+    tiling_inference: false

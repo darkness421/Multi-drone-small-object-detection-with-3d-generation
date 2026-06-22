@@ -1,0 +1,122 @@
+name: proposed_yolo11_small_object_ablation
+description: >
+  Proposed perception-module ablation queue. Runnable variants use runtime
+  patches on top of the selected YOLO11 checkpoint so SE/CBAM/wavelet/deformable
+  modules are trained and logged separately from the unchanged control model.
+
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+dataset_tag: visdrone
+project: outputs/detectors/server_proposed_ablation
+log_dir: outputs/logs/server_baselines
+experiment_root: outputs/experiments
+command_csv: outputs/experiments/proposed_ablation_commands.csv
+
+training:
+  imgsz: 1280
+  epochs: 100
+  patience: 30
+  batch: 8
+  seeds: [42, 123, 2026]
+  deterministic: true
+  run_eval: true
+  roc_auc: true
+
+base_models:
+  - yolo11s.pt
+
+ablations:
+  - name: control
+    method_template: Proposed-Control-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: control
+    model_patches: ""
+    enabled: true
+    notes: Same training protocol as baselines, isolated in the proposed-ablation root.
+
+  - name: wavelet_stem
+    method_template: Proposed-WaveletStem-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: wavelet_stem
+    model_patches: wavelet_stem
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: High-frequency residual pre-filter before the first YOLO stem conv.
+
+  - name: se_neck
+    method_template: Proposed-SE-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: se_neck
+    model_patches: se_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Squeeze-and-excitation gates on P3/P4/P5 neck outputs.
+
+  - name: cbam_neck
+    method_template: Proposed-CBAM-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: cbam_neck
+    model_patches: cbam_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: CBAM channel+spatial attention on P3/P4/P5 neck outputs.
+
+  - name: partial_deformable_neck
+    method_template: Proposed-DeformableNeck-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: partial_deformable_neck
+    model_patches: partial_deformable_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Partial-channel deformable refinement on P3/P4/P5 neck outputs.
+
+  - name: wavelet_se
+    method_template: Proposed-WaveletSE-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: wavelet_stem+se_neck
+    model_patches: wavelet_stem,se_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Tests whether high-frequency stem and SE are complementary.
+
+  - name: wavelet_cbam
+    method_template: Proposed-WaveletCBAM-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: wavelet_stem+cbam_neck
+    model_patches: wavelet_stem,cbam_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Tests high-frequency stem with spatial/channel attention.
+
+  - name: tiling_inference
+    method_template: Proposed-TilingInference-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: planned_eval_only
+    proposed_module: tiling_inference
+    enabled: false
+    requires:
+      - evaluation/tiled_detector_eval.py
+    skip_reason: Tiling inference should be evaluated with a tiled detector evaluator, not by retraining the unchanged base model.
+
+  - name: full_proposed
+    method_template: Proposed-Full-{base_slug}
+    train_model_template: "{base_model}"
+    implementation_status: implemented
+    proposed_module: wavelet_stem+cbam_neck+partial_deformable_neck
+    model_patches: wavelet_stem,cbam_neck,partial_deformable_neck
+    enabled: true
+    requires:
+      - detectors/proposed/modules.py
+    notes: Trainable full detector-side proposal; tiling remains eval-only after checkpoint selection.

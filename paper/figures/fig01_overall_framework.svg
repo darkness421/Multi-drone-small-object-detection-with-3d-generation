@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Figure 1. Overall CoM3D-ACE Framework</title>
+  <desc id="desc">Overall multi-UAV perception pipeline from MarineCity simulation to detection, 3D reconstruction, LLM reasoning, and final decision.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg{fill:#f8fafc}.title{font:700 28px Arial, sans-serif;fill:#0f172a}.subtitle{font:400 15px Arial, sans-serif;fill:#475569}
+      .box{fill:#ffffff;stroke:#334155;stroke-width:2;rx:12}.box-blue{fill:#e0f2fe;stroke:#0369a1}.box-green{fill:#dcfce7;stroke:#15803d}
+      .box-yellow{fill:#fef3c7;stroke:#b45309}.box-purple{fill:#ede9fe;stroke:#6d28d9}.box-red{fill:#fee2e2;stroke:#b91c1c}
+      .label{font:700 17px Arial, sans-serif;fill:#0f172a}.small{font:400 13px Arial, sans-serif;fill:#334155}.tag{font:700 13px Arial, sans-serif;fill:#ffffff}
+      .arrow{stroke:#334155;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.dash{stroke:#64748b;stroke-width:2;stroke-dasharray:6 5;fill:none}
+      .chip1{fill:#2563eb}.chip2{fill:#16a34a}.chip3{fill:#b45309}.chip4{fill:#7c3aed}
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1200" height="675"/>
+  <text class="title" x="60" y="56">CoM3D-ACE: Cooperative Multi-UAV Perception and Reasoning</text>
+  <text class="subtitle" x="60" y="84">Detector baselines, proposed small-object module, MarineCity benchmark, 3D reconstruction, and active LLM reasoning.</text>
+
+  <rect class="box box-blue" x="60" y="145" width="150" height="135"/>
+  <text class="label" x="85" y="180">MarineCity</text>
+  <text class="label" x="91" y="202">Multi-UAV</text>
+  <text class="small" x="82" y="232">Isaac Sim scene</text>
+  <text class="small" x="82" y="252">altitude / pose</text>
+
+  <rect class="box" x="255" y="145" width="150" height="135"/>
+  <text class="label" x="286" y="180">Multi-angle</text>
+  <text class="label" x="300" y="202">Images</text>
+  <text class="small" x="278" y="232">RGB, depth, pose</text>
+  <text class="small" x="278" y="252">2D boxes, IDs</text>
+
+  <rect class="box box-green" x="450" y="145" width="170" height="135"/>
+  <text class="label" x="480" y="174">Detector +</text>
+  <text class="label" x="478" y="197">Proposed FM</text>
+  <text class="small" x="473" y="226">wavelet stem</text>
+  <text class="small" x="473" y="246">deformable neck</text>
+  <text class="small" x="473" y="266">tiling inference</text>
+
+  <rect class="box box-yellow" x="665" y="145" width="150" height="135"/>
+  <text class="label" x="690" y="182">Evidence</text>
+  <text class="label" x="704" y="204">Tokens</text>
+  <text class="small" x="690" y="234">class, box, score</text>
+  <text class="small" x="690" y="254">view, pose, risk</text>
+
+  <rect class="box box-purple" x="860" y="145" width="170" height="135"/>
+  <text class="label" x="895" y="174">3D Evidence</text>
+  <text class="label" x="897" y="197">Completion</text>
+  <text class="small" x="888" y="226">NeRF / 3DGS / ours</text>
+  <text class="small" x="888" y="246">missing view fill</text>
+
+  <rect class="box box-red" x="450" y="385" width="170" height="120"/>
+  <text class="label" x="490" y="420">Ambiguity</text>
+  <text class="label" x="502" y="442">Scorer</text>
+  <text class="small" x="475" y="472">low confidence</text>
+  <text class="small" x="475" y="492">view disagreement</text>
+
+  <rect class="box box-yellow" x="665" y="385" width="165" height="120"/>
+  <text class="label" x="695" y="420">LLM/VLM</text>
+  <text class="label" x="700" y="442">Reasoner</text>
+  <text class="small" x="692" y="472">verify or request</text>
+  <text class="small" x="692" y="492">re-observation</text>
+
+  <rect class="box box-green" x="875" y="385" width="155" height="120"/>
+  <text class="label" x="913" y="420">Final</text>
+  <text class="label" x="900" y="442">Decision</text>
+  <text class="small" x="903" y="472">class, location</text>
+  <text class="small" x="903" y="492">confidence, action</text>
+
+  <path class="arrow" d="M210 212 L255 212"/>
+  <path class="arrow" d="M405 212 L450 212"/>
+  <path class="arrow" d="M620 212 L665 212"/>
+  <path class="arrow" d="M815 212 L860 212"/>
+  <path class="arrow" d="M535 280 L535 385"/>
+  <path class="arrow" d="M620 445 L665 445"/>
+  <path class="arrow" d="M830 445 L875 445"/>
+  <path class="dash" d="M740 385 C740 330 740 315 740 280"/>
+  <path class="dash" d="M747 505 C690 570 430 570 250 280"/>
+
+  <rect class="chip1" x="60" y="585" width="245" height="34" rx="17"/>
+  <text class="tag" x="82" y="607">C1: detector and proposed FM</text>
+  <rect class="chip2" x="330" y="585" width="260" height="34" rx="17"/>
+  <text class="tag" x="352" y="607">C2: 3D generative reconstruction</text>
+  <rect class="chip3" x="615" y="585" width="270" height="34" rx="17"/>
+  <text class="tag" x="637" y="607">C3: MarineCity multi-angle benchmark</text>
+  <rect class="chip4" x="910" y="585" width="220" height="34" rx="17"/>
+  <text class="tag" x="932" y="607">C4: LLM re-observation</text>
+</svg>

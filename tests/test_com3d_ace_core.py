@@ -26,9 +26,13 @@ from evaluation.association_eval import evaluate_association, infer_gt_from_toke
 from evaluation.system_level_runner import build_system_rows
 from evaluation.system_compare import empty_system_table
 from evaluation.vlm_compare import empty_vlm_table
+from generative3d.benchmark_manifest import build_multiview_benchmark, summarize_benchmark
+from generative3d.registry import default_model_specs
+from reasoning.final_adjudicator import adjudicate_object
 from runtime.config import load_config
 from runtime.outputs import prepare_run_dir
 from scripts.check_dataset_readiness import inspect_dataset
+from scripts.check_dataset_ready import inspect_paths
 from scripts.check_training_readiness import inspect_data_yaml
 from scripts.make_visible_smoke_sample import create_visible_smoke_sample
 from scripts.preview_yolo_dataset import render_yolo_dataset_preview
@@ -269,6 +273,30 @@ class TestCom3DAceCore(unittest.TestCase):
             self.assertEqual(row.counts["images"], 1)
             self.assertEqual(row.counts["annotations"], 1)
 
+    def test_server_dataset_ready_requires_files_for_required_paths(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            raw = tmp_path / "raw" / "VisDrone2019-DET"
+            yolo = tmp_path / "processed" / "visdrone_yolo"
+            raw.mkdir(parents=True)
+            yolo.mkdir(parents=True)
+            config = tmp_path / "paths.yaml"
+            config.write_text(
+                "\n".join(
+                    [
+                        "datasets:",
+                        f"  visdrone_raw: {raw.as_posix()}",
+                        f"  visdrone_yolo: {yolo.as_posix()}",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            rows = {row.name: row for row in inspect_paths(config)}
+            self.assertFalse(rows["visdrone_raw"].ready)
+            (raw / "sample.txt").write_text("placeholder", encoding="utf-8")
+            rows = {row.name: row for row in inspect_paths(config)}
+            self.assertTrue(rows["visdrone_raw"].ready)
+
     def test_training_readiness_detects_placeholder_images(self) -> None:
         with TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
@@ -408,6 +436,34 @@ class TestCom3DAceCore(unittest.TestCase):
             self.assertTrue((output_root / run_id / "experiment.md").exists())
             index_path = write_experiment_index(output_root)
             self.assertIn(run_id, index_path.read_text(encoding="utf-8"))
+
+    def test_marinecity_3d_generation_registry_and_benchmark(self) -> None:
+        specs = default_model_specs()
+        self.assertGreaterEqual(len(specs), 4)
+        self.assertIn("gaussian_splatting", {spec.key for spec in specs})
+
+        frames = build_multiview_benchmark(
+            "datasets/converters/dummy_marinecity_input.json",
+            val_angles=["nadir"],
+            test_angles=["right_oblique"],
+        )
+        summary = summarize_benchmark(frames)
+        self.assertEqual(summary["frame_count"], 2)
+        self.assertEqual(summary["by_split"]["val"], 1)
+        self.assertEqual(summary["by_split"]["test_unseen_angle"], 1)
+
+    def test_final_adjudicator_uses_llm_disagreement(self) -> None:
+        decision = adjudicate_object(
+            {
+                "object_id": "obj_1",
+                "class_posterior": {"van": 0.65, "truck": 0.35},
+            },
+            ambiguity={"ambiguity_score": 0.7, "reason_tags": ["class_confusion"], "components": {"geometry_residual": 0.2}},
+            llm_payload={"object_id": "obj_1", "predicted_class": "truck", "confidence": 0.9, "reasons": ["side_profile"]},
+        )
+        self.assertEqual(decision.predicted_class, "van")
+        self.assertTrue(decision.should_reobserve)
+        self.assertIn("llm_detector_disagreement", decision.reason_tags)
 
 
 if __name__ == "__main__":

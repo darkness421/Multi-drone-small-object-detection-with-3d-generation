@@ -1,0 +1,169 @@
+name: paper_detector_comparison_additions
+description: >
+  Extra paper-driven detector comparisons requested after reviewing recent
+  UAV/small-object detection papers. These are queued after the main VisDrone
+  comparison sweep to avoid disrupting active baselines.
+
+dataset: VisDrone2019-DET
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+project: outputs/detectors/server_baselines
+
+models:
+  - name: YOLOv10n
+    weights: yolov10n.pt
+    family: YOLO
+    size: nano
+    status: ultralytics_available_check
+    rationale: Completes YOLOv10 nano/small/medium coverage for size-based comparisons.
+
+  - name: YOLOv10s
+    weights: yolov10s.pt
+    family: YOLO
+    size: small
+    status: already_in_queue
+    rationale: Already queued in the expanded small-model comparison sweep.
+
+  - name: YOLOv10m
+    weights: yolov10m.pt
+    family: YOLO
+    size: medium
+    status: already_in_queue
+    rationale: Already queued in the expanded medium-model comparison sweep.
+
+  - name: LRDS-YOLO
+    weights: weights/lrds-yolo.pt
+    fallback_weights: lrds-yolo.pt
+    family: LRDS-YOLO
+    size: lightweight
+    status: external_required
+    source: https://www.nature.com/articles/s41598-025-07021-6
+    rationale: Recent UAV small-object detector using LAD, Re-Calibration FPN, SegNext Attention, and DyHead.
+    note: >
+      Queue only runs this model if the checkpoint/config is loadable by the
+      current environment. Otherwise it is skipped and documented.
+
+  - name: SOD-YOLO
+    weights: weights/sod-yolo.pt
+    fallback_weights: sod-yolo.pt
+    family: SOD-YOLO
+    size: lightweight
+    status: external_required
+    source: https://arxiv.org/abs/2507.12727
+    code: https://github.com/iamwangxiaobai/SOD-YOLO
+    rationale: 2025 UAV small-object YOLO variant with reported VisDrone2019-DET gains and public source/weights link in the paper record.
+    note: >
+      Add only after the external checkpoint/config is staged locally and can be
+      loaded by the current detector wrapper.
+
+  - name: DR-YOLO
+    weights: weights/dr-yolo.pt
+    fallback_weights: dr-yolo.pt
+    family: DR-YOLO
+    size: lightweight
+    status: external_required
+    source: https://doi.org/10.1016/j.dsp.2025.105087
+    code: https://github.com/DRdairuiDR/DR-YOLO
+    rationale: 2025 YOLOv7-based multi-scale small-object detector for drone aerial scenes with a public repository noted by the paper.
+    note: >
+      The repo may need adapter code if it is not packaged as an Ultralytics
+      checkpoint.
+
+  - name: LSOD-YOLO
+    weights: weights/lsod-yolo.pt
+    fallback_weights: lsod-yolo.pt
+    family: LSOD-YOLO
+    size: lightweight
+    status: external_required
+    source: https://doi.org/10.1016/j.eswa.2025.126155
+    rationale: 2025 lightweight YOLOv8-based small-object detector reporting VisDrone2019, TinyPerson, LEVIR-Ship, and UAVDT comparisons with accuracy/recall/mAP gains.
+    note: >
+      Add if a compatible checkpoint/config is available; otherwise cite as a
+      recent paper comparison target and document why it was not runnable.
+
+  - name: MASF-YOLO
+    weights: weights/masf-yolo.pt
+    fallback_weights: masf-yolo.pt
+    family: MASF-YOLO
+    size: small
+    status: external_required
+    source: https://arxiv.org/abs/2504.18136
+    rationale: 2025 YOLOv11-based UAV small-object detector using multi-scale context aggregation, scale-adaptive fusion, and attention on VisDrone2019.
+    note: >
+      Prefer this if the authors publish a YOLO-compatible checkpoint/config;
+      otherwise implement only after the top-3 proposed screening finishes.
+
+  - name: TOE-YOLO
+    weights: weights/toe-yolo.pt
+    fallback_weights: toe-yolo.pt
+    family: TOE-YOLO
+    size: nano
+    status: external_required
+    source: https://doi.org/10.1007/s11554-025-01770-3
+    rationale: 2025 YOLO11-based tiny-object detector for UAV imagery; useful as a recent YOLO11-family paper comparison.
+    note: >
+      Queue only if the authors release a loadable checkpoint/config or we
+      implement an adapter.
+
+  - name: MFR-YOLO
+    weights: weights/mfr-yolo.pt
+    fallback_weights: mfr-yolo.pt
+    family: MFR-YOLO
+    size: medium
+    status: external_required
+    source: https://doi.org/10.1038/s41598-026-45641-8
+    rationale: 2026 UAV detector using multi-scale feature refinement, deformable convolution, and global attention; close to our proposed-module theme.
+    note: >
+      Track as a paper-facing comparison candidate; run only after a compatible
+      checkpoint/config is available.
+
+  - name: UAVDet
+    weights: weights/uavdet.pt
+    fallback_weights: uavdet.pt
+    family: UAVDet
+    size: lightweight
+    architecture_group: non_yolo
+    status: external_required
+    source: https://doi.org/10.1016/j.cviu.2026.104637
+    rationale: 2026 CNN-Mamba hybrid UAV small-object detector from the Notion research list; reports VisDrone/UAVDT/DroneVehicle evaluation and strong parameter/FPS tradeoff.
+    note: >
+      Non-YOLO RTMDet-style implementation. Run only if a compatible adapter or
+      checkpoint/export path is prepared.
+
+  - name: HF-D-FINE
+    weights: weights/hf-d-fine.pt
+    fallback_weights: hf-d-fine.pt
+    family: D-FINE
+    size: small
+    architecture_group: non_yolo
+    status: external_required
+    source: https://doi.org/10.1016/j.imavis.2025.105834
+    rationale: 2026 high-resolution-feature D-FINE variant for UAV tiny-object detection from the Notion research list; useful as a recent non-YOLO real-time detector comparison.
+    note: >
+      Prefer as the D-FINE family comparison if authors release weights or if we
+      implement a D-FINE adapter.
+
+  - name: CSFPR-RTDETR
+    weights: weights/csfpr-rtdetr.pt
+    fallback_weights: csfpr-rtdetr.pt
+    family: RT-DETR
+    size: small
+    architecture_group: non_yolo
+    status: external_required
+    source: https://github.com/HuLei-JXNU/CSFPR-RTDETR
+    rationale: RT-DETR-style UAV small-object detector based on cross spatial-frequency domain and position relation, matching the frequency/detail theme of our proposed module.
+    note: >
+      Use after confirming the repository training/evaluation format can be
+      bridged to our VisDrone metrics collector.
+
+  - name: UFO-DETR
+    weights: weights/ufo-detr.pt
+    fallback_weights: ufo-detr.pt
+    family: DETR
+    size: lightweight
+    architecture_group: non_yolo
+    status: external_required
+    source: https://arxiv.org/abs/2602.22712
+    rationale: 2026 frequency-guided end-to-end detector for UAV tiny objects from the Notion research list; useful as a recent DETR/frequency-domain comparison target.
+    note: >
+      Track as a paper-facing candidate first. Queue only after public code or a
+      compatible checkpoint becomes available.

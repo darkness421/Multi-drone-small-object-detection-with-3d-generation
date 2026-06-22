@@ -1,0 +1,71 @@
+name: large_detector_comparison
+description: >
+  Representative L-size detector anchors for paper-scale comparison. These runs
+  are queued after the proposed ablation session so they do not compete for GPU
+  memory during active proposed-module training.
+
+dataset: VisDrone2019-DET
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+
+training:
+  imgsz: 1280
+  epochs: 100
+  seeds: [42, 123, 2026]
+  default_batch: 2
+  deterministic: true
+  default_gpus: [0]
+  note: GPU1 is not used by default until the server CUDA allocation issue is resolved.
+
+models:
+  - name: YOLOv8l
+    weights: yolov8l.pt
+    family: YOLO
+    version: v8
+    size: large
+    batch: 2
+    rationale: Adds a mature YOLO large-scale anchor.
+
+  - name: YOLOv10l
+    weights: yolov10l.pt
+    family: YOLO
+    version: v10
+    size: large
+    batch: 2
+    rationale: Completes YOLOv10 scale progression beyond n/s/m.
+
+  - name: YOLO11l
+    weights: yolo11l.pt
+    family: YOLO
+    version: v11
+    size: large
+    batch: 2
+    rationale: Main modern YOLO large anchor near the proposed YOLO11 base.
+
+  - name: YOLO12l
+    weights: yolo12l.pt
+    family: YOLO
+    version: v12
+    size: large
+    batch: 2
+    rationale: Large counterpart to the current best overall YOLOv12m baseline.
+
+  - name: YOLO26l
+    weights: yolo26l.pt
+    family: YOLO
+    version: v26
+    size: large
+    batch: 2
+    rationale: Future-version YOLO anchor for reviewer-facing breadth.
+
+  - name: RT-DETR-L
+    weights: rtdetr-l.pt
+    family: RT-DETR
+    version: RT-DETR
+    size: large
+    batch: 2
+    rationale: Complete transformer-style large detector seed coverage.
+
+outputs:
+  detector_root_pattern: outputs/detectors/server_fresh_baselines/large_*
+  experiment_root_pattern: outputs/experiments/server_fresh/large_*
+  report_root_pattern: outputs/reports/server_fresh_baselines/large_*

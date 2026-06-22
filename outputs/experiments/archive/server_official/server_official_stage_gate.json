@@ -1,0 +1,42 @@
+{
+  "metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "candidate_regex": "(?i)(proposed|com3d|ace|wavelet|deformable|tiling|ours)",
+  "lightweight_max_params": 15000000,
+  "min_delta": 0.0,
+  "require_main": false,
+  "baseline_count": 8,
+  "candidate_count": 0,
+  "best_overall_baseline": {
+    "method": "YOLOv9s",
+    "model": "yolov9s.pt",
+    "detector_family": "YOLO",
+    "model_version": "v9",
+    "model_scale": "small",
+    "param_size_group": "small",
+    "seed_count": 3,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.3433466666666667,
+    "best_AP50_mean": 0.5544333333333333,
+    "Params_mean": 7291278.0,
+    "GFLOPs_mean": 27.4
+  },
+  "best_lightweight_baseline": {
+    "method": "YOLOv9s",
+    "model": "yolov9s.pt",
+    "detector_family": "YOLO",
+    "model_version": "v9",
+    "model_scale": "small",
+    "param_size_group": "small",
+    "seed_count": 3,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.3433466666666667,
+    "best_AP50_mean": 0.5544333333333333,
+    "Params_mean": 7291278.0,
+    "GFLOPs_mean": 27.4
+  },
+  "best_proposed_candidate": null,
+  "recommended_next_stage": "finish_baselines_then_build_proposed",
+  "rationale": "Baseline/comparison models are being established; proposed detector rows are not present yet.",
+  "dataset": "VisDrone2019-DET"
+}

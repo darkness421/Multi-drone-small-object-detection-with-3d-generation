@@ -27,8 +27,10 @@ INDEX_COLUMNS = [
     "epochs",
     "imgsz",
     "batch",
+    "seed",
     "AP",
     "AP50",
+    "ROC-AUC",
     "precision",
     "recall",
     "run_dir",
@@ -112,6 +114,7 @@ def start_experiment(
     imgsz: int,
     batch: int,
     data_yaml: str | Path,
+    seed: int | None = None,
     command: str | None = None,
     output_root: str | Path = DEFAULT_OUTPUT_ROOT,
     visible_execution: bool = True,
@@ -137,6 +140,7 @@ def start_experiment(
         "epochs": epochs,
         "imgsz": imgsz,
         "batch": batch,
+        "seed": seed,
         "data_yaml": str(resolve_path(data_yaml)),
         "command": command,
         "visible_execution": visible_execution,
@@ -274,6 +278,7 @@ def write_markdown_summary(manifest: dict[str, Any], path: Path) -> None:
         "",
         f"- Status: {manifest.get('status', '')}",
         f"- Model: {manifest.get('model', '')}",
+        f"- Seed: {manifest.get('seed') if manifest.get('seed') is not None else ''}",
         f"- Dataset: {manifest.get('dataset', '')}",
         f"- Started: {manifest.get('started_at', '')}",
         f"- Finished: {manifest.get('finished_at') or ''}",
@@ -292,6 +297,7 @@ def write_markdown_summary(manifest: dict[str, Any], path: Path) -> None:
         "| --- | --- |",
         f"| AP | {format_metric(metrics.get('AP'))} |",
         f"| AP50 | {format_metric(metrics.get('AP50'))} |",
+        f"| ROC-AUC | {format_metric(metrics.get('ROC-AUC'))} |",
         f"| Precision | {format_metric(metrics.get('precision'))} |",
         f"| Recall | {format_metric(metrics.get('recall'))} |",
         f"| Epoch | {format_metric(metrics.get('epoch'))} |",
@@ -333,8 +339,10 @@ def manifest_to_index_row(manifest: dict[str, Any], *, output_root: str | Path =
         "epochs": str(manifest.get("epochs", "")),
         "imgsz": str(manifest.get("imgsz", "")),
         "batch": str(manifest.get("batch", "")),
+        "seed": str(manifest.get("seed", "")),
         "AP": format_metric(metrics.get("AP")),
         "AP50": format_metric(metrics.get("AP50")),
+        "ROC-AUC": format_metric(metrics.get("ROC-AUC")),
         "precision": format_metric(metrics.get("precision")),
         "recall": format_metric(metrics.get("recall")),
         "run_dir": str(experiment_paths(manifest.get("run_id", ""), output_root=output_root).run_dir) if manifest.get("run_id") else "",
@@ -366,6 +374,7 @@ def build_parser() -> argparse.ArgumentParser:
     start.add_argument("--epochs", type=int, default=100)
     start.add_argument("--imgsz", type=int, default=1280)
     start.add_argument("--batch", type=int, default=8)
+    start.add_argument("--seed", type=int, default=None)
     start.add_argument("--data-yaml", default="configs/detector/visdrone_yolo_data.yaml")
     start.add_argument("--command", default=None)
     start.add_argument("--output-root", default=str(DEFAULT_OUTPUT_ROOT))
@@ -397,6 +406,7 @@ def main() -> None:
             imgsz=args.imgsz,
             batch=args.batch,
             data_yaml=args.data_yaml,
+            seed=args.seed,
             command=args.command,
             output_root=args.output_root,
             visible_execution=not args.hidden_execution,

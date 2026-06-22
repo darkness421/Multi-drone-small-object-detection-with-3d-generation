@@ -1,0 +1,93 @@
+name: final_p2p4_selfattnfr_ablation_queue
+status: queued_after_current_comparison_sweep
+description: >
+  Final paper-facing ablation queue for the selected detector candidate
+  P2P4-SelfAttnFR. The queue separates the P2/P3/P4 head, TinyFReLU,
+  SelfAttn, the full detector, and overlap-aware NMS/eval-only refinement.
+
+protocol:
+  dataset: VisDrone2019-DET validation
+  data_yaml: configs/detector/visdrone_yolo_data.yaml
+  imgsz: 1280
+  epochs: 100
+  patience: 20
+  batch: 4
+  seeds: [42, 123, 2026]
+  init_weights: yolo11l.pt
+  model_yaml: configs/detector/yolo11l-p2p4-balanced-v1.yaml
+  project: outputs/detectors/server_yolov11_p2p4_balanced
+  log_dir: outputs/logs/server_yolov11_p2p4_balanced
+
+main_paper_rows:
+  - key: yolo11l_baseline
+    label: YOLOv11l baseline
+    source: existing_completed_1280_3seed_result
+    train: false
+    purpose: Strong baseline reference.
+
+  - key: p2p4_head_only
+    label: P2P4 head only
+    ablation: p2p4_balanced_head_only
+    modules:
+      - p2p4_balanced_head
+    purpose: Tests the 4x/8x/16x high-resolution detection-head contribution.
+
+  - key: p2p4_tiny_frelu
+    label: P2P4 + TinyFReLU
+    ablation: p2p4_balanced_tiny_frelu
+    modules:
+      - p2p4_balanced_head
+      - tiny_frelu_neck
+    purpose: Tests spatial activation without self-attention.
+
+  - key: p2p4_selfattn_only
+    label: P2P4 + SelfAttn
+    ablation: p2p4_balanced_selfattn_only
+    modules:
+      - p2p4_balanced_head
+      - lite_self_attention_neck
+    purpose: Tests contextual self-attention without TinyFReLU.
+
+  - key: p2p4_selfattnfr
+    label: P2P4-SelfAttnFR
+    ablation: p2p4_balanced_selfattn_tiny_frelu
+    modules:
+      - p2p4_balanced_head
+      - lite_self_attention_neck
+      - tiny_frelu_neck
+    purpose: Final proposed detector architecture.
+
+  - key: p2p4_selfattnfr_nms055
+    label: P2P4-SelfAttnFR + NMS@0.55
+    ablation: p2p4_balanced_selfattn_tiny_frelu+nms055
+    train: false
+    eval_only: true
+    modules:
+      - p2p4_balanced_head
+      - lite_self_attention_neck
+      - tiny_frelu_neck
+      - class_aware_nms_iou_055
+    purpose: Tests crowded/overlap-aware decision refinement.
+
+supplementary_rows:
+  - p2p4_balanced_se_tiny_frelu
+  - p2p4_balanced_dynfreq_p2_tiny_frelu
+  - p2p4_balanced_dynfreq_small_tiny_frelu
+  - input_size_sweep_960_1280_1536
+  - gradcam_core_ablation_panel
+
+outputs:
+  queue_log: outputs/logs/final_p2p4_selfattnfr_ablation_queue/queue.log
+  plan_tsv: outputs/experiments/final_p2p4_selfattnfr_ablation_queue/plan.tsv
+  results_csv: outputs/experiments/final_p2p4_selfattnfr_ablation_results.csv
+  summary_csv: outputs/experiments/final_p2p4_selfattnfr_ablation_summary.csv
+  pvalues_csv: outputs/experiments/final_p2p4_selfattnfr_ablation_pvalues.csv
+  dashboard: outputs/reports/live/final_p2p4_selfattnfr_ablation_dashboard.png
+
+paper_usage:
+  main: >
+    Use a compact 4-5 row table or grouped bar chart. Do not place the long
+    exhaustive detector table in the main paper.
+  supplementary: >
+    Put full 3-seed tables, NMS sweeps, input-size sensitivity, Grad-CAM panels,
+    per-category metrics, and failure cases in supplementary material.

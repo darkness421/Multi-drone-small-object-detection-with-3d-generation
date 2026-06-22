@@ -1,0 +1,4 @@
+label,baseline_reference,AP,AP50,Recall,F1
+yolo11s / cbam_neck,Proposed-Control-yolo11s,0.00009,0.00042,0.00381,0.00154
+yolo11s / se_neck,Proposed-Control-yolo11s,-0.00008,-0.00025,-0.00238,-0.00275
+yolo11s / wavelet_stem,Proposed-Control-yolo11s,-0.00125,-0.00231,-0.00217,-0.00131

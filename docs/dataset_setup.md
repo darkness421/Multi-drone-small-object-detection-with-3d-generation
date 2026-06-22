@@ -65,3 +65,50 @@ scripts\23_prepare_visdrone_visible_terminal.bat
 4. `AI-TOD`
 
 VisDrone train/val이 준비되면 detector baseline 학습을 시작할 수 있다.
+
+## UAVDT
+
+UAVDT는 VisDrone baseline이 안정화된 뒤 cross-dataset validation으로 쓴다.
+서버에서는 아래 구조를 우선 기대한다.
+
+```text
+data/raw/UAVDT/
+  images/<sequence>/*.jpg
+  annotations/<sequence>.txt
+```
+
+로컬 폴더나 zip이 있으면 `SOURCE`로 넘겨 staged raw data, COCO JSON, YOLO
+labels를 한 번에 준비한다.
+
+```bash
+SOURCE=/path/to/UAVDT bash scripts/ubuntu/prepare_uavdt_dataset.sh
+```
+
+서버에서 공식 Google Drive 원본 zip을 받을 때는 tmux 다운로드를 사용한다.
+기본값은 먼저 zip만 받고, 완료 후 구조 확인/압축 해제/변환을 이어서 한다.
+
+```bash
+bash scripts/ubuntu/download_uavdt_dataset_tmux.sh
+tmux attach -t server-uavdt-download
+```
+
+변환 스크립트는 서버에서 기본적으로 YOLO image tree를 hardlink로 만든다.
+따라서 raw/extracted image를 다시 복사하지 않아 디스크 사용량을 줄인다.
+공식 UAVDT zip을 그대로 푼 경우에는 `data/raw/UAVDT/_official_extract`를
+`RAW_ROOT`로 넘기면 된다. 변환기는 `M####` 형식의 공식 sequence directory만
+사용하고, annotation은 `*_gt.txt`를 `*_gt_whole.txt`나 `*_gt_ignore.txt`보다
+우선한다.
+
+```bash
+RAW_ROOT=data/raw/UAVDT/_official_extract bash scripts/ubuntu/prepare_uavdt_dataset.sh
+```
+
+준비가 끝나면 VisDrone queue 뒤에 UAVDT 비교 baseline을 붙인다.
+
+```bash
+bash scripts/ubuntu/start_uavdt_comparisons_pending.sh
+bash scripts/ubuntu/collect_cross_dataset_results.sh
+```
+
+UAVDT raw 파일이 비어 있으면 readiness check가 실패하고 학습은 시작하지
+않는다.
