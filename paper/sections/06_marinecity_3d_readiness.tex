@@ -1,0 +1,62 @@
+\subsection{MarineCity 3D Benchmark Protocol}
+\label{sec:marinecity_3d_protocol}
+
+This section describes the planned 3D benchmark protocol without reporting final
+benchmark results. The MarineCity scene, camera layout, and split definitions
+can be prepared independently of the final 2D detector checkpoint, while the
+main paper avoids treating dry-run placeholder counts as experimental evidence.
+After Isaac/Cesium export succeeds, this subsection can be replaced with the
+actual dataset statistics and capture protocol.
+
+The scene is centered on the Haeundae MarineCity region and is constructed in
+Isaac Sim with Cesium geospatial context when available. The default
+configuration uses three UAVs, while the protocol supports two to four UAVs for
+fleet-size ablation. Each UAV exports synchronized RGB, optional depth, camera
+intrinsics/extrinsics, pose, and timestamp metadata. Vehicles and pedestrian-like
+small objects are placed from the detector class vocabulary so that the 2D
+SAFR-YOLO output can be converted into structured EvidenceTokens for the 3D
+graph and reasoner.
+
+The protocol reserves train, validation, and held-out unseen-angle test splits
+with multiple UAV viewpoints, including nadir, front-oblique, side, rear-oblique,
+right-oblique, and left-oblique cameras. The held-out split emphasizes
+unseen viewpoints so that the reconstruction and reasoning components are tested
+on viewpoint generalization rather than memorized camera poses. The first smoke
+test focuses on a small number of manually verified scenes rather than a
+large synthetic dataset claim.
+
+\paragraph{3D and reasoner evaluation slots.}
+The main paper reports only validated 3D/reasoner results. The minimum
+paper-facing pilot experiment is: (1) run SAFR-YOLO on each UAV view, (2)
+associate multi-view detections into a 3D evidence graph, (3) identify
+high-ambiguity nodes, and (4) let the graph-grounded reasoner propose a verified
+class/action under a safety verifier. If the 3D completion module is only a
+planned design at submission time, the main paper calls it a system
+prototype and moves detailed prompts, action schemas, and extra examples to the
+supplementary material.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Planned MarineCity 3D/reasoner reporting split. Empty cells are filled
+only after the Isaac/Cesium scene and multi-UAV capture are verified.}
+\label{tab:marinecity_reporting_split}
+\begin{tabular}{lll}
+\toprule
+Component & Main paper & Supplementary material \\
+\midrule
+MarineCity scene & geospatial scene overview and final object/camera counts & full camera poses, object placement list, export manifest \\
+Multi-UAV capture & representative two-to-four UAV setting, default three-UAV result & fleet-size and viewpoint ablation details \\
+3D evidence graph & association accuracy or verified qualitative graph examples & graph construction parameters and failure cases \\
+3D completion & pilot completion/restoration result if validated & NeRF/3DGS/re-observation settings and extra renders \\
+Reasoner & class/action accuracy or verified decision examples & prompt template, JSON schema, verifier rules, rejected actions \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Reporting rule.}
+Dry-run manifests and placeholder frame counts are moved to the supplementary
+material or implementation notes. The main paper reports only
+the final exported RGB, depth, mask, 2D/3D bounding box, camera-parameter, and
+UAV-pose statistics once the MarineCity Isaac/Cesium scene is constructed.

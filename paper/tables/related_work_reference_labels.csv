@@ -1,0 +1,21 @@
+model,cite_key,reference_number,fallback_label,note
+Universal YOLO small-object structure,hu2024universalyolo,1,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+MFFSODNet,jiang2024mffsodnet,2,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+DS-YOLOv5s,li2024dsyolov5s,3,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+SFFEF-YOLO,bai2025sffefyolo,4,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+FMFN-YOLO,luo2026fmfnyolo,5,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+DG-TSOD,xie2026dgtsod,6,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+BPD-YOLO,chao2025bpdyolo,7,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+LRDS-YOLO,han2025lrds,8,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+CFIA,bi2025cfia,9,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+D2A-Detector,wang2026d2adetector,10,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+CSFPR-RTDETR,hu2025csfprrtdetr,11,,Cited in Sec. 2.1 UAV Small-object Evidence Generation; local code and VisDrone checkpoint staged.
+HF-D-FINE,hu2026hfdifine,12,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+DFFormer,li2026dfformer,13,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+UFO-DETR,chen2026ufodetr,14,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+RT-UAV-SOD,tan2025rtuavsod,15,,Cited in Sec. 2.1 UAV Small-object Evidence Generation.
+UAVDet,yang2026uavdet,16,,Cited in Sec. 2.1 UAV Small-object Evidence Generation; official GitHub candidate identified, adapter audit needed.
+GLF-Net,ye2022glfnet,18,,Cited in Sec. 2.1 as orientation/context prior, not a direct horizontal-box detector baseline.
+FG-UNet,lin2025fgunet,19,,Cited in Sec. 2.1 as segmentation/boundary evidence prior, not a direct detector baseline.
+CSADet,han2022csadet,20,,Cited in Sec. 2.1 as context-scale weak-object prior.
+AFFNet,tang2026affnet,21,,Cited in Sec. 2.1 as RGB-infrared fusion prior, not a direct RGB-only baseline.
