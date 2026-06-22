@@ -8,12 +8,13 @@ main 1280-pixel comparison, or come from design-search experiments rather than
 the selected detector.
 
 \paragraph{Main/supplementary split.}
-The main paper keeps only the selected detector and representative strong
-baselines. The supplementary material contains the full YOLO-family scale sweep,
-external related-work checks, ablation details, NMS sensitivity, heat-map
-analysis, and secondary dataset stress tests. This split keeps the main paper
-self-contained while preserving reviewer-visible evidence for model-scale and
-protocol coverage.
+The main paper reports the selected detector, representative strong YOLO-family
+and transformer baselines, and a compact related-work comparison/status table.
+The supplementary material expands those results with the full YOLO-family
+scale sweep, detailed related-work coverage labels, ablation details, NMS
+sensitivity, heat-map analysis, and secondary dataset stress tests. This split
+keeps the main paper self-contained while preserving reviewer-visible evidence
+for model-scale and protocol coverage.
 
 \begin{table*}[t]
 \centering
@@ -62,25 +63,26 @@ Rank & Group & Method & AP & AP50 & F1 & Params(M) & GFLOPs & $\Delta$AP \\
 \end{tabular}
 \end{table*}
 
-\paragraph{Protocol-mismatched related-work checks.}
-For the related-work comparison, we now use the stricter paper-facing rule that
-candidate prior models must be cited in Sec.~2.1. Under this rule,
-CSFPR-RTDETR is the only currently staged Sec.~2.1 prior with local code and a
-VisDrone checkpoint, so it is kept as a measured supplementary related-work row.
-MFFSODNet and UAVDet are cited in Sec.~2.1 and have official repository
-candidates, but they still require repository, dependency, checkpoint, and
-adapter audits before GPU training. LEAF-YOLO-N/S rows are kept as internal
-sanity checks only because LEAF-YOLO is not cited in the current Sec.~2.1 draft;
-they are not promoted to the paper-facing related-work table unless the
-manuscript is revised to cite LEAF-YOLO explicitly.
+\paragraph{Related-work comparison inventory.}
+The main paper includes a compact related-work comparison/status table so prior
+detectors are visible in the detector results section. This supplementary table
+keeps the detailed protocol notes. Candidate prior models must either be cited
+in Sec.~2.1 or be explicitly added to the manuscript before they are treated as
+paper-facing comparison rows. CSFPR-RTDETR currently has a measured external
+checkpoint row and an adapter under validation. MFFSODNet and UAVDet remain
+planned runnable comparisons because they have repository candidates but still
+require dependency, checkpoint, and adapter audits. LEAF-YOLO-N/S are measured
+external sanity checks; they should be cited explicitly if they remain in the
+main related-work status table.
 
 \begin{table*}[t]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{Measured external related-work checks. These rows are separated from
-Table~\ref{tab:main_detector_comparison} because they use external checkpoint
-evaluation rather than our normalized three-seed training protocol.}
+\caption{Measured external related-work checks. These rows support the compact
+main-paper related-work status table, but are still marked by protocol because
+they use external checkpoint evaluation rather than our normalized three-seed
+training protocol.}
 \label{tab:supp_related_work_eval_rows}
 \begin{tabular}{llrrrrrrl}
 \toprule
@@ -103,9 +105,10 @@ CSFPR-RTDETR & VisDrone val, 1280 eval & 0.0420 & 0.1482 & 0.2805 & 0.1661 & 0.2
 \toprule
 Model group & Examples & Status & Paper use \\
 \midrule
-Measured external eval & CSFPR-RTDETR & eval-only row available; matched training adapter under validation & Supplementary comparison table \\
+Measured external eval & CSFPR-RTDETR, LEAF-YOLO-N/S & eval-only rows available; matched training adapter still under validation & Main compact status table + supplementary protocol table \\
 Official repo audit & MFFSODNet, UAVDet & repository candidates identified; runnable protocol not yet staged & Coverage table and citation discussion \\
-Pending compatible assets & SFFEF-YOLO, FMFN-YOLO, DS-YOLOv5s, HF-D-FINE & code/weights/adapter not staged & Coverage table and citation discussion \\
+Pending compatible assets & SFFEF-YOLO, LSOD-YOLO, HF-D-FINE, DR-YOLO & code/weights/adapter not staged & Coverage table and citation discussion \\
+Pending compatible assets & GCL-YOLO, SRTSOD-YOLO, YOLO11s-UAV & code/weights/adapter not staged & Coverage table and citation discussion \\
 Citation-only/method motivation & LRDS-YOLO, BPD-YOLO, DG-TSOD, D2A, UFO-DETR, CFIA, DFFormer, RT-UAV-SOD & not fairly runnable today & Related-work motivation and coverage row \\
 \bottomrule
 \end{tabular}

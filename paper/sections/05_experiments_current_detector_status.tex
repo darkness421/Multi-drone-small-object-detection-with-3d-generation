@@ -1,13 +1,13 @@
-\subsection{Detector Results and Reporting Scope}
+\subsection{Detector Comparison and Reporting Scope}
 \label{sec:detector_results_scope}
 
-We report only paper-eligible detector evidence in the main manuscript. To keep
-the paper self-contained and concise, the main detector table includes completed
-VisDrone2019-DET validation runs under the normalized 1280-pixel protocol. Rows
-from single-seed architecture search, active training queues, 640-pixel
-repository sanity checks, and dry-run scripts are excluded from the main table
-and are reported in the supplementary material only when they clarify the design
-process.
+We propose \textbf{SAFR-YOLO} as the 2D evidence generator for the full
+CoM3D-ACE system. The detector contribution is evaluated with two
+paper-facing views: a normalized three-seed comparison against strong
+YOLO-family and transformer baselines, and a compact related-work
+reproduction/coverage table. This keeps the main paper self-contained while
+preventing single-seed architecture search rows, 640-pixel sanity checks, and
+dry-run scripts from being mixed with the final detector claim.
 
 \paragraph{Implementation and evaluation setup.}
 Unless otherwise specified, detector experiments use VisDrone2019-DET with
@@ -20,19 +20,21 @@ corresponding model summaries under the same input protocol. Remaining queue
 runs use a shorter early-stopping patience for screening, but final paper rows
 are promoted only after the normalized three-seed record is complete.
 
-\paragraph{Main-table rule.}
-The main detector comparison contains the selected detector candidate and the
-strongest normalized YOLO-family and transformer baselines. Smaller YOLO scale
-sweeps, related-work models that currently have external eval-only checkpoints,
-NMS sensitivity, Grad-CAM/heat-map analysis, and module-search trails belong in
-the supplementary material. This prevents protocol-mismatched rows from
-weakening the main claim.
+\paragraph{Main comparison rule.}
+The main normalized detector table contains the selected detector and the
+strongest completed YOLO-family and transformer baselines under the same
+VisDrone2019-DET 1280-pixel, three-seed protocol. A second compact table records
+related-work reproduction status and currently measured prior-model rows. The
+full YOLO nano/small/medium/large scale sweep, protocol details, heat maps, NMS
+sensitivity, and module-search trails are moved to the supplementary material.
+This gives reviewers both a clean fair-comparison table and transparent
+coverage of the prior methods discussed in Related Work.
 
 \begin{table*}[t]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{Main detector comparison after removing protocol-mismatched and search-only rows. All rows use VisDrone2019-DET validation at 1280-pixel input. AP and AP50 are reported as mean $\pm$ standard deviation when three seeds are complete.}
+\caption{Main normalized detector comparison. All rows use VisDrone2019-DET validation at 1280-pixel input. AP and AP50 are reported as mean $\pm$ standard deviation over seeds 42, 123, and 2026. Related-work reproduction rows with different protocols are summarized separately in Table~\ref{tab:main_related_work_comparison_status}.}
 \label{tab:main_detector_comparison}
 \begin{tabular}{llrrrrrrl}
 \toprule
@@ -47,6 +49,40 @@ YOLO baseline & YOLOv26l & 0.3732 $\pm$ 0.0015 & 0.5877 $\pm$ 0.0010 & 0.6136 & 
 YOLO baseline & YOLOv10l & 0.3728 $\pm$ 0.0019 & 0.5890 $\pm$ 0.0020 & 0.6166 & 25.78 & 127.30 & -0.0049 & large-scale baseline \\
 YOLO baseline & YOLOv5lu & 0.3709 $\pm$ 0.0011 & 0.5897 $\pm$ 0.0017 & 0.6141 & 53.17 & 135.30 & -0.0067 & high-parameter legacy baseline \\
 Transformer & RT-DETR-L & 0.3201 $\pm$ 0.0397 & 0.5355 $\pm$ 0.0450 & 0.5773 & 32.83 & 108.00 & -0.0576 & transformer baseline \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Related-work comparison and coverage.}
+Table~\ref{tab:main_related_work_comparison_status} prevents the main results
+from silently omitting prior UAV small-object detectors. We separate these rows
+from Table~\ref{tab:main_detector_comparison} because many prior methods ship
+with different checkpoints, input sizes, dependencies, or no directly runnable
+VisDrone training recipe. Measured rows are reported with their exact protocol;
+pending rows remain in the queue or coverage matrix until a reproducible
+1280-pixel evaluation is available. Before submission, any related-work model
+that completes the normalized protocol will be promoted from ``pending'' to a
+measured row.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Compact related-work comparison and reproduction status. Measured rows
+are shown with their current protocol. Pending rows are retained so every
+detector discussed in Related Work is visibly accounted for rather than dropped
+from the comparison.}
+\label{tab:main_related_work_comparison_status}
+\begin{tabular}{lllrrrl}
+\toprule
+Category & Method & Protocol & AP & AP50 & Params(M) & Status / paper use \\
+\midrule
+Measured prior check & LEAF-YOLO-S & VisDrone val, 1280 eval & 0.3080 & 0.5210 & 4.28 & external eval row; cite only if kept in Related Work \\
+Measured prior check & LEAF-YOLO-N & VisDrone val, 1280 eval & 0.2510 & 0.4430 & 1.20 & external eval row; cite only if kept in Related Work \\
+Measured prior check & CSFPR-RTDETR & VisDrone val, 1280 eval & 0.0420 & 0.1482 & 14.09 & external checkpoint; 3-seed adapter under validation \\
+Runnable queue & MFFSODNet, UAVDet & VisDrone val, 1280 planned & -- & -- & -- & code/adapter audit and 3-seed queue \\
+Pending assets & SFFEF-YOLO, LSOD-YOLO, HF-D-FINE, DR-YOLO & VisDrone-compatible run pending & -- & -- & -- & add if repo/checkpoint/adapter is reproducible \\
+Pending assets & GCL-YOLO, SRTSOD-YOLO, YOLO11s-UAV & VisDrone-compatible run pending & -- & -- & -- & add if repo/checkpoint/adapter is reproducible \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -98,16 +134,12 @@ as mean $\pm$ standard deviation over seeds 42, 123, and 2026 when available.}
 \input{tables/final_ablation_main_table}
 \end{table*}
 
-\paragraph{Excluded rows.}
-CSFPR-RTDETR and LEAF-YOLO are currently useful related-work checks. We have
-external checkpoint evaluation rows for them, including 1280-pixel evaluations,
-but they are still eval-only rows rather than our normalized three-seed training
-protocol. We therefore report them in a separate supplementary related-work
-table with an explicit protocol note. The main table remains limited to
-protocol-clean trained rows and the selected detector. Likewise, YOLO
-nano/small/medium scale sweeps are important for reviewer coverage, but they are
-better placed in the supplementary material to preserve the main paper page
-budget.
+\paragraph{Supplementary protocol notes.}
+The main paper includes the compact related-work comparison/status table above,
+while the supplementary material expands it into a full inventory with protocol
+notes and coverage labels. Likewise, YOLO nano/small/medium scale sweeps are
+important for reviewer coverage, but the full scale table is better placed in
+the supplementary material to preserve the main paper page budget.
 
 Post-processing NMS sweeps are also kept out of the main comparison until they
 are confirmed with the selected detector under the same three-seed protocol. If
