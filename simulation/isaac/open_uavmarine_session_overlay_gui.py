@@ -21,7 +21,7 @@ from pathlib import Path
 import carb
 import omni.kit.app
 import omni.usd
-from pxr import Gf, Sdf, UsdGeom, UsdLux
+from pxr import Gf, Sdf, Usd, UsdGeom, UsdLux
 
 
 DEFAULT_BASE_STAGE = "/workspace/uav_marinecity/uavmarine.usd"
@@ -39,6 +39,23 @@ RUNTIME_ROOT = f"{ROOT}/RuntimeView"
 VIEWER160_CAMERA = f"{RUNTIME_ROOT}/viewer160_OverviewCamera"
 VIEWER160_TARGET = [-22.0, -13.0, 15.0]
 VIEWER160_EYE = [8.0, -2.0, 160.0]
+
+VIEW_PROFILES = {
+    "viewer160": {
+        "camera_path": VIEWER160_CAMERA,
+        "eye": VIEWER160_EYE,
+        "target": VIEWER160_TARGET,
+        "focal_length": 30.0,
+        "note": "matches the user-inspected 160 m MarineCity viewport",
+    },
+    "bright160": {
+        "camera_path": f"{RUNTIME_ROOT}/bright160_ReviewCamera",
+        "eye": [-10.0, -58.0, 158.0],
+        "target": [-26.0, -11.0, 14.0],
+        "focal_length": 26.0,
+        "note": "bright 140-160 m UAV-style review camera over the real Cesium ROI",
+    },
+}
 
 
 def _write_json(path: str, payload: dict[str, object]) -> None:
@@ -70,6 +87,25 @@ def _read_georef(stage) -> dict[str, object]:
     return result
 
 
+def _apply_georef_height_override(stage, height_value: str | None) -> float | None:
+    if not height_value:
+        return None
+    try:
+        height = float(height_value)
+    except ValueError:
+        carb.log_warn(f"[CoM3D-ACE] Invalid COM3D_GEOREF_HEIGHT={height_value!r}; keeping saved USD height")
+        return None
+    prim = stage.GetPrimAtPath("/CesiumGeoreference")
+    if not prim or not prim.IsValid():
+        return None
+    attr = prim.GetAttribute("cesium:georeferenceOrigin:height")
+    if not attr:
+        return None
+    with Usd.EditContext(stage, stage.GetSessionLayer()):
+        attr.Set(height)
+    return height
+
+
 def _prim_status(stage) -> dict[str, object]:
     status: dict[str, object] = {}
     for path in CESIUM_PRIMS:
@@ -95,17 +131,24 @@ def _ensure_review_lighting(stage) -> None:
     """Add session-only review lighting so the live viewport is not trapped in shadows."""
     UsdGeom.Xform.Define(stage, Sdf.Path(f"{RUNTIME_ROOT}/Lighting"))
     sun = UsdLux.DistantLight.Define(stage, Sdf.Path(f"{RUNTIME_ROOT}/Lighting/SunKey"))
-    sun.CreateIntensityAttr(3500.0)
-    sun.CreateAngleAttr(0.35)
+    sun.CreateIntensityAttr(9000.0)
+    sun.CreateAngleAttr(0.55)
     fill = UsdLux.DomeLight.Define(stage, Sdf.Path(f"{RUNTIME_ROOT}/Lighting/SkyFill"))
-    fill.CreateIntensityAttr(180.0)
+    fill.CreateIntensityAttr(1600.0)
+
+    try:
+        settings = carb.settings.get_settings()
+        settings.set("/rtx/post/tonemap/exposure", 0.35)
+        settings.set("/rtx/sceneDb/ambientLightIntensity", 0.8)
+    except Exception as exc:
+        carb.log_warn(f"[CoM3D-ACE] Could not apply viewport exposure settings: {exc}")
 
 
-def _make_camera(stage, path: str, eye: list[float], target: list[float]) -> str:
+def _make_camera(stage, path: str, eye: list[float], target: list[float], focal_length: float) -> str:
     UsdGeom.Xform.Define(stage, Sdf.Path(RUNTIME_ROOT))
     camera = UsdGeom.Camera.Define(stage, Sdf.Path(path))
     camera.CreateProjectionAttr(UsdGeom.Tokens.perspective)
-    camera.CreateFocalLengthAttr(30.0)
+    camera.CreateFocalLengthAttr(float(focal_length))
     camera.CreateHorizontalApertureAttr(20.955)
     camera.CreateClippingRangeAttr(Gf.Vec2f(0.1, 2_000_000.0))
     camera.CreateFocusDistanceAttr(float((Gf.Vec3d(*eye) - Gf.Vec3d(*target)).GetLength()))
@@ -139,12 +182,17 @@ async def main() -> None:
     actor_layer = os.environ.get("COM3D_UAVMARINE_ACTOR_LAYER", DEFAULT_ACTOR_LAYER)
     status_path = os.environ.get("COM3D_UAVMARINE_SESSION_STATUS", DEFAULT_STATUS)
     keep_user_camera = os.environ.get("COM3D_KEEP_USER_CAMERA", "1") == "1"
+    view_profile_name = os.environ.get("COM3D_VIEWER_PROFILE", "viewer160")
+    view_profile = VIEW_PROFILES.get(view_profile_name, VIEW_PROFILES["viewer160"])
+    georef_height_override = os.environ.get("COM3D_GEOREF_HEIGHT")
 
     payload: dict[str, object] = {
         "status": "starting",
         "base_stage": base_stage,
         "actor_layer": actor_layer,
         "keep_user_camera": keep_user_camera,
+        "requested_view_profile": view_profile_name,
+        "requested_georef_height": georef_height_override,
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
     }
 
@@ -174,6 +222,10 @@ async def main() -> None:
         session_layer.subLayerPaths.append(actor_layer_path)
     await _wait(360)
 
+    applied_georef_height = _apply_georef_height_override(stage, georef_height_override)
+    if applied_georef_height is not None:
+        await _wait(120)
+
     # Default: keep the user's saved or manually adjusted view. If the live GUI
     # drifts into a dark/shadowed tile, COM3D_KEEP_USER_CAMERA=0 forces a
     # viewer160 review camera over the real Cesium map without saving the USD.
@@ -182,9 +234,15 @@ async def main() -> None:
     camera_profile = "manual_user_camera"
     if not keep_user_camera:
         _ensure_review_lighting(stage)
-        active_camera = _make_camera(stage, VIEWER160_CAMERA, VIEWER160_EYE, VIEWER160_TARGET)
+        active_camera = _make_camera(
+            stage,
+            str(view_profile["camera_path"]),
+            list(view_profile["eye"]),
+            list(view_profile["target"]),
+            float(view_profile["focal_length"]),
+        )
         camera_set = _set_viewport_camera(active_camera)
-        camera_profile = "viewer160_marinecity_roi"
+        camera_profile = f"{view_profile_name}_marinecity_roi"
         await _wait(240)
     try:
         import omni.kit.viewport.utility as viewport_utility
@@ -201,11 +259,15 @@ async def main() -> None:
             "open_stage_returned": bool(opened),
             "root_layer": stage.GetRootLayer().identifier,
             "session_sublayers": _session_sublayers(stage),
+            "applied_georef_height": applied_georef_height,
             "georeference_readback": _read_georef(stage),
             "prim_status": _prim_status(stage),
             "active_camera_path": active_camera,
             "camera_set": camera_set,
             "camera_profile": camera_profile,
+            "viewer_eye": list(view_profile["eye"]) if not keep_user_camera else None,
+            "viewer_target": list(view_profile["target"]) if not keep_user_camera else None,
+            "viewer_note": str(view_profile["note"]) if not keep_user_camera else None,
             "viewer160_eye": VIEWER160_EYE if not keep_user_camera else None,
             "viewer160_target": VIEWER160_TARGET if not keep_user_camera else None,
             "substitute_city_geometry_created": False,

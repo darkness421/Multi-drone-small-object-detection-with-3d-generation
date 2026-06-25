@@ -259,18 +259,24 @@ def main() -> None:
     overlay_status = session_overlay.get("status", "not verified")
     root_layer = Path(str(session_overlay.get("root_layer", "unknown"))).name
     actor_layer = Path(str(session_overlay.get("actor_layer", "unknown"))).name
+    if len(actor_layer) > 42:
+        actor_layer = actor_layer[:39] + "..."
     prim_status = session_overlay.get("prim_status", {}) or {}
     google_ok = prim_status.get("/Google_Photorealistic_3D_Tiles", {}).get("valid", False)
     terrain_ok = prim_status.get("/Cesium_World_Terrain", {}).get("valid", False)
     fake_city = session_overlay.get("substitute_city_geometry_created", "unknown")
     georef = session_overlay.get("georeference_readback", {}) or {}
     georef_height = georef.get("cesium:georeferenceOrigin:height", "unknown")
+    applied_georef_height = session_overlay.get("applied_georef_height")
+    requested_georef_height = session_overlay.get("requested_georef_height")
+    viewer_eye = session_overlay.get("viewer_eye") or session_overlay.get("viewer160_eye") or []
+    viewer_target = session_overlay.get("viewer_target") or session_overlay.get("viewer160_target") or []
     active_camera = Path(str(session_overlay.get("active_camera_path", "unknown"))).name
     if camera_set:
         live_text = (
             "Current visible Isaac GUI is the real-time view you can inspect manually. "
-            "It has been reset to the encoded viewer160 runtime camera so the MarineCity "
-            "ROI should stay visible instead of drifting into a dark tile or shadowed view."
+            "The encoded viewer160 runtime camera keeps the real MarineCity ROI visible "
+            "without creating any fake city geometry."
         )
     else:
         live_text = (
@@ -286,11 +292,18 @@ def main() -> None:
         48,
         29,
     )
-    draw.text((x, y + 18), "Viewer camera altitude: 160 m", fill="#0f172a", font=FONT_H)
+    camera_altitude = viewer_eye[2] if isinstance(viewer_eye, list) and len(viewer_eye) >= 3 else "unknown"
+    draw.text((x, y + 18), f"Viewer camera altitude: {camera_altitude} m", fill="#0f172a", font=FONT_H)
     draw.text((x, y + 58), f"Camera profile: {camera_profile}; active: {active_camera}", fill="#334155", font=FONT_SMALL)
     draw.text((x, y + 88), f"Live overlay: {overlay_status}", fill="#0f172a", font=FONT_SMALL)
     draw.text((x, y + 114), f"Root: {root_layer}; actor: {actor_layer}", fill="#334155", font=FONT_SMALL)
-    draw.text((x, y + 140), f"Google tiles={google_ok}, terrain={terrain_ok}, georef h={georef_height}, fake city={fake_city}", fill="#b45309", font=FONT_SMALL)
+    draw.text((x, y + 140), f"Google tiles={google_ok}, terrain={terrain_ok}, fake city={fake_city}", fill="#b45309", font=FONT_SMALL)
+    draw.text(
+        (x, y + 166),
+        f"georef h={georef_height}, requested/applied={requested_georef_height}/{applied_georef_height}",
+        fill="#b45309",
+        font=FONT_SMALL,
+    )
 
     x, y = card(draw, (730, 130, 1420, 500), "Viewer160 Real-Cesium Queue", "#0f766e")
     smoke_summary = (
@@ -385,7 +398,7 @@ def main() -> None:
     x, y = card(draw, (1484, 960, 2164, 1344), "Concrete Commands", "#0f172a")
     commands = [
         "bash scripts/ubuntu/start_accv_continuous_queue.sh",
-        "COM3D_KEEP_USER_CAMERA=0 SESSION=uav-marinecity-s0-viewer160-gui bash scripts/ubuntu/start_uavmarine_overlay_gui.sh s0",
+        "COM3D_KEEP_USER_CAMERA=0 COM3D_VIEWER_PROFILE=bright160 COM3D_GEOREF_HEIGHT=160 SESSION=uav-marinecity-s0-bright160-gui bash scripts/ubuntu/start_uavmarine_overlay_gui.sh s0",
         "tmux attach -t live-training-scoreboard",
         "python scripts/build_live_training_dashboard.py --out outputs/reports/live/training_dashboard.png",
         "python scripts/build_aerograph_prompt_pack.py",
@@ -393,7 +406,7 @@ def main() -> None:
         "run_marinecity_3d_reasoner_smoke.py --provider openai|command",
     ]
     for cmd in commands:
-        y = wrapped(draw, cmd, x, y, 66, 20, fill="#334155", font_obj=FONT_SMALL)
+        y = wrapped(draw, cmd, x, y, 58, 20, fill="#334155", font_obj=FONT_SMALL)
         y += 7
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
