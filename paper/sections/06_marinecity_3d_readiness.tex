@@ -1,21 +1,41 @@
 \subsection{MarineCity 3D Benchmark Protocol}
 \label{sec:marinecity_3d_protocol}
 
-This section describes the planned 3D benchmark protocol without reporting final
-benchmark results. The MarineCity scene, camera layout, and split definitions
-can be prepared independently of the final 2D detector checkpoint, while the
-main paper avoids treating dry-run placeholder counts as experimental evidence.
-After Isaac/Cesium export succeeds, this subsection can be replaced with the
-actual dataset statistics and capture protocol.
+This section reports the current MarineCity 3D/reasoner protocol and the
+verified real-Cesium smoke-test artifacts. We do not present the smoke test as a
+full benchmark result yet: it validates scene loading, multi-UAV capture,
+SAFR-YOLO EvidenceToken export, 3D evidence grouping, and AeroGraph Reasoner
+plumbing. A reviewed 49-prompt AeroGraph candidate table is available for the
+current prompt pack, while external GPT/Factory/local-provider replication is
+kept as pending before making a stronger final reasoning claim.
 
 The scene is centered on the Haeundae MarineCity region and is constructed in
-Isaac Sim with Cesium geospatial context when available. The default
-configuration uses three UAVs, while the protocol supports two to four UAVs for
-fleet-size ablation. Each UAV exports synchronized RGB, optional depth, camera
-intrinsics/extrinsics, pose, and timestamp metadata. Vehicles and pedestrian-like
-small objects are placed from the detector class vocabulary so that the 2D
-SAFR-YOLO output can be converted into structured EvidenceTokens for the 3D
-graph and reasoner.
+Isaac Sim with Cesium geospatial context. The current verified smoke test uses
+three UAV views over the saved real-Cesium \texttt{uavmarine.usd} stage. The UAV
+camera altitude band is fixed to 140--160 m for the current protocol
+(the latest viewer160 recapture uses 140/150/160 m for UAV~1/2/3 across
+S0--S2), which is logged separately from the Cesium georeference height. Each UAV exports
+RGB/depth-like capture artifacts, camera metadata, pose hints, and timestamp
+fields. Vehicles and pedestrian-like small objects are placed from the detector
+class vocabulary so that the 2D SAFR-YOLO output can be converted into
+structured EvidenceTokens for the 3D graph and \textbf{AeroGraph Reasoner}.
+
+Table~\ref{tab:marinecity_real_capture_benchmark} summarizes the real-Cesium
+capture source now used for the 3D/reasoner handoff. The table is intentionally
+reported as capture evidence rather than as a neural reconstruction benchmark:
+the RGB/depth/pose captures are available, while NeRF, Instant-NGP, Mip-NeRF
+360, and 3D Gaussian Splatting training remain pending until the external
+upstream runners are connected.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Verified real-Cesium MarineCity capture source for the current
+multi-UAV 3D/reasoner handoff.}
+\label{tab:marinecity_real_capture_benchmark}
+\input{tables/marinecity_real_capture_benchmark_table}
+\end{table}
 
 The protocol reserves train, validation, and held-out unseen-angle test splits
 with multiple UAV viewpoints, including nadir, front-oblique, side, rear-oblique,
@@ -26,21 +46,35 @@ test focuses on a small number of manually verified scenes rather than a
 large synthetic dataset claim.
 
 \paragraph{3D and reasoner evaluation slots.}
-The main paper reports only validated 3D/reasoner results. The minimum
-paper-facing pilot experiment is: (1) run SAFR-YOLO on each UAV view, (2)
-associate multi-view detections into a 3D evidence graph, (3) identify
-high-ambiguity nodes, and (4) let the graph-grounded reasoner propose a verified
-class/action under a safety verifier. If the 3D completion module is only a
-planned design at submission time, the main paper calls it a system
-prototype and moves detailed prompts, action schemas, and extra examples to the
-supplementary material.
+The validated smoke test already runs: (1) SAFR-YOLO on each UAV view, (2)
+detector outputs as EvidenceTokens, (3) token grouping into 3D evidence
+hypotheses, and (4) \textbf{AeroGraph Reasoner}, the drone-specialized
+graph-grounded LLM/VLM reasoner, to propose verified class/action decisions
+under a safety-verifier schema. The current reasoner provider is deterministic
+mock logic for system validation, not a final external-provider LLM/VLM result.
+Table~\ref{tab:marinecity_system_smoke} summarizes the completed smoke-test
+artifacts, and Table~\ref{tab:aerograph_reasoner_pending} reports the current
+reviewed AeroGraph candidate while keeping external-provider replication
+explicit.
+
+\input{tables/marinecity_system_scenario_table}
+
+\begin{table}[t]
+\centering
+\caption{AeroGraph Reasoner evaluation slot. The current table reports a
+reviewed 49-prompt candidate; external GPT/Factory/local-provider replication
+remains pending before promoting this to a final reasoning benchmark claim.}
+\label{tab:aerograph_reasoner_pending}
+\input{tables/aerograph_reasoner_results_placeholder}
+\end{table}
 
 \begin{table*}[t]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
-\caption{Planned MarineCity 3D/reasoner reporting split. Empty cells are filled
-only after the Isaac/Cesium scene and multi-UAV capture are verified.}
+\caption{MarineCity 3D/reasoner reporting split. The smoke-test rows are
+available now; full benchmark rows are filled only after non-mock reasoning and
+completion/restoration experiments are validated.}
 \label{tab:marinecity_reporting_split}
 \begin{tabular}{lll}
 \toprule
@@ -50,13 +84,14 @@ MarineCity scene & geospatial scene overview and final object/camera counts & fu
 Multi-UAV capture & representative two-to-four UAV setting, default three-UAV result & fleet-size and viewpoint ablation details \\
 3D evidence graph & association accuracy or verified qualitative graph examples & graph construction parameters and failure cases \\
 3D completion & pilot completion/restoration result if validated & NeRF/3DGS/re-observation settings and extra renders \\
-Reasoner & class/action accuracy or verified decision examples & prompt template, JSON schema, verifier rules, rejected actions \\
+AeroGraph Reasoner & class/action accuracy or verified decision examples & prompt template, JSON schema, verifier rules, rejected actions \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
 \paragraph{Reporting rule.}
-Dry-run manifests and placeholder frame counts are moved to the supplementary
-material or implementation notes. The main paper reports only
-the final exported RGB, depth, mask, 2D/3D bounding box, camera-parameter, and
-UAV-pose statistics once the MarineCity Isaac/Cesium scene is constructed.
+Dry-run manifests and provider placeholders are moved to the supplementary
+material or implementation notes. The main paper reports the verified
+real-Cesium capture, detector-token, and smoke-test tables now, but reserves
+final external-provider LLM/VLM and 3D completion claims until replicated
+provider runs and completion/restoration experiments are validated.

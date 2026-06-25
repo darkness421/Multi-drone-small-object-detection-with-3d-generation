@@ -33,6 +33,7 @@ ARTIFACTS = [
     Artifact("main_detector", "paper/figures/results/paper_fig05_ap_params_scatter.png", "main_or_supp", True, "AP vs params chart"),
     Artifact("main_system", "paper/sections/06_marinecity_3d_readiness.tex", "main", True, "MarineCity protocol section patch"),
     Artifact("main_system", "paper/tables/marinecity_system_scenario_table.tex", "main", True, "Real-Cesium smoke/protocol table"),
+    Artifact("main_system", "paper/tables/marinecity_real_capture_benchmark_table.tex", "main", True, "Verified real-Cesium capture-source table"),
     Artifact("main_system", "paper/sections/07_marinecity_qualitative_figure_slots.tex", "main_optional", True, "Safe qualitative figure slots"),
     Artifact("bundle", "paper/sections/main_results_patch_bundle.tex", "main_bundle", True, "Overleaf-ready main results patch bundle"),
     Artifact("bundle", "paper/sections/supplementary_patch_bundle.tex", "supp_bundle", True, "Overleaf-ready supplementary patch bundle"),
@@ -42,8 +43,10 @@ ARTIFACTS = [
     Artifact("supp_detector", "paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png", "supp", True, "Ablation heatmap"),
     Artifact("supp_detector", "paper/figures/results/paper_fig11_final_detector_feature_activation_heatmap.png", "supp", True, "Detector activation/heatmap sheet"),
     Artifact("supp_system", "paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png", "supp_or_main_smoke", True, "Three-scenario real-Cesium smoke sheet"),
+    Artifact("supp_system", "paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png", "supp", True, "Real-Cesium 3-scenario x 3-UAV capture contact sheet"),
     Artifact("supp_system", "paper/figures/results/marinecity_system/marinecity_qualitative_selection_manifest.md", "supp", True, "MarineCity qualitative selection rules"),
     Artifact("supp_system", "paper/figures/results/marinecity_system/marinecity_qualitative_gate.md", "supp", True, "MarineCity full-frame vs crop-only qualitative gate"),
+    Artifact("supp_system", "outputs/reports/live/marinecity_real_capture_benchmark.md", "runbook", True, "Real-Cesium capture benchmark manifest summary"),
     Artifact("pending_reasoner", "paper/tables/aerograph_reasoner_results_placeholder.tex", "pending", True, "AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete"),
     Artifact("pending_reasoner", "docs/aerograph_nonmock_collection_plan.md", "runbook", True, "Non-mock reasoner collection gate"),
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_prompt_pack_integrity.md", "audit", True, "AeroGraph prompt/template/batch consistency check"),
@@ -77,6 +80,7 @@ TEXT_SCOPE = [
     "docs/aerograph_nonmock_collection_plan.md",
     "docs/aerograph_reasoner_naming.md",
     "outputs/reports/live/accv_workflow_status_snapshot.md",
+    "outputs/reports/live/marinecity_real_capture_benchmark.md",
 ]
 
 

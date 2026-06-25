@@ -1,0 +1,434 @@
+{
+  "summary": {
+    "updated": "2026-06-26T06:23:58+09:00",
+    "source_export_root": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports",
+    "scenario_count": 3,
+    "frame_count": 9,
+    "uav_count": 3,
+    "altitude_range_m": [
+      140.0,
+      160.0
+    ],
+    "mean_rgb_black_ratio": 0.0913768325617284,
+    "mean_depth_finite_ratio": 0.908344425154321,
+    "terrain_all_valid": true,
+    "google_tiles_all_valid": true,
+    "external_neural_3d_runner_status": "pending_upstream_runner_connection"
+  },
+  "scenarios": [
+    {
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "summary_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture_summary.json",
+      "stage_path": "/workspace/uav_marinecity/uavmarine.usd",
+      "root_layer": "/workspace/uav_marinecity/uavmarine.usd",
+      "georeference_readback": {
+        "valid": true,
+        "path": "/CesiumGeoreference",
+        "latitude": 35.1569,
+        "latitude_attr": "cesium:georeferenceOrigin:latitude",
+        "longitude": 129.1439,
+        "longitude_attr": "cesium:georeferenceOrigin:longitude",
+        "height": 200.0,
+        "height_attr": "cesium:georeferenceOrigin:height"
+      },
+      "camera_profile": {
+        "name": "viewer160_clean_fullframe",
+        "reason": "Tighter full-frame MarineCity recapture profile derived from the successful 2026-06-26 S0 focal/film-shift test. It preserves the 140-160 m UAV-style camera band while reducing black tile-boundary voids without post-cropping or synthetic city geometry.",
+        "target": [
+          -22.0,
+          -13.0,
+          15.0
+        ],
+        "eyes": {
+          "uav_01": [
+            8.0,
+            -2.0,
+            140.0
+          ],
+          "uav_02": [
+            -2.0,
+            3.0,
+            150.0
+          ],
+          "uav_03": [
+            18.0,
+            -15.0,
+            160.0
+          ]
+        },
+        "focal_length": 52.0,
+        "horizontal_aperture_offset": -3.7,
+        "vertical_aperture_offset": 1.0,
+        "effective_focal_length": 52.0
+      },
+      "object_marker_count": 6,
+      "uav_marker_count": 3,
+      "real_cesium_google_tiles": true,
+      "real_cesium_terrain": true
+    },
+    {
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "summary_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture_summary.json",
+      "stage_path": "/workspace/uav_marinecity/uavmarine.usd",
+      "root_layer": "/workspace/uav_marinecity/uavmarine.usd",
+      "georeference_readback": {
+        "valid": true,
+        "path": "/CesiumGeoreference",
+        "latitude": 35.1569,
+        "latitude_attr": "cesium:georeferenceOrigin:latitude",
+        "longitude": 129.1439,
+        "longitude_attr": "cesium:georeferenceOrigin:longitude",
+        "height": 200.0,
+        "height_attr": "cesium:georeferenceOrigin:height"
+      },
+      "camera_profile": {
+        "name": "viewer160_clean_fullframe",
+        "reason": "Tighter full-frame MarineCity recapture profile derived from the successful 2026-06-26 S0 focal/film-shift test. It preserves the 140-160 m UAV-style camera band while reducing black tile-boundary voids without post-cropping or synthetic city geometry.",
+        "target": [
+          -22.0,
+          -13.0,
+          15.0
+        ],
+        "eyes": {
+          "uav_01": [
+            8.0,
+            -2.0,
+            140.0
+          ],
+          "uav_02": [
+            -2.0,
+            3.0,
+            150.0
+          ],
+          "uav_03": [
+            18.0,
+            -15.0,
+            160.0
+          ]
+        },
+        "focal_length": 52.0,
+        "horizontal_aperture_offset": -3.7,
+        "vertical_aperture_offset": 1.0,
+        "effective_focal_length": 52.0
+      },
+      "object_marker_count": 6,
+      "uav_marker_count": 3,
+      "real_cesium_google_tiles": true,
+      "real_cesium_terrain": true
+    },
+    {
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "summary_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture_summary.json",
+      "stage_path": "/workspace/uav_marinecity/uavmarine.usd",
+      "root_layer": "/workspace/uav_marinecity/uavmarine.usd",
+      "georeference_readback": {
+        "valid": true,
+        "path": "/CesiumGeoreference",
+        "latitude": 35.1569,
+        "latitude_attr": "cesium:georeferenceOrigin:latitude",
+        "longitude": 129.1439,
+        "longitude_attr": "cesium:georeferenceOrigin:longitude",
+        "height": 200.0,
+        "height_attr": "cesium:georeferenceOrigin:height"
+      },
+      "camera_profile": {
+        "name": "viewer160_clean_fullframe",
+        "reason": "Tighter full-frame MarineCity recapture profile derived from the successful 2026-06-26 S0 focal/film-shift test. It preserves the 140-160 m UAV-style camera band while reducing black tile-boundary voids without post-cropping or synthetic city geometry.",
+        "target": [
+          -22.0,
+          -13.0,
+          15.0
+        ],
+        "eyes": {
+          "uav_01": [
+            8.0,
+            -2.0,
+            140.0
+          ],
+          "uav_02": [
+            -2.0,
+            3.0,
+            150.0
+          ],
+          "uav_03": [
+            18.0,
+            -15.0,
+            160.0
+          ]
+        },
+        "focal_length": 52.0,
+        "horizontal_aperture_offset": -3.7,
+        "vertical_aperture_offset": 1.0,
+        "effective_focal_length": 52.0
+      },
+      "object_marker_count": 6,
+      "uav_marker_count": 3,
+      "real_cesium_google_tiles": true,
+      "real_cesium_terrain": true
+    }
+  ],
+  "frames": [
+    {
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "frame_id": "frame_001_uav_01",
+      "uav_id": "uav_01",
+      "rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_rgb.png",
+      "depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_depth.npy",
+      "depth_preview_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_depth_preview.png",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_01_Camera",
+      "camera_position": [
+        8.0,
+        -2.0,
+        140.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 140.0,
+      "image_size": [
+        1280,
+        720
+      ],
+      "rgb_black_ratio": 0.042082248263888886,
+      "depth_finite_ratio": 0.9575911458333334,
+      "depth_min_m": 123.54351043701172,
+      "depth_median_m": 320.9843292236328,
+      "depth_max_m": 342.24591064453125
+    },
+    {
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "frame_id": "frame_002_uav_02",
+      "uav_id": "uav_02",
+      "rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
+      "depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_depth.npy",
+      "depth_preview_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_depth_preview.png",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_02_Camera",
+      "camera_position": [
+        -2.0,
+        3.0,
+        150.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 150.0,
+      "image_size": [
+        1280,
+        720
+      ],
+      "rgb_black_ratio": 0.017840711805555555,
+      "depth_finite_ratio": 0.9819748263888889,
+      "depth_min_m": 132.50718688964844,
+      "depth_median_m": 326.2165985107422,
+      "depth_max_m": 345.2665710449219
+    },
+    {
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "frame_id": "frame_003_uav_03",
+      "uav_id": "uav_03",
+      "rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_rgb.png",
+      "depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_depth.npy",
+      "depth_preview_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_depth_preview.png",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_03_Camera",
+      "camera_position": [
+        18.0,
+        -15.0,
+        160.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 160.0,
+      "image_size": [
+        1280,
+        720
+      ],
+      "rgb_black_ratio": 0.21953776041666667,
+      "depth_finite_ratio": 0.7800206163194444,
+      "depth_min_m": 144.68748474121094,
+      "depth_median_m": 344.34576416015625,
+      "depth_max_m": 367.87109375
+    },
+    {
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "frame_id": "frame_001_uav_01",
+      "uav_id": "uav_01",
+      "rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_rgb.png",
+      "depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_depth.npy",
+      "depth_preview_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_depth_preview.png",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_01_Camera",
+      "camera_position": [
+        8.0,
+        -2.0,
+        140.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 140.0,
+      "image_size": [
+        1280,
+        720
+      ],
+      "rgb_black_ratio": 0.04237847222222222,
+      "depth_finite_ratio": 0.9575911458333334,
+      "depth_min_m": 124.1441421508789,
+      "depth_median_m": 321.08558654785156,
+      "depth_max_m": 342.24591064453125
+    },
+    {
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "frame_id": "frame_002_uav_02",
+      "uav_id": "uav_02",
+      "rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
+      "depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_depth.npy",
+      "depth_preview_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_depth_preview.png",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_02_Camera",
+      "camera_position": [
+        -2.0,
+        3.0,
+        150.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 150.0,
+      "image_size": [
+        1280,
+        720
+      ],
+      "rgb_black_ratio": 0.018120659722222224,
+      "depth_finite_ratio": 0.9819748263888889,
+      "depth_min_m": 132.87252807617188,
+      "depth_median_m": 326.2919464111328,
+      "depth_max_m": 345.2665710449219
+    },
+    {
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "frame_id": "frame_003_uav_03",
+      "uav_id": "uav_03",
+      "rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_rgb.png",
+      "depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_depth.npy",
+      "depth_preview_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_depth_preview.png",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_03_Camera",
+      "camera_position": [
+        18.0,
+        -15.0,
+        160.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 160.0,
+      "image_size": [
+        1280,
+        720
+      ],
+      "rgb_black_ratio": 0.21972547743055557,
+      "depth_finite_ratio": 0.7800206163194444,
+      "depth_min_m": 145.33045959472656,
+      "depth_median_m": 344.5174865722656,
+      "depth_max_m": 367.87109375
+    },
+    {
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "frame_id": "frame_001_uav_01",
+      "uav_id": "uav_01",
+      "rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_rgb.png",
+      "depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_depth.npy",
+      "depth_preview_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_depth_preview.png",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_01_Camera",
+      "camera_position": [
+        8.0,
+        -2.0,
+        140.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 140.0,
+      "image_size": [
+        1280,
+        720
+      ],
+      "rgb_black_ratio": 0.042084418402777775,
+      "depth_finite_ratio": 0.9575911458333334,
+      "depth_min_m": 123.88387298583984,
+      "depth_median_m": 320.6683349609375,
+      "depth_max_m": 342.24591064453125
+    },
+    {
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "frame_id": "frame_002_uav_02",
+      "uav_id": "uav_02",
+      "rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
+      "depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_depth.npy",
+      "depth_preview_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_depth_preview.png",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_02_Camera",
+      "camera_position": [
+        -2.0,
+        3.0,
+        150.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 150.0,
+      "image_size": [
+        1280,
+        720
+      ],
+      "rgb_black_ratio": 0.017836371527777777,
+      "depth_finite_ratio": 0.9819748263888889,
+      "depth_min_m": 131.60153198242188,
+      "depth_median_m": 325.97491455078125,
+      "depth_max_m": 345.2665710449219
+    },
+    {
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "frame_id": "frame_003_uav_03",
+      "uav_id": "uav_03",
+      "rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_rgb.png",
+      "depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_depth.npy",
+      "depth_preview_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_depth_preview.png",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_03_Camera",
+      "camera_position": [
+        18.0,
+        -15.0,
+        160.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 160.0,
+      "image_size": [
+        1280,
+        720
+      ],
+      "rgb_black_ratio": 0.2027853732638889,
+      "depth_finite_ratio": 0.7963606770833334,
+      "depth_min_m": 143.8474578857422,
+      "depth_median_m": 344.450927734375,
+      "depth_max_m": 367.87109375
+    }
+  ],
+  "manifest_path": "outputs/experiments/marinecity_real_capture_benchmark.json"
+}

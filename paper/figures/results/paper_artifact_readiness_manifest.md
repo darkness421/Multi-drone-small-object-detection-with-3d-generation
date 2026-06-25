@@ -17,6 +17,7 @@ main-paper-ready items from supplementary items and explicit pending slots.
 | AP vs parameter scatter | `paper/figures/results/paper_fig05_ap_params_scatter.png` | Ready | Trade-off visual |
 | Gated trade-off chart | `paper/figures/results/paper_fig06_gated_tradeoff_bar.png` | Ready | Trade-off visual if page budget allows |
 | MarineCity system smoke table | `paper/tables/marinecity_system_scenario_table.tex` | Ready with wording limit | Real-Cesium system/protocol smoke-test table |
+| MarineCity real-capture benchmark table | `paper/tables/marinecity_real_capture_benchmark_table.tex` | Ready with wording limit | 3-scenario, 9-frame real-Cesium RGB/depth/pose capture source for the 3D/reasoner handoff |
 | MarineCity qualitative figure slots | `paper/sections/07_marinecity_qualitative_figure_slots.tex` | Ready with wording limit | Optional real-Cesium smoke/protocol figure slots |
 | Main result patch bundle | `paper/sections/main_results_patch_bundle.tex` | Ready | Overleaf `\input` bundle for detector + MarineCity protocol sections |
 | Supplementary patch bundle | `paper/sections/supplementary_patch_bundle.tex` | Ready | Overleaf `\input` bundle for supplementary detector and MarineCity qualitative slots |
@@ -35,6 +36,7 @@ main-paper-ready items from supplementary items and explicit pending slots.
 | Detector feature activation sheet | `paper/figures/results/paper_fig11_final_detector_feature_activation_heatmap.png` | Ready | Supplementary Fig. S4, Grad-CAM-style qualitative evidence |
 | TinyPerson 640 stress-test table | `paper/tables/tinyperson_640_stress_table.tex` | Ready | Supplementary domain-shift diagnostic only |
 | MarineCity scenario contact sheet | `paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png` | Smoke-test ready | Main only if clearly labeled; otherwise supplementary |
+| MarineCity real-capture benchmark sheet | `paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png` | Capture-source ready | Supplementary capture evidence for the 3-scenario x 3-UAV RGB/depth/pose source |
 | MarineCity token contact sheet | `paper/figures/results/marinecity_system/contact_sheet_token_tests.png` | Smoke-test ready | Supplementary token-level qualitative cases |
 | MarineCity capture QA sheet | `paper/figures/results/marinecity_system/marinecity_capture_quality_top8.png` | Review/selection aid | Use to choose final recapture |
 | MarineCity crop candidates | `paper/figures/results/marinecity_system/marinecity_real_capture_crop_top12.png` | Review/selection aid | Crop-only framing guidance, not final replacement |
@@ -63,6 +65,8 @@ main-paper-ready items from supplementary items and explicit pending slots.
 - The AeroGraph table must remain pending until a complete non-mock provider
   manifest is selected by `scripts/build_aerograph_reasoner_table.py`.
 - TinyPerson640 should be used only as supplementary domain-shift/limitation
-  evidence. The 640px core-model queue is complete with 15 diagnostic rows
+  evidence. The 640px core-model table currently has 15 diagnostic rows
   (five models over seeds 42, 123, and 2026), but AP/AP50 values remain near
-  zero, so it should not be used as a main detector claim.
+  zero, so it should not be used as a main detector claim. A sixth
+  P2P4-head-only core-ablation refresh is running as a top-6 supplementary
+  completion row and should be promoted only after result collection finishes.
