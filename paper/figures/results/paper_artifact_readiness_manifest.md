@@ -65,8 +65,6 @@ main-paper-ready items from supplementary items and explicit pending slots.
 - The AeroGraph table must remain pending until a complete non-mock provider
   manifest is selected by `scripts/build_aerograph_reasoner_table.py`.
 - TinyPerson640 should be used only as supplementary domain-shift/limitation
-  evidence. The 640px core-model table currently has 15 diagnostic rows
-  (five models over seeds 42, 123, and 2026), but AP/AP50 values remain near
-  zero, so it should not be used as a main detector claim. A sixth
-  P2P4-head-only core-ablation refresh is running as a top-6 supplementary
-  completion row and should be promoted only after result collection finishes.
+  evidence. The 640px core-model table now has 18 diagnostic rows
+  (six models over seeds 42, 123, and 2026), but AP/AP50 values remain near
+  zero, so it should not be used as a main detector claim.
