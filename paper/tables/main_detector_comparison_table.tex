@@ -1,0 +1,27 @@
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Main detector comparison on VisDrone validation at 1280 input resolution. All rows are completed three-seed runs under the same protocol; our proposed detector is placed at the bottom following common comparison-table style.}
+\label{tab:detector_preview_overall}
+\begin{tabular}{@{}llrrrrrrrr@{}}
+\toprule
+Group & Method & AP & AP50 & P & R & F1 & Params(M) & GFLOPs & $\Delta$AP \\
+\midrule
+Cited related work & UAVDet [16] & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.0036 & 0.6542 & 0.5899 & 0.6203 & 33.55 & 201.20 & +0.0035 \\
+Cited related work & BPD-YOLO [7] & 0.3804 $\pm$ 0.0035 & 0.5986 $\pm$ 0.0027 & 0.6626 & 0.5802 & 0.6187 & 24.53 & 109.50 & +0.0028 \\
+YOLO baseline & YOLOv11l & 0.3777 $\pm$ 0.0004 & 0.5981 $\pm$ 0.0011 & 0.6666 & 0.5881 & 0.6248 & 25.32 & 87.30 & +0.0000 \\
+YOLO large & YOLOv12l & 0.3771 $\pm$ 0.0020 & 0.5958 $\pm$ 0.0025 & 0.6698 & 0.5805 & 0.6219 & 26.40 & 89.40 & -0.0006 \\
+YOLO large & YOLOv8l & 0.3765 $\pm$ 0.0003 & 0.5963 $\pm$ 0.0008 & 0.6695 & 0.5770 & 0.6198 & 43.64 & 165.40 & -0.0011 \\
+Cited related work & SFFEF-YOLO [4] & 0.3749 $\pm$ 0.0040 & 0.5914 $\pm$ 0.0039 & 0.6540 & 0.5781 & 0.6137 & 20.87 & 108.70 & -0.0027 \\
+YOLO family & YOLOv9c & 0.3738 $\pm$ 0.0009 & 0.5942 $\pm$ 0.0020 & 0.6641 & 0.5831 & 0.6210 & 25.54 & 103.70 & -0.0039 \\
+YOLO large & YOLOv26l & 0.3732 $\pm$ 0.0015 & 0.5877 $\pm$ 0.0010 & 0.6602 & 0.5731 & 0.6136 & 26.19 & 93.20 & -0.0045 \\
+YOLO large & YOLOv10l & 0.3728 $\pm$ 0.0019 & 0.5890 $\pm$ 0.0020 & 0.6677 & 0.5729 & 0.6166 & 25.78 & 127.30 & -0.0049 \\
+YOLO large & YOLOv5lu & 0.3709 $\pm$ 0.0011 & 0.5897 $\pm$ 0.0017 & 0.6614 & 0.5732 & 0.6141 & 53.17 & 135.30 & -0.0067 \\
+YOLO medium & YOLOv9m & 0.3700 $\pm$ 0.0003 & 0.5910 $\pm$ 0.0012 & 0.6708 & 0.5749 & 0.6192 & 20.17 & 77.60 & -0.0077 \\
+YOLO medium & YOLOv12m & 0.3668 $\pm$ 0.0008 & 0.5851 $\pm$ 0.0029 & 0.6638 & 0.5663 & 0.6112 & 20.15 & 67.80 & -0.0109 \\
+YOLO medium & YOLOv11m & 0.3657 $\pm$ 0.0005 & 0.5846 $\pm$ 0.0012 & 0.6612 & 0.5728 & 0.6138 & 20.06 & 68.20 & -0.0119 \\
+\textbf{Ours} & \textbf{Ours: P2P4-SelfAttnFR} & \textbf{0.3822 $\pm$ 0.0007} & \textbf{0.6052 $\pm$ 0.0012} & \textbf{0.6732} & \textbf{0.5872} & \textbf{0.6273} & \textbf{20.82} & \textbf{109.30} & \textbf{+0.0045} \\
+\bottomrule
+\end{tabular}
+\end{table*}

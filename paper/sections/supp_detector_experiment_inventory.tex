@@ -68,29 +68,28 @@ The main paper includes a compact related-work comparison/status table so prior
 detectors are visible in the detector results section. This supplementary table
 keeps the detailed protocol notes. Candidate prior models must either be cited
 in Sec.~2.1 or be explicitly added to the manuscript before they are treated as
-paper-facing comparison rows. CSFPR-RTDETR currently has a measured external
-checkpoint row and an adapter under validation. MFFSODNet and UAVDet remain
-planned runnable comparisons because they have repository candidates but still
-require dependency, checkpoint, and adapter audits. LEAF-YOLO-N/S are measured
-external sanity checks; they should be cited explicitly if they remain in the
-main related-work status table.
+paper-facing comparison rows. CSFPR-RTDETR, MFFSODNet, SFFEF-YOLO, BPD-YOLO,
+HF-D-FINE, and UAVDet currently have normalized 1280-pixel three-seed records.
+LEAF-YOLO-N/S are kept as internal sanity checks only because they are not cited
+in the current manuscript.
 
 \begin{table*}[t]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{Measured external related-work checks. These rows support the compact
-main-paper related-work status table, but are still marked by protocol because
-they use external checkpoint evaluation rather than our normalized three-seed
-training protocol.}
+\caption{Measured cited related-work checks. Rows use VisDrone2019-DET
+validation at 1280 input with seeds 42, 123, and 2026 unless otherwise noted.}
 \label{tab:supp_related_work_eval_rows}
 \begin{tabular}{llrrrrrrl}
 \toprule
 Method & Protocol & AP & AP50 & P & R & F1 & Params(M) & Note \\
 \midrule
-LEAF-YOLO-S & VisDrone val, 1280 eval & 0.3080 & 0.5210 & 0.5910 & 0.5330 & 0.5605 & 4.28 & optional if cited \\
-LEAF-YOLO-N & VisDrone val, 1280 eval & 0.2510 & 0.4430 & 0.5240 & 0.4610 & 0.4905 & 1.20 & optional if cited \\
-CSFPR-RTDETR & VisDrone val, 1280 eval & 0.0420 & 0.1482 & 0.2805 & 0.1661 & 0.2086 & 14.09 & external checkpoint \\
+CSFPR-RTDETR [11] & VisDrone val, 1280, 3-seed & 0.2784 $\pm$ 0.0070 & 0.4431 $\pm$ 0.0094 & 0.5766 & 0.4292 & 0.4921 & 14.09 & staged related-work run \\
+MFFSODNet [2] & VisDrone val, 1280, 3-seed & 0.0975 $\pm$ 0.0034 & 0.1830 $\pm$ 0.0070 & 0.6418 & 0.2465 & 0.3562 & 4.54 & scratch retrain; no pretrained checkpoint found \\
+SFFEF-YOLO [4] & VisDrone val, 1280, 3-seed & 0.3749 $\pm$ 0.0040 & 0.5914 $\pm$ 0.0039 & 0.6540 & 0.5781 & 0.6137 & 20.87 & paper-faithful reimplementation \\
+BPD-YOLO [7] & VisDrone val, 1280, 3-seed & 0.3804 $\pm$ 0.0035 & 0.5986 $\pm$ 0.0027 & 0.6626 & 0.5802 & 0.6187 & 24.53 & paper-faithful reimplementation \\
+HF-D-FINE [12] & VisDrone val, 1280, 3-seed & 0.3619 $\pm$ 0.0129 & 0.5764 $\pm$ 0.0186 & 0.6685 & 0.5555 & 0.6067 & 25.48 & high-resolution/frequency-detail reproduction \\
+UAVDet [16] & VisDrone val, 1280, 3-seed & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.0036 & 0.6542 & 0.5899 & 0.6203 & 33.55 & inspired reproduction; not official checkpoint \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -99,17 +98,16 @@ CSFPR-RTDETR & VisDrone val, 1280 eval & 0.0420 & 0.1482 & 0.2805 & 0.1661 & 0.2
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{Related-work coverage matrix. Models discussed in Related Work are not removed from the evaluation plan; each is marked as measured, pending runnable assets, or citation-only. The live CSV version is stored in \texttt{paper/tables/related\_work\_coverage\_matrix.csv}.}
+\caption{Related-work coverage matrix. Models discussed in Related Work are not removed from the evaluation plan; each is marked as measured, runnable assets not staged, or citation-only. The live CSV version is stored in \texttt{paper/tables/related\_work\_coverage\_matrix.csv}.}
 \label{tab:supp_related_work_coverage}
 \begin{tabular}{llll}
 \toprule
 Model group & Examples & Status & Paper use \\
 \midrule
-Measured external eval & CSFPR-RTDETR, LEAF-YOLO-N/S & eval-only rows available; matched training adapter still under validation & Main compact status table + supplementary protocol table \\
-Official repo audit & MFFSODNet, UAVDet & repository candidates identified; runnable protocol not yet staged & Coverage table and citation discussion \\
-Pending compatible assets & SFFEF-YOLO, LSOD-YOLO, HF-D-FINE, DR-YOLO & code/weights/adapter not staged & Coverage table and citation discussion \\
-Pending compatible assets & GCL-YOLO, SRTSOD-YOLO, YOLO11s-UAV & code/weights/adapter not staged & Coverage table and citation discussion \\
-Citation-only/method motivation & LRDS-YOLO, BPD-YOLO, DG-TSOD, D2A, UFO-DETR, CFIA, DFFormer, RT-UAV-SOD & not fairly runnable today & Related-work motivation and coverage row \\
+Completed reproduction & CSFPR-RTDETR [11], MFFSODNet [2], SFFEF-YOLO [4], BPD-YOLO [7], HF-D-FINE [12], UAVDet [16] & normalized 1280 three-seed records complete & Main compact status table + supplementary protocol table \\
+Cited prior; assets not staged & LRDS-YOLO [8] & compatible code/weights/adapter not staged & Coverage table and citation discussion \\
+Citation-only/method motivation & DG-TSOD [6], D2A-Detector [10], UFO-DETR [14], CFIA [9], DFFormer [13], RT-UAV-SOD [15] & not fairly runnable today & Related-work motivation and coverage row \\
+Internal-only sanity check & LEAF-YOLO-N/S & external eval rows exist, but the model is not cited in the current manuscript & excluded from paper-facing comparison \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -142,13 +140,25 @@ as design-search evidence and are not interpreted as final competing methods.}
     \label{fig:supp_final_detector_ablation_heatmap}
 \end{figure*}
 
-\paragraph{Planned qualitative and explainability figures.}
-The following supplementary slots are reserved for the final detector checkpoint
-and Grad-CAM output. These figures are not headline claims until generated from
-the final checkpoint.
+\paragraph{Qualitative and explainability figures.}
+Fig.~\ref{fig:supp_final_detector_feature_activation} shows the generated
+feature-activation heat-map comparison for YOLOv11l, YOLOv9c, and SAFR-YOLO on
+six crowded VisDrone validation crops. These are Grad-CAM-style feature
+response visualizations from fixed checkpoints, not class-logit attribution
+scores; we therefore use them as qualitative support for the detector behavior
+rather than as an additional quantitative claim.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/results/paper_fig11_final_detector_feature_activation_heatmap}
+    \caption{Supplementary detector feature-activation heat maps for YOLOv11l,
+    YOLOv9c, and SAFR-YOLO. The panels compare the spatial feature responses on
+    crowded UAV crops containing adjacent tiny objects and clutter.}
+    \label{fig:supp_final_detector_feature_activation}
+\end{figure*}
+
+The remaining qualitative slots are reserved for final layout selection:
 \begin{itemize}
-    \item Supp. Fig.~S4: side-by-side Grad-CAM or detector heat maps for
-    YOLOv11l and SAFR-YOLO on crowded UAV crops.
     \item Supp. Fig.~S5: qualitative detection examples grouped by small
     vehicles, pedestrians, dense adjacent objects, and water/road clutter.
     \item Supp. Fig.~S6: failure cases, including missed tiny objects,
@@ -165,9 +175,30 @@ AP50 on a fixed checkpoint, but the paper labels it as an eval-only
 robustness analysis.
 
 \paragraph{TinyPerson supplementary stress test.}
-TinyPerson is reported as a detector-only supplementary stress test after
-the final VisDrone detector is fixed. The planned compact table contains
-YOLOv11l, the final SAFR-YOLO detector, and one compact architecture-only
-variant at 640-pixel input. Related-work TinyPerson rows are added only
-for models that are either cited in the manuscript or explicitly added to the
-Related Work section with a matching bibliography entry.
+TinyPerson is treated as a detector-only supplementary stress test after the
+final VisDrone detector is fixed. The 640-pixel TinyPerson queue currently
+contains YOLOv11l, YOLOv9c, YOLOv8l, YOLOv9m, and SAFR-YOLO. As of the
+current snapshot, all 15 TinyPerson rows have been collected: five detector
+variants over seeds 42, 123, and 2026. These rows remain diagnostic because the
+converted split is highly sparse (794 training images with 596 boxes and 786
+validation images with 77 boxes), and all AP/AP50 values are close to zero.
+The strongest TinyPerson row is YOLOv9m with AP/AP50 of approximately
+0.0002/0.0010, while SAFR-YOLO reaches approximately 0.0000/0.0000. We
+therefore keep TinyPerson as a supplementary domain-shift and dataset-conversion
+limitation analysis rather than using it as a main detector claim. Related-work
+TinyPerson rows are added only for models that are either cited in the
+manuscript or explicitly added to the Related Work section with a matching
+bibliography entry.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{TinyPerson 640-pixel supplementary stress test. Results are reported
+over seeds 42, 123, and 2026. AP, AP50, and F1 are scaled by $10^{-3}$ because
+all tested models are near zero on the current converted sparse split; this
+table is therefore used only as domain-shift evidence, not as a main comparison
+claim.}
+\label{tab:supp_tinyperson_640_stress}
+\input{tables/tinyperson_640_stress_table}
+\end{table*}

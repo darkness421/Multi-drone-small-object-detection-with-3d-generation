@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{MarineCity multi-UAV system smoke-test results. The current reasoner provider is a deterministic AeroGraph mock; non-mock LLM/VLM validation is marked as pending for the final system study.}
+\label{tab:marinecity_system_smoke}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrll}
+\toprule
+Scenario & UAV views & Evidence tokens & 3D hypotheses & Re-observe & Detected classes & Provider \\
+\midrule
+S0 locked MarineCity ROI & 3 & 19 & 13 & 13 & car=14, bus=5 & mock\_symbolic\_aerograph \\
+S1 adjacent/overlapping objects & 3 & 25 & 17 & 17 & bus=7, car=17, pedestrian=1 & mock\_symbolic\_aerograph \\
+S2 coastline multi-view ambiguity & 3 & 29 & 19 & 19 & bus=6, car=20, pedestrian=3 & mock\_symbolic\_aerograph \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}

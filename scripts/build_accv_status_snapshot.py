@@ -19,11 +19,34 @@ UAVDET_LOG = REPO_ROOT / "outputs/logs/required_related_work_models/uavdet_inspi
 TINYPERSON_LOG = REPO_ROOT / "outputs/logs/tinyperson_640/queue.log"
 SYSTEM_MANIFEST = LIVE_DIR / "marinecity_system_test_10plus/manifest.json"
 PROMPT_MANIFEST = LIVE_DIR / "aerograph_prompt_pack/manifest.json"
-AEROGRAPH_DRY_RUN = REPO_ROOT / "outputs/reasoning/aerograph_prompt_pack_eval_dry_run/manifest.json"
+AEROGRAPH_WEB_BATCH_MANIFEST = LIVE_DIR / "aerograph_prompt_pack/web_batches/manifest.json"
+AEROGRAPH_DRY_RUN = REPO_ROOT / "outputs/reasoning/aerograph_prompt_pack_eval_dryrun_latest/manifest.json"
+AEROGRAPH_TABLE_MANIFEST = LIVE_DIR / "aerograph_reasoner_table_manifest.json"
+AEROGRAPH_NONMOCK_READINESS = LIVE_DIR / "aerograph_nonmock_readiness_status.json"
 SIM_DASHBOARD = LIVE_DIR / "marinecity_simulation_dashboard.png"
 TRAIN_DASHBOARD = LIVE_DIR / "training_dashboard.png"
+READINESS_AUDIT = LIVE_DIR / "accv_research_package_readiness_audit.md"
+TRACKED_READINESS_AUDIT = REPO_ROOT / "docs/accv_research_package_readiness_audit_2026-06-25.md"
+PAPER_ARTIFACT_MANIFEST = REPO_ROOT / "paper/figures/results/paper_artifact_readiness_manifest.md"
+PAPER_ARTIFACT_CHECK = LIVE_DIR / "paper_artifact_readiness_check.json"
+LATEX_PATCH_CHECK = LIVE_DIR / "latex_patch_integrity_check.json"
+MARINECITY_QUALITATIVE_GATE = LIVE_DIR / "marinecity_qualitative_gate.json"
+MARINECITY_CLEAN_RECAPTURE_PLAN = LIVE_DIR / "marinecity_clean_recapture_plan.json"
+AEROGRAPH_COLLECTION_PLAN = REPO_ROOT / "docs/aerograph_nonmock_collection_plan.md"
 AEROGRAPH_PLACEHOLDER_TABLE = REPO_ROOT / "paper/tables/aerograph_reasoner_results_placeholder.tex"
 MARINECITY_SESSION_OVERLAY_STATUS = Path("/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json")
+MARINECITY_TARGET_GEOREF_HEIGHT_M = 160
+UAV_ALTITUDE_POLICY = {
+    "band_m": [140, 160],
+    "default_m": 160,
+    "user_locked_review_height_m": 160,
+    "verified_viewer160_recapture_m": {
+        "uav_01": 140,
+        "uav_02": 150,
+        "uav_03": 160,
+    },
+    "note": "Use 140-160 m for UAV/camera observation; keep CesiumGeoreference readback logged separately.",
+}
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -44,6 +67,41 @@ def last_log_line(path: Path) -> str:
         return "missing"
     lines = [line.strip() for line in path.read_text(encoding="utf-8", errors="ignore").splitlines() if line.strip()]
     return lines[-1] if lines else "empty"
+
+
+def tiny_person_gate_state() -> str:
+    if not TINYPERSON_LOG.exists():
+        return "not_started"
+    lines = [
+        line.strip()
+        for line in TINYPERSON_LOG.read_text(encoding="utf-8", errors="ignore").splitlines()
+        if line.strip()
+    ]
+    for line in reversed(lines):
+        if "QUEUE_FINISHED TinyPerson 640 stress test" in line:
+            return "finished_tinyperson_640_stress_test"
+        if "Starting TinyPerson 640 job=" in line:
+            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
+            if match:
+                return f"running_tinyperson_640_{match.group(1)}_seed{match.group(2)}"
+            return "running_tinyperson_640"
+        if "Collecting TinyPerson 640 results" in line:
+            return "collecting_tinyperson_640"
+        if "TRAIN_OK TinyPerson job=" in line:
+            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
+            if match:
+                return f"last_train_ok_tinyperson_640_{match.group(1)}_seed{match.group(2)}"
+            return "last_train_ok_tinyperson_640"
+        if "TRAIN_FAILED TinyPerson job=" in line:
+            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
+            if match:
+                return f"last_train_failed_tinyperson_640_{match.group(1)}_seed{match.group(2)}"
+            return "last_train_failed_tinyperson_640"
+        if "TinyPerson data is ready" in line:
+            return "data_ready_tinyperson_640"
+        if "Waiting for wait_uavdet_1280" in line:
+            return "waiting_for_uavdet_1280_marker"
+    return "log_present_state_unknown"
 
 
 def _f1(row: dict[str, str]) -> float:
@@ -192,10 +250,23 @@ def build_snapshot() -> dict[str, Any]:
     detectors = detector_rows()
     ours = next((row for row in detectors if row["method"].startswith("Ours:")), {})
     yolo11 = next((row for row in detectors if row["method"] == "YOLOv11l"), {})
+    uavdet_table = next((row for row in detectors if row["method"].startswith("UAVDet")), {})
     uavdet = latest_uavdet()
     prompt_manifest = read_json(PROMPT_MANIFEST)
+    web_batch_manifest = read_json(AEROGRAPH_WEB_BATCH_MANIFEST)
     system_manifest = read_json(SYSTEM_MANIFEST)
     dry_run = read_json(AEROGRAPH_DRY_RUN)
+    aerograph_table = read_json(AEROGRAPH_TABLE_MANIFEST)
+    aerograph_nonmock = read_json(AEROGRAPH_NONMOCK_READINESS)
+    aerograph_coverage = (
+        aerograph_nonmock.get("effective_response_coverage")
+        or aerograph_nonmock.get("manual_response_coverage", {})
+        or {}
+    )
+    paper_check = read_json(PAPER_ARTIFACT_CHECK)
+    latex_check = read_json(LATEX_PATCH_CHECK)
+    marinecity_qual = read_json(MARINECITY_QUALITATIVE_GATE)
+    marinecity_recapture_plan = read_json(MARINECITY_CLEAN_RECAPTURE_PLAN)
     session_overlay = read_json(MARINECITY_SESSION_OVERLAY_STATUS)
     prim_status = session_overlay.get("prim_status", {}) or {}
     georef = session_overlay.get("georeference_readback", {}) or {}
@@ -205,11 +276,15 @@ def build_snapshot() -> dict[str, Any]:
             "paper_facing_top_rows": detectors,
             "ours": ours,
             "yolov11l": yolo11,
+            "uavdet_final_table": uavdet_table,
             "uavdet_queue": uavdet,
             "ours_minus_yolov11l_ap": round(float(ours.get("ap", 0.0)) - float(yolo11.get("ap", 0.0)), 6)
             if ours and yolo11
             else None,
-            "ours_minus_uavdet_best_ap": round(float(ours.get("ap", 0.0)) - float(uavdet.get("best_ap", 0.0)), 6)
+            "ours_minus_uavdet_final_ap": round(float(ours.get("ap", 0.0)) - float(uavdet_table.get("ap", 0.0)), 6)
+            if ours and uavdet_table
+            else None,
+            "ours_minus_uavdet_queue_best_ap": round(float(ours.get("ap", 0.0)) - float(uavdet.get("best_ap", 0.0)), 6)
             if ours and uavdet.get("best_ap") is not None
             else None,
         },
@@ -228,30 +303,78 @@ def build_snapshot() -> dict[str, Any]:
             "viewer_target": session_overlay.get("viewer_target") or session_overlay.get("viewer160_target"),
             "viewer160_eye": session_overlay.get("viewer160_eye"),
             "viewer160_target": session_overlay.get("viewer160_target"),
+            "uav_altitude_policy": UAV_ALTITUDE_POLICY,
+            "target_georeference_height": MARINECITY_TARGET_GEOREF_HEIGHT_M,
             "georeference_height": georef.get("cesium:georeferenceOrigin:height"),
+            "georeference_height_note": (
+                "The user-verified MarineCity review height is 160 m, and the UAV/camera "
+                "observation band is locked to 140-160 m. The live CesiumGeoreference "
+                "readback is logged separately because it can lag until the next recapture/status export."
+            ),
             "google_photorealistic_tiles_valid": (prim_status.get("/Google_Photorealistic_3D_Tiles", {}) or {}).get("valid"),
             "cesium_world_terrain_valid": (prim_status.get("/Cesium_World_Terrain", {}) or {}).get("valid"),
             "substitute_city_geometry_created": session_overlay.get("substitute_city_geometry_created"),
+            "qualitative_gate_status": marinecity_qual.get("status"),
+            "qualitative_gate_checks": marinecity_qual.get("checks"),
+            "best_full_capture": marinecity_qual.get("best_full_capture"),
+            "best_crop_candidate": marinecity_qual.get("best_crop_candidate"),
+            "qualitative_claiming_rule": marinecity_qual.get("claiming_rule"),
+            "clean_recapture_plan": str(MARINECITY_CLEAN_RECAPTURE_PLAN.relative_to(REPO_ROOT)),
+            "clean_recapture_plan_status": marinecity_recapture_plan.get("status"),
+            "clean_recapture_needed_improvement": marinecity_recapture_plan.get("needed_improvement"),
         },
         "aerograph": {
             "prompt_pack_status": prompt_manifest.get("status"),
             "total_prompts": prompt_manifest.get("total_prompts"),
             "sample_prompts": prompt_manifest.get("sample_prompts"),
             "class_counts": prompt_manifest.get("class_counts"),
+            "web_batch_status": web_batch_manifest.get("status"),
+            "web_batch_count": web_batch_manifest.get("batch_count"),
+            "web_batch_dir": web_batch_manifest.get("out_dir"),
+            "web_batch_import_command": web_batch_manifest.get("import_command"),
             "dry_run_status": dry_run.get("status"),
             "dry_run_summary": dry_run.get("summary"),
-            "non_mock_status": "pending_provider_execution",
+            "paper_table_status": aerograph_table.get("status"),
+            "paper_table_selected_manifest": aerograph_table.get("selected_manifest"),
+            "non_mock_status": aerograph_nonmock.get("status", "pending_provider_execution"),
+            "non_mock_coverage_ratio": aerograph_coverage.get(
+                "valid_coverage_ratio", aerograph_coverage.get("coverage_ratio")
+            ),
+            "non_mock_matched_responses": aerograph_coverage.get(
+                "matched_valid_response_count",
+                aerograph_coverage.get("matched_nonblank_response_count"),
+            ),
+            "non_mock_nonblank_responses": aerograph_coverage.get("matched_nonblank_response_count"),
+            "non_mock_prompt_count": aerograph_coverage.get("prompt_count"),
+            "reviewed_candidate_valid_count": aerograph_nonmock.get("reviewed_candidate_valid_count"),
+            "external_provider_replication_ready": aerograph_nonmock.get("external_provider_replication_ready"),
+            "full_manual_template": aerograph_nonmock.get("full_template"),
+            "nonmock_readiness_report": str(AEROGRAPH_NONMOCK_READINESS.with_suffix(".md").relative_to(REPO_ROOT)),
+            "nonmock_collection_plan": str(AEROGRAPH_COLLECTION_PLAN.relative_to(REPO_ROOT)),
+            "nonmock_collection_plan_exists": AEROGRAPH_COLLECTION_PLAN.exists(),
         },
         "queues": {
             "uavdet_log_tail": last_log_line(UAVDET_LOG),
             "tinyperson_log_tail": last_log_line(TINYPERSON_LOG),
-            "tiny_person_gate": "waiting_for_uavdet_3seed_marker",
+            "tiny_person_gate": tiny_person_gate_state(),
         },
         "dashboards": {
             "training": str(TRAIN_DASHBOARD.relative_to(REPO_ROOT)),
             "marinecity": str(SIM_DASHBOARD.relative_to(REPO_ROOT)),
         },
         "paper_ready_artifacts": {
+            "readiness_audit": str(READINESS_AUDIT.relative_to(REPO_ROOT)),
+            "readiness_audit_exists": READINESS_AUDIT.exists(),
+            "tracked_readiness_audit": str(TRACKED_READINESS_AUDIT.relative_to(REPO_ROOT)),
+            "tracked_readiness_audit_exists": TRACKED_READINESS_AUDIT.exists(),
+            "paper_artifact_manifest": str(PAPER_ARTIFACT_MANIFEST.relative_to(REPO_ROOT)),
+            "paper_artifact_manifest_exists": PAPER_ARTIFACT_MANIFEST.exists(),
+            "paper_artifact_check": str(PAPER_ARTIFACT_CHECK.relative_to(REPO_ROOT)),
+            "paper_artifact_check_status": paper_check.get("status", "missing"),
+            "paper_artifact_missing_required_count": paper_check.get("missing_required_count"),
+            "paper_artifact_stale_claim_count": paper_check.get("stale_claim_count"),
+            "latex_patch_check": str(LATEX_PATCH_CHECK.relative_to(REPO_ROOT)),
+            "latex_patch_check_status": latex_check.get("status", "missing"),
             "detector_table": "paper/tables/main_detector_comparison_table.tex",
             "marinecity_system_table": "paper/tables/marinecity_system_scenario_table.tex",
             "aerograph_placeholder_table": str(AEROGRAPH_PLACEHOLDER_TABLE.relative_to(REPO_ROOT)),
@@ -304,7 +427,8 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         "",
         f"- Selected detector: `{detector['ours'].get('method', 'missing')}`",
         f"- Ours vs YOLOv11l AP gap: `{detector.get('ours_minus_yolov11l_ap')}`",
-        f"- Ours vs UAVDet best-seed AP gap: `{detector.get('ours_minus_uavdet_best_ap')}`",
+        f"- Ours vs UAVDet final-table AP gap: `{detector.get('ours_minus_uavdet_final_ap')}`",
+        f"- Ours vs UAVDet queue-best AP gap: `{detector.get('ours_minus_uavdet_queue_best_ap')}`",
         f"- UAVDet queue: `{uavdet.get('status')}`; seeds started `{uavdet.get('started_seed_count')}/{uavdet.get('total_seed_count')}`; seeds completed `{uavdet.get('completed_seed_count')}/{uavdet.get('total_seed_count')}`",
         f"- UAVDet active seed: `{uavdet.get('active_seed')}`; best seed: `{uavdet.get('best_seed')}`; best AP: `{uavdet.get('best_ap')}`; best AP50: `{uavdet.get('best_ap50')}`",
         "",
@@ -321,15 +445,30 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- Artifact status: `{system.get('artifact_status')}`",
         f"- Live overlay: `{system.get('live_overlay_status')}`; camera set `{system.get('camera_set')}`; profile `{system.get('camera_profile')}`",
         f"- Real Cesium: Google tiles `{system.get('google_photorealistic_tiles_valid')}`, terrain `{system.get('cesium_world_terrain_valid')}`, fake city `{system.get('substitute_city_geometry_created')}`",
-        f"- Viewer camera: eye `{system.get('viewer_eye')}`, target `{system.get('viewer_target')}`, georef height `{system.get('georeference_height')}`, requested/applied `{system.get('requested_georef_height')}`/`{system.get('applied_georef_height')}`",
+        f"- UAV altitude policy: `{system.get('uav_altitude_policy')}`",
+        f"- Viewer camera: eye `{system.get('viewer_eye')}`, target `{system.get('viewer_target')}`",
+        f"- Cesium target georef height: `{system.get('target_georeference_height')}`; latest GUI readback `{system.get('georeference_height')}`, requested/applied `{system.get('requested_georef_height')}`/`{system.get('applied_georef_height')}`",
+        f"- Georef note: {system.get('georeference_height_note')}",
+        f"- Qualitative gate: `{system.get('qualitative_gate_status')}`",
+        f"- Full-frame ready: `{(system.get('qualitative_gate_checks') or {}).get('full_frame_main_ready')}`; best full void `{(system.get('best_full_capture') or {}).get('best_black_ratio')}`; mean top-3 void `{(system.get('best_full_capture') or {}).get('mean_top3_black_ratio')}`",
+        f"- Crop supplementary ready: `{(system.get('qualitative_gate_checks') or {}).get('crop_supplementary_ready')}`; best crop void `{(system.get('best_crop_candidate') or {}).get('black_ratio')}`; area `{(system.get('best_crop_candidate') or {}).get('area_ratio')}`",
+        f"- Clean full-frame recapture plan: `{system.get('clean_recapture_plan')}`; status `{system.get('clean_recapture_plan_status')}`; needed improvement `{system.get('clean_recapture_needed_improvement')}`",
         f"- Dashboard: `{system.get('dashboard')}`",
         "",
         "## AeroGraph Reasoner",
         "",
         f"- Prompt pack: `{aerograph.get('prompt_pack_status')}`, prompts `{aerograph.get('total_prompts')}`",
         f"- Prompt class counts: `{aerograph.get('class_counts')}`",
+        f"- Web batches: `{aerograph.get('web_batch_status')}`, count `{aerograph.get('web_batch_count')}`, dir `{aerograph.get('web_batch_dir')}`",
         f"- Dry-run status: `{aerograph.get('dry_run_status')}`",
-        f"- Non-mock status: `{aerograph.get('non_mock_status')}`",
+        f"- Paper table status: `{aerograph.get('paper_table_status')}`, selected manifest `{aerograph.get('paper_table_selected_manifest')}`",
+        f"- Reasoner readiness status: `{aerograph.get('non_mock_status')}`",
+        f"- Effective valid response coverage: `{aerograph.get('non_mock_matched_responses')}/{aerograph.get('non_mock_prompt_count')}`; ratio `{aerograph.get('non_mock_coverage_ratio')}`",
+        f"- Reviewed-candidate coverage: `{aerograph.get('reviewed_candidate_valid_count')}/{aerograph.get('non_mock_prompt_count')}`",
+        f"- External-provider replication ready: `{aerograph.get('external_provider_replication_ready')}`",
+        f"- Full manual template: `{aerograph.get('full_manual_template')}`",
+        f"- Non-mock readiness report: `{aerograph.get('nonmock_readiness_report')}`",
+        f"- Non-mock collection plan: `{aerograph.get('nonmock_collection_plan')}`",
         "",
         "## Queue Gates",
         "",
@@ -344,6 +483,11 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         "",
         "## Paper-Ready Artifacts",
         "",
+        f"- Readiness audit: `{snapshot['paper_ready_artifacts']['readiness_audit']}`",
+        f"- Tracked readiness audit: `{snapshot['paper_ready_artifacts']['tracked_readiness_audit']}`",
+        f"- Paper artifact manifest: `{snapshot['paper_ready_artifacts']['paper_artifact_manifest']}`",
+        f"- Paper artifact check: `{snapshot['paper_ready_artifacts']['paper_artifact_check']}`; status `{snapshot['paper_ready_artifacts']['paper_artifact_check_status']}`; missing `{snapshot['paper_ready_artifacts']['paper_artifact_missing_required_count']}`; stale claims `{snapshot['paper_ready_artifacts']['paper_artifact_stale_claim_count']}`",
+        f"- LaTeX patch check: `{snapshot['paper_ready_artifacts']['latex_patch_check']}`; status `{snapshot['paper_ready_artifacts']['latex_patch_check_status']}`",
         f"- Detector table: `{snapshot['paper_ready_artifacts']['detector_table']}`",
         f"- MarineCity system table: `{snapshot['paper_ready_artifacts']['marinecity_system_table']}`",
         f"- AeroGraph placeholder table: `{snapshot['paper_ready_artifacts']['aerograph_placeholder_table']}`",

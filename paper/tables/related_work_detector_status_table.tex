@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Cited related-work detector status. These rows are separated from the main three-seed comparison unless the method is retrained or evaluated under the same protocol.}
+\label{tab:cited_related_detector_status}
+\begin{tabular}{@{}llrrrrrl@{}}
+\toprule
+Method & Protocol & AP & AP50 & F1 & Params(M) & GFLOPs & Note \\
+\midrule
+UAVDet [16] & VisDrone val, 1280, 3-seed & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.0036 & 0.6203 & 33.55 & 201.20 & inspired reproduction from cited UAVDet design; not official checkpoint; 1280, 3-seed \\
+BPD-YOLO [7] & VisDrone val, 1280, 3-seed & 0.3804 $\pm$ 0.0035 & 0.5986 $\pm$ 0.0027 & 0.6187 & 24.53 & 109.50 & paper-faithful reimplementation; not official checkpoint; 1280, 3-seed \\
+SFFEF-YOLO [4] & VisDrone val, 1280, 3-seed & 0.3749 $\pm$ 0.0040 & 0.5914 $\pm$ 0.0039 & 0.6137 & 20.87 & 108.70 & paper-faithful reimplementation; not official checkpoint; 1280, 3-seed \\
+HF-D-FINE [12] & VisDrone val, 1280, 3-seed & 0.3619 $\pm$ 0.0129 & 0.5764 $\pm$ 0.0186 & 0.6067 & 25.48 & 87.30 & high-resolution/frequency-detail reproduction; not official D-FINE checkpoint; 1280, 3-seed \\
+CSFPR-RTDETR [11] & VisDrone val, 1280, 3-seed & 0.2784 $\pm$ 0.0070 & 0.4431 $\pm$ 0.0094 & 0.4921 & 14.09 & 63.90 & official/staged 1280 3-seed related-work run \\
+MFFSODNet [2] & VisDrone val, 1280, 3-seed & 0.0975 $\pm$ 0.0034 & 0.1830 $\pm$ 0.0070 & 0.3562 & 4.54 & 55.10 & official code scratch retrain; no pretrained checkpoint found \\
+\bottomrule
+\end{tabular}
+\end{table*}

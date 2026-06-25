@@ -21,71 +21,40 @@ runs use a shorter early-stopping patience for screening, but final paper rows
 are promoted only after the normalized three-seed record is complete.
 
 \paragraph{Main comparison rule.}
-The main normalized detector table contains the selected detector and the
-strongest completed YOLO-family and transformer baselines under the same
-VisDrone2019-DET 1280-pixel, three-seed protocol. A second compact table records
-related-work reproduction status and currently measured prior-model rows. The
-full YOLO nano/small/medium/large scale sweep, protocol details, heat maps, NMS
-sensitivity, and module-search trails are moved to the supplementary material.
-This gives reviewers both a clean fair-comparison table and transparent
-coverage of the prior methods discussed in Related Work.
+The main normalized detector table contains the selected detector, the strongest
+completed YOLO-family and transformer baselines, and the completed cited
+related-work reproductions under the same VisDrone2019-DET 1280-pixel,
+three-seed protocol. A second compact table records related-work reproduction
+status and protocol caveats. The full YOLO nano/small/medium/large scale sweep,
+protocol details, heat maps, NMS sensitivity, and module-search trails are
+moved to the supplementary material. This gives reviewers both a clean
+fair-comparison table and transparent coverage of the prior methods discussed
+in Related Work.
 
-\begin{table*}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\caption{Main normalized detector comparison. All rows use VisDrone2019-DET validation at 1280-pixel input. AP and AP50 are reported as mean $\pm$ standard deviation over seeds 42, 123, and 2026. Related-work reproduction rows with different protocols are summarized separately in Table~\ref{tab:main_related_work_comparison_status}.}
-\label{tab:main_detector_comparison}
-\begin{tabular}{llrrrrrrl}
-\toprule
-Group & Method & AP & AP50 & F1 & Params(M) & GFLOPs & $\Delta$AP & Note \\
-\midrule
-Ours & SAFR-YOLO & \textbf{0.3822 $\pm$ 0.0007} & \textbf{0.6052 $\pm$ 0.0012} & \textbf{0.6273} & \textbf{20.82} & 109.30 & +0.0045 & selected candidate \\
-YOLO baseline & YOLOv11l & 0.3777 $\pm$ 0.0004 & 0.5981 $\pm$ 0.0011 & 0.6248 & 25.32 & \textbf{87.30} & +0.0000 & strongest stock YOLO \\
-YOLO baseline & YOLOv12l & 0.3771 $\pm$ 0.0020 & 0.5958 $\pm$ 0.0025 & 0.6219 & 26.40 & 89.40 & -0.0006 & large-scale baseline \\
-YOLO baseline & YOLOv8l & 0.3765 $\pm$ 0.0003 & 0.5963 $\pm$ 0.0008 & 0.6198 & 43.64 & 165.40 & -0.0011 & high-parameter baseline \\
-YOLO baseline & YOLOv9c & 0.3738 $\pm$ 0.0009 & 0.5942 $\pm$ 0.0020 & 0.6210 & 25.54 & 103.70 & -0.0039 & strong YOLOv9 baseline \\
-YOLO baseline & YOLOv26l & 0.3732 $\pm$ 0.0015 & 0.5877 $\pm$ 0.0010 & 0.6136 & 26.19 & 93.20 & -0.0045 & large-scale baseline \\
-YOLO baseline & YOLOv10l & 0.3728 $\pm$ 0.0019 & 0.5890 $\pm$ 0.0020 & 0.6166 & 25.78 & 127.30 & -0.0049 & large-scale baseline \\
-YOLO baseline & YOLOv5lu & 0.3709 $\pm$ 0.0011 & 0.5897 $\pm$ 0.0017 & 0.6141 & 53.17 & 135.30 & -0.0067 & high-parameter legacy baseline \\
-Transformer & RT-DETR-L & 0.3201 $\pm$ 0.0397 & 0.5355 $\pm$ 0.0450 & 0.5773 & 32.83 & 108.00 & -0.0576 & transformer baseline \\
-\bottomrule
-\end{tabular}
-\end{table*}
+\input{tables/main_detector_comparison_table}
 
 \paragraph{Related-work comparison and coverage.}
-Table~\ref{tab:main_related_work_comparison_status} prevents the main results
-from silently omitting prior UAV small-object detectors. We separate these rows
-from Table~\ref{tab:main_detector_comparison} because many prior methods ship
-with different checkpoints, input sizes, dependencies, or no directly runnable
+Table~\ref{tab:cited_related_detector_status} prevents the main results
+from silently omitting prior UAV small-object detectors. We keep this compact
+status table next to the main comparison because prior methods often ship with
+different checkpoints, input sizes, dependencies, or no directly runnable
 VisDrone training recipe. Measured rows are reported with their exact protocol;
-pending rows remain in the queue or coverage matrix until a reproducible
-1280-pixel evaluation is available. Before submission, any related-work model
-that completes the normalized protocol will be promoted from ``pending'' to a
-measured row.
+cited rows without compatible runnable assets remain in the supplementary
+coverage matrix until a reproducible 1280-pixel evaluation is available. The
+headline comparison in Table~\ref{tab:detector_preview_overall} ranks the
+completed three-seed YOLO-family, transformer, and cited related-work rows
+under the same VisDrone2019-DET 1280-pixel protocol, with our method placed as
+the final row.
 
-\begin{table*}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\caption{Compact related-work comparison and reproduction status. Measured rows
-are shown with their current protocol. Pending rows are retained so every
-detector discussed in Related Work is visibly accounted for rather than dropped
-from the comparison.}
-\label{tab:main_related_work_comparison_status}
-\begin{tabular}{lllrrrl}
-\toprule
-Category & Method & Protocol & AP & AP50 & Params(M) & Status / paper use \\
-\midrule
-Measured prior check & LEAF-YOLO-S & VisDrone val, 1280 eval & 0.3080 & 0.5210 & 4.28 & external eval row; cite only if kept in Related Work \\
-Measured prior check & LEAF-YOLO-N & VisDrone val, 1280 eval & 0.2510 & 0.4430 & 1.20 & external eval row; cite only if kept in Related Work \\
-Measured prior check & CSFPR-RTDETR & VisDrone val, 1280 eval & 0.0420 & 0.1482 & 14.09 & external checkpoint; 3-seed adapter under validation \\
-Runnable queue & MFFSODNet, UAVDet & VisDrone val, 1280 planned & -- & -- & -- & code/adapter audit and 3-seed queue \\
-Pending assets & SFFEF-YOLO, LSOD-YOLO, HF-D-FINE, DR-YOLO & VisDrone-compatible run pending & -- & -- & -- & add if repo/checkpoint/adapter is reproducible \\
-Pending assets & GCL-YOLO, SRTSOD-YOLO, YOLO11s-UAV & VisDrone-compatible run pending & -- & -- & -- & add if repo/checkpoint/adapter is reproducible \\
-\bottomrule
-\end{tabular}
-\end{table*}
+\input{tables/related_work_detector_status_table}
+
+Among cited UAV small-object detector reproductions, UAVDet~[16] is the
+strongest completed row under the normalized 1280-pixel, three-seed protocol.
+Its reproduced mean AP/AP50 is 0.3812/0.6005 with 33.55M parameters. SAFR-YOLO
+remains slightly higher at 0.3822/0.6052 while using 20.82M parameters. We
+therefore report UAVDet in the related-work table with an explicit
+``inspired reproduction'' note rather than treating it as an official
+checkpoint result.
 
 \paragraph{Selected detector candidate.}
 The current selected detector candidate is \textbf{SAFR-YOLO}. It keeps a
@@ -107,11 +76,11 @@ sample size.
 The main paper reserves space for one compact quantitative detector figure and
 one qualitative detector figure after final rendering. The compact quantitative
 figure visualizes AP/AP50 versus parameter count for
-Table~\ref{tab:main_detector_comparison}, while the qualitative figure compares
-YOLOv11l and SAFR-YOLO on crowded UAV crops with adjacent objects. Grad-CAM or
-heat-map visualizations are referenced in the main text but placed in the
-supplementary material unless space remains after the 3D and reasoner sections
-are finalized.
+Table~\ref{tab:detector_preview_overall}, while the qualitative figure compares
+YOLOv11l and SAFR-YOLO on crowded UAV crops with adjacent objects. The
+Grad-CAM-style feature activation heat maps for YOLOv11l, YOLOv9c, and
+SAFR-YOLO are provided in the supplementary material so the main detector claim
+is supported without crowding the page budget.
 
 \paragraph{Ablation reporting.}
 The main paper reports the completed compact final ablation in
@@ -148,13 +117,6 @@ an explanatory robustness check rather than as the headline detector score.
 
 \paragraph{Related-work coverage rule.}
 Every detector discussed in Related Work is accounted for in the
-supplementary coverage matrix as measured, pending adapter/code/weights, or
+supplementary coverage matrix as measured, adapter/code/weights not staged, or
 citation-only. This avoids silently dropping prior methods that are discussed in
 the text but cannot be fairly reproduced under our current protocol.
-
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=0.95\textwidth]{figures/fig02_detector_module}
-    \caption{Detector structure for the selected SAFR-YOLO candidate. The figure emphasizes the high-resolution P2/P3/P4 prediction path, SelfAttnFR refinement, and TinyFReLU activation.}
-    \label{fig:current_p2p4_selfattnfr_candidate}
-\end{figure*}
