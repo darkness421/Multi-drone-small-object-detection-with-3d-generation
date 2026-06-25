@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-26 07:30:29 KST",
+  "updated_at_kst": "2026-06-26 08:19:54 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
-  "artifact_count": 35,
+  "artifact_count": 38,
   "missing_required_count": 0,
   "stale_claim_count": 0,
   "artifacts": [
@@ -101,7 +101,7 @@
       "placement": "main_source",
       "required_now": true,
       "exists": true,
-      "size_bytes": 431,
+      "size_bytes": 427,
       "status": "ok",
       "note": "Source CSV for real-Cesium detector-to-reasoner smoke table"
     },
@@ -281,7 +281,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 7878,
+      "size_bytes": 9324,
       "status": "ok",
       "note": "Non-mock reasoner collection gate"
     },
@@ -317,6 +317,36 @@
     },
     {
       "group": "pending_reasoner",
+      "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/manifest.json",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 994,
+      "status": "ok",
+      "note": "Compact 23-prompt real-capture AeroGraph smoke pack"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/README.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 3054,
+      "status": "ok",
+      "note": "Compact real-capture web-provider batch index"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "outputs/reasoning/aerograph_real_capture_eval_dryrun/manifest.json",
+      "placement": "audit",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 911,
+      "status": "ok",
+      "note": "Compact real-capture prompt-pack runner dry-run check"
+    },
+    {
+      "group": "pending_reasoner",
       "path": "scripts/normalize_aerograph_web_responses.py",
       "placement": "runbook_helper",
       "required_now": true,
@@ -331,7 +361,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 7826,
+      "size_bytes": 8350,
       "status": "ok",
       "note": "Human-readable artifact manifest"
     },

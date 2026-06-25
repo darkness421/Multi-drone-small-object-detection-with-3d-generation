@@ -1,6 +1,6 @@
 # Live Training Reports
 
-Last organized: `2026-06-25`
+Last organized: `2026-06-26`
 
 This folder is refreshed by active server experiments. Use it to watch training
 progress, but do not treat it as the final paper report.
@@ -8,6 +8,7 @@ progress, but do not treat it as the final paper report.
 Current live bundle:
 
 - `training_dashboard.png`: active detector queue view.
+- `tinyperson_640_dashboard.png`: completed TinyPerson 640 supplementary stress-test dashboard.
 - `marinecity_simulation_dashboard.png`: Isaac/Cesium simulation status, live-GUI vs automated-capture distinction, and next viewer160 recapture queue.
 - `accv_workflow_status_snapshot.md`: compact current-state handoff for
   detector, MarineCity, AeroGraph, and queue gates.
@@ -59,6 +60,10 @@ Current live bundle:
   table promotion commands.
 - `aerograph_prompt_pack/`: 49 real-Cesium detector-token AeroGraph prompts plus
   a compact 10-prompt sample for GPT/Factory/local LLM non-mock evaluation.
+- `aerograph_real_capture_prompt_pack/`: 23-prompt compact AeroGraph smoke pack
+  generated from the current real-Cesium detector-to-reasoner smoke outputs.
+  Use its three web batches for a fast GPT/Factory/local-provider sanity check
+  before running the full 49-prompt final gate.
 - `aerograph_prompt_pack/aerograph_manual_response_template_sample10.jsonl`:
   manual web-provider response template. Use
   `scripts/import_aerograph_manual_responses.py` to convert Factory/ChatGPT web

@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 07:30:29 KST",
+  "updated_at_kst": "2026-06-26 08:12:02 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -340,10 +340,20 @@
       "car": 29,
       "pedestrian": 4
     },
+    "real_capture_prompt_pack_status": "aerograph_real_capture_prompt_pack_ready",
+    "real_capture_prompt_count": 23,
+    "real_capture_prompt_class_counts": {
+      "bus": 8,
+      "car": 15
+    },
+    "real_capture_web_batch_status": "aerograph_web_batches_ready",
+    "real_capture_web_batch_count": 3,
+    "real_capture_dryrun_status": "aerograph_eval_dry_run_ready",
+    "real_capture_dryrun_paper_claim_allowed": false,
     "web_batch_status": "aerograph_web_batches_ready",
     "web_batch_count": 5,
     "web_batch_dir": "outputs/reports/live/aerograph_prompt_pack/web_batches",
-    "web_batch_import_command": "python scripts/import_aerograph_manual_responses.py --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"Factory/ChatGPT web\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
+    "web_batch_import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"Factory/ChatGPT web\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
     "dry_run_status": "aerograph_eval_dry_run_ready",
     "dry_run_summary": {
       "total": 79,
