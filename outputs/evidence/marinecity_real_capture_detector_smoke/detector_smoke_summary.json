@@ -1,0 +1,31 @@
+{
+  "status": "marinecity_real_capture_detector_smoke_complete",
+  "benchmark": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/marinecity_real_capture_benchmark.json",
+  "weights": "/home/oem/projects/multi-uav-marine-city/outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
+  "out_jsonl": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/evidence_tokens.jsonl",
+  "scenario_jsonl": {
+    "uavmarine_s0_viewer160_session_recapture": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/evidence_tokens_uavmarine_s0_viewer160_session_recapture.jsonl",
+    "uavmarine_s1_viewer160_session_recapture": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/evidence_tokens_uavmarine_s1_viewer160_session_recapture.jsonl",
+    "uavmarine_s2_viewer160_session_recapture": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/evidence_tokens_uavmarine_s2_viewer160_session_recapture.jsonl"
+  },
+  "preview_contact_sheet": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/marinecity_detector_preview_contact_sheet.png",
+  "device": "cpu",
+  "imgsz": 1280,
+  "conf": 0.15,
+  "frame_count": 9,
+  "token_count": 23,
+  "tokens_by_scenario": {
+    "uavmarine_s0_viewer160_session_recapture": 7,
+    "uavmarine_s1_viewer160_session_recapture": 8,
+    "uavmarine_s2_viewer160_session_recapture": 8
+  },
+  "tokens_by_uav": {
+    "uav_01": 5,
+    "uav_02": 15,
+    "uav_03": 3
+  },
+  "tokens_by_class": {
+    "car": 15,
+    "bus": 8
+  }
+}

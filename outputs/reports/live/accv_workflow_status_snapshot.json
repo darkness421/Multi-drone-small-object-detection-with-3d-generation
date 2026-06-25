@@ -1,0 +1,400 @@
+{
+  "updated_at_kst": "2026-06-26 07:30:29 KST",
+  "detector": {
+    "paper_facing_top_rows": [
+      {
+        "rank": "1",
+        "method": "Ours: P2P4-SelfAttnFR",
+        "group": "Ours final candidate",
+        "ap": 0.382163,
+        "ap50": 0.605173,
+        "f1": 0.627275,
+        "params_m": 20.82,
+        "seeds": "42,123,2026",
+        "note": "deduped latest official seed runs"
+      },
+      {
+        "rank": "2",
+        "method": "UAVDet [16]",
+        "group": "Cited related work",
+        "ap": 0.381184,
+        "ap50": 0.600516,
+        "f1": 0.62034,
+        "params_m": 33.5504,
+        "seeds": "42,123,2026",
+        "note": "inspired reproduction from cited UAVDet design; not official checkpoint; 1280, 3-seed"
+      },
+      {
+        "rank": "3",
+        "method": "BPD-YOLO [7]",
+        "group": "Cited related work",
+        "ap": 0.38042,
+        "ap50": 0.59856,
+        "f1": 0.618703,
+        "params_m": 24.5296,
+        "seeds": "42,123,2026",
+        "note": "paper-faithful reimplementation; not official checkpoint; 1280, 3-seed"
+      },
+      {
+        "rank": "4",
+        "method": "YOLOv11l",
+        "group": "Best YOLO baseline",
+        "ap": 0.377657,
+        "ap50": 0.59809,
+        "f1": 0.624751,
+        "params_m": 25.3182,
+        "seeds": "123,2026,42",
+        "note": "official comparison row"
+      },
+      {
+        "rank": "5",
+        "method": "YOLOv12l",
+        "group": "YOLO large",
+        "ap": 0.377103,
+        "ap50": 0.595813,
+        "f1": 0.62192,
+        "params_m": 26.3968,
+        "seeds": "123,2026,42",
+        "note": "official comparison row"
+      },
+      {
+        "rank": "6",
+        "method": "YOLOv8l",
+        "group": "YOLO large",
+        "ap": 0.376543,
+        "ap50": 0.596293,
+        "f1": 0.619767,
+        "params_m": 43.6375,
+        "seeds": "123,2026,42",
+        "note": "current 1280 comparison sweep, completed 3-seed"
+      },
+      {
+        "rank": "7",
+        "method": "SFFEF-YOLO [4]",
+        "group": "Cited related work",
+        "ap": 0.374935,
+        "ap50": 0.591412,
+        "f1": 0.613727,
+        "params_m": 20.8743,
+        "seeds": "42,123,2026",
+        "note": "paper-faithful reimplementation; not official checkpoint; 1280, 3-seed"
+      },
+      {
+        "rank": "8",
+        "method": "YOLOv9c",
+        "group": "YOLO family",
+        "ap": 0.373763,
+        "ap50": 0.59421,
+        "f1": 0.620969,
+        "params_m": 25.5369,
+        "seeds": "123,2026,42",
+        "note": "current 1280 comparison sweep, completed 3-seed"
+      }
+    ],
+    "ours": {
+      "rank": "1",
+      "method": "Ours: P2P4-SelfAttnFR",
+      "group": "Ours final candidate",
+      "ap": 0.382163,
+      "ap50": 0.605173,
+      "f1": 0.627275,
+      "params_m": 20.82,
+      "seeds": "42,123,2026",
+      "note": "deduped latest official seed runs"
+    },
+    "yolov11l": {
+      "rank": "4",
+      "method": "YOLOv11l",
+      "group": "Best YOLO baseline",
+      "ap": 0.377657,
+      "ap50": 0.59809,
+      "f1": 0.624751,
+      "params_m": 25.3182,
+      "seeds": "123,2026,42",
+      "note": "official comparison row"
+    },
+    "uavdet_final_table": {
+      "rank": "2",
+      "method": "UAVDet [16]",
+      "group": "Cited related work",
+      "ap": 0.381184,
+      "ap50": 0.600516,
+      "f1": 0.62034,
+      "params_m": 33.5504,
+      "seeds": "42,123,2026",
+      "note": "inspired reproduction from cited UAVDet design; not official checkpoint; 1280, 3-seed"
+    },
+    "uavdet_queue": {
+      "status": "all_seed_results_present",
+      "planned_seeds": [
+        42,
+        123,
+        2026
+      ],
+      "seeds_with_results": [
+        42,
+        123,
+        2026
+      ],
+      "started_seeds": [
+        42,
+        123,
+        2026
+      ],
+      "started_seed_count": 3,
+      "completed_seed_count": 3,
+      "completed_seeds": [
+        42,
+        123,
+        2026
+      ],
+      "total_seed_count": 3,
+      "active_seed": null,
+      "seed_rows": [
+        {
+          "seed": 42,
+          "status": "finished",
+          "results": "outputs/detectors/required_related_work_reimplementations/20260625_055712_uavdet_inspired_reimpl_visdrone_seed42/ultralytics/results.csv",
+          "latest_epoch": 43,
+          "latest_ap": 0.37947,
+          "latest_ap50": 0.60087,
+          "latest_f1": 0.6227370376295916,
+          "best_epoch": 38,
+          "best_ap": 0.37955,
+          "best_ap50": 0.60167,
+          "best_precision": 0.66466,
+          "best_recall": 0.58651,
+          "epochs_since_best": 5,
+          "complete_hint": true
+        },
+        {
+          "seed": 123,
+          "status": "finished",
+          "results": "outputs/detectors/required_related_work_reimplementations/20260625_104804_uavdet_inspired_reimpl_visdrone_seed123/ultralytics/results.csv",
+          "latest_epoch": 38,
+          "latest_ap": 0.37711,
+          "latest_ap50": 0.59682,
+          "latest_f1": 0.6192248510610892,
+          "best_epoch": 33,
+          "best_ap": 0.37788,
+          "best_ap50": 0.59761,
+          "best_precision": 0.64425,
+          "best_recall": 0.59132,
+          "epochs_since_best": 5,
+          "complete_hint": true
+        },
+        {
+          "seed": 2026,
+          "status": "finished",
+          "results": "outputs/detectors/required_related_work_reimplementations/20260625_150516_uavdet_inspired_reimpl_visdrone_seed2026/ultralytics/results.csv",
+          "latest_epoch": 38,
+          "latest_ap": 0.37431,
+          "latest_ap50": 0.59577,
+          "latest_f1": 0.6191782910562434,
+          "best_epoch": 33,
+          "best_ap": 0.37829,
+          "best_ap50": 0.59597,
+          "best_precision": 0.65326,
+          "best_recall": 0.58534,
+          "epochs_since_best": 5,
+          "complete_hint": true
+        }
+      ],
+      "best_seed": 42,
+      "best_epoch": 38,
+      "best_ap": 0.37955,
+      "best_ap50": 0.60167,
+      "best_precision": 0.66466,
+      "best_recall": 0.58651
+    },
+    "ours_minus_yolov11l_ap": 0.004506,
+    "ours_minus_uavdet_final_ap": 0.000979,
+    "ours_minus_uavdet_queue_best_ap": 0.002613
+  },
+  "marinecity_system": {
+    "scenario_count": 3,
+    "token_level_test_count": 49,
+    "artifact_status": "marinecity_system_test_artifacts_complete",
+    "detector_reasoner_smoke_status": "marinecity_detector_reasoner_smoke_artifacts_ready",
+    "detector_reasoner_smoke_tokens": 23,
+    "detector_reasoner_smoke_rows": [
+      {
+        "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+        "scenario": "S0 locked MarineCity ROI",
+        "uav_views": 3,
+        "evidence_tokens": 7,
+        "hypotheses": 7,
+        "reobserve": 7,
+        "detected_classes": "car=5, bus=2",
+        "provider": "mock_symbolic_aerograph"
+      },
+      {
+        "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+        "scenario": "S1 adjacent overlap",
+        "uav_views": 3,
+        "evidence_tokens": 8,
+        "hypotheses": 8,
+        "reobserve": 8,
+        "detected_classes": "car=5, bus=3",
+        "provider": "mock_symbolic_aerograph"
+      },
+      {
+        "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+        "scenario": "S2 coastline multi-view",
+        "uav_views": 3,
+        "evidence_tokens": 8,
+        "hypotheses": 8,
+        "reobserve": 8,
+        "detected_classes": "car=5, bus=3",
+        "provider": "mock_symbolic_aerograph"
+      }
+    ],
+    "detector_reasoner_smoke_report": "outputs/reports/live/marinecity_detector_reasoner_smoke.md",
+    "detector_reasoner_smoke_contact_sheet": "paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png",
+    "dashboard": "outputs/reports/live/marinecity_simulation_dashboard.png",
+    "live_overlay_status": "session_overlay_added",
+    "camera_set": true,
+    "camera_profile": "viewer160_marinecity_roi",
+    "active_camera_path": "/World/CoM3D_ACE_UAVMarine/RuntimeView/viewer160_OverviewCamera",
+    "requested_georef_height": null,
+    "applied_georef_height": null,
+    "viewer_eye": [
+      8.0,
+      -2.0,
+      160.0
+    ],
+    "viewer_target": [
+      -22.0,
+      -13.0,
+      15.0
+    ],
+    "viewer160_eye": [
+      8.0,
+      -2.0,
+      160.0
+    ],
+    "viewer160_target": [
+      -22.0,
+      -13.0,
+      15.0
+    ],
+    "uav_altitude_policy": {
+      "band_m": [
+        140,
+        160
+      ],
+      "default_m": 160,
+      "user_locked_review_height_m": 160,
+      "verified_viewer160_recapture_m": {
+        "uav_01": 140,
+        "uav_02": 150,
+        "uav_03": 160
+      },
+      "note": "Use 140-160 m for UAV/camera observation; keep CesiumGeoreference readback logged separately."
+    },
+    "target_georeference_height": 160,
+    "georeference_height": 200.0,
+    "georeference_height_note": "The user-verified MarineCity review height is 160 m, and the UAV/camera observation band is locked to 140-160 m. The live CesiumGeoreference readback is logged separately because it can lag until the next recapture/status export.",
+    "google_photorealistic_tiles_valid": true,
+    "cesium_world_terrain_valid": true,
+    "substitute_city_geometry_created": false,
+    "qualitative_gate_status": "marinecity_qualitative_gate_main_ready",
+    "qualitative_gate_checks": {
+      "real_cesium_ok": true,
+      "system_smoke_ok": true,
+      "crop_supplementary_ready": true,
+      "full_frame_main_ready": true,
+      "google_tiles_valid": true,
+      "terrain_valid": true,
+      "fake_or_substitute_city_created": false
+    },
+    "best_full_capture": {
+      "capture_name": "uavmarine_s2_viewer160_session_recapture",
+      "best_image": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
+      "best_black_ratio": 0.017828,
+      "mean_top3_black_ratio": 0.087552,
+      "camera_profile": "viewer160_clean_fullframe"
+    },
+    "best_crop_candidate": {
+      "capture_name": "uavmarine_s2_viewer160_session_recapture",
+      "source": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
+      "crop_path": "outputs/reports/live/marinecity_real_capture_crops/crops/uavmarine_s2_viewer160_session_recapture_frame_002_uav_02_rgb_crop.png",
+      "black_ratio": 0.003577,
+      "area_ratio": 0.9025,
+      "score": 1.115215
+    },
+    "qualitative_claiming_rule": "Main paper full-frame qualitative figure may be promoted.",
+    "clean_recapture_plan": "outputs/reports/live/marinecity_clean_recapture_plan.json",
+    "clean_recapture_plan_status": "main_full_frame_ready",
+    "clean_recapture_needed_improvement": {
+      "best_black_ratio_delta_to_threshold": 0.0,
+      "mean_top3_black_ratio_delta_to_threshold": 0.0
+    }
+  },
+  "aerograph": {
+    "prompt_pack_status": "aerograph_prompt_pack_ready",
+    "total_prompts": 49,
+    "sample_prompts": 10,
+    "class_counts": {
+      "bus": 16,
+      "car": 29,
+      "pedestrian": 4
+    },
+    "web_batch_status": "aerograph_web_batches_ready",
+    "web_batch_count": 5,
+    "web_batch_dir": "outputs/reports/live/aerograph_prompt_pack/web_batches",
+    "web_batch_import_command": "python scripts/import_aerograph_manual_responses.py --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"Factory/ChatGPT web\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
+    "dry_run_status": "aerograph_eval_dry_run_ready",
+    "dry_run_summary": {
+      "total": 79,
+      "by_decision": {
+        "uncertain": 79
+      },
+      "by_provider_runtime": {
+        "dry_run": 79
+      },
+      "class_mismatch_count": 0,
+      "reobserve_or_expected_count": 79
+    },
+    "paper_table_status": "aerograph_reasoner_table_candidate_external_pending",
+    "paper_table_selected_manifest": "",
+    "non_mock_status": "aerograph_reviewed_candidate_ready_external_pending",
+    "non_mock_coverage_ratio": 1.0,
+    "non_mock_matched_responses": 49,
+    "non_mock_nonblank_responses": 49,
+    "non_mock_prompt_count": 49,
+    "reviewed_candidate_valid_count": 49,
+    "external_provider_replication_ready": false,
+    "full_manual_template": "outputs/reports/live/aerograph_prompt_pack/aerograph_manual_response_template_all.jsonl",
+    "nonmock_readiness_report": "outputs/reports/live/aerograph_nonmock_readiness_status.md",
+    "nonmock_collection_plan": "docs/aerograph_nonmock_collection_plan.md",
+    "nonmock_collection_plan_exists": true
+  },
+  "queues": {
+    "uavdet_log_tail": "[2026-06-25T19:23:05+09:00] QUEUE_FINISHED UAVDet inspired reproduction queue",
+    "tinyperson_log_tail": "[2026-06-26T06:52:33+09:00] Dashboard: outputs/reports/live/tinyperson_640_dashboard.png",
+    "tiny_person_gate": "finished_tinyperson_640_stress_test"
+  },
+  "dashboards": {
+    "training": "outputs/reports/live/training_dashboard.png",
+    "marinecity": "outputs/reports/live/marinecity_simulation_dashboard.png"
+  },
+  "paper_ready_artifacts": {
+    "readiness_audit": "outputs/reports/live/accv_research_package_readiness_audit.md",
+    "readiness_audit_exists": true,
+    "tracked_readiness_audit": "docs/accv_research_package_readiness_audit_2026-06-25.md",
+    "tracked_readiness_audit_exists": true,
+    "paper_artifact_manifest": "paper/figures/results/paper_artifact_readiness_manifest.md",
+    "paper_artifact_manifest_exists": true,
+    "paper_artifact_check": "outputs/reports/live/paper_artifact_readiness_check.json",
+    "paper_artifact_check_status": "paper_artifact_audit_ok_with_pending_gates",
+    "paper_artifact_missing_required_count": 0,
+    "paper_artifact_stale_claim_count": 0,
+    "latex_patch_check": "outputs/reports/live/latex_patch_integrity_check.json",
+    "latex_patch_check_status": "latex_patch_integrity_ok",
+    "detector_table": "paper/tables/main_detector_comparison_table.tex",
+    "marinecity_system_table": "paper/tables/marinecity_system_scenario_table.tex",
+    "aerograph_placeholder_table": "paper/tables/aerograph_reasoner_results_placeholder.tex",
+    "aerograph_placeholder_exists": true
+  }
+}

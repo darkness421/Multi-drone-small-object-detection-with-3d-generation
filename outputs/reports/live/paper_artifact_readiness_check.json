@@ -1,0 +1,405 @@
+{
+  "updated_at_kst": "2026-06-26 07:30:29 KST",
+  "status": "paper_artifact_audit_ok_with_pending_gates",
+  "artifact_count": 35,
+  "missing_required_count": 0,
+  "stale_claim_count": 0,
+  "artifacts": [
+    {
+      "group": "main_detector",
+      "path": "paper/sections/05_experiments_current_detector_status.tex",
+      "placement": "main",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 6933,
+      "status": "ok",
+      "note": "Detector result section patch"
+    },
+    {
+      "group": "main_detector",
+      "path": "paper/tables/main_detector_comparison_table.tex",
+      "placement": "main",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 2363,
+      "status": "ok",
+      "note": "Compact final detector table"
+    },
+    {
+      "group": "main_detector",
+      "path": "paper/tables/final_ablation_main_table.tex",
+      "placement": "main",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 659,
+      "status": "ok",
+      "note": "Compact final ablation table"
+    },
+    {
+      "group": "main_detector",
+      "path": "paper/tables/related_work_detector_status_table.tex",
+      "placement": "main",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 1576,
+      "status": "ok",
+      "note": "Cited related-work detector table"
+    },
+    {
+      "group": "main_detector",
+      "path": "paper/figures/results/paper_fig01_main_detector_table.png",
+      "placement": "main_optional",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 274489,
+      "status": "ok",
+      "note": "Detector table visual"
+    },
+    {
+      "group": "main_detector",
+      "path": "paper/figures/results/paper_fig04_ap_ap50_bar_chart.png",
+      "placement": "main_or_supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 109155,
+      "status": "ok",
+      "note": "AP/AP50 chart"
+    },
+    {
+      "group": "main_detector",
+      "path": "paper/figures/results/paper_fig05_ap_params_scatter.png",
+      "placement": "main_or_supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 144538,
+      "status": "ok",
+      "note": "AP vs params chart"
+    },
+    {
+      "group": "main_system",
+      "path": "paper/sections/06_marinecity_3d_readiness.tex",
+      "placement": "main",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 5235,
+      "status": "ok",
+      "note": "MarineCity protocol section patch"
+    },
+    {
+      "group": "main_system",
+      "path": "paper/tables/marinecity_system_scenario_table.tex",
+      "placement": "main",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 771,
+      "status": "ok",
+      "note": "Real-Cesium smoke/protocol table"
+    },
+    {
+      "group": "main_system",
+      "path": "paper/tables/marinecity_system_token_results.csv",
+      "placement": "main_source",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 431,
+      "status": "ok",
+      "note": "Source CSV for real-Cesium detector-to-reasoner smoke table"
+    },
+    {
+      "group": "main_system",
+      "path": "paper/tables/marinecity_real_capture_benchmark_table.tex",
+      "placement": "main",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 465,
+      "status": "ok",
+      "note": "Verified real-Cesium capture-source table"
+    },
+    {
+      "group": "main_system",
+      "path": "paper/sections/07_marinecity_qualitative_figure_slots.tex",
+      "placement": "main_optional",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 2439,
+      "status": "ok",
+      "note": "Safe qualitative figure slots"
+    },
+    {
+      "group": "bundle",
+      "path": "paper/sections/main_results_patch_bundle.tex",
+      "placement": "main_bundle",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 655,
+      "status": "ok",
+      "note": "Overleaf-ready main results patch bundle"
+    },
+    {
+      "group": "bundle",
+      "path": "paper/sections/supplementary_patch_bundle.tex",
+      "placement": "supp_bundle",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 559,
+      "status": "ok",
+      "note": "Overleaf-ready supplementary patch bundle"
+    },
+    {
+      "group": "supp_detector",
+      "path": "paper/sections/supp_detector_experiment_inventory.tex",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 12681,
+      "status": "ok",
+      "note": "Supplementary detector inventory"
+    },
+    {
+      "group": "supp_detector",
+      "path": "paper/tables/final_ablation_supplementary_table.tex",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 935,
+      "status": "ok",
+      "note": "Full ablation table"
+    },
+    {
+      "group": "supp_detector",
+      "path": "paper/tables/tinyperson_640_stress_table.tex",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 833,
+      "status": "ok",
+      "note": "TinyPerson 640 supplementary stress-test table"
+    },
+    {
+      "group": "supp_detector",
+      "path": "paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 139781,
+      "status": "ok",
+      "note": "Ablation heatmap"
+    },
+    {
+      "group": "supp_detector",
+      "path": "paper/figures/results/paper_fig11_final_detector_feature_activation_heatmap.png",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 3522558,
+      "status": "ok",
+      "note": "Detector activation/heatmap sheet"
+    },
+    {
+      "group": "supp_system",
+      "path": "paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png",
+      "placement": "supp_or_main_smoke",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 221474,
+      "status": "ok",
+      "note": "Three-scenario real-Cesium smoke sheet"
+    },
+    {
+      "group": "supp_system",
+      "path": "paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png",
+      "placement": "main_or_supp_smoke",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 2336388,
+      "status": "ok",
+      "note": "Real-Cesium detector preview contact sheet from SAFR-YOLO smoke run"
+    },
+    {
+      "group": "supp_system",
+      "path": "paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 1290779,
+      "status": "ok",
+      "note": "Real-Cesium 3-scenario x 3-UAV capture contact sheet"
+    },
+    {
+      "group": "supp_system",
+      "path": "paper/figures/results/marinecity_system/marinecity_qualitative_selection_manifest.md",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 3128,
+      "status": "ok",
+      "note": "MarineCity qualitative selection rules"
+    },
+    {
+      "group": "supp_system",
+      "path": "paper/figures/results/marinecity_system/marinecity_qualitative_gate.md",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 2147,
+      "status": "ok",
+      "note": "MarineCity full-frame vs crop-only qualitative gate"
+    },
+    {
+      "group": "supp_system",
+      "path": "outputs/reports/live/marinecity_real_capture_benchmark.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 924,
+      "status": "ok",
+      "note": "Real-Cesium capture benchmark manifest summary"
+    },
+    {
+      "group": "supp_system",
+      "path": "outputs/reports/live/marinecity_detector_reasoner_smoke.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 905,
+      "status": "ok",
+      "note": "Real-Cesium detector-to-reasoner smoke report"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "paper/tables/aerograph_reasoner_results_placeholder.tex",
+      "placement": "pending",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 444,
+      "status": "ok",
+      "note": "AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "docs/aerograph_nonmock_collection_plan.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 7878,
+      "status": "ok",
+      "note": "Non-mock reasoner collection gate"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "outputs/reports/live/aerograph_prompt_pack_integrity.md",
+      "placement": "audit",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 926,
+      "status": "ok",
+      "note": "AeroGraph prompt/template/batch consistency check"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_packet.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 5274,
+      "status": "ok",
+      "note": "One-file web LLM handoff for AeroGraph collection"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_checklist.csv",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 10631,
+      "status": "ok",
+      "note": "Per-prompt AeroGraph non-mock collection checklist"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "scripts/normalize_aerograph_web_responses.py",
+      "placement": "runbook_helper",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 11355,
+      "status": "ok",
+      "note": "Web LLM raw-output normalizer for AeroGraph manual responses"
+    },
+    {
+      "group": "audit",
+      "path": "paper/figures/results/paper_artifact_readiness_manifest.md",
+      "placement": "audit",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 7826,
+      "status": "ok",
+      "note": "Human-readable artifact manifest"
+    },
+    {
+      "group": "audit",
+      "path": "outputs/reports/live/latex_patch_integrity_check.md",
+      "placement": "audit",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 2005,
+      "status": "ok",
+      "note": "LaTeX input/figure/label integrity check"
+    },
+    {
+      "group": "audit",
+      "path": "docs/accv_research_package_readiness_audit_2026-06-25.md",
+      "placement": "audit",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 6904,
+      "status": "ok",
+      "note": "Claim readiness audit"
+    }
+  ],
+  "missing_required": [],
+  "stale_claims": [],
+  "aerograph_gate": {
+    "status": "aerograph_reviewed_candidate_ready_external_pending",
+    "matched_nonblank_response_count": 49,
+    "matched_valid_response_count": 49,
+    "prompt_count": 49,
+    "coverage_ratio": 1.0,
+    "paper_table_status": "aerograph_reasoner_table_candidate_external_pending",
+    "non_mock_outputs_ready": false,
+    "external_provider_replication_ready": false,
+    "reviewed_candidate_valid_count": 49,
+    "complete": false
+  },
+  "marinecity_qualitative_gate": {
+    "status": "marinecity_qualitative_gate_main_ready",
+    "real_cesium_ok": true,
+    "system_smoke_ok": true,
+    "crop_supplementary_ready": true,
+    "full_frame_main_ready": true,
+    "best_full_black_ratio": 0.017828,
+    "mean_top3_black_ratio": 0.087552,
+    "best_crop_black_ratio": 0.003577,
+    "claiming_rule": "Main paper full-frame qualitative figure may be promoted."
+  },
+  "main_tex_gate": {
+    "main_tex_candidates": [],
+    "main_tex_present": false,
+    "note": "No local main.tex means current files are Overleaf-ready patches rather than a full local paper build."
+  },
+  "latex_integrity_gate": {
+    "status": "latex_patch_integrity_ok",
+    "missing_input_count": 0,
+    "missing_graphics_count": 0,
+    "duplicate_label_count": 0,
+    "unresolved_ref_count": 0,
+    "pending_review_count": 0
+  },
+  "claiming_summary": {
+    "detector": "ready",
+    "marinecity_system": "ready_as_real_cesium_smoke_protocol_only",
+    "marinecity_qualitative": "ready_for_main",
+    "aerograph": "candidate_ready_external_provider_pending",
+    "final_3d_completion": "pending_or_pilot_only",
+    "local_compile": "pending_main_tex_or_overleaf_sync"
+  }
+}

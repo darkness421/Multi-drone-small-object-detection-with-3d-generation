@@ -1,0 +1,41 @@
+{
+  "status": "marinecity_detector_reasoner_smoke_artifacts_ready",
+  "row_count": 3,
+  "table": "paper/tables/marinecity_system_scenario_table.tex",
+  "csv": "paper/tables/marinecity_system_token_results.csv",
+  "report": "outputs/reports/live/marinecity_detector_reasoner_smoke.md",
+  "paper_contact_sheet": "paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png",
+  "total_tokens": 23,
+  "rows": [
+    {
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "scenario": "S0 locked MarineCity ROI",
+      "uav_views": 3,
+      "evidence_tokens": 7,
+      "hypotheses": 7,
+      "reobserve": 7,
+      "detected_classes": "car=5, bus=2",
+      "provider": "mock_symbolic_aerograph"
+    },
+    {
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "scenario": "S1 adjacent overlap",
+      "uav_views": 3,
+      "evidence_tokens": 8,
+      "hypotheses": 8,
+      "reobserve": 8,
+      "detected_classes": "car=5, bus=3",
+      "provider": "mock_symbolic_aerograph"
+    },
+    {
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "scenario": "S2 coastline multi-view",
+      "uav_views": 3,
+      "evidence_tokens": 8,
+      "hypotheses": 8,
+      "reobserve": 8,
+      "detected_classes": "car=5, bus=3",
+      "provider": "mock_symbolic_aerograph"
+    }
+  ]
+}

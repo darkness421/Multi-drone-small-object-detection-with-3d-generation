@@ -18,6 +18,7 @@ UAVDET_SEEDS = [42, 123, 2026]
 UAVDET_LOG = REPO_ROOT / "outputs/logs/required_related_work_models/uavdet_inspired_after_required.log"
 TINYPERSON_LOG = REPO_ROOT / "outputs/logs/tinyperson_640/queue.log"
 SYSTEM_MANIFEST = LIVE_DIR / "marinecity_system_test_10plus/manifest.json"
+MARINECITY_DETECTOR_REASONER_SMOKE = LIVE_DIR / "marinecity_detector_reasoner_smoke.json"
 PROMPT_MANIFEST = LIVE_DIR / "aerograph_prompt_pack/manifest.json"
 AEROGRAPH_WEB_BATCH_MANIFEST = LIVE_DIR / "aerograph_prompt_pack/web_batches/manifest.json"
 AEROGRAPH_DRY_RUN = REPO_ROOT / "outputs/reasoning/aerograph_prompt_pack_eval_dryrun_latest/manifest.json"
@@ -255,6 +256,7 @@ def build_snapshot() -> dict[str, Any]:
     prompt_manifest = read_json(PROMPT_MANIFEST)
     web_batch_manifest = read_json(AEROGRAPH_WEB_BATCH_MANIFEST)
     system_manifest = read_json(SYSTEM_MANIFEST)
+    detector_reasoner_smoke = read_json(MARINECITY_DETECTOR_REASONER_SMOKE)
     dry_run = read_json(AEROGRAPH_DRY_RUN)
     aerograph_table = read_json(AEROGRAPH_TABLE_MANIFEST)
     aerograph_nonmock = read_json(AEROGRAPH_NONMOCK_READINESS)
@@ -292,6 +294,11 @@ def build_snapshot() -> dict[str, Any]:
             "scenario_count": system_manifest.get("scenario_count"),
             "token_level_test_count": system_manifest.get("token_level_test_count"),
             "artifact_status": system_manifest.get("status"),
+            "detector_reasoner_smoke_status": detector_reasoner_smoke.get("status"),
+            "detector_reasoner_smoke_tokens": detector_reasoner_smoke.get("total_tokens"),
+            "detector_reasoner_smoke_rows": detector_reasoner_smoke.get("rows", []),
+            "detector_reasoner_smoke_report": str(MARINECITY_DETECTOR_REASONER_SMOKE.with_suffix(".md").relative_to(REPO_ROOT)),
+            "detector_reasoner_smoke_contact_sheet": detector_reasoner_smoke.get("paper_contact_sheet"),
             "dashboard": str(SIM_DASHBOARD.relative_to(REPO_ROOT)),
             "live_overlay_status": session_overlay.get("status"),
             "camera_set": session_overlay.get("camera_set"),
@@ -443,6 +450,8 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- Real-Cesium scenario count: `{system.get('scenario_count')}`",
         f"- Token-level system tests: `{system.get('token_level_test_count')}`",
         f"- Artifact status: `{system.get('artifact_status')}`",
+        f"- Real-capture detector/reasoner smoke: `{system.get('detector_reasoner_smoke_status')}`; tokens `{system.get('detector_reasoner_smoke_tokens')}`; report `{system.get('detector_reasoner_smoke_report')}`",
+        f"- Detector preview sheet: `{system.get('detector_reasoner_smoke_contact_sheet')}`",
         f"- Live overlay: `{system.get('live_overlay_status')}`; camera set `{system.get('camera_set')}`; profile `{system.get('camera_profile')}`",
         f"- Real Cesium: Google tiles `{system.get('google_photorealistic_tiles_valid')}`, terrain `{system.get('cesium_world_terrain_valid')}`, fake city `{system.get('substitute_city_geometry_created')}`",
         f"- UAV altitude policy: `{system.get('uav_altitude_policy')}`",

@@ -39,6 +39,11 @@ Current live bundle:
 - `marinecity_real_capture_benchmark_contact_sheet.png`: contact sheet for the
   real-Cesium capture benchmark. Use it as supplementary capture evidence, not
   as a completed NeRF/3DGS result.
+- `marinecity_detector_reasoner_smoke.md`: real-Cesium detector-to-reasoner
+  smoke report using the current SAFR-YOLO/P2P4-SelfAttnFR weights on the
+  verified 3-scenario x 3-UAV captures. It records 23 EvidenceTokens and the
+  deterministic AeroGraph mock plumbing result; use this as system validation,
+  not as a labeled MarineCity accuracy benchmark.
 - `/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json`: latest live Isaac session-layer overlay status. It confirms `uavmarine.usd` is the real Cesium root layer and the UAV/object layer is non-destructive.
 - `../../experiments/marinecity_viewer160_pipeline_status.md`: current viewer160 recapture/detector/reasoner queue status.
 - `../../docs/uavmarine_multiuav_scenarios.md`: live Isaac scenario operation guide.
@@ -111,6 +116,7 @@ MarineCity system-test quick links:
 - `marinecity_system_test_10plus/contact_sheet_3_scenarios.png`: 3 scenario-level multi-UAV summaries.
 - `marinecity_system_test_10plus/paper_system_scenario_table.tex`: LaTeX table for the current system smoke-test result.
 - `marinecity_system_test_10plus/reasoner_answers_token_tests.md`: image-by-image reasoner answers and artifact paths.
+- `../../paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png`: current paper-facing detector-preview sheet from the real-Cesium 3-scenario smoke run.
 - `marinecity_real_capture_benchmark_contact_sheet.png`: 3 scenarios x 3 UAV
   real-Cesium RGB capture grid with altitude and depth/void QA metrics.
 - `marinecity_capture_quality/marinecity_capture_quality_top8.png`: ranked

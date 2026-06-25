@@ -1,0 +1,4 @@
+scenario_id,scenario,uav_views,evidence_tokens,hypotheses,reobserve,detected_classes,provider
+uavmarine_s0_viewer160_session_recapture,S0 locked MarineCity ROI,3,7,7,7,"car=5, bus=2",mock_symbolic_aerograph
+uavmarine_s1_viewer160_session_recapture,S1 adjacent overlap,3,8,8,8,"car=5, bus=3",mock_symbolic_aerograph
+uavmarine_s2_viewer160_session_recapture,S2 coastline multi-view,3,8,8,8,"car=5, bus=3",mock_symbolic_aerograph
