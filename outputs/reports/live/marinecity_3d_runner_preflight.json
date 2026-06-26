@@ -1,0 +1,87 @@
+{
+  "updated_at_kst": "2026-06-26 13:42:09 KST",
+  "status": "marinecity_3d_runner_preflight_ready",
+  "neural_runner_available": false,
+  "geometry_smoke_available": true,
+  "current_python": "/home/oem/anaconda3/bin/python",
+  "current_env": {
+    "commands": {
+      "ns-train": null,
+      "ns-process-data": null,
+      "colmap": null,
+      "instant-ngp": null
+    },
+    "modules": {
+      "nerfstudio": {
+        "available": false,
+        "error": "ModuleNotFoundError: No module named 'nerfstudio'"
+      },
+      "open3d": {
+        "available": false,
+        "error": "ModuleNotFoundError: No module named 'open3d'"
+      },
+      "plyfile": {
+        "available": false,
+        "error": "ModuleNotFoundError: No module named 'plyfile'"
+      },
+      "trimesh": {
+        "available": false,
+        "error": "ModuleNotFoundError: No module named 'trimesh'"
+      },
+      "cv2": {
+        "available": false,
+        "error": "ModuleNotFoundError: No module named 'cv2'"
+      },
+      "numpy": {
+        "available": true,
+        "error": ""
+      },
+      "PIL": {
+        "available": true,
+        "error": ""
+      }
+    }
+  },
+  "conda_env": "com3d-ace",
+  "conda_env_status": {
+    "commands": {
+      "ns-train": null,
+      "ns-process-data": null,
+      "colmap": null,
+      "instant-ngp": null
+    },
+    "modules": {
+      "nerfstudio": {
+        "available": false,
+        "error": "ModuleNotFoundError: No module named 'nerfstudio'"
+      },
+      "open3d": {
+        "available": false,
+        "error": "ModuleNotFoundError: No module named 'open3d'"
+      },
+      "plyfile": {
+        "available": false,
+        "error": "ModuleNotFoundError: No module named 'plyfile'"
+      },
+      "trimesh": {
+        "available": false,
+        "error": "ModuleNotFoundError: No module named 'trimesh'"
+      },
+      "cv2": {
+        "available": true,
+        "error": ""
+      },
+      "numpy": {
+        "available": true,
+        "error": ""
+      },
+      "PIL": {
+        "available": true,
+        "error": ""
+      }
+    },
+    "available": true,
+    "error": ""
+  },
+  "claiming_rule": "No local neural 3D runner is considered available unless ns-train, instant-ngp, or an equivalent upstream command is found. The depth point-cloud smoke only verifies geometry handoff."
+}

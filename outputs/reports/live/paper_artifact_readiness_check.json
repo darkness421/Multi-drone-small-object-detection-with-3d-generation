@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-26 13:25:15 KST",
+  "updated_at_kst": "2026-06-26 13:45:33 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
-  "artifact_count": 47,
+  "artifact_count": 50,
   "missing_required_count": 0,
   "stale_claim_count": 0,
   "artifacts": [
@@ -81,7 +81,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 6769,
+      "size_bytes": 7431,
       "status": "ok",
       "note": "MarineCity protocol section patch"
     },
@@ -327,11 +327,41 @@
     },
     {
       "group": "pending_3d",
+      "path": "outputs/reports/live/marinecity_3d_runner_preflight.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 1591,
+      "status": "ok",
+      "note": "MarineCity local neural-3D runner dependency preflight"
+    },
+    {
+      "group": "pending_3d",
+      "path": "outputs/reports/live/marinecity_depth_pointcloud_smoke.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 1809,
+      "status": "ok",
+      "note": "MarineCity depth-fused 3D geometry smoke artifact"
+    },
+    {
+      "group": "pending_3d",
+      "path": "paper/figures/results/marinecity_system/marinecity_depth_pointcloud_smoke_topdown.png",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 92770,
+      "status": "ok",
+      "note": "Depth point-cloud smoke preview figure"
+    },
+    {
+      "group": "pending_3d",
       "path": "outputs/reports/live/marinecity_3d_completion_readiness.md",
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1456,
+      "size_bytes": 1956,
       "status": "ok",
       "note": "MarineCity neural 3D completion readiness gate"
     },
@@ -527,6 +557,9 @@
     "status": "marinecity_3d_input_dataset_ready_metrics_pending",
     "source_capture_ready": true,
     "neural3d_dataset_ready": true,
+    "depth_pointcloud_smoke_ready": true,
+    "depth_pointcloud_point_count": 7584,
+    "neural_runner_available": false,
     "metric_result_row_count": 0,
     "methods_ready": [],
     "missing_expected_methods": [
@@ -535,7 +568,7 @@
       "mip_nerf_360",
       "gaussian_splatting"
     ],
-    "claiming_rule": "The real-Cesium RGB/depth/pose capture source and neural-3D transforms package are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
+    "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
   },
   "main_tex_gate": {
     "main_tex_candidates": [],

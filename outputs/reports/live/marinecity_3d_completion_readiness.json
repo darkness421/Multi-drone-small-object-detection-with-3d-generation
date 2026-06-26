@@ -1,8 +1,16 @@
 {
-  "updated_at_kst": "2026-06-26 13:25:15 KST",
+  "updated_at_kst": "2026-06-26 13:45:32 KST",
   "status": "marinecity_3d_input_dataset_ready_metrics_pending",
   "source_capture_ready": true,
   "neural3d_dataset_ready": true,
+  "depth_pointcloud_smoke_ready": true,
+  "runner_preflight_status": "marinecity_3d_runner_preflight_ready",
+  "neural_runner_available": false,
+  "geometry_smoke_available": true,
+  "runner_preflight_report": "outputs/reports/live/marinecity_3d_runner_preflight.md",
+  "depth_pointcloud_smoke_manifest": "outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/manifest.json",
+  "depth_pointcloud_point_count": 7584,
+  "depth_pointcloud_preview": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/marinecity_depth_pointcloud_smoke_topdown.png",
   "neural3d_dataset_manifest": "outputs/experiments/3d_generation/marinecity_real_capture_neural3d/dataset_manifest.json",
   "neural3d_dataset_frame_count": 9,
   "neural3d_dataset_train_frame_count": 6,
@@ -33,5 +41,5 @@
     "mip_nerf_360",
     "gaussian_splatting"
   ],
-  "claiming_rule": "The real-Cesium RGB/depth/pose capture source and neural-3D transforms package are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
+  "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
 }

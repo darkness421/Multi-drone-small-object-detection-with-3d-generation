@@ -1,0 +1,122 @@
+{
+  "status": "marinecity_depth_pointcloud_smoke_ready",
+  "updated_at_kst": "2026-06-26 13:42:08 KST",
+  "dataset_manifest": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/dataset_manifest.json",
+  "dataset_status": "marinecity_neural3d_dataset_export_ready",
+  "out_dir": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke",
+  "ply": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/marinecity_depth_pointcloud_smoke.ply",
+  "preview": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/marinecity_depth_pointcloud_smoke_topdown.png",
+  "paper_preview": "/home/oem/projects/multi-uav-marine-city/paper/figures/results/marinecity_system/marinecity_depth_pointcloud_smoke_topdown.png",
+  "frame_count": 9,
+  "point_count": 7584,
+  "stride": 32,
+  "max_depth_m": 500.0,
+  "max_points_per_frame": 1200,
+  "bounds_xyz": [
+    [
+      -200.243896484375,
+      109.62438201904297
+    ],
+    [
+      -205.28025817871094,
+      107.87459564208984
+    ],
+    [
+      -174.09237670898438,
+      35.32783508300781
+    ]
+  ],
+  "frame_rows": [
+    {
+      "frame_id": "frame_001_uav_01",
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "uav_id": "uav_01",
+      "split": "train",
+      "sampled_points": 920,
+      "valid_points": 889,
+      "depth_median_m": 320.9843292236328,
+      "altitude_m": 140.0
+    },
+    {
+      "frame_id": "frame_002_uav_02",
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "uav_id": "uav_02",
+      "split": "train",
+      "sampled_points": 920,
+      "valid_points": 907,
+      "depth_median_m": 326.2165985107422,
+      "altitude_m": 150.0
+    },
+    {
+      "frame_id": "frame_003_uav_03",
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "uav_id": "uav_03",
+      "split": "test",
+      "sampled_points": 920,
+      "valid_points": 727,
+      "depth_median_m": 344.34576416015625,
+      "altitude_m": 160.0
+    },
+    {
+      "frame_id": "frame_001_uav_01",
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "uav_id": "uav_01",
+      "split": "train",
+      "sampled_points": 920,
+      "valid_points": 889,
+      "depth_median_m": 321.08558654785156,
+      "altitude_m": 140.0
+    },
+    {
+      "frame_id": "frame_002_uav_02",
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "uav_id": "uav_02",
+      "split": "train",
+      "sampled_points": 920,
+      "valid_points": 907,
+      "depth_median_m": 326.2919464111328,
+      "altitude_m": 150.0
+    },
+    {
+      "frame_id": "frame_003_uav_03",
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "uav_id": "uav_03",
+      "split": "test",
+      "sampled_points": 920,
+      "valid_points": 727,
+      "depth_median_m": 344.5174865722656,
+      "altitude_m": 160.0
+    },
+    {
+      "frame_id": "frame_001_uav_01",
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "uav_id": "uav_01",
+      "split": "train",
+      "sampled_points": 920,
+      "valid_points": 889,
+      "depth_median_m": 320.6683349609375,
+      "altitude_m": 140.0
+    },
+    {
+      "frame_id": "frame_002_uav_02",
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "uav_id": "uav_02",
+      "split": "train",
+      "sampled_points": 920,
+      "valid_points": 907,
+      "depth_median_m": 325.97491455078125,
+      "altitude_m": 150.0
+    },
+    {
+      "frame_id": "frame_003_uav_03",
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "uav_id": "uav_03",
+      "split": "test",
+      "sampled_points": 920,
+      "valid_points": 742,
+      "depth_median_m": 344.450927734375,
+      "altitude_m": 160.0
+    }
+  ],
+  "claiming_rule": "This is a depth-fused geometry smoke artifact from real-Cesium RGB/depth/pose captures. It is not a neural NeRF/3DGS reconstruction benchmark."
+}

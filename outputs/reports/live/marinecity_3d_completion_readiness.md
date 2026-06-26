@@ -1,6 +1,6 @@
 # MarineCity 3D Completion Readiness
 
-Updated: `2026-06-26 13:25:15 KST`
+Updated: `2026-06-26 13:45:32 KST`
 Status: `marinecity_3d_input_dataset_ready_metrics_pending`
 
 ## Capture Source
@@ -17,6 +17,13 @@ Status: `marinecity_3d_input_dataset_ready_metrics_pending`
 ## Neural 3D Results
 
 - Input dataset ready: `True`
+- Runner preflight: `marinecity_3d_runner_preflight_ready`
+- Neural runner available: `False`
+- Geometry smoke available: `True`
+- Runner preflight report: `outputs/reports/live/marinecity_3d_runner_preflight.md`
+- Depth point-cloud smoke ready: `True`
+- Depth point-cloud points: `7584`
+- Depth point-cloud preview: `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/marinecity_depth_pointcloud_smoke_topdown.png`
 - Input dataset manifest: `outputs/experiments/3d_generation/marinecity_real_capture_neural3d/dataset_manifest.json`
 - Dataset frames train/heldout: `9` / `6` / `3`
 - Transforms: `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/transforms.json`
@@ -27,6 +34,6 @@ Status: `marinecity_3d_input_dataset_ready_metrics_pending`
 - Methods ready: `[]`
 - Missing expected methods: `['nerf', 'instant_ngp', 'mip_nerf_360', 'gaussian_splatting']`
 
-Claiming rule: The real-Cesium RGB/depth/pose capture source and neural-3D transforms package are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected.
+Claiming rule: The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected.
 
 Next action: run the 3D generation/completion runner on the verified MarineCity captures and collect PSNR/SSIM/LPIPS/FPS/runtime rows before upgrading this from pending to a paper benchmark claim.

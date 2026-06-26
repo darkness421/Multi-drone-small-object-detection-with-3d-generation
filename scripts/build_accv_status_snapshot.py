@@ -43,6 +43,8 @@ MARINECITY_CLEAN_RECAPTURE_PLAN = LIVE_DIR / "marinecity_clean_recapture_plan.js
 MARINECITY_SYSTEM_INTEGRATION_CHECK = LIVE_DIR / "marinecity_system_integration_check.json"
 MARINECITY_3D_COMPLETION_READINESS = LIVE_DIR / "marinecity_3d_completion_readiness.json"
 MARINECITY_NEURAL3D_DATASET_EXPORT = LIVE_DIR / "marinecity_neural3d_dataset_export.json"
+MARINECITY_DEPTH_POINTCLOUD_SMOKE = LIVE_DIR / "marinecity_depth_pointcloud_smoke.json"
+MARINECITY_3D_RUNNER_PREFLIGHT = LIVE_DIR / "marinecity_3d_runner_preflight.json"
 AEROGRAPH_COLLECTION_PLAN = REPO_ROOT / "docs/aerograph_nonmock_collection_plan.md"
 AEROGRAPH_PLACEHOLDER_TABLE = REPO_ROOT / "paper/tables/aerograph_reasoner_results_placeholder.tex"
 MARINECITY_SESSION_OVERLAY_STATUS = Path("/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json")
@@ -287,6 +289,8 @@ def build_snapshot() -> dict[str, Any]:
     marinecity_integration = read_json(MARINECITY_SYSTEM_INTEGRATION_CHECK)
     marinecity_3d = read_json(MARINECITY_3D_COMPLETION_READINESS)
     marinecity_neural3d_dataset = read_json(MARINECITY_NEURAL3D_DATASET_EXPORT)
+    marinecity_pointcloud = read_json(MARINECITY_DEPTH_POINTCLOUD_SMOKE)
+    marinecity_runner_preflight = read_json(MARINECITY_3D_RUNNER_PREFLIGHT)
     session_overlay = read_json(MARINECITY_SESSION_OVERLAY_STATUS)
     prim_status = session_overlay.get("prim_status", {}) or {}
     georef = session_overlay.get("georeference_readback", {}) or {}
@@ -341,6 +345,13 @@ def build_snapshot() -> dict[str, Any]:
                 "train": marinecity_neural3d_dataset.get("train_frame_count"),
                 "heldout": marinecity_neural3d_dataset.get("heldout_frame_count"),
             },
+            "depth_pointcloud_smoke_status": marinecity_pointcloud.get("status"),
+            "depth_pointcloud_smoke_report": str(MARINECITY_DEPTH_POINTCLOUD_SMOKE.with_suffix(".md").relative_to(REPO_ROOT)),
+            "depth_pointcloud_point_count": marinecity_pointcloud.get("point_count"),
+            "depth_pointcloud_preview": marinecity_pointcloud.get("preview"),
+            "neural_3d_runner_preflight_status": marinecity_runner_preflight.get("status"),
+            "neural_3d_runner_available": marinecity_runner_preflight.get("neural_runner_available"),
+            "neural_3d_runner_preflight_report": str(MARINECITY_3D_RUNNER_PREFLIGHT.with_suffix(".md").relative_to(REPO_ROOT)),
             "neural_3d_metric_result_rows": marinecity_3d.get("metric_result_row_count"),
             "neural_3d_readiness_report": str(MARINECITY_3D_COMPLETION_READINESS.with_suffix(".md").relative_to(REPO_ROOT)),
             "neural_3d_claiming_rule": marinecity_3d.get("claiming_rule"),
@@ -517,6 +528,8 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- Integration check: `{system.get('integration_check_status')}`; actor classes `{system.get('integration_actor_classes')}`; detector classes `{system.get('integration_detector_classes')}`; report `{system.get('integration_check')}`",
         f"- Neural 3D completion gate: `{system.get('neural_3d_completion_status')}`; metric rows `{system.get('neural_3d_metric_result_rows')}`; report `{system.get('neural_3d_readiness_report')}`",
         f"- Neural 3D input dataset: `{system.get('neural_3d_input_dataset_status')}`; frames `{system.get('neural_3d_input_dataset_frames')}`; split `{system.get('neural_3d_input_dataset_split')}`; report `{system.get('neural_3d_input_dataset_report')}`",
+        f"- Depth point-cloud smoke: `{system.get('depth_pointcloud_smoke_status')}`; points `{system.get('depth_pointcloud_point_count')}`; preview `{system.get('depth_pointcloud_preview')}`; report `{system.get('depth_pointcloud_smoke_report')}`",
+        f"- Neural 3D runner preflight: `{system.get('neural_3d_runner_preflight_status')}`; runner available `{system.get('neural_3d_runner_available')}`; report `{system.get('neural_3d_runner_preflight_report')}`",
         f"- Live overlay: `{system.get('live_overlay_status')}`; camera set `{system.get('camera_set')}`; profile `{system.get('camera_profile')}`",
         f"- Real Cesium: Google tiles `{system.get('google_photorealistic_tiles_valid')}`, terrain `{system.get('cesium_world_terrain_valid')}`, fake city `{system.get('substitute_city_geometry_created')}`",
         f"- UAV altitude policy: `{system.get('uav_altitude_policy')}`",

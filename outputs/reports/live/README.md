@@ -63,6 +63,13 @@ Current live bundle:
   `transforms.json` export generated from the verified 3-scenario x 3-UAV
   MarineCity real-Cesium captures. Use this as the upstream 3D runner input,
   not as a completed reconstruction result.
+- `marinecity_depth_pointcloud_smoke.md`: depth-fused colored point-cloud smoke
+  generated from the same RGB/depth/pose captures. Use it to visually sanity
+  check 3D handoff geometry; it is not a neural reconstruction benchmark.
+- `marinecity_3d_runner_preflight.md`: local dependency preflight for
+  Nerfstudio/COLMAP/Instant-NGP/3DGS-style runners. The current state records
+  that the dataset and geometry smoke are ready, while neural runner execution
+  still needs upstream dependencies or containers.
 - `marinecity_crossview_evidence_graph.png`: supplementary visualization of the
   current cross-view evidence graph smoke result.
 - `/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json`: latest live Isaac session-layer overlay status. It confirms `uavmarine.usd` is the real Cesium root layer and the UAV/object layer is non-destructive.

@@ -15,6 +15,8 @@ BENCHMARK = REPO_ROOT / "outputs/experiments/marinecity_real_capture_benchmark.j
 COMPARISON = REPO_ROOT / "outputs/experiments/3d_generation_comparison.csv"
 RESULT_DIR = REPO_ROOT / "outputs/experiments/3d_generation"
 DATASET_EXPORT = RESULT_DIR / "marinecity_real_capture_neural3d/dataset_manifest.json"
+POINTCLOUD_SMOKE = RESULT_DIR / "marinecity_depth_pointcloud_smoke/manifest.json"
+RUNNER_PREFLIGHT = LIVE_DIR / "marinecity_3d_runner_preflight.json"
 EXPECTED_METHODS = ["nerf", "instant_ngp", "mip_nerf_360", "gaussian_splatting"]
 
 
@@ -54,6 +56,8 @@ def result_jsons() -> list[Path]:
 def build_report() -> dict[str, Any]:
     benchmark = read_json(BENCHMARK)
     dataset_export = read_json(DATASET_EXPORT)
+    pointcloud_smoke = read_json(POINTCLOUD_SMOKE)
+    runner_preflight = read_json(RUNNER_PREFLIGHT)
     summary = benchmark.get("summary", {}) or {}
     rows = read_csv(COMPARISON)
     metric_rows = [
@@ -67,6 +71,7 @@ def build_report() -> dict[str, Any]:
     missing_methods = [method for method in EXPECTED_METHODS if method not in methods_ready]
     source_ready = bool(summary.get("terrain_all_valid")) and bool(summary.get("google_tiles_all_valid")) and int(summary.get("frame_count", 0) or 0) >= 9
     dataset_ready = dataset_export.get("status") == "marinecity_neural3d_dataset_export_ready"
+    pointcloud_ready = pointcloud_smoke.get("status") == "marinecity_depth_pointcloud_smoke_ready"
     if source_ready and len(metric_rows) >= 2:
         status = "marinecity_3d_completion_ready"
     elif source_ready and dataset_ready:
@@ -78,6 +83,14 @@ def build_report() -> dict[str, Any]:
         "status": status,
         "source_capture_ready": source_ready,
         "neural3d_dataset_ready": dataset_ready,
+        "depth_pointcloud_smoke_ready": pointcloud_ready,
+        "runner_preflight_status": runner_preflight.get("status", "missing"),
+        "neural_runner_available": runner_preflight.get("neural_runner_available"),
+        "geometry_smoke_available": runner_preflight.get("geometry_smoke_available"),
+        "runner_preflight_report": str(RUNNER_PREFLIGHT.with_suffix(".md").relative_to(REPO_ROOT)),
+        "depth_pointcloud_smoke_manifest": str(POINTCLOUD_SMOKE.relative_to(REPO_ROOT)),
+        "depth_pointcloud_point_count": pointcloud_smoke.get("point_count"),
+        "depth_pointcloud_preview": pointcloud_smoke.get("preview"),
         "neural3d_dataset_manifest": str(DATASET_EXPORT.relative_to(REPO_ROOT)),
         "neural3d_dataset_frame_count": dataset_export.get("frame_count"),
         "neural3d_dataset_train_frame_count": dataset_export.get("train_frame_count"),
@@ -101,7 +114,7 @@ def build_report() -> dict[str, Any]:
         "methods_ready": methods_ready,
         "missing_expected_methods": missing_methods,
         "claiming_rule": (
-            "The real-Cesium RGB/depth/pose capture source and neural-3D transforms package are ready for the 3D handoff. "
+            "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. "
             "Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
         ),
     }
@@ -125,6 +138,13 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
         "## Neural 3D Results",
         "",
         f"- Input dataset ready: `{report['neural3d_dataset_ready']}`",
+        f"- Runner preflight: `{report['runner_preflight_status']}`",
+        f"- Neural runner available: `{report['neural_runner_available']}`",
+        f"- Geometry smoke available: `{report['geometry_smoke_available']}`",
+        f"- Runner preflight report: `{report['runner_preflight_report']}`",
+        f"- Depth point-cloud smoke ready: `{report['depth_pointcloud_smoke_ready']}`",
+        f"- Depth point-cloud points: `{report['depth_pointcloud_point_count']}`",
+        f"- Depth point-cloud preview: `{report['depth_pointcloud_preview']}`",
         f"- Input dataset manifest: `{report['neural3d_dataset_manifest']}`",
         f"- Dataset frames train/heldout: `{report['neural3d_dataset_frame_count']}` / `{report['neural3d_dataset_train_frame_count']}` / `{report['neural3d_dataset_heldout_frame_count']}`",
         f"- Transforms: `{report['neural3d_dataset_transforms']}`",
