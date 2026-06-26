@@ -1,6 +1,6 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-26 09:06:54 KST`
+Updated: `2026-06-26 09:41:03 KST`
 
 ## Detector Status
 
@@ -37,6 +37,7 @@ Updated: `2026-06-26 09:06:54 KST`
 - Artifact status: `marinecity_system_test_artifacts_complete`
 - Real-capture detector/reasoner smoke: `marinecity_detector_reasoner_smoke_artifacts_ready`; tokens `23`; report `outputs/reports/live/marinecity_detector_reasoner_smoke.md`
 - Detector preview sheet: `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png`
+- Cross-view evidence graph: `marinecity_crossview_evidence_graph_smoke_ready`; hypotheses `13`; multi-view `5`; edges support/conflict/missing `23`/`4`/`20`; claim `real_cesium_crossview_association_smoke_not_final_3d_reconstruction`
 - Live overlay: `session_overlay_added`; camera set `True`; profile `viewer160_marinecity_roi`
 - Real Cesium: Google tiles `True`, terrain `True`, fake city `False`
 - UAV altitude policy: `{'band_m': [140, 160], 'default_m': 160, 'user_locked_review_height_m': 160, 'verified_viewer160_recapture_m': {'uav_01': 140, 'uav_02': 150, 'uav_03': 160}, 'note': 'Use 140-160 m for UAV/camera observation; keep CesiumGeoreference readback logged separately.'}`
@@ -86,4 +87,6 @@ Updated: `2026-06-26 09:06:54 KST`
 - LaTeX patch check: `outputs/reports/live/latex_patch_integrity_check.json`; status `latex_patch_integrity_ok`
 - Detector table: `paper/tables/main_detector_comparison_table.tex`
 - MarineCity system table: `paper/tables/marinecity_system_scenario_table.tex`
+- MarineCity cross-view graph table: `paper/tables/marinecity_crossview_evidence_graph_table.tex`
+- MarineCity cross-view graph figure: `paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png`
 - AeroGraph placeholder table: `paper/tables/aerograph_reasoner_results_placeholder.tex`

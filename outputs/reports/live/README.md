@@ -46,6 +46,13 @@ Current live bundle:
   verified 3-scenario x 3-UAV captures. It records 23 EvidenceTokens and the
   deterministic AeroGraph mock plumbing result; use this as system validation,
   not as a labeled MarineCity accuracy benchmark.
+- `marinecity_crossview_evidence_graph.md`: real-Cesium cross-view
+  EvidenceToken association smoke report. It groups 23 detector tokens into 13
+  object hypotheses with support, conflict, and missing-evidence edges. Use it
+  as 2D-to-3D evidence-graph protocol validation, not as metric 3D
+  reconstruction evidence.
+- `marinecity_crossview_evidence_graph.png`: supplementary visualization of the
+  current cross-view evidence graph smoke result.
 - `/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json`: latest live Isaac session-layer overlay status. It confirms `uavmarine.usd` is the real Cesium root layer and the UAV/object layer is non-destructive.
 - `../../experiments/marinecity_viewer160_pipeline_status.md`: current viewer160 recapture/detector/reasoner queue status.
 - `../../docs/uavmarine_multiuav_scenarios.md`: live Isaac scenario operation guide.
@@ -123,6 +130,8 @@ MarineCity system-test quick links:
 - `marinecity_system_test_10plus/paper_system_scenario_table.tex`: LaTeX table for the current system smoke-test result.
 - `marinecity_system_test_10plus/reasoner_answers_token_tests.md`: image-by-image reasoner answers and artifact paths.
 - `../../paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png`: current paper-facing detector-preview sheet from the real-Cesium 3-scenario smoke run.
+- `../../paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png`: paper-facing cross-view evidence graph smoke figure.
+- `../../paper/tables/marinecity_crossview_evidence_graph_table.tex`: LaTeX table for the current cross-view evidence graph smoke result.
 - `marinecity_real_capture_benchmark_contact_sheet.png`: 3 scenarios x 3 UAV
   real-Cesium RGB capture grid with altitude and depth/void QA metrics.
 - `marinecity_capture_quality/marinecity_capture_quality_top8.png`: ranked

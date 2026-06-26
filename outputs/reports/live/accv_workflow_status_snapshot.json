@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 09:06:54 KST",
+  "updated_at_kst": "2026-06-26 09:41:03 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -251,6 +251,17 @@
     ],
     "detector_reasoner_smoke_report": "outputs/reports/live/marinecity_detector_reasoner_smoke.md",
     "detector_reasoner_smoke_contact_sheet": "paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png",
+    "crossview_graph_status": "marinecity_crossview_evidence_graph_smoke_ready",
+    "crossview_graph_claim_level": "real_cesium_crossview_association_smoke_not_final_3d_reconstruction",
+    "crossview_graph_token_count": 23,
+    "crossview_graph_hypothesis_count": 13,
+    "crossview_graph_multi_view_hypothesis_count": 5,
+    "crossview_graph_support_edge_count": 23,
+    "crossview_graph_conflict_edge_count": 4,
+    "crossview_graph_missing_evidence_edge_count": 20,
+    "crossview_graph_report": "outputs/reports/live/marinecity_crossview_evidence_graph.md",
+    "crossview_graph_table": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
+    "crossview_graph_figure": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
     "dashboard": "outputs/reports/live/marinecity_simulation_dashboard.png",
     "live_overlay_status": "session_overlay_added",
     "camera_set": true,
@@ -404,6 +415,8 @@
     "latex_patch_check_status": "latex_patch_integrity_ok",
     "detector_table": "paper/tables/main_detector_comparison_table.tex",
     "marinecity_system_table": "paper/tables/marinecity_system_scenario_table.tex",
+    "marinecity_crossview_graph_table": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
+    "marinecity_crossview_graph_figure": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
     "aerograph_placeholder_table": "paper/tables/aerograph_reasoner_results_placeholder.tex",
     "aerograph_placeholder_exists": true
   }

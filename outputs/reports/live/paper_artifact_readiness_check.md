@@ -1,11 +1,11 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-06-26 09:06:24 KST`
+Updated: `2026-06-26 09:41:03 KST`
 Status: `paper_artifact_audit_ok_with_pending_gates`
 
 ## Summary
 
-- Artifacts checked: `39`
+- Artifacts checked: `42`
 - Missing required artifacts: `0`
 - Stale/unsafe claim matches: `0`
 - AeroGraph effective valid response coverage: `49/49`
@@ -54,6 +54,7 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 | main_system | paper/tables/marinecity_system_scenario_table.tex | main | True | ok | Real-Cesium smoke/protocol table |
 | main_system | paper/tables/marinecity_system_token_results.csv | main_source | True | ok | Source CSV for real-Cesium detector-to-reasoner smoke table |
 | main_system | paper/tables/marinecity_real_capture_benchmark_table.tex | main | True | ok | Verified real-Cesium capture-source table |
+| main_system | paper/tables/marinecity_crossview_evidence_graph_table.tex | main | True | ok | Real-Cesium cross-view evidence graph smoke table |
 | main_system | paper/sections/07_marinecity_qualitative_figure_slots.tex | main_optional | True | ok | Safe qualitative figure slots |
 | bundle | paper/sections/main_results_patch_bundle.tex | main_bundle | True | ok | Overleaf-ready main results patch bundle |
 | bundle | paper/sections/supplementary_patch_bundle.tex | supp_bundle | True | ok | Overleaf-ready supplementary patch bundle |
@@ -66,10 +67,12 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 | supp_system | paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png | supp_or_main_smoke | True | ok | Three-scenario real-Cesium smoke sheet |
 | supp_system | paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png | main_or_supp_smoke | True | ok | Real-Cesium detector preview contact sheet from SAFR-YOLO smoke run |
 | supp_system | paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png | supp | True | ok | Real-Cesium 3-scenario x 3-UAV capture contact sheet |
+| supp_system | paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png | supp | True | ok | Real-Cesium cross-view evidence graph smoke figure |
 | supp_system | paper/figures/results/marinecity_system/marinecity_qualitative_selection_manifest.md | supp | True | ok | MarineCity qualitative selection rules |
 | supp_system | paper/figures/results/marinecity_system/marinecity_qualitative_gate.md | supp | True | ok | MarineCity full-frame vs crop-only qualitative gate |
 | supp_system | outputs/reports/live/marinecity_real_capture_benchmark.md | runbook | True | ok | Real-Cesium capture benchmark manifest summary |
 | supp_system | outputs/reports/live/marinecity_detector_reasoner_smoke.md | runbook | True | ok | Real-Cesium detector-to-reasoner smoke report |
+| supp_system | outputs/reports/live/marinecity_crossview_evidence_graph.md | runbook | True | ok | Real-Cesium cross-view evidence graph smoke report |
 | pending_reasoner | paper/tables/aerograph_reasoner_results_placeholder.tex | pending | True | ok | AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete |
 | pending_reasoner | docs/aerograph_nonmock_collection_plan.md | runbook | True | ok | Non-mock reasoner collection gate |
 | pending_reasoner | outputs/reports/live/aerograph_prompt_pack_integrity.md | audit | True | ok | AeroGraph prompt/template/batch consistency check |

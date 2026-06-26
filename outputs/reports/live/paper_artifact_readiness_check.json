@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-26 09:06:24 KST",
+  "updated_at_kst": "2026-06-26 09:41:03 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
-  "artifact_count": 39,
+  "artifact_count": 42,
   "missing_required_count": 0,
   "stale_claim_count": 0,
   "artifacts": [
@@ -81,7 +81,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 5235,
+      "size_bytes": 6263,
       "status": "ok",
       "note": "MarineCity protocol section patch"
     },
@@ -117,11 +117,21 @@
     },
     {
       "group": "main_system",
+      "path": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
+      "placement": "main",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 909,
+      "status": "ok",
+      "note": "Real-Cesium cross-view evidence graph smoke table"
+    },
+    {
+      "group": "main_system",
       "path": "paper/sections/07_marinecity_qualitative_figure_slots.tex",
       "placement": "main_optional",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2439,
+      "size_bytes": 2986,
       "status": "ok",
       "note": "Safe qualitative figure slots"
     },
@@ -237,6 +247,16 @@
     },
     {
       "group": "supp_system",
+      "path": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 123905,
+      "status": "ok",
+      "note": "Real-Cesium cross-view evidence graph smoke figure"
+    },
+    {
+      "group": "supp_system",
       "path": "paper/figures/results/marinecity_system/marinecity_qualitative_selection_manifest.md",
       "placement": "supp",
       "required_now": true,
@@ -274,6 +294,16 @@
       "size_bytes": 905,
       "status": "ok",
       "note": "Real-Cesium detector-to-reasoner smoke report"
+    },
+    {
+      "group": "supp_system",
+      "path": "outputs/reports/live/marinecity_crossview_evidence_graph.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 1860,
+      "status": "ok",
+      "note": "Real-Cesium cross-view evidence graph smoke report"
     },
     {
       "group": "pending_reasoner",
@@ -371,7 +401,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 8350,
+      "size_bytes": 9014,
       "status": "ok",
       "note": "Human-readable artifact manifest"
     },

@@ -19,6 +19,7 @@ main-paper-ready items from supplementary items and explicit pending slots.
 | MarineCity system smoke table | `paper/tables/marinecity_system_scenario_table.tex` | Ready with wording limit | Real-Cesium system/protocol smoke-test table |
 | MarineCity smoke source CSV | `paper/tables/marinecity_system_token_results.csv` | Ready with wording limit | Source rows for detector-to-reasoner smoke-test table |
 | MarineCity real-capture benchmark table | `paper/tables/marinecity_real_capture_benchmark_table.tex` | Ready with wording limit | 3-scenario, 9-frame real-Cesium RGB/depth/pose capture source for the 3D/reasoner handoff |
+| MarineCity cross-view evidence graph table | `paper/tables/marinecity_crossview_evidence_graph_table.tex` | Ready with wording limit | 23 real-Cesium EvidenceTokens grouped into 13 smoke-test hypotheses |
 | MarineCity detector-preview sheet | `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png` | Smoke-test ready | Real-Cesium detector preview sheet; use only with system-smoke wording |
 | MarineCity qualitative figure slots | `paper/sections/07_marinecity_qualitative_figure_slots.tex` | Ready with wording limit | Optional real-Cesium smoke/protocol figure slots |
 | Main result patch bundle | `paper/sections/main_results_patch_bundle.tex` | Ready | Overleaf `\input` bundle for detector + MarineCity protocol sections |
@@ -40,6 +41,9 @@ main-paper-ready items from supplementary items and explicit pending slots.
 | MarineCity scenario contact sheet | `paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png` | Smoke-test ready | Main only if clearly labeled; otherwise supplementary |
 | MarineCity real-capture benchmark sheet | `paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png` | Capture-source ready | Supplementary capture evidence for the 3-scenario x 3-UAV RGB/depth/pose source |
 | MarineCity detector-to-reasoner report | `outputs/reports/live/marinecity_detector_reasoner_smoke.md` | Smoke-test ready | Live report for the 23-token SAFR-YOLO to AeroGraph mock plumbing run |
+| MarineCity cross-view evidence graph figure | `paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png` | Smoke-test ready | Supplementary graph view of support/conflict/missing-evidence links; not metric 3D reconstruction |
+| MarineCity cross-view evidence graph report | `outputs/reports/live/marinecity_crossview_evidence_graph.md` | Smoke-test ready | Live report and source summary for the current cross-view evidence graph |
+| AeroGraph real-capture compact prompt pack | `outputs/reports/live/aerograph_real_capture_prompt_pack/manifest.json` | Provider-ready smoke gate | 23 prompts matching the latest real-Cesium detector smoke; use before the full 49-prompt final gate |
 | MarineCity token contact sheet | `paper/figures/results/marinecity_system/contact_sheet_token_tests.png` | Smoke-test ready | Supplementary token-level qualitative cases |
 | MarineCity capture QA sheet | `paper/figures/results/marinecity_system/marinecity_capture_quality_top8.png` | Review/selection aid | Use to choose final recapture |
 | MarineCity crop candidates | `paper/figures/results/marinecity_system/marinecity_real_capture_crop_top12.png` | Review/selection aid | Crop-only framing guidance, not final replacement |
@@ -54,6 +58,7 @@ main-paper-ready items from supplementary items and explicit pending slots.
 | AeroGraph external-provider replication | `paper/tables/aerograph_reasoner_results_placeholder.tex` | Candidate table ready; external GPT/Factory/local run pending | Re-run all 49 prompts with selected final provider and rebuild table |
 | AeroGraph direct manual/API response file | `outputs/reports/live/aerograph_nonmock_readiness_status.md` | Provider-manifest coverage 49/49; direct manual response file 0/49 | Fill `outputs/reasoning/aerograph_manual_responses.jsonl` or configure provider if replacing the candidate manifest |
 | AeroGraph non-mock collection plan | `docs/aerograph_nonmock_collection_plan.md` | Ready | Use as the acceptance gate before promoting the reasoner table |
+| AeroGraph real-capture compact non-mock smoke | `outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/` | Prompt batches ready; provider responses pending | Collect 23 valid-schema provider responses to sanity-check the current real-Cesium smoke setting |
 | Final 3D completion/restoration result | TBD | Not complete | Run validated NeRF/3DGS/restoration or keep as future/pilot protocol |
 | Final MarineCity main qualitative image | `uavmarine_s2_viewer160_session_recapture/frame_002_uav_02_rgb.png` | Qualitative gate says full-frame main ready is true; crop supplementary ready is true | Keep as candidate and re-check during final paper layout review |
 

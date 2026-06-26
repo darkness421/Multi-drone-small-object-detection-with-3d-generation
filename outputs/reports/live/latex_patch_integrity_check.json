@@ -1,11 +1,11 @@
 {
-  "updated_at_kst": "2026-06-26 09:05:48 KST",
+  "updated_at_kst": "2026-06-26 09:41:03 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
       "bundle": "paper/sections/main_results_patch_bundle.tex",
       "exists": true,
-      "included_file_count": 10,
+      "included_file_count": 11,
       "included_files": [
         "paper/sections/05_experiments_current_detector_status.tex",
         "paper/sections/06_marinecity_3d_readiness.tex",
@@ -14,6 +14,7 @@
         "paper/tables/aerograph_reasoner_results_placeholder.tex",
         "paper/tables/final_ablation_main_table.tex",
         "paper/tables/main_detector_comparison_table.tex",
+        "paper/tables/marinecity_crossview_evidence_graph_table.tex",
         "paper/tables/marinecity_real_capture_benchmark_table.tex",
         "paper/tables/marinecity_system_scenario_table.tex",
         "paper/tables/related_work_detector_status_table.tex"
@@ -36,7 +37,7 @@
       "commented_optional_inputs": []
     }
   ],
-  "checked_file_count": 14,
+  "checked_file_count": 15,
   "missing_input_count": 0,
   "missing_graphics_count": 0,
   "duplicate_label_count": 0,
@@ -61,19 +62,19 @@
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "56",
+      "line": "77",
       "status": "allowed",
       "text": "artifacts, and Table~\\ref{tab:aerograph_reasoner_pending} reports the current"
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "66",
+      "line": "87",
       "status": "allowed",
       "text": "remains pending before promoting this to a final reasoning benchmark claim.}"
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "67",
+      "line": "88",
       "status": "allowed",
       "text": "\\label{tab:aerograph_reasoner_pending}"
     },

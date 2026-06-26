@@ -19,7 +19,11 @@ UAVDET_LOG = REPO_ROOT / "outputs/logs/required_related_work_models/uavdet_inspi
 TINYPERSON_LOG = REPO_ROOT / "outputs/logs/tinyperson_640/queue.log"
 SYSTEM_MANIFEST = LIVE_DIR / "marinecity_system_test_10plus/manifest.json"
 MARINECITY_DETECTOR_REASONER_SMOKE = LIVE_DIR / "marinecity_detector_reasoner_smoke.json"
+MARINECITY_CROSSVIEW_GRAPH_SUMMARY = REPO_ROOT / "outputs/graphs/marinecity_crossview_evidence_graph/summary.json"
 PROMPT_MANIFEST = LIVE_DIR / "aerograph_prompt_pack/manifest.json"
+REAL_CAPTURE_PROMPT_MANIFEST = LIVE_DIR / "aerograph_real_capture_prompt_pack/manifest.json"
+REAL_CAPTURE_PROMPT_WEB_BATCH_MANIFEST = LIVE_DIR / "aerograph_real_capture_prompt_pack/web_batches/manifest.json"
+REAL_CAPTURE_PROMPT_DRYRUN = REPO_ROOT / "outputs/reasoning/aerograph_real_capture_eval_dryrun/manifest.json"
 AEROGRAPH_WEB_BATCH_MANIFEST = LIVE_DIR / "aerograph_prompt_pack/web_batches/manifest.json"
 AEROGRAPH_DRY_RUN = REPO_ROOT / "outputs/reasoning/aerograph_prompt_pack_eval_dryrun_latest/manifest.json"
 AEROGRAPH_TABLE_MANIFEST = LIVE_DIR / "aerograph_reasoner_table_manifest.json"
@@ -254,9 +258,13 @@ def build_snapshot() -> dict[str, Any]:
     uavdet_table = next((row for row in detectors if row["method"].startswith("UAVDet")), {})
     uavdet = latest_uavdet()
     prompt_manifest = read_json(PROMPT_MANIFEST)
+    real_capture_prompt_manifest = read_json(REAL_CAPTURE_PROMPT_MANIFEST)
+    real_capture_web_batch_manifest = read_json(REAL_CAPTURE_PROMPT_WEB_BATCH_MANIFEST)
+    real_capture_dryrun = read_json(REAL_CAPTURE_PROMPT_DRYRUN)
     web_batch_manifest = read_json(AEROGRAPH_WEB_BATCH_MANIFEST)
     system_manifest = read_json(SYSTEM_MANIFEST)
     detector_reasoner_smoke = read_json(MARINECITY_DETECTOR_REASONER_SMOKE)
+    crossview_graph = read_json(MARINECITY_CROSSVIEW_GRAPH_SUMMARY)
     dry_run = read_json(AEROGRAPH_DRY_RUN)
     aerograph_table = read_json(AEROGRAPH_TABLE_MANIFEST)
     aerograph_nonmock = read_json(AEROGRAPH_NONMOCK_READINESS)
@@ -299,6 +307,17 @@ def build_snapshot() -> dict[str, Any]:
             "detector_reasoner_smoke_rows": detector_reasoner_smoke.get("rows", []),
             "detector_reasoner_smoke_report": str(MARINECITY_DETECTOR_REASONER_SMOKE.with_suffix(".md").relative_to(REPO_ROOT)),
             "detector_reasoner_smoke_contact_sheet": detector_reasoner_smoke.get("paper_contact_sheet"),
+            "crossview_graph_status": crossview_graph.get("status"),
+            "crossview_graph_claim_level": crossview_graph.get("claim_level"),
+            "crossview_graph_token_count": crossview_graph.get("token_count"),
+            "crossview_graph_hypothesis_count": crossview_graph.get("hypothesis_count"),
+            "crossview_graph_multi_view_hypothesis_count": crossview_graph.get("multi_view_hypothesis_count"),
+            "crossview_graph_support_edge_count": crossview_graph.get("support_edge_count"),
+            "crossview_graph_conflict_edge_count": crossview_graph.get("conflict_edge_count"),
+            "crossview_graph_missing_evidence_edge_count": crossview_graph.get("missing_evidence_edge_count"),
+            "crossview_graph_report": "outputs/reports/live/marinecity_crossview_evidence_graph.md",
+            "crossview_graph_table": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
+            "crossview_graph_figure": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
             "dashboard": str(SIM_DASHBOARD.relative_to(REPO_ROOT)),
             "live_overlay_status": session_overlay.get("status"),
             "camera_set": session_overlay.get("camera_set"),
@@ -335,6 +354,13 @@ def build_snapshot() -> dict[str, Any]:
             "total_prompts": prompt_manifest.get("total_prompts"),
             "sample_prompts": prompt_manifest.get("sample_prompts"),
             "class_counts": prompt_manifest.get("class_counts"),
+            "real_capture_prompt_pack_status": real_capture_prompt_manifest.get("status"),
+            "real_capture_prompt_count": real_capture_prompt_manifest.get("total_prompts"),
+            "real_capture_prompt_class_counts": real_capture_prompt_manifest.get("class_counts"),
+            "real_capture_web_batch_status": real_capture_web_batch_manifest.get("status"),
+            "real_capture_web_batch_count": real_capture_web_batch_manifest.get("batch_count"),
+            "real_capture_dryrun_status": real_capture_dryrun.get("status"),
+            "real_capture_dryrun_paper_claim_allowed": real_capture_dryrun.get("paper_claim_allowed"),
             "web_batch_status": web_batch_manifest.get("status"),
             "web_batch_count": web_batch_manifest.get("batch_count"),
             "web_batch_dir": web_batch_manifest.get("out_dir"),
@@ -384,6 +410,8 @@ def build_snapshot() -> dict[str, Any]:
             "latex_patch_check_status": latex_check.get("status", "missing"),
             "detector_table": "paper/tables/main_detector_comparison_table.tex",
             "marinecity_system_table": "paper/tables/marinecity_system_scenario_table.tex",
+            "marinecity_crossview_graph_table": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
+            "marinecity_crossview_graph_figure": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
             "aerograph_placeholder_table": str(AEROGRAPH_PLACEHOLDER_TABLE.relative_to(REPO_ROOT)),
             "aerograph_placeholder_exists": AEROGRAPH_PLACEHOLDER_TABLE.exists(),
         },
@@ -452,6 +480,7 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- Artifact status: `{system.get('artifact_status')}`",
         f"- Real-capture detector/reasoner smoke: `{system.get('detector_reasoner_smoke_status')}`; tokens `{system.get('detector_reasoner_smoke_tokens')}`; report `{system.get('detector_reasoner_smoke_report')}`",
         f"- Detector preview sheet: `{system.get('detector_reasoner_smoke_contact_sheet')}`",
+        f"- Cross-view evidence graph: `{system.get('crossview_graph_status')}`; hypotheses `{system.get('crossview_graph_hypothesis_count')}`; multi-view `{system.get('crossview_graph_multi_view_hypothesis_count')}`; edges support/conflict/missing `{system.get('crossview_graph_support_edge_count')}`/`{system.get('crossview_graph_conflict_edge_count')}`/`{system.get('crossview_graph_missing_evidence_edge_count')}`; claim `{system.get('crossview_graph_claim_level')}`",
         f"- Live overlay: `{system.get('live_overlay_status')}`; camera set `{system.get('camera_set')}`; profile `{system.get('camera_profile')}`",
         f"- Real Cesium: Google tiles `{system.get('google_photorealistic_tiles_valid')}`, terrain `{system.get('cesium_world_terrain_valid')}`, fake city `{system.get('substitute_city_geometry_created')}`",
         f"- UAV altitude policy: `{system.get('uav_altitude_policy')}`",
@@ -468,6 +497,8 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         "",
         f"- Prompt pack: `{aerograph.get('prompt_pack_status')}`, prompts `{aerograph.get('total_prompts')}`",
         f"- Prompt class counts: `{aerograph.get('class_counts')}`",
+        f"- Real-capture compact prompt pack: `{aerograph.get('real_capture_prompt_pack_status')}`, prompts `{aerograph.get('real_capture_prompt_count')}`, classes `{aerograph.get('real_capture_prompt_class_counts')}`",
+        f"- Real-capture compact web batches: `{aerograph.get('real_capture_web_batch_status')}`, count `{aerograph.get('real_capture_web_batch_count')}`; dry-run `{aerograph.get('real_capture_dryrun_status')}`, paper-claim `{aerograph.get('real_capture_dryrun_paper_claim_allowed')}`",
         f"- Web batches: `{aerograph.get('web_batch_status')}`, count `{aerograph.get('web_batch_count')}`, dir `{aerograph.get('web_batch_dir')}`",
         f"- Dry-run status: `{aerograph.get('dry_run_status')}`",
         f"- Paper table status: `{aerograph.get('paper_table_status')}`, selected manifest `{aerograph.get('paper_table_selected_manifest')}`",
@@ -499,6 +530,8 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- LaTeX patch check: `{snapshot['paper_ready_artifacts']['latex_patch_check']}`; status `{snapshot['paper_ready_artifacts']['latex_patch_check_status']}`",
         f"- Detector table: `{snapshot['paper_ready_artifacts']['detector_table']}`",
         f"- MarineCity system table: `{snapshot['paper_ready_artifacts']['marinecity_system_table']}`",
+        f"- MarineCity cross-view graph table: `{snapshot['paper_ready_artifacts']['marinecity_crossview_graph_table']}`",
+        f"- MarineCity cross-view graph figure: `{snapshot['paper_ready_artifacts']['marinecity_crossview_graph_figure']}`",
         f"- AeroGraph placeholder table: `{snapshot['paper_ready_artifacts']['aerograph_placeholder_table']}`",
         "",
     ]

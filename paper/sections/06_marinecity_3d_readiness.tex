@@ -37,6 +37,27 @@ multi-UAV 3D/reasoner handoff.}
 \input{tables/marinecity_real_capture_benchmark_table}
 \end{table}
 
+We also export the real-Cesium detector outputs into a cross-view evidence graph
+for the current smoke protocol. The graph builder consumes 23 SAFR-YOLO
+EvidenceTokens from the three-scenario, three-UAV capture, performs a
+camera-metadata-based approximate ray projection, and groups them into 13
+object hypotheses. Five hypotheses receive multi-view support, while the graph
+records 23 support edges, 4 conflict edges, and 20 missing-evidence edges for
+downstream ambiguity handling. This is a protocol validation of evidence
+association and uncertainty routing, not a completed metric 3D reconstruction.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{MarineCity real-Cesium cross-view evidence graph smoke result. The
+coordinates are heuristic camera-ray projections used for association and
+ambiguity routing; they are not treated as metric 3D reconstruction ground
+truth.}
+\label{tab:marinecity_crossview_evidence_graph}
+\input{tables/marinecity_crossview_evidence_graph_table}
+\end{table*}
+
 The protocol reserves train, validation, and held-out unseen-angle test splits
 with multiple UAV viewpoints, including nadir, front-oblique, side, rear-oblique,
 right-oblique, and left-oblique cameras. The held-out split emphasizes
