@@ -1,0 +1,99 @@
+"""AeroGraph Reasoner prompt builder and robust JSON parser."""
+
+from __future__ import annotations
+
+import json
+import re
+from typing import Any
+
+
+AEROGRAPH_SCHEMA = {
+    "decision": "verified|rejected|uncertain",
+    "predicted_class": "string",
+    "confidence": 0.0,
+    "evidence_clues": [],
+    "missing_evidence": "string",
+    "recommended_action": "string",
+}
+
+
+def expected_json_schema() -> dict[str, object]:
+    return dict(AEROGRAPH_SCHEMA)
+
+
+def build_aerograph_prompt(
+    *,
+    scene_summary: str,
+    graph_summary: dict[str, Any],
+    ambiguity_reasons: list[str],
+    candidate_classes: list[str],
+    roi_hints: list[str] | None = None,
+) -> str:
+    roi_hints = roi_hints or []
+    return "\n".join(
+        [
+            "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.",
+            "Use structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.",
+            "Return only valid JSON following this schema:",
+            json.dumps(AEROGRAPH_SCHEMA, indent=2),
+            "",
+            f"Scene: {scene_summary}",
+            f"Candidate classes: {candidate_classes}",
+            f"Ambiguity reasons: {ambiguity_reasons}",
+            f"ROI hints: {roi_hints}",
+            "Graph summary:",
+            json.dumps(graph_summary, indent=2),
+        ]
+    )
+
+
+def build_aerograph_prompt_from_paths(
+    *,
+    crop_paths: list[str],
+    graph_summary: dict[str, Any],
+    ambiguity_reasons: list[str],
+) -> str:
+    return build_aerograph_prompt(
+        scene_summary="Cooperative multi-UAV small-object evidence verification.",
+        graph_summary={**graph_summary, "multi_view_crop_paths": crop_paths},
+        ambiguity_reasons=ambiguity_reasons,
+        candidate_classes=list(graph_summary.get("candidate_classes", [])),
+        roi_hints=crop_paths,
+    )
+
+
+def parse_aerograph_response(text: str) -> dict[str, Any]:
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError:
+        match = re.search(r"\{.*\}", text, flags=re.DOTALL)
+        if not match:
+            return {
+                "decision": "uncertain",
+                "predicted_class": None,
+                "confidence": 0.0,
+                "evidence_clues": [],
+                "missing_evidence": "json_parse_failed",
+                "recommended_action": "active re-observe",
+                "raw_response": text,
+            }
+        try:
+            payload = json.loads(match.group(0))
+        except json.JSONDecodeError:
+            return {
+                "decision": "uncertain",
+                "predicted_class": None,
+                "confidence": 0.0,
+                "evidence_clues": [],
+                "missing_evidence": "json_parse_failed",
+                "recommended_action": "active re-observe",
+                "raw_response": text,
+            }
+
+    payload.setdefault("decision", "uncertain")
+    payload.setdefault("predicted_class", None)
+    payload.setdefault("confidence", 0.0)
+    payload.setdefault("evidence_clues", [])
+    payload.setdefault("missing_evidence", "")
+    payload.setdefault("recommended_action", "VLM verify")
+    return payload
