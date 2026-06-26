@@ -20,17 +20,17 @@ case "$PROVIDER" in
     OUT_DIR=${AEROGRAPH_OUT_DIR:-outputs/reasoning/aerograph_real_capture_eval_openai}
     PROVIDER_ARGS=(--provider openai --openai-model "$OPENAI_MODEL")
     ;;
-  command|factory)
-    COMMAND=${AEROGRAPH_COMMAND:-${FACTORY_COMMAND:-}}
+  command)
+    COMMAND=${AEROGRAPH_COMMAND:-}
     if [[ -z "$COMMAND" ]]; then
-      echo "[AeroGraph real-capture smoke] AEROGRAPH_COMMAND or FACTORY_COMMAND is not set." >&2
+      echo "[AeroGraph real-capture smoke] AEROGRAPH_COMMAND is not set." >&2
       exit 2
     fi
-    OUT_DIR=${AEROGRAPH_OUT_DIR:-outputs/reasoning/aerograph_real_capture_eval_factory}
+    OUT_DIR=${AEROGRAPH_OUT_DIR:-outputs/reasoning/aerograph_real_capture_eval_command}
     PROVIDER_ARGS=(--provider command --command "$COMMAND")
     ;;
   *)
-    echo "[AeroGraph real-capture smoke] Unsupported AEROGRAPH_PROVIDER='$PROVIDER' (use openai, command, or factory)." >&2
+    echo "[AeroGraph real-capture smoke] Unsupported AEROGRAPH_PROVIDER='$PROVIDER' (use openai or command)." >&2
     exit 2
     ;;
 esac
@@ -46,7 +46,7 @@ python scripts/build_aerograph_web_batches.py \
   --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl \
   --raw-output-dir outputs/reasoning/aerograph_real_capture_web_raw_batches \
   --normalized-responses outputs/reasoning/aerograph_real_capture_manual_responses.normalized.jsonl \
-  --provider-label "Factory/ChatGPT web real-capture smoke" \
+  --provider-label "ChatGPT/Codex web real-capture smoke" \
   --import-out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web \
   --promotion-mode smoke
 python scripts/build_aerograph_web_collection_packet.py \
@@ -55,7 +55,7 @@ python scripts/build_aerograph_web_collection_packet.py \
   --manual-responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl \
   --raw-output-dir outputs/reasoning/aerograph_real_capture_web_raw_batches \
   --normalized-responses outputs/reasoning/aerograph_real_capture_manual_responses.normalized.jsonl \
-  --provider-label "Factory/ChatGPT web real-capture smoke" \
+  --provider-label "ChatGPT/Codex web real-capture smoke" \
   --import-out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web \
   --gate-label "23-Prompt Real-Capture Smoke" \
   --promotion-mode smoke \

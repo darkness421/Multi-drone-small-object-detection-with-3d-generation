@@ -1,6 +1,6 @@
 # External Gate Capabilities
 
-Updated: `2026-06-26 19:58:53 KST`
+Updated: `2026-06-26 22:07:13 KST`
 Status: `external_gates_missing_provider_and_3d_runner`
 
 This report checks whether the remaining external gates can be executed from the current shell. Secret values are never printed.
@@ -8,7 +8,7 @@ This report checks whether the remaining external gates can be executed from the
 ## Summary
 
 - AeroGraph provider configured: `False`; modes `[]`
-- Provider candidates without runnable command: `False`; candidates `{'factory_cli': False, 'ollama': False, 'openai_cli': False}`
+- Provider candidates without runnable command: `False`; candidates `{'ollama': False, 'openai_cli': False}`
 - Neural 3D runner configured: `False`
 - Neural 3D source capture ready: `True`
 - Neural 3D dataset ready: `True`
@@ -34,7 +34,6 @@ This report checks whether the remaining external gates can be executed from the
 | `OPENAI_API_KEY` | `False` | `` |
 | `AEROGRAPH_COMMAND` | `False` | `` |
 | `AEROGRAPH_ENV_FILE` | `False` | `` |
-| `FACTORY_COMMAND` | `False` | `` |
 | `OLLAMA_HOST` | `False` | `` |
 | `AEROGRAPH_OPENAI_MODEL` | `False` | `` |
 
@@ -43,8 +42,6 @@ This report checks whether the remaining external gates can be executed from the
 | Command | Available | Path |
 |---|---|---|
 | `ollama` | `False` | `` |
-| `factory` | `False` | `` |
-| `factory-ai` | `False` | `` |
 | `openai` | `False` | `` |
 | `ns-train` | `False` | `` |
 | `ns-process-data` | `False` | `` |
@@ -56,13 +53,13 @@ This report checks whether the remaining external gates can be executed from the
 ### AeroGraph manual web fallback
 
 ```bash
-python scripts/import_aerograph_external_responses.py --mode final49 --input reasoning/aerograph_web_raw_batches/*.md --provider-label "Factory/ChatGPT web"
+python scripts/import_aerograph_external_responses.py --mode final49 --input reasoning/aerograph_web_raw_batches/*.md --provider-label "ChatGPT/Codex web"
 ```
 
 ### AeroGraph compact manual fallback
 
 ```bash
-python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label "Factory/ChatGPT web compact"
+python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label "ChatGPT/Codex web compact"
 ```
 
 ### Neural 3D fallback/import path

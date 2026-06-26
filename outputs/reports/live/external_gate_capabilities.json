@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 19:58:53 KST",
+  "updated_at_kst": "2026-06-26 22:07:13 KST",
   "status": "external_gates_missing_provider_and_3d_runner",
   "env": {
     "OPENAI_API_KEY": {
@@ -14,10 +14,6 @@
       "set": false,
       "value_redacted": false
     },
-    "FACTORY_COMMAND": {
-      "set": false,
-      "value_redacted": false
-    },
     "OLLAMA_HOST": {
       "set": false,
       "value_redacted": false
@@ -29,14 +25,6 @@
   },
   "commands": {
     "ollama": {
-      "available": false,
-      "path": ""
-    },
-    "factory": {
-      "available": false,
-      "path": ""
-    },
-    "factory-ai": {
       "available": false,
       "path": ""
     },
@@ -67,7 +55,6 @@
     "command_or_local_ready": false,
     "env_file_ready": false,
     "provider_candidates": {
-      "factory_cli": false,
       "ollama": false,
       "openai_cli": false
     },
@@ -96,11 +83,11 @@
   "next_commands": [
     {
       "gate": "AeroGraph manual web fallback",
-      "command": "python scripts/import_aerograph_external_responses.py --mode final49 --input reasoning/aerograph_web_raw_batches/*.md --provider-label \"Factory/ChatGPT web\""
+      "command": "python scripts/import_aerograph_external_responses.py --mode final49 --input reasoning/aerograph_web_raw_batches/*.md --provider-label \"ChatGPT/Codex web\""
     },
     {
       "gate": "AeroGraph compact manual fallback",
-      "command": "python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label \"Factory/ChatGPT web compact\""
+      "command": "python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label \"ChatGPT/Codex web compact\""
     },
     {
       "gate": "Neural 3D fallback/import path",

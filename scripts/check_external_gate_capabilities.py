@@ -22,15 +22,12 @@ ENV_VARS = [
     "OPENAI_API_KEY",
     "AEROGRAPH_COMMAND",
     "AEROGRAPH_ENV_FILE",
-    "FACTORY_COMMAND",
     "OLLAMA_HOST",
     "AEROGRAPH_OPENAI_MODEL",
 ]
 
 COMMANDS = [
     "ollama",
-    "factory",
-    "factory-ai",
     "openai",
     "ns-train",
     "ns-process-data",
@@ -82,9 +79,8 @@ def command_status() -> dict[str, dict[str, Any]]:
 def aerograph_runnable(env: dict[str, dict[str, Any]], commands: dict[str, dict[str, Any]]) -> dict[str, Any]:
     env_file_ready = bool(env["AEROGRAPH_ENV_FILE"].get("readable"))
     openai_ready = bool(env["OPENAI_API_KEY"]["set"] or env_file_ready)
-    command_ready = bool(env["AEROGRAPH_COMMAND"]["set"] or env["FACTORY_COMMAND"]["set"] or env_file_ready)
+    command_ready = bool(env["AEROGRAPH_COMMAND"]["set"] or env_file_ready)
     provider_candidates = {
-        "factory_cli": bool(commands["factory"]["available"] or commands["factory-ai"]["available"]),
         "ollama": bool(commands["ollama"]["available"] or env["OLLAMA_HOST"]["set"]),
         "openai_cli": bool(commands["openai"]["available"]),
     }
@@ -177,7 +173,7 @@ def next_commands(aerograph: dict[str, Any], threed: dict[str, Any]) -> list[dic
                     "python scripts/import_aerograph_external_responses.py "
                     "--mode final49 "
                     "--input reasoning/aerograph_web_raw_batches/*.md "
-                    "--provider-label \"Factory/ChatGPT web\""
+                    "--provider-label \"ChatGPT/Codex web\""
                 ),
             }
         )
@@ -188,7 +184,7 @@ def next_commands(aerograph: dict[str, Any], threed: dict[str, Any]) -> list[dic
                     "python scripts/import_aerograph_external_responses.py "
                     "--mode compact23 "
                     "--input reasoning/aerograph_real_capture_web_raw_batches/*.md "
-                    "--provider-label \"Factory/ChatGPT web compact\""
+                    "--provider-label \"ChatGPT/Codex web compact\""
                 ),
             }
         )

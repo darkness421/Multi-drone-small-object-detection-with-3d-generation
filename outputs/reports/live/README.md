@@ -30,7 +30,7 @@ Current live bundle:
   AeroGraph responses.
 - `external_gate_capabilities.md`: current-shell capability audit for the two
   remaining external gates. It reports whether an AeroGraph provider
-  (`OPENAI_API_KEY`, `AEROGRAPH_COMMAND`, Factory/local command, or Ollama) and
+  (`OPENAI_API_KEY`, `AEROGRAPH_COMMAND`, ChatGPT/Codex manual web review, or Ollama) and
   neural-3D runner (`ns-train`, `instant-ngp`, etc.) are actually configured,
   without printing secret values.
 - `accv_research_package_readiness_audit.md`: paper-claim readiness audit that
@@ -106,16 +106,16 @@ Current live bundle:
   separate from CesiumGeoreference height.
 - `../../reasoning/gpt_model_comparison/gpt54_vs_gpt55_aerograph_comparison.md`: earlier GPT-style AeroGraph smoke comparison on an 8-token set. It is useful as a policy sanity check, but the current non-mock queue should use the 49-prompt pack below.
 - `aerograph_reasoner_nonmock_handoff.md`: prompt/input paths and command shapes
-  for running the MarineCity AeroGraph Reasoner with Factory, OpenAI, or another
+  for running the MarineCity AeroGraph Reasoner with OpenAI/ChatGPT or another
   non-mock provider.
 - `../../docs/aerograph_nonmock_collection_plan.md`: tracked runbook for the
   49-prompt non-mock AeroGraph collection gate, acceptance criteria, and paper
   table promotion commands.
 - `aerograph_prompt_pack/`: 49 real-Cesium detector-token AeroGraph prompts plus
-  a compact 10-prompt sample for GPT/Factory/local LLM non-mock evaluation.
+  a compact 10-prompt sample for GPT/ChatGPT/local LLM non-mock evaluation.
 - `aerograph_real_capture_prompt_pack/`: 23-prompt compact AeroGraph smoke pack
   generated from the current real-Cesium detector-to-reasoner smoke outputs.
-  Use its three web batches for a fast GPT/Factory/local-provider sanity check
+  Use its three web batches for a fast GPT/ChatGPT/local-provider sanity check
   before running the full 49-prompt final gate.
 - `aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md`:
   compact 23-prompt web-provider handoff for the current real-Cesium smoke run.
@@ -125,12 +125,12 @@ Current live bundle:
   per-prompt tracking sheet for the 23-prompt compact real-capture smoke check.
 - `aerograph_prompt_pack/aerograph_manual_response_template_sample10.jsonl`:
   manual web-provider response template. Use
-  `scripts/import_aerograph_manual_responses.py` to convert Factory/ChatGPT web
+  `scripts/import_aerograph_manual_responses.py` to convert ChatGPT/Codex web
   JSON responses into the same CSV/LaTeX artifacts as the CLI runner.
 - `aerograph_prompt_pack/aerograph_manual_response_template_all.jsonl`:
   full 49-prompt manual response template for the final non-mock AeroGraph run.
 - `aerograph_prompt_pack/web_batches/`: paste-ready 10-prompt Markdown batches
-  for Factory/ChatGPT web non-mock AeroGraph evaluation. Collect the JSONL
+  for ChatGPT/Codex web non-mock AeroGraph evaluation. Collect the JSONL
   responses and import them with `scripts/import_aerograph_manual_responses.py`.
 - `aerograph_prompt_pack/aerograph_web_collection_packet.md`: one-file web LLM
   handoff with all batch paths, raw-output targets, promotion commands, and the
@@ -138,13 +138,13 @@ Current live bundle:
 - `aerograph_prompt_pack/aerograph_web_collection_checklist.csv`: per-prompt
   tracking sheet for the 49 non-mock AeroGraph responses.
 - `../../reasoning/aerograph_web_raw_batches/README.md`: drop-folder guide for
-  saving Factory/ChatGPT raw batch answers as `batch_01.md` ... `batch_05.md`
+  saving ChatGPT/Codex raw batch answers as `batch_01.md` ... `batch_05.md`
   before normalization and import.
 - `../../scripts/normalize_aerograph_web_responses.py`: optional cleanup helper
   for web outputs that contain markdown fences, JSON arrays, or prose around
   the AeroGraph JSONL responses.
 - `../../scripts/import_aerograph_external_responses.py`: one-command importer
-  for raw Factory/ChatGPT/OpenAI-web/local-LLM response files. It normalizes
+  for raw ChatGPT/Codex/OpenAI-web/local-LLM response files. It normalizes
   raw `.md`, `.txt`, `.json`, or `.jsonl` outputs, imports them against either
   the compact 23-prompt or final 49-prompt pack, and rebuilds readiness reports.
 - `aerograph_prompt_pack/web_batches/README.md`: batch index, required response
@@ -158,7 +158,7 @@ Current live bundle:
 - `../../paper/tables/aerograph_reasoner_results_placeholder.tex`: current
   AeroGraph reasoner table slot. It is filled by the transparent
   `Codex-assisted manual LLM review candidate` import for now; replace it with
-  Factory/OpenAI/local-LLM output before making a stronger external-provider
+  OpenAI/ChatGPT/local-LLM output before making a stronger external-provider
   claim.
 - `../../scripts/ubuntu/start_aerograph_nonmock_queue.sh`: tmux wrapper for the
   final 49-prompt non-mock AeroGraph run once `OPENAI_API_KEY` or
@@ -227,10 +227,10 @@ Continuous ACCV queue entrypoint:
 bash scripts/ubuntu/start_accv_continuous_queue.sh
 ```
 
-Optional Factory AI supervisor/reasoner hook:
+Optional OpenAI/ChatGPT reasoner hook:
 
 ```bash
-ENABLE_FACTORY_SUPERVISOR=1 \
-FACTORY_COMMAND='<factory command that reads prompt from stdin>' \
-bash scripts/ubuntu/start_accv_continuous_queue.sh
+OPENAI_API_KEY='<redacted>' \
+AEROGRAPH_PROVIDER=openai \
+bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
 ```

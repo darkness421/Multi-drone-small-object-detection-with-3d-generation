@@ -1,9 +1,9 @@
 """Run AeroGraph prompt-pack evaluation with a real or dry-run provider.
 
 The input prompt pack is produced by ``scripts/build_aerograph_prompt_pack.py``.
-This runner keeps provider execution separate from prompt construction so GPT,
-Factory AI, Ollama, or any local command can be swapped in without changing the
-MarineCity detector/3D pipeline.
+This runner keeps provider execution separate from prompt construction so
+OpenAI/ChatGPT, Ollama, or any local command can be swapped in without changing
+the MarineCity detector/3D pipeline.
 """
 
 from __future__ import annotations

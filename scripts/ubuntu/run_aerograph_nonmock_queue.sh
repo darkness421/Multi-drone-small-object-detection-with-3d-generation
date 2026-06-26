@@ -20,17 +20,17 @@ case "$PROVIDER" in
     OUT_DIR=${AEROGRAPH_OUT_DIR:-outputs/reasoning/aerograph_prompt_pack_eval_openai}
     PROVIDER_ARGS=(--provider openai --openai-model "$OPENAI_MODEL")
     ;;
-  command|factory)
-    COMMAND=${AEROGRAPH_COMMAND:-${FACTORY_COMMAND:-}}
+  command)
+    COMMAND=${AEROGRAPH_COMMAND:-}
     if [[ -z "$COMMAND" ]]; then
-      echo "[AeroGraph] AEROGRAPH_COMMAND or FACTORY_COMMAND is not set; cannot run command provider." >&2
+      echo "[AeroGraph] AEROGRAPH_COMMAND is not set; cannot run command provider." >&2
       exit 2
     fi
-    OUT_DIR=${AEROGRAPH_OUT_DIR:-outputs/reasoning/aerograph_prompt_pack_eval_factory}
+    OUT_DIR=${AEROGRAPH_OUT_DIR:-outputs/reasoning/aerograph_prompt_pack_eval_command}
     PROVIDER_ARGS=(--provider command --command "$COMMAND")
     ;;
   *)
-    echo "[AeroGraph] Unsupported AEROGRAPH_PROVIDER='$PROVIDER' (use openai, command, or factory)." >&2
+    echo "[AeroGraph] Unsupported AEROGRAPH_PROVIDER='$PROVIDER' (use openai or command)." >&2
     exit 2
     ;;
 esac
