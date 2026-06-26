@@ -1,0 +1,69 @@
+{
+  "status": "aerograph_web_batches_ready",
+  "prompt_pack": "outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl",
+  "out_dir": "outputs/reports/live/aerograph_prompt_pack/web_batches",
+  "batch_size": 10,
+  "total_prompts": 49,
+  "batch_count": 5,
+  "scenario_counts": {
+    "S0": 13,
+    "S1": 17,
+    "S2": 19
+  },
+  "batches": [
+    {
+      "path": "outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_01_001-010.md",
+      "start_index": 1,
+      "end_index": 10,
+      "count": 10,
+      "scenario_counts": {
+        "S0": 10
+      }
+    },
+    {
+      "path": "outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_02_011-020.md",
+      "start_index": 11,
+      "end_index": 20,
+      "count": 10,
+      "scenario_counts": {
+        "S0": 3,
+        "S1": 7
+      }
+    },
+    {
+      "path": "outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_03_021-030.md",
+      "start_index": 21,
+      "end_index": 30,
+      "count": 10,
+      "scenario_counts": {
+        "S1": 10
+      }
+    },
+    {
+      "path": "outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_04_031-040.md",
+      "start_index": 31,
+      "end_index": 40,
+      "count": 10,
+      "scenario_counts": {
+        "S2": 10
+      }
+    },
+    {
+      "path": "outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_05_041-049.md",
+      "start_index": 41,
+      "end_index": 49,
+      "count": 9,
+      "scenario_counts": {
+        "S2": 9
+      }
+    }
+  ],
+  "archived_legacy_batches": [],
+  "responses": "outputs/reasoning/aerograph_manual_responses.jsonl",
+  "raw_output_dir": "outputs/reasoning/aerograph_web_raw_batches",
+  "normalized_responses": "outputs/reasoning/aerograph_manual_responses.normalized.jsonl",
+  "promotion_mode": "full",
+  "collection_packet_command": "python scripts/build_aerograph_web_collection_packet.py",
+  "import_out_dir": "outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
+  "import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"Factory/ChatGPT web\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web"
+}

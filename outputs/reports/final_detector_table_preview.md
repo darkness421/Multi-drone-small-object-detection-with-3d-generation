@@ -1,6 +1,6 @@
 # Final Detector Table Preview
 
-Updated: 2026-06-26T06:05:08+09:00
+Updated: 2026-06-26T10:14:47+09:00
 
 Reference baseline: YOLOv11l 3-seed mean, AP 0.3777 / AP50 0.5981 / F1 0.6248 / Params 25.32M.
 This preview separates completed 1280 3-seed rows, the current 1280 sweep status, single-seed NMS snapshots, and cited related-work rows.

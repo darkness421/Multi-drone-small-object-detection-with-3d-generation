@@ -1,6 +1,6 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-26 09:41:03 KST`
+Updated: `2026-06-26 10:22:19 KST`
 
 ## Detector Status
 
@@ -56,6 +56,7 @@ Updated: `2026-06-26 09:41:03 KST`
 - Prompt class counts: `{'bus': 16, 'car': 29, 'pedestrian': 4}`
 - Real-capture compact prompt pack: `aerograph_real_capture_prompt_pack_ready`, prompts `23`, classes `{'bus': 8, 'car': 15}`
 - Real-capture compact web batches: `aerograph_web_batches_ready`, count `3`; dry-run `aerograph_eval_dry_run_ready`, paper-claim `False`
+- Real-capture compact web packet: `outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md`; checklist `outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv`
 - Web batches: `aerograph_web_batches_ready`, count `5`, dir `outputs/reports/live/aerograph_prompt_pack/web_batches`
 - Dry-run status: `aerograph_eval_dry_run_ready`
 - Paper table status: `aerograph_reasoner_table_candidate_external_pending`, selected manifest ``

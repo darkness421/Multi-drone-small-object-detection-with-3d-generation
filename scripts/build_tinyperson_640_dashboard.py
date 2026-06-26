@@ -65,6 +65,48 @@ def metric_text(mean: float, std: float, scale: float = 1.0) -> str:
     return f"{mean * scale:.3f} +/- {std * scale:.3f}"
 
 
+def latex_escape(value: str) -> str:
+    return (
+        value.replace("\\", "\\textbackslash{}")
+        .replace("&", "\\&")
+        .replace("%", "\\%")
+        .replace("_", "\\_")
+        .replace("#", "\\#")
+    )
+
+
+def latex_metric(mean: float, std: float, scale: float = 1.0, *, bold: bool = False) -> str:
+    text = f"{mean * scale:.3f} $\\pm$ {std * scale:.3f}"
+    return f"\\textbf{{{text}}}" if bold else text
+
+
+def write_tex(rows: list[dict[str, float | str]], out_path: Path) -> None:
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    best_ap = max(float(row["ap"]) for row in rows) if rows else 0.0
+    best_ap50 = max(float(row["ap50"]) for row in rows) if rows else 0.0
+    lines = [
+        "\\begin{tabular}{lrrrrl}",
+        "\\toprule",
+        "Method & AP $\\times 10^{-3}$ & AP50 $\\times 10^{-3}$ & Recall & F1 $\\times 10^{-3}$ & Interpretation \\\\",
+        "\\midrule",
+    ]
+    for row in rows:
+        method = str(row["method"])
+        ap = float(row["ap"])
+        ap50 = float(row["ap50"])
+        line = (
+            f"{latex_escape(method)} & "
+            f"{latex_metric(ap, float(row['ap_std']), 1000.0, bold=ap == best_ap)} & "
+            f"{latex_metric(ap50, float(row['ap50_std']), 1000.0, bold=ap50 == best_ap50)} & "
+            f"{float(row['recall']):.4f} & "
+            f"{latex_metric(float(row['f1']), float(row['f1_std']), 1000.0)} & "
+            f"{latex_escape(str(row['note']))} \\\\"
+        )
+        lines.append(line)
+    lines.extend(["\\bottomrule", "\\end{tabular}", ""])
+    out_path.write_text("\n".join(lines), encoding="utf-8")
+
+
 def draw_table(ax: plt.Axes, rows: list[dict[str, float | str]]) -> None:
     ax.axis("off")
     headers = ["Method", "AP x1e-3", "AP50 x1e-3", "Recall", "F1 x1e-3", "Interpretation"]
@@ -177,12 +219,15 @@ def main() -> None:
     parser.add_argument("--summary", default="outputs/experiments/tinyperson_640/summary.csv")
     parser.add_argument("--out", default="outputs/reports/live/tinyperson_640_dashboard.png")
     parser.add_argument("--paper-out", default="paper/figures/results/paper_fig12_tinyperson_640_stress.png")
+    parser.add_argument("--tex-out", default="paper/tables/tinyperson_640_stress_table.tex")
     args = parser.parse_args()
 
     rows = read_rows(Path(args.summary))
     for output in [Path(args.out), Path(args.paper_out)]:
         build_dashboard(rows, output, paper_style=output.name.startswith("paper_fig"))
         print(output)
+    write_tex(rows, Path(args.tex_out))
+    print(args.tex_out)
 
 
 if __name__ == "__main__":

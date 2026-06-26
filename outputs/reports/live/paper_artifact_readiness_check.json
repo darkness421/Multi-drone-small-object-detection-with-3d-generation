@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-26 09:41:03 KST",
+  "updated_at_kst": "2026-06-26 10:24:24 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
-  "artifact_count": 42,
+  "artifact_count": 44,
   "missing_required_count": 0,
   "stale_claim_count": 0,
   "artifacts": [
@@ -181,7 +181,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 831,
+      "size_bytes": 817,
       "status": "ok",
       "note": "TinyPerson 640 supplementary stress-test table"
     },
@@ -321,7 +321,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9324,
+      "size_bytes": 9753,
       "status": "ok",
       "note": "Non-mock reasoner collection gate"
     },
@@ -341,7 +341,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 5274,
+      "size_bytes": 5324,
       "status": "ok",
       "note": "One-file web LLM handoff for AeroGraph collection"
     },
@@ -371,9 +371,29 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 3054,
+      "size_bytes": 4104,
       "status": "ok",
       "note": "Compact real-capture web-provider batch index"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 4546,
+      "status": "ok",
+      "note": "Compact real-capture web-provider collection packet"
+    },
+    {
+      "group": "pending_reasoner",
+      "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 6560,
+      "status": "ok",
+      "note": "Compact real-capture web-provider collection checklist"
     },
     {
       "group": "pending_reasoner",

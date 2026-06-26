@@ -1,0 +1,52 @@
+{
+  "status": "aerograph_web_batches_ready",
+  "prompt_pack": "outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl",
+  "out_dir": "outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches",
+  "batch_size": 10,
+  "total_prompts": 23,
+  "batch_count": 3,
+  "scenario_counts": {
+    "S0": 7,
+    "S1": 8,
+    "S2": 8
+  },
+  "batches": [
+    {
+      "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/aerograph_web_batch_01_001-010.md",
+      "start_index": 1,
+      "end_index": 10,
+      "count": 10,
+      "scenario_counts": {
+        "S0": 7,
+        "S1": 3
+      }
+    },
+    {
+      "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/aerograph_web_batch_02_011-020.md",
+      "start_index": 11,
+      "end_index": 20,
+      "count": 10,
+      "scenario_counts": {
+        "S1": 5,
+        "S2": 5
+      }
+    },
+    {
+      "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/aerograph_web_batch_03_021-023.md",
+      "start_index": 21,
+      "end_index": 23,
+      "count": 3,
+      "scenario_counts": {
+        "S2": 3
+      }
+    }
+  ],
+  "archived_legacy_batches": [],
+  "responses": "outputs/reasoning/aerograph_real_capture_manual_responses.jsonl",
+  "raw_output_dir": "outputs/reasoning/aerograph_real_capture_web_raw_batches",
+  "normalized_responses": "outputs/reasoning/aerograph_real_capture_manual_responses.normalized.jsonl",
+  "promotion_mode": "smoke",
+  "collection_packet_command": "python scripts/build_aerograph_web_collection_packet.py --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl --web-batch-manifest outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/manifest.json --manual-responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl --raw-output-dir outputs/reasoning/aerograph_real_capture_web_raw_batches --normalized-responses outputs/reasoning/aerograph_real_capture_manual_responses.normalized.jsonl --provider-label 'Factory/ChatGPT web real-capture smoke' --import-out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web --gate-label '23-Prompt Real-Capture Smoke' --promotion-mode smoke --purpose 'Purpose: collect compact non-mock AeroGraph responses for the current 23-token real-Cesium detector smoke run. This validates provider behavior on current captures before the final 49-prompt paper-table gate.' --out-md outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md --out-csv outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv --out-json outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.json",
+  "import_out_dir": "outputs/reasoning/aerograph_real_capture_eval_manual_web",
+  "import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl --provider-label \"Factory/ChatGPT web real-capture smoke\" --out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web"
+}

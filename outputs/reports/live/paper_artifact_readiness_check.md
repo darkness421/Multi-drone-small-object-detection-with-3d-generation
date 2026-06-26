@@ -1,11 +1,11 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-06-26 09:41:03 KST`
+Updated: `2026-06-26 10:24:24 KST`
 Status: `paper_artifact_audit_ok_with_pending_gates`
 
 ## Summary
 
-- Artifacts checked: `42`
+- Artifacts checked: `44`
 - Missing required artifacts: `0`
 - Stale/unsafe claim matches: `0`
 - AeroGraph effective valid response coverage: `49/49`
@@ -80,6 +80,8 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 | pending_reasoner | outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_checklist.csv | runbook | True | ok | Per-prompt AeroGraph non-mock collection checklist |
 | pending_reasoner | outputs/reports/live/aerograph_real_capture_prompt_pack/manifest.json | runbook | True | ok | Compact 23-prompt real-capture AeroGraph smoke pack |
 | pending_reasoner | outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/README.md | runbook | True | ok | Compact real-capture web-provider batch index |
+| pending_reasoner | outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md | runbook | True | ok | Compact real-capture web-provider collection packet |
+| pending_reasoner | outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv | runbook | True | ok | Compact real-capture web-provider collection checklist |
 | pending_reasoner | outputs/reasoning/aerograph_real_capture_eval_dryrun/manifest.json | audit | True | ok | Compact real-capture prompt-pack runner dry-run check |
 | pending_reasoner | scripts/normalize_aerograph_web_responses.py | runbook_helper | True | ok | Web LLM raw-output normalizer for AeroGraph manual responses |
 | audit | paper/figures/results/paper_artifact_readiness_manifest.md | audit | True | ok | Human-readable artifact manifest |
