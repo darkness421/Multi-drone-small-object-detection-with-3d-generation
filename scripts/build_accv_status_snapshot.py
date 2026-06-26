@@ -23,7 +23,10 @@ MARINECITY_CROSSVIEW_GRAPH_SUMMARY = REPO_ROOT / "outputs/graphs/marinecity_cros
 PROMPT_MANIFEST = LIVE_DIR / "aerograph_prompt_pack/manifest.json"
 REAL_CAPTURE_PROMPT_MANIFEST = LIVE_DIR / "aerograph_real_capture_prompt_pack/manifest.json"
 REAL_CAPTURE_PROMPT_WEB_BATCH_MANIFEST = LIVE_DIR / "aerograph_real_capture_prompt_pack/web_batches/manifest.json"
+REAL_CAPTURE_WEB_COLLECTION_PACKET = LIVE_DIR / "aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md"
+REAL_CAPTURE_WEB_COLLECTION_CHECKLIST = LIVE_DIR / "aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv"
 REAL_CAPTURE_PROMPT_DRYRUN = REPO_ROOT / "outputs/reasoning/aerograph_real_capture_eval_dryrun/manifest.json"
+REAL_CAPTURE_NONMOCK_SMOKE_STATUS = LIVE_DIR / "aerograph_real_capture_nonmock_smoke_status.json"
 AEROGRAPH_WEB_BATCH_MANIFEST = LIVE_DIR / "aerograph_prompt_pack/web_batches/manifest.json"
 AEROGRAPH_DRY_RUN = REPO_ROOT / "outputs/reasoning/aerograph_prompt_pack_eval_dryrun_latest/manifest.json"
 AEROGRAPH_TABLE_MANIFEST = LIVE_DIR / "aerograph_reasoner_table_manifest.json"
@@ -37,6 +40,8 @@ PAPER_ARTIFACT_CHECK = LIVE_DIR / "paper_artifact_readiness_check.json"
 LATEX_PATCH_CHECK = LIVE_DIR / "latex_patch_integrity_check.json"
 MARINECITY_QUALITATIVE_GATE = LIVE_DIR / "marinecity_qualitative_gate.json"
 MARINECITY_CLEAN_RECAPTURE_PLAN = LIVE_DIR / "marinecity_clean_recapture_plan.json"
+MARINECITY_SYSTEM_INTEGRATION_CHECK = LIVE_DIR / "marinecity_system_integration_check.json"
+MARINECITY_3D_COMPLETION_READINESS = LIVE_DIR / "marinecity_3d_completion_readiness.json"
 AEROGRAPH_COLLECTION_PLAN = REPO_ROOT / "docs/aerograph_nonmock_collection_plan.md"
 AEROGRAPH_PLACEHOLDER_TABLE = REPO_ROOT / "paper/tables/aerograph_reasoner_results_placeholder.tex"
 MARINECITY_SESSION_OVERLAY_STATUS = Path("/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json")
@@ -261,6 +266,7 @@ def build_snapshot() -> dict[str, Any]:
     real_capture_prompt_manifest = read_json(REAL_CAPTURE_PROMPT_MANIFEST)
     real_capture_web_batch_manifest = read_json(REAL_CAPTURE_PROMPT_WEB_BATCH_MANIFEST)
     real_capture_dryrun = read_json(REAL_CAPTURE_PROMPT_DRYRUN)
+    real_capture_nonmock_smoke = read_json(REAL_CAPTURE_NONMOCK_SMOKE_STATUS)
     web_batch_manifest = read_json(AEROGRAPH_WEB_BATCH_MANIFEST)
     system_manifest = read_json(SYSTEM_MANIFEST)
     detector_reasoner_smoke = read_json(MARINECITY_DETECTOR_REASONER_SMOKE)
@@ -277,6 +283,8 @@ def build_snapshot() -> dict[str, Any]:
     latex_check = read_json(LATEX_PATCH_CHECK)
     marinecity_qual = read_json(MARINECITY_QUALITATIVE_GATE)
     marinecity_recapture_plan = read_json(MARINECITY_CLEAN_RECAPTURE_PLAN)
+    marinecity_integration = read_json(MARINECITY_SYSTEM_INTEGRATION_CHECK)
+    marinecity_3d = read_json(MARINECITY_3D_COMPLETION_READINESS)
     session_overlay = read_json(MARINECITY_SESSION_OVERLAY_STATUS)
     prim_status = session_overlay.get("prim_status", {}) or {}
     georef = session_overlay.get("georeference_readback", {}) or {}
@@ -318,6 +326,15 @@ def build_snapshot() -> dict[str, Any]:
             "crossview_graph_report": "outputs/reports/live/marinecity_crossview_evidence_graph.md",
             "crossview_graph_table": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
             "crossview_graph_figure": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
+            "integration_check_status": marinecity_integration.get("status"),
+            "integration_check": str(MARINECITY_SYSTEM_INTEGRATION_CHECK.with_suffix(".md").relative_to(REPO_ROOT)),
+            "integration_checks": marinecity_integration.get("checks", []),
+            "integration_detector_classes": (marinecity_integration.get("detector", {}) or {}).get("tokens_by_class"),
+            "integration_actor_classes": (marinecity_integration.get("actors", {}) or {}).get("actor_classes"),
+            "neural_3d_completion_status": marinecity_3d.get("status"),
+            "neural_3d_metric_result_rows": marinecity_3d.get("metric_result_row_count"),
+            "neural_3d_readiness_report": str(MARINECITY_3D_COMPLETION_READINESS.with_suffix(".md").relative_to(REPO_ROOT)),
+            "neural_3d_claiming_rule": marinecity_3d.get("claiming_rule"),
             "dashboard": str(SIM_DASHBOARD.relative_to(REPO_ROOT)),
             "live_overlay_status": session_overlay.get("status"),
             "camera_set": session_overlay.get("camera_set"),
@@ -359,8 +376,15 @@ def build_snapshot() -> dict[str, Any]:
             "real_capture_prompt_class_counts": real_capture_prompt_manifest.get("class_counts"),
             "real_capture_web_batch_status": real_capture_web_batch_manifest.get("status"),
             "real_capture_web_batch_count": real_capture_web_batch_manifest.get("batch_count"),
+            "real_capture_web_collection_packet": str(REAL_CAPTURE_WEB_COLLECTION_PACKET.relative_to(REPO_ROOT)),
+            "real_capture_web_collection_packet_exists": REAL_CAPTURE_WEB_COLLECTION_PACKET.exists(),
+            "real_capture_web_collection_checklist": str(REAL_CAPTURE_WEB_COLLECTION_CHECKLIST.relative_to(REPO_ROOT)),
+            "real_capture_web_collection_checklist_exists": REAL_CAPTURE_WEB_COLLECTION_CHECKLIST.exists(),
             "real_capture_dryrun_status": real_capture_dryrun.get("status"),
             "real_capture_dryrun_paper_claim_allowed": real_capture_dryrun.get("paper_claim_allowed"),
+            "real_capture_nonmock_smoke_status": real_capture_nonmock_smoke.get("status"),
+            "real_capture_nonmock_smoke_selected_manifest": real_capture_nonmock_smoke.get("selected_manifest"),
+            "real_capture_nonmock_smoke_expected_prompt_count": real_capture_nonmock_smoke.get("expected_prompt_count"),
             "web_batch_status": web_batch_manifest.get("status"),
             "web_batch_count": web_batch_manifest.get("batch_count"),
             "web_batch_dir": web_batch_manifest.get("out_dir"),
@@ -481,6 +505,8 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- Real-capture detector/reasoner smoke: `{system.get('detector_reasoner_smoke_status')}`; tokens `{system.get('detector_reasoner_smoke_tokens')}`; report `{system.get('detector_reasoner_smoke_report')}`",
         f"- Detector preview sheet: `{system.get('detector_reasoner_smoke_contact_sheet')}`",
         f"- Cross-view evidence graph: `{system.get('crossview_graph_status')}`; hypotheses `{system.get('crossview_graph_hypothesis_count')}`; multi-view `{system.get('crossview_graph_multi_view_hypothesis_count')}`; edges support/conflict/missing `{system.get('crossview_graph_support_edge_count')}`/`{system.get('crossview_graph_conflict_edge_count')}`/`{system.get('crossview_graph_missing_evidence_edge_count')}`; claim `{system.get('crossview_graph_claim_level')}`",
+        f"- Integration check: `{system.get('integration_check_status')}`; actor classes `{system.get('integration_actor_classes')}`; detector classes `{system.get('integration_detector_classes')}`; report `{system.get('integration_check')}`",
+        f"- Neural 3D completion gate: `{system.get('neural_3d_completion_status')}`; metric rows `{system.get('neural_3d_metric_result_rows')}`; report `{system.get('neural_3d_readiness_report')}`",
         f"- Live overlay: `{system.get('live_overlay_status')}`; camera set `{system.get('camera_set')}`; profile `{system.get('camera_profile')}`",
         f"- Real Cesium: Google tiles `{system.get('google_photorealistic_tiles_valid')}`, terrain `{system.get('cesium_world_terrain_valid')}`, fake city `{system.get('substitute_city_geometry_created')}`",
         f"- UAV altitude policy: `{system.get('uav_altitude_policy')}`",
@@ -491,6 +517,7 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- Full-frame ready: `{(system.get('qualitative_gate_checks') or {}).get('full_frame_main_ready')}`; best full void `{(system.get('best_full_capture') or {}).get('best_black_ratio')}`; mean top-3 void `{(system.get('best_full_capture') or {}).get('mean_top3_black_ratio')}`",
         f"- Crop supplementary ready: `{(system.get('qualitative_gate_checks') or {}).get('crop_supplementary_ready')}`; best crop void `{(system.get('best_crop_candidate') or {}).get('black_ratio')}`; area `{(system.get('best_crop_candidate') or {}).get('area_ratio')}`",
         f"- Clean full-frame recapture plan: `{system.get('clean_recapture_plan')}`; status `{system.get('clean_recapture_plan_status')}`; needed improvement `{system.get('clean_recapture_needed_improvement')}`",
+        f"- 3D claiming rule: {system.get('neural_3d_claiming_rule')}",
         f"- Dashboard: `{system.get('dashboard')}`",
         "",
         "## AeroGraph Reasoner",
@@ -499,6 +526,8 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- Prompt class counts: `{aerograph.get('class_counts')}`",
         f"- Real-capture compact prompt pack: `{aerograph.get('real_capture_prompt_pack_status')}`, prompts `{aerograph.get('real_capture_prompt_count')}`, classes `{aerograph.get('real_capture_prompt_class_counts')}`",
         f"- Real-capture compact web batches: `{aerograph.get('real_capture_web_batch_status')}`, count `{aerograph.get('real_capture_web_batch_count')}`; dry-run `{aerograph.get('real_capture_dryrun_status')}`, paper-claim `{aerograph.get('real_capture_dryrun_paper_claim_allowed')}`",
+        f"- Real-capture compact non-mock smoke: `{aerograph.get('real_capture_nonmock_smoke_status')}`; expected prompts `{aerograph.get('real_capture_nonmock_smoke_expected_prompt_count')}`; selected manifest `{aerograph.get('real_capture_nonmock_smoke_selected_manifest') or ''}`",
+        f"- Real-capture compact web packet: `{aerograph.get('real_capture_web_collection_packet')}`; checklist `{aerograph.get('real_capture_web_collection_checklist')}`",
         f"- Web batches: `{aerograph.get('web_batch_status')}`, count `{aerograph.get('web_batch_count')}`, dir `{aerograph.get('web_batch_dir')}`",
         f"- Dry-run status: `{aerograph.get('dry_run_status')}`",
         f"- Paper table status: `{aerograph.get('paper_table_status')}`, selected manifest `{aerograph.get('paper_table_selected_manifest')}`",

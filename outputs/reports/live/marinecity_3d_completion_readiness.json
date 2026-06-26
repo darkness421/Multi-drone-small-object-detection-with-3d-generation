@@ -1,0 +1,31 @@
+{
+  "updated_at_kst": "2026-06-26 13:05:10 KST",
+  "status": "marinecity_3d_completion_pending_upstream_runner",
+  "source_capture_ready": true,
+  "capture_summary": {
+    "scenario_count": 3,
+    "frame_count": 9,
+    "uav_count": 3,
+    "altitude_range_m": [
+      140.0,
+      160.0
+    ],
+    "terrain_all_valid": true,
+    "google_tiles_all_valid": true,
+    "mean_rgb_black_ratio": 0.0913768325617284,
+    "mean_depth_finite_ratio": 0.908344425154321
+  },
+  "comparison_csv": "outputs/experiments/3d_generation_comparison.csv",
+  "comparison_row_count": 0,
+  "metric_result_row_count": 0,
+  "result_json_count": 0,
+  "result_jsons": [],
+  "methods_ready": [],
+  "missing_expected_methods": [
+    "nerf",
+    "instant_ngp",
+    "mip_nerf_360",
+    "gaussian_splatting"
+  ],
+  "claiming_rule": "The real-Cesium RGB/depth/pose capture source is ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
+}

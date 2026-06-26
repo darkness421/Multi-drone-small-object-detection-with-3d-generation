@@ -54,6 +54,8 @@ ARTIFACTS = [
     Artifact("supp_system", "outputs/reports/live/marinecity_real_capture_benchmark.md", "runbook", True, "Real-Cesium capture benchmark manifest summary"),
     Artifact("supp_system", "outputs/reports/live/marinecity_detector_reasoner_smoke.md", "runbook", True, "Real-Cesium detector-to-reasoner smoke report"),
     Artifact("supp_system", "outputs/reports/live/marinecity_crossview_evidence_graph.md", "runbook", True, "Real-Cesium cross-view evidence graph smoke report"),
+    Artifact("supp_system", "outputs/reports/live/marinecity_system_integration_check.md", "runbook", True, "Real-Cesium object/UAV/camera/YOLO/3D/LLM integration gate"),
+    Artifact("pending_3d", "outputs/reports/live/marinecity_3d_completion_readiness.md", "runbook", True, "MarineCity neural 3D completion readiness gate"),
     Artifact("pending_reasoner", "paper/tables/aerograph_reasoner_results_placeholder.tex", "pending", True, "AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete"),
     Artifact("pending_reasoner", "docs/aerograph_nonmock_collection_plan.md", "runbook", True, "Non-mock reasoner collection gate"),
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_prompt_pack_integrity.md", "audit", True, "AeroGraph prompt/template/batch consistency check"),
@@ -61,6 +63,8 @@ ARTIFACTS = [
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_checklist.csv", "runbook", True, "Per-prompt AeroGraph non-mock collection checklist"),
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_real_capture_prompt_pack/manifest.json", "runbook", True, "Compact 23-prompt real-capture AeroGraph smoke pack"),
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/README.md", "runbook", True, "Compact real-capture web-provider batch index"),
+    Artifact("pending_reasoner", "outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md", "runbook", True, "Compact real-capture web-provider collection packet"),
+    Artifact("pending_reasoner", "outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv", "runbook", True, "Compact real-capture web-provider collection checklist"),
     Artifact("pending_reasoner", "outputs/reasoning/aerograph_real_capture_eval_dryrun/manifest.json", "audit", True, "Compact real-capture prompt-pack runner dry-run check"),
     Artifact("pending_reasoner", "scripts/normalize_aerograph_web_responses.py", "runbook_helper", True, "Web LLM raw-output normalizer for AeroGraph manual responses"),
     Artifact("audit", "paper/figures/results/paper_artifact_readiness_manifest.md", "audit", True, "Human-readable artifact manifest"),
@@ -91,6 +95,8 @@ TEXT_SCOPE = [
     "docs/aerograph_reasoner_naming.md",
     "outputs/reports/live/accv_workflow_status_snapshot.md",
     "outputs/reports/live/marinecity_real_capture_benchmark.md",
+    "outputs/reports/live/marinecity_system_integration_check.md",
+    "outputs/reports/live/marinecity_3d_completion_readiness.md",
 ]
 
 
@@ -219,6 +225,35 @@ def marinecity_qualitative_gate() -> dict[str, Any]:
     }
 
 
+def marinecity_system_integration_gate() -> dict[str, Any]:
+    report = read_json(REPO_ROOT / "outputs/reports/live/marinecity_system_integration_check.json")
+    checks = report.get("checks", []) or []
+    return {
+        "status": report.get("status", "missing"),
+        "fail_count": sum(1 for row in checks if row.get("status") == "FAIL"),
+        "warn_count": sum(1 for row in checks if row.get("status") == "WARN"),
+        "pending_count": sum(1 for row in checks if row.get("status") == "PENDING"),
+        "detector_token_count": (report.get("detector", {}) or {}).get("token_count"),
+        "detector_classes": (report.get("detector", {}) or {}).get("tokens_by_class"),
+        "actor_classes": (report.get("actors", {}) or {}).get("actor_classes"),
+        "three_d_status": (report.get("three_d_completion", {}) or {}).get("status"),
+        "llm_external_ready": (report.get("llm_reasoner", {}) or {}).get("external_provider_replication_ready"),
+        "tinyperson_status": (report.get("tinyperson_640", {}) or {}).get("status"),
+    }
+
+
+def marinecity_3d_completion_gate() -> dict[str, Any]:
+    report = read_json(REPO_ROOT / "outputs/reports/live/marinecity_3d_completion_readiness.json")
+    return {
+        "status": report.get("status", "missing"),
+        "source_capture_ready": report.get("source_capture_ready"),
+        "metric_result_row_count": report.get("metric_result_row_count"),
+        "methods_ready": report.get("methods_ready"),
+        "missing_expected_methods": report.get("missing_expected_methods"),
+        "claiming_rule": report.get("claiming_rule", ""),
+    }
+
+
 def build_report() -> dict[str, Any]:
     artifacts = artifact_rows()
     stale = stale_claim_rows()
@@ -227,6 +262,8 @@ def build_report() -> dict[str, Any]:
     main_tex = main_tex_gate()
     latex_integrity = latex_integrity_gate()
     marinecity_qual = marinecity_qualitative_gate()
+    marinecity_system = marinecity_system_integration_gate()
+    marinecity_3d = marinecity_3d_completion_gate()
     status = "paper_artifact_audit_ok_with_pending_gates"
     latex_bad = latex_integrity.get("status") not in {"latex_patch_integrity_ok"}
     if missing_required or stale or latex_bad:
@@ -252,6 +289,8 @@ def build_report() -> dict[str, Any]:
         "stale_claims": stale,
         "aerograph_gate": aerograph,
         "marinecity_qualitative_gate": marinecity_qual,
+        "marinecity_system_integration_gate": marinecity_system,
+        "marinecity_3d_completion_gate": marinecity_3d,
         "main_tex_gate": main_tex,
         "latex_integrity_gate": latex_integrity,
         "claiming_summary": {
@@ -261,7 +300,9 @@ def build_report() -> dict[str, Any]:
             if marinecity_qual.get("full_frame_main_ready")
             else "pending_clean_full_frame_recapture",
             "aerograph": aerograph_claim,
-            "final_3d_completion": "pending_or_pilot_only",
+            "final_3d_completion": "ready"
+            if marinecity_3d.get("status") == "marinecity_3d_completion_ready"
+            else "pending_neural_3d_completion_metrics",
             "local_compile": "pending_main_tex_or_overleaf_sync",
         },
     }
@@ -281,6 +322,8 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
     aerograph = report["aerograph_gate"]
     main_tex = report["main_tex_gate"]
     marinecity_qual = report["marinecity_qualitative_gate"]
+    marinecity_system = report["marinecity_system_integration_gate"]
+    marinecity_3d = report["marinecity_3d_completion_gate"]
     lines = [
         "# Paper Artifact Readiness Check",
         "",
@@ -297,6 +340,8 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
         f"- AeroGraph external-provider replication ready: `{aerograph['external_provider_replication_ready']}`",
         f"- AeroGraph table status: `{aerograph['paper_table_status']}`",
         f"- MarineCity qualitative gate: `{marinecity_qual['status']}`",
+        f"- MarineCity integration gate: `{marinecity_system['status']}`; fails `{marinecity_system['fail_count']}`, warnings `{marinecity_system['warn_count']}`, pending `{marinecity_system['pending_count']}`",
+        f"- MarineCity 3D completion gate: `{marinecity_3d['status']}`; metric rows `{marinecity_3d['metric_result_row_count']}`",
         f"- MarineCity main full-frame ready: `{marinecity_qual['full_frame_main_ready']}`",
         f"- Local main.tex present: `{main_tex['main_tex_present']}`",
         f"- LaTeX patch integrity: `{report['latex_integrity_gate']['status']}`",
@@ -310,6 +355,26 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
 
     lines.extend(
         [
+            "",
+            "## MarineCity Integration Gate",
+            "",
+            f"- Status: `{marinecity_system['status']}`",
+            f"- Fail/warn/pending count: `{marinecity_system['fail_count']}` / `{marinecity_system['warn_count']}` / `{marinecity_system['pending_count']}`",
+            f"- Detector token count: `{marinecity_system['detector_token_count']}`",
+            f"- Detector classes: `{marinecity_system['detector_classes']}`",
+            f"- Actor classes: `{marinecity_system['actor_classes']}`",
+            f"- 3D status: `{marinecity_system['three_d_status']}`",
+            f"- LLM external ready: `{marinecity_system['llm_external_ready']}`",
+            f"- TinyPerson status: `{marinecity_system['tinyperson_status']}`",
+            "",
+            "## MarineCity 3D Completion Gate",
+            "",
+            f"- Status: `{marinecity_3d['status']}`",
+            f"- Source capture ready: `{marinecity_3d['source_capture_ready']}`",
+            f"- Metric result rows: `{marinecity_3d['metric_result_row_count']}`",
+            f"- Methods ready: `{marinecity_3d['methods_ready']}`",
+            f"- Missing expected methods: `{marinecity_3d['missing_expected_methods']}`",
+            f"- Claiming rule: {marinecity_3d['claiming_rule']}",
             "",
             "## MarineCity Qualitative Gate",
             "",

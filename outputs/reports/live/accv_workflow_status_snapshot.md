@@ -1,6 +1,6 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-26 12:14:27 KST`
+Updated: `2026-06-26 13:13:10 KST`
 
 ## Detector Status
 
@@ -38,6 +38,8 @@ Updated: `2026-06-26 12:14:27 KST`
 - Real-capture detector/reasoner smoke: `marinecity_detector_reasoner_smoke_artifacts_ready`; tokens `23`; report `outputs/reports/live/marinecity_detector_reasoner_smoke.md`
 - Detector preview sheet: `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png`
 - Cross-view evidence graph: `marinecity_crossview_evidence_graph_smoke_ready`; hypotheses `13`; multi-view `5`; edges support/conflict/missing `23`/`4`/`20`; claim `real_cesium_crossview_association_smoke_not_final_3d_reconstruction`
+- Integration check: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; actor classes `['bus', 'car', 'pedestrian', 'person', 'truck', 'van']`; detector classes `{'car': 15, 'bus': 8}`; report `outputs/reports/live/marinecity_system_integration_check.md`
+- Neural 3D completion gate: `marinecity_3d_completion_pending_upstream_runner`; metric rows `0`; report `outputs/reports/live/marinecity_3d_completion_readiness.md`
 - Live overlay: `session_overlay_added`; camera set `True`; profile `viewer160_marinecity_roi`
 - Real Cesium: Google tiles `True`, terrain `True`, fake city `False`
 - UAV altitude policy: `{'band_m': [140, 160], 'default_m': 160, 'user_locked_review_height_m': 160, 'verified_viewer160_recapture_m': {'uav_01': 140, 'uav_02': 150, 'uav_03': 160}, 'note': 'Use 140-160 m for UAV/camera observation; keep CesiumGeoreference readback logged separately.'}`
@@ -48,6 +50,7 @@ Updated: `2026-06-26 12:14:27 KST`
 - Full-frame ready: `True`; best full void `0.017828`; mean top-3 void `0.087552`
 - Crop supplementary ready: `True`; best crop void `0.003577`; area `0.9025`
 - Clean full-frame recapture plan: `outputs/reports/live/marinecity_clean_recapture_plan.json`; status `main_full_frame_ready`; needed improvement `{'best_black_ratio_delta_to_threshold': 0.0, 'mean_top3_black_ratio_delta_to_threshold': 0.0}`
+- 3D claiming rule: The real-Cesium RGB/depth/pose capture source is ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected.
 - Dashboard: `outputs/reports/live/marinecity_simulation_dashboard.png`
 
 ## AeroGraph Reasoner

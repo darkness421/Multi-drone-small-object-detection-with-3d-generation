@@ -1,0 +1,194 @@
+{
+  "updated_at_kst": "2026-06-26 13:13:10 KST",
+  "status": "marinecity_system_integration_smoke_ready_with_pending_final_gates",
+  "checks": [
+    {
+      "name": "real_cesium_stage",
+      "status": "PASS",
+      "evidence": "google_tiles=True, terrain=True, fake_city=False"
+    },
+    {
+      "name": "visdrone_actor_overlay",
+      "status": "PASS",
+      "evidence": "objects=6, classes=bus,car,pedestrian,person,truck,van"
+    },
+    {
+      "name": "multi_uav_markers_and_cameras",
+      "status": "PASS",
+      "evidence": "uav_markers=3, capture_cameras=3"
+    },
+    {
+      "name": "real_capture_rgb_depth_pose",
+      "status": "PASS",
+      "evidence": "scenarios=3, frames=9, altitude_range=140.0-160.0m"
+    },
+    {
+      "name": "safr_yolo_from_uav_views",
+      "status": "PASS",
+      "evidence": "tokens=23, device=1, classes={'car': 15, 'bus': 8}"
+    },
+    {
+      "name": "pedestrian_detection_from_current_views",
+      "status": "WARN",
+      "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=0, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
+    },
+    {
+      "name": "crossview_evidence_graph",
+      "status": "PASS",
+      "evidence": "hypotheses=13, multi_view=5"
+    },
+    {
+      "name": "neural_3d_completion_benchmark",
+      "status": "PENDING",
+      "evidence": "Current real-Cesium RGB/depth/pose captures are valid source evidence. Do not claim NeRF/Instant-NGP/Mip-NeRF/3DGS completion until metric rows exist."
+    },
+    {
+      "name": "external_llm_reasoner",
+      "status": "PENDING",
+      "evidence": "49-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_pending"
+    },
+    {
+      "name": "tinyperson_640_supplement",
+      "status": "PASS",
+      "evidence": "Use TinyPerson as supplementary domain-shift evidence only. The current sparse converted 640 split does not support a headline SAFR-YOLO improvement claim."
+    }
+  ],
+  "opened_stage": {
+    "stage_path": "/workspace/uav_marinecity/uavmarine.usd",
+    "root_layer": "/workspace/uav_marinecity/uavmarine.usd",
+    "georeference_readback": {
+      "valid": true,
+      "path": "/CesiumGeoreference",
+      "latitude": 35.1569,
+      "latitude_attr": "cesium:georeferenceOrigin:latitude",
+      "longitude": 129.1439,
+      "longitude_attr": "cesium:georeferenceOrigin:longitude",
+      "height": 200.0,
+      "height_attr": "cesium:georeferenceOrigin:height"
+    },
+    "google_tiles": true,
+    "terrain": true,
+    "fake_or_substitute_city": false
+  },
+  "actors": {
+    "exists": true,
+    "path": "/home/oem/UAV/uav_marinecity/uavmarine_multiuav_actor_overlay_s0_locked_roi.usda",
+    "object_count": 6,
+    "uav_count": 3,
+    "actor_classes": [
+      "bus",
+      "car",
+      "pedestrian",
+      "person",
+      "truck",
+      "van"
+    ],
+    "uav_ids": [
+      "uav_01",
+      "uav_02",
+      "uav_03"
+    ],
+    "camera_count": 3,
+    "fake_city_keyword_found": false
+  },
+  "captures": {
+    "scenario_count": 3,
+    "frame_count": 9,
+    "camera_prims": [
+      "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_01_Camera",
+      "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_02_Camera",
+      "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_03_Camera"
+    ],
+    "altitude_range_m": [
+      140.0,
+      160.0
+    ],
+    "mean_rgb_black_ratio": 0.0913768325617284,
+    "mean_depth_finite_ratio": 0.908344425154321
+  },
+  "detector": {
+    "status": "marinecity_real_capture_detector_smoke_complete",
+    "weights": "/home/oem/projects/multi-uav-marine-city/outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
+    "device": "1",
+    "imgsz": 1280,
+    "conf": 0.15,
+    "frame_count": 9,
+    "token_count": 23,
+    "tokens_by_class": {
+      "car": 15,
+      "bus": 8
+    },
+    "tokens_by_uav": {
+      "uav_01": 5,
+      "uav_02": 15,
+      "uav_03": 3
+    },
+    "preview_contact_sheet": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/marinecity_detector_preview_contact_sheet.png",
+    "supp_lowconf_conf": 0.05,
+    "supp_lowconf_token_count": 27,
+    "supp_lowconf_tokens_by_class": {
+      "car": 18,
+      "bus": 8,
+      "pedestrian": 1
+    },
+    "supp_lowconf_preview_contact_sheet": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke_conf005/marinecity_detector_preview_contact_sheet.png"
+  },
+  "crossview_graph": {
+    "status": "marinecity_crossview_evidence_graph_smoke_ready",
+    "claim_level": "real_cesium_crossview_association_smoke_not_final_3d_reconstruction",
+    "source_tokens": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/evidence_tokens.jsonl",
+    "token_count": 23,
+    "scenario_count": 3,
+    "uav_count": 3,
+    "hypothesis_count": 13,
+    "multi_view_hypothesis_count": 5,
+    "single_view_hypothesis_count": 8,
+    "support_edge_count": 23,
+    "conflict_edge_count": 4,
+    "weak_edge_count": 13,
+    "missing_evidence_edge_count": 20,
+    "class_counts": {
+      "car": 15,
+      "bus": 8
+    },
+    "scenario_token_counts": {
+      "S0": 7,
+      "S1": 8,
+      "S2": 8
+    },
+    "parameters": {
+      "hfov_deg": 60.0,
+      "ground_z": 0.0,
+      "cluster_threshold": 55.0,
+      "conflict_threshold": 38.0
+    },
+    "claiming_rule": "Use as real-Cesium evidence-graph smoke/protocol result. Do not claim completed metric 3D reconstruction or non-mock LLM validation."
+  },
+  "three_d_completion": {
+    "status": "pending_upstream_runner_connection",
+    "result_row_count": 0,
+    "comparison_csv": "outputs/experiments/3d_generation_comparison.csv",
+    "benchmark_external_runner_status": "pending_upstream_runner_connection",
+    "claiming_rule": "Current real-Cesium RGB/depth/pose captures are valid source evidence. Do not claim NeRF/Instant-NGP/Mip-NeRF/3DGS completion until metric rows exist."
+  },
+  "llm_reasoner": {
+    "real_capture_nonmock_smoke_status": "aerograph_real_capture_nonmock_smoke_pending",
+    "final_49_prompt_status": "aerograph_reviewed_candidate_ready_external_pending",
+    "external_provider_replication_ready": false,
+    "claiming_rule": "AeroGraph is the drone-specific reasoner name. Current non-mock external-provider validation remains pending."
+  },
+  "tinyperson_640": {
+    "status": "complete_supplementary_stress_test",
+    "row_count": 6,
+    "all_seed_count": [
+      "3"
+    ],
+    "best_method": "YOLOv9m-TinyPerson640",
+    "best_ap": 0.00019666666666666666,
+    "best_ap50": 0.0010199999999999999,
+    "ours_method": "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l-TinyPerson640",
+    "ours_ap": 1e-05,
+    "ours_ap50": 4.3333333333333334e-05,
+    "claiming_rule": "Use TinyPerson as supplementary domain-shift evidence only. The current sparse converted 640 split does not support a headline SAFR-YOLO improvement claim."
+  }
+}

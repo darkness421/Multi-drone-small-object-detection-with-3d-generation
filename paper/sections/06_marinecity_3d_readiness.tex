@@ -19,6 +19,13 @@ RGB/depth-like capture artifacts, camera metadata, pose hints, and timestamp
 fields. Vehicles and pedestrian-like small objects are placed from the detector
 class vocabulary so that the 2D SAFR-YOLO output can be converted into
 structured EvidenceTokens for the 3D graph and \textbf{AeroGraph Reasoner}.
+The current actor-layer audit confirms six VisDrone-derived object cards
+(vehicle classes plus pedestrian/person actors), three UAV markers, and three
+UAV camera prims on the real-Cesium stage without synthetic city replacement.
+The current SAFR-YOLO smoke run produces vehicle tokens (car/bus) from the UAV
+views; pedestrian actor placement is therefore verified, but pedestrian
+detection is reserved for the next recapture or threshold-tuning pass rather
+than claimed as a completed quantitative result.
 
 Table~\ref{tab:marinecity_real_capture_benchmark} summarizes the real-Cesium
 capture source now used for the 3D/reasoner handoff. The table is intentionally

@@ -51,6 +51,14 @@ Current live bundle:
   object hypotheses with support, conflict, and missing-evidence edges. Use it
   as 2D-to-3D evidence-graph protocol validation, not as metric 3D
   reconstruction evidence.
+- `marinecity_system_integration_check.md`: conservative pass/warn/pending
+  audit for the current real-Cesium stage, VisDrone actor overlay, 3-UAV camera
+  captures, SAFR-YOLO smoke tokens, cross-view graph, TinyPerson stress test,
+  and the remaining neural-3D/non-mock-LLM gates.
+- `marinecity_3d_completion_readiness.md`: explicit readiness gate for NeRF,
+  Instant-NGP, Mip-NeRF/3DGS-style completion. It currently treats the
+  real-Cesium RGB/depth/pose captures as ready source evidence and keeps neural
+  3D metric rows pending.
 - `marinecity_crossview_evidence_graph.png`: supplementary visualization of the
   current cross-view evidence graph smoke result.
 - `/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json`: latest live Isaac session-layer overlay status. It confirms `uavmarine.usd` is the real Cesium root layer and the UAV/object layer is non-destructive.
@@ -72,6 +80,12 @@ Current live bundle:
   generated from the current real-Cesium detector-to-reasoner smoke outputs.
   Use its three web batches for a fast GPT/Factory/local-provider sanity check
   before running the full 49-prompt final gate.
+- `aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md`:
+  compact 23-prompt web-provider handoff for the current real-Cesium smoke run.
+  This is the fastest non-mock sanity check and must stay separate from the
+  final 49-prompt paper-table gate.
+- `aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv`:
+  per-prompt tracking sheet for the 23-prompt compact real-capture smoke check.
 - `aerograph_prompt_pack/aerograph_manual_response_template_sample10.jsonl`:
   manual web-provider response template. Use
   `scripts/import_aerograph_manual_responses.py` to convert Factory/ChatGPT web

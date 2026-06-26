@@ -13,6 +13,7 @@ import csv
 import json
 import math
 import os
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -22,10 +23,13 @@ os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
 
 import matplotlib.pyplot as plt
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from evidence import EvidenceToken, load_tokens_jsonl
 
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TOKENS = REPO_ROOT / "outputs/evidence/marinecity_real_capture_detector_smoke/evidence_tokens.jsonl"
 DEFAULT_OUT = REPO_ROOT / "outputs/graphs/marinecity_crossview_evidence_graph"
 DEFAULT_LIVE = REPO_ROOT / "outputs/reports/live"
