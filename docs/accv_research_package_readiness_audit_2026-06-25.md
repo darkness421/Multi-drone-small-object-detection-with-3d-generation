@@ -1,6 +1,6 @@
 # ACCV Research Package Readiness Audit
 
-Updated: `2026-06-25 KST`
+Updated: `2026-06-26 KST`
 
 This audit separates paper-claimable evidence from smoke-test or pending
 evidence. Use it before updating the main paper, supplementary material, or
@@ -11,13 +11,14 @@ Companion paper artifact index:
 
 ## Current Decision
 
-- 2D detector section: **paper-ready with final wording review**.
+- 2D detector section: **paper-ready and committed** in
+  `64ed57c` (`Update 2D paper results and TinyPerson supplement`).
 - MarineCity/Isaac system section: **paper-ready as a real-Cesium system
   smoke/protocol result**, but not yet as a final 3D reconstruction benchmark.
 - AeroGraph reasoner section: **reviewed 49-prompt candidate table available;
   external-provider replication still pending**.
-- TinyPerson stress test: **completed but weak; use only as supplementary
-  domain-shift/limitation evidence**.
+- TinyPerson 640 stress test: **completed, paper figure/table refreshed, but
+  weak; use only as supplementary domain-shift/limitation evidence**.
 
 ## Paper-Claimable Now
 
@@ -32,12 +33,14 @@ Companion paper artifact index:
 | MarineCity visual QA and crop candidates | Complete for figure selection guidance | `paper/figures/results/marinecity_system/marinecity_capture_quality_rank.csv`, `paper/figures/results/marinecity_system/marinecity_real_capture_crop_candidates.csv` |
 | MarineCity qualitative gate | Complete as a promotion gate | `outputs/reports/live/marinecity_qualitative_gate.md`, `paper/figures/results/marinecity_system/marinecity_qualitative_gate.md` |
 | UAV/camera altitude policy | Complete | `outputs/reports/live/accv_workflow_status_snapshot.md`, `docs/uavmarine_multiuav_scenarios.md`, `paper/sections/06_marinecity_3d_readiness.tex` |
+| TinyPerson 640 supplementary stress test | Complete as limitation evidence | `paper/tables/tinyperson_640_stress_table.tex`, `paper/figures/results/paper_fig12_tinyperson_640_stress.png`, `outputs/experiments/tinyperson_640/summary.csv` |
 
 ## Must Stay Pending Or Carefully Worded
 
 | Area | Current State | Required Before Final Claim |
 |---|---|---|
 | AeroGraph external-provider reasoning accuracy | Reviewed 49-prompt candidate table, web batches, dry-run, and table builder exist; final paper claim remains pending | Complete one external-provider run over all 49 prompts and rebuild `paper/tables/aerograph_reasoner_results_placeholder.tex` |
+| AeroGraph real-capture compact smoke | 23-prompt current-capture prompt pack and dry-run exist, but no non-mock provider manifest is present | Configure `OPENAI_API_KEY` or `AEROGRAPH_COMMAND`, or import web answers into `outputs/reasoning/aerograph_real_capture_manual_responses.jsonl` |
 | 3D reconstruction/restoration benchmark | Current evidence is detector-to-graph/system smoke, not final NeRF/3DGS/3D-completion benchmark | Run final 3D completion/restoration experiment or phrase as planned/initial protocol |
 | Final MarineCity qualitative figure | Real-Cesium smoke, crop supplementary evidence, and clean full-frame main candidate are ready (`best full-frame void=0.017828`, `mean top-3 void=0.087552`) | Keep as paper candidate and re-check during final layout review |
 | Isaac live GUI state | User-visible GUI has real Cesium, but paper evidence should come from saved screenshots/manifests | Export clean screenshots/panels after final altitude and ROI are locked |
@@ -54,12 +57,19 @@ Authoritative source:
 
 - `outputs/experiments/tinyperson_640/summary.csv`
 - `outputs/reports/live/tinyperson_640_dashboard.png`
+- `paper/tables/tinyperson_640_stress_table.tex`
+- `paper/figures/results/paper_fig12_tinyperson_640_stress.png`
 
 Do not use `outputs/experiments/tinyperson_640/stage_gate.md` as the source of
 truth if it contradicts the summary CSV; that generic gate can misread this
 stress-test naming.
 
 ## AeroGraph Next Action
+
+The active shell currently has no `OPENAI_API_KEY`, `AEROGRAPH_COMMAND`,
+Factory CLI, OpenAI CLI, Ollama CLI, or equivalent provider command configured.
+Therefore the remaining AeroGraph gate is not compute-bound; it is a provider
+connection/data-entry gate.
 
 Use the web batches if no CLI provider key is configured:
 
