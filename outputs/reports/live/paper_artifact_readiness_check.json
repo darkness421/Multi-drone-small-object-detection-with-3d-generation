@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 15:04:59 KST",
+  "updated_at_kst": "2026-06-26 15:10:55 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 52,
   "missing_required_count": 0,
@@ -521,7 +521,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 7901,
+      "size_bytes": 8986,
       "status": "ok",
       "note": "Claim readiness audit"
     }

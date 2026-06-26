@@ -11,14 +11,17 @@ Companion paper artifact index:
 
 ## Current Decision
 
-- 2D detector section: **paper-ready and committed** in
-  `64ed57c` (`Update 2D paper results and TinyPerson supplement`).
+- 2D detector section: **paper-ready and committed**. Recent paper-facing
+  detector/TinyPerson updates include `196b4a7` (`Add TinyPerson transfer and
+  eval-size supplementary results`) and `a5b898e` (`Track TinyPerson eval-size
+  artifacts in paper readiness`).
 - MarineCity/Isaac system section: **paper-ready as a real-Cesium system
   smoke/protocol result**, but not yet as a final 3D reconstruction benchmark.
 - AeroGraph reasoner section: **reviewed 49-prompt candidate table available;
   external-provider replication still pending**.
-- TinyPerson 640 stress test: **completed, paper figure/table refreshed, but
-  weak; use only as supplementary domain-shift/limitation evidence**.
+- TinyPerson 640 stress test and eval-size diagnostic: **completed, paper
+  figure/table refreshed, but weak; use only as supplementary
+  domain-shift/limitation evidence**.
 
 ## Paper-Claimable Now
 
@@ -34,6 +37,7 @@ Companion paper artifact index:
 | MarineCity qualitative gate | Complete as a promotion gate | `outputs/reports/live/marinecity_qualitative_gate.md`, `paper/figures/results/marinecity_system/marinecity_qualitative_gate.md` |
 | UAV/camera altitude policy | Complete | `outputs/reports/live/accv_workflow_status_snapshot.md`, `docs/uavmarine_multiuav_scenarios.md`, `paper/sections/06_marinecity_3d_readiness.tex` |
 | TinyPerson 640 supplementary stress test | Complete as limitation evidence | `paper/tables/tinyperson_640_stress_table.tex`, `paper/figures/results/paper_fig12_tinyperson_640_stress.png`, `outputs/experiments/tinyperson_640/summary.csv` |
+| TinyPerson transfer and eval-size diagnostic | Complete as supplementary-only diagnostic evidence | `paper/tables/tinyperson_eval_imgsz_sweep_table.tex`, `paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png`, `outputs/experiments/tinyperson_eval_imgsz_sweep/summary.csv` |
 
 ## Must Stay Pending Or Carefully Worded
 
@@ -48,17 +52,26 @@ Companion paper artifact index:
 
 ## TinyPerson Status
 
-TinyPerson640 is finished as a stress-test queue, but the values are near zero
-for all tested models. This is not useful as a primary comparison table. It can
-be used in supplementary material as evidence that cross-dataset tiny-person
-transfer at 640px is a hard domain-shift case.
+TinyPerson640 is finished as a stress-test queue, and the VisDrone-initialized
+SAFR-YOLO transfer row plus eval-only input-size sweep are also complete. The
+values are still near zero for all tested models, so this is not useful as a
+primary comparison table. It can be used in supplementary material as evidence
+that cross-dataset tiny-person transfer at 640px is a hard domain-shift case.
+The transfer row improves recall, and the eval-size sweep shows that the sparse
+converted split is most stable at 640px, but neither result changes the main
+VisDrone detector claim.
 
 Authoritative source:
 
 - `outputs/experiments/tinyperson_640/summary.csv`
+- `outputs/experiments/tinyperson_640_transfer/summary.csv`
+- `outputs/experiments/tinyperson_eval_imgsz_sweep/summary.csv`
 - `outputs/reports/live/tinyperson_640_dashboard.png`
+- `outputs/reports/live/tinyperson_eval_imgsz_sweep_dashboard.png`
 - `paper/tables/tinyperson_640_stress_table.tex`
+- `paper/tables/tinyperson_eval_imgsz_sweep_table.tex`
 - `paper/figures/results/paper_fig12_tinyperson_640_stress.png`
+- `paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png`
 
 Do not use `outputs/experiments/tinyperson_640/stage_gate.md` as the source of
 truth if it contradicts the summary CSV; that generic gate can misread this
@@ -126,5 +139,6 @@ benchmark is run.
   a real-Cesium multi-UAV system pipeline and evidence-token export.
 - Main paper should not claim a completed 3D reconstruction benchmark unless the
   final 3D completion/restoration experiment is run.
-- Supplementary should carry the full ablation inventory, TinyPerson stress
-  result, extra Grad-CAM/qualitative panels, and implementation details.
+- Supplementary should carry the full ablation inventory, TinyPerson stress and
+  eval-size diagnostics, extra Grad-CAM/qualitative panels, and implementation
+  details.
