@@ -1,6 +1,6 @@
 # Detector Ranking Snapshot
 
-Generated: 2026-06-26T10:58:16
+Generated: 2026-06-26T11:48:49
 
 Trade-off score = mean(AP, AP50, F1) * (YOLOv11l params / model params).
 Paper-gated trade-off additionally requires AP and AP50 to be at least YOLOv11l before scoring.

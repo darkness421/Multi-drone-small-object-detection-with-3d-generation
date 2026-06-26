@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 11:29:30 KST",
+  "updated_at_kst": "2026-06-26 11:58:24 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 44,
   "missing_required_count": 0,
@@ -201,7 +201,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 3522558,
+      "size_bytes": 3514780,
       "status": "ok",
       "note": "Detector activation/heatmap sheet"
     },
