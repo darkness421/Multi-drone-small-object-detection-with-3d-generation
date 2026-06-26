@@ -16,8 +16,8 @@ Paper-facing detector figures are restricted to final Ours, YOLO-family baseline
 - `paper_fig09_final_ablation_delta_bar.png`
 - `paper_fig10_final_ablation_metric_heatmap.png`
 - `paper_fig11_final_detector_feature_activation_heatmap.png`
-- `paper_fig12_tinyperson_640_stress.png`
-- `paper_fig13_tinyperson_eval_imgsz_sweep.png`
+- `paper_fig14_final_nms_robustness.png`
+- `paper_fig15_final_input_resolution_sweep.png`
 
 Main-paper recommended:
 - `paper_fig01_main_detector_table.png`
@@ -34,5 +34,10 @@ Supplementary or appendix recommended:
 - `paper_fig09_final_ablation_delta_bar.png`
 - `paper_fig10_final_ablation_metric_heatmap.png`
 - `paper_fig11_final_detector_feature_activation_heatmap.png`
+- `paper_fig14_final_nms_robustness.png`
+- `paper_fig15_final_input_resolution_sweep.png`
+
+Archive-only diagnostics, not recommended for the default main or supplementary
+paper:
 - `paper_fig12_tinyperson_640_stress.png`
 - `paper_fig13_tinyperson_eval_imgsz_sweep.png`

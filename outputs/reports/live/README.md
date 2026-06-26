@@ -50,8 +50,28 @@ Current live bundle:
 - `paper_fig09_final_ablation_delta_bar.png`: compact ablation delta chart versus YOLOv11l.
 - `paper_fig10_final_ablation_metric_heatmap.png`: supplementary ablation heatmap including exploratory modules.
 - `paper_fig11_final_detector_feature_activation_heatmap.png`: Grad-CAM-style feature activation heatmap sheet for YOLOv11l, YOLOv9c, and Ours. Use as supplementary qualitative evidence.
+- `paper_fig14_final_nms_robustness.png`: final detector NMS robustness curve
+  for Ours versus YOLOv9c across IoU thresholds 0.45/0.55/0.65/0.75 at
+  confidence 0.001. Source tables are
+  `../../experiments/final_nms_robustness_sweep/results.csv` and
+  `../../experiments/final_nms_robustness_sweep/summary.csv`; the best 3-seed
+  mean setting is Ours at IoU 0.55 with AP/AP50/F1
+  0.3858/0.6133/0.6298 using 20.82M parameters.
+- `paper_fig15_final_input_resolution_sweep.png`: final detector input-size
+  sensitivity curve for Ours versus YOLOv9c using the 1280-trained checkpoints
+  at eval sizes 640/960/1280/1536. Source tables are
+  `../../experiments/final_input_resolution_sweep/results.csv` and
+  `../../experiments/final_input_resolution_sweep/summary.csv`; Ours stays
+  ahead at all tested evaluation sizes while using fewer parameters.
 - `paper_fig12_tinyperson_640_stress.png`: archived legacy TinyPerson 640 diagnostic figure with the Ours transfer row; keep it out of the default paper.
 - `../../paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png`: archived eval-only input-size sensitivity figure; keep it out of the default paper.
+- `final_nms_robustness_summary.md`: supplementary-ready NMS robustness table
+  generated from the final detector and YOLOv9c 3-seed eval-only sweep. Use as
+  supplemental evidence, not as a new training claim.
+- `final_input_resolution_summary.md`: supplementary-ready input-resolution
+  sensitivity table generated from the final detector and YOLOv9c 3-seed
+  eval-only sweep. Use it to justify the fixed 1280 main protocol and to answer
+  reviewer questions about image-size sensitivity.
 - `fig1_fig3_revision_package/`: clean handoff package for revising Main Fig. 1
   and Main Fig. 3 from the current real-Cesium MarineCity evidence. It contains
   24 copied assets and 2 explicitly marked pending placeholders for final neural
