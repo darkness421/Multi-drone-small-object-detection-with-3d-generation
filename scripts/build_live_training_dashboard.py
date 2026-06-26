@@ -49,6 +49,8 @@ DEFAULT_PROJECT_DIRS = [
     "outputs/detectors/related_work_module_reproductions",
     "outputs/detectors/required_related_work_reimplementations",
     "outputs/detectors/tinyperson_640",
+    "outputs/detectors/tinyperson_640_transfer",
+    "outputs/detectors/tinyperson_eval_imgsz_sweep",
 ]
 DEFAULT_LOG_DIRS = [
     "outputs/logs/server_baselines",
@@ -67,6 +69,8 @@ DEFAULT_LOG_DIRS = [
     "outputs/logs/related_work_module_reproductions",
     "outputs/logs/required_related_work_models",
     "outputs/logs/tinyperson_640",
+    "outputs/logs/tinyperson_640_transfer",
+    "outputs/logs/tinyperson_eval_imgsz_sweep",
 ]
 
 SELECTED_OURS = "Ours: P2P4-SelfAttnFR"
@@ -90,6 +94,10 @@ HEATMAP_LOG = "outputs/logs/final_detector_heatmaps/queue.log"
 HEATMAP_MARKER = "QUEUE_FINISHED final detector heatmaps"
 TINYPERSON_LOG = "outputs/logs/tinyperson_640/queue.log"
 TINYPERSON_MARKER = "QUEUE_FINISHED TinyPerson 640 stress test"
+TINYPERSON_TRANSFER_LOG = "outputs/logs/tinyperson_640_transfer/queue.log"
+TINYPERSON_TRANSFER_MARKER = "QUEUE_FINISHED TinyPerson Ours transfer fine-tune"
+TINYPERSON_EVAL_SWEEP_LOG = "outputs/logs/tinyperson_eval_imgsz_sweep/queue.log"
+TINYPERSON_EVAL_SWEEP_MARKER = "QUEUE_FINISHED TinyPerson eval-only input-size sweep"
 PAPER_ARTIFACT_LOG = "outputs/logs/paper_artifacts_after_2d/queue.log"
 PAPER_ARTIFACT_MARKER = "QUEUE_FINISHED paper artifacts after 2D"
 ISAAC_CAPTURE_PLAN = "outputs/experiments/marinecity_isaac_capture_plan.json"
@@ -260,6 +268,8 @@ def active_run_display_name(row: dict[str, str]) -> str:
         return f"{related_label_with_scope('CSFPR-RTDETR', labels)}{seed}"
     if "mffsod" in run.lower():
         return f"{related_label_with_scope('MFFSODNet', labels)}{seed}"
+    if "p2p4_selfattnfr_visdrone_transfer_tinyperson640" in run:
+        return f"Ours P2P4-SelfAttnFR TinyPerson transfer{seed}"
     return run
 
 
@@ -451,6 +461,20 @@ def queue_status_rows() -> list[dict[str, str]]:
             "status": queue_state(TINYPERSON_LOG, TINYPERSON_MARKER, waiting=not (final_done and related_done and heatmap_done)),
             "detail": "top models only: Ours, YOLO11l, YOLOv9c, YOLOv8l, YOLOv9m",
             "event": latest_queue_event(TINYPERSON_LOG),
+        })
+    if not queue_log_contains(TINYPERSON_TRANSFER_LOG, TINYPERSON_TRANSFER_MARKER):
+        rows.append({
+            "queue": "TinyPerson transfer",
+            "status": queue_state(TINYPERSON_TRANSFER_LOG, TINYPERSON_TRANSFER_MARKER),
+            "detail": "VisDrone-trained Ours -> TinyPerson640, seeds 42/123/2026",
+            "event": latest_queue_event(TINYPERSON_TRANSFER_LOG),
+        })
+    if not queue_log_contains(TINYPERSON_EVAL_SWEEP_LOG, TINYPERSON_EVAL_SWEEP_MARKER):
+        rows.append({
+            "queue": "TinyPerson eval-size",
+            "status": queue_state(TINYPERSON_EVAL_SWEEP_LOG, TINYPERSON_EVAL_SWEEP_MARKER),
+            "detail": "eval-only 640/960/1280 for YOLOv9m, SAFR-YOLO, SAFR-YOLO transfer",
+            "event": latest_queue_event(TINYPERSON_EVAL_SWEEP_LOG),
         })
     if not queue_log_contains(PAPER_ARTIFACT_LOG, PAPER_ARTIFACT_MARKER):
         rows.append({

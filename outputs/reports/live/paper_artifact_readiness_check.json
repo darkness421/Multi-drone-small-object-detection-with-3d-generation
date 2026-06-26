@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 13:45:33 KST",
+  "updated_at_kst": "2026-06-26 14:49:32 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 50,
   "missing_required_count": 0,
@@ -161,7 +161,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 13143,
+      "size_bytes": 14564,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },
@@ -181,7 +181,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 817,
+      "size_bytes": 935,
       "status": "ok",
       "note": "TinyPerson 640 supplementary stress-test table"
     },
@@ -211,7 +211,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 137017,
+      "size_bytes": 159009,
       "status": "ok",
       "note": "TinyPerson 640 supplementary stress-test figure"
     },
@@ -491,7 +491,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2006,
+      "size_bytes": 2152,
       "status": "ok",
       "note": "LaTeX input/figure/label integrity check"
     },

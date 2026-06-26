@@ -17,6 +17,8 @@ UAVDET_ROOT = REPO_ROOT / "outputs/detectors/required_related_work_reimplementat
 UAVDET_SEEDS = [42, 123, 2026]
 UAVDET_LOG = REPO_ROOT / "outputs/logs/required_related_work_models/uavdet_inspired_after_required.log"
 TINYPERSON_LOG = REPO_ROOT / "outputs/logs/tinyperson_640/queue.log"
+TINYPERSON_TRANSFER_LOG = REPO_ROOT / "outputs/logs/tinyperson_640_transfer/queue.log"
+TINYPERSON_EVAL_SWEEP_LOG = REPO_ROOT / "outputs/logs/tinyperson_eval_imgsz_sweep/queue.log"
 SYSTEM_MANIFEST = LIVE_DIR / "marinecity_system_test_10plus/manifest.json"
 MARINECITY_DETECTOR_REASONER_SMOKE = LIVE_DIR / "marinecity_detector_reasoner_smoke.json"
 MARINECITY_CROSSVIEW_GRAPH_SUMMARY = REPO_ROOT / "outputs/graphs/marinecity_crossview_evidence_graph/summary.json"
@@ -114,6 +116,52 @@ def tiny_person_gate_state() -> str:
             return "data_ready_tinyperson_640"
         if "Waiting for wait_uavdet_1280" in line:
             return "waiting_for_uavdet_1280_marker"
+    return "log_present_state_unknown"
+
+
+def tiny_person_transfer_gate_state() -> str:
+    if not TINYPERSON_TRANSFER_LOG.exists():
+        return "not_started"
+    lines = [
+        line.strip()
+        for line in TINYPERSON_TRANSFER_LOG.read_text(encoding="utf-8", errors="ignore").splitlines()
+        if line.strip()
+    ]
+    for line in reversed(lines):
+        if "QUEUE_FINISHED TinyPerson Ours transfer fine-tune" in line:
+            return "finished_tinyperson_ours_transfer"
+        if "Collecting TinyPerson transfer results" in line:
+            return "collecting_tinyperson_ours_transfer"
+        if "FINISH TinyPerson transfer seed=" in line:
+            match = re.search(r"seed=(\d+)", line)
+            return f"last_finished_tinyperson_ours_transfer_seed{match.group(1)}" if match else "last_finished_tinyperson_ours_transfer"
+        if "START TinyPerson transfer seed=" in line:
+            match = re.search(r"seed=(\d+)", line)
+            return f"running_tinyperson_ours_transfer_seed{match.group(1)}" if match else "running_tinyperson_ours_transfer"
+    return "log_present_state_unknown"
+
+
+def tiny_person_eval_sweep_gate_state() -> str:
+    if not TINYPERSON_EVAL_SWEEP_LOG.exists():
+        return "not_started"
+    lines = [
+        line.strip()
+        for line in TINYPERSON_EVAL_SWEEP_LOG.read_text(encoding="utf-8", errors="ignore").splitlines()
+        if line.strip()
+    ]
+    for line in reversed(lines):
+        if "QUEUE_FINISHED TinyPerson eval-only input-size sweep" in line:
+            return "finished_tinyperson_eval_imgsz_sweep"
+        if "FINISH TinyPerson eval sweep method=" in line:
+            match = re.search(r"method=([^ ]+) seed=(\d+) imgsz=(\d+)", line)
+            if match:
+                return f"last_finished_eval_sweep_{match.group(1)}_seed{match.group(2)}_img{match.group(3)}"
+            return "last_finished_tinyperson_eval_sweep"
+        if "START TinyPerson eval sweep method=" in line:
+            match = re.search(r"method=([^ ]+) seed=(\d+) imgsz=(\d+)", line)
+            if match:
+                return f"running_eval_sweep_{match.group(1)}_seed{match.group(2)}_img{match.group(3)}"
+            return "running_tinyperson_eval_sweep"
     return "log_present_state_unknown"
 
 
@@ -434,6 +482,10 @@ def build_snapshot() -> dict[str, Any]:
             "uavdet_log_tail": last_log_line(UAVDET_LOG),
             "tinyperson_log_tail": last_log_line(TINYPERSON_LOG),
             "tiny_person_gate": tiny_person_gate_state(),
+            "tinyperson_transfer_log_tail": last_log_line(TINYPERSON_TRANSFER_LOG),
+            "tiny_person_transfer_gate": tiny_person_transfer_gate_state(),
+            "tinyperson_eval_sweep_log_tail": last_log_line(TINYPERSON_EVAL_SWEEP_LOG),
+            "tiny_person_eval_sweep_gate": tiny_person_eval_sweep_gate_state(),
         },
         "dashboards": {
             "training": str(TRAIN_DASHBOARD.relative_to(REPO_ROOT)),
@@ -567,6 +619,10 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- UAVDet log tail: `{queues.get('uavdet_log_tail')}`",
         f"- TinyPerson log tail: `{queues.get('tinyperson_log_tail')}`",
         f"- TinyPerson gate: `{queues.get('tiny_person_gate')}`",
+        f"- TinyPerson transfer log tail: `{queues.get('tinyperson_transfer_log_tail')}`",
+        f"- TinyPerson transfer gate: `{queues.get('tiny_person_transfer_gate')}`",
+        f"- TinyPerson eval-size log tail: `{queues.get('tinyperson_eval_sweep_log_tail')}`",
+        f"- TinyPerson eval-size gate: `{queues.get('tiny_person_eval_sweep_gate')}`",
         "",
         "## Dashboard Links",
         "",

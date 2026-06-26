@@ -1,6 +1,6 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-26 13:45:33 KST`
+Updated: `2026-06-26 14:49:30 KST`
 
 ## Detector Status
 
@@ -80,6 +80,10 @@ Updated: `2026-06-26 13:45:33 KST`
 - UAVDet log tail: `[2026-06-25T19:23:05+09:00] QUEUE_FINISHED UAVDet inspired reproduction queue`
 - TinyPerson log tail: `[2026-06-26T06:52:33+09:00] Dashboard: outputs/reports/live/tinyperson_640_dashboard.png`
 - TinyPerson gate: `finished_tinyperson_640_stress_test`
+- TinyPerson transfer log tail: `[2026-06-26T14:17:32+09:00] Dashboard: outputs/reports/live/tinyperson_640_transfer_dashboard.png`
+- TinyPerson transfer gate: `finished_tinyperson_ours_transfer`
+- TinyPerson eval-size log tail: `[2026-06-26T14:45:20+09:00] QUEUE_FINISHED TinyPerson eval-only input-size sweep`
+- TinyPerson eval-size gate: `finished_tinyperson_eval_imgsz_sweep`
 
 ## Dashboard Links
 

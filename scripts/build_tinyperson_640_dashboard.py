@@ -16,6 +16,7 @@ from matplotlib.patches import Rectangle
 
 NAME_MAP = {
     "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l-TinyPerson640": "SAFR-YOLO",
+    "ProposedTransfer-P2P4SelfAttnFR-yolo11l-TinyPerson640": "SAFR-YOLO transfer",
     "ProposedSize-P2P4HeadOnly-yolo11l-TinyPerson640": "P2P4 head only",
     "YOLOv11l-TinyPerson640": "YOLOv11l",
     "YOLOv8l-TinyPerson640": "YOLOv8l",
@@ -25,6 +26,7 @@ NAME_MAP = {
 
 INTERPRETATION = {
     "SAFR-YOLO": "domain-shift limitation",
+    "SAFR-YOLO transfer": "VisDrone-init diagnostic",
     "P2P4 head only": "core ablation",
     "YOLOv11l": "near-zero transfer",
     "YOLOv8l": "near-zero transfer",
@@ -39,25 +41,28 @@ def as_float(value: str | None) -> float:
     return float(value)
 
 
-def read_rows(path: Path) -> list[dict[str, float | str]]:
+def read_rows(paths: list[Path]) -> list[dict[str, float | str]]:
     rows: list[dict[str, float | str]] = []
-    with path.open("r", encoding="utf-8-sig", newline="") as handle:
-        for row in csv.DictReader(handle):
-            name = NAME_MAP.get(row["method"], row["method"].replace("-TinyPerson640", ""))
-            rows.append(
-                {
-                    "method": name,
-                    "ap": as_float(row.get("best_AP_mean")),
-                    "ap_std": as_float(row.get("best_AP_std")),
-                    "ap50": as_float(row.get("best_AP50_mean")),
-                    "ap50_std": as_float(row.get("best_AP50_std")),
-                    "recall": as_float(row.get("best_recall_mean")),
-                    "f1": as_float(row.get("best_F1_mean")),
-                    "f1_std": as_float(row.get("best_F1_std")),
-                    "seeds": row.get("seeds", ""),
-                    "note": INTERPRETATION.get(name, "diagnostic"),
-                }
-            )
+    for path in paths:
+        if not path.exists():
+            continue
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            for row in csv.DictReader(handle):
+                name = NAME_MAP.get(row["method"], row["method"].replace("-TinyPerson640", ""))
+                rows.append(
+                    {
+                        "method": name,
+                        "ap": as_float(row.get("best_AP_mean")),
+                        "ap_std": as_float(row.get("best_AP_std")),
+                        "ap50": as_float(row.get("best_AP50_mean")),
+                        "ap50_std": as_float(row.get("best_AP50_std")),
+                        "recall": as_float(row.get("best_recall_mean")),
+                        "f1": as_float(row.get("best_F1_mean")),
+                        "f1_std": as_float(row.get("best_F1_std")),
+                        "seeds": row.get("seeds", ""),
+                        "note": INTERPRETATION.get(name, "diagnostic"),
+                    }
+                )
     return sorted(rows, key=lambda item: float(item["ap"]), reverse=True)
 
 
@@ -125,7 +130,7 @@ def draw_table(ax: plt.Axes, rows: list[dict[str, float | str]]) -> None:
     y -= row_h
     for idx, row in enumerate(rows):
         method = str(row["method"])
-        face = "#fff5c7" if method == "SAFR-YOLO" else ("#eef7ee" if idx == 0 else "#ffffff")
+        face = "#fff5c7" if method.startswith("SAFR-YOLO") else ("#eef7ee" if idx == 0 else "#ffffff")
         ax.add_patch(Rectangle((x0, y), sum(widths), row_h, facecolor=face, edgecolor=line_color))
         cells = [
             method,
@@ -137,7 +142,7 @@ def draw_table(ax: plt.Axes, rows: list[dict[str, float | str]]) -> None:
         ]
         x = x0
         for cell, width in zip(cells, widths):
-            weight = "bold" if method == "SAFR-YOLO" else "normal"
+            weight = "bold" if method.startswith("SAFR-YOLO") else "normal"
             ax.text(x + 0.008, y + row_h * 0.55, cell, va="center", ha="left", fontsize=8.5, color="#172033", weight=weight)
             x += width
         y -= row_h
@@ -163,7 +168,7 @@ def build_dashboard(rows: list[dict[str, float | str]], out_path: Path, *, paper
         fig.text(
             0.04,
             0.925,
-            "Six detector variants, seeds 42/123/2026. Values are diagnostic only because the converted TinyPerson split is sparse.",
+            "Six detector variants plus SAFR-YOLO VisDrone-transfer diagnostic, seeds 42/123/2026. Values are diagnostic only because the converted TinyPerson split is sparse.",
             fontsize=10,
             color="#475569",
         )
@@ -203,7 +208,7 @@ def build_dashboard(rows: list[dict[str, float | str]], out_path: Path, *, paper
         fig.text(
             0.04,
             0.04,
-            "Use in supplementary as a domain-shift and dataset-conversion limitation check, not as the main VisDrone detector claim.",
+            "Use in supplementary as a domain-shift and dataset-conversion limitation check, not as the main VisDrone detector claim. The transfer row is VisDrone-initialized SAFR-YOLO.",
             fontsize=9,
             color="#64748b",
         )
@@ -217,9 +222,15 @@ def main() -> None:
     parser.add_argument("--out", default="outputs/reports/live/tinyperson_640_dashboard.png")
     parser.add_argument("--paper-out", default="paper/figures/results/paper_fig12_tinyperson_640_stress.png")
     parser.add_argument("--tex-out", default="paper/tables/tinyperson_640_stress_table.tex")
+    parser.add_argument(
+        "--extra-summary",
+        action="append",
+        default=["outputs/experiments/tinyperson_640_transfer/summary.csv"],
+        help="Optional extra TinyPerson summary CSV to merge into the paper-facing table.",
+    )
     args = parser.parse_args()
 
-    rows = read_rows(Path(args.summary))
+    rows = read_rows([Path(args.summary), *[Path(path) for path in args.extra_summary]])
     for output in [Path(args.out), Path(args.paper_out)]:
         build_dashboard(rows, output, paper_style=output.name.startswith("paper_fig"))
         print(output)

@@ -1,0 +1,15 @@
+\begin{tabular}{llrrrrrl}
+\toprule
+Method & Eval size & AP $\times 10^{-3}$ & AP50 $\times 10^{-3}$ & Recall & F1 $\times 10^{-3}$ & Seeds & Note \\
+\midrule
+SAFR-YOLO & 640 & 0.005 $\pm$ 0.007 & 0.021 $\pm$ 0.028 & 0.0519 $\pm$ 0.0468 & 0.181 $\pm$ 0.214 & 42,123,2026 & from TinyPerson scratch run \\
+SAFR-YOLO & 960 & 0.001 $\pm$ 0.001 & 0.004 $\pm$ 0.003 & 0.0433 $\pm$ 0.0456 & 0.068 $\pm$ 0.063 & 42,123,2026 & from TinyPerson scratch run \\
+SAFR-YOLO & 1280 & 0.001 $\pm$ 0.001 & 0.007 $\pm$ 0.006 & 0.0693 $\pm$ 0.0715 & 0.078 $\pm$ 0.069 & 42,123,2026 & from TinyPerson scratch run \\
+SAFR-YOLO transfer & 640 & 0.024 $\pm$ 0.031 & 0.125 $\pm$ 0.152 & 0.1342 $\pm$ 0.0150 & 0.379 $\pm$ 0.084 & 42,123,2026 & VisDrone-init TinyPerson fine-tune \\
+SAFR-YOLO transfer & 960 & 0.003 $\pm$ 0.001 & 0.014 $\pm$ 0.005 & 0.0996 $\pm$ 0.0397 & 0.174 $\pm$ 0.042 & 42,123,2026 & VisDrone-init TinyPerson fine-tune \\
+SAFR-YOLO transfer & 1280 & 0.001 $\pm$ 0.001 & 0.007 $\pm$ 0.006 & 0.0779 $\pm$ 0.0260 & 0.116 $\pm$ 0.054 & 42,123,2026 & VisDrone-init TinyPerson fine-tune \\
+YOLOv9m & 640 & 0.254 $\pm$ 0.379 & 1.726 $\pm$ 2.736 & 0.0563 $\pm$ 0.0150 & 3.220 $\pm$ 4.991 & 42,123,2026 & strongest TinyPerson stress-test baseline \\
+YOLOv9m & 960 & 0.026 $\pm$ 0.042 & 0.206 $\pm$ 0.335 & 0.0649 $\pm$ 0.0649 & 0.193 $\pm$ 0.246 & 42,123,2026 & strongest TinyPerson stress-test baseline \\
+YOLOv9m & 1280 & 0.010 $\pm$ 0.009 & 0.046 $\pm$ 0.044 & 0.0649 $\pm$ 0.0649 & 0.134 $\pm$ 0.182 & 42,123,2026 & strongest TinyPerson stress-test baseline \\
+\bottomrule
+\end{tabular}

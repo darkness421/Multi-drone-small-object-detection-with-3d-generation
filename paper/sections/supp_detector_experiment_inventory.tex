@@ -179,26 +179,29 @@ TinyPerson is treated as a detector-only supplementary stress test after the
 final VisDrone detector is fixed. The completed 640-pixel TinyPerson queue
 contains YOLOv11l, YOLOv9c, YOLOv8l, YOLOv9m, SAFR-YOLO, and a P2P4-head-only
 core-ablation row. All 18 TinyPerson rows have been collected: six detector
-variants over seeds 42, 123, and 2026. These rows remain diagnostic because the
-converted split is highly sparse (794 training images with 596 boxes and 786
-validation images with 77 boxes), and all AP/AP50 values are close to zero.
-The strongest TinyPerson row is YOLOv9m with AP/AP50 of approximately
-0.0002/0.0010, while SAFR-YOLO reaches approximately 0.0000/0.0000. We
-therefore keep TinyPerson as a supplementary domain-shift and dataset-conversion
-limitation analysis rather than using it as a main detector claim. Related-work
-TinyPerson rows are added only for models that are either cited in the
-manuscript or explicitly added to the Related Work section with a matching
-bibliography entry.
+variants over seeds 42, 123, and 2026. We additionally collect a
+VisDrone-initialized SAFR-YOLO transfer row over the same three seeds. These
+rows remain diagnostic because the converted split is highly sparse (794
+training images with 596 boxes and 786 validation images with 77 boxes), and
+all AP/AP50 values are close to zero. The strongest from-scratch TinyPerson row
+is YOLOv9m with AP/AP50 of approximately 0.0002/0.0010. The VisDrone-initialized
+SAFR-YOLO transfer row increases recall to approximately 0.0996 but still
+reaches only approximately 0.00003/0.00012 AP/AP50. We therefore keep
+TinyPerson as a supplementary domain-shift and dataset-conversion limitation
+analysis rather than using it as a main detector claim. Related-work TinyPerson
+rows are added only for models that are either cited in the manuscript or
+explicitly added to the Related Work section with a matching bibliography entry.
 
 \begin{table*}[t]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
 \caption{TinyPerson 640-pixel supplementary stress test. Results are reported
-over seeds 42, 123, and 2026. AP, AP50, and F1 are scaled by $10^{-3}$ because
-all tested models are near zero on the current converted sparse split; this
-table is therefore used only as domain-shift evidence, not as a main comparison
-claim.}
+over seeds 42, 123, and 2026. The SAFR-YOLO transfer row uses VisDrone-trained
+SAFR-YOLO initialization before TinyPerson fine-tuning. AP, AP50, and F1 are
+scaled by $10^{-3}$ because all tested models are near zero on the current
+converted sparse split; this table is therefore used only as domain-shift
+evidence, not as a main comparison claim.}
 \label{tab:supp_tinyperson_640_stress}
 \input{tables/tinyperson_640_stress_table}
 \end{table*}
@@ -206,9 +209,34 @@ claim.}
 \begin{figure*}[t]
     \centering
     \includegraphics[width=0.86\textwidth]{figures/results/paper_fig12_tinyperson_640_stress}
-    \caption{TinyPerson 640-pixel supplementary stress-test summary. AP/AP50
-    and F1 are shown at $10^{-3}$ scale because the converted sparse split
-    produces near-zero AP for all tested models. This figure is included only
-    as domain-shift evidence after the VisDrone detector claim is fixed.}
+    \caption{TinyPerson 640-pixel supplementary stress-test summary, including
+    the VisDrone-initialized SAFR-YOLO transfer diagnostic. AP/AP50 and F1 are
+    shown at $10^{-3}$ scale because the converted sparse split produces
+    near-zero AP for all tested models. This figure is included only as
+    domain-shift evidence after the VisDrone detector claim is fixed.}
     \label{fig:supp_tinyperson_640_stress}
+\end{figure*}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{TinyPerson eval-only input-size sensitivity. Completed TinyPerson
+checkpoints are evaluated at 640, 960, and 1280 pixels without additional
+training. AP, AP50, and F1 are scaled by $10^{-3}$. This table is a
+supplementary diagnostic for input-size sensitivity under the sparse converted
+TinyPerson split, not a main detector claim.}
+\label{tab:supp_tinyperson_eval_imgsz_sweep}
+\input{tables/tinyperson_eval_imgsz_sweep_table}
+\end{table*}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.86\textwidth]{figures/results/paper_fig13_tinyperson_eval_imgsz_sweep}
+    \caption{TinyPerson eval-only input-size sensitivity. The completed
+    checkpoints are reused and only the evaluation image size is changed. On
+    the current converted split, 640-pixel evaluation is the most stable for
+    AP50, while the VisDrone-initialized SAFR-YOLO transfer row gives the
+    highest recall.}
+    \label{fig:supp_tinyperson_eval_imgsz_sweep}
 \end{figure*}

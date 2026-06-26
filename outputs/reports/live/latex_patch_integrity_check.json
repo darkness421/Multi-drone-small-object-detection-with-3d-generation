@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 12:14:27 KST",
+  "updated_at_kst": "2026-06-26 14:49:32 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
@@ -26,18 +26,19 @@
     {
       "bundle": "paper/sections/supplementary_patch_bundle.tex",
       "exists": true,
-      "included_file_count": 5,
+      "included_file_count": 6,
       "included_files": [
         "paper/sections/07_marinecity_qualitative_figure_slots.tex",
         "paper/sections/supp_detector_experiment_inventory.tex",
         "paper/sections/supplementary_patch_bundle.tex",
         "paper/tables/final_ablation_supplementary_table.tex",
-        "paper/tables/tinyperson_640_stress_table.tex"
+        "paper/tables/tinyperson_640_stress_table.tex",
+        "paper/tables/tinyperson_eval_imgsz_sweep_table.tex"
       ],
       "commented_optional_inputs": []
     }
   ],
-  "checked_file_count": 15,
+  "checked_file_count": 16,
   "missing_input_count": 0,
   "missing_graphics_count": 0,
   "duplicate_label_count": 0,
@@ -56,25 +57,31 @@
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "27",
+      "line": "34",
       "status": "allowed",
       "text": "360, and 3D Gaussian Splatting training remain pending until the external"
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "77",
+      "line": "91",
+      "status": "allowed",
+      "text": "runner. Therefore, full neural 3D metrics remain a pending experiment rather"
+    },
+    {
+      "source": "paper/sections/06_marinecity_3d_readiness.tex",
+      "line": "94",
       "status": "allowed",
       "text": "artifacts, and Table~\\ref{tab:aerograph_reasoner_pending} reports the current"
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "87",
+      "line": "104",
       "status": "allowed",
       "text": "remains pending before promoting this to a final reasoning benchmark claim.}"
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "88",
+      "line": "105",
       "status": "allowed",
       "text": "\\label{tab:aerograph_reasoner_pending}"
     },
