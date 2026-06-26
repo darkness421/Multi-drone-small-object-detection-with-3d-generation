@@ -21,8 +21,9 @@ RUNAPP_STAGE_PATH=${RUNAPP_STAGE_PATH-/isaac-sim/.local/share/ov/data/haeundae_m
 RUNAPP_BASE_ARGS=${RUNAPP_BASE_ARGS:---/exts/omni.kit.pipapi/envPath=/isaac-sim/.cache/pip3-envs/no_space}
 RUNAPP_EXTRA_ARGS=${RUNAPP_EXTRA_ARGS:-}
 CONTAINER_USER=${CONTAINER_USER:-1234:1234}
+DOCKER_IPC_ARGS=${DOCKER_IPC_ARGS:---ipc=host}
 XAUTHORITY_MOUNT=${XAUTHORITY_MOUNT:-/tmp/${SESSION}.Xauthority}
-MARINECITY_PROFILE=${MARINECITY_PROFILE:-repo80}
+MARINECITY_PROFILE=${MARINECITY_PROFILE:-viewer160}
 MARINECITY_USD=${MARINECITY_USD:-/isaac-sim/.local/share/ov/data/haeundae_marinecity_roi_prep.usd}
 MARINECITY_OUTPUT_ROOT=${MARINECITY_OUTPUT_ROOT:-/workspace/uav_marinecity/outputs/debug}
 COM3D_UAVMARINE_STAGE=${COM3D_UAVMARINE_STAGE:-}
@@ -33,8 +34,8 @@ COM3D_UAVMARINE_BASE_STAGE=${COM3D_UAVMARINE_BASE_STAGE:-}
 COM3D_UAVMARINE_ACTOR_LAYER=${COM3D_UAVMARINE_ACTOR_LAYER:-}
 COM3D_UAVMARINE_SESSION_STATUS=${COM3D_UAVMARINE_SESSION_STATUS:-}
 COM3D_KEEP_USER_CAMERA=${COM3D_KEEP_USER_CAMERA:-}
-COM3D_VIEWER_PROFILE=${COM3D_VIEWER_PROFILE:-}
-COM3D_GEOREF_HEIGHT=${COM3D_GEOREF_HEIGHT:-}
+COM3D_VIEWER_PROFILE=${COM3D_VIEWER_PROFILE:-viewer160}
+COM3D_GEOREF_HEIGHT=${COM3D_GEOREF_HEIGHT:-160.0}
 
 mkdir -p "$LOG_DIR"
 
@@ -81,6 +82,7 @@ tmux new-session -d -s "$SESSION" -n isaac-gui \
    echo 'UAV project: $UAV_PROJECT' 2>&1 | tee -a '$log_file'; \
    echo 'Run mode: $RUN_MODE' 2>&1 | tee -a '$log_file'; \
    echo 'Container user: $CONTAINER_USER' 2>&1 | tee -a '$log_file'; \
+   echo 'Docker IPC args: $DOCKER_IPC_ARGS' 2>&1 | tee -a '$log_file'; \
    echo 'Container command: $container_cmd' 2>&1 | tee -a '$log_file'; \
    xhost +local: 2>&1 | tee -a '$log_file'; \
    docker rm -f '$CONTAINER_NAME' >/dev/null 2>&1 || true; \
@@ -89,7 +91,7 @@ tmux new-session -d -s "$SESSION" -n isaac-gui \
      -it \
      --gpus '\"device=$GPU\"' \
      --network=host \
-     --ipc=host \
+     $DOCKER_IPC_ARGS \
      --rm \
      -e ACCEPT_EULA=Y \
      -e PRIVACY_CONSENT=Y \
