@@ -59,6 +59,10 @@ Current live bundle:
   Instant-NGP, Mip-NeRF/3DGS-style completion. It currently treats the
   real-Cesium RGB/depth/pose captures as ready source evidence and keeps neural
   3D metric rows pending.
+- `marinecity_neural3d_dataset_export.md`: NeRF/Instant-NGP/Nerfstudio-style
+  `transforms.json` export generated from the verified 3-scenario x 3-UAV
+  MarineCity real-Cesium captures. Use this as the upstream 3D runner input,
+  not as a completed reconstruction result.
 - `marinecity_crossview_evidence_graph.png`: supplementary visualization of the
   current cross-view evidence graph smoke result.
 - `/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json`: latest live Isaac session-layer overlay status. It confirms `uavmarine.usd` is the real Cesium root layer and the UAV/object layer is non-destructive.

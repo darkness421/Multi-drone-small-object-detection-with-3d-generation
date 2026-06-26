@@ -55,6 +55,7 @@ ARTIFACTS = [
     Artifact("supp_system", "outputs/reports/live/marinecity_detector_reasoner_smoke.md", "runbook", True, "Real-Cesium detector-to-reasoner smoke report"),
     Artifact("supp_system", "outputs/reports/live/marinecity_crossview_evidence_graph.md", "runbook", True, "Real-Cesium cross-view evidence graph smoke report"),
     Artifact("supp_system", "outputs/reports/live/marinecity_system_integration_check.md", "runbook", True, "Real-Cesium object/UAV/camera/YOLO/3D/LLM integration gate"),
+    Artifact("pending_3d", "outputs/reports/live/marinecity_neural3d_dataset_export.md", "runbook", True, "MarineCity real-capture neural-3D input dataset export"),
     Artifact("pending_3d", "outputs/reports/live/marinecity_3d_completion_readiness.md", "runbook", True, "MarineCity neural 3D completion readiness gate"),
     Artifact("pending_reasoner", "paper/tables/aerograph_reasoner_results_placeholder.tex", "pending", True, "AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete"),
     Artifact("pending_reasoner", "docs/aerograph_nonmock_collection_plan.md", "runbook", True, "Non-mock reasoner collection gate"),
@@ -96,6 +97,7 @@ TEXT_SCOPE = [
     "outputs/reports/live/accv_workflow_status_snapshot.md",
     "outputs/reports/live/marinecity_real_capture_benchmark.md",
     "outputs/reports/live/marinecity_system_integration_check.md",
+    "outputs/reports/live/marinecity_neural3d_dataset_export.md",
     "outputs/reports/live/marinecity_3d_completion_readiness.md",
 ]
 
@@ -247,6 +249,7 @@ def marinecity_3d_completion_gate() -> dict[str, Any]:
     return {
         "status": report.get("status", "missing"),
         "source_capture_ready": report.get("source_capture_ready"),
+        "neural3d_dataset_ready": report.get("neural3d_dataset_ready"),
         "metric_result_row_count": report.get("metric_result_row_count"),
         "methods_ready": report.get("methods_ready"),
         "missing_expected_methods": report.get("missing_expected_methods"),
@@ -371,6 +374,7 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
             "",
             f"- Status: `{marinecity_3d['status']}`",
             f"- Source capture ready: `{marinecity_3d['source_capture_ready']}`",
+            f"- Neural-3D input dataset ready: `{marinecity_3d['neural3d_dataset_ready']}`",
             f"- Metric result rows: `{marinecity_3d['metric_result_row_count']}`",
             f"- Methods ready: `{marinecity_3d['methods_ready']}`",
             f"- Missing expected methods: `{marinecity_3d['missing_expected_methods']}`",

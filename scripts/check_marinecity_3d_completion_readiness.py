@@ -14,6 +14,7 @@ LIVE_DIR = REPO_ROOT / "outputs/reports/live"
 BENCHMARK = REPO_ROOT / "outputs/experiments/marinecity_real_capture_benchmark.json"
 COMPARISON = REPO_ROOT / "outputs/experiments/3d_generation_comparison.csv"
 RESULT_DIR = REPO_ROOT / "outputs/experiments/3d_generation"
+DATASET_EXPORT = RESULT_DIR / "marinecity_real_capture_neural3d/dataset_manifest.json"
 EXPECTED_METHODS = ["nerf", "instant_ngp", "mip_nerf_360", "gaussian_splatting"]
 
 
@@ -52,6 +53,7 @@ def result_jsons() -> list[Path]:
 
 def build_report() -> dict[str, Any]:
     benchmark = read_json(BENCHMARK)
+    dataset_export = read_json(DATASET_EXPORT)
     summary = benchmark.get("summary", {}) or {}
     rows = read_csv(COMPARISON)
     metric_rows = [
@@ -64,11 +66,23 @@ def build_report() -> dict[str, Any]:
     methods_ready = sorted(set((row.get("method") or "").strip() for row in metric_rows if (row.get("method") or "").strip()))
     missing_methods = [method for method in EXPECTED_METHODS if method not in methods_ready]
     source_ready = bool(summary.get("terrain_all_valid")) and bool(summary.get("google_tiles_all_valid")) and int(summary.get("frame_count", 0) or 0) >= 9
-    status = "marinecity_3d_completion_ready" if source_ready and len(metric_rows) >= 2 else "marinecity_3d_completion_pending_upstream_runner"
+    dataset_ready = dataset_export.get("status") == "marinecity_neural3d_dataset_export_ready"
+    if source_ready and len(metric_rows) >= 2:
+        status = "marinecity_3d_completion_ready"
+    elif source_ready and dataset_ready:
+        status = "marinecity_3d_input_dataset_ready_metrics_pending"
+    else:
+        status = "marinecity_3d_completion_pending_upstream_runner"
     return {
         "updated_at_kst": datetime.now().strftime("%Y-%m-%d %H:%M:%S KST"),
         "status": status,
         "source_capture_ready": source_ready,
+        "neural3d_dataset_ready": dataset_ready,
+        "neural3d_dataset_manifest": str(DATASET_EXPORT.relative_to(REPO_ROOT)),
+        "neural3d_dataset_frame_count": dataset_export.get("frame_count"),
+        "neural3d_dataset_train_frame_count": dataset_export.get("train_frame_count"),
+        "neural3d_dataset_heldout_frame_count": dataset_export.get("heldout_frame_count"),
+        "neural3d_dataset_transforms": dataset_export.get("transforms"),
         "capture_summary": {
             "scenario_count": summary.get("scenario_count"),
             "frame_count": summary.get("frame_count"),
@@ -87,7 +101,7 @@ def build_report() -> dict[str, Any]:
         "methods_ready": methods_ready,
         "missing_expected_methods": missing_methods,
         "claiming_rule": (
-            "The real-Cesium RGB/depth/pose capture source is ready for the 3D handoff. "
+            "The real-Cesium RGB/depth/pose capture source and neural-3D transforms package are ready for the 3D handoff. "
             "Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
         ),
     }
@@ -108,9 +122,13 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
     lines.extend(
         [
             "",
-            "## Neural 3D Results",
-            "",
-            f"- Comparison CSV: `{report['comparison_csv']}`",
+        "## Neural 3D Results",
+        "",
+        f"- Input dataset ready: `{report['neural3d_dataset_ready']}`",
+        f"- Input dataset manifest: `{report['neural3d_dataset_manifest']}`",
+        f"- Dataset frames train/heldout: `{report['neural3d_dataset_frame_count']}` / `{report['neural3d_dataset_train_frame_count']}` / `{report['neural3d_dataset_heldout_frame_count']}`",
+        f"- Transforms: `{report['neural3d_dataset_transforms']}`",
+        f"- Comparison CSV: `{report['comparison_csv']}`",
             f"- Comparison rows: `{report['comparison_row_count']}`",
             f"- Metric result rows: `{report['metric_result_row_count']}`",
             f"- Result JSON count: `{report['result_json_count']}`",

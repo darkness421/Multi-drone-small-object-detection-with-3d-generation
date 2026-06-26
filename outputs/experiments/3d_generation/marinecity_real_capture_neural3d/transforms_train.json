@@ -1,0 +1,332 @@
+{
+  "camera_model": "OPENCV",
+  "w": 1280,
+  "h": 720,
+  "fl_x": 1229.4285612615463,
+  "fl_y": 1229.4285612615463,
+  "cx": 640.0,
+  "cy": 360.0,
+  "camera_angle_x": 0.9599310885968813,
+  "aabb_scale": 16,
+  "frames": [
+    {
+      "file_path": "images/uavmarine_s0_viewer160_session_recapture_frame_001_uav_01_uav_01.png",
+      "depth_file_path": "depths/uavmarine_s0_viewer160_session_recapture_frame_001_uav_01_uav_01.npy",
+      "transform_matrix": [
+        [
+          -0.3442546491584232,
+          -0.9096272277143673,
+          0.2325232098812622,
+          8.0
+        ],
+        [
+          0.9388763158866087,
+          -0.333529983495268,
+          0.08525851028979614,
+          -2.0
+        ],
+        [
+          0.0,
+          0.24766117319903175,
+          0.9688467078385925,
+          140.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "frame_id": "frame_001_uav_01",
+      "uav_id": "uav_01",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_01_Camera",
+      "camera_position": [
+        8.0,
+        -2.0,
+        140.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 140.0,
+      "rgb_black_ratio": 0.042082248263888886,
+      "depth_finite_ratio": 0.9575911458333334,
+      "depth_median_m": 320.9843292236328,
+      "split": "train",
+      "source_rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_rgb.png",
+      "source_depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_depth.npy",
+      "copied_rgb": true,
+      "copied_depth": true
+    },
+    {
+      "file_path": "images/uavmarine_s0_viewer160_session_recapture_frame_002_uav_02_uav_02.png",
+      "depth_file_path": "depths/uavmarine_s0_viewer160_session_recapture_frame_002_uav_02_uav_02.npy",
+      "transform_matrix": [
+        [
+          -0.6246950475544243,
+          -0.7671836670489979,
+          0.14555177283093482,
+          -2.0
+        ],
+        [
+          0.7808688094430303,
+          -0.6137469336391983,
+          0.11644141826474785,
+          3.0
+        ],
+        [
+          0.0,
+          0.18639721688301578,
+          0.98247446660881,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "frame_id": "frame_002_uav_02",
+      "uav_id": "uav_02",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_02_Camera",
+      "camera_position": [
+        -2.0,
+        3.0,
+        150.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 150.0,
+      "rgb_black_ratio": 0.017840711805555555,
+      "depth_finite_ratio": 0.9819748263888889,
+      "depth_median_m": 326.2165985107422,
+      "split": "train",
+      "source_rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
+      "source_depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_depth.npy",
+      "copied_rgb": true,
+      "copied_depth": true
+    },
+    {
+      "file_path": "images/uavmarine_s1_viewer160_session_recapture_frame_001_uav_01_uav_01.png",
+      "depth_file_path": "depths/uavmarine_s1_viewer160_session_recapture_frame_001_uav_01_uav_01.npy",
+      "transform_matrix": [
+        [
+          -0.3442546491584232,
+          -0.9096272277143673,
+          0.2325232098812622,
+          8.0
+        ],
+        [
+          0.9388763158866087,
+          -0.333529983495268,
+          0.08525851028979614,
+          -2.0
+        ],
+        [
+          0.0,
+          0.24766117319903175,
+          0.9688467078385925,
+          140.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "frame_id": "frame_001_uav_01",
+      "uav_id": "uav_01",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_01_Camera",
+      "camera_position": [
+        8.0,
+        -2.0,
+        140.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 140.0,
+      "rgb_black_ratio": 0.04237847222222222,
+      "depth_finite_ratio": 0.9575911458333334,
+      "depth_median_m": 321.08558654785156,
+      "split": "train",
+      "source_rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_rgb.png",
+      "source_depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_depth.npy",
+      "copied_rgb": true,
+      "copied_depth": true
+    },
+    {
+      "file_path": "images/uavmarine_s1_viewer160_session_recapture_frame_002_uav_02_uav_02.png",
+      "depth_file_path": "depths/uavmarine_s1_viewer160_session_recapture_frame_002_uav_02_uav_02.npy",
+      "transform_matrix": [
+        [
+          -0.6246950475544243,
+          -0.7671836670489979,
+          0.14555177283093482,
+          -2.0
+        ],
+        [
+          0.7808688094430303,
+          -0.6137469336391983,
+          0.11644141826474785,
+          3.0
+        ],
+        [
+          0.0,
+          0.18639721688301578,
+          0.98247446660881,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "frame_id": "frame_002_uav_02",
+      "uav_id": "uav_02",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_02_Camera",
+      "camera_position": [
+        -2.0,
+        3.0,
+        150.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 150.0,
+      "rgb_black_ratio": 0.018120659722222224,
+      "depth_finite_ratio": 0.9819748263888889,
+      "depth_median_m": 326.2919464111328,
+      "split": "train",
+      "source_rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
+      "source_depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s1_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_depth.npy",
+      "copied_rgb": true,
+      "copied_depth": true
+    },
+    {
+      "file_path": "images/uavmarine_s2_viewer160_session_recapture_frame_001_uav_01_uav_01.png",
+      "depth_file_path": "depths/uavmarine_s2_viewer160_session_recapture_frame_001_uav_01_uav_01.npy",
+      "transform_matrix": [
+        [
+          -0.3442546491584232,
+          -0.9096272277143673,
+          0.2325232098812622,
+          8.0
+        ],
+        [
+          0.9388763158866087,
+          -0.333529983495268,
+          0.08525851028979614,
+          -2.0
+        ],
+        [
+          0.0,
+          0.24766117319903175,
+          0.9688467078385925,
+          140.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "frame_id": "frame_001_uav_01",
+      "uav_id": "uav_01",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_01_Camera",
+      "camera_position": [
+        8.0,
+        -2.0,
+        140.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 140.0,
+      "rgb_black_ratio": 0.042084418402777775,
+      "depth_finite_ratio": 0.9575911458333334,
+      "depth_median_m": 320.6683349609375,
+      "split": "train",
+      "source_rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_rgb.png",
+      "source_depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_depth.npy",
+      "copied_rgb": true,
+      "copied_depth": true
+    },
+    {
+      "file_path": "images/uavmarine_s2_viewer160_session_recapture_frame_002_uav_02_uav_02.png",
+      "depth_file_path": "depths/uavmarine_s2_viewer160_session_recapture_frame_002_uav_02_uav_02.npy",
+      "transform_matrix": [
+        [
+          -0.6246950475544243,
+          -0.7671836670489979,
+          0.14555177283093482,
+          -2.0
+        ],
+        [
+          0.7808688094430303,
+          -0.6137469336391983,
+          0.11644141826474785,
+          3.0
+        ],
+        [
+          0.0,
+          0.18639721688301578,
+          0.98247446660881,
+          150.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "frame_id": "frame_002_uav_02",
+      "uav_id": "uav_02",
+      "camera_prim": "/World/CoM3D_ACE_UAVMarine/CaptureCameras/uav_02_Camera",
+      "camera_position": [
+        -2.0,
+        3.0,
+        150.0
+      ],
+      "look_at_target": [
+        -22.0,
+        -13.0,
+        15.0
+      ],
+      "altitude_m": 150.0,
+      "rgb_black_ratio": 0.017836371527777777,
+      "depth_finite_ratio": 0.9819748263888889,
+      "depth_median_m": 325.97491455078125,
+      "split": "train",
+      "source_rgb_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
+      "source_depth_path": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_depth.npy",
+      "copied_rgb": true,
+      "copied_depth": true
+    }
+  ],
+  "com3d_note": "Generated from verified real-Cesium MarineCity RGB/depth/pose captures. Camera transforms are metadata-derived look-at matrices for upstream 3D runner handoff; this package is not itself a completed neural reconstruction result."
+}

@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 12:14:27 KST",
+  "updated_at_kst": "2026-06-26 13:25:43 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -262,6 +262,83 @@
     "crossview_graph_report": "outputs/reports/live/marinecity_crossview_evidence_graph.md",
     "crossview_graph_table": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
     "crossview_graph_figure": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
+    "integration_check_status": "marinecity_system_integration_smoke_ready_with_pending_final_gates",
+    "integration_check": "outputs/reports/live/marinecity_system_integration_check.md",
+    "integration_checks": [
+      {
+        "name": "real_cesium_stage",
+        "status": "PASS",
+        "evidence": "google_tiles=True, terrain=True, fake_city=False"
+      },
+      {
+        "name": "visdrone_actor_overlay",
+        "status": "PASS",
+        "evidence": "objects=6, classes=bus,car,pedestrian,person,truck,van"
+      },
+      {
+        "name": "multi_uav_markers_and_cameras",
+        "status": "PASS",
+        "evidence": "uav_markers=3, capture_cameras=3"
+      },
+      {
+        "name": "real_capture_rgb_depth_pose",
+        "status": "PASS",
+        "evidence": "scenarios=3, frames=9, altitude_range=140.0-160.0m"
+      },
+      {
+        "name": "safr_yolo_from_uav_views",
+        "status": "PASS",
+        "evidence": "tokens=23, device=1, classes={'car': 15, 'bus': 8}"
+      },
+      {
+        "name": "pedestrian_detection_from_current_views",
+        "status": "WARN",
+        "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=0, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
+      },
+      {
+        "name": "crossview_evidence_graph",
+        "status": "PASS",
+        "evidence": "hypotheses=13, multi_view=5"
+      },
+      {
+        "name": "neural_3d_completion_benchmark",
+        "status": "PENDING",
+        "evidence": "Current real-Cesium RGB/depth/pose captures are valid source evidence. Do not claim NeRF/Instant-NGP/Mip-NeRF/3DGS completion until metric rows exist."
+      },
+      {
+        "name": "external_llm_reasoner",
+        "status": "PENDING",
+        "evidence": "49-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_pending"
+      },
+      {
+        "name": "tinyperson_640_supplement",
+        "status": "PASS",
+        "evidence": "Use TinyPerson as supplementary domain-shift evidence only. The current sparse converted 640 split does not support a headline SAFR-YOLO improvement claim."
+      }
+    ],
+    "integration_detector_classes": {
+      "car": 15,
+      "bus": 8
+    },
+    "integration_actor_classes": [
+      "bus",
+      "car",
+      "pedestrian",
+      "person",
+      "truck",
+      "van"
+    ],
+    "neural_3d_completion_status": "marinecity_3d_input_dataset_ready_metrics_pending",
+    "neural_3d_input_dataset_status": "marinecity_neural3d_dataset_export_ready",
+    "neural_3d_input_dataset_report": "outputs/reports/live/marinecity_neural3d_dataset_export.md",
+    "neural_3d_input_dataset_frames": 9,
+    "neural_3d_input_dataset_split": {
+      "train": 6,
+      "heldout": 3
+    },
+    "neural_3d_metric_result_rows": 0,
+    "neural_3d_readiness_report": "outputs/reports/live/marinecity_3d_completion_readiness.md",
+    "neural_3d_claiming_rule": "The real-Cesium RGB/depth/pose capture source and neural-3D transforms package are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected.",
     "dashboard": "outputs/reports/live/marinecity_simulation_dashboard.png",
     "live_overlay_status": "session_overlay_added",
     "camera_set": true,

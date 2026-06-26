@@ -1,11 +1,11 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-06-26 13:13:10 KST`
+Updated: `2026-06-26 13:25:15 KST`
 Status: `paper_artifact_audit_ok_with_pending_gates`
 
 ## Summary
 
-- Artifacts checked: `46`
+- Artifacts checked: `47`
 - Missing required artifacts: `0`
 - Stale/unsafe claim matches: `0`
 - AeroGraph effective valid response coverage: `49/49`
@@ -14,7 +14,7 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 - AeroGraph table status: `aerograph_reasoner_table_candidate_external_pending`
 - MarineCity qualitative gate: `marinecity_qualitative_gate_main_ready`
 - MarineCity integration gate: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; fails `0`, warnings `1`, pending `2`
-- MarineCity 3D completion gate: `marinecity_3d_completion_pending_upstream_runner`; metric rows `0`
+- MarineCity 3D completion gate: `marinecity_3d_input_dataset_ready_metrics_pending`; metric rows `0`
 - MarineCity main full-frame ready: `True`
 - Local main.tex present: `False`
 - LaTeX patch integrity: `latex_patch_integrity_ok`
@@ -42,12 +42,13 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 
 ## MarineCity 3D Completion Gate
 
-- Status: `marinecity_3d_completion_pending_upstream_runner`
+- Status: `marinecity_3d_input_dataset_ready_metrics_pending`
 - Source capture ready: `True`
+- Neural-3D input dataset ready: `True`
 - Metric result rows: `0`
 - Methods ready: `[]`
 - Missing expected methods: `['nerf', 'instant_ngp', 'mip_nerf_360', 'gaussian_splatting']`
-- Claiming rule: The real-Cesium RGB/depth/pose capture source is ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected.
+- Claiming rule: The real-Cesium RGB/depth/pose capture source and neural-3D transforms package are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected.
 
 ## MarineCity Qualitative Gate
 
@@ -96,6 +97,7 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 | supp_system | outputs/reports/live/marinecity_detector_reasoner_smoke.md | runbook | True | ok | Real-Cesium detector-to-reasoner smoke report |
 | supp_system | outputs/reports/live/marinecity_crossview_evidence_graph.md | runbook | True | ok | Real-Cesium cross-view evidence graph smoke report |
 | supp_system | outputs/reports/live/marinecity_system_integration_check.md | runbook | True | ok | Real-Cesium object/UAV/camera/YOLO/3D/LLM integration gate |
+| pending_3d | outputs/reports/live/marinecity_neural3d_dataset_export.md | runbook | True | ok | MarineCity real-capture neural-3D input dataset export |
 | pending_3d | outputs/reports/live/marinecity_3d_completion_readiness.md | runbook | True | ok | MarineCity neural 3D completion readiness gate |
 | pending_reasoner | paper/tables/aerograph_reasoner_results_placeholder.tex | pending | True | ok | AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete |
 | pending_reasoner | docs/aerograph_nonmock_collection_plan.md | runbook | True | ok | Non-mock reasoner collection gate |
