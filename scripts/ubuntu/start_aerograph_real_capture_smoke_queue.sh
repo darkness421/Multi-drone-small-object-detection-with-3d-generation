@@ -2,28 +2,28 @@
 set -Eeuo pipefail
 
 REPO_ROOT=${REPO_ROOT:-/home/oem/projects/multi-uav-marine-city}
-SESSION=${SESSION:-aerograph-nonmock-49}
-LOG_DIR=${LOG_DIR:-outputs/logs/aerograph_nonmock}
+SESSION=${SESSION:-aerograph-real-capture-smoke}
+LOG_DIR=${LOG_DIR:-outputs/logs/aerograph_real_capture_smoke}
 mkdir -p "$REPO_ROOT/$LOG_DIR"
 
 PROVIDER=${AEROGRAPH_PROVIDER:-openai}
 if [[ "$PROVIDER" == "openai" && -z "${OPENAI_API_KEY:-}" && -z "${AEROGRAPH_ENV_FILE:-}" ]]; then
-  echo "[AeroGraph] OPENAI_API_KEY is not set. Export it or pass AEROGRAPH_ENV_FILE before starting tmux." >&2
+  echo "[AeroGraph real-capture smoke] OPENAI_API_KEY is not set. Export it or pass AEROGRAPH_ENV_FILE." >&2
   exit 2
 fi
 if [[ "$PROVIDER" != "openai" && -z "${AEROGRAPH_COMMAND:-}" && -z "${AEROGRAPH_ENV_FILE:-}" ]]; then
-  echo "[AeroGraph] AEROGRAPH_COMMAND is not set. Export it or pass AEROGRAPH_ENV_FILE before starting tmux." >&2
+  echo "[AeroGraph real-capture smoke] AEROGRAPH_COMMAND is not set. Export it or pass AEROGRAPH_ENV_FILE." >&2
   exit 2
 fi
 
 TEMP_ENV_FILE=""
 ENV_FILE=${AEROGRAPH_ENV_FILE:-}
 if [[ -n "$ENV_FILE" && ! -r "$ENV_FILE" ]]; then
-  echo "[AeroGraph] AEROGRAPH_ENV_FILE is not readable: $ENV_FILE" >&2
+  echo "[AeroGraph real-capture smoke] AEROGRAPH_ENV_FILE is not readable: $ENV_FILE" >&2
   exit 2
 fi
 if [[ -z "$ENV_FILE" ]]; then
-  TEMP_ENV_FILE=$(mktemp "/tmp/aerograph_nonmock_${SESSION}.XXXXXX.env")
+  TEMP_ENV_FILE=$(mktemp "/tmp/aerograph_real_capture_${SESSION}.XXXXXX.env")
   chmod 600 "$TEMP_ENV_FILE"
   {
     printf 'export AEROGRAPH_PROVIDER=%q\n' "$PROVIDER"
@@ -44,11 +44,11 @@ if [[ -z "$ENV_FILE" ]]; then
   ENV_FILE="$TEMP_ENV_FILE"
 fi
 
-tmux new-session -d -s "$SESSION" -n aerograph "cd '$REPO_ROOT' && \
+tmux new-session -d -s "$SESSION" -n aerograph-smoke "cd '$REPO_ROOT' && \
   trap 'rm -f \"$TEMP_ENV_FILE\"' EXIT && \
   source '$ENV_FILE' && \
-  bash scripts/ubuntu/run_aerograph_nonmock_queue.sh 2>&1 | tee '$LOG_DIR/queue.log'"
+  bash scripts/ubuntu/run_aerograph_real_capture_smoke_queue.sh 2>&1 | tee '$LOG_DIR/queue.log'"
 
-echo "[AeroGraph] started tmux session: $SESSION"
-echo "[AeroGraph] log: $REPO_ROOT/$LOG_DIR/queue.log"
-echo "[AeroGraph] attach: tmux attach -t $SESSION"
+echo "[AeroGraph real-capture smoke] started tmux session: $SESSION"
+echo "[AeroGraph real-capture smoke] log: $REPO_ROOT/$LOG_DIR/queue.log"
+echo "[AeroGraph real-capture smoke] attach: tmux attach -t $SESSION"

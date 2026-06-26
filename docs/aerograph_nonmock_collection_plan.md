@@ -18,6 +18,18 @@ the final AeroGraph result table must use non-mock LLM/VLM responses.
 - Current reviewed-candidate coverage: `49/49` via
   `outputs/reasoning/aerograph_prompt_pack_eval_manual_web/manifest.json`
 - Current direct manual-response file coverage: `0/49`
+- Current real-capture compact smoke pack:
+  `outputs/reports/live/aerograph_real_capture_prompt_pack/`
+  (`23` prompts, matching the latest 3-scenario x 3-UAV real-Cesium detector
+  smoke run). Use this for quick non-mock smoke checks before spending time on
+  the full 49-prompt table gate.
+- Compact smoke web packet:
+  `outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md`
+  with checklist
+  `outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv`.
+  Save compact raw web answers under
+  `outputs/reasoning/aerograph_real_capture_web_raw_batches/` and import them
+  into `outputs/reasoning/aerograph_real_capture_manual_responses.jsonl`.
 - Current external-provider blocker: no `OPENAI_API_KEY`,
   `AEROGRAPH_COMMAND`, Factory CLI, or local LLM command is configured in the
   active shell.
@@ -58,6 +70,60 @@ outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_03_02
 outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_04_031-040.md
 outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_05_041-049.md
 ```
+
+For the shorter current real-capture smoke check, use these three batches
+instead and save responses to
+`outputs/reasoning/aerograph_real_capture_manual_responses.jsonl`:
+
+```text
+outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/aerograph_web_batch_01_001-010.md
+outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/aerograph_web_batch_02_011-020.md
+outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/aerograph_web_batch_03_021-023.md
+```
+
+Import the compact smoke responses with:
+
+```bash
+python scripts/import_aerograph_manual_responses.py \
+  --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl \
+  --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl \
+  --provider-label "Factory/ChatGPT web real-capture smoke" \
+  --out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web
+```
+
+This compact run is useful for debugging the provider and wording on current
+captures. The final paper table still uses the 49-prompt gate unless we
+explicitly switch the paper protocol to the compact 23-prompt smoke setting.
+
+If a provider CLI/API is available, run the compact smoke directly without
+touching the final 49-prompt paper-table slot:
+
+```bash
+# OpenAI API smoke
+OPENAI_API_KEY=... \
+AEROGRAPH_PROVIDER=openai \
+AEROGRAPH_OPENAI_MODEL=gpt-5.1 \
+SESSION=aerograph-real-capture-smoke \
+bash scripts/ubuntu/start_aerograph_real_capture_smoke_queue.sh
+
+# Factory/local command smoke
+AEROGRAPH_PROVIDER=command \
+AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' \
+SESSION=aerograph-real-capture-smoke-command \
+bash scripts/ubuntu/start_aerograph_real_capture_smoke_queue.sh
+```
+
+The compact smoke writes:
+
+```text
+outputs/reports/live/aerograph_real_capture_nonmock_smoke_status.md
+outputs/reasoning/aerograph_real_capture_eval_openai/manifest.json
+outputs/reasoning/aerograph_real_capture_eval_factory/manifest.json
+```
+
+This smoke gate is only a provider-connection and current-capture validation
+step. It must not replace the 49-prompt final AeroGraph table unless the paper
+protocol is explicitly changed.
 
 Batch progress is tracked in:
 
@@ -123,6 +189,16 @@ SESSION=aerograph-nonmock-49 \
 bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
 ```
 
+Preflight behavior:
+
+- The wrapper refuses to start tmux if `OPENAI_API_KEY` is missing for
+  `AEROGRAPH_PROVIDER=openai`.
+- The wrapper refuses to start tmux if `AEROGRAPH_COMMAND` is missing for
+  `AEROGRAPH_PROVIDER=command` or `AEROGRAPH_PROVIDER=factory`.
+- If `AEROGRAPH_ENV_FILE` is provided, it must be readable before tmux starts.
+  This avoids a silent background session that immediately exits without
+  producing non-mock evidence.
+
 Private env-file option, useful when starting from an already-running tmux
 server:
 
@@ -171,6 +247,11 @@ AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' \
 SESSION=aerograph-nonmock-49-command \
 bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
 ```
+
+For Factory or any other hosted agent exposed through a local CLI, wrap the
+provider so the command reads one AeroGraph prompt from `stdin` and returns one
+JSON object with the required fields only. Use a private env file when the
+command contains credentials, browser profile paths, or machine-local tokens.
 
 Direct command:
 
