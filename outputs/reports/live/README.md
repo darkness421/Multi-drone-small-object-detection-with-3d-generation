@@ -30,6 +30,7 @@ Current live bundle:
 - `paper_fig09_final_ablation_delta_bar.png`: compact ablation delta chart versus YOLOv11l.
 - `paper_fig10_final_ablation_metric_heatmap.png`: supplementary ablation heatmap including exploratory modules.
 - `paper_fig11_final_detector_feature_activation_heatmap.png`: Grad-CAM-style feature activation heatmap sheet for YOLOv11l, YOLOv9c, and Ours. Use as supplementary qualitative evidence.
+- `paper_fig12_tinyperson_640_stress.png`: supplementary TinyPerson 640 stress-test figure; use only as domain-shift evidence.
 - `final_detector_feature_activation_manifest.json`: source metadata for the feature activation heatmap sheet.
 - `final_ablation_main_table.csv`: source CSV for the completed main ablation table.
 - `supplementary_detector_analysis/final_ablation_supplementary_table.csv`: source CSV for the supplementary ablation table.

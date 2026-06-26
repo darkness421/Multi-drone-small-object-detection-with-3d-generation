@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-26 08:19:54 KST",
+  "updated_at_kst": "2026-06-26 09:06:24 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
-  "artifact_count": 38,
+  "artifact_count": 39,
   "missing_required_count": 0,
   "stale_claim_count": 0,
   "artifacts": [
@@ -151,7 +151,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 12681,
+      "size_bytes": 13171,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },
@@ -171,7 +171,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 833,
+      "size_bytes": 831,
       "status": "ok",
       "note": "TinyPerson 640 supplementary stress-test table"
     },
@@ -194,6 +194,16 @@
       "size_bytes": 3522558,
       "status": "ok",
       "note": "Detector activation/heatmap sheet"
+    },
+    {
+      "group": "supp_detector",
+      "path": "paper/figures/results/paper_fig12_tinyperson_640_stress.png",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 187030,
+      "status": "ok",
+      "note": "TinyPerson 640 supplementary stress-test figure"
     },
     {
       "group": "supp_system",

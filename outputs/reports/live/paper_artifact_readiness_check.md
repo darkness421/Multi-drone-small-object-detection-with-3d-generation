@@ -1,11 +1,11 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-06-26 08:19:54 KST`
+Updated: `2026-06-26 09:06:24 KST`
 Status: `paper_artifact_audit_ok_with_pending_gates`
 
 ## Summary
 
-- Artifacts checked: `38`
+- Artifacts checked: `39`
 - Missing required artifacts: `0`
 - Stale/unsafe claim matches: `0`
 - AeroGraph effective valid response coverage: `49/49`
@@ -62,6 +62,7 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 | supp_detector | paper/tables/tinyperson_640_stress_table.tex | supp | True | ok | TinyPerson 640 supplementary stress-test table |
 | supp_detector | paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png | supp | True | ok | Ablation heatmap |
 | supp_detector | paper/figures/results/paper_fig11_final_detector_feature_activation_heatmap.png | supp | True | ok | Detector activation/heatmap sheet |
+| supp_detector | paper/figures/results/paper_fig12_tinyperson_640_stress.png | supp | True | ok | TinyPerson 640 supplementary stress-test figure |
 | supp_system | paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png | supp_or_main_smoke | True | ok | Three-scenario real-Cesium smoke sheet |
 | supp_system | paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png | main_or_supp_smoke | True | ok | Real-Cesium detector preview contact sheet from SAFR-YOLO smoke run |
 | supp_system | paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png | supp | True | ok | Real-Cesium 3-scenario x 3-UAV capture contact sheet |

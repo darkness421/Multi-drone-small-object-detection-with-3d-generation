@@ -34,6 +34,7 @@ EXTRA_DETECTOR_ARTIFACTS = [
     "paper_fig09_final_ablation_delta_bar.png",
     "paper_fig10_final_ablation_metric_heatmap.png",
     "paper_fig11_final_detector_feature_activation_heatmap.png",
+    "paper_fig12_tinyperson_640_stress.png",
 ]
 
 PAPER_MAIN_METHODS = [
@@ -1091,6 +1092,7 @@ def export_manifest(out_dir: Path, files: Iterable[Path]) -> Path:
             "- `paper_fig09_final_ablation_delta_bar.png`",
             "- `paper_fig10_final_ablation_metric_heatmap.png`",
             "- `paper_fig11_final_detector_feature_activation_heatmap.png`",
+            "- `paper_fig12_tinyperson_640_stress.png`",
         ]
     )
     manifest.write_text("\n".join(lines) + "\n", encoding="utf-8")
