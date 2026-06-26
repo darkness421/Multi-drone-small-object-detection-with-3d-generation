@@ -1,6 +1,6 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-26 19:59:42 KST`
+Updated: `2026-06-26 23:24:08 KST`
 
 ## Detector Status
 
@@ -63,7 +63,7 @@ Updated: `2026-06-26 19:59:42 KST`
 - Prompt class counts: `{'bus': 16, 'car': 29, 'pedestrian': 4}`
 - Real-capture compact prompt pack: `aerograph_real_capture_prompt_pack_ready`, prompts `23`, classes `{'bus': 8, 'car': 15}`
 - Real-capture compact web batches: `aerograph_web_batches_ready`, count `3`; dry-run `aerograph_eval_dry_run_ready`, paper-claim `False`
-- Real-capture compact non-mock smoke: `aerograph_real_capture_nonmock_smoke_pending`; expected prompts `23`; selected manifest ``
+- Real-capture compact non-mock smoke: `aerograph_real_capture_nonmock_smoke_complete`; expected prompts `23`; selected manifest `outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json`
 - Real-capture compact web packet: `outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md`; checklist `outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv`
 - Web batches: `aerograph_web_batches_ready`, count `5`, dir `outputs/reports/live/aerograph_prompt_pack/web_batches`
 - Dry-run status: `aerograph_eval_dry_run_ready`
@@ -79,21 +79,17 @@ Updated: `2026-06-26 19:59:42 KST`
 ## Queue Gates
 
 - UAVDet log tail: `[2026-06-25T19:23:05+09:00] QUEUE_FINISHED UAVDet inspired reproduction queue`
-- TinyPerson log tail: `[2026-06-26T06:52:33+09:00] Dashboard: outputs/reports/live/tinyperson_640_dashboard.png`
-- TinyPerson gate: `finished_tinyperson_640_stress_test`
-- TinyPerson transfer log tail: `[2026-06-26T14:17:32+09:00] Dashboard: outputs/reports/live/tinyperson_640_transfer_dashboard.png`
-- TinyPerson transfer gate: `finished_tinyperson_ours_transfer`
-- TinyPerson eval-size log tail: `[2026-06-26T14:45:20+09:00] QUEUE_FINISHED TinyPerson eval-only input-size sweep`
-- TinyPerson eval-size gate: `finished_tinyperson_eval_imgsz_sweep`
-- Corrected TinyPerson log tail: `[2026-06-26T18:21:01+09:00] Dashboard: outputs/reports/live/tinyperson_corner_original_dashboard.png`
-- Corrected TinyPerson gate: `finished_tinyperson_corner_original`; status `comparison_complete`; methods `['Ours', 'YOLOv9m']`; complete `['Ours', 'YOLOv9m']`
-- Corrected TinyPerson best row: `{'method': 'YOLOv9m', 'seed': '42', 'imgsz': '1280', 'latest_epoch': 60, 'best_epoch': 55, 'best_ap': 0.20348, 'best_ap50': 0.54079, 'best_recall': 0.51038, 'status': 'complete'}`
+- TinyPerson policy: `TinyPerson is stopped here and retained only as an internal diagnostic; it is excluded from default main/supplementary paper artifacts.`
+- TinyPerson archive gate: `closed_archive_only_internal`
+- TinyPerson corrected original-window archive: gate `closed_archive_only_internal`; status `closed_archive_only`; paper use `internal_archive`
+- TinyPerson archived methods: `['Ours', 'YOLOv9m']`; completed methods `['Ours', 'YOLOv9m']`
+- TinyPerson archived best row: `{'method': 'YOLOv9m', 'seed': '42', 'imgsz': '1280', 'latest_epoch': 60, 'best_epoch': 55, 'best_ap': 0.20348, 'best_ap50': 0.54079, 'best_recall': 0.51038, 'status': 'complete'}`
 
 ## Dashboard Links
 
 - Training dashboard: `outputs/reports/live/training_dashboard.png`
 - MarineCity dashboard: `outputs/reports/live/marinecity_simulation_dashboard.png`
-- Corrected TinyPerson dashboard: `outputs/reports/live/tinyperson_corner_original_dashboard.png`
+- Archived TinyPerson dashboard: `outputs/reports/live/tinyperson_corner_original_dashboard.png`
 
 ## Paper-Ready Artifacts
 

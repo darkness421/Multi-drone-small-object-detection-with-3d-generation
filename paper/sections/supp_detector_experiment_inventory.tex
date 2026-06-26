@@ -23,13 +23,14 @@ for model-scale and protocol coverage.
 \caption{Completed 1280-pixel detector ranking for supplementary reporting.
 Rows use VisDrone2019-DET validation with seeds 42, 123, and 2026. The main
 paper reports only the selected detector and representative strong baselines;
-this table provides full scale coverage for reviewer inspection.}
+this table provides full scale coverage for reviewer inspection. ``Ours''
+denotes the SAFR-YOLO/P2P4-SelfAttnFR implementation described in the method.}
 \label{tab:supp_yolo_scale_sweep}
 \begin{tabular}{rllrrrrrr}
 \toprule
 Rank & Group & Method & AP & AP50 & F1 & Params(M) & GFLOPs & $\Delta$AP \\
 \midrule
-1 & Ours & SAFR-YOLO & 0.3822 $\pm$ 0.0007 & 0.6052 $\pm$ 0.0012 & 0.6273 & 20.82 & 109.30 & +0.0045 \\
+1 & Ours & Ours & 0.3822 $\pm$ 0.0007 & 0.6052 $\pm$ 0.0012 & 0.6273 & 20.82 & 109.30 & +0.0045 \\
 2 & YOLO large & YOLOv11l & 0.3777 $\pm$ 0.0004 & 0.5981 $\pm$ 0.0011 & 0.6248 & 25.32 & 87.30 & +0.0000 \\
 3 & YOLO large & YOLOv12l & 0.3771 $\pm$ 0.0020 & 0.5958 $\pm$ 0.0025 & 0.6219 & 26.40 & 89.40 & -0.0006 \\
 4 & YOLO large & YOLOv8l & 0.3765 $\pm$ 0.0003 & 0.5963 $\pm$ 0.0008 & 0.6198 & 43.64 & 165.40 & -0.0011 \\
@@ -142,7 +143,7 @@ as design-search evidence and are not interpreted as final competing methods.}
 
 \paragraph{Qualitative and explainability figures.}
 Fig.~\ref{fig:supp_final_detector_feature_activation} shows the generated
-feature-activation heat-map comparison for YOLOv11l, YOLOv9c, and SAFR-YOLO on
+feature-activation heat-map comparison for YOLOv11l, YOLOv9c, and Ours on
 six crowded VisDrone validation crops. These are Grad-CAM-style feature
 response visualizations from fixed checkpoints, not class-logit attribution
 scores; we therefore use them as qualitative support for the detector behavior
@@ -152,7 +153,7 @@ rather than as an additional quantitative claim.
     \centering
     \includegraphics[width=0.98\textwidth]{figures/results/paper_fig11_final_detector_feature_activation_heatmap}
     \caption{Supplementary detector feature-activation heat maps for YOLOv11l,
-    YOLOv9c, and SAFR-YOLO. The panels compare the spatial feature responses on
+    YOLOv9c, and Ours. The panels compare the spatial feature responses on
     crowded UAV crops containing adjacent tiny objects and clutter.}
     \label{fig:supp_final_detector_feature_activation}
 \end{figure*}
@@ -174,69 +175,10 @@ useful because it shows that adjacent-object post-processing can improve AP and
 AP50 on a fixed checkpoint, but the paper labels it as an eval-only
 robustness analysis.
 
-\paragraph{TinyPerson supplementary stress test.}
-TinyPerson is treated as a detector-only supplementary stress test after the
-final VisDrone detector is fixed. The completed 640-pixel TinyPerson queue
-contains YOLOv11l, YOLOv9c, YOLOv8l, YOLOv9m, SAFR-YOLO, and a P2P4-head-only
-core-ablation row. All 18 TinyPerson rows have been collected: six detector
-variants over seeds 42, 123, and 2026. We additionally collect a
-VisDrone-initialized SAFR-YOLO transfer row over the same three seeds. These
-rows remain diagnostic because the converted split is highly sparse (794
-training images with 596 boxes and 786 validation images with 77 boxes), and
-all AP/AP50 values are close to zero. The strongest from-scratch TinyPerson row
-is YOLOv9m with AP/AP50 of approximately 0.0002/0.0010. The VisDrone-initialized
-SAFR-YOLO transfer row increases recall to approximately 0.0996 but still
-reaches only approximately 0.00003/0.00012 AP/AP50. We therefore keep
-TinyPerson as a supplementary domain-shift and dataset-conversion limitation
-analysis rather than using it as a main detector claim. Related-work TinyPerson
-rows are added only for models that are either cited in the manuscript or
-explicitly added to the Related Work section with a matching bibliography entry.
-
-\begin{table*}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\caption{TinyPerson 640-pixel supplementary stress test. Results are reported
-over seeds 42, 123, and 2026. The SAFR-YOLO transfer row uses VisDrone-trained
-SAFR-YOLO initialization before TinyPerson fine-tuning. AP, AP50, and F1 are
-scaled by $10^{-3}$ because all tested models are near zero on the current
-converted sparse split; this table is therefore used only as domain-shift
-evidence, not as a main comparison claim.}
-\label{tab:supp_tinyperson_640_stress}
-\input{tables/tinyperson_640_stress_table}
-\end{table*}
-
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=0.86\textwidth]{figures/results/paper_fig12_tinyperson_640_stress}
-    \caption{TinyPerson 640-pixel supplementary stress-test summary, including
-    the VisDrone-initialized SAFR-YOLO transfer diagnostic. AP/AP50 and F1 are
-    shown at $10^{-3}$ scale because the converted sparse split produces
-    near-zero AP for all tested models. This figure is included only as
-    domain-shift evidence after the VisDrone detector claim is fixed.}
-    \label{fig:supp_tinyperson_640_stress}
-\end{figure*}
-
-\begin{table*}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\caption{TinyPerson eval-only input-size sensitivity. Completed TinyPerson
-checkpoints are evaluated at 640, 960, and 1280 pixels without additional
-training. AP, AP50, and F1 are scaled by $10^{-3}$. This table is a
-supplementary diagnostic for input-size sensitivity under the sparse converted
-TinyPerson split, not a main detector claim.}
-\label{tab:supp_tinyperson_eval_imgsz_sweep}
-\input{tables/tinyperson_eval_imgsz_sweep_table}
-\end{table*}
-
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=0.86\textwidth]{figures/results/paper_fig13_tinyperson_eval_imgsz_sweep}
-    \caption{TinyPerson eval-only input-size sensitivity. The completed
-    checkpoints are reused and only the evaluation image size is changed. On
-    the current converted split, 640-pixel evaluation is the most stable for
-    AP50, while the VisDrone-initialized SAFR-YOLO transfer row gives the
-    highest recall.}
-    \label{fig:supp_tinyperson_eval_imgsz_sweep}
-\end{figure*}
+\paragraph{Archived TinyPerson diagnostic.}
+TinyPerson was used only as an internal domain-transfer sanity check. We stop
+this line of experiments because the corrected original-window runs do not
+strengthen the proposed-detector claim and the earlier 640-pixel conversion is
+not protocol-compatible with the paper's VisDrone-controlled detector
+comparison. The TinyPerson artifacts remain in the repository for auditability,
+but the default supplementary draft omits TinyPerson tables and figures.

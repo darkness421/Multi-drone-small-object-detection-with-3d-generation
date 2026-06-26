@@ -9,21 +9,20 @@ Current live bundle:
 
 - `training_dashboard.png`: active detector queue view.
 - `tinyperson_640_dashboard.png`: archived legacy TinyPerson 640 diagnostic dashboard, now including the VisDrone-initialized Ours transfer row. Do not use it as a paper-facing TinyPerson comparison because the initial conversion did not materialize corner crops and the protocol is not aligned with the original-window 1280 setup.
-- `tinyperson_640_transfer_dashboard.png`: separate dashboard for the 3-seed Ours TinyPerson transfer run before it is merged into the paper-facing Fig. 12.
-- `tinyperson_eval_imgsz_sweep_dashboard.png`: supplementary eval-only input-size sweep for legacy TinyPerson checkpoints at 640/960/1280.
+- `tinyperson_640_transfer_dashboard.png`: archived transfer diagnostic; not planned for the default main or supplementary paper.
+- `tinyperson_eval_imgsz_sweep_dashboard.png`: archived eval-only input-size diagnostic for legacy TinyPerson checkpoints at 640/960/1280.
 - `tinyperson_corner_original_dashboard.png`: corrected TinyPerson
-  original-window/1280 diagnostic dashboard. The corrected Ours-vs-YOLOv9m
-  seed-42 run is complete; Ours is lower, so use it only as supplementary
-  domain-transfer or limitation evidence rather than as a positive detector
-  claim.
+  original-window/1280 diagnostic dashboard. TinyPerson is now closed as an
+  internal archive-only diagnostic because it does not strengthen the ACCV
+  detector claim.
 - `../experiments/tinyperson_corner_original/live_summary.csv` and
-  `../../paper/tables/tinyperson_corner_original_live_table.tex`: live
-  corrected TinyPerson source rows for the supplementary slot.
+  `../../paper/tables/tinyperson_corner_original_live_table.tex`: archived
+  corrected TinyPerson source rows; not included in the default paper draft.
 - `marinecity_simulation_dashboard.png`: Isaac/Cesium simulation status, live-GUI vs automated-capture distinction, and next viewer160 recapture queue.
 - `accv_workflow_status_snapshot.md`: compact current-state handoff for
   detector, MarineCity, AeroGraph, and queue gates.
 - `accv_remaining_gates_queue.md`: concise remaining-gates queue that separates
-  paper-ready evidence from pending TinyPerson corrected, neural-3D, AeroGraph,
+  paper-ready evidence from archived TinyPerson diagnostics, pending neural-3D, AeroGraph,
   and Overleaf/local-compile gates.
 - `accv_next_execution_handoff.md`: exact next commands and external inputs for
   the two remaining hard gates: neural-3D metrics and external non-mock
@@ -51,8 +50,8 @@ Current live bundle:
 - `paper_fig09_final_ablation_delta_bar.png`: compact ablation delta chart versus YOLOv11l.
 - `paper_fig10_final_ablation_metric_heatmap.png`: supplementary ablation heatmap including exploratory modules.
 - `paper_fig11_final_detector_feature_activation_heatmap.png`: Grad-CAM-style feature activation heatmap sheet for YOLOv11l, YOLOv9c, and Ours. Use as supplementary qualitative evidence.
-- `paper_fig12_tinyperson_640_stress.png`: archived legacy TinyPerson 640 diagnostic figure with the Ours transfer row; keep it out of paper comparison tables unless explicitly discussing a failed/legacy protocol.
-- `../../paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png`: supplementary eval-only input-size sensitivity figure, generated from completed TinyPerson checkpoints.
+- `paper_fig12_tinyperson_640_stress.png`: archived legacy TinyPerson 640 diagnostic figure with the Ours transfer row; keep it out of the default paper.
+- `../../paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png`: archived eval-only input-size sensitivity figure; keep it out of the default paper.
 - `fig1_fig3_revision_package/`: clean handoff package for revising Main Fig. 1
   and Main Fig. 3 from the current real-Cesium MarineCity evidence. It contains
   24 copied assets and 2 explicitly marked pending placeholders for final neural

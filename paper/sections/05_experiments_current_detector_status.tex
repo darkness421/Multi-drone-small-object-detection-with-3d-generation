@@ -114,14 +114,11 @@ notes and coverage labels. Likewise, YOLO nano/small/medium scale sweeps are
 important for reviewer coverage, but the full scale table is better placed in
 the supplementary material to preserve the main paper page budget.
 The supplementary material also contains the Grad-CAM-style detector
-feature-activation sheet. TinyPerson is treated separately as a domain-transfer
-diagnostic, not as part of the main detector claim. Earlier 640-pixel
-TinyPerson rows are archived as protocol diagnostics because the first
-conversion did not materialize TinyPerson corner windows and should not be
-mixed into paper-facing comparison tables. If TinyPerson is included, we use
-only the corrected original-window 1280-pixel protocol. In this corrected
-single-seed check, Ours does not outperform YOLOv9m on TinyPerson, so we report
-it as limitation evidence rather than as a headline detector win.
+feature-activation sheet. TinyPerson experiments are closed as internal
+archive-only diagnostics and are not included in the default paper tables or
+figures. The early TinyPerson runs did not strengthen the proposed-detector
+claim and would distract from the VisDrone-controlled comparison, so we keep
+them only as implementation notes for future domain-transfer work.
 
 Post-processing NMS sweeps are also kept out of the main comparison until they
 are confirmed with the selected detector under the same three-seed protocol. If

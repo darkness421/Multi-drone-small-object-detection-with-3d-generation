@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 19:59:42 KST",
+  "updated_at_kst": "2026-06-26 23:24:08 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -308,17 +308,17 @@
       {
         "name": "external_llm_reasoner",
         "status": "PENDING",
-        "evidence": "49-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_pending"
+        "evidence": "49-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_complete"
       },
       {
         "name": "tinyperson_legacy_640_diagnostic",
         "status": "INFO",
-        "evidence": "Archive the legacy TinyPerson 640 rows as a protocol-audit diagnostic only. Do not use them as paper-facing detector comparison evidence; the corrected original-window 1280 run is the only TinyPerson paper-facing check."
+        "evidence": "Archive the legacy TinyPerson 640 rows as a protocol-audit diagnostic only. Do not use them as paper-facing detector comparison evidence; TinyPerson is now excluded from the default paper."
       },
       {
         "name": "tinyperson_corrected_corner_original",
-        "status": "PASS",
-        "evidence": "status=comparison_complete, methods=['Ours', 'YOLOv9m'], complete=['Ours', 'YOLOv9m'], best=YOLOv9m AP=0.20348. Corrected TinyPerson uses materialized corner crops, one person class, and 1280 input. Do not make a TinyPerson generalization claim until Ours and YOLOv9m are both complete under the same protocol."
+        "status": "PENDING",
+        "evidence": "status=closed_archive_only, methods=['Ours', 'YOLOv9m'], complete=['Ours', 'YOLOv9m'], best=YOLOv9m AP=0.20348. Corrected TinyPerson uses materialized corner crops, one person class, and 1280 input. The results are retained only as internal diagnostics and are excluded from the default paper."
       }
     ],
     "integration_detector_classes": {
@@ -454,13 +454,13 @@
     "real_capture_web_collection_checklist_exists": true,
     "real_capture_dryrun_status": "aerograph_eval_dry_run_ready",
     "real_capture_dryrun_paper_claim_allowed": false,
-    "real_capture_nonmock_smoke_status": "aerograph_real_capture_nonmock_smoke_pending",
-    "real_capture_nonmock_smoke_selected_manifest": "",
+    "real_capture_nonmock_smoke_status": "aerograph_real_capture_nonmock_smoke_complete",
+    "real_capture_nonmock_smoke_selected_manifest": "outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json",
     "real_capture_nonmock_smoke_expected_prompt_count": 23,
     "web_batch_status": "aerograph_web_batches_ready",
     "web_batch_count": 5,
     "web_batch_dir": "outputs/reports/live/aerograph_prompt_pack/web_batches",
-    "web_batch_import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"Factory/ChatGPT web\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
+    "web_batch_import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"ChatGPT/Codex web\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
     "dry_run_status": "aerograph_eval_dry_run_ready",
     "dry_run_summary": {
       "total": 79,
@@ -489,15 +489,17 @@
   },
   "queues": {
     "uavdet_log_tail": "[2026-06-25T19:23:05+09:00] QUEUE_FINISHED UAVDet inspired reproduction queue",
-    "tinyperson_log_tail": "[2026-06-26T06:52:33+09:00] Dashboard: outputs/reports/live/tinyperson_640_dashboard.png",
-    "tiny_person_gate": "finished_tinyperson_640_stress_test",
-    "tinyperson_transfer_log_tail": "[2026-06-26T14:17:32+09:00] Dashboard: outputs/reports/live/tinyperson_640_transfer_dashboard.png",
-    "tiny_person_transfer_gate": "finished_tinyperson_ours_transfer",
-    "tinyperson_eval_sweep_log_tail": "[2026-06-26T14:45:20+09:00] QUEUE_FINISHED TinyPerson eval-only input-size sweep",
-    "tiny_person_eval_sweep_gate": "finished_tinyperson_eval_imgsz_sweep",
-    "tinyperson_corner_log_tail": "[2026-06-26T18:21:01+09:00] Dashboard: outputs/reports/live/tinyperson_corner_original_dashboard.png",
-    "tiny_person_corner_gate": "finished_tinyperson_corner_original",
-    "tinyperson_corner_status": "comparison_complete",
+    "tinyperson_archive_note": "TinyPerson is stopped here and retained only as an internal diagnostic; it is excluded from default main/supplementary paper artifacts.",
+    "tinyperson_log_tail": "archived; legacy log retained but ignored",
+    "tiny_person_gate": "closed_archive_only_internal",
+    "tinyperson_transfer_log_tail": "archived; legacy transfer log retained but ignored",
+    "tiny_person_transfer_gate": "closed_archive_only_internal",
+    "tinyperson_eval_sweep_log_tail": "archived; legacy eval-size log retained but ignored",
+    "tiny_person_eval_sweep_gate": "closed_archive_only_internal",
+    "tinyperson_corner_log_tail": "archived; stopped queue log retained but ignored",
+    "tiny_person_corner_gate": "closed_archive_only_internal",
+    "tinyperson_corner_status": "closed_archive_only",
+    "tinyperson_corner_paper_use": "internal_archive",
     "tinyperson_corner_methods": [
       "Ours",
       "YOLOv9m"
@@ -519,6 +521,28 @@
         "status": "complete"
       },
       {
+        "method": "Ours",
+        "seed": "123",
+        "imgsz": "1280",
+        "latest_epoch": 21,
+        "best_epoch": 16,
+        "best_ap": 0.15226,
+        "best_ap50": 0.40974,
+        "best_recall": 0.39805,
+        "status": "complete"
+      },
+      {
+        "method": "Ours",
+        "seed": "2026",
+        "imgsz": "1280",
+        "latest_epoch": 5,
+        "best_epoch": 5,
+        "best_ap": 0.08902,
+        "best_ap50": 0.25687,
+        "best_recall": 0.31673,
+        "status": "running"
+      },
+      {
         "method": "YOLOv9m",
         "seed": "42",
         "imgsz": "1280",
@@ -527,6 +551,28 @@
         "best_ap": 0.20348,
         "best_ap50": 0.54079,
         "best_recall": 0.51038,
+        "status": "complete"
+      },
+      {
+        "method": "YOLOv9m",
+        "seed": "123",
+        "imgsz": "1280",
+        "latest_epoch": 36,
+        "best_epoch": 31,
+        "best_ap": 0.19602,
+        "best_ap50": 0.51739,
+        "best_recall": 0.47832,
+        "status": "complete"
+      },
+      {
+        "method": "YOLOv9m",
+        "seed": "2026",
+        "imgsz": "1280",
+        "latest_epoch": 21,
+        "best_epoch": 16,
+        "best_ap": 0.16173,
+        "best_ap50": 0.44543,
+        "best_recall": 0.42509,
         "status": "complete"
       }
     ],

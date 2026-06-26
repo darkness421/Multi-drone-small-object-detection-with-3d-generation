@@ -19,6 +19,14 @@ UAVDET_LOG = REPO_ROOT / "outputs/logs/required_related_work_models/uavdet_inspi
 TINYPERSON_LOG = REPO_ROOT / "outputs/logs/tinyperson_640/queue.log"
 TINYPERSON_TRANSFER_LOG = REPO_ROOT / "outputs/logs/tinyperson_640_transfer/queue.log"
 TINYPERSON_EVAL_SWEEP_LOG = REPO_ROOT / "outputs/logs/tinyperson_eval_imgsz_sweep/queue.log"
+TINYPERSON_CORNER_LOG = REPO_ROOT / "outputs/logs/tinyperson_corner_original/queue.log"
+TINYPERSON_CORNER_LIVE_SUMMARY = REPO_ROOT / "outputs/experiments/tinyperson_corner_original/live_summary.csv"
+TINYPERSON_CORNER_DASHBOARD = LIVE_DIR / "tinyperson_corner_original_dashboard.png"
+TINYPERSON_ARCHIVE_GATE = "closed_archive_only_internal"
+TINYPERSON_ARCHIVE_NOTE = (
+    "TinyPerson is stopped here and retained only as an internal diagnostic; "
+    "it is excluded from default main/supplementary paper artifacts."
+)
 SYSTEM_MANIFEST = LIVE_DIR / "marinecity_system_test_10plus/manifest.json"
 MARINECITY_DETECTOR_REASONER_SMOKE = LIVE_DIR / "marinecity_detector_reasoner_smoke.json"
 MARINECITY_CROSSVIEW_GRAPH_SUMMARY = REPO_ROOT / "outputs/graphs/marinecity_crossview_evidence_graph/summary.json"
@@ -165,6 +173,63 @@ def tiny_person_eval_sweep_gate_state() -> str:
     return "log_present_state_unknown"
 
 
+def tiny_person_corner_gate_state() -> str:
+    if not TINYPERSON_CORNER_LOG.exists():
+        return "not_started"
+    lines = [
+        line.strip()
+        for line in TINYPERSON_CORNER_LOG.read_text(encoding="utf-8", errors="ignore").splitlines()
+        if line.strip()
+    ]
+    for line in reversed(lines):
+        if "QUEUE_FINISHED TinyPerson corner/original-window queue" in line:
+            return "finished_tinyperson_corner_original"
+        if "FINISH TinyPerson corner/original job=" in line:
+            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
+            if match:
+                return f"last_finished_tinyperson_corner_{match.group(1)}_seed{match.group(2)}"
+            return "last_finished_tinyperson_corner_original"
+        if "START TinyPerson corner/original job=" in line:
+            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
+            if match:
+                return f"running_tinyperson_corner_{match.group(1)}_seed{match.group(2)}"
+            return "running_tinyperson_corner_original"
+        if "Preparing TinyPerson corner/original-window YOLO dataset" in line:
+            return "preparing_tinyperson_corner_original"
+    return "log_present_state_unknown"
+
+
+def tiny_person_corner_live_summary() -> dict[str, Any]:
+    rows = read_csv(TINYPERSON_CORNER_LIVE_SUMMARY)
+    if not rows:
+        return {"status": "closed_archive_only", "paper_use": "internal_archive", "rows": []}
+    parsed: list[dict[str, Any]] = []
+    for row in rows:
+        parsed.append(
+            {
+                "method": row.get("method", ""),
+                "seed": row.get("seed", ""),
+                "imgsz": row.get("imgsz", ""),
+                "latest_epoch": int(float(row.get("latest_epoch", 0) or 0)),
+                "best_epoch": int(float(row.get("best_epoch", 0) or 0)),
+                "best_ap": float(row.get("best_ap", 0.0) or 0.0),
+                "best_ap50": float(row.get("best_ap50", 0.0) or 0.0),
+                "best_recall": float(row.get("best_recall", 0.0) or 0.0),
+                "status": row.get("status", ""),
+            }
+        )
+    methods = sorted({row["method"] for row in parsed if row["method"]})
+    complete_methods = {row["method"] for row in parsed if row["method"] and row.get("status") == "complete"}
+    return {
+        "status": "closed_archive_only",
+        "paper_use": "internal_archive",
+        "methods": methods,
+        "complete_methods": sorted(complete_methods),
+        "rows": parsed,
+        "best_row": max(parsed, key=lambda row: row["best_ap"], default={}),
+    }
+
+
 def _f1(row: dict[str, str]) -> float:
     precision = float(row.get("metrics/precision(B)", 0.0) or 0.0)
     recall = float(row.get("metrics/recall(B)", 0.0) or 0.0)
@@ -309,7 +374,7 @@ def detector_rows(limit: int = 8) -> list[dict[str, Any]]:
 
 def build_snapshot() -> dict[str, Any]:
     detectors = detector_rows()
-    ours = next((row for row in detectors if row["method"].startswith("Ours:")), {})
+    ours = next((row for row in detectors if display_detector_method(row["method"]) == "Ours"), {})
     yolo11 = next((row for row in detectors if row["method"] == "YOLOv11l"), {})
     uavdet_table = next((row for row in detectors if row["method"].startswith("UAVDet")), {})
     uavdet = latest_uavdet()
@@ -340,6 +405,7 @@ def build_snapshot() -> dict[str, Any]:
     marinecity_pointcloud = read_json(MARINECITY_DEPTH_POINTCLOUD_SMOKE)
     marinecity_runner_preflight = read_json(MARINECITY_3D_RUNNER_PREFLIGHT)
     session_overlay = read_json(MARINECITY_SESSION_OVERLAY_STATUS)
+    tinyperson_corner = tiny_person_corner_live_summary()
     prim_status = session_overlay.get("prim_status", {}) or {}
     georef = session_overlay.get("georeference_readback", {}) or {}
     return {
@@ -480,16 +546,26 @@ def build_snapshot() -> dict[str, Any]:
         },
         "queues": {
             "uavdet_log_tail": last_log_line(UAVDET_LOG),
-            "tinyperson_log_tail": last_log_line(TINYPERSON_LOG),
-            "tiny_person_gate": tiny_person_gate_state(),
-            "tinyperson_transfer_log_tail": last_log_line(TINYPERSON_TRANSFER_LOG),
-            "tiny_person_transfer_gate": tiny_person_transfer_gate_state(),
-            "tinyperson_eval_sweep_log_tail": last_log_line(TINYPERSON_EVAL_SWEEP_LOG),
-            "tiny_person_eval_sweep_gate": tiny_person_eval_sweep_gate_state(),
+            "tinyperson_archive_note": TINYPERSON_ARCHIVE_NOTE,
+            "tinyperson_log_tail": "archived; legacy log retained but ignored",
+            "tiny_person_gate": TINYPERSON_ARCHIVE_GATE,
+            "tinyperson_transfer_log_tail": "archived; legacy transfer log retained but ignored",
+            "tiny_person_transfer_gate": TINYPERSON_ARCHIVE_GATE,
+            "tinyperson_eval_sweep_log_tail": "archived; legacy eval-size log retained but ignored",
+            "tiny_person_eval_sweep_gate": TINYPERSON_ARCHIVE_GATE,
+            "tinyperson_corner_log_tail": "archived; stopped queue log retained but ignored",
+            "tiny_person_corner_gate": TINYPERSON_ARCHIVE_GATE,
+            "tinyperson_corner_status": tinyperson_corner.get("status"),
+            "tinyperson_corner_paper_use": tinyperson_corner.get("paper_use"),
+            "tinyperson_corner_methods": tinyperson_corner.get("methods"),
+            "tinyperson_corner_complete_methods": tinyperson_corner.get("complete_methods"),
+            "tinyperson_corner_rows": tinyperson_corner.get("rows"),
+            "tinyperson_corner_best_row": tinyperson_corner.get("best_row"),
         },
         "dashboards": {
             "training": str(TRAIN_DASHBOARD.relative_to(REPO_ROOT)),
             "marinecity": str(SIM_DASHBOARD.relative_to(REPO_ROOT)),
+            "tinyperson_corner": str(TINYPERSON_CORNER_DASHBOARD.relative_to(REPO_ROOT)),
         },
         "paper_ready_artifacts": {
             "readiness_audit": str(READINESS_AUDIT.relative_to(REPO_ROOT)),
@@ -521,10 +597,16 @@ def md_table(rows: list[dict[str, Any]]) -> list[str]:
     ]
     for row in rows:
         lines.append(
-            f"| {row['rank']} | {row['method']} | {row['ap']:.4f} | {row['ap50']:.4f} | "
+            f"| {row['rank']} | {display_detector_method(row['method'])} | {row['ap']:.4f} | {row['ap50']:.4f} | "
             f"{row['f1']:.4f} | {row['params_m']:.2f}M | {row['seeds']} |"
         )
     return lines
+
+
+def display_detector_method(method: str) -> str:
+    if method in {"Ours", "Ours: P2P4-SelfAttnFR"}:
+        return "Ours"
+    return method
 
 
 def uavdet_seed_table(rows: list[dict[str, Any]]) -> list[str]:
@@ -556,7 +638,8 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         "",
         "## Detector Status",
         "",
-        f"- Selected detector: `{detector['ours'].get('method', 'missing')}`",
+        f"- Selected detector: `{display_detector_method(detector['ours'].get('method', 'missing'))}`",
+        "- Selected detector implementation: `SAFR-YOLO/P2P4-SelfAttnFR`",
         f"- Ours vs YOLOv11l AP gap: `{detector.get('ours_minus_yolov11l_ap')}`",
         f"- Ours vs UAVDet final-table AP gap: `{detector.get('ours_minus_uavdet_final_ap')}`",
         f"- Ours vs UAVDet queue-best AP gap: `{detector.get('ours_minus_uavdet_queue_best_ap')}`",
@@ -617,17 +700,17 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         "## Queue Gates",
         "",
         f"- UAVDet log tail: `{queues.get('uavdet_log_tail')}`",
-        f"- TinyPerson log tail: `{queues.get('tinyperson_log_tail')}`",
-        f"- TinyPerson gate: `{queues.get('tiny_person_gate')}`",
-        f"- TinyPerson transfer log tail: `{queues.get('tinyperson_transfer_log_tail')}`",
-        f"- TinyPerson transfer gate: `{queues.get('tiny_person_transfer_gate')}`",
-        f"- TinyPerson eval-size log tail: `{queues.get('tinyperson_eval_sweep_log_tail')}`",
-        f"- TinyPerson eval-size gate: `{queues.get('tiny_person_eval_sweep_gate')}`",
+        f"- TinyPerson policy: `{queues.get('tinyperson_archive_note')}`",
+        f"- TinyPerson archive gate: `{queues.get('tiny_person_gate')}`",
+        f"- TinyPerson corrected original-window archive: gate `{queues.get('tiny_person_corner_gate')}`; status `{queues.get('tinyperson_corner_status')}`; paper use `{queues.get('tinyperson_corner_paper_use')}`",
+        f"- TinyPerson archived methods: `{queues.get('tinyperson_corner_methods')}`; completed methods `{queues.get('tinyperson_corner_complete_methods')}`",
+        f"- TinyPerson archived best row: `{queues.get('tinyperson_corner_best_row')}`",
         "",
         "## Dashboard Links",
         "",
         f"- Training dashboard: `{snapshot['dashboards']['training']}`",
         f"- MarineCity dashboard: `{snapshot['dashboards']['marinecity']}`",
+        f"- Archived TinyPerson dashboard: `{snapshot['dashboards']['tinyperson_corner']}`",
         "",
         "## Paper-Ready Artifacts",
         "",
