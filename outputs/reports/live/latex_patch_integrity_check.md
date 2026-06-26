@@ -1,6 +1,6 @@
 # LaTeX Patch Integrity Check
 
-Updated: `2026-06-26 10:35:37 KST`
+Updated: `2026-06-26 11:19:43 KST`
 Status: `latex_patch_integrity_ok`
 
 ## Summary
@@ -28,6 +28,6 @@ Status: `latex_patch_integrity_ok`
 | paper/sections/06_marinecity_3d_readiness.tex | 77 | allowed | artifacts, and Table~\ref{tab:aerograph_reasoner_pending} reports the current |
 | paper/sections/06_marinecity_3d_readiness.tex | 87 | allowed | remains pending before promoting this to a final reasoning benchmark claim.} |
 | paper/sections/06_marinecity_3d_readiness.tex | 88 | allowed | \label{tab:aerograph_reasoner_pending} |
-| paper/sections/main_results_patch_bundle.tex | 8 | allowed | % - AeroGraph has a reviewed 49-prompt candidate table; external provider replication remains pending. |
+| paper/sections/main_results_patch_bundle.tex | 10 | allowed | % - AeroGraph has a reviewed 49-prompt candidate table; external provider replication remains pending. |
 | paper/tables/aerograph_reasoner_results_placeholder.tex | 7 | allowed | Codex-assisted manual LLM review candidate & 49 & 13 & 36 & 0 & Candidate; external replication pending; mismatches=0; source=aerograph_prompt_pack_eval_manual_web \\ |
 | paper/tables/marinecity_system_scenario_table.tex | 3 | allowed | \caption{MarineCity real-Cesium detector-to-reasoner smoke-test results. The current reasoner provider is deterministic AeroGraph mock logic for pipeline validation; non-mock LLM/VLM validation remains pending for the fi |

@@ -157,13 +157,7 @@ def build_dashboard(rows: list[dict[str, float | str]], out_path: Path, *, paper
     gs = fig.add_gridspec(2, 2, height_ratios=[1.0, 1.25], hspace=0.35, wspace=0.22)
     fig.patch.set_facecolor("#f5f7fb")
     if paper_style:
-        fig.text(
-            0.04,
-            0.965,
-            "Six detector variants, seeds 42/123/2026. Values are diagnostic only because the converted TinyPerson split is sparse.",
-            fontsize=10,
-            color="#475569",
-        )
+        fig.subplots_adjust(top=0.94)
     else:
         fig.suptitle("TinyPerson 640 Supplementary Stress Test", x=0.04, ha="left", fontsize=18, weight="bold", color="#111827")
         fig.text(
@@ -182,7 +176,8 @@ def build_dashboard(rows: list[dict[str, float | str]], out_path: Path, *, paper
     ax1.set_yticklabels(labels, fontsize=9)
     ax1.invert_yaxis()
     ax1.set_xlabel("score x 1e-3")
-    ax1.set_title("Detection Accuracy")
+    if not paper_style:
+        ax1.set_title("Detection Accuracy")
     ax1.grid(axis="x", color="#e5e7eb")
     ax1.legend(frameon=False, loc="lower right")
     for y, value in zip(ypos, ap50):
@@ -196,20 +191,22 @@ def build_dashboard(rows: list[dict[str, float | str]], out_path: Path, *, paper
     ax2.set_yticklabels(labels, fontsize=9)
     ax2.invert_yaxis()
     ax2.set_xlabel("score")
-    ax2.set_title("Recall and F1")
+    if not paper_style:
+        ax2.set_title("Recall and F1")
     ax2.grid(axis="x", color="#e5e7eb")
     ax2.legend(frameon=False, loc="lower right")
 
     ax3 = fig.add_subplot(gs[1, :])
     ax3.set_facecolor("#ffffff")
     draw_table(ax3, rows)
-    fig.text(
-        0.04,
-        0.04,
-        "Use in supplementary as a domain-shift and dataset-conversion limitation check, not as the main VisDrone detector claim.",
-        fontsize=9,
-        color="#64748b",
-    )
+    if not paper_style:
+        fig.text(
+            0.04,
+            0.04,
+            "Use in supplementary as a domain-shift and dataset-conversion limitation check, not as the main VisDrone detector claim.",
+            fontsize=9,
+            color="#64748b",
+        )
     fig.savefig(out_path, bbox_inches="tight")
     plt.close(fig)
 

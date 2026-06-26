@@ -1,0 +1,2 @@
+method,dataset,imgsz,precision,recall,f1,ap50,ap,params_m,gflops,speed_ms,source_log,fairness_note
+CSFPR-RTDETR,VisDrone2019-DET val,1280,0.2805,0.1661,0.2086,0.1482,0.0420,14.0892,63.9000,29.9000,outputs/logs/related_work_detectors/csfpr_rtdetr_visdrone_eval_img1280.log,Staged CSFPR checkpoint evaluated at 1280; keep separate from trained 3-seed rows because this is an external eval-only checkpoint.

@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 10:35:34 KST",
+  "updated_at_kst": "2026-06-26 11:09:03 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -365,6 +365,9 @@
     "real_capture_web_collection_checklist_exists": true,
     "real_capture_dryrun_status": "aerograph_eval_dry_run_ready",
     "real_capture_dryrun_paper_claim_allowed": false,
+    "real_capture_nonmock_smoke_status": "aerograph_real_capture_nonmock_smoke_pending",
+    "real_capture_nonmock_smoke_selected_manifest": "",
+    "real_capture_nonmock_smoke_expected_prompt_count": 23,
     "web_batch_status": "aerograph_web_batches_ready",
     "web_batch_count": 5,
     "web_batch_dir": "outputs/reports/live/aerograph_prompt_pack/web_batches",

@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 10:35:37 KST",
+  "updated_at_kst": "2026-06-26 11:19:43 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 44,
   "missing_required_count": 0,
@@ -11,7 +11,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 6933,
+      "size_bytes": 7369,
       "status": "ok",
       "note": "Detector result section patch"
     },
@@ -141,7 +141,7 @@
       "placement": "main_bundle",
       "required_now": true,
       "exists": true,
-      "size_bytes": 655,
+      "size_bytes": 840,
       "status": "ok",
       "note": "Overleaf-ready main results patch bundle"
     },
@@ -161,7 +161,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 13171,
+      "size_bytes": 13143,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },
@@ -211,7 +211,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 187030,
+      "size_bytes": 137017,
       "status": "ok",
       "note": "TinyPerson 640 supplementary stress-test figure"
     },
@@ -321,7 +321,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9753,
+      "size_bytes": 10760,
       "status": "ok",
       "note": "Non-mock reasoner collection gate"
     },
@@ -371,7 +371,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 4104,
+      "size_bytes": 2906,
       "status": "ok",
       "note": "Compact real-capture web-provider batch index"
     },
@@ -381,7 +381,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 4546,
+      "size_bytes": 4492,
       "status": "ok",
       "note": "Compact real-capture web-provider collection packet"
     },
@@ -431,7 +431,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2005,
+      "size_bytes": 2006,
       "status": "ok",
       "note": "LaTeX input/figure/label integrity check"
     },

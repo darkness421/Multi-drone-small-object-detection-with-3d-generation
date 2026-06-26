@@ -6,19 +6,32 @@ rank,name,group,method,ablation,seed,seeds,seed_count,n,status,AP,AP50,P,R,F1,Pa
 5,YOLOv11n,YOLO nano,YOLOv11n,,,"123,2026,42",3,3,completed_3seed,0.287920,0.473850,0.580713,0.470310,0.519696,2.5918,6.5,-0.089737,4.172698,,"current 1280 comparison sweep, completed 3-seed"
 6,YOLOv10n,YOLO nano,YOLOv10n,,,"123,2026,42",3,3,completed_3seed,0.285620,0.470273,0.576457,0.467090,0.516021,2.7109,8.4,-0.092037,3.959640,,"current 1280 comparison sweep, completed 3-seed"
 7,YOLOv8n,YOLO nano,YOLOv8n,,,"123,2026,42",3,3,completed_3seed,0.292087,0.481850,0.581660,0.477073,0.524201,3.0128,8.2,-0.085570,3.636319,,"current 1280 comparison sweep, completed 3-seed"
-8,YOLOv9s,YOLO small,YOLOv9s,,,"123,2026,42",3,3,completed_3seed,0.343347,0.554433,0.636240,0.544803,0.586945,7.2913,27.4,-0.034310,1.718512,,official comparison row
-9,YOLOv10s,YOLO small,YOLOv10s,,,"123,2026,42",3,3,completed_3seed,0.324783,0.526003,0.623867,0.513857,0.563538,8.0741,24.8,-0.052873,1.478312,,official comparison row
-10,YOLOv5su,YOLO small,YOLOv5su,,,"123,2026,42",3,3,completed_3seed,0.327877,0.533053,0.626120,0.522723,0.569745,9.1261,24.1,-0.049780,1.323022,,official comparison row
-11,YOLOv12s,YOLO small,YOLOv12s,,,"123,2026,42",3,3,completed_3seed,0.332183,0.538570,0.634110,0.526783,0.575485,9.2570,21.5,-0.045473,1.318502,,official comparison row
-12,YOLOv11s,YOLO small,YOLOv11s,,,"123,2026,42",3,3,completed_3seed,0.326203,0.528367,0.632117,0.516157,0.568232,9.4317,21.6,-0.051453,1.273110,,official comparison row
-13,YOLOv26s,YOLO small,YOLOv26s,,,"123,2026,42",3,3,completed_3seed,0.322903,0.522937,0.606133,0.512017,0.555112,9.9556,22.5,-0.054753,1.187592,,official comparison row
-14,YOLOv8s,YOLO small,YOLOv8s,,,"123,2026,42",3,3,completed_3seed,0.332867,0.540060,0.630173,0.531790,0.576809,11.1395,28.7,-0.044790,1.098335,,official comparison row
-15,YOLOv10m,YOLO medium,YOLOv10m,,,"123,2026,42",3,3,completed_3seed,0.353930,0.567457,0.643103,0.557257,0.597102,16.4957,64.0,-0.023727,0.776877,,official comparison row
-16,YOLOv12m,YOLO medium,YOLOv12m,,,"123,2026,42",3,3,completed_3seed,0.366877,0.584820,0.664587,0.569390,0.613305,20.1452,67.8,-0.010780,0.655624,,official comparison row
-17,Ours: P2P4-SelfAttnFR,Ours final candidate,Ours: P2P4-SelfAttnFR,,,"42,123,2026",3,3,completed_3seed,0.382163,0.605173,0.673183,0.587247,0.627275,20.8200,109.3,0.004507,0.654483,1.228135,deduped latest official seed runs
-18,YOLOv11l,Best YOLO baseline,YOLOv11l,,,"123,2026,42",3,3,completed_3seed,0.377657,0.598090,0.666567,0.588063,0.624751,25.3182,87.3,0.000000,0.533499,1.000000,official comparison row
-19,YOLOv10l,YOLO large,YOLOv10l,,,"123,2026,42",3,3,completed_3seed,0.372783,0.588987,0.667653,0.572890,0.616625,25.7807,127.3,-0.004873,0.516693,,official comparison row
-20,YOLOv12l,YOLO large,YOLOv12l,,,"123,2026,42",3,3,completed_3seed,0.377103,0.595813,0.669787,0.580467,0.621920,26.3968,89.4,-0.000553,0.509890,,official comparison row
-21,YOLOv26l,YOLO large,YOLOv26l,,,"123,2026,42",3,3,completed_3seed,0.373177,0.587690,0.660237,0.573110,0.613562,26.1918,93.2,-0.004480,0.507305,,official comparison row
-22,RT-DETR-L,Transformer baseline,RT-DETR-L,,,"123,2026,42",3,3,completed_3seed,0.320073,0.535500,0.618860,0.541070,0.577350,32.8266,108.0,-0.057583,0.368390,,official comparison row
-23,YOLOv8l,YOLO large,YOLOv8l,,,"123,2026,42",3,3,completed_3seed,0.376543,0.596293,0.669493,0.576963,0.619767,43.6375,165.4,-0.001113,0.308006,,official comparison row
+8,YOLOv9s,YOLO small,YOLOv9s,,,"123,2026,42",3,3,completed_3seed,0.345400,0.557343,0.645850,0.540637,0.588555,7.2913,27.4,-0.032257,1.726120,,"current 1280 comparison sweep, completed 3-seed"
+9,YOLOv10s,YOLO small,YOLOv10s,,,"123,2026,42",3,3,completed_3seed,0.324697,0.526083,0.624983,0.516023,0.565289,8.0741,24.8,-0.052960,1.480136,,"current 1280 comparison sweep, completed 3-seed"
+10,YOLOv5su,YOLO small,YOLOv5su,,,"123,2026,42",3,3,completed_3seed,0.330010,0.536313,0.629650,0.523637,0.571762,9.1261,24.1,-0.047647,1.329875,,"current 1280 comparison sweep, completed 3-seed"
+11,YOLOv12s,YOLO small,YOLOv12s,,,"123,2026,42",3,3,completed_3seed,0.333783,0.540617,0.639137,0.525257,0.576610,9.2570,21.5,-0.043873,1.322853,,"current 1280 comparison sweep, completed 3-seed"
+12,YOLOv11s,YOLO small,YOLOv11s,,,"123,2026,42",3,3,completed_3seed,0.327627,0.530357,0.629533,0.519897,0.569485,9.4317,21.6,-0.050030,1.277286,,"current 1280 comparison sweep, completed 3-seed"
+13,YOLOv26s,YOLO small,YOLOv26s,,,"123,2026,42",3,3,completed_3seed,0.325413,0.526310,0.615710,0.519693,0.563638,9.9556,22.5,-0.052243,1.199806,,"current 1280 comparison sweep, completed 3-seed"
+14,MFFSODNet [2],Cited related work,MFFSODNet [2],,,"123,2026,42",3,3,completed_3seed,0.097487,0.182963,0.641833,0.246540,0.356234,4.5366,55.1,-0.280170,1.184418,,official code scratch retrain; no pretrained checkpoint found
+15,YOLOv8s,YOLO small,YOLOv8s,,,"123,2026,42",3,3,completed_3seed,0.333610,0.541323,0.633517,0.530163,0.577224,11.1395,28.7,-0.044047,1.100169,,"current 1280 comparison sweep, completed 3-seed"
+16,YOLOv10m,YOLO medium,YOLOv10m,,,"123,2026,42",3,3,completed_3seed,0.354643,0.567407,0.646090,0.553037,0.595939,16.4957,64.0,-0.023013,0.776621,,"current 1280 comparison sweep, completed 3-seed"
+17,CSFPR-RTDETR [11],Cited related work,CSFPR-RTDETR [11],,,"123,2026,42",3,3,completed_3seed,0.278400,0.443063,0.576587,0.429243,0.492119,14.0892,63.9,-0.099257,0.726933,,official/staged 1280 3-seed related-work run
+18,YOLOv9m,YOLO medium,YOLOv9m,,,"123,2026,42",3,3,completed_3seed,0.369950,0.591020,0.670810,0.574950,0.619159,20.1655,77.6,-0.007707,0.661295,,"current 1280 comparison sweep, completed 3-seed"
+19,YOLOv11m,YOLO medium,YOLOv11m,,,"123,2026,42",3,3,completed_3seed,0.365713,0.584597,0.661193,0.572820,0.613816,20.0607,68.2,-0.011943,0.658017,,"current 1280 comparison sweep, completed 3-seed"
+20,YOLOv12m,YOLO medium,YOLOv12m,,,"123,2026,42",3,3,completed_3seed,0.366783,0.585090,0.663850,0.566317,0.611215,20.1452,67.8,-0.010873,0.654822,,"current 1280 comparison sweep, completed 3-seed"
+21,Ours: P2P4-SelfAttnFR,Ours final candidate,Ours: P2P4-SelfAttnFR,,,"42,123,2026",3,3,completed_3seed,0.382163,0.605173,0.673183,0.587247,0.627275,20.8200,109.3,0.004507,0.654483,1.228135,deduped latest official seed runs
+22,SFFEF-YOLO [4],Cited related work,SFFEF-YOLO [4],,,"42,123,2026",3,3,completed_3seed,0.374935,0.591412,0.654013,0.578120,0.613727,20.8743,108.7,-0.002722,0.638818,,"paper-faithful reimplementation; not official checkpoint; 1280, 3-seed"
+23,YOLOv26m,YOLO medium,YOLOv26m,,,"123,2026,42",3,3,completed_3seed,0.365073,0.580107,0.652457,0.566787,0.606560,21.7883,74.8,-0.012583,0.601045,,"current 1280 comparison sweep, completed 3-seed"
+24,BPD-YOLO [7],Cited related work,BPD-YOLO [7],,,"42,123,2026",3,3,completed_3seed,0.380420,0.598560,0.662640,0.580236,0.618703,24.5296,109.5,0.002764,0.549682,1.033629,"paper-faithful reimplementation; not official checkpoint; 1280, 3-seed"
+25,YOLOv11l,Best YOLO baseline,YOLOv11l,,,"123,2026,42",3,3,completed_3seed,0.377657,0.598090,0.666567,0.588063,0.624751,25.3182,87.3,0.000000,0.533499,1.000000,official comparison row
+26,YOLOv9c,YOLO family,YOLOv9c,,,"123,2026,42",3,3,completed_3seed,0.373763,0.594210,0.664113,0.583107,0.620969,25.5369,103.7,-0.003893,0.525111,,"current 1280 comparison sweep, completed 3-seed"
+27,YOLOv10l,YOLO large,YOLOv10l,,,"123,2026,42",3,3,completed_3seed,0.372783,0.588987,0.667653,0.572890,0.616625,25.7807,127.3,-0.004873,0.516693,,official comparison row
+28,YOLOv5mu,YOLO medium,YOLOv5mu,,,"123,2026,42",3,3,completed_3seed,0.354633,0.567337,0.656447,0.550570,0.598846,25.0709,64.4,-0.023023,0.511939,,"current 1280 comparison sweep, completed 3-seed"
+29,HF-D-FINE [12],Cited related work,HF-D-FINE [12],,,"42,123,2026",3,3,completed_3seed,0.361874,0.576418,0.668452,0.555482,0.606711,25.4771,87.3,-0.015782,0.511789,,"high-resolution/frequency-detail reproduction; not official D-FINE checkpoint; 1280, 3-seed"
+30,YOLOv12l,YOLO large,YOLOv12l,,,"123,2026,42",3,3,completed_3seed,0.377103,0.595813,0.669787,0.580467,0.621920,26.3968,89.4,-0.000553,0.509890,,official comparison row
+31,YOLOv26l,YOLO large,YOLOv26l,,,"123,2026,42",3,3,completed_3seed,0.373177,0.587690,0.660237,0.573110,0.613562,26.1918,93.2,-0.004480,0.507305,,official comparison row
+32,YOLOv8m,YOLO medium,YOLOv8m,,,"123,2026,42",3,3,completed_3seed,0.360907,0.577150,0.659263,0.562167,0.606838,25.8621,79.1,-0.016750,0.504135,,"current 1280 comparison sweep, completed 3-seed"
+33,UAVDet [16],Cited related work,UAVDet [16],,,"42,123,2026",3,3,completed_3seed,0.381184,0.600516,0.654156,0.589924,0.620340,33.5504,201.2,0.003527,0.402983,0.757589,"inspired reproduction from cited UAVDet design; not official checkpoint; 1280, 3-seed"
+34,RT-DETR-L,Transformer baseline,RT-DETR-L,,,"123,2026,42",3,3,completed_3seed,0.320073,0.535500,0.618860,0.541070,0.577350,32.8266,108.0,-0.057583,0.368390,,official comparison row
+35,YOLOv8l,YOLO large,YOLOv8l,,,"123,2026,42",3,3,completed_3seed,0.376543,0.596293,0.669493,0.576963,0.619767,43.6375,165.4,-0.001113,0.308006,,"current 1280 comparison sweep, completed 3-seed"
+36,YOLOv5lu,YOLO large,YOLOv5lu,,,"123,2026,42",3,3,completed_3seed,0.370937,0.589687,0.661413,0.573227,0.614143,53.1711,135.3,-0.006720,0.249949,,"current 1280 comparison sweep, completed 3-seed"
