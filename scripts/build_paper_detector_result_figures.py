@@ -35,6 +35,7 @@ EXTRA_DETECTOR_ARTIFACTS = [
     "paper_fig10_final_ablation_metric_heatmap.png",
     "paper_fig11_final_detector_feature_activation_heatmap.png",
     "paper_fig12_tinyperson_640_stress.png",
+    "paper_fig13_tinyperson_eval_imgsz_sweep.png",
 ]
 
 PAPER_MAIN_METHODS = [
@@ -89,23 +90,23 @@ FINAL_ABLATION_PLAN = [
         "key": "p2p4_balanced_head_only",
         "source": "proposed",
         "protocol": "1280, 3 seeds",
-        "status": "Running",
+        "status": "Complete",
         "placement": "Ablation",
     },
     {
         "component": "P2/P3/P4 + TinyFReLU",
         "key": "p2p4_balanced_tiny_frelu",
-        "source": "pending",
-        "protocol": "1280, 3 seeds queued",
-        "status": "Queued",
-        "placement": "Ablation / update",
+        "source": "proposed",
+        "protocol": "1280, 3 seeds",
+        "status": "Complete",
+        "placement": "Ablation",
     },
     {
         "component": "P2/P3/P4 + SelfAttn",
         "key": "p2p4_balanced_selfattn_only",
         "source": "proposed",
-        "protocol": "1280, queued",
-        "status": "Queued",
+        "protocol": "1280, 3 seeds",
+        "status": "Complete",
         "placement": "Ablation",
     },
     {
@@ -780,16 +781,16 @@ def export_status_overview(out_dir: Path) -> Path:
         {
             "block": "YOLO-family scale coverage",
             "protocol": "VisDrone val, 1280, 3-seed",
-            "status": "Complete / reinforcement running",
+            "status": "Complete",
             "placement": "Main backup or Suppl.",
-            "next": "Keep dashboard updated as current re-sweeps finish.",
+            "next": "Use full nano/small/medium/large coverage as supplementary reviewer evidence.",
         },
         {
             "block": "Sec. 2.1 related-work models",
             "protocol": "Only cited models; 1280 where runnable",
-            "status": "CSFPR measured; others audit/pending",
+            "status": "6 cited rows complete",
             "placement": "Suppl. / status note",
-            "next": "Keep CSFPR-RTDETR [11], MFFSODNet [2], UAVDet [16], and pending Sec. 2.1 priors labeled by reference number.",
+            "next": "Main uses compact status table; supplementary keeps coverage notes for non-runnable citations.",
         },
         {
             "block": "NMS / postprocess sweep",
@@ -808,9 +809,16 @@ def export_status_overview(out_dir: Path) -> Path:
         {
             "block": "Heatmap / input-size / categories",
             "protocol": "Final checkpoints",
-            "status": "Pending",
+            "status": "Feature heatmap complete",
             "placement": "Suppl.",
-            "next": "Generate after detector queue stabilizes.",
+            "next": "Use feature-activation wording; do not claim class-logit Grad-CAM attribution.",
+        },
+        {
+            "block": "TinyPerson 640 stress test",
+            "protocol": "TinyPerson, 640, 6 models x 3 seeds",
+            "status": "Complete",
+            "placement": "Suppl.",
+            "next": "Report as domain-shift evidence only because the converted split is sparse.",
         },
         {
             "block": "3D benchmark and reasoner",
@@ -1093,6 +1101,7 @@ def export_manifest(out_dir: Path, files: Iterable[Path]) -> Path:
             "- `paper_fig10_final_ablation_metric_heatmap.png`",
             "- `paper_fig11_final_detector_feature_activation_heatmap.png`",
             "- `paper_fig12_tinyperson_640_stress.png`",
+            "- `paper_fig13_tinyperson_eval_imgsz_sweep.png`",
         ]
     )
     manifest.write_text("\n".join(lines) + "\n", encoding="utf-8")

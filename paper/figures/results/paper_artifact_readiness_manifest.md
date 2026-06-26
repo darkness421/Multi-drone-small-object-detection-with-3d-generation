@@ -38,6 +38,8 @@ main-paper-ready items from supplementary items and explicit pending slots.
 | Final ablation heatmap | `paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png` | Ready | Supplementary heatmap |
 | Detector feature activation sheet | `paper/figures/results/paper_fig11_final_detector_feature_activation_heatmap.png` | Ready | Supplementary Fig. S4, Grad-CAM-style qualitative evidence |
 | TinyPerson 640 stress-test table | `paper/tables/tinyperson_640_stress_table.tex` | Ready | Supplementary domain-shift diagnostic only |
+| TinyPerson eval-size sensitivity table | `paper/tables/tinyperson_eval_imgsz_sweep_table.tex` | Ready | Supplementary input-size diagnostic only |
+| TinyPerson eval-size sensitivity figure | `paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png` | Ready | Supplementary input-size diagnostic only |
 | MarineCity scenario contact sheet | `paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png` | Smoke-test ready | Main only if clearly labeled; otherwise supplementary |
 | MarineCity real-capture benchmark sheet | `paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png` | Capture-source ready | Supplementary capture evidence for the 3-scenario x 3-UAV RGB/depth/pose source |
 | MarineCity detector-to-reasoner report | `outputs/reports/live/marinecity_detector_reasoner_smoke.md` | Smoke-test ready | Live report for the 23-token SAFR-YOLO to AeroGraph mock plumbing run |
@@ -75,4 +77,6 @@ main-paper-ready items from supplementary items and explicit pending slots.
 - TinyPerson640 should be used only as supplementary domain-shift/limitation
   evidence. The 640px core-model table now has 18 diagnostic rows
   (six models over seeds 42, 123, and 2026), but AP/AP50 values remain near
-  zero, so it should not be used as a main detector claim.
+  zero, so it should not be used as a main detector claim. The eval-size
+  sensitivity table reuses completed TinyPerson checkpoints at 640/960/1280
+  and is also supplementary-only.

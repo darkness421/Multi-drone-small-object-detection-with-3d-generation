@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-26 14:49:32 KST",
+  "updated_at_kst": "2026-06-26 15:04:59 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
-  "artifact_count": 50,
+  "artifact_count": 52,
   "missing_required_count": 0,
   "stale_claim_count": 0,
   "artifacts": [
@@ -187,6 +187,16 @@
     },
     {
       "group": "supp_detector",
+      "path": "paper/tables/tinyperson_eval_imgsz_sweep_table.tex",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 1576,
+      "status": "ok",
+      "note": "TinyPerson eval-only input-size sensitivity table"
+    },
+    {
+      "group": "supp_detector",
       "path": "paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png",
       "placement": "supp",
       "required_now": true,
@@ -214,6 +224,16 @@
       "size_bytes": 159009,
       "status": "ok",
       "note": "TinyPerson 640 supplementary stress-test figure"
+    },
+    {
+      "group": "supp_detector",
+      "path": "paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 108840,
+      "status": "ok",
+      "note": "TinyPerson eval-only input-size sensitivity figure"
     },
     {
       "group": "supp_system",
@@ -481,7 +501,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9014,
+      "size_bytes": 9452,
       "status": "ok",
       "note": "Human-readable artifact manifest"
     },
