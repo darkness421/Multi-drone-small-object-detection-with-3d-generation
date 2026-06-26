@@ -90,10 +90,24 @@ The local 3D runner preflight currently finds the geometry-smoke dependencies
 available but does not find a local Nerfstudio, Instant-NGP, COLMAP, or 3DGS
 runner. Therefore, full neural 3D metrics remain a pending experiment rather
 than a current paper claim.
+Table~\ref{tab:marinecity_3d_completion_results} is kept as a pending-safe
+metric slot: it remains visibly pending until verified upstream runner metrics
+are imported, and it excludes placeholder or dry-run rows by construction.
 Table~\ref{tab:marinecity_system_smoke} summarizes the completed smoke-test
 artifacts, and Table~\ref{tab:aerograph_reasoner_pending} reports the current
 reviewed AeroGraph candidate while keeping external-provider replication
 explicit.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{MarineCity neural 3D completion metric slot. Rows are populated only
+after verified upstream runner outputs provide non-placeholder PSNR, SSIM, and
+LPIPS metrics.}
+\label{tab:marinecity_3d_completion_results}
+\input{tables/marinecity_3d_completion_results_table}
+\end{table}
 
 \input{tables/marinecity_system_scenario_table}
 

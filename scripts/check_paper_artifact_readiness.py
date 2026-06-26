@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import re
 from dataclasses import dataclass
@@ -41,12 +42,15 @@ ARTIFACTS = [
     Artifact("bundle", "paper/sections/supplementary_patch_bundle.tex", "supp_bundle", True, "Overleaf-ready supplementary patch bundle"),
     Artifact("supp_detector", "paper/sections/supp_detector_experiment_inventory.tex", "supp", True, "Supplementary detector inventory"),
     Artifact("supp_detector", "paper/tables/final_ablation_supplementary_table.tex", "supp", True, "Full ablation table"),
-    Artifact("supp_detector", "paper/tables/tinyperson_640_stress_table.tex", "supp", True, "TinyPerson 640 supplementary stress-test table"),
-    Artifact("supp_detector", "paper/tables/tinyperson_eval_imgsz_sweep_table.tex", "supp", True, "TinyPerson eval-only input-size sensitivity table"),
+    Artifact("supp_detector", "paper/tables/tinyperson_640_stress_table.tex", "archive_diagnostic", False, "Legacy TinyPerson 640 protocol audit; do not use as paper comparison"),
+    Artifact("supp_detector", "paper/tables/tinyperson_eval_imgsz_sweep_table.tex", "archive_diagnostic", False, "Legacy eval-only input-size diagnostic; do not use as paper comparison"),
+    Artifact("supp_detector", "paper/tables/tinyperson_corner_original_live_table.tex", "supp_pending", True, "Corrected TinyPerson original-window/1280 live table"),
     Artifact("supp_detector", "paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png", "supp", True, "Ablation heatmap"),
     Artifact("supp_detector", "paper/figures/results/paper_fig11_final_detector_feature_activation_heatmap.png", "supp", True, "Detector activation/heatmap sheet"),
-    Artifact("supp_detector", "paper/figures/results/paper_fig12_tinyperson_640_stress.png", "supp", True, "TinyPerson 640 supplementary stress-test figure"),
-    Artifact("supp_detector", "paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png", "supp", True, "TinyPerson eval-only input-size sensitivity figure"),
+    Artifact("supp_detector", "paper/figures/results/paper_fig12_tinyperson_640_stress.png", "archive_diagnostic", False, "Legacy TinyPerson 640 protocol-audit figure; do not use as paper comparison"),
+    Artifact("supp_detector", "paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png", "archive_diagnostic", False, "Legacy eval-only input-size sensitivity figure; do not use as paper comparison"),
+    Artifact("supp_detector", "outputs/reports/live/tinyperson_corner_original_dashboard.png", "runbook", True, "Corrected TinyPerson original-window/1280 dashboard"),
+    Artifact("supp_detector", "outputs/experiments/tinyperson_corner_original/live_summary.csv", "source", True, "Corrected TinyPerson original-window/1280 live summary"),
     Artifact("supp_system", "paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png", "supp_or_main_smoke", True, "Three-scenario real-Cesium smoke sheet"),
     Artifact("supp_system", "paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png", "main_or_supp_smoke", True, "Real-Cesium detector preview contact sheet from SAFR-YOLO smoke run"),
     Artifact("supp_system", "paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png", "supp", True, "Real-Cesium 3-scenario x 3-UAV capture contact sheet"),
@@ -61,6 +65,8 @@ ARTIFACTS = [
     Artifact("pending_3d", "outputs/reports/live/marinecity_3d_runner_preflight.md", "runbook", True, "MarineCity local neural-3D runner dependency preflight"),
     Artifact("pending_3d", "outputs/reports/live/marinecity_depth_pointcloud_smoke.md", "runbook", True, "MarineCity depth-fused 3D geometry smoke artifact"),
     Artifact("pending_3d", "paper/figures/results/marinecity_system/marinecity_depth_pointcloud_smoke_topdown.png", "supp", True, "Depth point-cloud smoke preview figure"),
+    Artifact("pending_3d", "paper/tables/marinecity_3d_completion_results_table.tex", "pending_table", True, "Pending-safe neural 3D completion metric table slot"),
+    Artifact("pending_3d", "outputs/reports/live/marinecity_3d_completion_results_table.md", "runbook", True, "Live summary for verified neural 3D metric rows"),
     Artifact("pending_3d", "outputs/reports/live/marinecity_3d_completion_readiness.md", "runbook", True, "MarineCity neural 3D completion readiness gate"),
     Artifact("pending_reasoner", "paper/tables/aerograph_reasoner_results_placeholder.tex", "pending", True, "AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete"),
     Artifact("pending_reasoner", "docs/aerograph_nonmock_collection_plan.md", "runbook", True, "Non-mock reasoner collection gate"),
@@ -75,6 +81,7 @@ ARTIFACTS = [
     Artifact("pending_reasoner", "scripts/normalize_aerograph_web_responses.py", "runbook_helper", True, "Web LLM raw-output normalizer for AeroGraph manual responses"),
     Artifact("audit", "paper/figures/results/paper_artifact_readiness_manifest.md", "audit", True, "Human-readable artifact manifest"),
     Artifact("audit", "outputs/reports/live/latex_patch_integrity_check.md", "audit", True, "LaTeX input/figure/label integrity check"),
+    Artifact("audit", "outputs/reports/live/external_gate_capabilities.md", "audit", True, "External provider and neural-3D runner capability check"),
     Artifact("audit", "docs/accv_research_package_readiness_audit_2026-06-25.md", "audit", True, "Claim readiness audit"),
 ]
 
@@ -106,6 +113,7 @@ TEXT_SCOPE = [
     "outputs/reports/live/marinecity_3d_runner_preflight.md",
     "outputs/reports/live/marinecity_depth_pointcloud_smoke.md",
     "outputs/reports/live/marinecity_3d_completion_readiness.md",
+    "outputs/reports/live/external_gate_capabilities.md",
 ]
 
 
@@ -216,6 +224,18 @@ def latex_integrity_gate() -> dict[str, Any]:
     }
 
 
+def external_gate_capabilities() -> dict[str, Any]:
+    report = read_json(REPO_ROOT / "outputs/reports/live/external_gate_capabilities.json")
+    return {
+        "status": report.get("status", "missing"),
+        "aerograph_provider_configured": (report.get("aerograph_execution", {}) or {}).get("ready"),
+        "aerograph_provider_modes": (report.get("aerograph_execution", {}) or {}).get("provider_modes", []),
+        "neural_3d_runner_configured": (report.get("neural_3d_execution", {}) or {}).get("ready"),
+        "neural_3d_dataset_ready": (report.get("neural_3d_execution", {}) or {}).get("dataset_ready"),
+        "neural_3d_metric_rows": (report.get("neural_3d_execution", {}) or {}).get("metric_result_row_count"),
+    }
+
+
 def marinecity_qualitative_gate() -> dict[str, Any]:
     report = read_json(REPO_ROOT / "outputs/reports/live/marinecity_qualitative_gate.json")
     checks = report.get("checks", {}) or {}
@@ -247,7 +267,7 @@ def marinecity_system_integration_gate() -> dict[str, Any]:
         "actor_classes": (report.get("actors", {}) or {}).get("actor_classes"),
         "three_d_status": (report.get("three_d_completion", {}) or {}).get("status"),
         "llm_external_ready": (report.get("llm_reasoner", {}) or {}).get("external_provider_replication_ready"),
-        "tinyperson_status": (report.get("tinyperson_640", {}) or {}).get("status"),
+        "tinyperson_status": (report.get("tinyperson_corrected", {}) or {}).get("status"),
     }
 
 
@@ -267,6 +287,48 @@ def marinecity_3d_completion_gate() -> dict[str, Any]:
     }
 
 
+def tinyperson_corrected_gate() -> dict[str, Any]:
+    prep = read_json(REPO_ROOT / "outputs/experiments/tinyperson_corner_original/prepare_summary.json")
+    summary_path = REPO_ROOT / "outputs/experiments/tinyperson_corner_original/live_summary.csv"
+    rows: list[dict[str, str]] = []
+    if summary_path.exists():
+        with summary_path.open("r", encoding="utf-8-sig", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+    methods = sorted({row.get("method", "") for row in rows if row.get("method")})
+    best_by_method = {
+        method: max((float(row.get("best_ap", 0) or 0) for row in rows if row.get("method") == method), default=0.0)
+        for method in methods
+    }
+    required_methods = {"YOLOv9m", "Ours"}
+    complete_methods = {
+        row.get("method", "")
+        for row in rows
+        if row.get("method") and row.get("status") == "complete"
+    }
+    status = "missing"
+    if prep.get("status") == "ready":
+        status = "dataset_ready_no_training_rows"
+    if rows:
+        status = "running_corrected_tinyperson"
+    if required_methods.issubset(set(methods)):
+        status = "comparison_running_partial"
+    if required_methods.issubset(complete_methods):
+        status = "comparison_complete"
+    return {
+        "status": status,
+        "dataset_status": prep.get("status"),
+        "train_images": ((prep.get("splits", {}) or {}).get("train", {}) or {}).get("images"),
+        "train_boxes": ((prep.get("splits", {}) or {}).get("train", {}) or {}).get("boxes"),
+        "val_images": ((prep.get("splits", {}) or {}).get("val", {}) or {}).get("images"),
+        "val_boxes": ((prep.get("splits", {}) or {}).get("val", {}) or {}).get("boxes"),
+        "methods": methods,
+        "complete_methods": sorted(complete_methods),
+        "row_count": len(rows),
+        "best_ap_by_method": best_by_method,
+        "claiming_rule": "Use only the corrected TinyPerson original-window/1280 protocol as paper-facing supplementary evidence. Legacy TinyPerson 640 rows are archived protocol diagnostics and should not be mixed into comparison tables.",
+    }
+
+
 def build_report() -> dict[str, Any]:
     artifacts = artifact_rows()
     stale = stale_claim_rows()
@@ -277,6 +339,8 @@ def build_report() -> dict[str, Any]:
     marinecity_qual = marinecity_qualitative_gate()
     marinecity_system = marinecity_system_integration_gate()
     marinecity_3d = marinecity_3d_completion_gate()
+    tinyperson_corrected = tinyperson_corrected_gate()
+    external_caps = external_gate_capabilities()
     status = "paper_artifact_audit_ok_with_pending_gates"
     latex_bad = latex_integrity.get("status") not in {"latex_patch_integrity_ok"}
     if missing_required or stale or latex_bad:
@@ -304,6 +368,8 @@ def build_report() -> dict[str, Any]:
         "marinecity_qualitative_gate": marinecity_qual,
         "marinecity_system_integration_gate": marinecity_system,
         "marinecity_3d_completion_gate": marinecity_3d,
+        "tinyperson_corrected_gate": tinyperson_corrected,
+        "external_gate_capabilities": external_caps,
         "main_tex_gate": main_tex,
         "latex_integrity_gate": latex_integrity,
         "claiming_summary": {
@@ -316,6 +382,7 @@ def build_report() -> dict[str, Any]:
             "final_3d_completion": "ready"
             if marinecity_3d.get("status") == "marinecity_3d_completion_ready"
             else "pending_neural_3d_completion_metrics",
+            "tinyperson_corrected": tinyperson_corrected.get("status"),
             "local_compile": "pending_main_tex_or_overleaf_sync",
         },
     }
@@ -337,6 +404,8 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
     marinecity_qual = report["marinecity_qualitative_gate"]
     marinecity_system = report["marinecity_system_integration_gate"]
     marinecity_3d = report["marinecity_3d_completion_gate"]
+    tinyperson_corrected = report["tinyperson_corrected_gate"]
+    external_caps = report["external_gate_capabilities"]
     lines = [
         "# Paper Artifact Readiness Check",
         "",
@@ -355,7 +424,9 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
         f"- MarineCity qualitative gate: `{marinecity_qual['status']}`",
         f"- MarineCity integration gate: `{marinecity_system['status']}`; fails `{marinecity_system['fail_count']}`, warnings `{marinecity_system['warn_count']}`, pending `{marinecity_system['pending_count']}`",
         f"- MarineCity 3D completion gate: `{marinecity_3d['status']}`; metric rows `{marinecity_3d['metric_result_row_count']}`",
+        f"- External gate capabilities: `{external_caps['status']}`; AeroGraph provider `{external_caps['aerograph_provider_configured']}`; neural-3D runner `{external_caps['neural_3d_runner_configured']}`",
         f"- MarineCity main full-frame ready: `{marinecity_qual['full_frame_main_ready']}`",
+        f"- Corrected TinyPerson status: `{tinyperson_corrected['status']}`; methods `{tinyperson_corrected['methods']}`; complete `{tinyperson_corrected.get('complete_methods')}`",
         f"- Local main.tex present: `{main_tex['main_tex_present']}`",
         f"- LaTeX patch integrity: `{report['latex_integrity_gate']['status']}`",
         f"- Main.tex note: {main_tex['note']}",
@@ -379,6 +450,10 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
             f"- 3D status: `{marinecity_system['three_d_status']}`",
             f"- LLM external ready: `{marinecity_system['llm_external_ready']}`",
             f"- TinyPerson status: `{marinecity_system['tinyperson_status']}`",
+            f"- Corrected TinyPerson status: `{tinyperson_corrected['status']}`",
+            f"- Corrected TinyPerson data: train `{tinyperson_corrected['train_images']}` images / `{tinyperson_corrected['train_boxes']}` boxes; val `{tinyperson_corrected['val_images']}` images / `{tinyperson_corrected['val_boxes']}` boxes",
+            f"- Corrected TinyPerson methods: `{tinyperson_corrected['methods']}`; complete `{tinyperson_corrected.get('complete_methods')}`; best AP by method `{tinyperson_corrected['best_ap_by_method']}`",
+            f"- Corrected TinyPerson claiming rule: {tinyperson_corrected['claiming_rule']}",
             "",
             "## MarineCity 3D Completion Gate",
             "",
@@ -391,6 +466,15 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
             f"- Methods ready: `{marinecity_3d['methods_ready']}`",
             f"- Missing expected methods: `{marinecity_3d['missing_expected_methods']}`",
             f"- Claiming rule: {marinecity_3d['claiming_rule']}",
+            "",
+            "## External Gate Capabilities",
+            "",
+            f"- Status: `{external_caps['status']}`",
+            f"- AeroGraph provider configured: `{external_caps['aerograph_provider_configured']}`",
+            f"- AeroGraph provider modes: `{external_caps['aerograph_provider_modes']}`",
+            f"- Neural 3D runner configured: `{external_caps['neural_3d_runner_configured']}`",
+            f"- Neural 3D dataset ready: `{external_caps['neural_3d_dataset_ready']}`",
+            f"- Neural 3D metric rows: `{external_caps['neural_3d_metric_rows']}`",
             "",
             "## MarineCity Qualitative Gate",
             "",

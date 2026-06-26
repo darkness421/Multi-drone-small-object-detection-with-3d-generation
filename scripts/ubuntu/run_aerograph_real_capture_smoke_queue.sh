@@ -21,12 +21,13 @@ case "$PROVIDER" in
     PROVIDER_ARGS=(--provider openai --openai-model "$OPENAI_MODEL")
     ;;
   command|factory)
-    if [[ -z "${AEROGRAPH_COMMAND:-}" ]]; then
-      echo "[AeroGraph real-capture smoke] AEROGRAPH_COMMAND is not set." >&2
+    COMMAND=${AEROGRAPH_COMMAND:-${FACTORY_COMMAND:-}}
+    if [[ -z "$COMMAND" ]]; then
+      echo "[AeroGraph real-capture smoke] AEROGRAPH_COMMAND or FACTORY_COMMAND is not set." >&2
       exit 2
     fi
     OUT_DIR=${AEROGRAPH_OUT_DIR:-outputs/reasoning/aerograph_real_capture_eval_factory}
-    PROVIDER_ARGS=(--provider command --command "$AEROGRAPH_COMMAND")
+    PROVIDER_ARGS=(--provider command --command "$COMMAND")
     ;;
   *)
     echo "[AeroGraph real-capture smoke] Unsupported AEROGRAPH_PROVIDER='$PROVIDER' (use openai, command, or factory)." >&2
@@ -75,6 +76,7 @@ python scripts/run_aerograph_prompt_pack.py \
 
 python scripts/build_aerograph_real_capture_smoke_status.py
 python scripts/check_aerograph_nonmock_readiness.py
+python scripts/check_external_gate_capabilities.py
 python scripts/check_paper_artifact_readiness.py
 python scripts/check_latex_patch_integrity.py
 python scripts/build_accv_status_snapshot.py

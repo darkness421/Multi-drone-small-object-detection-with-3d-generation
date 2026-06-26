@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-26 15:10:55 KST",
+  "updated_at_kst": "2026-06-26 19:59:41 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
-  "artifact_count": 52,
+  "artifact_count": 58,
   "missing_required_count": 0,
   "stale_claim_count": 0,
   "artifacts": [
@@ -11,7 +11,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 7369,
+      "size_bytes": 7897,
       "status": "ok",
       "note": "Detector result section patch"
     },
@@ -21,7 +21,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2363,
+      "size_bytes": 2346,
       "status": "ok",
       "note": "Compact final detector table"
     },
@@ -81,7 +81,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 7431,
+      "size_bytes": 8013,
       "status": "ok",
       "note": "MarineCity protocol section patch"
     },
@@ -161,7 +161,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 14564,
+      "size_bytes": 15260,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },
@@ -178,22 +178,32 @@
     {
       "group": "supp_detector",
       "path": "paper/tables/tinyperson_640_stress_table.tex",
-      "placement": "supp",
-      "required_now": true,
+      "placement": "archive_diagnostic",
+      "required_now": false,
       "exists": true,
-      "size_bytes": 935,
+      "size_bytes": 924,
       "status": "ok",
-      "note": "TinyPerson 640 supplementary stress-test table"
+      "note": "Legacy TinyPerson 640 protocol audit; do not use as paper comparison"
     },
     {
       "group": "supp_detector",
       "path": "paper/tables/tinyperson_eval_imgsz_sweep_table.tex",
-      "placement": "supp",
+      "placement": "archive_diagnostic",
+      "required_now": false,
+      "exists": true,
+      "size_bytes": 1552,
+      "status": "ok",
+      "note": "Legacy eval-only input-size diagnostic; do not use as paper comparison"
+    },
+    {
+      "group": "supp_detector",
+      "path": "paper/tables/tinyperson_corner_original_live_table.tex",
+      "placement": "supp_pending",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1576,
+      "size_bytes": 432,
       "status": "ok",
-      "note": "TinyPerson eval-only input-size sensitivity table"
+      "note": "Corrected TinyPerson original-window/1280 live table"
     },
     {
       "group": "supp_detector",
@@ -218,22 +228,42 @@
     {
       "group": "supp_detector",
       "path": "paper/figures/results/paper_fig12_tinyperson_640_stress.png",
-      "placement": "supp",
-      "required_now": true,
+      "placement": "archive_diagnostic",
+      "required_now": false,
       "exists": true,
-      "size_bytes": 159009,
+      "size_bytes": 154508,
       "status": "ok",
-      "note": "TinyPerson 640 supplementary stress-test figure"
+      "note": "Legacy TinyPerson 640 protocol-audit figure; do not use as paper comparison"
     },
     {
       "group": "supp_detector",
       "path": "paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png",
-      "placement": "supp",
+      "placement": "archive_diagnostic",
+      "required_now": false,
+      "exists": true,
+      "size_bytes": 105445,
+      "status": "ok",
+      "note": "Legacy eval-only input-size sensitivity figure; do not use as paper comparison"
+    },
+    {
+      "group": "supp_detector",
+      "path": "outputs/reports/live/tinyperson_corner_original_dashboard.png",
+      "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 108840,
+      "size_bytes": 94297,
       "status": "ok",
-      "note": "TinyPerson eval-only input-size sensitivity figure"
+      "note": "Corrected TinyPerson original-window/1280 dashboard"
+    },
+    {
+      "group": "supp_detector",
+      "path": "outputs/experiments/tinyperson_corner_original/live_summary.csv",
+      "placement": "source",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 513,
+      "status": "ok",
+      "note": "Corrected TinyPerson original-window/1280 live summary"
     },
     {
       "group": "supp_system",
@@ -331,7 +361,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 3522,
+      "size_bytes": 4108,
       "status": "ok",
       "note": "Real-Cesium object/UAV/camera/YOLO/3D/LLM integration gate"
     },
@@ -341,7 +371,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1398,
+      "size_bytes": 1785,
       "status": "ok",
       "note": "MarineCity real-capture neural-3D input dataset export"
     },
@@ -374,6 +404,26 @@
       "size_bytes": 92770,
       "status": "ok",
       "note": "Depth point-cloud smoke preview figure"
+    },
+    {
+      "group": "pending_3d",
+      "path": "paper/tables/marinecity_3d_completion_results_table.tex",
+      "placement": "pending_table",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 427,
+      "status": "ok",
+      "note": "Pending-safe neural 3D completion metric table slot"
+    },
+    {
+      "group": "pending_3d",
+      "path": "outputs/reports/live/marinecity_3d_completion_results_table.md",
+      "placement": "runbook",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 318,
+      "status": "ok",
+      "note": "Live summary for verified neural 3D metric rows"
     },
     {
       "group": "pending_3d",
@@ -511,9 +561,19 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2152,
+      "size_bytes": 2440,
       "status": "ok",
       "note": "LaTeX input/figure/label integrity check"
+    },
+    {
+      "group": "audit",
+      "path": "outputs/reports/live/external_gate_capabilities.md",
+      "placement": "audit",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 2607,
+      "status": "ok",
+      "note": "External provider and neural-3D runner capability check"
     },
     {
       "group": "audit",
@@ -521,7 +581,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 8986,
+      "size_bytes": 9085,
       "status": "ok",
       "note": "Claim readiness audit"
     }
@@ -571,7 +631,7 @@
     ],
     "three_d_status": "pending_upstream_runner_connection",
     "llm_external_ready": false,
-    "tinyperson_status": "complete_supplementary_stress_test"
+    "tinyperson_status": "comparison_complete"
   },
   "marinecity_3d_completion_gate": {
     "status": "marinecity_3d_input_dataset_ready_metrics_pending",
@@ -589,6 +649,36 @@
       "gaussian_splatting"
     ],
     "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
+  },
+  "tinyperson_corrected_gate": {
+    "status": "comparison_complete",
+    "dataset_status": "ready",
+    "train_images": 1221,
+    "train_boxes": 36855,
+    "val_images": 3998,
+    "val_boxes": 18937,
+    "methods": [
+      "Ours",
+      "YOLOv9m"
+    ],
+    "complete_methods": [
+      "Ours",
+      "YOLOv9m"
+    ],
+    "row_count": 2,
+    "best_ap_by_method": {
+      "Ours": 0.18271,
+      "YOLOv9m": 0.20348
+    },
+    "claiming_rule": "Use only the corrected TinyPerson original-window/1280 protocol as paper-facing supplementary evidence. Legacy TinyPerson 640 rows are archived protocol diagnostics and should not be mixed into comparison tables."
+  },
+  "external_gate_capabilities": {
+    "status": "external_gates_missing_provider_and_3d_runner",
+    "aerograph_provider_configured": false,
+    "aerograph_provider_modes": [],
+    "neural_3d_runner_configured": false,
+    "neural_3d_dataset_ready": true,
+    "neural_3d_metric_rows": 0
   },
   "main_tex_gate": {
     "main_tex_candidates": [],
@@ -609,6 +699,7 @@
     "marinecity_qualitative": "ready_for_main",
     "aerograph": "candidate_ready_external_provider_pending",
     "final_3d_completion": "pending_neural_3d_completion_metrics",
+    "tinyperson_corrected": "comparison_complete",
     "local_compile": "pending_main_tex_or_overleaf_sync"
   }
 }

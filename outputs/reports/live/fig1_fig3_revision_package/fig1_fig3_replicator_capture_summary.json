@@ -1,0 +1,362 @@
+{
+  "status": "replicator_direct_capture_complete",
+  "stage_path": "/tmp/com3d_isaac_replicator_direct/marinecity_proxy_stage.usda",
+  "output_dir": "/tmp/com3d_isaac_replicator_direct",
+  "camera_count": 3,
+  "frame_count": 1,
+  "render_resolution": [
+    1280,
+    720
+  ],
+  "frames": [
+    {
+      "uav_id": "uav_01",
+      "camera_prim": "/World/UAVs/uav_01/Camera",
+      "rgb_path": "replicator_direct/frame_001_uav_01_rgb.png",
+      "bbox_preview_path": "replicator_direct/frame_001_uav_01_bbox_preview.png",
+      "depth_npy_path": "replicator_direct/frame_001_uav_01_depth.npy",
+      "depth_preview_path": "replicator_direct/frame_001_uav_01_depth_preview.png",
+      "annotation_path": "replicator_direct/frame_001_uav_01_annotations.json",
+      "rgb_shape": [
+        720,
+        1280,
+        4
+      ],
+      "depth_shape": [
+        720,
+        1280
+      ],
+      "bbox_2d_count": 7
+    },
+    {
+      "uav_id": "uav_02",
+      "camera_prim": "/World/UAVs/uav_02/Camera",
+      "rgb_path": "replicator_direct/frame_002_uav_02_rgb.png",
+      "bbox_preview_path": "replicator_direct/frame_002_uav_02_bbox_preview.png",
+      "depth_npy_path": "replicator_direct/frame_002_uav_02_depth.npy",
+      "depth_preview_path": "replicator_direct/frame_002_uav_02_depth_preview.png",
+      "annotation_path": "replicator_direct/frame_002_uav_02_annotations.json",
+      "rgb_shape": [
+        720,
+        1280,
+        4
+      ],
+      "depth_shape": [
+        720,
+        1280
+      ],
+      "bbox_2d_count": 10
+    },
+    {
+      "uav_id": "uav_03",
+      "camera_prim": "/World/UAVs/uav_03/Camera",
+      "rgb_path": "replicator_direct/frame_003_uav_03_rgb.png",
+      "bbox_preview_path": "replicator_direct/frame_003_uav_03_bbox_preview.png",
+      "depth_npy_path": "replicator_direct/frame_003_uav_03_depth.npy",
+      "depth_preview_path": "replicator_direct/frame_003_uav_03_depth_preview.png",
+      "annotation_path": "replicator_direct/frame_003_uav_03_annotations.json",
+      "rgb_shape": [
+        720,
+        1280,
+        4
+      ],
+      "depth_shape": [
+        720,
+        1280
+      ],
+      "bbox_2d_count": 12
+    }
+  ],
+  "file_count": 18,
+  "files": [
+    "capture_plan.json",
+    "isaac_replicator_capture_template.py",
+    "marinecity_proxy_stage.usda",
+    "replicator_direct/frame_001_uav_01_annotations.json",
+    "replicator_direct/frame_001_uav_01_bbox_preview.png",
+    "replicator_direct/frame_001_uav_01_depth.npy",
+    "replicator_direct/frame_001_uav_01_depth_preview.png",
+    "replicator_direct/frame_001_uav_01_rgb.png",
+    "replicator_direct/frame_002_uav_02_annotations.json",
+    "replicator_direct/frame_002_uav_02_bbox_preview.png",
+    "replicator_direct/frame_002_uav_02_depth.npy",
+    "replicator_direct/frame_002_uav_02_depth_preview.png",
+    "replicator_direct/frame_002_uav_02_rgb.png",
+    "replicator_direct/frame_003_uav_03_annotations.json",
+    "replicator_direct/frame_003_uav_03_bbox_preview.png",
+    "replicator_direct/frame_003_uav_03_depth.npy",
+    "replicator_direct/frame_003_uav_03_depth_preview.png",
+    "replicator_direct/frame_003_uav_03_rgb.png"
+  ],
+  "stage_summary": {
+    "dataset": "CoM3D-MarineCity",
+    "stage_path": "/tmp/com3d_isaac_replicator_direct/marinecity_proxy_stage.usda",
+    "status": "proxy_usd_stage_ready",
+    "note": "Proxy stage validates Isaac GPU1 runtime, UAV poses, and object layout before Cesium tiles are attached.",
+    "origin": {
+      "latitude_deg": 35.1569,
+      "longitude_deg": 129.1456,
+      "height_m": 80.0
+    },
+    "capture_summary": {
+      "planned_frame_count": 3,
+      "scene_count": 1,
+      "by_scene": {
+        "stage1_dense_traffic_intersection": 3
+      },
+      "by_view_angle": {
+        "front_oblique": 1,
+        "nadir": 1,
+        "side_view": 1
+      },
+      "by_weather": {
+        "clear": 3
+      },
+      "by_altitude": {
+        "100m": 1,
+        "140m": 1,
+        "60m": 1
+      }
+    },
+    "uav_count": 3,
+    "object_count": 12,
+    "uavs": [
+      {
+        "uav_id": "uav_01",
+        "view_angle": "nadir",
+        "altitude_m": 60.0,
+        "pose_xyz_rpy": [
+          8.457,
+          3.078,
+          60.0,
+          0.0,
+          -90.0,
+          -160.0
+        ],
+        "camera_prim": "/World/UAVs/uav_01/Camera"
+      },
+      {
+        "uav_id": "uav_02",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0,
+        "pose_xyz_rpy": [
+          -57.453,
+          48.209,
+          100.0,
+          0.0,
+          -35.0,
+          -40.0
+        ],
+        "camera_prim": "/World/UAVs/uav_02/Camera"
+      },
+      {
+        "uav_id": "uav_03",
+        "view_angle": "side_view",
+        "altitude_m": 140.0,
+        "pose_xyz_rpy": [
+          -21.88,
+          -124.086,
+          140.0,
+          0.0,
+          -18.0,
+          80.0
+        ],
+        "camera_prim": "/World/UAVs/uav_03/Camera"
+      }
+    ],
+    "objects": [
+      {
+        "object_id": "obj_0001",
+        "class_name": "sedan",
+        "position_xyz_m": [
+          -30.0,
+          -12.0,
+          0.8
+        ],
+        "dims_lwh_m": [
+          4.5,
+          1.9,
+          1.5
+        ],
+        "yaw_deg": 0.0,
+        "ambiguity_group": "adjacent_vehicle_cluster"
+      },
+      {
+        "object_id": "obj_0002",
+        "class_name": "sedan",
+        "position_xyz_m": [
+          -24.5,
+          -12.0,
+          0.8
+        ],
+        "dims_lwh_m": [
+          4.5,
+          1.9,
+          1.5
+        ],
+        "yaw_deg": 0.0,
+        "ambiguity_group": "adjacent_vehicle_cluster"
+      },
+      {
+        "object_id": "obj_0003",
+        "class_name": "van",
+        "position_xyz_m": [
+          -19.0,
+          -12.0,
+          1.0
+        ],
+        "dims_lwh_m": [
+          5.3,
+          2.1,
+          2.2
+        ],
+        "yaw_deg": 0.0,
+        "ambiguity_group": "adjacent_vehicle_cluster"
+      },
+      {
+        "object_id": "obj_0004",
+        "class_name": "pickup",
+        "position_xyz_m": [
+          -13.5,
+          -12.0,
+          0.95
+        ],
+        "dims_lwh_m": [
+          5.2,
+          2.0,
+          1.8
+        ],
+        "yaw_deg": 0.0,
+        "ambiguity_group": "adjacent_vehicle_cluster"
+      },
+      {
+        "object_id": "obj_0005",
+        "class_name": "police_car",
+        "position_xyz_m": [
+          -8.0,
+          -12.0,
+          0.8
+        ],
+        "dims_lwh_m": [
+          4.7,
+          1.9,
+          1.5
+        ],
+        "yaw_deg": 0.0,
+        "ambiguity_group": "adjacent_vehicle_cluster"
+      },
+      {
+        "object_id": "obj_0006",
+        "class_name": "truck",
+        "position_xyz_m": [
+          18.0,
+          8.5,
+          1.25
+        ],
+        "dims_lwh_m": [
+          7.2,
+          2.5,
+          2.8
+        ],
+        "yaw_deg": 90.0,
+        "ambiguity_group": "context"
+      },
+      {
+        "object_id": "obj_0007",
+        "class_name": "ambulance",
+        "position_xyz_m": [
+          25.0,
+          8.5,
+          1.1
+        ],
+        "dims_lwh_m": [
+          5.8,
+          2.2,
+          2.3
+        ],
+        "yaw_deg": 90.0,
+        "ambiguity_group": "context"
+      },
+      {
+        "object_id": "obj_0008",
+        "class_name": "pedestrian",
+        "position_xyz_m": [
+          -6.0,
+          14.0,
+          0.85
+        ],
+        "dims_lwh_m": [
+          0.55,
+          0.55,
+          1.7
+        ],
+        "yaw_deg": 0.0,
+        "ambiguity_group": "context"
+      },
+      {
+        "object_id": "obj_0009",
+        "class_name": "worker",
+        "position_xyz_m": [
+          -3.2,
+          14.6,
+          0.85
+        ],
+        "dims_lwh_m": [
+          0.55,
+          0.55,
+          1.7
+        ],
+        "yaw_deg": 0.0,
+        "ambiguity_group": "context"
+      },
+      {
+        "object_id": "obj_0010",
+        "class_name": "pedestrian",
+        "position_xyz_m": [
+          4.0,
+          15.0,
+          0.85
+        ],
+        "dims_lwh_m": [
+          0.55,
+          0.55,
+          1.7
+        ],
+        "yaw_deg": 0.0,
+        "ambiguity_group": "context"
+      },
+      {
+        "object_id": "obj_0011",
+        "class_name": "small_boat",
+        "position_xyz_m": [
+          72.0,
+          -52.0,
+          0.45
+        ],
+        "dims_lwh_m": [
+          5.5,
+          1.8,
+          0.9
+        ],
+        "yaw_deg": -12.0,
+        "ambiguity_group": "context"
+      },
+      {
+        "object_id": "obj_0012",
+        "class_name": "debris",
+        "position_xyz_m": [
+          79.0,
+          -48.0,
+          0.25
+        ],
+        "dims_lwh_m": [
+          1.2,
+          0.8,
+          0.4
+        ],
+        "yaw_deg": 20.0,
+        "ambiguity_group": "context"
+      }
+    ]
+  }
+}

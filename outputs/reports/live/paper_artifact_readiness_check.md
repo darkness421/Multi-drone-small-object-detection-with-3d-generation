@@ -1,11 +1,11 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-06-26 15:10:55 KST`
+Updated: `2026-06-26 19:59:41 KST`
 Status: `paper_artifact_audit_ok_with_pending_gates`
 
 ## Summary
 
-- Artifacts checked: `52`
+- Artifacts checked: `58`
 - Missing required artifacts: `0`
 - Stale/unsafe claim matches: `0`
 - AeroGraph effective valid response coverage: `49/49`
@@ -15,7 +15,9 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 - MarineCity qualitative gate: `marinecity_qualitative_gate_main_ready`
 - MarineCity integration gate: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; fails `0`, warnings `1`, pending `2`
 - MarineCity 3D completion gate: `marinecity_3d_input_dataset_ready_metrics_pending`; metric rows `0`
+- External gate capabilities: `external_gates_missing_provider_and_3d_runner`; AeroGraph provider `False`; neural-3D runner `False`
 - MarineCity main full-frame ready: `True`
+- Corrected TinyPerson status: `comparison_complete`; methods `['Ours', 'YOLOv9m']`; complete `['Ours', 'YOLOv9m']`
 - Local main.tex present: `False`
 - LaTeX patch integrity: `latex_patch_integrity_ok`
 - Main.tex note: No local main.tex means current files are Overleaf-ready patches rather than a full local paper build.
@@ -27,6 +29,7 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 - `marinecity_qualitative`: `ready_for_main`
 - `aerograph`: `candidate_ready_external_provider_pending`
 - `final_3d_completion`: `pending_neural_3d_completion_metrics`
+- `tinyperson_corrected`: `comparison_complete`
 - `local_compile`: `pending_main_tex_or_overleaf_sync`
 
 ## MarineCity Integration Gate
@@ -38,7 +41,11 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 - Actor classes: `['bus', 'car', 'pedestrian', 'person', 'truck', 'van']`
 - 3D status: `pending_upstream_runner_connection`
 - LLM external ready: `False`
-- TinyPerson status: `complete_supplementary_stress_test`
+- TinyPerson status: `comparison_complete`
+- Corrected TinyPerson status: `comparison_complete`
+- Corrected TinyPerson data: train `1221` images / `36855` boxes; val `3998` images / `18937` boxes
+- Corrected TinyPerson methods: `['Ours', 'YOLOv9m']`; complete `['Ours', 'YOLOv9m']`; best AP by method `{'Ours': 0.18271, 'YOLOv9m': 0.20348}`
+- Corrected TinyPerson claiming rule: Use only the corrected TinyPerson original-window/1280 protocol as paper-facing supplementary evidence. Legacy TinyPerson 640 rows are archived protocol diagnostics and should not be mixed into comparison tables.
 
 ## MarineCity 3D Completion Gate
 
@@ -51,6 +58,15 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 - Methods ready: `[]`
 - Missing expected methods: `['nerf', 'instant_ngp', 'mip_nerf_360', 'gaussian_splatting']`
 - Claiming rule: The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected.
+
+## External Gate Capabilities
+
+- Status: `external_gates_missing_provider_and_3d_runner`
+- AeroGraph provider configured: `False`
+- AeroGraph provider modes: `[]`
+- Neural 3D runner configured: `False`
+- Neural 3D dataset ready: `True`
+- Neural 3D metric rows: `0`
 
 ## MarineCity Qualitative Gate
 
@@ -85,12 +101,15 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 | bundle | paper/sections/supplementary_patch_bundle.tex | supp_bundle | True | ok | Overleaf-ready supplementary patch bundle |
 | supp_detector | paper/sections/supp_detector_experiment_inventory.tex | supp | True | ok | Supplementary detector inventory |
 | supp_detector | paper/tables/final_ablation_supplementary_table.tex | supp | True | ok | Full ablation table |
-| supp_detector | paper/tables/tinyperson_640_stress_table.tex | supp | True | ok | TinyPerson 640 supplementary stress-test table |
-| supp_detector | paper/tables/tinyperson_eval_imgsz_sweep_table.tex | supp | True | ok | TinyPerson eval-only input-size sensitivity table |
+| supp_detector | paper/tables/tinyperson_640_stress_table.tex | archive_diagnostic | True | ok | Legacy TinyPerson 640 protocol audit; do not use as paper comparison |
+| supp_detector | paper/tables/tinyperson_eval_imgsz_sweep_table.tex | archive_diagnostic | True | ok | Legacy eval-only input-size diagnostic; do not use as paper comparison |
+| supp_detector | paper/tables/tinyperson_corner_original_live_table.tex | supp_pending | True | ok | Corrected TinyPerson original-window/1280 live table |
 | supp_detector | paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png | supp | True | ok | Ablation heatmap |
 | supp_detector | paper/figures/results/paper_fig11_final_detector_feature_activation_heatmap.png | supp | True | ok | Detector activation/heatmap sheet |
-| supp_detector | paper/figures/results/paper_fig12_tinyperson_640_stress.png | supp | True | ok | TinyPerson 640 supplementary stress-test figure |
-| supp_detector | paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png | supp | True | ok | TinyPerson eval-only input-size sensitivity figure |
+| supp_detector | paper/figures/results/paper_fig12_tinyperson_640_stress.png | archive_diagnostic | True | ok | Legacy TinyPerson 640 protocol-audit figure; do not use as paper comparison |
+| supp_detector | paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png | archive_diagnostic | True | ok | Legacy eval-only input-size sensitivity figure; do not use as paper comparison |
+| supp_detector | outputs/reports/live/tinyperson_corner_original_dashboard.png | runbook | True | ok | Corrected TinyPerson original-window/1280 dashboard |
+| supp_detector | outputs/experiments/tinyperson_corner_original/live_summary.csv | source | True | ok | Corrected TinyPerson original-window/1280 live summary |
 | supp_system | paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png | supp_or_main_smoke | True | ok | Three-scenario real-Cesium smoke sheet |
 | supp_system | paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png | main_or_supp_smoke | True | ok | Real-Cesium detector preview contact sheet from SAFR-YOLO smoke run |
 | supp_system | paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png | supp | True | ok | Real-Cesium 3-scenario x 3-UAV capture contact sheet |
@@ -105,6 +124,8 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 | pending_3d | outputs/reports/live/marinecity_3d_runner_preflight.md | runbook | True | ok | MarineCity local neural-3D runner dependency preflight |
 | pending_3d | outputs/reports/live/marinecity_depth_pointcloud_smoke.md | runbook | True | ok | MarineCity depth-fused 3D geometry smoke artifact |
 | pending_3d | paper/figures/results/marinecity_system/marinecity_depth_pointcloud_smoke_topdown.png | supp | True | ok | Depth point-cloud smoke preview figure |
+| pending_3d | paper/tables/marinecity_3d_completion_results_table.tex | pending_table | True | ok | Pending-safe neural 3D completion metric table slot |
+| pending_3d | outputs/reports/live/marinecity_3d_completion_results_table.md | runbook | True | ok | Live summary for verified neural 3D metric rows |
 | pending_3d | outputs/reports/live/marinecity_3d_completion_readiness.md | runbook | True | ok | MarineCity neural 3D completion readiness gate |
 | pending_reasoner | paper/tables/aerograph_reasoner_results_placeholder.tex | pending | True | ok | AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete |
 | pending_reasoner | docs/aerograph_nonmock_collection_plan.md | runbook | True | ok | Non-mock reasoner collection gate |
@@ -119,4 +140,5 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 | pending_reasoner | scripts/normalize_aerograph_web_responses.py | runbook_helper | True | ok | Web LLM raw-output normalizer for AeroGraph manual responses |
 | audit | paper/figures/results/paper_artifact_readiness_manifest.md | audit | True | ok | Human-readable artifact manifest |
 | audit | outputs/reports/live/latex_patch_integrity_check.md | audit | True | ok | LaTeX input/figure/label integrity check |
+| audit | outputs/reports/live/external_gate_capabilities.md | audit | True | ok | External provider and neural-3D runner capability check |
 | audit | docs/accv_research_package_readiness_audit_2026-06-25.md | audit | True | ok | Claim readiness audit |

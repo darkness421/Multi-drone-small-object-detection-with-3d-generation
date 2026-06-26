@@ -1,0 +1,246 @@
+{
+  "summary": {
+    "planned_frame_count": 3,
+    "scene_count": 1,
+    "by_scene": {
+      "stage1_dense_traffic_intersection": 3
+    },
+    "by_view_angle": {
+      "front_oblique": 1,
+      "nadir": 1,
+      "side_view": 1
+    },
+    "by_weather": {
+      "clear": 3
+    },
+    "by_altitude": {
+      "100m": 1,
+      "140m": 1,
+      "60m": 1
+    }
+  },
+  "views": [
+    {
+      "scene_id": "stage1_dense_traffic_intersection",
+      "frame_id": "stage1_dense_traffic_intersection_uav_01_t000_nadir",
+      "image_id": "stage1_dense_traffic_intersection_uav_01_t000_nadir",
+      "uav_id": "uav_01",
+      "timestamp": 0.0,
+      "altitude_m": 60.0,
+      "view_angle": "nadir",
+      "weather": "clear",
+      "lighting": "day",
+      "object_density": "dense",
+      "uav_pose": {
+        "x": 8.457,
+        "y": 3.078,
+        "z": 60.0,
+        "roll": 0.0,
+        "pitch": -90.0,
+        "yaw": -160.0
+      },
+      "camera_intrinsic": [
+        [
+          780.0,
+          0.0,
+          640.0
+        ],
+        [
+          0.0,
+          780.0,
+          360.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          8.457
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          3.078
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          60.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rgb_path": "images/stage1_dense_traffic_intersection/stage1_dense_traffic_intersection_uav_01_t000_nadir_rgb.png",
+      "depth_path": "depth/stage1_dense_traffic_intersection/stage1_dense_traffic_intersection_uav_01_t000_nadir_depth.npy",
+      "pose_path": "poses/stage1_dense_traffic_intersection/stage1_dense_traffic_intersection_uav_01_t000_nadir_pose.json",
+      "metadata": {
+        "scene_description": "Marine City proxy intersection with adjacent vehicles, pedestrians, and ambiguous small-object cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "dense",
+        "view_angle": "nadir",
+        "altitude_m": 60.0
+      }
+    },
+    {
+      "scene_id": "stage1_dense_traffic_intersection",
+      "frame_id": "stage1_dense_traffic_intersection_uav_02_t000_front_oblique",
+      "image_id": "stage1_dense_traffic_intersection_uav_02_t000_front_oblique",
+      "uav_id": "uav_02",
+      "timestamp": 0.0,
+      "altitude_m": 100.0,
+      "view_angle": "front_oblique",
+      "weather": "clear",
+      "lighting": "day",
+      "object_density": "dense",
+      "uav_pose": {
+        "x": -57.453,
+        "y": 48.209,
+        "z": 100.0,
+        "roll": 0.0,
+        "pitch": -35.0,
+        "yaw": -40.0
+      },
+      "camera_intrinsic": [
+        [
+          780.0,
+          0.0,
+          640.0
+        ],
+        [
+          0.0,
+          780.0,
+          360.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -57.453
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          48.209
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rgb_path": "images/stage1_dense_traffic_intersection/stage1_dense_traffic_intersection_uav_02_t000_front_oblique_rgb.png",
+      "depth_path": "depth/stage1_dense_traffic_intersection/stage1_dense_traffic_intersection_uav_02_t000_front_oblique_depth.npy",
+      "pose_path": "poses/stage1_dense_traffic_intersection/stage1_dense_traffic_intersection_uav_02_t000_front_oblique_pose.json",
+      "metadata": {
+        "scene_description": "Marine City proxy intersection with adjacent vehicles, pedestrians, and ambiguous small-object cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "dense",
+        "view_angle": "front_oblique",
+        "altitude_m": 100.0
+      }
+    },
+    {
+      "scene_id": "stage1_dense_traffic_intersection",
+      "frame_id": "stage1_dense_traffic_intersection_uav_03_t000_side_view",
+      "image_id": "stage1_dense_traffic_intersection_uav_03_t000_side_view",
+      "uav_id": "uav_03",
+      "timestamp": 0.0,
+      "altitude_m": 140.0,
+      "view_angle": "side_view",
+      "weather": "clear",
+      "lighting": "day",
+      "object_density": "dense",
+      "uav_pose": {
+        "x": -21.88,
+        "y": -124.086,
+        "z": 140.0,
+        "roll": 0.0,
+        "pitch": -18.0,
+        "yaw": 80.0
+      },
+      "camera_intrinsic": [
+        [
+          780.0,
+          0.0,
+          640.0
+        ],
+        [
+          0.0,
+          780.0,
+          360.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_extrinsic": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -21.88
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -124.086
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          140.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rgb_path": "images/stage1_dense_traffic_intersection/stage1_dense_traffic_intersection_uav_03_t000_side_view_rgb.png",
+      "depth_path": "depth/stage1_dense_traffic_intersection/stage1_dense_traffic_intersection_uav_03_t000_side_view_depth.npy",
+      "pose_path": "poses/stage1_dense_traffic_intersection/stage1_dense_traffic_intersection_uav_03_t000_side_view_pose.json",
+      "metadata": {
+        "scene_description": "Marine City proxy intersection with adjacent vehicles, pedestrians, and ambiguous small-object cases.",
+        "weather": "clear",
+        "lighting": "day",
+        "object_density": "dense",
+        "view_angle": "side_view",
+        "altitude_m": 140.0
+      }
+    }
+  ]
+}

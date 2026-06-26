@@ -1,10 +1,11 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-26 15:10:55 KST`
+Updated: `2026-06-26 19:59:42 KST`
 
 ## Detector Status
 
-- Selected detector: `Ours: P2P4-SelfAttnFR`
+- Selected detector: `Ours`
+- Selected detector implementation: `SAFR-YOLO/P2P4-SelfAttnFR`
 - Ours vs YOLOv11l AP gap: `0.004506`
 - Ours vs UAVDet final-table AP gap: `0.000979`
 - Ours vs UAVDet queue-best AP gap: `0.002613`
@@ -13,7 +14,7 @@ Updated: `2026-06-26 15:10:55 KST`
 
 | Rank | Model | AP | AP50 | F1 | Params | Seeds |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | Ours: P2P4-SelfAttnFR | 0.3822 | 0.6052 | 0.6273 | 20.82M | 42,123,2026 |
+| 1 | Ours | 0.3822 | 0.6052 | 0.6273 | 20.82M | 42,123,2026 |
 | 2 | UAVDet [16] | 0.3812 | 0.6005 | 0.6203 | 33.55M | 42,123,2026 |
 | 3 | BPD-YOLO [7] | 0.3804 | 0.5986 | 0.6187 | 24.53M | 42,123,2026 |
 | 4 | YOLOv11l | 0.3777 | 0.5981 | 0.6248 | 25.32M | 123,2026,42 |
@@ -84,11 +85,15 @@ Updated: `2026-06-26 15:10:55 KST`
 - TinyPerson transfer gate: `finished_tinyperson_ours_transfer`
 - TinyPerson eval-size log tail: `[2026-06-26T14:45:20+09:00] QUEUE_FINISHED TinyPerson eval-only input-size sweep`
 - TinyPerson eval-size gate: `finished_tinyperson_eval_imgsz_sweep`
+- Corrected TinyPerson log tail: `[2026-06-26T18:21:01+09:00] Dashboard: outputs/reports/live/tinyperson_corner_original_dashboard.png`
+- Corrected TinyPerson gate: `finished_tinyperson_corner_original`; status `comparison_complete`; methods `['Ours', 'YOLOv9m']`; complete `['Ours', 'YOLOv9m']`
+- Corrected TinyPerson best row: `{'method': 'YOLOv9m', 'seed': '42', 'imgsz': '1280', 'latest_epoch': 60, 'best_epoch': 55, 'best_ap': 0.20348, 'best_ap50': 0.54079, 'best_recall': 0.51038, 'status': 'complete'}`
 
 ## Dashboard Links
 
 - Training dashboard: `outputs/reports/live/training_dashboard.png`
 - MarineCity dashboard: `outputs/reports/live/marinecity_simulation_dashboard.png`
+- Corrected TinyPerson dashboard: `outputs/reports/live/tinyperson_corner_original_dashboard.png`
 
 ## Paper-Ready Artifacts
 

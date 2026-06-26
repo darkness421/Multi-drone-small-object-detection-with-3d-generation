@@ -11,8 +11,8 @@ if [[ "$PROVIDER" == "openai" && -z "${OPENAI_API_KEY:-}" && -z "${AEROGRAPH_ENV
   echo "[AeroGraph real-capture smoke] OPENAI_API_KEY is not set. Export it or pass AEROGRAPH_ENV_FILE." >&2
   exit 2
 fi
-if [[ "$PROVIDER" != "openai" && -z "${AEROGRAPH_COMMAND:-}" && -z "${AEROGRAPH_ENV_FILE:-}" ]]; then
-  echo "[AeroGraph real-capture smoke] AEROGRAPH_COMMAND is not set. Export it or pass AEROGRAPH_ENV_FILE." >&2
+if [[ "$PROVIDER" != "openai" && -z "${AEROGRAPH_COMMAND:-}" && -z "${FACTORY_COMMAND:-}" && -z "${AEROGRAPH_ENV_FILE:-}" ]]; then
+  echo "[AeroGraph real-capture smoke] AEROGRAPH_COMMAND or FACTORY_COMMAND is not set. Export one or pass AEROGRAPH_ENV_FILE." >&2
   exit 2
 fi
 
@@ -39,6 +39,9 @@ if [[ -z "$ENV_FILE" ]]; then
     fi
     if [[ -n "${AEROGRAPH_COMMAND:-}" ]]; then
       printf 'export AEROGRAPH_COMMAND=%q\n' "$AEROGRAPH_COMMAND"
+    fi
+    if [[ -n "${FACTORY_COMMAND:-}" ]]; then
+      printf 'export FACTORY_COMMAND=%q\n' "$FACTORY_COMMAND"
     fi
   } > "$TEMP_ENV_FILE"
   ENV_FILE="$TEMP_ENV_FILE"

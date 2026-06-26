@@ -1,13 +1,14 @@
 \subsection{Detector Comparison and Reporting Scope}
 \label{sec:detector_results_scope}
 
-We propose \textbf{SAFR-YOLO} as the 2D evidence generator for the full
-CoM3D-ACE system. The detector contribution is evaluated with two
+We propose a 2D evidence generator for the full CoM3D-ACE system and report it
+as \textbf{Ours} in all comparison tables. The current implementation is
+SAFR-YOLO/P2P4-SelfAttnFR. The detector contribution is evaluated with two
 paper-facing views: a normalized three-seed comparison against strong
 YOLO-family and transformer baselines, and a compact related-work
 reproduction/coverage table. This keeps the main paper self-contained while
-preventing single-seed architecture search rows, 640-pixel sanity checks, and
-dry-run scripts from being mixed with the final detector claim.
+preventing single-seed architecture search rows, legacy 640-pixel sanity
+checks, and dry-run scripts from being mixed with the final detector claim.
 
 \paragraph{Implementation and evaluation setup.}
 Unless otherwise specified, detector experiments use VisDrone2019-DET with
@@ -53,17 +54,17 @@ the final row.
 
 Among cited UAV small-object detector reproductions, UAVDet~[16] is the
 strongest completed row under the normalized 1280-pixel, three-seed protocol.
-Its reproduced mean AP/AP50 is 0.3812/0.6005 with 33.55M parameters. SAFR-YOLO
+Its reproduced mean AP/AP50 is 0.3812/0.6005 with 33.55M parameters. Ours
 remains slightly higher at 0.3822/0.6052 while using 20.82M parameters. We
 therefore report UAVDet in the related-work table with an explicit
 ``inspired reproduction'' note rather than treating it as an official
 checkpoint result.
 
 \paragraph{Selected detector candidate.}
-The current selected detector candidate is \textbf{SAFR-YOLO}. It keeps a
-high-resolution P2/P3/P4 detection path and adds SelfAttnFR refinement with
-TinyFReLU; the current implementation label is P2P4-SelfAttnFR. Compared
-with YOLOv11l under the same three-seed protocol, it
+The current selected detector candidate is reported as \textbf{Ours} in result
+tables. Its implementation keeps a high-resolution P2/P3/P4 detection path and
+adds SelfAttnFR refinement with TinyFReLU; the current implementation label is
+P2P4-SelfAttnFR. Compared with YOLOv11l under the same three-seed protocol, it
 improves AP from 0.3777 to 0.3822 and AP50 from 0.5981 to 0.6052 while reducing
 the parameter count from 25.32M to 20.82M. This is the clean main-paper claim:
 better AP/AP50 and fewer parameters than the strongest normalized stock YOLO
@@ -80,9 +81,9 @@ The main paper reserves space for one compact quantitative detector figure and
 one qualitative detector figure after final rendering. The compact quantitative
 figure visualizes AP/AP50 versus parameter count for
 Table~\ref{tab:detector_preview_overall}, while the qualitative figure compares
-YOLOv11l and SAFR-YOLO on crowded UAV crops with adjacent objects. The
+YOLOv11l and Ours on crowded UAV crops with adjacent objects. The
 Grad-CAM-style feature activation heat maps for YOLOv11l, YOLOv9c, and
-SAFR-YOLO are provided in the supplementary material so the main detector claim
+Ours are provided in the supplementary material so the main detector claim
 is supported without crowding the page budget.
 
 \paragraph{Ablation reporting.}
@@ -112,10 +113,15 @@ while the supplementary material expands it into a full inventory with protocol
 notes and coverage labels. Likewise, YOLO nano/small/medium scale sweeps are
 important for reviewer coverage, but the full scale table is better placed in
 the supplementary material to preserve the main paper page budget.
-The supplementary material also contains the completed TinyPerson 640-pixel
-stress test and the Grad-CAM-style detector feature-activation sheet. These
-support robustness and interpretability discussion, but they are not used as
-headline detector claims.
+The supplementary material also contains the Grad-CAM-style detector
+feature-activation sheet. TinyPerson is treated separately as a domain-transfer
+diagnostic, not as part of the main detector claim. Earlier 640-pixel
+TinyPerson rows are archived as protocol diagnostics because the first
+conversion did not materialize TinyPerson corner windows and should not be
+mixed into paper-facing comparison tables. If TinyPerson is included, we use
+only the corrected original-window 1280-pixel protocol. In this corrected
+single-seed check, Ours does not outperform YOLOv9m on TinyPerson, so we report
+it as limitation evidence rather than as a headline detector win.
 
 Post-processing NMS sweeps are also kept out of the main comparison until they
 are confirmed with the selected detector under the same three-seed protocol. If

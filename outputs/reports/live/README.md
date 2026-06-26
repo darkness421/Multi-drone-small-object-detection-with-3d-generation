@@ -8,12 +8,31 @@ progress, but do not treat it as the final paper report.
 Current live bundle:
 
 - `training_dashboard.png`: active detector queue view.
-- `tinyperson_640_dashboard.png`: completed TinyPerson 640 supplementary stress-test dashboard, now including the VisDrone-initialized SAFR-YOLO transfer diagnostic row.
-- `tinyperson_640_transfer_dashboard.png`: separate dashboard for the 3-seed SAFR-YOLO TinyPerson transfer run before it is merged into the paper-facing Fig. 12.
-- `tinyperson_eval_imgsz_sweep_dashboard.png`: live supplementary eval-only input-size sweep for TinyPerson checkpoints at 640/960/1280.
+- `tinyperson_640_dashboard.png`: archived legacy TinyPerson 640 diagnostic dashboard, now including the VisDrone-initialized Ours transfer row. Do not use it as a paper-facing TinyPerson comparison because the initial conversion did not materialize corner crops and the protocol is not aligned with the original-window 1280 setup.
+- `tinyperson_640_transfer_dashboard.png`: separate dashboard for the 3-seed Ours TinyPerson transfer run before it is merged into the paper-facing Fig. 12.
+- `tinyperson_eval_imgsz_sweep_dashboard.png`: supplementary eval-only input-size sweep for legacy TinyPerson checkpoints at 640/960/1280.
+- `tinyperson_corner_original_dashboard.png`: corrected TinyPerson
+  original-window/1280 diagnostic dashboard. The corrected Ours-vs-YOLOv9m
+  seed-42 run is complete; Ours is lower, so use it only as supplementary
+  domain-transfer or limitation evidence rather than as a positive detector
+  claim.
+- `../experiments/tinyperson_corner_original/live_summary.csv` and
+  `../../paper/tables/tinyperson_corner_original_live_table.tex`: live
+  corrected TinyPerson source rows for the supplementary slot.
 - `marinecity_simulation_dashboard.png`: Isaac/Cesium simulation status, live-GUI vs automated-capture distinction, and next viewer160 recapture queue.
 - `accv_workflow_status_snapshot.md`: compact current-state handoff for
   detector, MarineCity, AeroGraph, and queue gates.
+- `accv_remaining_gates_queue.md`: concise remaining-gates queue that separates
+  paper-ready evidence from pending TinyPerson corrected, neural-3D, AeroGraph,
+  and Overleaf/local-compile gates.
+- `accv_next_execution_handoff.md`: exact next commands and external inputs for
+  the two remaining hard gates: neural-3D metrics and external non-mock
+  AeroGraph responses.
+- `external_gate_capabilities.md`: current-shell capability audit for the two
+  remaining external gates. It reports whether an AeroGraph provider
+  (`OPENAI_API_KEY`, `AEROGRAPH_COMMAND`, Factory/local command, or Ollama) and
+  neural-3D runner (`ns-train`, `instant-ngp`, etc.) are actually configured,
+  without printing secret values.
 - `accv_research_package_readiness_audit.md`: paper-claim readiness audit that
   separates complete evidence from smoke-test or pending evidence. The tracked
   GitHub copy is `../../docs/accv_research_package_readiness_audit_2026-06-25.md`.
@@ -32,8 +51,12 @@ Current live bundle:
 - `paper_fig09_final_ablation_delta_bar.png`: compact ablation delta chart versus YOLOv11l.
 - `paper_fig10_final_ablation_metric_heatmap.png`: supplementary ablation heatmap including exploratory modules.
 - `paper_fig11_final_detector_feature_activation_heatmap.png`: Grad-CAM-style feature activation heatmap sheet for YOLOv11l, YOLOv9c, and Ours. Use as supplementary qualitative evidence.
-- `paper_fig12_tinyperson_640_stress.png`: supplementary TinyPerson 640 stress-test figure with the SAFR-YOLO transfer diagnostic row; use only as domain-shift evidence.
+- `paper_fig12_tinyperson_640_stress.png`: archived legacy TinyPerson 640 diagnostic figure with the Ours transfer row; keep it out of paper comparison tables unless explicitly discussing a failed/legacy protocol.
 - `../../paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png`: supplementary eval-only input-size sensitivity figure, generated from completed TinyPerson checkpoints.
+- `fig1_fig3_revision_package/`: clean handoff package for revising Main Fig. 1
+  and Main Fig. 3 from the current real-Cesium MarineCity evidence. It contains
+  24 copied assets and 2 explicitly marked pending placeholders for final neural
+  3D completion and non-mock AeroGraph output.
 - `final_detector_feature_activation_manifest.json`: source metadata for the feature activation heatmap sheet.
 - `final_ablation_main_table.csv`: source CSV for the completed main ablation table.
 - `supplementary_detector_analysis/final_ablation_supplementary_table.csv`: source CSV for the supplementary ablation table.
@@ -120,6 +143,10 @@ Current live bundle:
 - `../../scripts/normalize_aerograph_web_responses.py`: optional cleanup helper
   for web outputs that contain markdown fences, JSON arrays, or prose around
   the AeroGraph JSONL responses.
+- `../../scripts/import_aerograph_external_responses.py`: one-command importer
+  for raw Factory/ChatGPT/OpenAI-web/local-LLM response files. It normalizes
+  raw `.md`, `.txt`, `.json`, or `.jsonl` outputs, imports them against either
+  the compact 23-prompt or final 49-prompt pack, and rebuilds readiness reports.
 - `aerograph_prompt_pack/web_batches/README.md`: batch index, required response
   shape, and import commands for the 49-prompt non-mock collection.
 - `aerograph_nonmock_readiness_status.md`: current coverage check for manual

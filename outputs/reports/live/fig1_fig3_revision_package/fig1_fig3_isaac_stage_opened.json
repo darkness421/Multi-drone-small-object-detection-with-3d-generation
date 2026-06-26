@@ -1,0 +1,9 @@
+{
+  "status": "stage_opened",
+  "stage_path": "/isaac-sim/.local/share/ov/data/haeundae_marinecity_roi_prep.usd",
+  "root_layer": "/isaac-sim/.local/share/ov/data/haeundae_marinecity_roi_prep.usd",
+  "camera_path": "/World/Camera",
+  "camera_set": true,
+  "timestamp": "2026-06-23T10:00:40+0000",
+  "screen": "visible Isaac Sim GUI"
+}
