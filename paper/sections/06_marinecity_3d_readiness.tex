@@ -5,7 +5,7 @@ This section reports the current MarineCity 3D/reasoner protocol and the
 verified real-Cesium smoke-test artifacts. We do not present the smoke test as a
 full benchmark result: it validates scene loading, multi-UAV capture,
 SAFR-YOLO EvidenceToken export, 3D evidence grouping, and AeroGraph Reasoner
-plumbing. A reviewed 49-prompt AeroGraph candidate table is available for the
+interface wiring. A 49-prompt AeroGraph schema-check record is available for the
 current prompt pack, while external OpenAI/ChatGPT/local-provider replication is
 reported separately as supplementary validation before any stronger final
 reasoning claim.
@@ -73,17 +73,17 @@ hypotheses, and (4) \textbf{AeroGraph Reasoner}, the drone-specialized
 graph-grounded LLM/VLM reasoner, to propose verified class/action decisions
 under a safety-verifier schema. The current system-smoke reasoner provider is a
 deterministic rule-based verifier for system validation, not a final
-external-provider LLM/VLM result. A separate 49-prompt AeroGraph candidate table has valid
+external-provider LLM/VLM result. A separate 49-prompt AeroGraph validation record has valid
 schema-checked JSON outputs and is kept in the supplementary validation record
 until an OpenAI/ChatGPT/local provider replication is imported. For 3D
 completion, Table~\ref{tab:marinecity_3d_completion_results} now contains three
-non-placeholder smoke rows on the real-Cesium capture package: Nerfacto,
+completed smoke rows on the real-Cesium capture package: Nerfacto,
 Instant-NGP, and a Splatfacto/3DGS-style runner. These rows demonstrate that the
 neural-3D handoff is executable across multiple runner families; they are not
 claimed as a full optimized 3D benchmark until longer validation and cleaner
 reconstruction captures are completed.
 Table~\ref{tab:marinecity_system_smoke} summarizes the completed smoke-test
-artifacts. The current reviewed AeroGraph candidate and prompt/schema details
+artifacts. The current AeroGraph prompt/schema validation details
 remain in the supplementary material as validation support rather than as the
 headline system result.
 
@@ -92,7 +92,7 @@ headline system result.
 \scriptsize
 \setlength{\tabcolsep}{3pt}
 \caption{MarineCity neural 3D completion smoke metrics on held-out real-Cesium
-MarineCity views. Placeholder and dry-run rows are excluded; these rows verify
+MarineCity views. Only completed runner rows are included; these rows verify
 runner-family execution rather than claim a final optimized benchmark.}
 \label{tab:marinecity_3d_completion_results}
 \input{tables/marinecity_3d_completion_results_table}
@@ -100,9 +100,19 @@ runner-family execution rather than claim a final optimized benchmark.}
 
 \input{tables/marinecity_system_scenario_table}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{figures/results/marinecity_system/contact_sheet_3_scenarios.png}
+\caption{Representative qualitative MarineCity system-smoke evidence. The
+panels show real-Cesium UAV views, detector overlays, and scenario-level
+evidence used to build the cross-view graph. This figure complements the
+quantitative detector and 3D smoke tables in the main paper.}
+\label{fig:marinecity_main_qualitative}
+\end{figure}
+
 \paragraph{Reporting rule.}
-Dry-run manifests and provider placeholders are moved to the supplementary
-material or implementation notes. The main paper reports the verified
+Unverified provider outputs and command-contract checks are kept outside the
+headline claim. The main paper reports the verified
 real-Cesium capture, detector-token, and smoke-test tables now, but reserves
 final external-provider LLM/VLM and 3D completion claims until replicated
 provider runs and completion/restoration experiments are validated.

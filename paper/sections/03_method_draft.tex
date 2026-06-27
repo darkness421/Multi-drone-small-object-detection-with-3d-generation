@@ -61,8 +61,11 @@ c(x)=\mathrm{BN}(\mathrm{DWConv}_{3\times3}(x))+\tanh(\gamma)h(x),
 \begin{equation}
 y=\max(x,c(x)).
 \end{equation}
-This keeps the activation close to a lightweight FReLU-style gate while adding
-an explicit residual cue for weak tiny-object boundaries.
+This keeps the activation close to a lightweight FReLU-style gate
+\cite{ma2020frelu} while adding an explicit residual cue for weak tiny-object
+boundaries. The overlap-aware post-processing used in SAFR-YOLO is evaluated
+against standard NMS and Soft-NMS-style alternatives \cite{bodla2017softnms}
+to avoid suppressing adjacent tiny objects solely because their boxes overlap.
 
 \subsection{EvidenceToken Representation}
 \label{sec:method_evidence_token}

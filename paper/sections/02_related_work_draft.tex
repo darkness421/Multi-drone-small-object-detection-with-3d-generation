@@ -13,6 +13,11 @@ target recall under aerial viewpoints
 Other detectors study deformable attention, transformer-style assignment, or
 position-sensitive refinement for dense UAV scenes
 \cite{hu2025csfprrtdetr,hu2026hfdifine,li2026dfformer,chen2026ufodetr,tan2025rtuavsod,yang2026uavdet}.
+Complementary UAV studies use dual-domain attention, coarse-fine feature
+alignment, cross-resolution semantic alignment, context modeling, rotated
+boxes, segmentation, multimodal fusion, hardware-aware acceleration, and
+benchmark comparisons
+\cite{wang2026d2adetector,bi2025cfia,tu2026dcocrsa,han2022csadet,ye2022glfnet,lin2025fgunet,tang2026affnet,ghanta2026shield8uav,sadeghibakhi2025comparison}.
 These works motivate two design choices in SAFR-YOLO: high-resolution P2/P3/P4
 prediction paths for tiny objects and lightweight refinement that preserves
 local detail without replacing the YOLO backbone with a large transformer.
@@ -27,14 +32,17 @@ small-object detection to 3D evidence completion.
 \subsection{Multi-View 3D Completion For Aerial Scenes}
 \label{sec:rw_3d_completion}
 
-Neural scene representations and 3D Gaussian-style renderers have made it
-possible to reconstruct or render novel views from sparse image collections.
-However, many reconstruction pipelines optimize appearance quality for the
-scene as a whole, while UAV small-object perception needs object-centered
-evidence under viewpoint ambiguity. In our setting, 3D is not used as a
-standalone visual effect; it is used to ask whether additional viewpoints,
-restored evidence, or approximate geometry can reduce class ambiguity for small
-objects.
+Multi-view recognition and UAV search systems show that heterogeneous
+viewpoints must be aligned rather than averaged blindly
+\cite{zhang2024attention4align,cai2025neusis,maletic2025spatialsemantic}.
+Active UAV reasoning also has physical costs: flight time, energy, bandwidth,
+freshness, and safety \cite{jeon2025symbolicrlbdi,emami2026frsicl}. Neural
+scene representations and 3D Gaussian-style renderers can reconstruct or render
+novel views from sparse image collections, but UAV small-object perception
+needs object-centered evidence under viewpoint ambiguity. In our setting, 3D is
+not used as a standalone visual effect; it is used to ask whether additional
+viewpoints, restored evidence, or approximate geometry can reduce class
+ambiguity for small objects.
 
 The MarineCity component of CoM3D-ACE is therefore framed as an evidence
 completion protocol. It consumes real-Cesium RGB/depth/pose captures and
@@ -47,7 +55,9 @@ runner-family evidence rather than as a final optimized 3D benchmark.
 \label{sec:rw_reasoning}
 
 Large language and vision-language models can help explain ambiguous visual
-evidence, but an unconstrained model should not directly control a UAV mission.
+evidence and support UAV planning, communication, and visual grounding
+\cite{tian2025uavsmeetllms,emami2026llmuavsurvey,chen2025uavvisualgrounding}.
+However, an unconstrained model should not directly control a UAV mission.
 CoM3D-ACE uses a restricted graph-grounded interface: the detector and 3D stages
 produce structured evidence, the reasoner receives only the high-ambiguity graph
 subproblem, and a verifier checks graph consistency, geometric plausibility, and
@@ -56,8 +66,9 @@ finalize, reject, monitor, or targeted re-observation while keeping the final
 decision tied to explicit evidence. We call this module the
 \textbf{AeroGraph Reasoner}.
 
-The current paper reports AeroGraph as a system interface and validation slot.
-The reviewed prompt pack is schema-checked, but the headline external-provider
-LLM/VLM replication is kept separate until provider outputs are imported and
-validated. This conservative reporting avoids conflating deterministic
-pipeline-validation logic with a final external-reasoner benchmark.
+Developer studies, safe-control frameworks, and prompt-security analyses also
+motivate constrained outputs and safety verification
+\cite{chen2025llmuavprojects,zhao2026sagellm,emami2026promptstoprotection}.
+The current paper reports AeroGraph as a system interface and validation slot;
+external-provider LLM/VLM replication is kept separate until provider outputs
+are imported and validated.

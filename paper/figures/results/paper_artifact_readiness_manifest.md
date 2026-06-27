@@ -48,13 +48,13 @@ main-paper-ready items from supplementary items and explicit validation slots.
 | MarineCity crop candidates | `paper/figures/results/marinecity_system/marinecity_real_capture_crop_top12.png` | Review/selection aid | Crop-only framing guidance, not final replacement |
 | MarineCity qualitative selection manifest | `paper/figures/results/marinecity_system/marinecity_qualitative_selection_manifest.md` | Ready | Captions and placement rules for current real-Cesium qualitative assets |
 | MarineCity qualitative gate | `paper/figures/results/marinecity_system/marinecity_qualitative_gate.md` | Ready | Explicit full-frame-vs-crop promotion gate |
-| AeroGraph external-provider table | `paper/tables/aerograph_reasoner_results_placeholder.tex` | Validation slot | External-provider replication is imported separately; internal reviewed outputs are not promoted as the headline paper result |
+| AeroGraph external-provider table | `paper/tables/aerograph_reasoner_validation_summary.tex` | Validation summary | External-provider replication is imported separately; schema-check records are not promoted as the headline paper result |
 
 ## Validation Slots
 
 | Artifact | Path | Current Status | Required Before Claim |
 |---|---|---|---|
-| AeroGraph external-provider replication | `paper/tables/aerograph_reasoner_results_placeholder.tex` | Candidate table ready; external OpenAI/ChatGPT/local run to be imported | Re-run all 49 prompts with selected final provider and rebuild table |
+| AeroGraph external-provider replication | `paper/tables/aerograph_reasoner_validation_summary.tex` | Schema-check record ready; external OpenAI/ChatGPT/local run to be imported | Re-run all 49 prompts with selected final provider and rebuild table |
 | AeroGraph direct manual/API response file | `outputs/reports/live/aerograph_nonmock_readiness_status.md` | Provider-manifest coverage 49/49; direct manual response file 0/49 | Fill `outputs/reasoning/aerograph_manual_responses.jsonl` or configure provider if replacing the candidate manifest |
 | AeroGraph external-provider collection plan | `docs/aerograph_nonmock_collection_plan.md` | Ready | Use as the acceptance gate before promoting the reasoner table |
 | AeroGraph real-capture compact provider smoke | `outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/` | Prompt batches ready; provider responses to be imported | Collect 23 valid-schema provider responses to sanity-check the current real-Cesium smoke setting |
