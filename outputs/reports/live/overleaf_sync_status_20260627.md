@@ -12,7 +12,7 @@ The Overleaf-linked repository has now been updated directly. The previous
 
 - Repository: `darkness421/-ACCV-Multi-drone-small-object-detection-with-3d-generation`
 - Branch: `main`
-- Pushed commit: `7674ffb Sync ACCV full draft bundle for Overleaf`
+- Pushed commit: `9875dd0 Refresh MarineCity Nerfacto contact sheet`
 - Local clean sync worktree: `/tmp/accv-overleaf-sync`
 
 The main experiment repository remains:
@@ -24,9 +24,10 @@ The main experiment repository remains:
 ## What To Do In Overleaf
 
 Open Overleaf and run `Sync with GitHub` / pull from GitHub again. It should now
-see commit `7674ffb` on the linked GitHub repository. The pushed `main.tex`
-loads `sections/full_main_draft_bundle`, so the current full draft should be
-visible after sync.
+see commit `9875dd0` on the linked GitHub repository. Commit `7674ffb` synced
+the full draft bundle, and `9875dd0` refreshes the MarineCity Nerfacto contact
+sheet. The pushed `main.tex` loads `sections/full_main_draft_bundle`, so the
+current full draft should be visible after sync.
 
 Local full PDF compilation was not run because this server environment does not
 currently provide `latexmk`, `pdflatex`, or `xelatex`. The local patch integrity

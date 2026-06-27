@@ -13,7 +13,7 @@ next gate immediately instead of waiting for the next calendar date.
 | TinyPerson | closed archive-only | Exclude from default main and supplementary; mention only as future/domain-transfer limitation if needed |
 | MarineCity real-Cesium smoke | ready | Use as system/protocol validation with real MarineCity captures, UAV views, EvidenceTokens, and graph handoff |
 | Neural 3D smoke | ready | Use Nerfacto 12k, Instant-NGP 5k, and Splatfacto/3DGS-style 5k as runner-family smoke rows |
-| AeroGraph reasoner | candidate-ready, external pending | Keep 49-prompt Codex-reviewed candidate table; do not claim external-provider validation yet |
+| AeroGraph reasoner | candidate-ready, external pending | Keep the reviewed 49-prompt candidate table; do not claim external-provider validation yet |
 | Paper compile/reference QA | next | Full Overleaf `main.tex` reference-order check still needs the actual Overleaf source |
 
 ## Evidence That Can Be Claimed Now
@@ -54,4 +54,3 @@ next gate immediately instead of waiting for the next calendar date.
 | 6/27 | Freeze system evidence and begin draft assembly | Move directly to main/supp QA |
 | 6/28 | Clean qualitative figure package and supplementary split | Move directly to reference/table/figure QA |
 | 6/29 | Full system experiment audit and Fig. 1/Fig. 3 handoff check | Move directly to professor-review draft polish |
-

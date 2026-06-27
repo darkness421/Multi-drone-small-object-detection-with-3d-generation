@@ -72,7 +72,7 @@ Supplementary-only slots:
 | --- | --- | --- | --- |
 | G1 fixed 2D detector bundle | Current state | Keep VisDrone 1280 three-seed detector, ablation, p-value, and related-work rows frozen; only formatting and reference labels may change. | Main detector tables/figures compile without stale or TinyPerson claims |
 | G2 MarineCity smoke bundle | Current state | Keep real-Cesium captures, UAV camera altitude band, detector tokens, cross-view graph, and neural-3D smoke rows synchronized with the dashboard. | Fig. 1/Fig. 3 handoff has real screenshots, detector overlays, graph/3D panels, and no fake-city assets |
-| G3 AeroGraph provider status | After G2 or in parallel | Use the reviewed 49-prompt Codex candidate as the current table; do not promote to external validation without imported provider responses. | Reasoner table is labeled candidate/pending or replaced by a verified external-provider table |
+| G3 AeroGraph provider status | After G2 or in parallel | Use the reviewed 49-prompt candidate table as the current table; do not promote to external validation without imported provider responses. | Reasoner table is labeled candidate/pending or replaced by a verified external-provider table |
 | G4 main/supp draft assembly | Started | Insert 2D core result, compact ablation, AP/Params figure, MarineCity smoke table, and conservative 3D/reasoner wording into the main draft; move long inventories to supplementary. | `full_main_draft_bundle.tex` and `supplementary_patch_bundle.tex` pass LaTeX patch integrity |
 | G5 final QA | After draft assembly | Check reference order in the actual Overleaf main file, table/figure overflow, equation consistency, contribution wording, conclusion page, and main/supp duplication. | Professor-review draft ready |
 

@@ -1,6 +1,6 @@
 # MarineCity Neural-3D Completion Result Table
 
-Updated: `2026-06-27 22:35:53 KST`
+Updated: `2026-06-28 06:27:52 KST`
 Source CSV: `outputs/experiments/3d_generation_comparison.csv`
 Verified rows: `3` / total rows `3`
 
