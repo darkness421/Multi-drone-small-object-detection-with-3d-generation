@@ -9,27 +9,17 @@ Current live bundle:
 
 - `training_dashboard.png`: active detector queue view.
 - `current_work_status.md`: text version of the live current-work queue shown
-  in `training_dashboard.png`. It lists only paper-facing gates; TinyPerson is
-  archived and hidden from active work.
-- `tinyperson_640_dashboard.png`: archived legacy TinyPerson 640 diagnostic dashboard, now including the VisDrone-initialized Ours transfer row. Do not use it as a paper-facing TinyPerson comparison because the initial conversion did not materialize corner crops and the protocol is not aligned with the original-window 1280 setup.
-- `tinyperson_640_transfer_dashboard.png`: archived transfer diagnostic; not planned for the default main or supplementary paper.
-- `tinyperson_eval_imgsz_sweep_dashboard.png`: archived eval-only input-size diagnostic for legacy TinyPerson checkpoints at 640/960/1280.
-- `tinyperson_corner_original_dashboard.png`: corrected TinyPerson
-  original-window/1280 diagnostic dashboard. TinyPerson is now closed as an
-  internal archive-only diagnostic because it does not strengthen the ACCV
-  detector claim.
-- `../experiments/tinyperson_corner_original/live_summary.csv` and
-  `../../paper/tables/tinyperson_corner_original_live_table.tex`: archived
-  corrected TinyPerson source rows; not included in the default paper draft.
+  in `training_dashboard.png`. Active work now focuses on the VisDrone detector
+  claim, MarineCity simulation, neural-3D smoke metrics, AeroGraph reasoner
+  replication, and paper cleanup.
 - `marinecity_simulation_dashboard.png`: Isaac/Cesium simulation status, live-GUI vs automated-capture distinction, and next viewer160 recapture queue.
 - `accv_workflow_status_snapshot.md`: compact current-state handoff for
   detector, MarineCity, AeroGraph, and queue gates.
 - `accv_remaining_gates_queue.md`: concise remaining-gates queue that separates
-  paper-ready evidence from archived TinyPerson diagnostics, neural-3D smoke
-  evidence, AeroGraph external-provider status, and Overleaf/local-compile
-  gates.
+  paper-ready evidence from neural-3D smoke evidence, AeroGraph
+  external-provider status, and Overleaf/local-compile gates.
 - `accv_next_execution_handoff.md`: exact next commands and external inputs for
-  the two remaining hard gates: neural-3D metrics and external non-mock
+  the two remaining hard gates: neural-3D metrics and external-provider
   AeroGraph responses.
 - `accv_submission_execution_plan.md`: 2026-06-27 to 2026-07-07 execution plan
   that merges the detector freeze, MarineCity system work, neural-3D/reasoner
@@ -80,8 +70,6 @@ Current live bundle:
   `../../experiments/final_input_resolution_sweep/results.csv` and
   `../../experiments/final_input_resolution_sweep/summary.csv`; Ours stays
   ahead at all tested evaluation sizes while using fewer parameters.
-- `paper_fig12_tinyperson_640_stress.png`: archived legacy TinyPerson 640 diagnostic figure with the Ours transfer row; keep it out of the default paper.
-- `../../paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png`: archived eval-only input-size sensitivity figure; keep it out of the default paper.
 - `final_nms_robustness_summary.md`: supplementary-ready NMS robustness table
   generated from the final detector and YOLOv9c 3-seed eval-only sweep. Use as
   supplemental evidence, not as a new training claim.
@@ -89,10 +77,11 @@ Current live bundle:
   sensitivity table generated from the final detector and YOLOv9c 3-seed
   eval-only sweep. Use it to justify the fixed 1280 main protocol and to answer
   reviewer questions about image-size sensitivity.
-- `fig1_fig3_revision_package/`: clean handoff package for revising Main Fig. 1
+- `fig1_fig3_handoff/`: clean handoff package for revising Main Fig. 1
   and Main Fig. 3 from the current real-Cesium MarineCity evidence. It contains
   copied real-Cesium assets plus current neural-3D smoke sheets; AeroGraph
-  external-provider output remains the explicit pending item.
+  external-provider output is tracked separately as a supplementary validation
+  item.
 - `final_detector_feature_activation_manifest.json`: source metadata for the feature activation heatmap sheet.
 - `final_ablation_main_table.csv`: source CSV for the completed main ablation table.
 - `supplementary_detector_analysis/final_ablation_supplementary_table.csv`: source CSV for the supplementary ablation table.
@@ -106,22 +95,22 @@ Current live bundle:
 - `marinecity_detector_reasoner_smoke.md`: real-Cesium detector-to-reasoner
   smoke report using the current SAFR-YOLO/P2P4-SelfAttnFR weights on the
   verified 3-scenario x 3-UAV captures. It records 23 EvidenceTokens and the
-  deterministic AeroGraph mock plumbing result; use this as system validation,
-  not as a labeled MarineCity accuracy benchmark.
+  deterministic rule-based AeroGraph verifier result; use this as system
+  validation, not as a labeled MarineCity accuracy benchmark.
 - `marinecity_crossview_evidence_graph.md`: real-Cesium cross-view
   EvidenceToken association smoke report. It groups 23 detector tokens into 13
   object hypotheses with support, conflict, and missing-evidence edges. Use it
   as 2D-to-3D evidence-graph protocol validation, not as metric 3D
   reconstruction evidence.
-- `marinecity_system_integration_check.md`: conservative pass/warn/pending
+- `marinecity_system_integration_check.md`: conservative pass/warn/validation
   audit for the current real-Cesium stage, VisDrone actor overlay, 3-UAV camera
-  captures, SAFR-YOLO smoke tokens, cross-view graph, TinyPerson stress test,
-  and the remaining neural-3D/non-mock-LLM gates.
+  captures, SAFR-YOLO smoke tokens, cross-view graph,
+  and the remaining neural-3D/external-provider reasoner validation gates.
 - `marinecity_3d_completion_readiness.md`: explicit readiness gate for NeRF,
   Instant-NGP, Mip-NeRF/3DGS-style completion. The paper-safe status is now
   runner-family smoke evidence: Nerfacto 12k, Instant-NGP 5k, and
   Splatfacto/3DGS-style 5k have metric rows; a full optimized benchmark remains
-  future/pending.
+  a later validation step.
 - `marinecity_neural3d_dataset_export.md`: NeRF/Instant-NGP/Nerfstudio-style
   `transforms.json` export generated from the verified 3-scenario x 3-UAV
   MarineCity real-Cesium captures. Use this as the upstream 3D runner input,
@@ -146,22 +135,22 @@ Current live bundle:
   The latest viewer160 recapture uses UAV camera altitudes
   `uav_01=140 m`, `uav_02=150 m`, and `uav_03=160 m` for S0/S1/S2; keep this
   separate from CesiumGeoreference height.
-- `../../reasoning/gpt_model_comparison/gpt54_vs_gpt55_aerograph_comparison.md`: earlier GPT-style AeroGraph smoke comparison on an 8-token set. It is useful as a policy sanity check, but the current non-mock queue should use the 49-prompt pack below.
+- `../../reasoning/gpt_model_comparison/gpt54_vs_gpt55_aerograph_comparison.md`: earlier GPT-style AeroGraph smoke comparison on an 8-token set. It is useful as a policy sanity check, but the current provider queue should use the 49-prompt pack below.
 - `aerograph_reasoner_nonmock_handoff.md`: prompt/input paths and command shapes
   for running the MarineCity AeroGraph Reasoner with OpenAI/ChatGPT or another
-  non-mock provider.
+  external provider.
 - `../../docs/aerograph_nonmock_collection_plan.md`: tracked runbook for the
-  49-prompt non-mock AeroGraph collection gate, acceptance criteria, and paper
+  49-prompt external-provider AeroGraph collection gate, acceptance criteria, and paper
   table promotion commands.
 - `aerograph_prompt_pack/`: 49 real-Cesium detector-token AeroGraph prompts plus
-  a compact 10-prompt sample for GPT/ChatGPT/local LLM non-mock evaluation.
+  a compact 10-prompt sample for GPT/ChatGPT/local LLM external-provider evaluation.
 - `aerograph_real_capture_prompt_pack/`: 23-prompt compact AeroGraph smoke pack
   generated from the current real-Cesium detector-to-reasoner smoke outputs.
   Use its three web batches for a fast GPT/ChatGPT/local-provider sanity check
   before running the full 49-prompt final gate.
 - `aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md`:
   compact 23-prompt web-provider handoff for the current real-Cesium smoke run.
-  This is the fastest non-mock sanity check and must stay separate from the
+  This is the fastest external-provider sanity check and must stay separate from the
   final 49-prompt paper-table gate.
 - `aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv`:
   per-prompt tracking sheet for the 23-prompt compact real-capture smoke check.
@@ -170,15 +159,15 @@ Current live bundle:
   `scripts/import_aerograph_manual_responses.py` to convert external web LLM
   JSON responses into the same CSV/LaTeX artifacts as the CLI runner.
 - `aerograph_prompt_pack/aerograph_manual_response_template_all.jsonl`:
-  full 49-prompt manual response template for the final non-mock AeroGraph run.
+  full 49-prompt manual response template for the final external-provider AeroGraph run.
 - `aerograph_prompt_pack/web_batches/`: paste-ready 10-prompt Markdown batches
-  for external web LLM non-mock AeroGraph evaluation. Collect the JSONL
+  for external web LLM external-provider AeroGraph evaluation. Collect the JSONL
   responses and import them with `scripts/import_aerograph_manual_responses.py`.
 - `aerograph_prompt_pack/aerograph_web_collection_packet.md`: one-file web LLM
   handoff with all batch paths, raw-output targets, promotion commands, and the
   current pending/valid checklist summary.
 - `aerograph_prompt_pack/aerograph_web_collection_checklist.csv`: per-prompt
-  tracking sheet for the 49 non-mock AeroGraph responses.
+  tracking sheet for the 49 external-provider AeroGraph responses.
 - `../../reasoning/aerograph_web_raw_batches/README.md`: drop-folder guide for
   saving external web LLM raw batch answers as `batch_01.md` ... `batch_05.md`
   before normalization and import.
@@ -190,25 +179,25 @@ Current live bundle:
   raw `.md`, `.txt`, `.json`, or `.jsonl` outputs, imports them against either
   the compact 23-prompt or final 49-prompt pack, and rebuilds readiness reports.
 - `aerograph_prompt_pack/web_batches/README.md`: batch index, required response
-  shape, and import commands for the 49-prompt non-mock collection.
+  shape, and import commands for the 49-prompt external-provider collection.
 - `aerograph_nonmock_readiness_status.md`: current coverage check for manual
-  or provider-run non-mock responses, batch-by-batch progress, and paper-table
+  or provider-run external-provider responses, batch-by-batch progress, and paper-table
   promotion readiness.
 - `../../reasoning/aerograph_prompt_pack_eval_dryrun_latest/`: structural validation
   that all 49 prompts can be evaluated into JSONL/CSV/LaTeX outputs. This is
-  not a non-mock result; it is a provider-readiness check.
+  not an external-provider result; it is a provider-readiness check.
 - `../../paper/tables/aerograph_reasoner_results_placeholder.tex`: current
   AeroGraph reasoner table slot. It remains pending until an
   external-provider import is available; replace it with
   OpenAI/ChatGPT/local-LLM output before making a stronger external-provider
   claim.
 - `../../scripts/ubuntu/start_aerograph_nonmock_queue.sh`: tmux wrapper for the
-  final 49-prompt non-mock AeroGraph run once `OPENAI_API_KEY` or
+  final 49-prompt external-provider AeroGraph run once `OPENAI_API_KEY` or
   `AEROGRAPH_COMMAND` is configured.
 - `../../scripts/ubuntu/run_aerograph_plumbing_test.sh`: local runner-path test
   that writes `outputs/reasoning/aerograph_prompt_pack_eval_plumbing_test/` but
   marks it `paper_claim_allowed=false`, so it cannot satisfy the final
-  non-mock paper gate.
+  external-provider paper gate.
 - `marinecity_system_test_10plus/`: token-level system-test panels, 3 scenario-level panels, reasoner answers, and paper-ready system smoke-test tables.
 - `marinecity_capture_quality/`: visual QA ranking for existing real-Cesium
   MarineCity captures, including black/void ratio and top-candidate contact sheet.

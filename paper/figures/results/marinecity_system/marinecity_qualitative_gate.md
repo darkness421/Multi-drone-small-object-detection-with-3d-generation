@@ -1,6 +1,6 @@
 # MarineCity Qualitative Gate
 
-Updated: `2026-06-26 10:34:13 KST`
+Updated: `2026-06-26 17:29:05 KST`
 Status: `marinecity_qualitative_gate_main_ready`
 
 ## Gate Checks
@@ -58,4 +58,4 @@ Main paper full-frame qualitative figure may be promoted.
 - Use the current full-frame real-Cesium MarineCity capture as the main-paper qualitative candidate.
 - Keep the live real-Cesium MarineCity GUI at the user-verified 160 m review view.
 - Use the reviewed AeroGraph candidate table with a caveat; reserve final reasoning claims for external-provider replication.
-- Regenerate paper tables and figure manifests after any GPT/Factory/local provider replication pass.
+- Regenerate paper tables and figure manifests after any OpenAI/ChatGPT/local provider replication pass.

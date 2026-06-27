@@ -85,7 +85,7 @@ update_status_md() {
     elif [[ "$REASONER_PROVIDER" == "command" ]]; then
       echo "- ChatGPT/LLM command reasoner: configured through \`AEROGRAPH_COMMAND\`"
     else
-      echo "- ChatGPT/OpenAI reasoner: not configured; using mock reasoner until \`OPENAI_API_KEY\` or \`AEROGRAPH_COMMAND\` is set"
+      echo "- ChatGPT/OpenAI reasoner: not configured; using rule-based verifier until \`OPENAI_API_KEY\` or \`AEROGRAPH_COMMAND\` is set"
     fi
     echo
     echo "## Scenario Queue"

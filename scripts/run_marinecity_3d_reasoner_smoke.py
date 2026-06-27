@@ -161,7 +161,7 @@ def _ambiguity_rows(hypotheses: list[dict[str, Any]], scenario: str) -> list[dic
     return rows
 
 
-def _mock_reason(prompt: str, hypothesis: dict[str, Any], ambiguity: dict[str, Any]) -> dict[str, Any]:
+def _rule_based_reason(prompt: str, hypothesis: dict[str, Any], ambiguity: dict[str, Any]) -> dict[str, Any]:
     posterior = hypothesis.get("class_posterior", {})
     predicted = max(posterior, key=posterior.get) if posterior else "unknown"
     score = float(ambiguity.get("ambiguity_score", 0.0))
@@ -173,7 +173,7 @@ def _mock_reason(prompt: str, hypothesis: dict[str, Any], ambiguity: dict[str, A
         "evidence_clues": ambiguity.get("reason_tags", [])[:4],
         "missing_evidence": "side/oblique confirmation" if decision == "uncertain" else "",
         "recommended_action": "targeted re-observation" if decision == "uncertain" else "finalize",
-        "provider": "mock_symbolic_aerograph",
+        "provider": "rule_based_aerograph",
         "raw_prompt_chars": len(prompt),
     }
 
@@ -205,7 +205,7 @@ def _openai_reason(prompt: str, model: str) -> dict[str, Any]:
             "confidence": 0.0,
             "evidence_clues": [],
             "missing_evidence": f"openai_sdk_unavailable:{type(exc).__name__}",
-            "recommended_action": "use mock or install provider",
+            "recommended_action": "use rule-based verifier or install provider",
             "provider": "openai_unavailable",
         }
     client = OpenAI()
@@ -222,8 +222,8 @@ def _openai_reason(prompt: str, model: str) -> dict[str, Any]:
 
 
 def _run_reasoner(provider: str, prompt: str, hypothesis: dict[str, Any], ambiguity: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]:
-    if provider == "mock":
-        return _mock_reason(prompt, hypothesis, ambiguity)
+    if provider == "rule_based":
+        return _rule_based_reason(prompt, hypothesis, ambiguity)
     if provider == "command":
         if not args.command:
             return {
@@ -244,7 +244,7 @@ def _run_reasoner(provider: str, prompt: str, hypothesis: dict[str, Any], ambigu
                 "confidence": 0.0,
                 "evidence_clues": [],
                 "missing_evidence": "OPENAI_API_KEY_missing",
-                "recommended_action": "set API key or use mock provider",
+                "recommended_action": "set API key or use rule-based verifier",
                 "provider": "openai_unconfigured",
             }
         return _openai_reason(prompt, args.openai_model)
@@ -327,7 +327,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="MarineCity 3D evidence + AeroGraph Reasoner smoke runner.")
     parser.add_argument("--scenario", choices=sorted(SCENARIO_METADATA), default="s0_locked_roi")
     parser.add_argument("--tokens", default=None, help="Optional detector EvidenceToken JSONL from YOLO smoke test.")
-    parser.add_argument("--provider", choices=["mock", "command", "openai"], default="mock")
+    parser.add_argument("--provider", choices=["rule_based", "command", "openai"], default="rule_based")
     parser.add_argument("--command", default=None, help="Generic command that reads prompt from stdin and writes JSON.")
     parser.add_argument("--openai-model", default="gpt-5.1")
     parser.add_argument("--out-dir", default="outputs/reasoning/marinecity_3d_reasoner_smoke")

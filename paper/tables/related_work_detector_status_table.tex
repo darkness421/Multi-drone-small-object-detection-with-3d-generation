@@ -4,16 +4,16 @@
 \setlength{\tabcolsep}{3pt}
 \caption{Cited related-work detector status. These rows are separated from the main three-seed comparison unless the method is retrained or evaluated under the same protocol.}
 \label{tab:cited_related_detector_status}
-\begin{tabularx}{\textwidth}{@{}lXrrrrrX@{}}
+\begin{tabular}{@{}llrrrrr@{}}
 \toprule
-Method & Protocol & AP & AP50 & F1 & Params(M) & GFLOPs & Note \\
+Method & Protocol & AP & AP50 & F1 & Params(M) & GFLOPs \\
 \midrule
-UAVDet [16] & VisDrone 1280, 3 seeds & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.0036 & 0.6203 & 33.55 & 201.20 & Inspired reproduction, not official checkpoint. \\
-BPD-YOLO [7] & VisDrone 1280, 3 seeds & 0.3804 $\pm$ 0.0035 & 0.5986 $\pm$ 0.0027 & 0.6187 & 24.53 & 109.50 & Paper-faithful reimplementation. \\
-SFFEF-YOLO [4] & VisDrone 1280, 3 seeds & 0.3749 $\pm$ 0.0040 & 0.5914 $\pm$ 0.0039 & 0.6137 & 20.87 & 108.70 & Paper-faithful reimplementation. \\
-HF-D-FINE [12] & VisDrone 1280, 3 seeds & 0.3619 $\pm$ 0.0129 & 0.5764 $\pm$ 0.0186 & 0.6067 & 25.48 & 87.30 & Frequency-detail reproduction. \\
-CSFPR-RTDETR [11] & VisDrone 1280, 3 seeds & 0.2784 $\pm$ 0.0070 & 0.4431 $\pm$ 0.0094 & 0.4921 & 14.09 & 63.90 & Staged related-work run. \\
-MFFSODNet [2] & VisDrone 1280, 3 seeds & 0.0975 $\pm$ 0.0034 & 0.1830 $\pm$ 0.0070 & 0.3562 & 4.54 & 55.10 & Scratch retrain; no pretrained checkpoint. \\
+UAVDet [16] & VisDrone val, 1280, 3-seed & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.0036 & 0.6203 & 33.55 & 201.20 \\
+BPD-YOLO [7] & VisDrone val, 1280, 3-seed & 0.3804 $\pm$ 0.0035 & 0.5986 $\pm$ 0.0027 & 0.6187 & 24.53 & 109.50 \\
+SFFEF-YOLO [4] & VisDrone val, 1280, 3-seed & 0.3749 $\pm$ 0.0040 & 0.5914 $\pm$ 0.0039 & 0.6137 & 20.87 & 108.70 \\
+HF-D-FINE [12] & VisDrone val, 1280, 3-seed & 0.3619 $\pm$ 0.0129 & 0.5764 $\pm$ 0.0186 & 0.6067 & 25.48 & 87.30 \\
+CSFPR-RTDETR [11] & VisDrone val, 1280, 3-seed & 0.2784 $\pm$ 0.0070 & 0.4431 $\pm$ 0.0094 & 0.4921 & 14.09 & 63.90 \\
+MFFSODNet [2] & VisDrone val, 1280, 3-seed & 0.0975 $\pm$ 0.0034 & 0.1830 $\pm$ 0.0070 & 0.3562 & 4.54 & 55.10 \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table*}

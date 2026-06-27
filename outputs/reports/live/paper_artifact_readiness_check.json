@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-27 22:36:55 KST",
+  "updated_at_kst": "2026-06-28 04:56:48 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
-  "artifact_count": 58,
+  "artifact_count": 52,
   "missing_required_count": 0,
   "stale_claim_count": 0,
   "artifacts": [
@@ -11,7 +11,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 8570,
+      "size_bytes": 7814,
       "status": "ok",
       "note": "Detector result section patch"
     },
@@ -21,7 +21,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1762,
+      "size_bytes": 2262,
       "status": "ok",
       "note": "Compact final detector table"
     },
@@ -36,14 +36,14 @@
       "note": "Compact final ablation table"
     },
     {
-      "group": "main_detector",
+      "group": "supp_detector",
       "path": "paper/tables/related_work_detector_status_table.tex",
-      "placement": "main",
+      "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1352,
+      "size_bytes": 1129,
       "status": "ok",
-      "note": "Cited related-work detector table"
+      "note": "Cited related-work detector protocol table"
     },
     {
       "group": "main_detector",
@@ -51,7 +51,7 @@
       "placement": "main_optional",
       "required_now": true,
       "exists": true,
-      "size_bytes": 274489,
+      "size_bytes": 234318,
       "status": "ok",
       "note": "Detector table visual"
     },
@@ -61,7 +61,7 @@
       "placement": "main_or_supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 109155,
+      "size_bytes": 91165,
       "status": "ok",
       "note": "AP/AP50 chart"
     },
@@ -71,7 +71,7 @@
       "placement": "main_or_supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 144538,
+      "size_bytes": 122670,
       "status": "ok",
       "note": "AP vs params chart"
     },
@@ -81,7 +81,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 8756,
+      "size_bytes": 6667,
       "status": "ok",
       "note": "MarineCity protocol section patch"
     },
@@ -91,7 +91,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 794,
+      "size_bytes": 805,
       "status": "ok",
       "note": "Real-Cesium smoke/protocol table"
     },
@@ -101,14 +101,24 @@
       "placement": "main_source",
       "required_now": true,
       "exists": true,
-      "size_bytes": 30362,
+      "size_bytes": 46944,
       "status": "ok",
       "note": "Source CSV for real-Cesium detector-to-reasoner smoke table"
     },
     {
-      "group": "main_system",
+      "group": "supp_system",
+      "path": "paper/sections/supp_marinecity_system_details.tex",
+      "placement": "supp",
+      "required_now": true,
+      "exists": true,
+      "size_bytes": 2454,
+      "status": "ok",
+      "note": "Supplementary MarineCity capture, graph, and reasoner details"
+    },
+    {
+      "group": "supp_system",
       "path": "paper/tables/marinecity_real_capture_benchmark_table.tex",
-      "placement": "main",
+      "placement": "supp",
       "required_now": true,
       "exists": true,
       "size_bytes": 465,
@@ -116,9 +126,9 @@
       "note": "Verified real-Cesium capture-source table"
     },
     {
-      "group": "main_system",
+      "group": "supp_system",
       "path": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
-      "placement": "main",
+      "placement": "supp",
       "required_now": true,
       "exists": true,
       "size_bytes": 909,
@@ -131,7 +141,7 @@
       "placement": "main_optional",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2986,
+      "size_bytes": 2995,
       "status": "ok",
       "note": "Safe qualitative figure slots"
     },
@@ -141,7 +151,7 @@
       "placement": "main_bundle",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1012,
+      "size_bytes": 964,
       "status": "ok",
       "note": "Overleaf-ready main results patch bundle"
     },
@@ -151,7 +161,7 @@
       "placement": "supp_bundle",
       "required_now": true,
       "exists": true,
-      "size_bytes": 559,
+      "size_bytes": 607,
       "status": "ok",
       "note": "Overleaf-ready supplementary patch bundle"
     },
@@ -161,7 +171,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 11316,
+      "size_bytes": 10567,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },
@@ -174,36 +184,6 @@
       "size_bytes": 935,
       "status": "ok",
       "note": "Full ablation table"
-    },
-    {
-      "group": "supp_detector",
-      "path": "paper/tables/tinyperson_640_stress_table.tex",
-      "placement": "archive_diagnostic",
-      "required_now": false,
-      "exists": true,
-      "size_bytes": 924,
-      "status": "ok",
-      "note": "Legacy TinyPerson 640 protocol audit; do not use as paper comparison"
-    },
-    {
-      "group": "supp_detector",
-      "path": "paper/tables/tinyperson_eval_imgsz_sweep_table.tex",
-      "placement": "archive_diagnostic",
-      "required_now": false,
-      "exists": true,
-      "size_bytes": 1552,
-      "status": "ok",
-      "note": "Legacy eval-only input-size diagnostic; do not use as paper comparison"
-    },
-    {
-      "group": "supp_detector",
-      "path": "paper/tables/tinyperson_corner_original_live_table.tex",
-      "placement": "supp_pending",
-      "required_now": true,
-      "exists": true,
-      "size_bytes": 694,
-      "status": "ok",
-      "note": "Corrected TinyPerson original-window/1280 live table"
     },
     {
       "group": "supp_detector",
@@ -224,46 +204,6 @@
       "size_bytes": 3514780,
       "status": "ok",
       "note": "Detector activation/heatmap sheet"
-    },
-    {
-      "group": "supp_detector",
-      "path": "paper/figures/results/paper_fig12_tinyperson_640_stress.png",
-      "placement": "archive_diagnostic",
-      "required_now": false,
-      "exists": true,
-      "size_bytes": 154508,
-      "status": "ok",
-      "note": "Legacy TinyPerson 640 protocol-audit figure; do not use as paper comparison"
-    },
-    {
-      "group": "supp_detector",
-      "path": "paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png",
-      "placement": "archive_diagnostic",
-      "required_now": false,
-      "exists": true,
-      "size_bytes": 105445,
-      "status": "ok",
-      "note": "Legacy eval-only input-size sensitivity figure; do not use as paper comparison"
-    },
-    {
-      "group": "supp_detector",
-      "path": "outputs/reports/live/tinyperson_corner_original_dashboard.png",
-      "placement": "runbook",
-      "required_now": true,
-      "exists": true,
-      "size_bytes": 139870,
-      "status": "ok",
-      "note": "Corrected TinyPerson original-window/1280 dashboard"
-    },
-    {
-      "group": "supp_detector",
-      "path": "outputs/experiments/tinyperson_corner_original/live_summary.csv",
-      "placement": "source",
-      "required_now": true,
-      "exists": true,
-      "size_bytes": 1298,
-      "status": "ok",
-      "note": "Corrected TinyPerson original-window/1280 live summary"
     },
     {
       "group": "supp_system",
@@ -311,7 +251,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 3128,
+      "size_bytes": 3134,
       "status": "ok",
       "note": "MarineCity qualitative selection rules"
     },
@@ -361,7 +301,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 3952,
+      "size_bytes": 3136,
       "status": "ok",
       "note": "Real-Cesium object/UAV/camera/YOLO/3D/LLM integration gate"
     },
@@ -406,14 +346,14 @@
       "note": "Depth point-cloud smoke preview figure"
     },
     {
-      "group": "pending_3d",
+      "group": "main_system",
       "path": "paper/tables/marinecity_3d_completion_results_table.tex",
-      "placement": "pending_table",
+      "placement": "main_or_supp_smoke",
       "required_now": true,
       "exists": true,
-      "size_bytes": 641,
+      "size_bytes": 481,
       "status": "ok",
-      "note": "Pending-safe neural 3D completion metric table slot"
+      "note": "Compact neural 3D runner-family smoke metric table"
     },
     {
       "group": "pending_3d",
@@ -441,9 +381,9 @@
       "placement": "pending",
       "required_now": true,
       "exists": true,
-      "size_bytes": 322,
+      "size_bytes": 366,
       "status": "ok",
-      "note": "AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete"
+      "note": "AeroGraph table slot must stay pending until all prompt-pack external-provider responses are valid-schema complete"
     },
     {
       "group": "pending_reasoner",
@@ -451,9 +391,9 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 11498,
+      "size_bytes": 11596,
       "status": "ok",
-      "note": "Non-mock reasoner collection gate"
+      "note": "External-provider reasoner collection gate"
     },
     {
       "group": "pending_reasoner",
@@ -483,7 +423,7 @@
       "exists": true,
       "size_bytes": 10631,
       "status": "ok",
-      "note": "Per-prompt AeroGraph non-mock collection checklist"
+      "note": "Per-prompt AeroGraph external-provider collection checklist"
     },
     {
       "group": "pending_reasoner",
@@ -501,7 +441,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 3083,
+      "size_bytes": 3087,
       "status": "ok",
       "note": "Compact real-capture web-provider batch index"
     },
@@ -511,7 +451,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 4686,
+      "size_bytes": 4690,
       "status": "ok",
       "note": "Compact real-capture web-provider collection packet"
     },
@@ -551,7 +491,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9530,
+      "size_bytes": 8877,
       "status": "ok",
       "note": "Human-readable artifact manifest"
     },
@@ -561,7 +501,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1761,
+      "size_bytes": 553,
       "status": "ok",
       "note": "LaTeX input/figure/label integrity check"
     },
@@ -581,7 +521,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9089,
+      "size_bytes": 9107,
       "status": "ok",
       "note": "Claim readiness audit"
     }
@@ -615,13 +555,15 @@
     "status": "marinecity_system_integration_smoke_ready_with_pending_final_gates",
     "fail_count": 0,
     "warn_count": 0,
-    "pending_count": 2,
-    "detector_token_count": 128,
+    "pending_count": 1,
+    "detector_token_count": 117,
     "detector_classes": {
-      "car": 77,
-      "bus": 17,
-      "van": 10,
-      "pedestrian": 24
+      "bus": 15,
+      "car": 65,
+      "motor": 2,
+      "pedestrian": 25,
+      "van": 8,
+      "truck": 2
     },
     "actor_classes": [
       "bus",
@@ -632,8 +574,7 @@
       "van"
     ],
     "three_d_status": "complete",
-    "llm_external_ready": false,
-    "tinyperson_status": "closed_archive_only"
+    "llm_external_ready": false
   },
   "marinecity_3d_completion_gate": {
     "status": "marinecity_3d_completion_ready",
@@ -652,28 +593,6 @@
       "mip_nerf_360"
     ],
     "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected."
-  },
-  "tinyperson_corrected_gate": {
-    "status": "comparison_complete",
-    "dataset_status": "ready",
-    "train_images": 1221,
-    "train_boxes": 36855,
-    "val_images": 3998,
-    "val_boxes": 18937,
-    "methods": [
-      "Ours",
-      "YOLOv9m"
-    ],
-    "complete_methods": [
-      "Ours",
-      "YOLOv9m"
-    ],
-    "row_count": 6,
-    "best_ap_by_method": {
-      "Ours": 0.18271,
-      "YOLOv9m": 0.20348
-    },
-    "claiming_rule": "Use only the corrected TinyPerson original-window/1280 protocol as paper-facing supplementary evidence. Legacy TinyPerson 640 rows are archived protocol diagnostics and should not be mixed into comparison tables."
   },
   "external_gate_capabilities": {
     "status": "three_d_runner_available_aerograph_provider_missing",
@@ -702,7 +621,6 @@
     "marinecity_qualitative": "ready_for_main",
     "aerograph": "candidate_ready_external_provider_pending",
     "final_3d_completion": "ready",
-    "tinyperson_corrected": "comparison_complete",
     "local_compile": "pending_main_tex_or_overleaf_sync"
   }
 }

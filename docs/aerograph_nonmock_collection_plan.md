@@ -4,7 +4,7 @@ Updated: 2026-06-26 KST
 
 This runbook is the paper-facing gate for the AeroGraph Reasoner experiment.
 Current detector-to-3D-graph smoke outputs are valid integration evidence, but
-the final AeroGraph result table must use non-mock LLM/VLM responses.
+the final AeroGraph result table must use external-provider LLM/VLM responses.
 
 ## Current State
 
@@ -21,7 +21,7 @@ the final AeroGraph result table must use non-mock LLM/VLM responses.
 - Current real-capture compact smoke pack:
   `outputs/reports/live/aerograph_real_capture_prompt_pack/`
   (`23` prompts, matching the latest 3-scenario x 3-UAV real-Cesium detector
-  smoke run). Use this for quick non-mock smoke checks before spending time on
+  smoke run). Use this for quick external-provider smoke checks before spending time on
   the full 49-prompt table gate.
 - Compact smoke web packet:
   `outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md`
@@ -40,7 +40,7 @@ The current internal reviewed candidate is available for internal checking with
 a clear caveat. Promote AeroGraph to a final external-provider benchmark only
 when all conditions below are true:
 
-1. All 49 current prompts have valid-schema non-mock responses.
+1. All 49 current prompts have valid-schema external-provider responses.
 2. Each row preserves either `index` or both `scenario_id` and `object_id`.
 3. Each response parses to valid AeroGraph JSON with:
    `decision`, `predicted_class`, `confidence`, `evidence_clues`,
@@ -49,11 +49,11 @@ when all conditions below are true:
    `non_mock_outputs_ready: true`.
 5. `scripts/build_aerograph_reasoner_table.py` promotes that manifest and
    rewrites `paper/tables/aerograph_reasoner_results_placeholder.tex` from a
-   complete non-mock run.
+   complete external-provider run.
 6. The status dashboard shows `49/49` valid-schema coverage for the selected
    final provider manifest.
 
-## Option A: ChatGPT / Codex Web
+## Option A: ChatGPT / OpenAI coding agent Web
 
 Paste each batch file into the web model and collect JSONL output lines into:
 
@@ -185,7 +185,7 @@ Queue wrapper:
 OPENAI_API_KEY=... \
 AEROGRAPH_PROVIDER=openai \
 AEROGRAPH_OPENAI_MODEL=gpt-5.1 \
-SESSION=aerograph-nonmock-49 \
+SESSION=aerograph-external_provider-49 \
 bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
 ```
 
@@ -197,7 +197,7 @@ Preflight behavior:
   `AEROGRAPH_PROVIDER=command` or `AEROGRAPH_PROVIDER=command`.
 - If `AEROGRAPH_ENV_FILE` is provided, it must be readable before tmux starts.
   This avoids a silent background session that immediately exits without
-  producing non-mock evidence.
+  producing external-provider evidence.
 
 Private env-file option, useful when starting from an already-running tmux
 server:
@@ -210,7 +210,7 @@ export AEROGRAPH_OPENAI_MODEL=gpt-5.1
 EOF
 chmod 600 /tmp/aerograph_openai.env
 AEROGRAPH_ENV_FILE=/tmp/aerograph_openai.env \
-SESSION=aerograph-nonmock-49 \
+SESSION=aerograph-external_provider-49 \
 bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
 ```
 
@@ -244,7 +244,7 @@ Queue wrapper:
 ```bash
 AEROGRAPH_PROVIDER=command \
 AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' \
-SESSION=aerograph-nonmock-49-command \
+SESSION=aerograph-external_provider-49-command \
 bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
 ```
 
@@ -279,7 +279,7 @@ Until the external-provider acceptance criteria pass, use only this wording:
 > 49-prompt AeroGraph candidate table is available. Final OpenAI/ChatGPT/local
 > provider replication remains pending.
 
-After the criteria pass, report the non-mock table and cite the provider/model
+After the criteria pass, report the external-provider table and cite the provider/model
 used in the experiment environment section.
 
 ## Plumbing Test

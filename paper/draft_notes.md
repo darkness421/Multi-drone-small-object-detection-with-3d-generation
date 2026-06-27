@@ -47,7 +47,10 @@ CoM3D-ACE: Ambiguity-Centric 3D Evidence Completion for Cooperative Multi-UAV Fi
   Splatfacto/3DGS-style 5k is a faster but lower-quality support row
   (PSNR 19.68, SSIM 0.807, LPIPS 0.170, FPS 4.56). Use these as system-smoke
   validation, not as a full 3D benchmark.
-- AeroGraph status: 49/49 Codex-reviewed JSON candidate responses are valid,
-  but external OpenAI/ChatGPT/local-provider replication is still pending.
-- TinyPerson policy: exclude TinyPerson from the default main and supplementary
-  paper. Keep it only as an internal archive/protocol-mismatch diagnostic.
+- AeroGraph status: 49/49 schema-validated reviewed candidate responses are
+  valid as a supplementary validation record. External
+  OpenAI/ChatGPT/local-provider replication should be imported before promoting
+  it as the headline reasoner result.
+- Auxiliary cross-dataset stress checks are excluded from the default main and
+  supplementary paper unless the protocol is fully aligned with the main
+  VisDrone-controlled comparison.

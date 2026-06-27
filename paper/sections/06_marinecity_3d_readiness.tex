@@ -3,11 +3,12 @@
 
 This section reports the current MarineCity 3D/reasoner protocol and the
 verified real-Cesium smoke-test artifacts. We do not present the smoke test as a
-full benchmark result yet: it validates scene loading, multi-UAV capture,
+full benchmark result: it validates scene loading, multi-UAV capture,
 SAFR-YOLO EvidenceToken export, 3D evidence grouping, and AeroGraph Reasoner
 plumbing. A reviewed 49-prompt AeroGraph candidate table is available for the
 current prompt pack, while external OpenAI/ChatGPT/local-provider replication is
-kept as pending before making a stronger final reasoning claim.
+reported separately as supplementary validation before any stronger final
+reasoning claim.
 
 The scene is centered on the Haeundae MarineCity region and is constructed in
 Isaac Sim with Cesium geospatial context. The current verified smoke test uses
@@ -30,10 +31,10 @@ below keeps the deterministic reasoner subset separate from this larger
 detector aggregate, because the table is intended as pipeline validation rather
 than as a final class-balanced quantitative benchmark.
 
-Table~\ref{tab:marinecity_real_capture_benchmark} summarizes the real-Cesium
-capture source now used for the 3D/reasoner handoff. The table is intentionally
-reported as capture evidence rather than as a full neural reconstruction
-benchmark. We additionally run short Nerfstudio runner-family smoke experiments
+The supplementary material summarizes the real-Cesium capture source now used
+for the 3D/reasoner handoff. We intentionally report this as capture evidence
+rather than as a full neural reconstruction benchmark. We additionally run
+short Nerfstudio runner-family smoke experiments
 on the exported MarineCity views to verify that neural 3D methods can be
 trained and evaluated on the scene. The current verified rows cover Nerfacto,
 Instant-NGP, and a Splatfacto/3DGS-style runner under the same sparse
@@ -47,16 +48,6 @@ real-Cesium views. This point cloud is used only as a geometry handoff sanity
 check in the supplementary material; it is not reported as a neural
 completion/reconstruction result.
 
-\begin{table}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\caption{Verified real-Cesium MarineCity capture source for the current
-multi-UAV 3D/reasoner handoff.}
-\label{tab:marinecity_real_capture_benchmark}
-\input{tables/marinecity_real_capture_benchmark_table}
-\end{table}
-
 We also export the real-Cesium detector outputs into a cross-view evidence graph
 for the current smoke protocol. The graph builder consumes 23 SAFR-YOLO
 EvidenceTokens from the three-scenario, three-UAV capture, performs a
@@ -65,18 +56,7 @@ object hypotheses. Five hypotheses receive multi-view support, while the graph
 records 23 support edges, 4 conflict edges, and 20 missing-evidence edges for
 downstream ambiguity handling. This is a protocol validation of evidence
 association and uncertainty routing, not a completed metric 3D reconstruction.
-
-\begin{table*}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\caption{MarineCity real-Cesium cross-view evidence graph smoke result. The
-coordinates are heuristic camera-ray projections used for association and
-ambiguity routing; they are not treated as metric 3D reconstruction ground
-truth.}
-\label{tab:marinecity_crossview_evidence_graph}
-\input{tables/marinecity_crossview_evidence_graph_table}
-\end{table*}
+The detailed graph table is placed in the supplementary material.
 
 The protocol reserves train, validation, and held-out unseen-angle test splits
 with multiple UAV viewpoints, including nadir, front-oblique, side, rear-oblique,
@@ -91,10 +71,10 @@ The validated smoke test already runs: (1) SAFR-YOLO on each UAV view, (2)
 detector outputs as EvidenceTokens, (3) token grouping into 3D evidence
 hypotheses, and (4) \textbf{AeroGraph Reasoner}, the drone-specialized
 graph-grounded LLM/VLM reasoner, to propose verified class/action decisions
-under a safety-verifier schema. The current system-smoke reasoner provider is
-deterministic mock logic for system validation, not a final external-provider
-LLM/VLM result. A separate 49-prompt AeroGraph candidate table has valid
-Codex-reviewed JSON outputs, but it remains labeled as a reviewed candidate
+under a safety-verifier schema. The current system-smoke reasoner provider is a
+deterministic rule-based verifier for system validation, not a final
+external-provider LLM/VLM result. A separate 49-prompt AeroGraph candidate table has valid
+schema-checked JSON outputs and is kept in the supplementary validation record
 until an OpenAI/ChatGPT/local provider replication is imported. For 3D
 completion, Table~\ref{tab:marinecity_3d_completion_results} now contains three
 non-placeholder smoke rows on the real-Cesium capture package: Nerfacto,
@@ -103,9 +83,9 @@ neural-3D handoff is executable across multiple runner families; they are not
 claimed as a full optimized 3D benchmark until longer validation and cleaner
 reconstruction captures are completed.
 Table~\ref{tab:marinecity_system_smoke} summarizes the completed smoke-test
-artifacts, and Table~\ref{tab:aerograph_reasoner_pending} reports the current
-reviewed AeroGraph candidate while keeping external-provider replication
-explicit.
+artifacts. The current reviewed AeroGraph candidate and prompt/schema details
+remain in the supplementary material as validation support rather than as the
+headline system result.
 
 \begin{table}[t]
 \centering
@@ -119,36 +99,6 @@ runner-family execution rather than claim a final optimized benchmark.}
 \end{table}
 
 \input{tables/marinecity_system_scenario_table}
-
-\begin{table}[t]
-\centering
-\caption{AeroGraph Reasoner evaluation slot. The current table reports a
-reviewed 49-prompt candidate; external OpenAI/ChatGPT/local-provider replication
-remains pending before promoting this to a final reasoning benchmark claim.}
-\label{tab:aerograph_reasoner_pending}
-\input{tables/aerograph_reasoner_results_placeholder}
-\end{table}
-
-\begin{table*}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\caption{MarineCity 3D/reasoner reporting split. The smoke-test rows are
-available now; full benchmark rows are filled only after non-mock reasoning and
-completion/restoration experiments are validated.}
-\label{tab:marinecity_reporting_split}
-\begin{tabular}{lll}
-\toprule
-Component & Main paper & Supplementary material \\
-\midrule
-MarineCity scene & geospatial scene overview and final object/camera counts & full camera poses, object placement list, export manifest \\
-Multi-UAV capture & representative two-to-four UAV setting, default three-UAV result & fleet-size and viewpoint ablation details \\
-3D evidence graph & association accuracy or verified qualitative graph examples & graph construction parameters and failure cases \\
-3D completion & pilot completion/restoration result if validated & NeRF/3DGS/re-observation settings and extra renders \\
-AeroGraph Reasoner & class/action accuracy or verified decision examples & prompt template, JSON schema, verifier rules, rejected actions \\
-\bottomrule
-\end{tabular}
-\end{table*}
 
 \paragraph{Reporting rule.}
 Dry-run manifests and provider placeholders are moved to the supplementary

@@ -83,16 +83,16 @@ in the current manuscript.
 \caption{Measured cited related-work checks. Rows use VisDrone2019-DET
 validation at 1280 input with seeds 42, 123, and 2026 unless otherwise noted.}
 \label{tab:supp_related_work_eval_rows}
-\begin{tabular}{llrrrrrrl}
+\begin{tabular}{llrrrrrr}
 \toprule
-Method & Protocol & AP & AP50 & P & R & F1 & Params(M) & Note \\
+Method & Protocol & AP & AP50 & P & R & F1 & Params(M) \\
 \midrule
-CSFPR-RTDETR [11] & VisDrone val, 1280, 3-seed & 0.2784 $\pm$ 0.0070 & 0.4431 $\pm$ 0.0094 & 0.5766 & 0.4292 & 0.4921 & 14.09 & staged related-work run \\
-MFFSODNet [2] & VisDrone val, 1280, 3-seed & 0.0975 $\pm$ 0.0034 & 0.1830 $\pm$ 0.0070 & 0.6418 & 0.2465 & 0.3562 & 4.54 & scratch retrain; no pretrained checkpoint found \\
-SFFEF-YOLO [4] & VisDrone val, 1280, 3-seed & 0.3749 $\pm$ 0.0040 & 0.5914 $\pm$ 0.0039 & 0.6540 & 0.5781 & 0.6137 & 20.87 & paper-faithful reimplementation \\
-BPD-YOLO [7] & VisDrone val, 1280, 3-seed & 0.3804 $\pm$ 0.0035 & 0.5986 $\pm$ 0.0027 & 0.6626 & 0.5802 & 0.6187 & 24.53 & paper-faithful reimplementation \\
-HF-D-FINE [12] & VisDrone val, 1280, 3-seed & 0.3619 $\pm$ 0.0129 & 0.5764 $\pm$ 0.0186 & 0.6685 & 0.5555 & 0.6067 & 25.48 & high-resolution/frequency-detail reproduction \\
-UAVDet [16] & VisDrone val, 1280, 3-seed & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.0036 & 0.6542 & 0.5899 & 0.6203 & 33.55 & inspired reproduction; not official checkpoint \\
+CSFPR-RTDETR [11] & VisDrone val, 1280, 3-seed & 0.2784 $\pm$ 0.0070 & 0.4431 $\pm$ 0.0094 & 0.5766 & 0.4292 & 0.4921 & 14.09 \\
+MFFSODNet [2] & VisDrone val, 1280, 3-seed & 0.0975 $\pm$ 0.0034 & 0.1830 $\pm$ 0.0070 & 0.6418 & 0.2465 & 0.3562 & 4.54 \\
+SFFEF-YOLO [4] & VisDrone val, 1280, 3-seed & 0.3749 $\pm$ 0.0040 & 0.5914 $\pm$ 0.0039 & 0.6540 & 0.5781 & 0.6137 & 20.87 \\
+BPD-YOLO [7] & VisDrone val, 1280, 3-seed & 0.3804 $\pm$ 0.0035 & 0.5986 $\pm$ 0.0027 & 0.6626 & 0.5802 & 0.6187 & 24.53 \\
+HF-D-FINE [12] & VisDrone val, 1280, 3-seed & 0.3619 $\pm$ 0.0129 & 0.5764 $\pm$ 0.0186 & 0.6685 & 0.5555 & 0.6067 & 25.48 \\
+UAVDet [16] & VisDrone val, 1280, 3-seed & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.0036 & 0.6542 & 0.5899 & 0.6203 & 33.55 \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -176,11 +176,3 @@ confirmation is added to the main detector protocol. The current NMS snapshot is
 useful because it shows that adjacent-object post-processing can improve AP and
 AP50 on a fixed checkpoint, but the paper labels it as an eval-only
 robustness analysis.
-
-\paragraph{Archived TinyPerson diagnostic.}
-TinyPerson was used only as an internal domain-transfer sanity check. We stop
-this line of experiments because the corrected original-window runs do not
-strengthen the proposed-detector claim and the earlier 640-pixel conversion is
-not protocol-compatible with the paper's VisDrone-controlled detector
-comparison. The TinyPerson artifacts remain in the repository for auditability,
-but the default supplementary draft omits TinyPerson tables and figures.

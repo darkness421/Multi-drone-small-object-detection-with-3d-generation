@@ -48,9 +48,6 @@ DEFAULT_PROJECT_DIRS = [
     "outputs/detectors/related_work_consistency",
     "outputs/detectors/related_work_module_reproductions",
     "outputs/detectors/required_related_work_reimplementations",
-    "outputs/detectors/tinyperson_640",
-    "outputs/detectors/tinyperson_640_transfer",
-    "outputs/detectors/tinyperson_eval_imgsz_sweep",
 ]
 DEFAULT_LOG_DIRS = [
     "outputs/logs/server_baselines",
@@ -68,12 +65,9 @@ DEFAULT_LOG_DIRS = [
     "outputs/logs/related_work_consistency",
     "outputs/logs/related_work_module_reproductions",
     "outputs/logs/required_related_work_models",
-    "outputs/logs/tinyperson_640",
-    "outputs/logs/tinyperson_640_transfer",
-    "outputs/logs/tinyperson_eval_imgsz_sweep",
 ]
 
-SELECTED_OURS = "Ours: P2P4-SelfAttnFR"
+SELECTED_OURS = "Ours: SAFR-YOLO"
 FINAL_TABLE_PREVIEW = "outputs/reports/final_detector_table_preview.csv"
 RELATED_REFERENCE_LABELS = "paper/tables/related_work_reference_labels.csv"
 PROPOSED_RUN_RANKING = "outputs/reports/detector_rankings/proposed_run_performance_ranking.csv"
@@ -92,14 +86,18 @@ UAVDET_AFTER_REQUIRED_LOG = "outputs/logs/required_related_work_models/uavdet_in
 UAVDET_AFTER_REQUIRED_SEEDS = (42, 123, 2026)
 HEATMAP_LOG = "outputs/logs/final_detector_heatmaps/queue.log"
 HEATMAP_MARKER = "QUEUE_FINISHED final detector heatmaps"
-TINYPERSON_LOG = "outputs/logs/tinyperson_640/queue.log"
-TINYPERSON_MARKER = "QUEUE_FINISHED TinyPerson 640 stress test"
-TINYPERSON_TRANSFER_LOG = "outputs/logs/tinyperson_640_transfer/queue.log"
-TINYPERSON_TRANSFER_MARKER = "QUEUE_FINISHED TinyPerson Ours transfer fine-tune"
-TINYPERSON_EVAL_SWEEP_LOG = "outputs/logs/tinyperson_eval_imgsz_sweep/queue.log"
-TINYPERSON_EVAL_SWEEP_MARKER = "QUEUE_FINISHED TinyPerson eval-only input-size sweep"
+TINYPERSON_LOG = "outputs/logs/tinyperson_224_top5/queue.log"
+TINYPERSON_MARKER = "QUEUE_FINISHED TinyPerson 224 Top5 3Seed stress test"
+TINYPERSON224_SUMMARY = "outputs/experiments/tinyperson_224_top5/summary.csv"
+TINYPERSON224_DASHBOARD = "outputs/reports/live/tinyperson_224_top5_dashboard.png"
+TINYPERSON224_DASHBOARD_MD = "outputs/reports/live/tinyperson_224_top5_dashboard.md"
+TINYPERSON_AUX_LOG = "outputs/logs/tinyperson_224_aux_sweep/queue.log"
+TINYPERSON_AUX_MARKER = "QUEUE_FINISHED TinyPerson224 auxiliary sweep"
+TINYPERSON224_AUX_SUMMARY = "outputs/experiments/tinyperson_224_aux_sweep/summary.csv"
+TINYPERSON224_AUX_DASHBOARD = "outputs/reports/live/tinyperson_224_aux_sweep_dashboard.png"
 PAPER_ARTIFACT_LOG = "outputs/logs/paper_artifacts_after_2d/queue.log"
 PAPER_ARTIFACT_MARKER = "QUEUE_FINISHED paper artifacts after 2D"
+PAPER_GATE_QUEUE_LOG_DIR = "outputs/logs/accv_paper_gate_queue"
 ISAAC_CAPTURE_PLAN = "outputs/experiments/marinecity_isaac_capture_plan.json"
 ISAAC_DRY_RUN_MANIFEST = "outputs/experiments/marinecity_isaac_dry_run_manifest.json"
 ISAAC_REPLICATOR_TEMPLATE = "outputs/experiments/marinecity_isaac_replicator_template.py"
@@ -254,7 +252,7 @@ def related_label_with_scope(name: str, labels: dict[str, str]) -> str:
 def active_run_display_name(row: dict[str, str]) -> str:
     run = row.get("run", "")
     labels = related_reference_labels()
-    seed_match = re.search(r"(?:^|[-_])s(\d+)$", run)
+    seed_match = re.search(r"(?:^|[-_])(?:s|seed)(\d+)$", run)
     seed = f" s{seed_match.group(1)}" if seed_match else ""
     if "yolo11s_uav_simam_dwr_repro" in run:
         return f"{related_label_with_scope('YOLO11s-UAV', labels)} SimAM+DWR repro{seed}"
@@ -270,6 +268,69 @@ def active_run_display_name(row: dict[str, str]) -> str:
         return f"{related_label_with_scope('MFFSODNet', labels)}{seed}"
     if "p2p4_selfattnfr_visdrone_transfer_tinyperson640" in run:
         return f"Ours P2P4-SelfAttnFR TinyPerson transfer{seed}"
+    if "tinyperson" in run.lower() and not any(
+        token in run.lower()
+        for token in ["sffef_yolo", "bpd_yolo", "hf_dfine", "uavdet", "yolo11s_uav", "csfpr", "mffsod"]
+    ):
+        for raw in [
+            "yolov5nu",
+            "yolov5su",
+            "yolov5mu",
+            "yolov5lu",
+            "yolov8n",
+            "yolov8s",
+            "yolov8m",
+            "yolov8l",
+            "yolov9t",
+            "yolov9s",
+            "yolov9m",
+            "yolov9c",
+            "yolov10n",
+            "yolov10s",
+            "yolov10m",
+            "yolov10l",
+            "yolo11n",
+            "yolo11s",
+            "yolo11m",
+            "yolo11l",
+            "yolo12n",
+            "yolo12s",
+            "yolo12m",
+            "yolo12l",
+            "yolo26n",
+            "yolo26s",
+            "yolo26m",
+            "yolo26l",
+        ]:
+            if raw in run.lower():
+                return f"{raw.upper()} TinyPerson224 aux{seed}"
+        if "p2p4_selfattnfr" in run.lower():
+            return f"Ours P2P4-SelfAttnFR TinyPerson224{seed}"
+    if "tinyperson224_aux" in run.lower() or "tinyperson_224_aux" in run.lower():
+        if "sffef_yolo" in run.lower():
+            return f"{related_label_with_scope('SFFEF-YOLO', labels)} TinyPerson224 aux{seed}"
+        if "bpd_yolo" in run.lower():
+            return f"{related_label_with_scope('BPD-YOLO', labels)} TinyPerson224 aux{seed}"
+        if "hf_dfine" in run.lower():
+            return f"{related_label_with_scope('HF-D-FINE', labels)} TinyPerson224 aux{seed}"
+        if "uavdet" in run.lower():
+            return f"{related_label_with_scope('UAVDet', labels)} TinyPerson224 aux{seed}"
+        if "yolo11s_uav" in run.lower():
+            return f"{related_label_with_scope('YOLO11s-UAV', labels)} TinyPerson224 aux{seed}"
+        name = run.lower().replace("_tinyperson224_aux", "").replace("-tinyperson224-aux", "")
+        name = re.sub(r"[-_]seed\d+$", "", name)
+        return f"{name.upper()} TinyPerson224 aux{seed}"
+    if "tinyperson224_top5" in run.lower() or "tinyperson_224_top5" in run.lower():
+        if "p2p4_selfattnfr" in run.lower():
+            return f"Ours P2P4-SelfAttnFR TinyPerson224{seed}"
+        for raw, label in [
+            ("yolo11l", "YOLOv11l"),
+            ("yolov9c", "YOLOv9c"),
+            ("yolov8l", "YOLOv8l"),
+            ("yolov9m", "YOLOv9m"),
+        ]:
+            if raw in run.lower():
+                return f"{label} TinyPerson224{seed}"
     return run
 
 
@@ -311,6 +372,40 @@ def queue_state(path: str, marker: str, *, waiting: bool = False) -> str:
     return "running"
 
 
+def latest_paper_gate_log() -> Path | None:
+    log_dir = resolve_path(PAPER_GATE_QUEUE_LOG_DIR)
+    if not log_dir.exists():
+        return None
+    files = sorted(log_dir.glob("run_*.log"), key=lambda path: path.stat().st_mtime, reverse=True)
+    return files[0] if files else None
+
+
+def paper_gate_queue_status_row() -> dict[str, str]:
+    latest = latest_paper_gate_log()
+    if latest is None:
+        return {
+            "queue": "ACCV paper gate queue",
+            "status": "waiting",
+            "detail": "15-min paper/readiness/dashboard refresh queue",
+            "event": "no queue log yet",
+        }
+    age_sec = max(0.0, datetime.now().timestamp() - latest.stat().st_mtime)
+    lines = [
+        line.strip()
+        for line in latest.read_text(encoding="utf-8", errors="ignore").splitlines()
+        if line.strip()
+    ]
+    event = clean_queue_line(lines[-1]) if lines else latest.name
+    status = "running" if age_sec <= 20 * 60 else "ready"
+    detail = "refreshes Overleaf sync status, paper gates, 3D/AeroGraph readiness, and dashboards"
+    return {
+        "queue": "ACCV paper gate queue",
+        "status": status,
+        "detail": detail,
+        "event": f"{latest.name}; {event}",
+    }
+
+
 def tinyperson_job_done(job_key: str) -> bool:
     marker = f"TRAIN_OK TinyPerson job={job_key}"
     failed = f"TRAIN_FAILED TinyPerson job={job_key}"
@@ -325,13 +420,62 @@ def drop_completed_tinyperson_active(rows: list[dict[str, str]]) -> None:
         "yolov9m": "yolov9m",
         "p2p4_selfattnfr": "p2p4_selfattnfr",
     }
-    completed = {prefix for prefix, job in job_keys.items() if tinyperson_job_done(job)}
+    if queue_log_contains(TINYPERSON_LOG, TINYPERSON_MARKER):
+        completed = set(job_keys)
+    else:
+        completed = {prefix for prefix, job in job_keys.items() if tinyperson_job_done(job)}
     if not completed:
         return
     for row in rows:
         run = row.get("run", "").lower()
         if "tinyperson" in run and any(run.startswith(prefix) for prefix in completed):
             row["active"] = "false"
+
+
+def tinyperson224_status_row() -> dict[str, str]:
+    rows = read_csv(TINYPERSON224_SUMMARY)
+    if rows:
+        best = max(rows, key=lambda row: numeric(row.get("best_AP_mean", "")) or -1.0)
+        method = best.get("method", "TinyPerson224")
+        if method.startswith("ProposedSize"):
+            method = "Ours"
+        evidence = (
+            f"img224 {best.get('seed_count', '-')}-seed; "
+            f"{method} AP {fmt(numeric(best.get('best_AP_mean', '')))} "
+            f"AP50 {fmt(numeric(best.get('best_AP50_mean', '')))}"
+        )
+    else:
+        evidence = "summary pending; imgsz 224 Top5 stress test"
+    status = "done" if queue_log_contains(TINYPERSON_LOG, TINYPERSON_MARKER) else queue_state(TINYPERSON_LOG, TINYPERSON_MARKER)
+    return {
+        "queue": "TinyPerson224 Top5",
+        "status": status,
+        "detail": "completed 224-input Top5/3-seed stress-test; excluded from main claims",
+        "event": evidence,
+    }
+
+
+def tinyperson224_aux_status_row() -> dict[str, str]:
+    rows = read_csv(TINYPERSON224_AUX_SUMMARY)
+    train_ok = sum(1 for line in queue_log_lines(TINYPERSON_AUX_LOG, limit=2000) if "TRAIN_OK TinyPerson224 aux" in line)
+    if rows:
+        best = max(rows, key=lambda row: numeric(row.get("best_AP_mean", "")) or -1.0)
+        method = best.get("method", "TinyPerson224 aux")
+        method = method.replace("-TinyPerson224Aux", "")
+        evidence = (
+            f"{len(rows)} rows; best {method[:22]} AP "
+            f"{fmt(numeric(best.get('best_AP_mean', '')))} AP50 "
+            f"{fmt(numeric(best.get('best_AP50_mean', '')))}"
+        )
+    else:
+        latest = latest_queue_event(TINYPERSON_AUX_LOG)
+        evidence = f"{train_ok} trained; {latest}"
+    return {
+        "queue": "TinyPerson224 sweep",
+        "status": queue_state(TINYPERSON_AUX_LOG, TINYPERSON_AUX_MARKER),
+        "detail": "separate 224-input auxiliary sweep; never mixed with VisDrone 1280 table",
+        "event": evidence,
+    }
 
 
 def isaac_cesium_status_row() -> dict[str, str]:
@@ -390,7 +534,7 @@ def multi_uav_detector_test_row() -> dict[str, str]:
             "queue": "Multi-UAV YOLO test",
             "status": "done",
             "detail": "P2P4-SelfAttnFR inference + 3D evidence/reasoner smoke ran on S0/S1/S2 viewer160 captures",
-            "event": f"{total_tokens} EvidenceTokens; {class_text}; mock reasoner 3/3",
+            "event": f"{total_tokens} EvidenceTokens; {class_text}; rule-based reasoner 3/3",
         }
     scene_ready = resolve_path(ISAAC_CESIUM_SCENE_PLAN).exists()
     detector_ready = selected_detector_ready()
@@ -417,7 +561,7 @@ def queue_status_rows() -> list[dict[str, str]]:
     required_related_done = queue_log_contains(REQUIRED_RELATED_WORK_LOG, REQUIRED_RELATED_WORK_MARKER)
     heatmap_done = queue_log_contains(HEATMAP_LOG, HEATMAP_MARKER)
 
-    rows: list[dict[str, str]] = []
+    rows: list[dict[str, str]] = [paper_gate_queue_status_row()]
     if not final_done:
         rows.append({
             "queue": "Final ablation",
@@ -455,27 +599,6 @@ def queue_status_rows() -> list[dict[str, str]]:
         })
     rows.append(isaac_cesium_status_row())
     rows.append(multi_uav_detector_test_row())
-    if not queue_log_contains(TINYPERSON_LOG, TINYPERSON_MARKER):
-        rows.append({
-            "queue": "TinyPerson 640",
-            "status": queue_state(TINYPERSON_LOG, TINYPERSON_MARKER, waiting=not (final_done and related_done and heatmap_done)),
-            "detail": "top models only: Ours, YOLO11l, YOLOv9c, YOLOv8l, YOLOv9m",
-            "event": latest_queue_event(TINYPERSON_LOG),
-        })
-    if not queue_log_contains(TINYPERSON_TRANSFER_LOG, TINYPERSON_TRANSFER_MARKER):
-        rows.append({
-            "queue": "TinyPerson transfer",
-            "status": queue_state(TINYPERSON_TRANSFER_LOG, TINYPERSON_TRANSFER_MARKER),
-            "detail": "VisDrone-trained Ours -> TinyPerson640, seeds 42/123/2026",
-            "event": latest_queue_event(TINYPERSON_TRANSFER_LOG),
-        })
-    if not queue_log_contains(TINYPERSON_EVAL_SWEEP_LOG, TINYPERSON_EVAL_SWEEP_MARKER):
-        rows.append({
-            "queue": "TinyPerson eval-size",
-            "status": queue_state(TINYPERSON_EVAL_SWEEP_LOG, TINYPERSON_EVAL_SWEEP_MARKER),
-            "detail": "eval-only 640/960/1280 for YOLOv9m, SAFR-YOLO, SAFR-YOLO transfer",
-            "event": latest_queue_event(TINYPERSON_EVAL_SWEEP_LOG),
-        })
     if not queue_log_contains(PAPER_ARTIFACT_LOG, PAPER_ARTIFACT_MARKER):
         rows.append({
             "queue": "Paper artifacts",
@@ -724,10 +847,9 @@ def visible_comparison_rows(comparison_rows: list[dict[str, str]]) -> list[dict[
             "note": "fallback official 3-seed",
         }
     selected = dict(selected)
-    selected_label = SELECTED_OURS.replace("Ours: ", "")
-    selected["model"] = f"1. Ours {selected_label}"
+    selected["model"] = "1. Ours"
     selected["group"] = "Ours final 3-seed"
-    selected["note"] = "official 3-seed"
+    selected["note"] = "P2P4-SelfAttnFR impl.; official 3-seed"
 
     comparison_pool = [row for row in comparison_rows if row.get("model") != SELECTED_OURS]
     yolo_pool = sorted(
@@ -1006,15 +1128,15 @@ def dashboard_table_rows(comparison_rows: list[dict[str, str]], live_rows: list[
     rows.append(
         {
             "rank": "1",
-            "model": "Ours: P2P4-SelfAttnFR",
-            "role": "Leading candidate",
+            "model": "Ours",
+            "role": "Selected detector",
             "AP": ours.get("AP", "-"),
             "AP50": ours.get("AP50", "-"),
             "F1": ours.get("F1", "-"),
             "Params": ours.get("Params", "-"),
             "GapOurs": "+0.0000",
             "ParamDiff": "+0.00M",
-            "Note": "selected trade-off",
+            "Note": "P2P4-SelfAttnFR impl.; selected trade-off",
         }
     )
 
@@ -1298,10 +1420,13 @@ def gated_tradeoff_ranking_rows(limit: int = 5) -> list[dict[str, str]]:
         score = numeric(row.get("gated_tradeoff", ""))
         if score is None:
             continue
+        name = row.get("name", "")
+        if "p2p4-selfattnfr" in name.lower() or normalized_model_name(name) == normalized_model_name(SELECTED_OURS):
+            name = "Ours"
         rows.append(
             {
                 "rank": row.get("rank", ""),
-                "name": row.get("name", ""),
+                "name": name,
                 "score": f"{score:.3f}",
                 "AP": f"{numeric(row.get('AP', '')) or 0.0:.4f}",
                 "Params": f"{numeric(row.get('ParamsM', '')) or 0.0:.2f}M",
@@ -1474,8 +1599,8 @@ def queue_status_color(status: str) -> str:
 
 def queue_status_card(ax: Any, patch_cls: Any, x: float, y: float, w: float, h: float, rows: list[dict[str, str]]) -> None:
     card(ax, patch_cls, x, y, w, h, face="#FFFFFF", edge="#CBD5E1")
-    text(ax, x + 0.014, y + h - 0.013, "Queue List", size=8.4, weight="bold", color="#0F172A")
-    text(ax, x + 0.110, y + h - 0.013, "Today: related-work runs, heatmaps, Isaac/Cesium map, and multi-UAV YOLO test; completed rows are hidden", size=6.2, color="#64748B")
+    text(ax, x + 0.014, y + h - 0.013, "Current Work / Live Queue", size=8.4, weight="bold", color="#0F172A")
+    text(ax, x + 0.174, y + h - 0.013, "Paper gates, 2D result freeze, Isaac/Cesium, neural-3D, and AeroGraph", size=6.2, color="#64748B")
 
     row_y = y + h - 0.033
     for row in rows[:6]:
@@ -1522,7 +1647,7 @@ def ranking_card(
             text(ax, x + w - 0.080, row_y - 0.004, row.get("Params", "-"), size=6.3, color="#475569")
         row_y -= 0.017
     if mode == "tradeoff" and len(rows) < 5:
-        text(ax, x + 0.017, y + 0.010, "Only rows clearing the gate receive a gated score.", size=5.9, color="#64748B")
+        pass
 
 
 def draw_metric_bar(ax: Any, x: float, y: float, w: float, h: float, value: str, baseline_value: float, target_value: float) -> None:
@@ -1553,7 +1678,7 @@ def render_dashboard(rows: list[dict[str, str]], out: Path, baseline: Baseline) 
 
     comparison_rows = build_full_comparison_rows(rows, baseline)
     dashboard_rows = dashboard_table_rows(comparison_rows, rows, baseline)
-    ours_row = next((row for row in dashboard_rows if row["role"] == "Leading candidate"), None)
+    ours_row = next((row for row in dashboard_rows if row.get("model") == "Ours"), None)
     ref_row = paper_reference_row(comparison_rows, baseline)
     active_best = max(
         active,
@@ -1606,7 +1731,7 @@ def render_dashboard(rows: list[dict[str, str]], out: Path, baseline: Baseline) 
         0.215,
         "Ours Vs Baseline",
         f"AP {ours_gap}",
-        f"AP50 {ours_ap50_gap} | current leading candidate",
+        f"AP50 {ours_ap50_gap} | selected detector",
         accent=target_gap_color(ours_gap),
     )
     kpi_card(
@@ -1648,14 +1773,13 @@ def render_dashboard(rows: list[dict[str, str]], out: Path, baseline: Baseline) 
     headers = [
         ("#", 0.058),
         ("Model", 0.090),
-        ("Role", 0.262),
-        ("AP", 0.405),
-        ("AP50", 0.482),
-        ("F1", 0.558),
-        ("Params", 0.630),
-        ("dAP vs Ours", 0.705),
-        ("dParams", 0.805),
-        ("Note", 0.875),
+        ("AP", 0.345),
+        ("AP50", 0.422),
+        ("F1", 0.500),
+        ("Params", 0.575),
+        ("dAP vs Ours", 0.665),
+        ("dParams", 0.775),
+        ("Note", 0.855),
     ]
     for label, x in headers:
         text(ax, x, table_top - 0.031, label, size=7.2, weight="bold", color="#334155")
@@ -1664,7 +1788,7 @@ def render_dashboard(rows: list[dict[str, str]], out: Path, baseline: Baseline) 
         if row.get("section") == "true":
             ax.add_patch(plt_rectangle(ax, 0.052, row_y - 0.018, 0.895, 0.016, "#E0F2FE"))
             text(ax, 0.058, row_y - 0.005, row["model"], size=6.6, weight="bold", color="#075985")
-            text(ax, 0.262, row_y - 0.005, row.get("role", ""), size=6.0, color="#0369A1")
+            text(ax, 0.345, row_y - 0.005, row.get("Note", row.get("role", ""))[:86], size=6.0, color="#0369A1")
             row_y -= 0.0170
             continue
         role = row["role"]
@@ -1679,16 +1803,15 @@ def render_dashboard(rows: list[dict[str, str]], out: Path, baseline: Baseline) 
         ax.add_patch(plt_rectangle(ax, 0.052, row_y - 0.019, 0.895, 0.017, bg))
         weight = "bold" if role == "Leading candidate" else "normal"
         text(ax, 0.058, row_y - 0.005, row.get("rank", "-"), size=6.2, weight="bold", color="#475569")
-        text(ax, 0.090, row_y - 0.005, row["model"][:24], size=6.2, weight=weight)
-        text(ax, 0.262, row_y - 0.005, row["role"], size=6.1, color="#475569")
-        text(ax, 0.405, row_y - 0.005, row["AP"], size=6.4)
-        text(ax, 0.482, row_y - 0.005, row["AP50"], size=6.4)
-        text(ax, 0.558, row_y - 0.005, row["F1"], size=6.4)
-        text(ax, 0.630, row_y - 0.005, row["Params"], size=6.4)
-        text(ax, 0.705, row_y - 0.005, row["GapOurs"], size=6.4, weight="bold", color=target_gap_color(row["GapOurs"]))
+        text(ax, 0.090, row_y - 0.005, row["model"][:31], size=6.2, weight=weight)
+        text(ax, 0.345, row_y - 0.005, row["AP"], size=6.4)
+        text(ax, 0.422, row_y - 0.005, row["AP50"], size=6.4)
+        text(ax, 0.500, row_y - 0.005, row["F1"], size=6.4)
+        text(ax, 0.575, row_y - 0.005, row["Params"], size=6.4)
+        text(ax, 0.665, row_y - 0.005, row["GapOurs"], size=6.4, weight="bold", color=target_gap_color(row["GapOurs"]))
         param_color = "#047857" if (numeric(row["ParamDiff"].replace("M", "")) or 1) <= 0 else "#B45309"
-        text(ax, 0.805, row_y - 0.005, row["ParamDiff"], size=6.4, weight="bold", color=param_color)
-        text(ax, 0.875, row_y - 0.005, short_note(row["Note"]), size=6.0, color="#475569")
+        text(ax, 0.775, row_y - 0.005, row["ParamDiff"], size=6.4, weight="bold", color=param_color)
+        text(ax, 0.855, row_y - 0.005, short_note(row["Note"]), size=6.0, color="#475569")
         row_y -= 0.0170
 
     y = 0.370
@@ -1742,15 +1865,25 @@ def render_dashboard(rows: list[dict[str, str]], out: Path, baseline: Baseline) 
     gap_word = "lead" if (numeric(ours_gap) or 0.0) >= 0 else "shortfall"
     gap_line = f"Ours {gap_word} vs best fair baseline: AP {ours_gap}, AP50 {ours_ap50_gap}."
     card(ax, patch_cls, 0.04, 0.008, 0.92, 0.036, face="#FEF3C7", edge="#F59E0B")
-    text(ax, 0.065, 0.031, "Paper-facing proposed detector: P2P4-SelfAttnFR", size=7.2, weight="bold")
+    text(ax, 0.065, 0.031, "Paper-facing proposed detector: Ours", size=7.2, weight="bold")
     text(ax, 0.345, 0.031, gap_line + (f"  {score_note}" if score_note else ""), size=6.6, color="#111827")
-    text(ax, 0.065, 0.017, "Other proposed variants are hidden here and reserved for ablation/supplementary, not shown as separate proposed methods.", size=6.2, color="#475569")
+    text(ax, 0.065, 0.017, "Implementation label: P2P4-SelfAttnFR. Other proposed variants are reserved for ablation/supplementary.", size=6.2, color="#475569")
 
     out.parent.mkdir(parents=True, exist_ok=True)
     tmp = out.with_suffix(".tmp.png")
     fig.savefig(tmp, dpi=150, facecolor=fig.get_facecolor(), bbox_inches="tight", pad_inches=0.08)
     plt.close(fig)
     tmp.replace(out)
+
+
+def archive_live_tinyperson_artifacts() -> None:
+    """Keep deprecated auxiliary stress-test dashboards out of the live paper view."""
+    archive = resolve_path("outputs/reports/archive/tinyperson_legacy_20260628")
+    archive.mkdir(parents=True, exist_ok=True)
+    for rel in [TINYPERSON224_DASHBOARD, TINYPERSON224_DASHBOARD_MD, TINYPERSON224_AUX_DASHBOARD]:
+        path = resolve_path(rel)
+        if path.exists():
+            path.replace(archive / path.name)
 
 
 def main() -> None:
@@ -1763,6 +1896,7 @@ def main() -> None:
     baseline = Baseline()
     rows = collect_rows(args.project_dir, args.log_dir, baseline)
     render_dashboard(rows, resolve_path(args.out), baseline)
+    archive_live_tinyperson_artifacts()
     print(resolve_path(args.out))
 
 

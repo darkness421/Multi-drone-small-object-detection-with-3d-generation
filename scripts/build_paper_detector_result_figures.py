@@ -34,12 +34,10 @@ EXTRA_DETECTOR_ARTIFACTS = [
     "paper_fig09_final_ablation_delta_bar.png",
     "paper_fig10_final_ablation_metric_heatmap.png",
     "paper_fig11_final_detector_feature_activation_heatmap.png",
-    "paper_fig12_tinyperson_640_stress.png",
-    "paper_fig13_tinyperson_eval_imgsz_sweep.png",
 ]
 
 PAPER_MAIN_METHODS = [
-    "Ours: P2P4-SelfAttnFR",
+    "Ours",
     "BPD-YOLO [7]",
     "SFFEF-YOLO [4]",
     "YOLOv11l",
@@ -53,7 +51,7 @@ PAPER_MAIN_METHODS = [
 ]
 
 PAPER_BAR_METHODS = [
-    "Ours: P2P4-SelfAttnFR",
+    "Ours",
     "YOLOv11l",
     "YOLOv12l",
     "YOLOv8l",
@@ -65,7 +63,7 @@ PAPER_BAR_METHODS = [
 ]
 
 SCATTER_LABEL_METHODS = {
-    "Ours: P2P4-SelfAttnFR",
+    "Ours",
     "YOLOv11l",
     "YOLOv12l",
     "YOLOv8l",
@@ -110,8 +108,8 @@ FINAL_ABLATION_PLAN = [
         "placement": "Ablation",
     },
     {
-        "component": "Ours: P2P4-SelfAttnFR",
-        "key": "Ours: P2P4-SelfAttnFR",
+        "component": "Ours",
+        "key": "Ours",
         "source": "final",
         "protocol": "1280, 3 seeds",
         "status": "Complete",
@@ -205,9 +203,13 @@ def fmt_signed(value: str | float | None, digits: int = 4) -> str:
 
 
 def short_method(name: str) -> str:
-    if name == "Ours: P2P4-SelfAttnFR":
-        return "SAFR-YOLO"
+    if name in {"Ours", "Ours: P2P4-SelfAttnFR"}:
+        return "Ours"
     return name.replace("Ours: ", "Ours ").replace("P2P4-SelfAttnFR", "P2P4-SelfAttnFR")
+
+
+def is_ours_method(name: str) -> bool:
+    return name in {"Ours", "Ours: P2P4-SelfAttnFR"}
 
 
 def display_group(group: str) -> str:
@@ -219,8 +221,8 @@ def display_group(group: str) -> str:
 
 
 def paper_order(rows: list[dict[str, str]]) -> list[dict[str, str]]:
-    baselines = [row for row in rows if not row.get("method", "").startswith("Ours:")]
-    ours = [row for row in rows if row.get("method", "").startswith("Ours:")]
+    baselines = [row for row in rows if not is_ours_method(row.get("method", ""))]
+    ours = [row for row in rows if is_ours_method(row.get("method", ""))]
     return sorted(baselines, key=lambda row: as_float(row.get("AP")) or -1, reverse=True) + ours
 
 
@@ -268,12 +270,20 @@ def rows_by_method(rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
 
 def paper_method_rows(methods: list[str]) -> list[dict[str, str]]:
     by_name = rows_by_method(main_rows())
-    rows = [by_name[name] for name in methods if name in by_name]
+    rows = []
+    for name in methods:
+        if name in by_name:
+            rows.append(by_name[name])
+        elif name == "Ours" and "Ours: P2P4-SelfAttnFR" in by_name:
+            rows.append(by_name["Ours: P2P4-SelfAttnFR"])
     return paper_order(rows)
 
 
 def final_metric_row(method: str) -> dict[str, str] | None:
-    return rows_by_method(main_rows()).get(method)
+    by_name = rows_by_method(main_rows())
+    if method == "Ours":
+        return by_name.get("Ours") or by_name.get("Ours: P2P4-SelfAttnFR")
+    return by_name.get(method)
 
 
 def proposed_metric_rows_by_ablation() -> dict[str, dict[str, str]]:
@@ -538,7 +548,6 @@ def export_yolo_scale_table(out_dir: Path) -> Path:
             row = cells.get((scale, family))
             if not row:
                 ax.add_patch(Rectangle((x0, y0), cell_w, cell_h, facecolor="#F8FAFC", edgecolor="#E2E8F0", linewidth=0.6))
-                ax.text(x0 + cell_w / 2, y0 + cell_h / 2, "pending", fontsize=9.5, color=COLORS["muted"], ha="center", va="center")
                 continue
             ap = as_float(row.get("AP")) or 0
             intensity = (ap - lo) / span
@@ -562,7 +571,7 @@ def export_yolo_scale_table(out_dir: Path) -> Path:
     ax.text(
         0.055,
         0.035,
-        f"Coverage: {len(cells)}/{len(families) * len(scales)} YOLO family-scale cells complete. Darker cells indicate stronger AP.",
+        f"YOLO scale overview: {len(cells)} selected 1280/3-seed rows; blank = not selected.",
         fontsize=10.5,
         color=COLORS["muted"],
         va="bottom",
@@ -570,7 +579,7 @@ def export_yolo_scale_table(out_dir: Path) -> Path:
     ax.text(
         0.945,
         0.035,
-        "Use this as a supplementary overview; main paper keeps the compact top comparison table.",
+        "Supplementary overview; main uses the compact top comparison table.",
         fontsize=10.5,
         color=COLORS["muted"],
         ha="right",
@@ -588,7 +597,7 @@ def export_related_status_table(out_dir: Path) -> Path:
     if not rows:
         rows = related_external_rows()
     rows = sorted(rows, key=lambda row: as_float(row.get("AP")) or -1, reverse=True)
-    ours = final_metric_row("Ours: P2P4-SelfAttnFR")
+    ours = final_metric_row("Ours")
     ours_ap = as_float(ours.get("AP")) if ours else None
     columns = [
         ("Method", 1.20),
@@ -708,7 +717,7 @@ def export_scatter(out_dir: Path) -> Path:
         method = row.get("method", "")
         if method in SCATTER_LABEL_METHODS:
             offset = {
-                "Ours: P2P4-SelfAttnFR": (6, 10),
+                "Ours": (6, 10),
                 "YOLOv11l": (8, 12),
                 "YOLOv12l": (30, 2),
                 "YOLOv8l": (8, 5),
@@ -776,7 +785,7 @@ def export_status_overview(out_dir: Path) -> Path:
             "protocol": "VisDrone val, 1280, 3-seed",
             "status": "Complete",
             "placement": "Main",
-            "next": "Use Ours P2P4-SelfAttnFR as final trade-off detector.",
+            "next": "Use Ours as the final trade-off detector; describe SAFR-YOLO/P2P4-SelfAttnFR in the method.",
         },
         {
             "block": "YOLO-family scale coverage",
@@ -814,11 +823,11 @@ def export_status_overview(out_dir: Path) -> Path:
             "next": "Use feature-activation wording; do not claim class-logit Grad-CAM attribution.",
         },
         {
-            "block": "TinyPerson 640 stress test",
-            "protocol": "TinyPerson, 640, 6 models x 3 seeds",
-            "status": "Complete",
-            "placement": "Suppl.",
-            "next": "Report as domain-shift evidence only because the converted split is sparse.",
+            "block": "TinyPerson corrected check",
+            "protocol": "TinyPerson original-window, 1280, Ours vs YOLOv9m",
+            "status": "Complete diagnostic",
+            "placement": "Suppl. limitation",
+            "next": "Do not mix legacy 640 rows into the paper comparison; report corrected 1280 only if we discuss domain transfer.",
         },
         {
             "block": "3D benchmark and reasoner",
@@ -1054,7 +1063,7 @@ def export_internal_proposed_search(out_dir: Path = INTERNAL_OUT_DIR) -> list[Pa
                 "They intentionally include single-seed and partially confirmed proposed variants such as P2-CBAM-FR, P2-DCT-FR, wavelet, DCT, SE, and DynFreq trials.",
                 "",
                 "Do not insert these broad search figures into the ACCV paper. Paper-facing figures should use only:",
-                "- final `Ours: P2P4-SelfAttnFR` rows",
+                "- final `Ours` rows",
                 "- YOLO-family comparisons",
                 "- final detector ablation rows",
                 "- related-work comparison rows",
@@ -1076,7 +1085,7 @@ def export_manifest(out_dir: Path, files: Iterable[Path]) -> Path:
         "# Paper Detector Figure PNG Manifest",
         "",
         "Generated files for LaTeX/Overleaf insertion. The PNGs intentionally omit large embedded titles because the paper captions carry the figure titles.",
-        "Incomplete experiments are marked as runnable-assets not staged or adapter not validated; rows with only 640-pixel evaluation are excluded from paper-facing 1280-pixel figures. YOLOv9c is included as the YOLOv9 large-anchor row; YOLOv9e is excluded from the paper-facing comparison because it is outside the target size regime.",
+        "Rows with only 640-pixel evaluation are excluded from paper-facing 1280-pixel figures. Blank cells in the YOLO-family scale overview are unselected family-scale combinations, not unfinished paper claims. YOLOv9c is included as the YOLOv9 large-anchor row; YOLOv9e is excluded from the paper-facing comparison because it is outside the target size regime.",
         "Paper-facing detector figures are restricted to final Ours, YOLO-family baselines, final ablations, and related-work comparison/status rows. Broad proposed-search candidates are exported separately under `outputs/reports/internal/proposed_search/` for lab review only.",
         "",
     ]
@@ -1100,8 +1109,9 @@ def export_manifest(out_dir: Path, files: Iterable[Path]) -> Path:
             "- `paper_fig09_final_ablation_delta_bar.png`",
             "- `paper_fig10_final_ablation_metric_heatmap.png`",
             "- `paper_fig11_final_detector_feature_activation_heatmap.png`",
-            "- `paper_fig12_tinyperson_640_stress.png`",
-            "- `paper_fig13_tinyperson_eval_imgsz_sweep.png`",
+            "",
+            "Internal-only diagnostics:",
+            "- Auxiliary cross-dataset stress-test artifacts are intentionally excluded from this paper-facing figure manifest.",
         ]
     )
     manifest.write_text("\n".join(lines) + "\n", encoding="utf-8")

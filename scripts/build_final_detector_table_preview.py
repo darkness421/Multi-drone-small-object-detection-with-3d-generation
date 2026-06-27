@@ -125,11 +125,20 @@ def fmt_m(value: float | None) -> str:
     return "-" if value is None else f"{value:.2f}"
 
 
+def input_resolution(protocol: str) -> str:
+    match = re.search(r"\b(224|320|512|640|960|1280|1536)\b", protocol)
+    return match.group(1) if match else "-"
+
+
 def paper_order(entries: list[TableEntry]) -> list[TableEntry]:
     """Keep the proposed method as the final row in paper-facing tables."""
-    baselines = [entry for entry in entries if not entry.method.startswith("Ours:")]
-    ours = [entry for entry in entries if entry.method.startswith("Ours:")]
+    baselines = [entry for entry in entries if not is_ours_method(entry.method)]
+    ours = [entry for entry in entries if is_ours_method(entry.method)]
     return sorted(baselines, key=entry_sort_key, reverse=True) + ours
+
+
+def is_ours_method(method: str) -> bool:
+    return method in {"Ours", "Ours: P2P4-SelfAttnFR"}
 
 
 def display_group(group: str) -> str:
@@ -290,7 +299,7 @@ def build_ours_entry(results_csv: Path) -> TableEntry | None:
     ap_mean = mean(ap)
     return TableEntry(
         group="Ours final candidate",
-        method="Ours: P2P4-SelfAttnFR",
+        method="Ours",
         protocol="VisDrone val, 1280, 3-seed",
         seeds="42,123,2026",
         seed_count=3,
@@ -304,7 +313,7 @@ def build_ours_entry(results_csv: Path) -> TableEntry | None:
         params_m=20.82,
         gflops=109.3,
         delta_ap=ap_mean - BASELINE_AP,
-        note="deduped latest official seed runs",
+        note="SAFR-YOLO/P2P4-SelfAttnFR implementation; deduped latest official seed runs",
     )
 
 
@@ -792,8 +801,8 @@ def latex_escape(text: str) -> str:
 def write_latex(entries: list[TableEntry], path: Path, limit: int = 12) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if limit:
-        baselines = [entry for entry in entries if not entry.method.startswith("Ours:")]
-        ours = [entry for entry in entries if entry.method.startswith("Ours:")]
+        baselines = [entry for entry in entries if not is_ours_method(entry.method)]
+        ours = [entry for entry in entries if is_ours_method(entry.method)]
         rows = sorted(baselines, key=entry_sort_key, reverse=True)[: max(0, limit - len(ours))] + ours
     else:
         rows = paper_order(entries)
@@ -802,21 +811,23 @@ def write_latex(entries: list[TableEntry], path: Path, limit: int = 12) -> None:
         r"\centering",
         r"\scriptsize",
         r"\setlength{\tabcolsep}{3pt}",
-        r"\caption{Main detector comparison on VisDrone validation at 1280 input resolution. All rows are completed three-seed runs under the same protocol; our proposed detector is placed at the bottom following common comparison-table style.}",
+        r"\caption{Main detector comparison on VisDrone validation. All rows are completed three-seed runs under the same input-resolution protocol; our proposed detector is placed at the bottom following common comparison-table style.}",
         r"\label{tab:detector_preview_overall}",
-        r"\begin{tabular}{@{}llrrrrrrrr@{}}",
+        r"\resizebox{\textwidth}{!}{%",
+        r"\begin{tabular}{@{}lcrrrrrrrr@{}}",
         r"\toprule",
-        r"Group & Method & AP & AP50 & P & R & F1 & Params(M) & GFLOPs & $\Delta$AP \\",
+        r"Method & Input & AP & AP50 & P & R & F1 & Params(M) & GFLOPs & $\Delta$AP \\",
         r"\midrule",
     ]
     for entry in rows:
-        row_prefix = r"\textbf{" if entry.method.startswith("Ours:") else ""
-        row_suffix = r"}" if entry.method.startswith("Ours:") else ""
+        row_prefix = r"\textbf{" if is_ours_method(entry.method) else ""
+        row_suffix = r"}" if is_ours_method(entry.method) else ""
+        method_label = "Ours" if is_ours_method(entry.method) else entry.method
         lines.append(
             " & ".join(
                 [
-                    row_prefix + latex_escape(display_group(entry.group)) + row_suffix,
-                    row_prefix + latex_escape(entry.method) + row_suffix,
+                    row_prefix + latex_escape(method_label) + row_suffix,
+                    row_prefix + input_resolution(entry.protocol) + row_suffix,
                     row_prefix + fmt_pm(entry.ap, entry.ap_std).replace("+/-", r"$\pm$") + row_suffix,
                     row_prefix + fmt_pm(entry.ap50, entry.ap50_std).replace("+/-", r"$\pm$") + row_suffix,
                     row_prefix + fmt(entry.precision) + row_suffix,
@@ -829,7 +840,7 @@ def write_latex(entries: list[TableEntry], path: Path, limit: int = 12) -> None:
             )
             + r" \\"
         )
-    lines.extend([r"\bottomrule", r"\end{tabular}", r"\end{table*}", ""])
+    lines.extend([r"\bottomrule", r"\end{tabular}", r"}", r"\end{table*}", ""])
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -843,9 +854,9 @@ def write_related_work_latex(entries: list[TableEntry], path: Path) -> None:
         r"\setlength{\tabcolsep}{3pt}",
         r"\caption{Cited related-work detector status. These rows are separated from the main three-seed comparison unless the method is retrained or evaluated under the same protocol.}",
         r"\label{tab:cited_related_detector_status}",
-        r"\begin{tabular}{@{}llrrrrrl@{}}",
+        r"\begin{tabular}{@{}llrrrrr@{}}",
         r"\toprule",
-        r"Method & Protocol & AP & AP50 & F1 & Params(M) & GFLOPs & Note \\",
+        r"Method & Protocol & AP & AP50 & F1 & Params(M) & GFLOPs \\",
         r"\midrule",
     ]
     if rows:
@@ -860,13 +871,12 @@ def write_related_work_latex(entries: list[TableEntry], path: Path) -> None:
                         fmt(entry.f1),
                         fmt_m(entry.params_m),
                         fmt_m(entry.gflops),
-                        latex_escape(entry.note),
                     ]
                 )
                 + r" \\"
             )
     else:
-        lines.append(r"\multicolumn{8}{c}{Additional cited related-work implementations are being audited for runnable 1280-resolution evaluation.} \\")
+        lines.append(r"\multicolumn{7}{c}{Additional cited related-work implementations are being audited for runnable 1280-resolution evaluation.} \\")
     lines.extend([r"\bottomrule", r"\end{tabular}", r"\end{table*}", ""])
     path.write_text("\n".join(lines), encoding="utf-8")
 
@@ -944,7 +954,7 @@ def write_markdown(
         "",
         "- YOLO-family nano/small/medium/large sweep rows in this preview are completed 1280-resolution three-seed rows.",
         "- Cited related-work rows with compatible staged runs are completed or explicitly marked with their reproduction/adapter caveat.",
-        "- P2P4-SelfAttnFR is deduped by latest official seed run for seeds 42, 123, and 2026.",
+        "- `Ours` denotes the SAFR-YOLO/P2P4-SelfAttnFR implementation, deduped by latest official seed run for seeds 42, 123, and 2026.",
         "- External related-work eval-only rows are intentionally separated; strict 1280 3-seed related-work rows are tracked with protocol notes.",
     ]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")

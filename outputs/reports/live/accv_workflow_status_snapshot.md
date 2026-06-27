@@ -1,6 +1,6 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-27 21:19:37 KST`
+Updated: `2026-06-28 04:38:57 KST`
 
 ## Detector Status
 
@@ -21,7 +21,7 @@ Updated: `2026-06-27 21:19:37 KST`
 | 5 | YOLOv12l | 0.3771 | 0.5958 | 0.6219 | 26.40M | 123,2026,42 |
 | 6 | YOLOv8l | 0.3765 | 0.5963 | 0.6198 | 43.64M | 123,2026,42 |
 | 7 | SFFEF-YOLO [4] | 0.3749 | 0.5914 | 0.6137 | 20.87M | 42,123,2026 |
-| 8 | YOLOv9c | 0.3738 | 0.5942 | 0.6210 | 25.54M | 123,2026,42 |
+| 8 | YOLOv26l | 0.3732 | 0.5877 | 0.6136 | 26.19M | 123,2026,42 |
 
 ### UAVDet 3-Seed Queue
 
@@ -34,16 +34,16 @@ Updated: `2026-06-27 21:19:37 KST`
 ## MarineCity System
 
 - Real-Cesium scenario count: `3`
-- Token-level system tests: `49`
+- Token-level system tests: `76`
 - Artifact status: `marinecity_system_test_artifacts_complete`
 - Real-capture detector/reasoner smoke: `marinecity_detector_reasoner_smoke_artifacts_ready`; tokens `23`; report `outputs/reports/live/marinecity_detector_reasoner_smoke.md`
 - Detector preview sheet: `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png`
 - Cross-view evidence graph: `marinecity_crossview_evidence_graph_smoke_ready`; hypotheses `13`; multi-view `5`; edges support/conflict/missing `23`/`4`/`20`; claim `real_cesium_crossview_association_smoke_not_final_3d_reconstruction`
-- Integration check: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; actor classes `['bus', 'car', 'pedestrian', 'person', 'truck', 'van']`; detector classes `{'car': 77, 'bus': 17, 'van': 10, 'pedestrian': 24}`; report `outputs/reports/live/marinecity_system_integration_check.md`
+- Integration check: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; actor classes `['bus', 'car', 'pedestrian', 'person', 'truck', 'van']`; detector classes `{'bus': 15, 'car': 65, 'motor': 2, 'pedestrian': 25, 'van': 8, 'truck': 2}`; report `outputs/reports/live/marinecity_system_integration_check.md`
 - Neural 3D completion gate: `marinecity_3d_completion_ready`; metric rows `3`; report `outputs/reports/live/marinecity_3d_completion_readiness.md`
 - Neural 3D input dataset: `marinecity_neural3d_dataset_export_ready`; frames `9`; split `{'train': 6, 'heldout': 3}`; report `outputs/reports/live/marinecity_neural3d_dataset_export.md`
 - Depth point-cloud smoke: `marinecity_depth_pointcloud_smoke_ready`; points `7584`; preview `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/marinecity_depth_pointcloud_smoke_topdown.png`; report `outputs/reports/live/marinecity_depth_pointcloud_smoke.md`
-- Neural 3D runner preflight: `marinecity_3d_runner_preflight_ready`; runner available `False`; report `outputs/reports/live/marinecity_3d_runner_preflight.md`
+- Neural 3D runner preflight: `marinecity_3d_runner_preflight_ready`; runner available `True`; report `outputs/reports/live/marinecity_3d_runner_preflight.md`
 - Live overlay: `session_overlay_added`; camera set `True`; profile `viewer160_marinecity_roi`
 - Real Cesium: Google tiles `True`, terrain `True`, fake city `False`
 - UAV altitude policy: `{'band_m': [140, 160], 'default_m': 160, 'user_locked_review_height_m': 160, 'verified_viewer160_recapture_m': {'uav_01': 140, 'uav_02': 150, 'uav_03': 160}, 'note': 'Use 140-160 m for UAV/camera observation; keep CesiumGeoreference readback logged separately.'}`
@@ -63,7 +63,7 @@ Updated: `2026-06-27 21:19:37 KST`
 - Prompt class counts: `{'bus': 16, 'car': 29, 'pedestrian': 4}`
 - Real-capture compact prompt pack: `aerograph_real_capture_prompt_pack_ready`, prompts `23`, classes `{'bus': 8, 'car': 15}`
 - Real-capture compact web batches: `aerograph_web_batches_ready`, count `3`; dry-run `aerograph_eval_dry_run_ready`, paper-claim `False`
-- Real-capture compact non-mock smoke: `aerograph_real_capture_nonmock_smoke_complete`; expected prompts `23`; selected manifest `outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json`
+- Real-capture compact external-provider smoke: `aerograph_real_capture_nonmock_smoke_complete`; expected prompts `23`; selected manifest `outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json`
 - Real-capture compact web packet: `outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md`; checklist `outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv`
 - Web batches: `aerograph_web_batches_ready`, count `5`, dir `outputs/reports/live/aerograph_prompt_pack/web_batches`
 - Dry-run status: `aerograph_eval_dry_run_ready`
@@ -79,17 +79,11 @@ Updated: `2026-06-27 21:19:37 KST`
 ## Queue Gates
 
 - UAVDet log tail: `[2026-06-25T19:23:05+09:00] QUEUE_FINISHED UAVDet inspired reproduction queue`
-- TinyPerson policy: `TinyPerson is stopped here and retained only as an internal diagnostic; it is excluded from default main/supplementary paper artifacts.`
-- TinyPerson archive gate: `closed_archive_only_internal`
-- TinyPerson corrected original-window archive: gate `closed_archive_only_internal`; status `closed_archive_only`; paper use `internal_archive`
-- TinyPerson archived methods: `['Ours', 'YOLOv9m']`; completed methods `['Ours', 'YOLOv9m']`
-- TinyPerson archived best row: `{'method': 'YOLOv9m', 'seed': '42', 'imgsz': '1280', 'latest_epoch': 60, 'best_epoch': 55, 'best_ap': 0.20348, 'best_ap50': 0.54079, 'best_recall': 0.51038, 'status': 'complete'}`
 
 ## Dashboard Links
 
 - Training dashboard: `outputs/reports/live/training_dashboard.png`
 - MarineCity dashboard: `outputs/reports/live/marinecity_simulation_dashboard.png`
-- Archived TinyPerson dashboard: `outputs/reports/live/tinyperson_corner_original_dashboard.png`
 
 ## Paper-Ready Artifacts
 

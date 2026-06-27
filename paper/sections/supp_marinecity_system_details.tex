@@ -1,0 +1,60 @@
+\subsection{Supplementary MarineCity System Details}
+\label{sec:supp_marinecity_system_details}
+
+This supplementary section records the supporting MarineCity artifacts that are
+too detailed for the 14-page main paper. The main paper keeps the compact
+system-smoke and neural-3D metric tables; this section provides the capture
+source, evidence-graph details, and current reasoner-validation status.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Verified real-Cesium MarineCity capture source for the current
+multi-UAV 3D/reasoner handoff.}
+\label{tab:supp_marinecity_real_capture_benchmark}
+\input{tables/marinecity_real_capture_benchmark_table}
+\end{table}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{MarineCity real-Cesium cross-view evidence graph smoke result. The
+coordinates are heuristic camera-ray projections used for association and
+ambiguity routing; they are not treated as metric 3D reconstruction ground
+truth.}
+\label{tab:supp_marinecity_crossview_evidence_graph}
+\input{tables/marinecity_crossview_evidence_graph_table}
+\end{table*}
+
+\begin{table}[t]
+\centering
+\scriptsize
+\caption{AeroGraph Reasoner validation slot. The current table is kept in the
+supplement because external OpenAI/ChatGPT/local-provider replication is not yet
+complete.}
+\label{tab:supp_aerograph_reasoner_validation_slot}
+\input{tables/aerograph_reasoner_results_placeholder}
+\end{table}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{MarineCity 3D/reasoner reporting split. Smoke-test rows are available
+now; full benchmark rows are promoted only after external-provider reasoning
+and longer completion/restoration experiments are validated.}
+\label{tab:supp_marinecity_reporting_split}
+\begin{tabular}{lll}
+\toprule
+Component & Main paper & Supplementary material \\
+\midrule
+MarineCity scene & geospatial scene overview and final object/camera counts & full camera poses, object placement list, export manifest \\
+Multi-UAV capture & representative three-UAV result & fleet-size and viewpoint details \\
+3D evidence graph & compact system result & graph construction parameters and failure cases \\
+3D completion & runner-family smoke metrics & NeRF/3DGS/re-observation settings and extra renders \\
+AeroGraph Reasoner & conservative system-smoke wording & prompt template, JSON schema, verifier rules, rejected actions \\
+\bottomrule
+\end{tabular}
+\end{table*}

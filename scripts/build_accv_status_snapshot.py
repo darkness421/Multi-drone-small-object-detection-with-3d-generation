@@ -16,17 +16,6 @@ FINAL_TABLE = REPO_ROOT / "outputs/reports/final_detector_table_preview.csv"
 UAVDET_ROOT = REPO_ROOT / "outputs/detectors/required_related_work_reimplementations"
 UAVDET_SEEDS = [42, 123, 2026]
 UAVDET_LOG = REPO_ROOT / "outputs/logs/required_related_work_models/uavdet_inspired_after_required.log"
-TINYPERSON_LOG = REPO_ROOT / "outputs/logs/tinyperson_640/queue.log"
-TINYPERSON_TRANSFER_LOG = REPO_ROOT / "outputs/logs/tinyperson_640_transfer/queue.log"
-TINYPERSON_EVAL_SWEEP_LOG = REPO_ROOT / "outputs/logs/tinyperson_eval_imgsz_sweep/queue.log"
-TINYPERSON_CORNER_LOG = REPO_ROOT / "outputs/logs/tinyperson_corner_original/queue.log"
-TINYPERSON_CORNER_LIVE_SUMMARY = REPO_ROOT / "outputs/experiments/tinyperson_corner_original/live_summary.csv"
-TINYPERSON_CORNER_DASHBOARD = LIVE_DIR / "tinyperson_corner_original_dashboard.png"
-TINYPERSON_ARCHIVE_GATE = "closed_archive_only_internal"
-TINYPERSON_ARCHIVE_NOTE = (
-    "TinyPerson is stopped here and retained only as an internal diagnostic; "
-    "it is excluded from default main/supplementary paper artifacts."
-)
 SYSTEM_MANIFEST = LIVE_DIR / "marinecity_system_test_10plus/manifest.json"
 MARINECITY_DETECTOR_REASONER_SMOKE = LIVE_DIR / "marinecity_detector_reasoner_smoke.json"
 MARINECITY_CROSSVIEW_GRAPH_SUMMARY = REPO_ROOT / "outputs/graphs/marinecity_crossview_evidence_graph/summary.json"
@@ -90,144 +79,6 @@ def last_log_line(path: Path) -> str:
         return "missing"
     lines = [line.strip() for line in path.read_text(encoding="utf-8", errors="ignore").splitlines() if line.strip()]
     return lines[-1] if lines else "empty"
-
-
-def tiny_person_gate_state() -> str:
-    if not TINYPERSON_LOG.exists():
-        return "not_started"
-    lines = [
-        line.strip()
-        for line in TINYPERSON_LOG.read_text(encoding="utf-8", errors="ignore").splitlines()
-        if line.strip()
-    ]
-    for line in reversed(lines):
-        if "QUEUE_FINISHED TinyPerson 640 stress test" in line:
-            return "finished_tinyperson_640_stress_test"
-        if "Starting TinyPerson 640 job=" in line:
-            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
-            if match:
-                return f"running_tinyperson_640_{match.group(1)}_seed{match.group(2)}"
-            return "running_tinyperson_640"
-        if "Collecting TinyPerson 640 results" in line:
-            return "collecting_tinyperson_640"
-        if "TRAIN_OK TinyPerson job=" in line:
-            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
-            if match:
-                return f"last_train_ok_tinyperson_640_{match.group(1)}_seed{match.group(2)}"
-            return "last_train_ok_tinyperson_640"
-        if "TRAIN_FAILED TinyPerson job=" in line:
-            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
-            if match:
-                return f"last_train_failed_tinyperson_640_{match.group(1)}_seed{match.group(2)}"
-            return "last_train_failed_tinyperson_640"
-        if "TinyPerson data is ready" in line:
-            return "data_ready_tinyperson_640"
-        if "Waiting for wait_uavdet_1280" in line:
-            return "waiting_for_uavdet_1280_marker"
-    return "log_present_state_unknown"
-
-
-def tiny_person_transfer_gate_state() -> str:
-    if not TINYPERSON_TRANSFER_LOG.exists():
-        return "not_started"
-    lines = [
-        line.strip()
-        for line in TINYPERSON_TRANSFER_LOG.read_text(encoding="utf-8", errors="ignore").splitlines()
-        if line.strip()
-    ]
-    for line in reversed(lines):
-        if "QUEUE_FINISHED TinyPerson Ours transfer fine-tune" in line:
-            return "finished_tinyperson_ours_transfer"
-        if "Collecting TinyPerson transfer results" in line:
-            return "collecting_tinyperson_ours_transfer"
-        if "FINISH TinyPerson transfer seed=" in line:
-            match = re.search(r"seed=(\d+)", line)
-            return f"last_finished_tinyperson_ours_transfer_seed{match.group(1)}" if match else "last_finished_tinyperson_ours_transfer"
-        if "START TinyPerson transfer seed=" in line:
-            match = re.search(r"seed=(\d+)", line)
-            return f"running_tinyperson_ours_transfer_seed{match.group(1)}" if match else "running_tinyperson_ours_transfer"
-    return "log_present_state_unknown"
-
-
-def tiny_person_eval_sweep_gate_state() -> str:
-    if not TINYPERSON_EVAL_SWEEP_LOG.exists():
-        return "not_started"
-    lines = [
-        line.strip()
-        for line in TINYPERSON_EVAL_SWEEP_LOG.read_text(encoding="utf-8", errors="ignore").splitlines()
-        if line.strip()
-    ]
-    for line in reversed(lines):
-        if "QUEUE_FINISHED TinyPerson eval-only input-size sweep" in line:
-            return "finished_tinyperson_eval_imgsz_sweep"
-        if "FINISH TinyPerson eval sweep method=" in line:
-            match = re.search(r"method=([^ ]+) seed=(\d+) imgsz=(\d+)", line)
-            if match:
-                return f"last_finished_eval_sweep_{match.group(1)}_seed{match.group(2)}_img{match.group(3)}"
-            return "last_finished_tinyperson_eval_sweep"
-        if "START TinyPerson eval sweep method=" in line:
-            match = re.search(r"method=([^ ]+) seed=(\d+) imgsz=(\d+)", line)
-            if match:
-                return f"running_eval_sweep_{match.group(1)}_seed{match.group(2)}_img{match.group(3)}"
-            return "running_tinyperson_eval_sweep"
-    return "log_present_state_unknown"
-
-
-def tiny_person_corner_gate_state() -> str:
-    if not TINYPERSON_CORNER_LOG.exists():
-        return "not_started"
-    lines = [
-        line.strip()
-        for line in TINYPERSON_CORNER_LOG.read_text(encoding="utf-8", errors="ignore").splitlines()
-        if line.strip()
-    ]
-    for line in reversed(lines):
-        if "QUEUE_FINISHED TinyPerson corner/original-window queue" in line:
-            return "finished_tinyperson_corner_original"
-        if "FINISH TinyPerson corner/original job=" in line:
-            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
-            if match:
-                return f"last_finished_tinyperson_corner_{match.group(1)}_seed{match.group(2)}"
-            return "last_finished_tinyperson_corner_original"
-        if "START TinyPerson corner/original job=" in line:
-            match = re.search(r"job=([^ ]+) seed=(\d+)", line)
-            if match:
-                return f"running_tinyperson_corner_{match.group(1)}_seed{match.group(2)}"
-            return "running_tinyperson_corner_original"
-        if "Preparing TinyPerson corner/original-window YOLO dataset" in line:
-            return "preparing_tinyperson_corner_original"
-    return "log_present_state_unknown"
-
-
-def tiny_person_corner_live_summary() -> dict[str, Any]:
-    rows = read_csv(TINYPERSON_CORNER_LIVE_SUMMARY)
-    if not rows:
-        return {"status": "closed_archive_only", "paper_use": "internal_archive", "rows": []}
-    parsed: list[dict[str, Any]] = []
-    for row in rows:
-        parsed.append(
-            {
-                "method": row.get("method", ""),
-                "seed": row.get("seed", ""),
-                "imgsz": row.get("imgsz", ""),
-                "latest_epoch": int(float(row.get("latest_epoch", 0) or 0)),
-                "best_epoch": int(float(row.get("best_epoch", 0) or 0)),
-                "best_ap": float(row.get("best_ap", 0.0) or 0.0),
-                "best_ap50": float(row.get("best_ap50", 0.0) or 0.0),
-                "best_recall": float(row.get("best_recall", 0.0) or 0.0),
-                "status": row.get("status", ""),
-            }
-        )
-    methods = sorted({row["method"] for row in parsed if row["method"]})
-    complete_methods = {row["method"] for row in parsed if row["method"] and row.get("status") == "complete"}
-    return {
-        "status": "closed_archive_only",
-        "paper_use": "internal_archive",
-        "methods": methods,
-        "complete_methods": sorted(complete_methods),
-        "rows": parsed,
-        "best_row": max(parsed, key=lambda row: row["best_ap"], default={}),
-    }
 
 
 def _f1(row: dict[str, str]) -> float:
@@ -382,17 +233,17 @@ def build_snapshot() -> dict[str, Any]:
     real_capture_prompt_manifest = read_json(REAL_CAPTURE_PROMPT_MANIFEST)
     real_capture_web_batch_manifest = read_json(REAL_CAPTURE_PROMPT_WEB_BATCH_MANIFEST)
     real_capture_dryrun = read_json(REAL_CAPTURE_PROMPT_DRYRUN)
-    real_capture_nonmock_smoke = read_json(REAL_CAPTURE_NONMOCK_SMOKE_STATUS)
+    real_capture_external_provider_smoke = read_json(REAL_CAPTURE_NONMOCK_SMOKE_STATUS)
     web_batch_manifest = read_json(AEROGRAPH_WEB_BATCH_MANIFEST)
     system_manifest = read_json(SYSTEM_MANIFEST)
     detector_reasoner_smoke = read_json(MARINECITY_DETECTOR_REASONER_SMOKE)
     crossview_graph = read_json(MARINECITY_CROSSVIEW_GRAPH_SUMMARY)
     dry_run = read_json(AEROGRAPH_DRY_RUN)
     aerograph_table = read_json(AEROGRAPH_TABLE_MANIFEST)
-    aerograph_nonmock = read_json(AEROGRAPH_NONMOCK_READINESS)
+    aerograph_external_provider = read_json(AEROGRAPH_NONMOCK_READINESS)
     aerograph_coverage = (
-        aerograph_nonmock.get("effective_response_coverage")
-        or aerograph_nonmock.get("manual_response_coverage", {})
+        aerograph_external_provider.get("effective_response_coverage")
+        or aerograph_external_provider.get("manual_response_coverage", {})
         or {}
     )
     paper_check = read_json(PAPER_ARTIFACT_CHECK)
@@ -405,7 +256,6 @@ def build_snapshot() -> dict[str, Any]:
     marinecity_pointcloud = read_json(MARINECITY_DEPTH_POINTCLOUD_SMOKE)
     marinecity_runner_preflight = read_json(MARINECITY_3D_RUNNER_PREFLIGHT)
     session_overlay = read_json(MARINECITY_SESSION_OVERLAY_STATUS)
-    tinyperson_corner = tiny_person_corner_live_summary()
     prim_status = session_overlay.get("prim_status", {}) or {}
     georef = session_overlay.get("georeference_readback", {}) or {}
     return {
@@ -516,9 +366,9 @@ def build_snapshot() -> dict[str, Any]:
             "real_capture_web_collection_checklist_exists": REAL_CAPTURE_WEB_COLLECTION_CHECKLIST.exists(),
             "real_capture_dryrun_status": real_capture_dryrun.get("status"),
             "real_capture_dryrun_paper_claim_allowed": real_capture_dryrun.get("paper_claim_allowed"),
-            "real_capture_nonmock_smoke_status": real_capture_nonmock_smoke.get("status"),
-            "real_capture_nonmock_smoke_selected_manifest": real_capture_nonmock_smoke.get("selected_manifest"),
-            "real_capture_nonmock_smoke_expected_prompt_count": real_capture_nonmock_smoke.get("expected_prompt_count"),
+            "real_capture_external_provider_smoke_status": real_capture_external_provider_smoke.get("status"),
+            "real_capture_external_provider_smoke_selected_manifest": real_capture_external_provider_smoke.get("selected_manifest"),
+            "real_capture_external_provider_smoke_expected_prompt_count": real_capture_external_provider_smoke.get("expected_prompt_count"),
             "web_batch_status": web_batch_manifest.get("status"),
             "web_batch_count": web_batch_manifest.get("batch_count"),
             "web_batch_dir": web_batch_manifest.get("out_dir"),
@@ -527,7 +377,7 @@ def build_snapshot() -> dict[str, Any]:
             "dry_run_summary": dry_run.get("summary"),
             "paper_table_status": aerograph_table.get("status"),
             "paper_table_selected_manifest": aerograph_table.get("selected_manifest"),
-            "non_mock_status": aerograph_nonmock.get("status", "pending_provider_execution"),
+            "non_mock_status": aerograph_external_provider.get("status", "pending_provider_execution"),
             "non_mock_coverage_ratio": aerograph_coverage.get(
                 "valid_coverage_ratio", aerograph_coverage.get("coverage_ratio")
             ),
@@ -537,35 +387,19 @@ def build_snapshot() -> dict[str, Any]:
             ),
             "non_mock_nonblank_responses": aerograph_coverage.get("matched_nonblank_response_count"),
             "non_mock_prompt_count": aerograph_coverage.get("prompt_count"),
-            "reviewed_candidate_valid_count": aerograph_nonmock.get("reviewed_candidate_valid_count"),
-            "external_provider_replication_ready": aerograph_nonmock.get("external_provider_replication_ready"),
-            "full_manual_template": aerograph_nonmock.get("full_template"),
-            "nonmock_readiness_report": str(AEROGRAPH_NONMOCK_READINESS.with_suffix(".md").relative_to(REPO_ROOT)),
-            "nonmock_collection_plan": str(AEROGRAPH_COLLECTION_PLAN.relative_to(REPO_ROOT)),
-            "nonmock_collection_plan_exists": AEROGRAPH_COLLECTION_PLAN.exists(),
+            "reviewed_candidate_valid_count": aerograph_external_provider.get("reviewed_candidate_valid_count"),
+            "external_provider_replication_ready": aerograph_external_provider.get("external_provider_replication_ready"),
+            "full_manual_template": aerograph_external_provider.get("full_template"),
+            "external_provider_readiness_report": str(AEROGRAPH_NONMOCK_READINESS.with_suffix(".md").relative_to(REPO_ROOT)),
+            "external_provider_collection_plan": str(AEROGRAPH_COLLECTION_PLAN.relative_to(REPO_ROOT)),
+            "external_provider_collection_plan_exists": AEROGRAPH_COLLECTION_PLAN.exists(),
         },
         "queues": {
             "uavdet_log_tail": last_log_line(UAVDET_LOG),
-            "tinyperson_archive_note": TINYPERSON_ARCHIVE_NOTE,
-            "tinyperson_log_tail": "archived; legacy log retained but ignored",
-            "tiny_person_gate": TINYPERSON_ARCHIVE_GATE,
-            "tinyperson_transfer_log_tail": "archived; legacy transfer log retained but ignored",
-            "tiny_person_transfer_gate": TINYPERSON_ARCHIVE_GATE,
-            "tinyperson_eval_sweep_log_tail": "archived; legacy eval-size log retained but ignored",
-            "tiny_person_eval_sweep_gate": TINYPERSON_ARCHIVE_GATE,
-            "tinyperson_corner_log_tail": "archived; stopped queue log retained but ignored",
-            "tiny_person_corner_gate": TINYPERSON_ARCHIVE_GATE,
-            "tinyperson_corner_status": tinyperson_corner.get("status"),
-            "tinyperson_corner_paper_use": tinyperson_corner.get("paper_use"),
-            "tinyperson_corner_methods": tinyperson_corner.get("methods"),
-            "tinyperson_corner_complete_methods": tinyperson_corner.get("complete_methods"),
-            "tinyperson_corner_rows": tinyperson_corner.get("rows"),
-            "tinyperson_corner_best_row": tinyperson_corner.get("best_row"),
         },
         "dashboards": {
             "training": str(TRAIN_DASHBOARD.relative_to(REPO_ROOT)),
             "marinecity": str(SIM_DASHBOARD.relative_to(REPO_ROOT)),
-            "tinyperson_corner": str(TINYPERSON_CORNER_DASHBOARD.relative_to(REPO_ROOT)),
         },
         "paper_ready_artifacts": {
             "readiness_audit": str(READINESS_AUDIT.relative_to(REPO_ROOT)),
@@ -684,7 +518,7 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- Prompt class counts: `{aerograph.get('class_counts')}`",
         f"- Real-capture compact prompt pack: `{aerograph.get('real_capture_prompt_pack_status')}`, prompts `{aerograph.get('real_capture_prompt_count')}`, classes `{aerograph.get('real_capture_prompt_class_counts')}`",
         f"- Real-capture compact web batches: `{aerograph.get('real_capture_web_batch_status')}`, count `{aerograph.get('real_capture_web_batch_count')}`; dry-run `{aerograph.get('real_capture_dryrun_status')}`, paper-claim `{aerograph.get('real_capture_dryrun_paper_claim_allowed')}`",
-        f"- Real-capture compact non-mock smoke: `{aerograph.get('real_capture_nonmock_smoke_status')}`; expected prompts `{aerograph.get('real_capture_nonmock_smoke_expected_prompt_count')}`; selected manifest `{aerograph.get('real_capture_nonmock_smoke_selected_manifest') or ''}`",
+        f"- Real-capture compact external-provider smoke: `{aerograph.get('real_capture_external_provider_smoke_status')}`; expected prompts `{aerograph.get('real_capture_external_provider_smoke_expected_prompt_count')}`; selected manifest `{aerograph.get('real_capture_external_provider_smoke_selected_manifest') or ''}`",
         f"- Real-capture compact web packet: `{aerograph.get('real_capture_web_collection_packet')}`; checklist `{aerograph.get('real_capture_web_collection_checklist')}`",
         f"- Web batches: `{aerograph.get('web_batch_status')}`, count `{aerograph.get('web_batch_count')}`, dir `{aerograph.get('web_batch_dir')}`",
         f"- Dry-run status: `{aerograph.get('dry_run_status')}`",
@@ -694,23 +528,17 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- Reviewed-candidate coverage: `{aerograph.get('reviewed_candidate_valid_count')}/{aerograph.get('non_mock_prompt_count')}`",
         f"- External-provider replication ready: `{aerograph.get('external_provider_replication_ready')}`",
         f"- Full manual template: `{aerograph.get('full_manual_template')}`",
-        f"- Non-mock readiness report: `{aerograph.get('nonmock_readiness_report')}`",
-        f"- Non-mock collection plan: `{aerograph.get('nonmock_collection_plan')}`",
+        f"- Non-mock readiness report: `{aerograph.get('external_provider_readiness_report')}`",
+        f"- Non-mock collection plan: `{aerograph.get('external_provider_collection_plan')}`",
         "",
         "## Queue Gates",
         "",
         f"- UAVDet log tail: `{queues.get('uavdet_log_tail')}`",
-        f"- TinyPerson policy: `{queues.get('tinyperson_archive_note')}`",
-        f"- TinyPerson archive gate: `{queues.get('tiny_person_gate')}`",
-        f"- TinyPerson corrected original-window archive: gate `{queues.get('tiny_person_corner_gate')}`; status `{queues.get('tinyperson_corner_status')}`; paper use `{queues.get('tinyperson_corner_paper_use')}`",
-        f"- TinyPerson archived methods: `{queues.get('tinyperson_corner_methods')}`; completed methods `{queues.get('tinyperson_corner_complete_methods')}`",
-        f"- TinyPerson archived best row: `{queues.get('tinyperson_corner_best_row')}`",
         "",
         "## Dashboard Links",
         "",
         f"- Training dashboard: `{snapshot['dashboards']['training']}`",
         f"- MarineCity dashboard: `{snapshot['dashboards']['marinecity']}`",
-        f"- Archived TinyPerson dashboard: `{snapshot['dashboards']['tinyperson_corner']}`",
         "",
         "## Paper-Ready Artifacts",
         "",

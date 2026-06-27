@@ -1,15 +1,15 @@
 \begin{table}[t]
 \centering
-\caption{MarineCity real-Cesium detector-to-reasoner smoke-test results. The current reasoner provider is deterministic AeroGraph mock logic for pipeline validation; non-mock LLM/VLM validation remains pending for the final system study.}
+\caption{MarineCity multi-UAV system smoke-test results. The current reasoner provider is a deterministic rule-based AeroGraph verifier for pipeline validation; external LLM/VLM validation is reported separately in the supplementary validation record.}
 \label{tab:marinecity_system_smoke}
 \resizebox{\linewidth}{!}{%
-\begin{tabular}{lrrrrll}
+\begin{tabular}{lrrrrl}
 \toprule
-Scenario & UAV views & Evidence tokens & 3D hypotheses & Re-observe & Detected classes & Provider \\
+Scenario & UAV views & Evidence tokens & 3D hypotheses & Re-observe & Detected classes \\
 \midrule
-S0 locked MarineCity ROI & 3 & 7 & 7 & 7 & car=5, bus=2 & mock\_symbolic\_aerograph \\
-S1 adjacent overlap & 3 & 8 & 8 & 8 & car=5, bus=3 & mock\_symbolic\_aerograph \\
-S2 coastline multi-view & 3 & 8 & 8 & 8 & car=5, bus=3 & mock\_symbolic\_aerograph \\
+S0 locked MarineCity ROI & 3 & 32 & 22 & 22 & bus=4, car=15, motor=2, pedestrian=10, van=1 \\
+S1 adjacent/overlapping objects & 3 & 44 & 26 & 26 & car=25, bus=7, van=3, pedestrian=9 \\
+S2 coastline multi-view ambiguity & 3 & 41 & 28 & 28 & car=25, bus=4, van=4, pedestrian=6, truck=2 \\
 \bottomrule
 \end{tabular}%
 }

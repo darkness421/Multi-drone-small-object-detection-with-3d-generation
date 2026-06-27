@@ -52,6 +52,13 @@ def _escape_tex(value: str) -> str:
     return value.replace("_", "\\_").replace("%", "\\%")
 
 
+def _display_provider(value: Any) -> str:
+    provider = str(value or "missing")
+    if provider.endswith("_symbolic_aerograph"):
+        return "rule_based_aerograph"
+    return provider
+
+
 def build(args: argparse.Namespace) -> dict[str, Any]:
     detector_dir = Path(args.detector_dir)
     detector_summary = _read_json(detector_dir / "detector_smoke_summary.json")
@@ -73,7 +80,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
                 "hypotheses": int(reasoner_summary.get("hypothesis_count", 0) or 0),
                 "reobserve": int(reasoner_summary.get("reobserve_count", 0) or 0),
                 "detected_classes": _format_counts(class_counts),
-                "provider": reasoner_summary.get("provider", "missing"),
+                "provider": _display_provider(reasoner_summary.get("provider", "missing")),
             }
         )
 
@@ -82,12 +89,12 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
     lines = [
         "\\begin{table}[t]",
         "\\centering",
-        "\\caption{MarineCity real-Cesium detector-to-reasoner smoke-test results. The current reasoner provider is deterministic AeroGraph mock logic for pipeline validation; non-mock LLM/VLM validation remains pending for the final system study.}",
+        "\\caption{MarineCity real-Cesium detector-to-reasoner smoke-test results. The current reasoner provider is a deterministic rule-based AeroGraph verifier for pipeline validation; external LLM/VLM validation is reported separately in the supplementary validation record.}",
         "\\label{tab:marinecity_system_smoke}",
         "\\resizebox{\\linewidth}{!}{%",
-        "\\begin{tabular}{lrrrrll}",
+        "\\begin{tabular}{lrrrrl}",
         "\\toprule",
-        "Scenario & UAV views & Evidence tokens & 3D hypotheses & Re-observe & Detected classes & Provider \\\\",
+        "Scenario & UAV views & Evidence tokens & 3D hypotheses & Re-observe & Detected classes \\\\",
         "\\midrule",
     ]
     for row in rows:
@@ -100,7 +107,6 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
                     str(row["hypotheses"]),
                     str(row["reobserve"]),
                     _escape_tex(str(row["detected_classes"])),
-                    _escape_tex(str(row["provider"])),
                 ]
             )
             + " \\\\"

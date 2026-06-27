@@ -1,6 +1,37 @@
 # ACCV Main Paper vs Supplementary Strategy
 
-Updated: 2026-06-01 KST
+Updated: 2026-06-28 KST
+
+## 2026-06-28 Submission Layout Update
+
+The current Overleaf draft must be reorganized so that the conclusion appears
+within the ACCV 14-page main-paper limit. If result tables drift beyond the
+conclusion or into late pages, keep only the core self-contained results in the
+main paper and move supporting material to the supplementary PDF.
+
+Main paper now keeps:
+
+- the compact VisDrone detector comparison table with `Ours` as the final row;
+- the compact detector ablation table;
+- one AP/parameter or AP/AP50 result figure if space allows;
+- the compact MarineCity real-Cesium system-smoke table;
+- the compact neural-3D runner-family smoke metric table if it fits;
+- one qualitative/system figure built from real MarineCity assets.
+
+Supplementary now receives:
+
+- full YOLO-family scale coverage and detailed related-work protocol tables;
+- related-work coverage matrix and citation-only model status;
+- Grad-CAM/feature-activation, NMS, input-resolution, and design-search rows;
+- real-Cesium capture-source and cross-view graph detail tables;
+- AeroGraph prompt schema, reviewed candidate table, and external-provider
+  validation checklist until replicated;
+- implementation details, hyperparameters, dataset conversion, failure cases,
+  and extra qualitative examples.
+
+TinyPerson-style auxiliary stress checks are not part of the active paper claim.
+They should not appear in default main/supplementary result artifacts unless the
+authors later decide to add a carefully explained limitation note.
 
 Official ACCV 2026 dates:
 
@@ -85,7 +116,7 @@ technical, or too exhaustive for the 14-page main paper goes here.
 | E. Hyperparameters | training configs, optimizer, batch, image size, tile settings, graph thresholds | Reproducibility |
 | F. Evidence Graph Details | node/edge definitions, score equations, uncertainty terms, association thresholds | Technical depth |
 | G. Re-observation Policy Details | selection rule, view scoring, budget limits, stopping criteria | Explains action policy |
-| H. VLM/LLM Prompt Details | ACE-Reasoner prompt, input fields, output schema, safety/verification rule | Keeps prompt text out of main |
+| H. VLM/LLM Prompt Details | AeroGraph Reasoner prompt, input fields, output schema, safety/verification rule | Keeps prompt text out of main |
 | I. Extra Visual Analysis | Grad-CAM, attention maps, graph overlays, before/after completion | Reviewer intuition |
 | J. Failure Cases | dense occlusion, reflective surfaces, extreme scale, cross-view mismatch | Honest limitations |
 | K. Additional Qualitative Examples | success/failure panels from multiple scenes | Visual confidence |

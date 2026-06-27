@@ -1,24 +1,20 @@
 {
-  "updated_at_kst": "2026-06-27 22:36:54 KST",
+  "updated_at_kst": "2026-06-28 04:56:48 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
       "bundle": "paper/sections/main_results_patch_bundle.tex",
       "exists": true,
-      "included_file_count": 12,
+      "included_file_count": 8,
       "included_files": [
         "paper/sections/05_experiments_current_detector_status.tex",
         "paper/sections/06_marinecity_3d_readiness.tex",
         "paper/sections/07_marinecity_qualitative_figure_slots.tex",
         "paper/sections/main_results_patch_bundle.tex",
-        "paper/tables/aerograph_reasoner_results_placeholder.tex",
         "paper/tables/final_ablation_main_table.tex",
         "paper/tables/main_detector_comparison_table.tex",
         "paper/tables/marinecity_3d_completion_results_table.tex",
-        "paper/tables/marinecity_crossview_evidence_graph_table.tex",
-        "paper/tables/marinecity_real_capture_benchmark_table.tex",
-        "paper/tables/marinecity_system_scenario_table.tex",
-        "paper/tables/related_work_detector_status_table.tex"
+        "paper/tables/marinecity_system_scenario_table.tex"
       ],
       "commented_optional_inputs": [
         "sections/07_marinecity_qualitative_figure_slots"
@@ -27,12 +23,16 @@
     {
       "bundle": "paper/sections/supplementary_patch_bundle.tex",
       "exists": true,
-      "included_file_count": 4,
+      "included_file_count": 8,
       "included_files": [
         "paper/sections/07_marinecity_qualitative_figure_slots.tex",
         "paper/sections/supp_detector_experiment_inventory.tex",
+        "paper/sections/supp_marinecity_system_details.tex",
         "paper/sections/supplementary_patch_bundle.tex",
-        "paper/tables/final_ablation_supplementary_table.tex"
+        "paper/tables/aerograph_reasoner_results_placeholder.tex",
+        "paper/tables/final_ablation_supplementary_table.tex",
+        "paper/tables/marinecity_crossview_evidence_graph_table.tex",
+        "paper/tables/marinecity_real_capture_benchmark_table.tex"
       ],
       "commented_optional_inputs": []
     }
@@ -47,48 +47,5 @@
   "missing_graphics": [],
   "duplicate_labels": [],
   "unresolved_refs": [],
-  "pending_rows": [
-    {
-      "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "10",
-      "status": "allowed",
-      "text": "kept as pending before making a stronger final reasoning claim."
-    },
-    {
-      "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "106",
-      "status": "allowed",
-      "text": "artifacts, and Table~\\ref{tab:aerograph_reasoner_pending} reports the current"
-    },
-    {
-      "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "127",
-      "status": "allowed",
-      "text": "remains pending before promoting this to a final reasoning benchmark claim.}"
-    },
-    {
-      "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "128",
-      "status": "allowed",
-      "text": "\\label{tab:aerograph_reasoner_pending}"
-    },
-    {
-      "source": "paper/sections/main_results_patch_bundle.tex",
-      "line": "12",
-      "status": "allowed",
-      "text": "% - AeroGraph has a reviewed 49-prompt candidate table; external provider replication remains pending."
-    },
-    {
-      "source": "paper/tables/aerograph_reasoner_results_placeholder.tex",
-      "line": "7",
-      "status": "allowed",
-      "text": "AeroGraph Reasoner & 49 & -- & -- & -- & External provider validation pending \\\\"
-    },
-    {
-      "source": "paper/tables/marinecity_system_scenario_table.tex",
-      "line": "3",
-      "status": "allowed",
-      "text": "\\caption{MarineCity multi-UAV system smoke-test results. The current reasoner provider is a deterministic AeroGraph mock; non-mock LLM/VLM validation is marked as pending for the final system study.}"
-    }
-  ]
+  "pending_rows": []
 }

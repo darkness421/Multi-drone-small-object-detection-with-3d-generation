@@ -1,0 +1,17 @@
+{
+  "status": "marinecity_real_capture_crops_complete",
+  "root": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports",
+  "image_count": 63,
+  "crop_count": 63,
+  "csv": "outputs/reports/live/marinecity_real_capture_crops/marinecity_real_capture_crop_candidates.csv",
+  "contact_sheet": "outputs/reports/live/marinecity_real_capture_crops/marinecity_real_capture_crop_top12.png",
+  "best": {
+    "capture_name": "uavmarine_s2_viewer160_session_recapture",
+    "source": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
+    "crop_path": "outputs/reports/live/marinecity_real_capture_crops/crops/uavmarine_s2_viewer160_session_recapture_frame_002_uav_02_rgb_crop.png",
+    "black_ratio": 0.0035768217143736535,
+    "area_ratio": 0.9025,
+    "score": 1.1152149339219761
+  },
+  "note": "Crops are from real Cesium captures only; no synthetic/fallback geometry is generated."
+}

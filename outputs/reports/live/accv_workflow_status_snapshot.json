@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 21:19:37 KST",
+  "updated_at_kst": "2026-06-28 04:38:57 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -66,7 +66,7 @@
         "f1": 0.619767,
         "params_m": 43.6375,
         "seeds": "123,2026,42",
-        "note": "current 1280 comparison sweep, completed 3-seed"
+        "note": "official comparison row"
       },
       {
         "rank": "7",
@@ -81,14 +81,14 @@
       },
       {
         "rank": "8",
-        "method": "YOLOv9c",
-        "group": "YOLO family",
-        "ap": 0.373763,
-        "ap50": 0.59421,
-        "f1": 0.620969,
-        "params_m": 25.5369,
+        "method": "YOLOv26l",
+        "group": "YOLO large",
+        "ap": 0.373177,
+        "ap50": 0.58769,
+        "f1": 0.613562,
+        "params_m": 26.1918,
         "seeds": "123,2026,42",
-        "note": "current 1280 comparison sweep, completed 3-seed"
+        "note": "official comparison row"
       }
     ],
     "ours": {
@@ -213,7 +213,7 @@
   },
   "marinecity_system": {
     "scenario_count": 3,
-    "token_level_test_count": 49,
+    "token_level_test_count": 76,
     "artifact_status": "marinecity_system_test_artifacts_complete",
     "detector_reasoner_smoke_status": "marinecity_detector_reasoner_smoke_artifacts_ready",
     "detector_reasoner_smoke_tokens": 23,
@@ -288,12 +288,12 @@
       {
         "name": "safr_yolo_from_uav_views",
         "status": "PASS",
-        "evidence": "tokens=128, device=1, classes={'car': 77, 'bus': 17, 'van': 10, 'pedestrian': 24}"
+        "evidence": "tokens=117, device=1, classes={'bus': 15, 'car': 65, 'motor': 2, 'pedestrian': 25, 'van': 8, 'truck': 2}"
       },
       {
         "name": "pedestrian_detection_from_current_views",
         "status": "PASS",
-        "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=24, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
+        "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=25, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
       },
       {
         "name": "crossview_evidence_graph",
@@ -309,23 +309,15 @@
         "name": "external_llm_reasoner",
         "status": "PENDING",
         "evidence": "49-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_complete"
-      },
-      {
-        "name": "tinyperson_legacy_640_diagnostic",
-        "status": "INFO",
-        "evidence": "Archive the legacy TinyPerson 640 rows as a protocol-audit diagnostic only. Do not use them as paper-facing detector comparison evidence; TinyPerson is now excluded from the default paper."
-      },
-      {
-        "name": "tinyperson_corrected_corner_original",
-        "status": "PENDING",
-        "evidence": "status=closed_archive_only, methods=['Ours', 'YOLOv9m'], complete=['Ours', 'YOLOv9m'], best=YOLOv9m AP=0.20348. Corrected TinyPerson uses materialized corner crops, one person class, and 1280 input. The results are retained only as internal diagnostics and are excluded from the default paper."
       }
     ],
     "integration_detector_classes": {
-      "car": 77,
-      "bus": 17,
-      "van": 10,
-      "pedestrian": 24
+      "bus": 15,
+      "car": 65,
+      "motor": 2,
+      "pedestrian": 25,
+      "van": 8,
+      "truck": 2
     },
     "integration_actor_classes": [
       "bus",
@@ -348,7 +340,7 @@
     "depth_pointcloud_point_count": 7584,
     "depth_pointcloud_preview": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/marinecity_depth_pointcloud_smoke_topdown.png",
     "neural_3d_runner_preflight_status": "marinecity_3d_runner_preflight_ready",
-    "neural_3d_runner_available": false,
+    "neural_3d_runner_available": true,
     "neural_3d_runner_preflight_report": "outputs/reports/live/marinecity_3d_runner_preflight.md",
     "neural_3d_metric_result_rows": 3,
     "neural_3d_readiness_report": "outputs/reports/live/marinecity_3d_completion_readiness.md",
@@ -456,9 +448,9 @@
     "real_capture_web_collection_checklist_exists": true,
     "real_capture_dryrun_status": "aerograph_eval_dry_run_ready",
     "real_capture_dryrun_paper_claim_allowed": false,
-    "real_capture_nonmock_smoke_status": "aerograph_real_capture_nonmock_smoke_complete",
-    "real_capture_nonmock_smoke_selected_manifest": "outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json",
-    "real_capture_nonmock_smoke_expected_prompt_count": 23,
+    "real_capture_external_provider_smoke_status": "aerograph_real_capture_nonmock_smoke_complete",
+    "real_capture_external_provider_smoke_selected_manifest": "outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json",
+    "real_capture_external_provider_smoke_expected_prompt_count": 23,
     "web_batch_status": "aerograph_web_batches_ready",
     "web_batch_count": 5,
     "web_batch_dir": "outputs/reports/live/aerograph_prompt_pack/web_batches",
@@ -485,115 +477,16 @@
     "reviewed_candidate_valid_count": 49,
     "external_provider_replication_ready": false,
     "full_manual_template": "outputs/reports/live/aerograph_prompt_pack/aerograph_manual_response_template_all.jsonl",
-    "nonmock_readiness_report": "outputs/reports/live/aerograph_nonmock_readiness_status.md",
-    "nonmock_collection_plan": "docs/aerograph_nonmock_collection_plan.md",
-    "nonmock_collection_plan_exists": true
+    "external_provider_readiness_report": "outputs/reports/live/aerograph_nonmock_readiness_status.md",
+    "external_provider_collection_plan": "docs/aerograph_nonmock_collection_plan.md",
+    "external_provider_collection_plan_exists": true
   },
   "queues": {
-    "uavdet_log_tail": "[2026-06-25T19:23:05+09:00] QUEUE_FINISHED UAVDet inspired reproduction queue",
-    "tinyperson_archive_note": "TinyPerson is stopped here and retained only as an internal diagnostic; it is excluded from default main/supplementary paper artifacts.",
-    "tinyperson_log_tail": "archived; legacy log retained but ignored",
-    "tiny_person_gate": "closed_archive_only_internal",
-    "tinyperson_transfer_log_tail": "archived; legacy transfer log retained but ignored",
-    "tiny_person_transfer_gate": "closed_archive_only_internal",
-    "tinyperson_eval_sweep_log_tail": "archived; legacy eval-size log retained but ignored",
-    "tiny_person_eval_sweep_gate": "closed_archive_only_internal",
-    "tinyperson_corner_log_tail": "archived; stopped queue log retained but ignored",
-    "tiny_person_corner_gate": "closed_archive_only_internal",
-    "tinyperson_corner_status": "closed_archive_only",
-    "tinyperson_corner_paper_use": "internal_archive",
-    "tinyperson_corner_methods": [
-      "Ours",
-      "YOLOv9m"
-    ],
-    "tinyperson_corner_complete_methods": [
-      "Ours",
-      "YOLOv9m"
-    ],
-    "tinyperson_corner_rows": [
-      {
-        "method": "Ours",
-        "seed": "42",
-        "imgsz": "1280",
-        "latest_epoch": 41,
-        "best_epoch": 36,
-        "best_ap": 0.18271,
-        "best_ap50": 0.47612,
-        "best_recall": 0.44674,
-        "status": "complete"
-      },
-      {
-        "method": "Ours",
-        "seed": "123",
-        "imgsz": "1280",
-        "latest_epoch": 21,
-        "best_epoch": 16,
-        "best_ap": 0.15226,
-        "best_ap50": 0.40974,
-        "best_recall": 0.39805,
-        "status": "complete"
-      },
-      {
-        "method": "Ours",
-        "seed": "2026",
-        "imgsz": "1280",
-        "latest_epoch": 5,
-        "best_epoch": 5,
-        "best_ap": 0.08902,
-        "best_ap50": 0.25687,
-        "best_recall": 0.31673,
-        "status": "running"
-      },
-      {
-        "method": "YOLOv9m",
-        "seed": "42",
-        "imgsz": "1280",
-        "latest_epoch": 60,
-        "best_epoch": 55,
-        "best_ap": 0.20348,
-        "best_ap50": 0.54079,
-        "best_recall": 0.51038,
-        "status": "complete"
-      },
-      {
-        "method": "YOLOv9m",
-        "seed": "123",
-        "imgsz": "1280",
-        "latest_epoch": 36,
-        "best_epoch": 31,
-        "best_ap": 0.19602,
-        "best_ap50": 0.51739,
-        "best_recall": 0.47832,
-        "status": "complete"
-      },
-      {
-        "method": "YOLOv9m",
-        "seed": "2026",
-        "imgsz": "1280",
-        "latest_epoch": 21,
-        "best_epoch": 16,
-        "best_ap": 0.16173,
-        "best_ap50": 0.44543,
-        "best_recall": 0.42509,
-        "status": "complete"
-      }
-    ],
-    "tinyperson_corner_best_row": {
-      "method": "YOLOv9m",
-      "seed": "42",
-      "imgsz": "1280",
-      "latest_epoch": 60,
-      "best_epoch": 55,
-      "best_ap": 0.20348,
-      "best_ap50": 0.54079,
-      "best_recall": 0.51038,
-      "status": "complete"
-    }
+    "uavdet_log_tail": "[2026-06-25T19:23:05+09:00] QUEUE_FINISHED UAVDet inspired reproduction queue"
   },
   "dashboards": {
     "training": "outputs/reports/live/training_dashboard.png",
-    "marinecity": "outputs/reports/live/marinecity_simulation_dashboard.png",
-    "tinyperson_corner": "outputs/reports/live/tinyperson_corner_original_dashboard.png"
+    "marinecity": "outputs/reports/live/marinecity_simulation_dashboard.png"
   },
   "paper_ready_artifacts": {
     "readiness_audit": "outputs/reports/live/accv_research_package_readiness_audit.md",

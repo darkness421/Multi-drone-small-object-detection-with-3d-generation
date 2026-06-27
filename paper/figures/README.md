@@ -11,10 +11,24 @@ Current Overleaf-ready PNG exports:
 | --- | --- |
 | `fig01_com3d_ace_overall_framework.png` | Main Fig. 1, overall CoM3D-ACE framework |
 | `fig02_p2p4_safr_yolo.png` | Main Fig. 2, SAFR-YOLO / P2P4-SelfAttnFR detector |
-| `fig03_3d_evidence_reasoner.png` | Main Fig. 3, 3D evidence completion and ACE-Reasoner |
+| `fig03_3d_evidence_reasoner.png` | Main Fig. 3, 3D evidence completion and AeroGraph Reasoner |
 | `figS1_selfattnfr_module.png` | Supplementary Fig. S1, SelfAttnFR module |
 | `figS2_tinyfrelu_activation.png` | Supplementary Fig. S2, TinyFReLU activation |
 | `figS3_overlap_aware_nms.png` | Supplementary Fig. S3, overlap-aware NMS |
+
+Caption-ready detector result PNGs:
+
+| Folder | Contents |
+| --- | --- |
+| `results/` | Script-generated detector tables and plots for LaTeX insertion. These PNGs intentionally omit large embedded titles because the captions should carry the titles. |
+| `../../outputs/reports/internal/proposed_search/` | Internal-only proposed detector search figures. Use these for lab decisions, not for paper insertion. |
+
+Notes:
+
+- `results/paper_fig02_yolo_family_scale_table.png` includes YOLOv9c as the YOLOv9 large-anchor row.
+- YOLOv9e is excluded from paper-facing comparison figures because it is far outside the target model-size regime.
+- Paper-facing detector result figures are limited to the final `Ours: P2P4-SelfAttnFR` row, YOLO-family baselines, final detector ablation rows, and related-work comparison/status rows.
+- Broad proposed-search variants such as P2-CBAM-FR, P2-DCT-FR, wavelet/DCT/SE/DynFreq trials are kept in the internal report folder only.
 
 Editable/source draft figures:
 

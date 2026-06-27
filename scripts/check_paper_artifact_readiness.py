@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import re
 from dataclasses import dataclass
@@ -28,29 +27,23 @@ ARTIFACTS = [
     Artifact("main_detector", "paper/sections/05_experiments_current_detector_status.tex", "main", True, "Detector result section patch"),
     Artifact("main_detector", "paper/tables/main_detector_comparison_table.tex", "main", True, "Compact final detector table"),
     Artifact("main_detector", "paper/tables/final_ablation_main_table.tex", "main", True, "Compact final ablation table"),
-    Artifact("main_detector", "paper/tables/related_work_detector_status_table.tex", "main", True, "Cited related-work detector table"),
+    Artifact("supp_detector", "paper/tables/related_work_detector_status_table.tex", "supp", True, "Cited related-work detector protocol table"),
     Artifact("main_detector", "paper/figures/results/paper_fig01_main_detector_table.png", "main_optional", True, "Detector table visual"),
     Artifact("main_detector", "paper/figures/results/paper_fig04_ap_ap50_bar_chart.png", "main_or_supp", True, "AP/AP50 chart"),
     Artifact("main_detector", "paper/figures/results/paper_fig05_ap_params_scatter.png", "main_or_supp", True, "AP vs params chart"),
     Artifact("main_system", "paper/sections/06_marinecity_3d_readiness.tex", "main", True, "MarineCity protocol section patch"),
     Artifact("main_system", "paper/tables/marinecity_system_scenario_table.tex", "main", True, "Real-Cesium smoke/protocol table"),
     Artifact("main_system", "paper/tables/marinecity_system_token_results.csv", "main_source", True, "Source CSV for real-Cesium detector-to-reasoner smoke table"),
-    Artifact("main_system", "paper/tables/marinecity_real_capture_benchmark_table.tex", "main", True, "Verified real-Cesium capture-source table"),
-    Artifact("main_system", "paper/tables/marinecity_crossview_evidence_graph_table.tex", "main", True, "Real-Cesium cross-view evidence graph smoke table"),
+    Artifact("supp_system", "paper/sections/supp_marinecity_system_details.tex", "supp", True, "Supplementary MarineCity capture, graph, and reasoner details"),
+    Artifact("supp_system", "paper/tables/marinecity_real_capture_benchmark_table.tex", "supp", True, "Verified real-Cesium capture-source table"),
+    Artifact("supp_system", "paper/tables/marinecity_crossview_evidence_graph_table.tex", "supp", True, "Real-Cesium cross-view evidence graph smoke table"),
     Artifact("main_system", "paper/sections/07_marinecity_qualitative_figure_slots.tex", "main_optional", True, "Safe qualitative figure slots"),
     Artifact("bundle", "paper/sections/main_results_patch_bundle.tex", "main_bundle", True, "Overleaf-ready main results patch bundle"),
     Artifact("bundle", "paper/sections/supplementary_patch_bundle.tex", "supp_bundle", True, "Overleaf-ready supplementary patch bundle"),
     Artifact("supp_detector", "paper/sections/supp_detector_experiment_inventory.tex", "supp", True, "Supplementary detector inventory"),
     Artifact("supp_detector", "paper/tables/final_ablation_supplementary_table.tex", "supp", True, "Full ablation table"),
-    Artifact("supp_detector", "paper/tables/tinyperson_640_stress_table.tex", "archive_diagnostic", False, "Legacy TinyPerson 640 protocol audit; do not use as paper comparison"),
-    Artifact("supp_detector", "paper/tables/tinyperson_eval_imgsz_sweep_table.tex", "archive_diagnostic", False, "Legacy eval-only input-size diagnostic; do not use as paper comparison"),
-    Artifact("supp_detector", "paper/tables/tinyperson_corner_original_live_table.tex", "supp_pending", True, "Corrected TinyPerson original-window/1280 live table"),
     Artifact("supp_detector", "paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png", "supp", True, "Ablation heatmap"),
     Artifact("supp_detector", "paper/figures/results/paper_fig11_final_detector_feature_activation_heatmap.png", "supp", True, "Detector activation/heatmap sheet"),
-    Artifact("supp_detector", "paper/figures/results/paper_fig12_tinyperson_640_stress.png", "archive_diagnostic", False, "Legacy TinyPerson 640 protocol-audit figure; do not use as paper comparison"),
-    Artifact("supp_detector", "paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png", "archive_diagnostic", False, "Legacy eval-only input-size sensitivity figure; do not use as paper comparison"),
-    Artifact("supp_detector", "outputs/reports/live/tinyperson_corner_original_dashboard.png", "runbook", True, "Corrected TinyPerson original-window/1280 dashboard"),
-    Artifact("supp_detector", "outputs/experiments/tinyperson_corner_original/live_summary.csv", "source", True, "Corrected TinyPerson original-window/1280 live summary"),
     Artifact("supp_system", "paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png", "supp_or_main_smoke", True, "Three-scenario real-Cesium smoke sheet"),
     Artifact("supp_system", "paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png", "main_or_supp_smoke", True, "Real-Cesium detector preview contact sheet from SAFR-YOLO smoke run"),
     Artifact("supp_system", "paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png", "supp", True, "Real-Cesium 3-scenario x 3-UAV capture contact sheet"),
@@ -65,14 +58,14 @@ ARTIFACTS = [
     Artifact("pending_3d", "outputs/reports/live/marinecity_3d_runner_preflight.md", "runbook", True, "MarineCity local neural-3D runner dependency preflight"),
     Artifact("pending_3d", "outputs/reports/live/marinecity_depth_pointcloud_smoke.md", "runbook", True, "MarineCity depth-fused 3D geometry smoke artifact"),
     Artifact("pending_3d", "paper/figures/results/marinecity_system/marinecity_depth_pointcloud_smoke_topdown.png", "supp", True, "Depth point-cloud smoke preview figure"),
-    Artifact("pending_3d", "paper/tables/marinecity_3d_completion_results_table.tex", "pending_table", True, "Pending-safe neural 3D completion metric table slot"),
+    Artifact("main_system", "paper/tables/marinecity_3d_completion_results_table.tex", "main_or_supp_smoke", True, "Compact neural 3D runner-family smoke metric table"),
     Artifact("pending_3d", "outputs/reports/live/marinecity_3d_completion_results_table.md", "runbook", True, "Live summary for verified neural 3D metric rows"),
     Artifact("pending_3d", "outputs/reports/live/marinecity_3d_completion_readiness.md", "runbook", True, "MarineCity neural 3D completion readiness gate"),
-    Artifact("pending_reasoner", "paper/tables/aerograph_reasoner_results_placeholder.tex", "pending", True, "AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete"),
-    Artifact("pending_reasoner", "docs/aerograph_nonmock_collection_plan.md", "runbook", True, "Non-mock reasoner collection gate"),
+    Artifact("pending_reasoner", "paper/tables/aerograph_reasoner_results_placeholder.tex", "pending", True, "AeroGraph table slot must stay pending until all prompt-pack external-provider responses are valid-schema complete"),
+    Artifact("pending_reasoner", "docs/aerograph_nonmock_collection_plan.md", "runbook", True, "External-provider reasoner collection gate"),
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_prompt_pack_integrity.md", "audit", True, "AeroGraph prompt/template/batch consistency check"),
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_packet.md", "runbook", True, "One-file web LLM handoff for AeroGraph collection"),
-    Artifact("pending_reasoner", "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_checklist.csv", "runbook", True, "Per-prompt AeroGraph non-mock collection checklist"),
+    Artifact("pending_reasoner", "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_checklist.csv", "runbook", True, "Per-prompt AeroGraph external-provider collection checklist"),
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_real_capture_prompt_pack/manifest.json", "runbook", True, "Compact 23-prompt real-capture AeroGraph smoke pack"),
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/README.md", "runbook", True, "Compact real-capture web-provider batch index"),
     Artifact("pending_reasoner", "outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md", "runbook", True, "Compact real-capture web-provider collection packet"),
@@ -88,7 +81,7 @@ ARTIFACTS = [
 
 PROHIBITED_READY_CLAIMS = [
     (re.compile(r"full\s+3D\s+reconstruction\s+benchmark\s+is\s+complete", re.I), "Claims full 3D reconstruction benchmark is complete"),
-    (re.compile(r"non[- ]mock\s+(?:LLM|VLM|AeroGraph).*complete", re.I), "Claims non-mock reasoner is complete"),
+    (re.compile(r"external[- ]provider\s+(?:LLM|VLM|AeroGraph).*complete", re.I), "Claims external-provider reasoner is complete"),
     (re.compile(r"autonomous\s+UAV\s+control", re.I), "Claims autonomous UAV control"),
     (re.compile(r"proxy\s+MarineCity\s+stage", re.I), "Stale proxy-stage wording"),
     (re.compile(r"fake\s+city\s+geometry\s+is\s+used", re.I), "Suggests fake city evidence"),
@@ -267,7 +260,6 @@ def marinecity_system_integration_gate() -> dict[str, Any]:
         "actor_classes": (report.get("actors", {}) or {}).get("actor_classes"),
         "three_d_status": (report.get("three_d_completion", {}) or {}).get("status"),
         "llm_external_ready": (report.get("llm_reasoner", {}) or {}).get("external_provider_replication_ready"),
-        "tinyperson_status": (report.get("tinyperson_corrected", {}) or {}).get("status"),
     }
 
 
@@ -287,48 +279,6 @@ def marinecity_3d_completion_gate() -> dict[str, Any]:
     }
 
 
-def tinyperson_corrected_gate() -> dict[str, Any]:
-    prep = read_json(REPO_ROOT / "outputs/experiments/tinyperson_corner_original/prepare_summary.json")
-    summary_path = REPO_ROOT / "outputs/experiments/tinyperson_corner_original/live_summary.csv"
-    rows: list[dict[str, str]] = []
-    if summary_path.exists():
-        with summary_path.open("r", encoding="utf-8-sig", newline="") as handle:
-            rows = list(csv.DictReader(handle))
-    methods = sorted({row.get("method", "") for row in rows if row.get("method")})
-    best_by_method = {
-        method: max((float(row.get("best_ap", 0) or 0) for row in rows if row.get("method") == method), default=0.0)
-        for method in methods
-    }
-    required_methods = {"YOLOv9m", "Ours"}
-    complete_methods = {
-        row.get("method", "")
-        for row in rows
-        if row.get("method") and row.get("status") == "complete"
-    }
-    status = "missing"
-    if prep.get("status") == "ready":
-        status = "dataset_ready_no_training_rows"
-    if rows:
-        status = "running_corrected_tinyperson"
-    if required_methods.issubset(set(methods)):
-        status = "comparison_running_partial"
-    if required_methods.issubset(complete_methods):
-        status = "comparison_complete"
-    return {
-        "status": status,
-        "dataset_status": prep.get("status"),
-        "train_images": ((prep.get("splits", {}) or {}).get("train", {}) or {}).get("images"),
-        "train_boxes": ((prep.get("splits", {}) or {}).get("train", {}) or {}).get("boxes"),
-        "val_images": ((prep.get("splits", {}) or {}).get("val", {}) or {}).get("images"),
-        "val_boxes": ((prep.get("splits", {}) or {}).get("val", {}) or {}).get("boxes"),
-        "methods": methods,
-        "complete_methods": sorted(complete_methods),
-        "row_count": len(rows),
-        "best_ap_by_method": best_by_method,
-        "claiming_rule": "Use only the corrected TinyPerson original-window/1280 protocol as paper-facing supplementary evidence. Legacy TinyPerson 640 rows are archived protocol diagnostics and should not be mixed into comparison tables.",
-    }
-
-
 def build_report() -> dict[str, Any]:
     artifacts = artifact_rows()
     stale = stale_claim_rows()
@@ -339,7 +289,6 @@ def build_report() -> dict[str, Any]:
     marinecity_qual = marinecity_qualitative_gate()
     marinecity_system = marinecity_system_integration_gate()
     marinecity_3d = marinecity_3d_completion_gate()
-    tinyperson_corrected = tinyperson_corrected_gate()
     external_caps = external_gate_capabilities()
     status = "paper_artifact_audit_ok_with_pending_gates"
     latex_bad = latex_integrity.get("status") not in {"latex_patch_integrity_ok"}
@@ -351,9 +300,9 @@ def build_report() -> dict[str, Any]:
         if aerograph.get("complete")
         else "candidate_ready_external_provider_pending"
         if aerograph.get("reviewed_candidate_valid_count") == prompt_count and prompt_count
-        else f"pending_nonmock_{prompt_count}_prompt_run"
+        else f"pending_external_provider_{prompt_count}_prompt_run"
         if prompt_count
-        else "pending_nonmock_prompt_run"
+        else "pending_external_provider_prompt_run"
     )
     return {
         "updated_at_kst": datetime.now().strftime("%Y-%m-%d %H:%M:%S KST"),
@@ -368,7 +317,6 @@ def build_report() -> dict[str, Any]:
         "marinecity_qualitative_gate": marinecity_qual,
         "marinecity_system_integration_gate": marinecity_system,
         "marinecity_3d_completion_gate": marinecity_3d,
-        "tinyperson_corrected_gate": tinyperson_corrected,
         "external_gate_capabilities": external_caps,
         "main_tex_gate": main_tex,
         "latex_integrity_gate": latex_integrity,
@@ -382,7 +330,6 @@ def build_report() -> dict[str, Any]:
             "final_3d_completion": "ready"
             if marinecity_3d.get("status") == "marinecity_3d_completion_ready"
             else "pending_neural_3d_completion_metrics",
-            "tinyperson_corrected": tinyperson_corrected.get("status"),
             "local_compile": "pending_main_tex_or_overleaf_sync",
         },
     }
@@ -404,7 +351,6 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
     marinecity_qual = report["marinecity_qualitative_gate"]
     marinecity_system = report["marinecity_system_integration_gate"]
     marinecity_3d = report["marinecity_3d_completion_gate"]
-    tinyperson_corrected = report["tinyperson_corrected_gate"]
     external_caps = report["external_gate_capabilities"]
     lines = [
         "# Paper Artifact Readiness Check",
@@ -426,7 +372,6 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
         f"- MarineCity 3D completion gate: `{marinecity_3d['status']}`; metric rows `{marinecity_3d['metric_result_row_count']}`",
         f"- External gate capabilities: `{external_caps['status']}`; AeroGraph provider `{external_caps['aerograph_provider_configured']}`; neural-3D runner `{external_caps['neural_3d_runner_configured']}`",
         f"- MarineCity main full-frame ready: `{marinecity_qual['full_frame_main_ready']}`",
-        f"- Corrected TinyPerson status: `{tinyperson_corrected['status']}`; methods `{tinyperson_corrected['methods']}`; complete `{tinyperson_corrected.get('complete_methods')}`",
         f"- Local main.tex present: `{main_tex['main_tex_present']}`",
         f"- LaTeX patch integrity: `{report['latex_integrity_gate']['status']}`",
         f"- Main.tex note: {main_tex['note']}",
@@ -449,11 +394,6 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
             f"- Actor classes: `{marinecity_system['actor_classes']}`",
             f"- 3D status: `{marinecity_system['three_d_status']}`",
             f"- LLM external ready: `{marinecity_system['llm_external_ready']}`",
-            f"- TinyPerson status: `{marinecity_system['tinyperson_status']}`",
-            f"- Corrected TinyPerson status: `{tinyperson_corrected['status']}`",
-            f"- Corrected TinyPerson data: train `{tinyperson_corrected['train_images']}` images / `{tinyperson_corrected['train_boxes']}` boxes; val `{tinyperson_corrected['val_images']}` images / `{tinyperson_corrected['val_boxes']}` boxes",
-            f"- Corrected TinyPerson methods: `{tinyperson_corrected['methods']}`; complete `{tinyperson_corrected.get('complete_methods')}`; best AP by method `{tinyperson_corrected['best_ap_by_method']}`",
-            f"- Corrected TinyPerson claiming rule: {tinyperson_corrected['claiming_rule']}",
             "",
             "## MarineCity 3D Completion Gate",
             "",
