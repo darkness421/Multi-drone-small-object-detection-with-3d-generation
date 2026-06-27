@@ -1,16 +1,16 @@
 {
   "method": "nerf",
   "scene": "marinecity_real_capture",
-  "status": "complete_native_nerfacto_torch_split067_noapp_12k",
-  "PSNR": 22.764698028564453,
-  "SSIM": 0.9411029815673828,
-  "LPIPS": 0.07047279179096222,
-  "FPS": 0.601716160774231,
+  "status": "complete_native_marinecity_nerfacto_torch_split067_noapp_fullres_12k",
+  "PSNR": 22.270915985107422,
+  "SSIM": 0.9387807846069336,
+  "LPIPS": 0.07427991926670074,
+  "FPS": 0.16369135677814484,
   "train_time_min": "",
   "VRAM_GB": "",
   "disk_GB": "",
-  "checkpoint": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_12k/nerfacto/20260627_180000/nerfstudio_models/step-000011999.ckpt",
-  "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_12k_20260627_180000_renders",
-  "source_result": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_12k_20260627_180000_metric_row.json",
-  "notes": "Nerfstudio nerfacto torch backend on native CUDA 12.8; 12000-iteration split-aware validation run with train_split_fraction=0.67, no appearance embedding, camera optimizer off, camera_res_scale_factor=0.5, held-out eval images=2. This supersedes the 8000-iteration smoke row as the current MarineCity neural-3D quality row while remaining a system-smoke validation rather than a full optimized benchmark."
+  "checkpoint": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_fullres_12k/nerfacto/20260628_081500_fullres12k/config.yml",
+  "render_dir": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_fullres_12k_20260628_081500_fullres12k_renders",
+  "source_result": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_fullres_12k_20260628_081500_fullres12k_metric_row.json",
+  "notes": "Nerfstudio nerfacto torch backend native CUDA 12.8 smoke, max_iters=12000, train_split_fraction=0.67; train_log=/home/oem/projects/multi-uav-marine-city/outputs/logs/marinecity_nerfstudio_gpu0/marinecity_nerfacto_torch_split067_noapp_fullres_12k_20260628_081500_fullres12k_train.log; eval_log=/home/oem/projects/multi-uav-marine-city/outputs/logs/marinecity_nerfstudio_gpu0/marinecity_nerfacto_torch_split067_noapp_fullres_12k_20260628_081500_fullres12k_eval.log"
 }

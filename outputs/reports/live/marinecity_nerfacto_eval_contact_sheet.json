@@ -1,23 +1,23 @@
 {
   "status": "marinecity_neural3d_eval_contact_sheet_ready",
-  "updated_at_kst": "2026-06-28 08:04:56 KST",
-  "method_label": "Nerfacto 48k",
-  "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_48k_20260628_071000_48k_renders",
-  "eval_json": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_48k_20260628_071000_48k_ns_eval.json",
+  "updated_at_kst": "2026-06-28 08:48:28 KST",
+  "method_label": "Nerfacto full-res 12k",
+  "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_fullres_12k_20260628_081500_fullres12k_renders",
+  "eval_json": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_fullres_12k_20260628_081500_fullres12k_ns_eval.json",
   "out": "paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png",
   "rgb_count": 2,
   "depth_count": 2,
   "metrics": {
-    "psnr": 10.559481620788574,
-    "psnr_std": 0.23294192552566528,
-    "ssim": 0.3819783329963684,
-    "ssim_std": 0.06611044704914093,
-    "lpips": 0.5572354793548584,
-    "lpips_std": 0.02516019344329834,
-    "num_rays_per_sec": 144241.9375,
-    "num_rays_per_sec_std": 40138.0234375,
-    "fps": 0.6260500550270081,
-    "fps_std": 0.17421020567417145
+    "psnr": 22.270915985107422,
+    "psnr_std": 0.6262617111206055,
+    "ssim": 0.9387807846069336,
+    "ssim_std": 0.0013312502996996045,
+    "lpips": 0.07427991926670074,
+    "lpips_std": 0.0018438772531226277,
+    "num_rays_per_sec": 150857.9375,
+    "num_rays_per_sec_std": 6913.1728515625,
+    "fps": 0.16369135677814484,
+    "fps_std": 0.007501274812966585
   },
   "claiming_rule": "Qualitative held-out neural-3D smoke visualization; not a final multi-method benchmark figure."
 }

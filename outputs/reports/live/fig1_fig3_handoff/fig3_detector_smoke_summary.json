@@ -9,16 +9,17 @@
   "imgsz": 1280,
   "conf": 0.01,
   "uav_count": 3,
-  "token_count": 39,
+  "token_count": 41,
   "tokens_by_uav": {
     "uav_01": 17,
-    "uav_02": 15,
+    "uav_02": 17,
     "uav_03": 7
   },
   "tokens_by_class": {
     "car": 25,
     "bus": 4,
     "van": 4,
-    "pedestrian": 6
+    "pedestrian": 6,
+    "truck": 2
   }
 }

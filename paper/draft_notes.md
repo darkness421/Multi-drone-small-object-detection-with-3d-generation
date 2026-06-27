@@ -6,7 +6,7 @@ CoM3D-ACE: Ambiguity-Centric 3D Evidence Completion for Cooperative Multi-UAV Fi
 
 ## Current Paper Patch - 2026-06-27
 
-- Current selected detector candidate: `Ours` in result tables.
+- Current selected detector: `Ours` in result tables.
 - Current implementation/method label: `SAFR-YOLO/P2P4-SelfAttnFR`.
 - Contribution wording rule: avoid weak phrasing such as "we study". Use
   "we propose", "we introduce", "we construct", and "we validate" for the
@@ -41,14 +41,13 @@ CoM3D-ACE: Ambiguity-Centric 3D Evidence Completion for Cooperative Multi-UAV Fi
   MarineCity scenarios. Treat the current outputs as real-Cesium
   system/protocol smoke evidence.
 - MarineCity neural 3D status: three runner-family smoke rows are available on
-  the real-Cesium capture package. Nerfacto 12k is the current quality row
-  (PSNR 22.76, SSIM 0.941, LPIPS 0.070), Instant-NGP 5k is a third verified
-  neural-runner sanity row (PSNR 21.62, SSIM 0.897, LPIPS 0.117), and
-  Splatfacto/3DGS-style 5k is a faster but lower-quality support row
-  (PSNR 19.68, SSIM 0.807, LPIPS 0.170, FPS 4.56). Use these as system-smoke
-  validation, not as a full 3D benchmark.
-- AeroGraph status: 49/49 schema-validated reviewed candidate responses are
-  valid as a supplementary validation record. External
+  the real-Cesium capture package. The current Nerfacto full-res 12k row reports
+  PSNR 22.27, SSIM 0.939, LPIPS 0.074, and FPS 0.16; Instant-NGP 5k reports
+  PSNR 21.62, SSIM 0.897, LPIPS 0.117; and Splatfacto/3DGS-style 5k reports
+  PSNR 19.68, SSIM 0.807, LPIPS 0.170, and FPS 4.56. Use these as
+  system-smoke validation, not as a full 3D benchmark.
+- AeroGraph status: a 49-prompt schema-check record is available as
+  supplementary validation support. External
   OpenAI/ChatGPT/local-provider replication should be imported before promoting
   it as the headline reasoner result.
 - Auxiliary cross-dataset stress checks are excluded from the default main and
