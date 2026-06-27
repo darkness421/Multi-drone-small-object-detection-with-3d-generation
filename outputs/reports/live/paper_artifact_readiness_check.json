@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 21:21:45 KST",
+  "updated_at_kst": "2026-06-27 22:20:08 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 58,
   "missing_required_count": 0,
@@ -11,7 +11,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 7673,
+      "size_bytes": 8570,
       "status": "ok",
       "note": "Detector result section patch"
     },
@@ -21,7 +21,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2346,
+      "size_bytes": 1762,
       "status": "ok",
       "note": "Compact final detector table"
     },
@@ -41,7 +41,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1576,
+      "size_bytes": 1352,
       "status": "ok",
       "note": "Cited related-work detector table"
     },
@@ -161,7 +161,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 11681,
+      "size_bytes": 11316,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },
@@ -541,7 +541,7 @@
       "placement": "runbook_helper",
       "required_now": true,
       "exists": true,
-      "size_bytes": 11353,
+      "size_bytes": 11352,
       "status": "ok",
       "note": "Web LLM raw-output normalizer for AeroGraph manual responses"
     },
@@ -581,7 +581,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9090,
+      "size_bytes": 9089,
       "status": "ok",
       "note": "Claim readiness audit"
     }

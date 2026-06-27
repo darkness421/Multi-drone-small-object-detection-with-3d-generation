@@ -12,14 +12,22 @@ checks, and dry-run scripts from being mixed with the final detector claim.
 
 \paragraph{Implementation and evaluation setup.}
 Unless otherwise specified, detector experiments use VisDrone2019-DET with
-1280-pixel input resolution and the same validation split. The paper-facing
-three-seed protocol uses seeds 42, 123, and 2026; each row reports the mean and
-standard deviation over the completed seeds. The training server contains an
-Intel Xeon Silver 4510 CPU with 12 physical cores, 24 threads, 125 GiB system
-memory, and two RTX 5090 GPUs. Parameter counts and GFLOPs are taken from the
-corresponding model summaries under the same input protocol. Remaining queue
-runs use a shorter early-stopping patience for screening, but final paper rows
-are promoted only after the normalized three-seed record is complete.
+1280-pixel input resolution and the official validation split. The converted
+YOLO-format benchmark keeps the 10 VisDrone categories: pedestrian, people,
+bicycle, car, van, truck, tricycle, awning-tricycle, bus, and motor. The
+paper-facing three-seed protocol uses seeds 42, 123, and 2026; each row reports
+the mean and standard deviation over the completed seeds. Training uses batch
+size 4 for large/proposed 1280-pixel runs, four dataloader workers, automatic
+optimizer selection, AMP, deterministic mode, and the best validation
+checkpoint. We do not add custom paper-specific augmentation; all promoted rows
+share the exported Ultralytics train-time recipe in their \texttt{args.yaml}
+files, including standard HSV, translation/scale, horizontal flip, mosaic, and
+close-mosaic settings. The training server contains an Intel Xeon Silver 4510
+CPU with 12 physical cores, 24 threads, 125 GiB system memory, and two RTX 5090
+GPUs. Parameter counts and GFLOPs are taken from the corresponding model
+summaries under the same input protocol. Remaining queue runs use shorter
+early-stopping patience only for screening; final paper rows are promoted after
+the normalized three-seed record is complete.
 
 \paragraph{Main comparison rule.}
 The main normalized detector table contains the selected detector, the strongest
@@ -75,6 +83,12 @@ The paired-seed test against YOLOv11l gives AP $p=0.0126$ and AP50 $p=0.0223$
 with seeds 42, 123, and 2026. Precision, recall, and F1 remain secondary
 supporting metrics because their paired significance is weaker at the current
 sample size.
+
+We show the detector trade-off through AP/AP50, parameter count, GFLOPs, and
+the AP--parameter figure instead of adding a single hand-designed trade-off
+score to the main table. This keeps the table interpretable and avoids making
+the conclusion depend on an arbitrary weighting between accuracy and model
+cost.
 
 \paragraph{Paper-ready detector figures.}
 The main paper reserves space for one compact quantitative detector figure and
