@@ -72,6 +72,10 @@ def build_report() -> dict[str, Any]:
     json_paths = result_jsons()
     methods_ready = sorted(set((row.get("method") or "").strip() for row in metric_rows if (row.get("method") or "").strip()))
     missing_methods = [method for method in EXPECTED_METHODS if method not in methods_ready]
+    metric_runner_available = bool(metric_rows)
+    neural_runner_available = runner_preflight.get("neural_runner_available")
+    if metric_runner_available:
+        neural_runner_available = True
     source_ready = bool(summary.get("terrain_all_valid")) and bool(summary.get("google_tiles_all_valid")) and int(summary.get("frame_count", 0) or 0) >= 9
     dataset_ready = dataset_export.get("status") == "marinecity_neural3d_dataset_export_ready"
     pointcloud_ready = pointcloud_smoke.get("status") == "marinecity_depth_pointcloud_smoke_ready"
@@ -90,7 +94,8 @@ def build_report() -> dict[str, Any]:
         "neural3d_dataset_ready": dataset_ready,
         "depth_pointcloud_smoke_ready": pointcloud_ready,
         "runner_preflight_status": runner_preflight.get("status", "missing"),
-        "neural_runner_available": runner_preflight.get("neural_runner_available"),
+        "neural_runner_available": neural_runner_available,
+        "metric_runner_available": metric_runner_available,
         "geometry_smoke_available": runner_preflight.get("geometry_smoke_available"),
         "runner_preflight_report": str(RUNNER_PREFLIGHT.with_suffix(".md").relative_to(REPO_ROOT)),
         "depth_pointcloud_smoke_manifest": str(POINTCLOUD_SMOKE.relative_to(REPO_ROOT)),

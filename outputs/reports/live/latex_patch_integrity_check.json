@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 16:35:14 KST",
+  "updated_at_kst": "2026-06-27 17:30:47 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
@@ -74,7 +74,7 @@
     },
     {
       "source": "paper/sections/main_results_patch_bundle.tex",
-      "line": "10",
+      "line": "12",
       "status": "allowed",
       "text": "% - AeroGraph has a reviewed 49-prompt candidate table; external provider replication remains pending."
     },

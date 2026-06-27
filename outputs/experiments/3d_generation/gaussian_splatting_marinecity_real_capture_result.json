@@ -1,0 +1,16 @@
+{
+  "method": "gaussian_splatting",
+  "scene": "marinecity_real_capture",
+  "status": "complete_native_splatfacto_split067_5k",
+  "PSNR": 19.675804138183594,
+  "SSIM": 0.8067082166671753,
+  "LPIPS": 0.17015835642814636,
+  "FPS": 4.563634395599365,
+  "train_time_min": "",
+  "VRAM_GB": "",
+  "disk_GB": "",
+  "checkpoint": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_splatfacto_split067_smoke_5k/splatfacto/20260627_170000/nerfstudio_models/step-000004999.ckpt",
+  "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_splatfacto_split067_smoke_5k_20260627_170000_renders",
+  "source_result": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_splatfacto_split067_smoke_5k_20260627_170000_metric_row.json",
+  "notes": "Nerfstudio Splatfacto / 3D Gaussian Splatting style smoke run on the same MarineCity real-Cesium split. It is faster than the Nerfacto smoke row but lower quality on the sparse held-out views; use as supplementary runner-family comparison, not as the main 3D completion claim."
+}

@@ -1,5 +1,5 @@
 {
-  "method": "nerf",
+  "method": "nerfacto",
   "scene": "marinecity_real_capture",
   "status": "complete_native_nerfacto_torch_split067_noapp_8k",
   "PSNR": 22.72756576538086,
@@ -11,6 +11,6 @@
   "disk_GB": "",
   "checkpoint": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_8k/nerfacto/20260627_164000/nerfstudio_models/step-000007999.ckpt",
   "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_8k_20260627_164000_renders",
-  "source_result": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_8k_20260627_164000_metric_row.json",
+  "source_result": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_8k_20260627_164000_ns_eval.json",
   "notes": "Nerfstudio nerfacto torch backend on native CUDA 12.8; 8000-iteration split-aware smoke run with train_split_fraction=0.67, no appearance embedding, camera_res_scale_factor=0.5, held-out eval images=2. Use as MarineCity neural-3D system-smoke quality result, not as a final multi-method benchmark or optimized real-time rendering result."
 }

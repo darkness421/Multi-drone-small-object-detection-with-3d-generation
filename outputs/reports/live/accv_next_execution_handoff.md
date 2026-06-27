@@ -1,28 +1,28 @@
 # ACCV Next Execution Handoff
 
-Updated: `2026-06-27T16:35:12+09:00`
+Updated: `2026-06-27T17:30:44+09:00`
 
 This file lists only the next actions needed to move the research package closer to paper-ready completion. It intentionally separates paper-ready evidence from blocked external gates.
 
 ## External Capability Snapshot
 
-- Current shell capability status: `external_gates_missing_provider_and_3d_runner`.
+- Current shell capability status: `three_d_runner_available_aerograph_provider_missing`.
 - AeroGraph provider configured: `False`; modes `[]`.
-- Neural-3D runner configured: `False`; metric rows `0`.
+- Neural-3D runner configured: `True`; metric rows `2`.
 - Capability report: `outputs/reports/live/external_gate_capabilities.md`.
 
 ## Already Paper-Ready
 
 - Detector main claim: `Ours`, AP/AP50/F1 `0.382163`/`0.605173`/`0.627275`, params `20.82M`, seeds `42,123,2026`.
-- TinyPerson: corrected original-window/1280 diagnostic is complete, but Ours is below YOLOv9m; keep it as a supplementary limitation only.
+- TinyPerson: corrected original-window/1280 diagnostic is complete, but Ours is below YOLOv9m; keep it as an internal archive-only diagnostic, excluded from default main/supplementary claims.
 - Paper artifact audit: `paper_artifact_audit_ok_with_pending_gates`.
 
 ## Gate 1: Neural 3D Completion Metrics
 
-- Current status: `marinecity_3d_single_runner_smoke_ready`.
-- Source capture ready: `True`; dataset ready: `True`; neural runner available: `False`.
+- Current status: `marinecity_3d_completion_ready`.
+- Source capture ready: `True`; dataset ready: `True`; neural runner available: `True`.
 - Transforms input: `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/transforms.json`.
-- Metric state: `single-runner smoke metric available`; metric rows `1`; missing optional methods: `['instant_ngp', 'mip_nerf_360', 'gaussian_splatting']`.
+- Metric state: `runner-family smoke metrics available`; metric rows `2`; missing optional methods: `['instant_ngp', 'mip_nerf_360']`.
 
 Next executable options:
 
@@ -39,7 +39,7 @@ python scripts/build_marinecity_3d_results_table.py
 python scripts/check_marinecity_3d_completion_readiness.py
 ```
 
-Keep the verified Nerfacto row as paper-safe system-smoke evidence. Add another runner only if time allows before upgrading to a full benchmark claim.
+Keep the verified Nerfacto and Splatfacto/3DGS-style rows as paper-safe system-smoke evidence. Add longer validation only before upgrading to a full benchmark claim.
 
 ## Gate 2: AeroGraph External Non-Mock Reasoner
 

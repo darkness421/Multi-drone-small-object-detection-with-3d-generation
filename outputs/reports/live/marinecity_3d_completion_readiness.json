@@ -1,11 +1,12 @@
 {
-  "updated_at_kst": "2026-06-27 16:34:34 KST",
-  "status": "marinecity_3d_single_runner_smoke_ready",
+  "updated_at_kst": "2026-06-27 17:24:09 KST",
+  "status": "marinecity_3d_completion_ready",
   "source_capture_ready": true,
   "neural3d_dataset_ready": true,
   "depth_pointcloud_smoke_ready": true,
   "runner_preflight_status": "marinecity_3d_runner_preflight_ready",
-  "neural_runner_available": false,
+  "neural_runner_available": true,
+  "metric_runner_available": true,
   "geometry_smoke_available": true,
   "runner_preflight_report": "outputs/reports/live/marinecity_3d_runner_preflight.md",
   "depth_pointcloud_smoke_manifest": "outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/manifest.json",
@@ -36,19 +37,20 @@
     "mean_depth_finite_ratio": 0.908344425154321
   },
   "comparison_csv": "outputs/experiments/3d_generation_comparison.csv",
-  "comparison_row_count": 1,
-  "metric_result_row_count": 1,
-  "result_json_count": 1,
+  "comparison_row_count": 2,
+  "metric_result_row_count": 2,
+  "result_json_count": 2,
   "result_jsons": [
+    "outputs/experiments/3d_generation/gaussian_splatting_marinecity_real_capture_result.json",
     "outputs/experiments/3d_generation/nerf_marinecity_real_capture_result.json"
   ],
   "methods_ready": [
+    "gaussian_splatting",
     "nerf"
   ],
   "missing_expected_methods": [
     "instant_ngp",
-    "mip_nerf_360",
-    "gaussian_splatting"
+    "mip_nerf_360"
   ],
   "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected."
 }

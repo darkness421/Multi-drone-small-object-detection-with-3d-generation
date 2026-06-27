@@ -1,4 +1,4 @@
-"""Build a compact qualitative sheet for MarineCity Nerfacto eval renders."""
+"""Build a compact qualitative sheet for MarineCity neural-3D eval renders."""
 
 from __future__ import annotations
 
@@ -43,12 +43,26 @@ def load_metrics(path: Path) -> dict[str, float]:
     return payload.get("results", payload)
 
 
+def default_method_label(path: Path) -> str:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return "Neural-3D"
+    method = str(payload.get("method_name") or payload.get("method") or "").strip()
+    labels = {
+        "nerfacto": "Nerfacto",
+        "splatfacto": "Splatfacto / 3DGS-style",
+    }
+    return labels.get(method, method or "Neural-3D")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--render-dir", type=Path, default=DEFAULT_RENDER_DIR)
     parser.add_argument("--eval-json", type=Path, default=DEFAULT_EVAL_JSON)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
+    parser.add_argument("--method-label", default=None)
     args = parser.parse_args()
 
     rgb_paths = sorted(args.render_dir.glob("eval_img_*.png"))
@@ -57,6 +71,7 @@ def main() -> None:
         raise SystemExit(f"No eval_img_*.png found in {args.render_dir}")
 
     metrics = load_metrics(args.eval_json)
+    method_label = args.method_label or default_method_label(args.eval_json)
     title_font = font(28)
     label_font = font(20)
     small_font = font(17)
@@ -69,7 +84,7 @@ def main() -> None:
     height = header_h + rows * row_h + pad
     canvas = Image.new("RGB", (width, height), "#f8fafc")
     draw = ImageDraw.Draw(canvas)
-    draw.text((pad, 18), "MarineCity Nerfacto held-out render smoke", fill="#111827", font=title_font)
+    draw.text((pad, 18), f"MarineCity {method_label} held-out render smoke", fill="#111827", font=title_font)
     metric_text = (
         f"PSNR {metrics.get('psnr', 0):.2f} | SSIM {metrics.get('ssim', 0):.3f} | "
         f"LPIPS {metrics.get('lpips', 0):.3f} | FPS {metrics.get('fps', 0):.2f}"
@@ -95,15 +110,16 @@ def main() -> None:
     canvas.save(args.out)
     args.manifest.parent.mkdir(parents=True, exist_ok=True)
     manifest = {
-        "status": "marinecity_nerfacto_eval_contact_sheet_ready",
+        "status": "marinecity_neural3d_eval_contact_sheet_ready",
         "updated_at_kst": datetime.now().strftime("%Y-%m-%d %H:%M:%S KST"),
+        "method_label": method_label,
         "render_dir": str(args.render_dir),
         "eval_json": str(args.eval_json),
         "out": str(args.out),
         "rgb_count": len(rgb_paths),
         "depth_count": len(depth_paths),
         "metrics": metrics,
-        "claiming_rule": "Qualitative held-out Nerfacto smoke visualization; not a final multi-method benchmark figure.",
+        "claiming_rule": "Qualitative held-out neural-3D smoke visualization; not a final multi-method benchmark figure.",
     }
     args.manifest.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
     print(json.dumps({"out": str(args.out), "manifest": str(args.manifest), "rgb_count": len(rgb_paths)}, indent=2))

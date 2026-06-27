@@ -1,0 +1,17 @@
+{
+  "experiment_name": "marinecity_splatfacto_split067_smoke_5k",
+  "method_name": "splatfacto",
+  "checkpoint": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_splatfacto_split067_smoke_5k/splatfacto/20260627_170000/nerfstudio_models/step-000004999.ckpt",
+  "results": {
+    "psnr": 19.675804138183594,
+    "psnr_std": 1.0390284061431885,
+    "ssim": 0.8067082166671753,
+    "ssim_std": 0.007130277343094349,
+    "lpips": 0.17015835642814636,
+    "lpips_std": 0.008513652719557285,
+    "num_rays_per_sec": 1051461.375,
+    "num_rays_per_sec_std": 1240586.875,
+    "fps": 4.563634395599365,
+    "fps_std": 5.384491443634033
+  }
+}

@@ -4,17 +4,10 @@
 
 CoM3D-ACE: Ambiguity-Centric 3D Evidence Completion for Cooperative Multi-UAV Fine-Grained Object Detection in Urban Digital Twins
 
-## Must Finish By Mid-June
+## Current Paper Patch - 2026-06-27
 
-- Introduction 1차 완성
-- Related Work 1차 완성
-- Proposed Method 1차 완성
-- Method figure 1차 완성
-
-## Current Paper Patch - 2026-06-16
-
-- Current selected detector candidate: `SAFR-YOLO`.
-- Current implementation/run label: `P2P4-SelfAttnFR`.
+- Current selected detector candidate: `Ours` in result tables.
+- Current implementation/method label: `SAFR-YOLO/P2P4-SelfAttnFR`.
 - Contribution wording rule: avoid weak phrasing such as "we study". Use
   "we propose", "we introduce", "we construct", and "we validate" for the
   actual contributions.
@@ -38,11 +31,21 @@ CoM3D-ACE: Ambiguity-Centric 3D Evidence Completion for Cooperative Multi-UAV Fi
   versus YOLO-family/transformer baselines under the normalized 1280-pixel,
   three-seed protocol, and (2) related-work reproduction/status rows so prior
   UAV small-object detectors are visibly accounted for.
-- Related-work detector checks now include 1280-pixel external eval/status rows
-  for CSFPR-RTDETR and LEAF-YOLO, with MFFSODNet/UAVDet and other cited UAV
-  detectors tracked as pending runnable comparisons until adapters/checkpoints
-  are reproducible.
-- MarineCity Isaac/Cesium status: Haeundae MarineCity Cesium preview is live on
-  port 8093, Isaac Sim 5.1 opens the proxy MarineCity stage on GPU1, and the
-  P2P4-SelfAttnFR detector smoke test exports EvidenceTokens, although the
-  current proxy visuals are not yet detector-quality validation.
+- Related-work detector checks now include normalized 1280-pixel, three-seed
+  rows for CSFPR-RTDETR, MFFSODNet, SFFEF-YOLO, BPD-YOLO, HF-D-FINE, and
+  UAVDet. LEAF-YOLO remains internal-only unless it is explicitly cited in the
+  manuscript.
+- MarineCity Isaac/Cesium status: Isaac Sim 5.1 opens the user-verified real
+  Cesium `uavmarine.usd` stage with Google/Cesium tiles visible, and the
+  P2P4-SelfAttnFR detector smoke test exports EvidenceTokens for three
+  MarineCity scenarios. Treat the current outputs as real-Cesium
+  system/protocol smoke evidence.
+- MarineCity neural 3D status: two runner-family smoke rows are available on
+  the real-Cesium capture package. Nerfacto 8k is the quality row
+  (PSNR 22.73, SSIM 0.938, LPIPS 0.072), while Splatfacto/3DGS-style 5k is a
+  faster but lower-quality support row (PSNR 19.68, SSIM 0.807, LPIPS 0.170,
+  FPS 4.56). Use these as system-smoke validation, not as a full 3D benchmark.
+- AeroGraph status: 49/49 Codex-reviewed JSON candidate responses are valid,
+  but external OpenAI/ChatGPT/local-provider replication is still pending.
+- TinyPerson policy: exclude TinyPerson from the default main and supplementary
+  paper. Keep it only as an internal archive/protocol-mismatch diagnostic.

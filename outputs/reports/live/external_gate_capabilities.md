@@ -1,7 +1,7 @@
 # External Gate Capabilities
 
-Updated: `2026-06-27 13:34:57 KST`
-Status: `external_gates_missing_provider_and_3d_runner`
+Updated: `2026-06-27 17:29:56 KST`
+Status: `three_d_runner_available_aerograph_provider_missing`
 
 This report checks whether the remaining external gates can be executed from the current shell. Secret values are never printed.
 
@@ -9,10 +9,10 @@ This report checks whether the remaining external gates can be executed from the
 
 - AeroGraph provider configured: `False`; modes `[]`
 - Provider candidates without runnable command: `False`; candidates `{'ollama': False, 'openai_cli': False}`
-- Neural 3D runner configured: `False`
+- Neural 3D runner configured: `True`
 - Neural 3D source capture ready: `True`
 - Neural 3D dataset ready: `True`
-- Neural 3D metric rows: `0`
+- Neural 3D metric rows: `2`
 
 ## Current Gate Reports
 
@@ -23,9 +23,9 @@ This report checks whether the remaining external gates can be executed from the
 | `aerograph_final_valid_direct_responses` | `0` |
 | `aerograph_final_prompt_count` | `49` |
 | `aerograph_compact_smoke_status` | `aerograph_real_capture_nonmock_smoke_complete` |
-| `marinecity_3d_completion_status` | `marinecity_3d_input_dataset_ready_metrics_pending` |
+| `marinecity_3d_completion_status` | `marinecity_3d_completion_ready` |
 | `marinecity_3d_runner_available` | `False` |
-| `marinecity_3d_metric_rows` | `0` |
+| `marinecity_3d_metric_rows` | `2` |
 
 ## Environment Flags
 
@@ -62,10 +62,16 @@ python scripts/import_aerograph_external_responses.py --mode final49 --input rea
 python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label "ChatGPT/Codex web compact"
 ```
 
-### Neural 3D fallback/import path
+### Neural 3D runner preflight
 
 ```bash
-Install/connect Nerfstudio, Instant-NGP, or 3DGS, then run python scripts/import_marinecity_3d_metrics.py PATH_TO_RUNNER_METRICS.json --overwrite
+python scripts/check_marinecity_3d_runner_preflight.py
+```
+
+### Neural 3D metric import after runner finishes
+
+```bash
+python scripts/import_marinecity_3d_metrics.py PATH_TO_RUNNER_METRICS.json --overwrite
 ```
 
 ## Claiming Rule

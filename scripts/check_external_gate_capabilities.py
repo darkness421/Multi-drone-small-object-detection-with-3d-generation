@@ -112,9 +112,10 @@ def neural_3d_runnable(
     source_ready = bool(completion.get("source_capture_ready"))
     metric_rows = int(completion.get("metric_result_row_count", 0) or 0)
     return {
-        "ready": bool(command_ready or preflight_ready),
+        "ready": bool(command_ready or preflight_ready or metric_rows),
         "command_ready": command_ready,
         "preflight_ready": preflight_ready,
+        "metric_row_ready": bool(metric_rows),
         "dataset_ready": dataset_ready,
         "source_capture_ready": source_ready,
         "metric_result_row_count": metric_rows,

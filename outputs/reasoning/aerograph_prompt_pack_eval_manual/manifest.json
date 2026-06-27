@@ -1,0 +1,29 @@
+{
+  "status": "aerograph_manual_import_complete",
+  "provider": "Codex-assisted review candidate",
+  "prompt_pack": "outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl",
+  "responses": "outputs/reasoning/aerograph_manual_responses.codex_candidate.jsonl",
+  "out_dir": "outputs/reasoning/aerograph_prompt_pack_eval_manual",
+  "summary": {
+    "total": 49,
+    "by_decision": {
+      "uncertain": 36,
+      "verified": 13
+    },
+    "by_provider_runtime": {
+      "manual_nonmock": 49
+    },
+    "class_mismatch_count": 0,
+    "reobserve_or_expected_count": 49,
+    "valid_schema_count": 49,
+    "invalid_schema_count": 0
+  },
+  "non_mock_output_count": 49,
+  "valid_non_mock_output_count": 49,
+  "invalid_non_mock_output_count": 0,
+  "invalid_non_mock_examples": [],
+  "non_mock_outputs_ready": true,
+  "missing_response_count": 0,
+  "missing_response_keys": [],
+  "note": "Manual web/provider import. Review response quality before paper use."
+}

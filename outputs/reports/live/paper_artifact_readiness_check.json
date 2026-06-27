@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 13:45:24 KST",
+  "updated_at_kst": "2026-06-27 17:29:20 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 58,
   "missing_required_count": 0,
@@ -81,7 +81,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 8019,
+      "size_bytes": 8518,
       "status": "ok",
       "note": "MarineCity protocol section patch"
     },
@@ -141,7 +141,7 @@
       "placement": "main_bundle",
       "required_now": true,
       "exists": true,
-      "size_bytes": 840,
+      "size_bytes": 1000,
       "status": "ok",
       "note": "Overleaf-ready main results patch bundle"
     },
@@ -361,7 +361,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 4005,
+      "size_bytes": 3952,
       "status": "ok",
       "note": "Real-Cesium object/UAV/camera/YOLO/3D/LLM integration gate"
     },
@@ -411,7 +411,7 @@
       "placement": "pending_table",
       "required_now": true,
       "exists": true,
-      "size_bytes": 427,
+      "size_bytes": 542,
       "status": "ok",
       "note": "Pending-safe neural 3D completion metric table slot"
     },
@@ -421,7 +421,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 318,
+      "size_bytes": 602,
       "status": "ok",
       "note": "Live summary for verified neural 3D metric rows"
     },
@@ -431,7 +431,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1956,
+      "size_bytes": 2459,
       "status": "ok",
       "note": "MarineCity neural 3D completion readiness gate"
     },
@@ -561,7 +561,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2427,
+      "size_bytes": 1855,
       "status": "ok",
       "note": "LaTeX input/figure/label integrity check"
     },
@@ -571,7 +571,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2484,
+      "size_bytes": 2526,
       "status": "ok",
       "note": "External provider and neural-3D runner capability check"
     },
@@ -615,14 +615,13 @@
     "status": "marinecity_system_integration_smoke_ready_with_pending_final_gates",
     "fail_count": 0,
     "warn_count": 0,
-    "pending_count": 3,
-    "detector_token_count": 125,
+    "pending_count": 2,
+    "detector_token_count": 128,
     "detector_classes": {
-      "car": 74,
-      "bus": 16,
+      "car": 77,
+      "bus": 17,
       "van": 10,
-      "pedestrian": 24,
-      "truck": 1
+      "pedestrian": 24
     },
     "actor_classes": [
       "bus",
@@ -632,26 +631,27 @@
       "truck",
       "van"
     ],
-    "three_d_status": "pending_upstream_runner_connection",
+    "three_d_status": "complete",
     "llm_external_ready": false,
     "tinyperson_status": "closed_archive_only"
   },
   "marinecity_3d_completion_gate": {
-    "status": "marinecity_3d_input_dataset_ready_metrics_pending",
+    "status": "marinecity_3d_completion_ready",
     "source_capture_ready": true,
     "neural3d_dataset_ready": true,
     "depth_pointcloud_smoke_ready": true,
     "depth_pointcloud_point_count": 7584,
-    "neural_runner_available": false,
-    "metric_result_row_count": 0,
-    "methods_ready": [],
-    "missing_expected_methods": [
-      "nerf",
-      "instant_ngp",
-      "mip_nerf_360",
-      "gaussian_splatting"
+    "neural_runner_available": true,
+    "metric_result_row_count": 2,
+    "methods_ready": [
+      "gaussian_splatting",
+      "nerf"
     ],
-    "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
+    "missing_expected_methods": [
+      "instant_ngp",
+      "mip_nerf_360"
+    ],
+    "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected."
   },
   "tinyperson_corrected_gate": {
     "status": "comparison_complete",
@@ -676,12 +676,12 @@
     "claiming_rule": "Use only the corrected TinyPerson original-window/1280 protocol as paper-facing supplementary evidence. Legacy TinyPerson 640 rows are archived protocol diagnostics and should not be mixed into comparison tables."
   },
   "external_gate_capabilities": {
-    "status": "external_gates_missing_provider_and_3d_runner",
+    "status": "three_d_runner_available_aerograph_provider_missing",
     "aerograph_provider_configured": false,
     "aerograph_provider_modes": [],
-    "neural_3d_runner_configured": false,
+    "neural_3d_runner_configured": true,
     "neural_3d_dataset_ready": true,
-    "neural_3d_metric_rows": 0
+    "neural_3d_metric_rows": 2
   },
   "main_tex_gate": {
     "main_tex_candidates": [],
@@ -701,7 +701,7 @@
     "marinecity_system": "ready_as_real_cesium_smoke_protocol_only",
     "marinecity_qualitative": "ready_for_main",
     "aerograph": "candidate_ready_external_provider_pending",
-    "final_3d_completion": "pending_neural_3d_completion_metrics",
+    "final_3d_completion": "ready",
     "tinyperson_corrected": "comparison_complete",
     "local_compile": "pending_main_tex_or_overleaf_sync"
   }

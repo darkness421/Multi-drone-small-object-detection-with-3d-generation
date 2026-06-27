@@ -1,6 +1,6 @@
 {
-  "updated_at_kst": "2026-06-27 13:34:57 KST",
-  "status": "external_gates_missing_provider_and_3d_runner",
+  "updated_at_kst": "2026-06-27 17:29:56 KST",
+  "status": "three_d_runner_available_aerograph_provider_missing",
   "env": {
     "OPENAI_API_KEY": {
       "set": false,
@@ -62,13 +62,14 @@
     "provider_modes": []
   },
   "neural_3d_execution": {
-    "ready": false,
+    "ready": true,
     "command_ready": false,
     "preflight_ready": false,
+    "metric_row_ready": true,
     "dataset_ready": true,
     "source_capture_ready": true,
-    "metric_result_row_count": 0,
-    "completion_status": "marinecity_3d_input_dataset_ready_metrics_pending"
+    "metric_result_row_count": 2,
+    "completion_status": "marinecity_3d_completion_ready"
   },
   "current_gate_reports": {
     "aerograph_final_status": "aerograph_reviewed_candidate_ready_external_pending",
@@ -76,9 +77,9 @@
     "aerograph_final_valid_direct_responses": 0,
     "aerograph_final_prompt_count": 49,
     "aerograph_compact_smoke_status": "aerograph_real_capture_nonmock_smoke_complete",
-    "marinecity_3d_completion_status": "marinecity_3d_input_dataset_ready_metrics_pending",
+    "marinecity_3d_completion_status": "marinecity_3d_completion_ready",
     "marinecity_3d_runner_available": false,
-    "marinecity_3d_metric_rows": 0
+    "marinecity_3d_metric_rows": 2
   },
   "next_commands": [
     {
@@ -90,8 +91,12 @@
       "command": "python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label \"ChatGPT/Codex web compact\""
     },
     {
-      "gate": "Neural 3D fallback/import path",
-      "command": "Install/connect Nerfstudio, Instant-NGP, or 3DGS, then run python scripts/import_marinecity_3d_metrics.py PATH_TO_RUNNER_METRICS.json --overwrite"
+      "gate": "Neural 3D runner preflight",
+      "command": "python scripts/check_marinecity_3d_runner_preflight.py"
+    },
+    {
+      "gate": "Neural 3D metric import after runner finishes",
+      "command": "python scripts/import_marinecity_3d_metrics.py PATH_TO_RUNNER_METRICS.json --overwrite"
     }
   ],
   "claiming_rule": "This report only indicates whether external execution is configured. It does not promote AeroGraph or neural-3D results unless the corresponding readiness reports contain complete, non-placeholder outputs."

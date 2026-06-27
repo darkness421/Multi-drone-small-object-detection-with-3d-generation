@@ -85,11 +85,18 @@ def build_rows() -> list[dict[str, str]]:
     latex_gate = readiness.get("latex_integrity_gate") or {}
     threed_metric_rows = threed.get("metric_result_row_count") or 0
     threed_has_metric = bool(threed_metric_rows)
-    threed_next_action = (
-        "Use the verified single-runner Nerfacto row as system-smoke evidence; add Instant-NGP/3DGS or longer validation only if time remains."
-        if threed_has_metric
-        else "Attach/install an upstream NeRF/3DGS/Instant-NGP runner and collect PSNR/SSIM/LPIPS/FPS/runtime rows; placeholders are not paper-valid."
-    )
+    if threed_metric_rows >= 2:
+        threed_next_action = (
+            "Use the verified Nerfacto and Splatfacto/3DGS-style rows as runner-family system-smoke evidence; add longer validation only if time remains."
+        )
+    elif threed_has_metric:
+        threed_next_action = (
+            "Use the verified Nerfacto row as system-smoke evidence; add Instant-NGP/3DGS or longer validation only if time remains."
+        )
+    else:
+        threed_next_action = (
+            "Attach/install an upstream NeRF/3DGS/Instant-NGP runner and collect PSNR/SSIM/LPIPS/FPS/runtime rows; placeholders are not paper-valid."
+        )
     threed_paper_use = "main_smoke_or_supp" if threed_has_metric else "pending_3d"
 
     return [
@@ -195,7 +202,7 @@ def write_outputs(rows: list[dict[str, str]]) -> None:
             "",
         "1. Close TinyPerson as an internal archive-only diagnostic; do not spend more GPU time or default paper space on it.",
         "2. Keep VisDrone detector results as the main 2D claim: `Ours` in tables, SAFR-YOLO/P2P4-SelfAttnFR in method text.",
-        "3. For 3D, use the verified MarineCity RGB/depth/pose package and the available single-runner Nerfacto metric row as system-smoke evidence; collect more runner families only before claiming a full 3D benchmark.",
+        "3. For 3D, use the verified MarineCity RGB/depth/pose package plus Nerfacto and Splatfacto/3DGS-style smoke rows as system evidence; collect longer validation only before claiming a full 3D benchmark.",
         "4. For AeroGraph, keep the reviewed candidate visible and collect external OpenAI/ChatGPT/local-provider replication before final reasoner claims.",
             "",
         ]

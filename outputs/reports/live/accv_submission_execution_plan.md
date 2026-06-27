@@ -22,7 +22,7 @@ does not overclaim unfinished 3D or reasoner results.
 
 | Date | Main Goal | Concrete Work | Output |
 | --- | --- | --- | --- |
-| 6/27 | System-level result consolidation | Re-run/refresh MarineCity real-Cesium capture + detector + reasoner smoke; verify actors/UAV cameras/classes; freeze 2D result bundle; lock the Nerfacto 3D smoke row unless the 5k refinement improves it. | Updated simulation dashboard, smoke reports, 3D smoke table, Fig. 1/3 source package candidates |
+| 6/27 | System-level result consolidation | Re-run/refresh MarineCity real-Cesium capture + detector + reasoner smoke; verify actors/UAV cameras/classes; freeze 2D result bundle; lock the 8k Nerfacto row plus the Splatfacto/3DGS-style smoke row as current paper-safe neural-3D evidence. | Updated simulation dashboard, smoke reports, 3D smoke table, Fig. 1/3 source package candidates |
 | 6/28 | System-level result cleanup | Improve object balance/natural placement if needed; collect qualitative panels; prepare 23-prompt non-mock reasoner path. | Paper-ready system smoke table and qualitative panels |
 | 6/29 | Full system experiment audit | Re-check detector tables, simulation evidence, reasoner status, 3D runner status; update final Fig. 1/Fig. 3 guidance package for GitHub. | Final experiment audit and figure revision handoff |
 | 6/30 | Full draft completion target | Finish main/supp draft skeleton with fixed 2D, system smoke, pending-safe 3D/reasoner wording; add Isaac validation images. | Complete draft for professor review |

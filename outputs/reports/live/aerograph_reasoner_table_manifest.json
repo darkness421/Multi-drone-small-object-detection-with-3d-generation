@@ -1,0 +1,16 @@
+{
+  "status": "aerograph_reasoner_table_candidate_external_pending",
+  "out": "paper/tables/aerograph_reasoner_results_placeholder.tex",
+  "selected_manifest": "",
+  "reviewed_candidate_manifest": "outputs/reasoning/aerograph_prompt_pack_eval_manual_web/manifest.json",
+  "candidate_manifests": [
+    "outputs/reasoning/aerograph_prompt_pack_eval_manual_web/manifest.json",
+    "outputs/reasoning/aerograph_prompt_pack_eval_chatgpt_web/manifest.json",
+    "outputs/reasoning/aerograph_prompt_pack_eval_openai/manifest.json",
+    "outputs/reasoning/aerograph_prompt_pack_eval_command/manifest.json",
+    "outputs/reasoning/aerograph_prompt_pack_eval_manual/manifest.json"
+  ],
+  "non_mock_outputs_ready": false,
+  "external_provider_replication_ready": false,
+  "reviewed_candidate_ready": true
+}
