@@ -1,6 +1,6 @@
 # ACCV Remaining Gates Queue
 
-Updated: `2026-06-28T04:38:57+09:00`
+Updated: `2026-06-28T08:10:55+09:00`
 
 This queue separates paper-ready evidence from pending gates. Do not promote a pending row into a main claim until its evidence column proves completion.
 
