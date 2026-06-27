@@ -14,6 +14,16 @@ the two bundles from the Overleaf project root:
 \input{sections/supplementary_patch_bundle}
 ```
 
+If replacing the full main-paper body rather than only the results section, use:
+
+```latex
+\input{sections/full_main_draft_bundle}
+```
+
+The full draft bundle includes introduction, related work, method,
+experimental protocol, current results, MarineCity system protocol, and
+conclusion.
+
 ## Main Paper Priority
 
 Keep the main paper self-contained and within the 14-page ACCV limit:

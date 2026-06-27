@@ -1,0 +1,63 @@
+\section{Related Work}
+\label{sec:related_work}
+
+\subsection{UAV Small-Object Evidence Generation}
+\label{sec:rw_uav_small_object}
+
+UAV small-object detection has increasingly focused on preserving shallow
+spatial detail while maintaining enough semantic context for classification.
+Several recent YOLO-family methods add high-resolution branches, lightweight
+feature enhancement, attention, or frequency-sensitive modules to improve tiny
+target recall under aerial viewpoints
+\cite{hu2024universalyolo,jiang2024mffsodnet,li2024dsyolov5s,bai2025sffefyolo,luo2026fmfnyolo,xie2026dgtsod,chao2025bpdyolo,han2025lrds}.
+Other detectors study deformable attention, transformer-style assignment, or
+position-sensitive refinement for dense UAV scenes
+\cite{hu2025csfprrtdetr,hu2026hfdifine,li2026dfformer,chen2026ufodetr,tan2025rtuavsod,yang2026uavdet}.
+These works motivate two design choices in SAFR-YOLO: high-resolution P2/P3/P4
+prediction paths for tiny objects and lightweight refinement that preserves
+local detail without replacing the YOLO backbone with a large transformer.
+
+Our goal differs from only improving the detector score. We treat detection as
+the first evidence-generation stage in a larger multi-UAV system. Therefore the
+detector must output not only boxes and classes, but also confidence,
+uncertainty, view identity, pose/time metadata, and descriptors that can be
+associated across views. This EvidenceToken interface is the bridge from 2D
+small-object detection to 3D evidence completion.
+
+\subsection{Multi-View 3D Completion For Aerial Scenes}
+\label{sec:rw_3d_completion}
+
+Neural scene representations and 3D Gaussian-style renderers have made it
+possible to reconstruct or render novel views from sparse image collections.
+However, many reconstruction pipelines optimize appearance quality for the
+scene as a whole, while UAV small-object perception needs object-centered
+evidence under viewpoint ambiguity. In our setting, 3D is not used as a
+standalone visual effect; it is used to ask whether additional viewpoints,
+restored evidence, or approximate geometry can reduce class ambiguity for small
+objects.
+
+The MarineCity component of CoM3D-ACE is therefore framed as an evidence
+completion protocol. It consumes real-Cesium RGB/depth/pose captures and
+detector EvidenceTokens, builds cross-view object hypotheses, and verifies that
+Nerfacto, Instant-NGP, and 3DGS-style runners can produce held-out smoke
+metrics on the exported capture package. We report these rows as system-level
+runner-family evidence rather than as a final optimized 3D benchmark.
+
+\subsection{Graph-Grounded Reasoning And Re-Observation}
+\label{sec:rw_reasoning}
+
+Large language and vision-language models can help explain ambiguous visual
+evidence, but an unconstrained model should not directly control a UAV mission.
+CoM3D-ACE uses a restricted graph-grounded interface: the detector and 3D stages
+produce structured evidence, the reasoner receives only the high-ambiguity graph
+subproblem, and a verifier checks graph consistency, geometric plausibility, and
+action validity. This design lets the reasoner suggest actions such as
+finalize, reject, monitor, or targeted re-observation while keeping the final
+decision tied to explicit evidence. We call this module the
+\textbf{AeroGraph Reasoner}.
+
+The current paper reports AeroGraph as a system interface and validation slot.
+The reviewed prompt pack is schema-checked, but the headline external-provider
+LLM/VLM replication is kept separate until provider outputs are imported and
+validated. This conservative reporting avoids conflating deterministic
+pipeline-validation logic with a final external-reasoner benchmark.

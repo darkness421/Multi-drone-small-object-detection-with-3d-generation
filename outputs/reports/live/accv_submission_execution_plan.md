@@ -22,7 +22,7 @@ blocking start dates.
 | MarineCity system smoke | smoke-ready | Real-Cesium stage, 3-UAV captures, detector tokens, and cross-view evidence graph are ready. | Main smoke or supplementary |
 | MarineCity neural 3D | smoke-ready | RGB/depth/pose, transforms, point-cloud smoke, and three held-out neural-runner metric rows are ready: Nerfacto 12k, Instant-NGP 5k, and Splatfacto/3DGS-style 5k. | Main smoke or supplementary |
 | AeroGraph reasoner | pending external validation | Internal reviewed candidate responses exist; external non-mock replication is not yet complete. | Pending |
-| Paper sync/compile | pending full check | GitHub artifacts are updated; full Overleaf/main.tex compile still needs final page/overflow check. | Paper ops |
+| Paper sync/compile | draft bundle ready | GitHub artifacts are updated; `paper/sections/full_main_draft_bundle.tex` now provides an Overleaf-ready main-paper draft skeleton. Full Overleaf/main.tex compile still needs final page/overflow check. | Paper ops |
 
 ## Main Paper Page Rule
 
@@ -59,7 +59,7 @@ Supplementary-only slots:
 | Date | Main Goal | Concrete Work | Output |
 | --- | --- | --- | --- |
 | 6/27 | System-level result consolidation | Re-run/refresh MarineCity real-Cesium capture + detector + reasoner smoke; verify actors/UAV cameras/classes; freeze 2D result bundle; lock the 12k Nerfacto, 5k Instant-NGP, and 5k Splatfacto/3DGS-style smoke rows as current paper-safe neural-3D evidence. | Updated simulation dashboard, smoke reports, 3D smoke table, Fig. 1/3 source package candidates |
-| 6/28 | Main/supp structure cleanup | Remove status/Note clutter from main-facing tables; move long related-work, capture-source, cross-view graph, and reasoner-pending tables to supplementary. | Main patch fits the 14-page strategy; supplementary patch holds supporting tables |
+| 6/28 | Main/supp structure cleanup | Remove status/Note clutter from main-facing tables; move long related-work, capture-source, cross-view graph, and reasoner-validation tables to supplementary. Add a full main-paper draft bundle with introduction, related work, method, experiment protocol, results, MarineCity system protocol, and conclusion. | Main patch fits the 14-page strategy; supplementary patch holds supporting tables; full draft bundle passes LaTeX patch integrity |
 | 6/29 | Full system experiment audit | Re-check detector tables, simulation evidence, reasoner status, 3D runner status; update final Fig. 1/Fig. 3 guidance package for GitHub. | Final experiment audit and figure revision handoff |
 | 6/30 | Full draft completion target | Finish main/supp draft skeleton with fixed 2D, system smoke, pending-safe 3D/reasoner wording; add Isaac validation images. | Complete draft for professor review |
 | 6/30-7/5 | Main paper writing and revision | Tighten introduction/related work, contribution wording, method, experiments, references, table/figure overflow, equations; keep conclusion by page 14. | Main paper submission on 7/5 |
@@ -73,7 +73,7 @@ Supplementary-only slots:
 | G1 fixed 2D detector bundle | Current state | Keep VisDrone 1280 three-seed detector, ablation, p-value, and related-work rows frozen; only formatting and reference labels may change. | Main detector tables/figures compile without stale or TinyPerson claims |
 | G2 MarineCity smoke bundle | Current state | Keep real-Cesium captures, UAV camera altitude band, detector tokens, cross-view graph, and neural-3D smoke rows synchronized with the dashboard. | Fig. 1/Fig. 3 handoff has real screenshots, detector overlays, graph/3D panels, and no fake-city assets |
 | G3 AeroGraph provider status | After G2 or in parallel | Use the reviewed 49-prompt Codex candidate as the current table; do not promote to external validation without imported provider responses. | Reasoner table is labeled candidate/pending or replaced by a verified external-provider table |
-| G4 main/supp draft assembly | Starts immediately after G1/G2 are paper-safe | Insert 2D core result, compact ablation, AP/Params figure, MarineCity smoke table, and pending-safe 3D/reasoner wording into the main patch; move long inventories to supplementary. | Local patch integrity passes and Overleaf can pull the GitHub update |
+| G4 main/supp draft assembly | Started | Insert 2D core result, compact ablation, AP/Params figure, MarineCity smoke table, and conservative 3D/reasoner wording into the main draft; move long inventories to supplementary. | `full_main_draft_bundle.tex` and `supplementary_patch_bundle.tex` pass LaTeX patch integrity |
 | G5 final QA | After draft assembly | Check reference order in the actual Overleaf main file, table/figure overflow, equation consistency, contribution wording, conclusion page, and main/supp duplication. | Professor-review draft ready |
 
 ## Work Breakdown
@@ -90,6 +90,9 @@ Supplementary-only slots:
   reconstruction benchmark.
 - Figure 1 and Figure 3: update after final MarineCity qualitative package is
   refreshed.
+- Full main-paper draft bundle: created as
+  `paper/sections/full_main_draft_bundle.tex`; next step is Overleaf page and
+  overflow review.
 
 ### Supplementary
 
@@ -108,7 +111,7 @@ Supplementary-only slots:
 | P1 | Neural 3D result | At least one real runner result or defensible reconstruction sanity result | Done with three runner-family smoke rows; Nerfacto 12k is the current quality row |
 | P1 | AeroGraph external-provider validation | 23-prompt compact external-provider run first, then 49-prompt final if time allows | Keep the reviewed 49-prompt candidate table internal; import external ChatGPT/OpenAI/local responses only if provider access is available |
 | P2 | MarineCity qualitative package | Natural object placement, 3 UAV views, detector overlays, evidence graph panels | Refresh capture/detector/reasoner smoke and update Fig. 1/3 handoff package |
-| P2 | Paper QA | Reference order, formula consistency, figure/table overflow, main/supp split | Run final checks after draft assembly |
+| P2 | Paper QA | Reference order, formula consistency, figure/table overflow, main/supp split | Run final checks in Overleaf after importing `full_main_draft_bundle.tex` |
 
 ## Claiming Rules
 

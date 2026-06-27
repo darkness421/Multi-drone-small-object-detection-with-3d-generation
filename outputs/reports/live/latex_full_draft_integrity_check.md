@@ -5,7 +5,7 @@ Status: `latex_patch_integrity_ok`
 
 ## Summary
 
-- Checked files: `15`
+- Checked files: `20`
 - Missing inputs: `0`
 - Missing graphics: `0`
 - Duplicate labels: `0`
@@ -16,5 +16,5 @@ Status: `latex_patch_integrity_ok`
 
 | bundle | exists | included_file_count | commented_optional_inputs |
 | --- | --- | --- | --- |
-| paper/sections/main_results_patch_bundle.tex | True | 8 | ['sections/07_marinecity_qualitative_figure_slots'] |
+| paper/sections/full_main_draft_bundle.tex | True | 12 | [] |
 | paper/sections/supplementary_patch_bundle.tex | True | 8 | [] |

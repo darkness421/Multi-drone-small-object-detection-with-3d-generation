@@ -1,0 +1,53 @@
+\section{Experimental Protocol}
+\label{sec:experiment_protocol}
+
+\subsection{Datasets And Splits}
+\label{sec:datasets}
+
+The main 2D detector experiments use VisDrone2019-DET under a normalized
+1280-pixel protocol. The converted detector benchmark keeps the ten VisDrone
+categories: pedestrian, people, bicycle, car, van, truck, tricycle,
+awning-tricycle, bus, and motor. All promoted detector rows use the official
+validation split and are reported over seeds 42, 123, and 2026 when included in
+the main comparison.
+
+The MarineCity experiments are a system-level real-Cesium protocol rather than
+a replacement for the VisDrone detector benchmark. The scene is centered on the
+Haeundae MarineCity region, loaded in Isaac Sim with Cesium geospatial context,
+and captured from three UAV views with the current verified 140--160 m camera
+altitude band. The scene exports RGB/depth-like captures, camera metadata,
+pose hints, detector EvidenceTokens, and cross-view graph artifacts. The paper
+uses this dataset as a system/protocol validation bed for multi-UAV evidence
+completion and reasoning.
+
+\subsection{Metrics}
+\label{sec:metrics}
+
+For 2D detection, we report AP, AP50, precision, recall, F1, parameter count,
+and GFLOPs. AP and AP50 are the primary detector metrics. Parameter count and
+GFLOPs are used to interpret model complexity, but the main claim is not based
+on a hand-designed weighted trade-off score.
+
+For MarineCity neural-3D smoke validation, we report held-out PSNR, SSIM,
+LPIPS, rendering FPS, and training/evaluation time when available. These rows
+verify that the real-Cesium capture package can be consumed by multiple
+runner families. They should not be interpreted as a fully optimized 3D
+benchmark until longer validation and cleaner reconstruction captures are
+completed.
+
+\subsection{Implementation Details}
+\label{sec:implementation_details}
+
+Detector experiments are run on a server with an Intel Xeon Silver 4510 CPU
+(12 physical cores, 24 threads), 125 GiB system memory, and two RTX 5090 GPUs.
+The main 1280-pixel detector runs use batch size 4 for large/proposed models,
+four dataloader workers, AMP, deterministic mode, automatic optimizer
+selection, and the best validation checkpoint. We do not introduce a custom
+paper-specific augmentation recipe; promoted rows share the exported
+Ultralytics train-time settings in their run metadata, including standard HSV,
+translation/scale, horizontal flip, mosaic, and close-mosaic settings.
+
+The MarineCity smoke experiments use Isaac Sim 5.1 and a saved real-Cesium
+\texttt{uavmarine.usd} stage. The capture and reasoner artifacts are exported
+as reproducible image, JSON, JSONL, and LaTeX-ready table files so that the main
+paper and supplementary material can be regenerated from the same evidence.

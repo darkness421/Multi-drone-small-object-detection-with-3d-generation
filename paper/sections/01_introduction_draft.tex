@@ -1,0 +1,71 @@
+\section{Introduction}
+\label{sec:introduction}
+
+UAV small-object perception is important for traffic monitoring, disaster
+response, maritime safety, urban inspection, and search-and-rescue. In these
+settings, the targets of interest often occupy only a few pixels, appear under
+large altitude and viewpoint changes, and are easily confused with shadows,
+buildings, vegetation, water texture, or dense nearby objects. The difficulty is
+not only that 2D detection is hard. A single detection rarely provides enough
+evidence for a fine-grained object decision: a pedestrian may resemble debris
+from a top-down view, a vehicle may be partially hidden by urban clutter, and a
+boat-like object may be confused with wave reflection. Multi-UAV observation can
+help resolve such cases, but only if heterogeneous views are aligned and their
+uncertainty is represented explicitly.
+
+Most UAV detection systems still treat the detector output as the final answer.
+Recent small-object detectors improve shallow feature usage, spatial-frequency
+response, and lightweight multi-scale fusion
+\cite{hu2024universalyolo,jiang2024mffsodnet,bai2025sffefyolo,chao2025bpdyolo,hu2025csfprrtdetr,yang2026uavdet}.
+These advances are valuable, but they do not by themselves answer a system-level
+question: what should a cooperative UAV team do when the 2D evidence is
+ambiguous, conflicting, or missing? Conversely, 3D reconstruction and neural
+rendering methods can provide geometric context, but they are rarely connected
+to the uncertainty and object-level evidence produced by small-object detectors.
+
+We address this gap with \textbf{CoM3D-ACE}, an ambiguity-centric cooperative
+multi-UAV perception framework. The core idea is to turn 2D detections into
+structured \emph{EvidenceTokens}, associate them across views into a 3D evidence
+graph, and route only high-ambiguity object hypotheses to 3D completion,
+targeted re-observation, and a graph-grounded reasoner. The 2D frontend is
+\textbf{SAFR-YOLO}, a UAV small-object detector built around high-resolution
+P2/P3/P4 heads, SelfAttnFR refinement, TinyFReLU activation, and an
+EvidenceToken output interface. The 3D and reasoning stages are evaluated as a
+real-Cesium MarineCity system protocol, where UAV views, detector outputs,
+cross-view associations, and neural-3D runner-family smoke metrics are logged
+under a controlled pipeline.
+
+Our current main detector result is fixed under a normalized VisDrone2019-DET
+1280-pixel, three-seed protocol. SAFR-YOLO improves AP/AP50 over the strongest
+stock YOLO baseline in our controlled comparison while using fewer parameters
+than YOLOv11l. We deliberately separate this completed detector claim from the
+MarineCity 3D/reasoner claims. The MarineCity experiments validate real-Cesium
+scene loading, multi-UAV capture, detector-token export, 3D evidence grouping,
+and runner-family neural-3D execution; they are not presented as a completed
+large-scale 3D reconstruction benchmark.
+
+Our contributions are:
+
+\begin{itemize}
+    \item We propose \textbf{SAFR-YOLO}, a high-resolution UAV small-object
+    evidence generator that combines P2/P3/P4 detection heads, SelfAttnFR
+    refinement, TinyFReLU activation, and overlap-aware EvidenceToken export.
+    \item We introduce an ambiguity-centric multi-UAV evidence graph that
+    converts detections into cross-view object hypotheses with support,
+    conflict, missing-evidence, and uncertainty cues.
+    \item We construct a real-Cesium MarineCity system protocol for cooperative
+    UAV evidence completion, including 3-UAV captures, detector overlays,
+    cross-view graph artifacts, and neural-3D runner-family smoke metrics.
+    \item We validate the detector with a normalized three-seed VisDrone
+    comparison and provide supplementary coverage for full YOLO-family scales,
+    cited UAV small-object methods, ablations, heat maps, and robustness
+    analyses.
+\end{itemize}
+
+The rest of the paper is organized as follows. Section~\ref{sec:related_work}
+reviews UAV small-object detection, multi-view 3D evidence, and graph-grounded
+reasoning. Section~\ref{sec:method} describes CoM3D-ACE, SAFR-YOLO,
+EvidenceTokens, the 3D evidence graph, and the AeroGraph Reasoner interface.
+Sections~\ref{sec:detector_results_scope} and
+\ref{sec:marinecity_3d_protocol} report the detector and MarineCity system
+results. Section~\ref{sec:conclusion} concludes.

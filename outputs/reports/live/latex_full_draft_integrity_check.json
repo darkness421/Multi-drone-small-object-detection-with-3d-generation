@@ -3,22 +3,24 @@
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
-      "bundle": "paper/sections/main_results_patch_bundle.tex",
+      "bundle": "paper/sections/full_main_draft_bundle.tex",
       "exists": true,
-      "included_file_count": 8,
+      "included_file_count": 12,
       "included_files": [
+        "paper/sections/01_introduction_draft.tex",
+        "paper/sections/02_related_work_draft.tex",
+        "paper/sections/03_method_draft.tex",
+        "paper/sections/04_experiment_protocol_draft.tex",
         "paper/sections/05_experiments_current_detector_status.tex",
         "paper/sections/06_marinecity_3d_readiness.tex",
-        "paper/sections/07_marinecity_qualitative_figure_slots.tex",
-        "paper/sections/main_results_patch_bundle.tex",
+        "paper/sections/08_conclusion_draft.tex",
+        "paper/sections/full_main_draft_bundle.tex",
         "paper/tables/final_ablation_main_table.tex",
         "paper/tables/main_detector_comparison_table.tex",
         "paper/tables/marinecity_3d_completion_results_table.tex",
         "paper/tables/marinecity_system_scenario_table.tex"
       ],
-      "commented_optional_inputs": [
-        "sections/07_marinecity_qualitative_figure_slots"
-      ]
+      "commented_optional_inputs": []
     },
     {
       "bundle": "paper/sections/supplementary_patch_bundle.tex",
@@ -37,7 +39,7 @@
       "commented_optional_inputs": []
     }
   ],
-  "checked_file_count": 15,
+  "checked_file_count": 20,
   "missing_input_count": 0,
   "missing_graphics_count": 0,
   "duplicate_label_count": 0,
