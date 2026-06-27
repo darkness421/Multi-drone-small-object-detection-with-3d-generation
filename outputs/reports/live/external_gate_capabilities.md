@@ -1,6 +1,6 @@
 # External Gate Capabilities
 
-Updated: `2026-06-27 18:18:57 KST`
+Updated: `2026-06-27 20:37:46 KST`
 Status: `three_d_runner_available_aerograph_provider_missing`
 
 This report checks whether the remaining external gates can be executed from the current shell. Secret values are never printed.

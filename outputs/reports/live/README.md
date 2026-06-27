@@ -34,6 +34,13 @@ Current live bundle:
 - `accv_gate_execution_status_20260627.md`: gate-first current status and
   next-queue handoff. Use this when continuing work before the next calendar
   checkpoint.
+- `overleaf_sync_status_20260627.md`: Overleaf-linked GitHub sync status. The
+  linked Overleaf repo is
+  `darkness421/-ACCV-Multi-drone-small-object-detection-with-3d-generation`
+  on `main`; latest pushed paper commit is `981d837`.
+- `../../scripts/ubuntu/run_accv_paper_gate_queue.sh`: repeatable paper-gate
+  queue runner for refreshing LaTeX/paper readiness, MarineCity 3D readiness,
+  AeroGraph readiness, dashboards, and remaining-gate summaries.
 - `external_gate_capabilities.md`: current-shell capability audit for the two
   remaining external gates. It reports whether an AeroGraph provider
   (`OPENAI_API_KEY`, `AEROGRAPH_COMMAND`, ChatGPT/Codex manual web review, or Ollama) and

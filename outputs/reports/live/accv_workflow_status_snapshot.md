@@ -1,6 +1,6 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-27 18:18:58 KST`
+Updated: `2026-06-27 20:37:53 KST`
 
 ## Detector Status
 
