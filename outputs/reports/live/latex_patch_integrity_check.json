@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 17:30:47 KST",
+  "updated_at_kst": "2026-06-27 18:19:29 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
@@ -56,19 +56,19 @@
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "103",
+      "line": "106",
       "status": "allowed",
       "text": "artifacts, and Table~\\ref{tab:aerograph_reasoner_pending} reports the current"
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "124",
+      "line": "127",
       "status": "allowed",
       "text": "remains pending before promoting this to a final reasoning benchmark claim.}"
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "125",
+      "line": "128",
       "status": "allowed",
       "text": "\\label{tab:aerograph_reasoner_pending}"
     },

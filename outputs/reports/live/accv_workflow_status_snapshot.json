@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 17:29:57 KST",
+  "updated_at_kst": "2026-06-27 18:18:58 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -350,7 +350,7 @@
     "neural_3d_runner_preflight_status": "marinecity_3d_runner_preflight_ready",
     "neural_3d_runner_available": false,
     "neural_3d_runner_preflight_report": "outputs/reports/live/marinecity_3d_runner_preflight.md",
-    "neural_3d_metric_result_rows": 2,
+    "neural_3d_metric_result_rows": 3,
     "neural_3d_readiness_report": "outputs/reports/live/marinecity_3d_completion_readiness.md",
     "neural_3d_claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected.",
     "dashboard": "outputs/reports/live/marinecity_simulation_dashboard.png",

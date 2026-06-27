@@ -1,6 +1,6 @@
 # ACCV Next Execution Handoff
 
-Updated: `2026-06-27T17:30:44+09:00`
+Updated: `2026-06-27T18:19:00+09:00`
 
 This file lists only the next actions needed to move the research package closer to paper-ready completion. It intentionally separates paper-ready evidence from blocked external gates.
 
@@ -8,7 +8,7 @@ This file lists only the next actions needed to move the research package closer
 
 - Current shell capability status: `three_d_runner_available_aerograph_provider_missing`.
 - AeroGraph provider configured: `False`; modes `[]`.
-- Neural-3D runner configured: `True`; metric rows `2`.
+- Neural-3D runner configured: `True`; metric rows `3`.
 - Capability report: `outputs/reports/live/external_gate_capabilities.md`.
 
 ## Already Paper-Ready
@@ -22,7 +22,7 @@ This file lists only the next actions needed to move the research package closer
 - Current status: `marinecity_3d_completion_ready`.
 - Source capture ready: `True`; dataset ready: `True`; neural runner available: `True`.
 - Transforms input: `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/transforms.json`.
-- Metric state: `runner-family smoke metrics available`; metric rows `2`; missing optional methods: `['instant_ngp', 'mip_nerf_360']`.
+- Metric state: `runner-family smoke metrics available`; metric rows `3`; missing optional methods: `['mip_nerf_360']`.
 
 Next executable options:
 

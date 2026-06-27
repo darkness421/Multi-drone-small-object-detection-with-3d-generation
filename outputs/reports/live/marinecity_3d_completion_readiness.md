@@ -1,6 +1,6 @@
 # MarineCity 3D Completion Readiness
 
-Updated: `2026-06-27 17:24:09 KST`
+Updated: `2026-06-27 18:15:44 KST`
 Status: `marinecity_3d_completion_ready`
 
 ## Capture Source
@@ -32,11 +32,11 @@ Status: `marinecity_3d_completion_ready`
 - Dataset frames train/heldout: `9` / `6` / `3`
 - Transforms: `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/transforms.json`
 - Comparison CSV: `outputs/experiments/3d_generation_comparison.csv`
-- Comparison rows: `2`
-- Metric result rows: `2`
-- Result JSON count: `2`
-- Methods ready: `['gaussian_splatting', 'nerf']`
-- Missing expected methods: `['instant_ngp', 'mip_nerf_360']`
+- Comparison rows: `3`
+- Metric result rows: `3`
+- Result JSON count: `3`
+- Methods ready: `['gaussian_splatting', 'instant_ngp', 'nerf']`
+- Missing expected methods: `['mip_nerf_360']`
 
 Claiming rule: The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected.
 

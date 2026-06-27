@@ -40,11 +40,13 @@ CoM3D-ACE: Ambiguity-Centric 3D Evidence Completion for Cooperative Multi-UAV Fi
   P2P4-SelfAttnFR detector smoke test exports EvidenceTokens for three
   MarineCity scenarios. Treat the current outputs as real-Cesium
   system/protocol smoke evidence.
-- MarineCity neural 3D status: two runner-family smoke rows are available on
-  the real-Cesium capture package. Nerfacto 8k is the quality row
-  (PSNR 22.73, SSIM 0.938, LPIPS 0.072), while Splatfacto/3DGS-style 5k is a
-  faster but lower-quality support row (PSNR 19.68, SSIM 0.807, LPIPS 0.170,
-  FPS 4.56). Use these as system-smoke validation, not as a full 3D benchmark.
+- MarineCity neural 3D status: three runner-family smoke rows are available on
+  the real-Cesium capture package. Nerfacto 12k is the current quality row
+  (PSNR 22.76, SSIM 0.941, LPIPS 0.070), Instant-NGP 5k is a third verified
+  neural-runner sanity row (PSNR 21.62, SSIM 0.897, LPIPS 0.117), and
+  Splatfacto/3DGS-style 5k is a faster but lower-quality support row
+  (PSNR 19.68, SSIM 0.807, LPIPS 0.170, FPS 4.56). Use these as system-smoke
+  validation, not as a full 3D benchmark.
 - AeroGraph status: 49/49 Codex-reviewed JSON candidate responses are valid,
   but external OpenAI/ChatGPT/local-provider replication is still pending.
 - TinyPerson policy: exclude TinyPerson from the default main and supplementary

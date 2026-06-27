@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 17:24:09 KST",
+  "updated_at_kst": "2026-06-27 18:15:44 KST",
   "status": "marinecity_3d_completion_ready",
   "source_capture_ready": true,
   "neural3d_dataset_ready": true,
@@ -37,19 +37,20 @@
     "mean_depth_finite_ratio": 0.908344425154321
   },
   "comparison_csv": "outputs/experiments/3d_generation_comparison.csv",
-  "comparison_row_count": 2,
-  "metric_result_row_count": 2,
-  "result_json_count": 2,
+  "comparison_row_count": 3,
+  "metric_result_row_count": 3,
+  "result_json_count": 3,
   "result_jsons": [
     "outputs/experiments/3d_generation/gaussian_splatting_marinecity_real_capture_result.json",
+    "outputs/experiments/3d_generation/instant_ngp_marinecity_real_capture_result.json",
     "outputs/experiments/3d_generation/nerf_marinecity_real_capture_result.json"
   ],
   "methods_ready": [
     "gaussian_splatting",
+    "instant_ngp",
     "nerf"
   ],
   "missing_expected_methods": [
-    "instant_ngp",
     "mip_nerf_360"
   ],
   "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected."

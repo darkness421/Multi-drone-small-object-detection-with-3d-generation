@@ -33,11 +33,13 @@ than as a final class-balanced quantitative benchmark.
 Table~\ref{tab:marinecity_real_capture_benchmark} summarizes the real-Cesium
 capture source now used for the 3D/reasoner handoff. The table is intentionally
 reported as capture evidence rather than as a full neural reconstruction
-benchmark. We additionally run a short Nerfstudio/Nerfacto torch-backend smoke
-experiment on the exported MarineCity views to verify that a neural 3D runner
-can be trained and evaluated on the scene. Larger Instant-NGP, Mip-NeRF 360, and
-3D Gaussian Splatting comparisons are left as optional follow-up rows rather
-than used as current main-paper claims.
+benchmark. We additionally run short Nerfstudio runner-family smoke experiments
+on the exported MarineCity views to verify that neural 3D methods can be
+trained and evaluated on the scene. The current verified rows cover Nerfacto,
+Instant-NGP, and a Splatfacto/3DGS-style runner under the same sparse
+real-Cesium capture split. These rows are system-executability evidence rather
+than a final optimized 3D benchmark; longer validation is kept as an optional
+late-stage improvement.
 To verify that the captures are usable before installing the upstream neural
 3D runners, we also export a NeRF-style \texttt{transforms.json} package and a
 depth-fused colored point-cloud smoke artifact from the same nine
@@ -94,11 +96,12 @@ deterministic mock logic for system validation, not a final external-provider
 LLM/VLM result. A separate 49-prompt AeroGraph candidate table has valid
 Codex-reviewed JSON outputs, but it remains labeled as a reviewed candidate
 until an OpenAI/ChatGPT/local provider replication is imported. For 3D
-completion, Table~\ref{tab:marinecity_3d_completion_results} now contains one
-non-placeholder Nerfacto smoke row on the real-Cesium capture package. This row
-is used only to demonstrate that the neural-3D handoff is executable; it is not
-claimed as a full multi-method 3D benchmark until more runner families or longer
-validation runs are added.
+completion, Table~\ref{tab:marinecity_3d_completion_results} now contains three
+non-placeholder smoke rows on the real-Cesium capture package: Nerfacto,
+Instant-NGP, and a Splatfacto/3DGS-style runner. These rows demonstrate that the
+neural-3D handoff is executable across multiple runner families; they are not
+claimed as a full optimized 3D benchmark until longer validation and cleaner
+reconstruction captures are completed.
 Table~\ref{tab:marinecity_system_smoke} summarizes the completed smoke-test
 artifacts, and Table~\ref{tab:aerograph_reasoner_pending} reports the current
 reviewed AeroGraph candidate while keeping external-provider replication
@@ -108,9 +111,9 @@ explicit.
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{MarineCity neural 3D completion smoke metric. The current row is a
-short Nerfstudio/Nerfacto torch-backend validation on held-out MarineCity views;
-placeholder and dry-run rows are excluded.}
+\caption{MarineCity neural 3D completion smoke metrics on held-out real-Cesium
+MarineCity views. Placeholder and dry-run rows are excluded; these rows verify
+runner-family execution rather than claim a final optimized benchmark.}
 \label{tab:marinecity_3d_completion_results}
 \input{tables/marinecity_3d_completion_results_table}
 \end{table}

@@ -1,5 +1,5 @@
 {
-  "method": "nerf",
+  "method": "nerfacto",
   "scene": "marinecity_real_capture",
   "status": "complete_native_nerfacto_torch_split067_noapp_12k",
   "PSNR": 22.764698028564453,
@@ -11,6 +11,6 @@
   "disk_GB": "",
   "checkpoint": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_12k/nerfacto/20260627_180000/nerfstudio_models/step-000011999.ckpt",
   "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_12k_20260627_180000_renders",
-  "source_result": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_12k_20260627_180000_metric_row.json",
+  "source_result": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_12k_20260627_180000_ns_eval.json",
   "notes": "Nerfstudio nerfacto torch backend on native CUDA 12.8; 12000-iteration split-aware validation run with train_split_fraction=0.67, no appearance embedding, camera optimizer off, camera_res_scale_factor=0.5, held-out eval images=2. This supersedes the 8000-iteration smoke row as the current MarineCity neural-3D quality row while remaining a system-smoke validation rather than a full optimized benchmark."
 }

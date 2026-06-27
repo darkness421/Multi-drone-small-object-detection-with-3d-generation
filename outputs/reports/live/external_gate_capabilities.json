@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 17:29:56 KST",
+  "updated_at_kst": "2026-06-27 18:18:57 KST",
   "status": "three_d_runner_available_aerograph_provider_missing",
   "env": {
     "OPENAI_API_KEY": {
@@ -68,7 +68,7 @@
     "metric_row_ready": true,
     "dataset_ready": true,
     "source_capture_ready": true,
-    "metric_result_row_count": 2,
+    "metric_result_row_count": 3,
     "completion_status": "marinecity_3d_completion_ready"
   },
   "current_gate_reports": {
@@ -79,7 +79,7 @@
     "aerograph_compact_smoke_status": "aerograph_real_capture_nonmock_smoke_complete",
     "marinecity_3d_completion_status": "marinecity_3d_completion_ready",
     "marinecity_3d_runner_available": false,
-    "marinecity_3d_metric_rows": 2
+    "marinecity_3d_metric_rows": 3
   },
   "next_commands": [
     {

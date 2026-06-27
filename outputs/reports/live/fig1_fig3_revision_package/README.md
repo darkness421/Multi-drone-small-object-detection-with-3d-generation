@@ -7,8 +7,9 @@ Stable figures: Fig. 2, SelfAttnFR, TinyFReLU, and overlap-aware NMS are treated
 ## Current Revision Decision
 
 - Fig. 1 should be revised with the current real-Cesium MarineCity 3-UAV captures and should no longer rely on generic/synthetic city panels.
-- Fig. 3 should be revised now for detector previews and cross-view EvidenceToken graph, but the neural 3D completion panel and non-mock AeroGraph output panel must stay visually marked as pending until those gates finish.
-- Use the current smoke-test assets as visual/evidence-flow material, not as final neural 3D reconstruction or external LLM validation.
+- Fig. 3 should be revised now for detector previews, cross-view EvidenceToken graph, and a verified neural-3D smoke panel. The neural-3D panel should be labeled as runner-family smoke validation, not as a full optimized benchmark.
+- The non-mock AeroGraph output panel must stay visually marked as pending until external OpenAI/ChatGPT/local-provider replication is imported.
+- Use the current smoke-test assets as visual/evidence-flow material, not as final external LLM validation.
 
 ## Copied Assets
 
@@ -30,6 +31,9 @@ Stable figures: Fig. 2, SelfAttnFR, TinyFReLU, and overlap-aware NMS are treated
 | copied | Fig. 3 | `fig3_real_cesium_detector_preview_contact_sheet.png` | `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png` | Current real-Cesium SAFR-YOLO detector-preview sheet from the 3-scenario smoke run. |
 | copied | Fig. 3 | `fig3_crossview_evidence_graph_smoke.png` | `outputs/reports/live/marinecity_crossview_evidence_graph.png` | Current real-Cesium cross-view EvidenceToken graph with support/conflict/missing edges. |
 | copied | Fig. 3 | `fig3_depth_pointcloud_smoke_topdown.png` | `paper/figures/results/marinecity_system/marinecity_depth_pointcloud_smoke_topdown.png` | Depth-backed 3D geometry smoke preview. Use as handoff context, not as neural 3D completion evidence. |
+| copied | Fig. 3 | `fig3_final_neural3d_completion_render.png` | `paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png` | Primary neural-3D smoke visual. Shows held-out GT/render/depth for the current Nerfacto quality row. Label as smoke validation, not final benchmark. |
+| copied | Fig. 3/supp | `fig3_instant_ngp_heldout_smoke_contact_sheet.png` | `paper/figures/results/marinecity_system/marinecity_instant_ngp_eval_contact_sheet.png` | Additional verified Instant-NGP runner-family visual for supplementary/supporting evidence. |
+| copied | Fig. 3/supp | `fig3_splatfacto_heldout_smoke_contact_sheet.png` | `paper/figures/results/marinecity_system/marinecity_splatfacto_eval_contact_sheet.png` | Additional Splatfacto/3DGS-style runner-family visual. Use as lower-quality/faster support row or limitation. |
 | copied | Fig. 3 | `fig3_s0_locked_roi_panel.png` | `paper/figures/results/marinecity_system/s0_scenario_panel.png` | Locked MarineCity ROI scenario panel. |
 | copied | Fig. 3 | `fig3_s1_adjacent_overlap_panel.png` | `paper/figures/results/marinecity_system/s1_scenario_panel.png` | Adjacent/overlap ambiguity scenario panel. |
 | copied | Fig. 3 | `fig3_s2_coastline_multiview_panel.png` | `paper/figures/results/marinecity_system/s2_scenario_panel.png` | Coastline multi-view scenario panel. |
@@ -43,13 +47,13 @@ Stable figures: Fig. 2, SelfAttnFR, TinyFReLU, and overlap-aware NMS are treated
 
 | File | Needed After Final Simulation/Reasoner Experiments |
 |---|---|
-| `fig3_final_neural3d_completion_render.png` | Final neural 3D completion or novel-view rendering after NeRF/Instant-NGP/3DGS-style evaluation. |
+| `fig3_final_neural3d_completion_render.png` | Available as Nerfacto held-out render smoke visual. Replace again only if the running 12k validation produces a clearly better panel. |
 | `fig3_final_nonmock_aerograph_decision_panel.png` | Final non-mock AeroGraph Reasoner output panel: belief, uncertainty, action, verifier result. |
 
 ## Figure Update Guidance
 
 - Fig. 1 should use `fig1_map_multiuav_preview.png`, the three `fig1_uav*_rgb.png` views, and the three `fig1_uav*_isaac_bbox.png` previews while keeping the high-level CoM3D-ACE pipeline layout.
-- Fig. 3 should use `fig3_real_cesium_detector_preview_contact_sheet.png`, `fig3_crossview_evidence_graph_smoke.png`, and `fig3_depth_pointcloud_smoke_topdown.png` for the current evidence-flow story.
-- Fig. 3's final neural 3D completion and non-mock AeroGraph panels should be replaced later by actual runner/provider outputs.
+- Fig. 3 should use `fig3_real_cesium_detector_preview_contact_sheet.png`, `fig3_crossview_evidence_graph_smoke.png`, `fig3_depth_pointcloud_smoke_topdown.png`, and `fig3_final_neural3d_completion_render.png` for the current evidence-flow story.
+- Fig. 3's non-mock AeroGraph panel should be replaced later by actual external-provider output. The current neural-3D panel is available as verified smoke evidence, with optional replacement after the 12k run if it improves.
 - Keep diagrams compact. Detailed equations and module internals stay in Fig. 2 and supplementary figures.
 - Do not present the current smoke-test detector output as the final 3D/reasoner result until the full simulation experiment is completed.

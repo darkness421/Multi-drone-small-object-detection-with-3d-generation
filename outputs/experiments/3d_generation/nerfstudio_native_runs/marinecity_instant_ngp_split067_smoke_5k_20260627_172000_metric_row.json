@@ -1,0 +1,16 @@
+{
+  "method": "instant_ngp",
+  "scene": "marinecity_real_capture",
+  "status": "complete_native_instant_ngp_split067_5k",
+  "PSNR": 21.61716079711914,
+  "SSIM": 0.8972314596176147,
+  "LPIPS": 0.11708777397871017,
+  "FPS": 0.2753486633300781,
+  "train_time_min": "",
+  "VRAM_GB": "",
+  "disk_GB": "",
+  "checkpoint": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_instant_ngp_split067_smoke_5k/instant-ngp/20260627_172000/nerfstudio_models/step-000004999.ckpt",
+  "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_instant_ngp_split067_smoke_5k_20260627_172000_renders",
+  "source_result": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_instant_ngp_split067_smoke_5k_20260627_172000_ns_eval.json",
+  "notes": "Nerfstudio Instant-NGP smoke run on the same MarineCity real-Cesium split. The run used the non-tcnn fallback implementation, so speed is not representative of an optimized Instant-NGP deployment; use as a verified third neural-3D runner-family sanity row rather than the main 3D completion quality claim."
+}

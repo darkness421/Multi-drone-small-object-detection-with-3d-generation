@@ -1,6 +1,6 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-27 17:29:57 KST`
+Updated: `2026-06-27 18:18:58 KST`
 
 ## Detector Status
 
@@ -40,7 +40,7 @@ Updated: `2026-06-27 17:29:57 KST`
 - Detector preview sheet: `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png`
 - Cross-view evidence graph: `marinecity_crossview_evidence_graph_smoke_ready`; hypotheses `13`; multi-view `5`; edges support/conflict/missing `23`/`4`/`20`; claim `real_cesium_crossview_association_smoke_not_final_3d_reconstruction`
 - Integration check: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; actor classes `['bus', 'car', 'pedestrian', 'person', 'truck', 'van']`; detector classes `{'car': 77, 'bus': 17, 'van': 10, 'pedestrian': 24}`; report `outputs/reports/live/marinecity_system_integration_check.md`
-- Neural 3D completion gate: `marinecity_3d_completion_ready`; metric rows `2`; report `outputs/reports/live/marinecity_3d_completion_readiness.md`
+- Neural 3D completion gate: `marinecity_3d_completion_ready`; metric rows `3`; report `outputs/reports/live/marinecity_3d_completion_readiness.md`
 - Neural 3D input dataset: `marinecity_neural3d_dataset_export_ready`; frames `9`; split `{'train': 6, 'heldout': 3}`; report `outputs/reports/live/marinecity_neural3d_dataset_export.md`
 - Depth point-cloud smoke: `marinecity_depth_pointcloud_smoke_ready`; points `7584`; preview `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/marinecity_depth_pointcloud_smoke_topdown.png`; report `outputs/reports/live/marinecity_depth_pointcloud_smoke.md`
 - Neural 3D runner preflight: `marinecity_3d_runner_preflight_ready`; runner available `False`; report `outputs/reports/live/marinecity_3d_runner_preflight.md`

@@ -1,0 +1,23 @@
+{
+  "status": "marinecity_neural3d_eval_contact_sheet_ready",
+  "updated_at_kst": "2026-06-27 18:15:47 KST",
+  "method_label": "Nerfacto",
+  "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_12k_20260627_180000_renders",
+  "eval_json": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_12k_20260627_180000_ns_eval.json",
+  "out": "paper/figures/results/marinecity_system/marinecity_nerfacto_12k_eval_contact_sheet.png",
+  "rgb_count": 2,
+  "depth_count": 2,
+  "metrics": {
+    "psnr": 22.764698028564453,
+    "psnr_std": 1.0141948461532593,
+    "ssim": 0.9411029815673828,
+    "ssim_std": 0.002581873908638954,
+    "lpips": 0.07047279179096222,
+    "lpips_std": 0.0022924356162548065,
+    "num_rays_per_sec": 138635.40625,
+    "num_rays_per_sec_std": 31614.94921875,
+    "fps": 0.601716160774231,
+    "fps_std": 0.1372176706790924
+  },
+  "claiming_rule": "Qualitative held-out neural-3D smoke visualization; not a final multi-method benchmark figure."
+}

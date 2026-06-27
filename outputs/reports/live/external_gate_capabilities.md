@@ -1,6 +1,6 @@
 # External Gate Capabilities
 
-Updated: `2026-06-27 17:29:56 KST`
+Updated: `2026-06-27 18:18:57 KST`
 Status: `three_d_runner_available_aerograph_provider_missing`
 
 This report checks whether the remaining external gates can be executed from the current shell. Secret values are never printed.
@@ -12,7 +12,7 @@ This report checks whether the remaining external gates can be executed from the
 - Neural 3D runner configured: `True`
 - Neural 3D source capture ready: `True`
 - Neural 3D dataset ready: `True`
-- Neural 3D metric rows: `2`
+- Neural 3D metric rows: `3`
 
 ## Current Gate Reports
 
@@ -25,7 +25,7 @@ This report checks whether the remaining external gates can be executed from the
 | `aerograph_compact_smoke_status` | `aerograph_real_capture_nonmock_smoke_complete` |
 | `marinecity_3d_completion_status` | `marinecity_3d_completion_ready` |
 | `marinecity_3d_runner_available` | `False` |
-| `marinecity_3d_metric_rows` | `2` |
+| `marinecity_3d_metric_rows` | `3` |
 
 ## Environment Flags
 
