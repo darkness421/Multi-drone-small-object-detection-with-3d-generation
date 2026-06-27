@@ -1,0 +1,25 @@
+{
+  "status": "detector_smoke_complete",
+  "weights": "/home/oem/projects/multi-uav-marine-city/outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
+  "summary": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture_summary.json",
+  "capture_plan": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/capture_plan.json",
+  "out_jsonl": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/evidence_tokens.jsonl",
+  "preview_dir": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/previews",
+  "device": "0",
+  "imgsz": 1280,
+  "conf": 0.01,
+  "uav_count": 3,
+  "token_count": 39,
+  "tokens_by_uav": {
+    "uav_01": 17,
+    "uav_02": 15,
+    "uav_03": 7
+  },
+  "tokens_by_class": {
+    "car": 24,
+    "bus": 4,
+    "van": 4,
+    "pedestrian": 6,
+    "truck": 1
+  }
+}

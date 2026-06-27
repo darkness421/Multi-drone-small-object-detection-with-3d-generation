@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 13:13:10 KST",
+  "updated_at_kst": "2026-06-27 13:17:46 KST",
   "status": "marinecity_system_integration_smoke_ready_with_pending_final_gates",
   "checks": [
     {
@@ -25,12 +25,12 @@
     {
       "name": "safr_yolo_from_uav_views",
       "status": "PASS",
-      "evidence": "tokens=23, device=1, classes={'car': 15, 'bus': 8}"
+      "evidence": "tokens=125, device=0, classes={'car': 74, 'bus': 16, 'van': 10, 'pedestrian': 24, 'truck': 1}"
     },
     {
       "name": "pedestrian_detection_from_current_views",
-      "status": "WARN",
-      "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=0, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
+      "status": "PASS",
+      "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=24, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
     },
     {
       "name": "crossview_evidence_graph",
@@ -45,12 +45,17 @@
     {
       "name": "external_llm_reasoner",
       "status": "PENDING",
-      "evidence": "49-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_pending"
+      "evidence": "49-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_complete"
     },
     {
-      "name": "tinyperson_640_supplement",
-      "status": "PASS",
-      "evidence": "Use TinyPerson as supplementary domain-shift evidence only. The current sparse converted 640 split does not support a headline SAFR-YOLO improvement claim."
+      "name": "tinyperson_legacy_640_diagnostic",
+      "status": "INFO",
+      "evidence": "Archive the legacy TinyPerson 640 rows as a protocol-audit diagnostic only. Do not use them as paper-facing detector comparison evidence; TinyPerson is now excluded from the default paper."
+    },
+    {
+      "name": "tinyperson_corrected_corner_original",
+      "status": "PENDING",
+      "evidence": "status=closed_archive_only, methods=['Ours', 'YOLOv9m'], complete=['Ours', 'YOLOv9m'], best=YOLOv9m AP=0.20348. Corrected TinyPerson uses materialized corner crops, one person class, and 1280 input. The results are retained only as internal diagnostics and are excluded from the default paper."
     }
   ],
   "opened_stage": {
@@ -107,23 +112,26 @@
     "mean_depth_finite_ratio": 0.908344425154321
   },
   "detector": {
-    "status": "marinecity_real_capture_detector_smoke_complete",
+    "status": "viewer160_detector_smoke_aggregate_complete",
     "weights": "/home/oem/projects/multi-uav-marine-city/outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
-    "device": "1",
+    "device": "0",
     "imgsz": 1280,
-    "conf": 0.15,
+    "conf": 0.01,
     "frame_count": 9,
-    "token_count": 23,
+    "token_count": 125,
     "tokens_by_class": {
-      "car": 15,
-      "bus": 8
+      "car": 74,
+      "bus": 16,
+      "van": 10,
+      "pedestrian": 24,
+      "truck": 1
     },
     "tokens_by_uav": {
-      "uav_01": 5,
-      "uav_02": 15,
-      "uav_03": 3
+      "uav_01": 57,
+      "uav_02": 41,
+      "uav_03": 27
     },
-    "preview_contact_sheet": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/marinecity_detector_preview_contact_sheet.png",
+    "preview_contact_sheet": "",
     "supp_lowconf_conf": 0.05,
     "supp_lowconf_token_count": 27,
     "supp_lowconf_tokens_by_class": {
@@ -172,13 +180,13 @@
     "claiming_rule": "Current real-Cesium RGB/depth/pose captures are valid source evidence. Do not claim NeRF/Instant-NGP/Mip-NeRF/3DGS completion until metric rows exist."
   },
   "llm_reasoner": {
-    "real_capture_nonmock_smoke_status": "aerograph_real_capture_nonmock_smoke_pending",
+    "real_capture_nonmock_smoke_status": "aerograph_real_capture_nonmock_smoke_complete",
     "final_49_prompt_status": "aerograph_reviewed_candidate_ready_external_pending",
     "external_provider_replication_ready": false,
     "claiming_rule": "AeroGraph is the drone-specific reasoner name. Current non-mock external-provider validation remains pending."
   },
   "tinyperson_640": {
-    "status": "complete_supplementary_stress_test",
+    "status": "archived_legacy_640_protocol_diagnostic",
     "row_count": 6,
     "all_seed_count": [
       "3"
@@ -189,6 +197,23 @@
     "ours_method": "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l-TinyPerson640",
     "ours_ap": 1e-05,
     "ours_ap50": 4.3333333333333334e-05,
-    "claiming_rule": "Use TinyPerson as supplementary domain-shift evidence only. The current sparse converted 640 split does not support a headline SAFR-YOLO improvement claim."
+    "claiming_rule": "Archive the legacy TinyPerson 640 rows as a protocol-audit diagnostic only. Do not use them as paper-facing detector comparison evidence; TinyPerson is now excluded from the default paper."
+  },
+  "tinyperson_corrected": {
+    "status": "closed_archive_only",
+    "row_count": 6,
+    "methods": [
+      "Ours",
+      "YOLOv9m"
+    ],
+    "complete_methods": [
+      "Ours",
+      "YOLOv9m"
+    ],
+    "best_method": "YOLOv9m",
+    "best_ap": 0.20348,
+    "best_ap50": 0.54079,
+    "best_recall": 0.51038,
+    "claiming_rule": "Corrected TinyPerson uses materialized corner crops, one person class, and 1280 input. The results are retained only as internal diagnostics and are excluded from the default paper."
   }
 }

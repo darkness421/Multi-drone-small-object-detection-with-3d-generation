@@ -27,6 +27,9 @@ Current live bundle:
 - `accv_next_execution_handoff.md`: exact next commands and external inputs for
   the two remaining hard gates: neural-3D metrics and external non-mock
   AeroGraph responses.
+- `accv_submission_execution_plan.md`: 2026-06-27 to 2026-07-07 execution plan
+  that merges the detector freeze, MarineCity system work, neural-3D/reasoner
+  gates, main-paper writing, and supplementary submission schedule.
 - `external_gate_capabilities.md`: current-shell capability audit for the two
   remaining external gates. It reports whether an AeroGraph provider
   (`OPENAI_API_KEY`, `AEROGRAPH_COMMAND`, ChatGPT/Codex manual web review, or Ollama) and

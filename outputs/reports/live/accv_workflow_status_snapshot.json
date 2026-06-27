@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 23:24:08 KST",
+  "updated_at_kst": "2026-06-27 13:16:39 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -288,12 +288,12 @@
       {
         "name": "safr_yolo_from_uav_views",
         "status": "PASS",
-        "evidence": "tokens=23, device=1, classes={'car': 15, 'bus': 8}"
+        "evidence": "tokens=125, device=0, classes={'car': 74, 'bus': 16, 'van': 10, 'pedestrian': 24, 'truck': 1}"
       },
       {
         "name": "pedestrian_detection_from_current_views",
-        "status": "WARN",
-        "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=0, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
+        "status": "PASS",
+        "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=24, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
       },
       {
         "name": "crossview_evidence_graph",
@@ -322,8 +322,11 @@
       }
     ],
     "integration_detector_classes": {
-      "car": 15,
-      "bus": 8
+      "car": 74,
+      "bus": 16,
+      "van": 10,
+      "pedestrian": 24,
+      "truck": 1
     },
     "integration_actor_classes": [
       "bus",

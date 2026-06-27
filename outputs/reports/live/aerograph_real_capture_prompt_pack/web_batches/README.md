@@ -1,7 +1,7 @@
 # AeroGraph Web Batch Index
 
 Use these batches when no CLI/API provider is configured. Paste one batch
-file into Factory/ChatGPT/web LLM, collect JSONL output, and append it to:
+file into ChatGPT/Codex/web LLM, collect JSONL output, and append it to:
 
 ```text
 outputs/reasoning/aerograph_real_capture_manual_responses.jsonl
@@ -64,8 +64,12 @@ python scripts/normalize_aerograph_web_responses.py \
 
 ```bash
 python scripts/check_aerograph_prompt_pack_integrity.py
-python scripts/build_aerograph_web_collection_packet.py --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl --web-batch-manifest outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/manifest.json --manual-responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl --raw-output-dir outputs/reasoning/aerograph_real_capture_web_raw_batches --normalized-responses outputs/reasoning/aerograph_real_capture_manual_responses.normalized.jsonl --provider-label 'Factory/ChatGPT web real-capture smoke' --import-out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web --gate-label '23-Prompt Real-Capture Smoke' --promotion-mode smoke --purpose 'Purpose: collect compact non-mock AeroGraph responses for the current 23-token real-Cesium detector smoke run. This validates provider behavior on current captures before the final 49-prompt paper-table gate.' --out-md outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md --out-csv outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv --out-json outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.json
-python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl --provider-label "Factory/ChatGPT web real-capture smoke" --out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web
-# Compact smoke only: inspect the manifest before any paper-table promotion.
-cat outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json
+python scripts/build_aerograph_web_collection_packet.py
+python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl --provider-label "ChatGPT/Codex web" --out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web
+python scripts/build_aerograph_reasoner_table.py
+python scripts/check_aerograph_nonmock_readiness.py
+python scripts/check_paper_artifact_readiness.py
+python scripts/check_latex_patch_integrity.py
+PYTHONPATH=. python scripts/build_live_training_dashboard.py --out outputs/reports/live/training_dashboard.png
+python scripts/build_accv_status_snapshot.py
 ```

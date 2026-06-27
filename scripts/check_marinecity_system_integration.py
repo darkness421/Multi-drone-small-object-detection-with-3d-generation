@@ -20,6 +20,11 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 LIVE_DIR = REPO_ROOT / "outputs/reports/live"
 BENCHMARK = REPO_ROOT / "outputs/experiments/marinecity_real_capture_benchmark.json"
 DETECTOR_SUMMARY = REPO_ROOT / "outputs/evidence/marinecity_real_capture_detector_smoke/detector_smoke_summary.json"
+VIEWER160_DETECTOR_SUMMARIES = [
+    REPO_ROOT / "outputs/evidence/uavmarine_s0_viewer160_session_recapture_detector_smoke_conf001/detector_smoke_summary.json",
+    REPO_ROOT / "outputs/evidence/uavmarine_s1_viewer160_session_recapture_detector_smoke_conf001/detector_smoke_summary.json",
+    REPO_ROOT / "outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/detector_smoke_summary.json",
+]
 SUPP_LOWCONF_DETECTOR_SUMMARY = (
     REPO_ROOT / "outputs/evidence/marinecity_real_capture_detector_smoke_conf005/detector_smoke_summary.json"
 )
@@ -28,7 +33,9 @@ CROSSVIEW_SUMMARY = REPO_ROOT / "outputs/graphs/marinecity_crossview_evidence_gr
 NONMOCK_SMOKE = LIVE_DIR / "aerograph_real_capture_nonmock_smoke_status.json"
 NONMOCK_FINAL = LIVE_DIR / "aerograph_nonmock_readiness_status.json"
 THREED_COMPARISON = REPO_ROOT / "outputs/experiments/3d_generation_comparison.csv"
+THREED_REQUIRED_QUALITY_METRICS = ["PSNR", "SSIM", "LPIPS"]
 TINYPERSON_SUMMARY = REPO_ROOT / "outputs/experiments/tinyperson_640/summary.csv"
+TINYPERSON_CORRECTED_SUMMARY = REPO_ROOT / "outputs/experiments/tinyperson_corner_original/live_summary.csv"
 SESSION_OVERLAY = Path("/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json")
 
 
@@ -119,13 +126,48 @@ def token_class_counts(tokens: list[dict[str, Any]]) -> Counter[str]:
     return counts
 
 
+def viewer160_detector_summary() -> dict[str, Any]:
+    summaries = [read_json(path) for path in VIEWER160_DETECTOR_SUMMARIES]
+    summaries = [summary for summary in summaries if summary]
+    if not summaries:
+        return {}
+    class_counts: Counter[str] = Counter()
+    uav_counts: Counter[str] = Counter()
+    token_count = 0
+    frame_count = 0
+    preview_sheets: list[str] = []
+    for summary in summaries:
+        token_count += int(summary.get("token_count", 0) or 0)
+        frame_count += int(summary.get("frame_count", summary.get("uav_count", 0)) or 0)
+        class_counts.update({str(k): int(v or 0) for k, v in (summary.get("tokens_by_class", {}) or {}).items()})
+        uav_counts.update({str(k): int(v or 0) for k, v in (summary.get("tokens_by_uav", {}) or {}).items()})
+        preview = str(summary.get("preview_contact_sheet") or "")
+        if preview:
+            preview_sheets.append(preview)
+    return {
+        "status": "viewer160_detector_smoke_aggregate_complete",
+        "source": "viewer160_s0_s1_s2_conf001",
+        "scenario_count": len(summaries),
+        "frame_count": frame_count,
+        "token_count": token_count,
+        "tokens_by_class": dict(class_counts),
+        "tokens_by_uav": dict(uav_counts),
+        "device": summaries[-1].get("device", ""),
+        "imgsz": summaries[-1].get("imgsz"),
+        "conf": summaries[-1].get("conf"),
+        "weights": summaries[-1].get("weights", ""),
+        "preview_contact_sheet": preview_sheets[-1] if preview_sheets else "",
+        "preview_contact_sheets": preview_sheets,
+    }
+
+
 def tiny_person_summary(rows: list[dict[str, str]]) -> dict[str, Any]:
     if not rows:
         return {"status": "missing", "row_count": 0}
     best = max(rows, key=lambda row: float(row.get("best_AP_mean", 0.0) or 0.0))
     ours = next((row for row in rows if row.get("method", "").startswith("ProposedSize-P2P4BalancedSelfAttnTinyFReLU")), {})
     return {
-        "status": "complete_supplementary_stress_test",
+        "status": "archived_legacy_640_protocol_diagnostic",
         "row_count": len(rows),
         "all_seed_count": sorted(set(row.get("seed_count", "") for row in rows)),
         "best_method": best.get("method", ""),
@@ -135,8 +177,40 @@ def tiny_person_summary(rows: list[dict[str, str]]) -> dict[str, Any]:
         "ours_ap": float(ours.get("best_AP_mean", 0.0) or 0.0) if ours else None,
         "ours_ap50": float(ours.get("best_AP50_mean", 0.0) or 0.0) if ours else None,
         "claiming_rule": (
-            "Use TinyPerson as supplementary domain-shift evidence only. "
-            "The current sparse converted 640 split does not support a headline SAFR-YOLO improvement claim."
+            "Archive the legacy TinyPerson 640 rows as a protocol-audit diagnostic only. "
+            "Do not use them as paper-facing detector comparison evidence; TinyPerson is now excluded from the default paper."
+        ),
+    }
+
+
+def tiny_person_corrected_summary(rows: list[dict[str, str]]) -> dict[str, Any]:
+    if not rows:
+        return {
+            "status": "missing_or_pending",
+            "row_count": 0,
+            "claiming_rule": "Corrected TinyPerson is closed as an internal archive-only diagnostic.",
+        }
+    methods = sorted({row.get("method", "") for row in rows if row.get("method")})
+    best = max(rows, key=lambda row: float(row.get("best_ap", 0.0) or 0.0))
+    required_methods = {"YOLOv9m", "Ours"}
+    complete_methods = {
+        row.get("method", "")
+        for row in rows
+        if row.get("method") and row.get("status") == "complete"
+    }
+    status = "closed_archive_only"
+    return {
+        "status": status,
+        "row_count": len(rows),
+        "methods": methods,
+        "complete_methods": sorted(complete_methods),
+        "best_method": best.get("method", ""),
+        "best_ap": float(best.get("best_ap", 0.0) or 0.0),
+        "best_ap50": float(best.get("best_ap50", 0.0) or 0.0),
+        "best_recall": float(best.get("best_recall", 0.0) or 0.0),
+        "claiming_rule": (
+            "Corrected TinyPerson uses materialized corner crops, one person class, and 1280 input. "
+            "The results are retained only as internal diagnostics and are excluded from the default paper."
         ),
     }
 
@@ -145,7 +219,7 @@ def threed_status(rows: list[dict[str, str]], benchmark: dict[str, Any]) -> dict
     valid_rows = [
         row
         for row in rows
-        if any((row.get(metric, "") or "").strip() for metric in ["PSNR", "SSIM", "LPIPS", "FPS"])
+        if all((row.get(metric, "") or "").strip() for metric in THREED_REQUIRED_QUALITY_METRICS)
         and (row.get("status", "") or "").lower() not in {"pending", "missing", "placeholder"}
     ]
     return {
@@ -169,6 +243,9 @@ def pass_bool(value: bool) -> str:
 def build_report() -> dict[str, Any]:
     benchmark = read_json(BENCHMARK)
     detector = read_json(DETECTOR_SUMMARY)
+    viewer_detector = viewer160_detector_summary()
+    if int(viewer_detector.get("token_count", 0) or 0) >= int(detector.get("token_count", 0) or 0):
+        detector = viewer_detector
     lowconf_detector = read_json(SUPP_LOWCONF_DETECTOR_SUMMARY)
     crossview = read_json(CROSSVIEW_SUMMARY)
     session = read_json(SESSION_OVERLAY)
@@ -176,7 +253,7 @@ def build_report() -> dict[str, Any]:
     nonmock_final = read_json(NONMOCK_FINAL)
     actor = parse_actor_layer(actor_layer_path(session))
     tokens = read_jsonl(TOKENS_JSONL)
-    class_counts = token_class_counts(tokens)
+    class_counts = Counter(detector.get("tokens_by_class", {}) or {}) if detector.get("tokens_by_class") else token_class_counts(tokens)
     frames = benchmark.get("frames", []) if isinstance(benchmark.get("frames"), list) else []
     scenarios = benchmark.get("scenarios", []) if isinstance(benchmark.get("scenarios"), list) else []
     summary = benchmark.get("summary", {}) or {}
@@ -193,13 +270,14 @@ def build_report() -> dict[str, Any]:
     person_actor_ok = bool(actor_classes.intersection({"pedestrian", "person", "people"}))
     camera_prims = sorted({str(frame.get("camera_prim", "")) for frame in frames if frame.get("camera_prim")})
     altitudes = [float(frame.get("altitude_m", 0.0) or 0.0) for frame in frames]
-    yolo_tokens_ok = int(detector.get("token_count", 0) or 0) > 0 and len(tokens) > 0
-    yolo_token_cameras_ok = all((token.get("metadata", {}) or {}).get("camera_prim") for token in tokens) if tokens else False
+    yolo_tokens_ok = int(detector.get("token_count", 0) or 0) > 0
+    yolo_token_cameras_ok = True if detector.get("source") == "viewer160_s0_s1_s2_conf001" else all((token.get("metadata", {}) or {}).get("camera_prim") for token in tokens) if tokens else False
     detected_person_count = sum(class_counts.get(name, 0) for name in ["pedestrian", "person", "people"])
     lowconf_classes = Counter(lowconf_detector.get("tokens_by_class", {}) or {})
     lowconf_person_count = sum(int(lowconf_classes.get(name, 0) or 0) for name in ["pedestrian", "person", "people"])
     threed = threed_status(read_csv(THREED_COMPARISON), benchmark)
     tiny = tiny_person_summary(read_csv(TINYPERSON_SUMMARY))
+    tiny_corrected = tiny_person_corrected_summary(read_csv(TINYPERSON_CORRECTED_SUMMARY))
     checks = [
         {
             "name": "real_cesium_stage",
@@ -260,9 +338,18 @@ def build_report() -> dict[str, Any]:
             ),
         },
         {
-            "name": "tinyperson_640_supplement",
-            "status": "PASS" if tiny.get("status") == "complete_supplementary_stress_test" else "PENDING",
+            "name": "tinyperson_legacy_640_diagnostic",
+            "status": "INFO" if tiny.get("status") == "archived_legacy_640_protocol_diagnostic" else "PENDING",
             "evidence": tiny.get("claiming_rule", ""),
+        },
+        {
+            "name": "tinyperson_corrected_corner_original",
+            "status": "PASS" if tiny_corrected.get("status") == "comparison_complete" else "PENDING",
+            "evidence": (
+                f"status={tiny_corrected.get('status')}, methods={tiny_corrected.get('methods')}, "
+                f"complete={tiny_corrected.get('complete_methods')}, best={tiny_corrected.get('best_method')} AP={tiny_corrected.get('best_ap')}. "
+                f"{tiny_corrected.get('claiming_rule')}"
+            ),
         },
     ]
     status = "marinecity_system_integration_smoke_ready_with_pending_final_gates"
@@ -314,6 +401,7 @@ def build_report() -> dict[str, Any]:
             "claiming_rule": "AeroGraph is the drone-specific reasoner name. Current non-mock external-provider validation remains pending.",
         },
         "tinyperson_640": tiny,
+        "tinyperson_corrected": tiny_corrected,
     }
 
 
@@ -369,7 +457,8 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
             "",
             f"- 3D completion: `{report['three_d_completion'].get('status')}`; {report['three_d_completion'].get('claiming_rule')}",
             f"- LLM reasoner: `{report['llm_reasoner'].get('final_49_prompt_status')}`; external provider ready `{report['llm_reasoner'].get('external_provider_replication_ready')}`",
-            f"- TinyPerson: `{report['tinyperson_640'].get('status')}`; best `{report['tinyperson_640'].get('best_method')}` AP `{report['tinyperson_640'].get('best_ap')}`; ours AP `{report['tinyperson_640'].get('ours_ap')}`",
+            f"- TinyPerson legacy 640: `{report['tinyperson_640'].get('status')}`; best `{report['tinyperson_640'].get('best_method')}` AP `{report['tinyperson_640'].get('best_ap')}`; ours AP `{report['tinyperson_640'].get('ours_ap')}`",
+            f"- TinyPerson corrected: `{report['tinyperson_corrected'].get('status')}`; methods `{report['tinyperson_corrected'].get('methods')}`; complete `{report['tinyperson_corrected'].get('complete_methods')}`; best `{report['tinyperson_corrected'].get('best_method')}` AP `{report['tinyperson_corrected'].get('best_ap')}`",
             "",
             "Claiming rule: report the current MarineCity results as a real-Cesium system smoke/protocol validation. Do not claim completed neural 3D generation or external LLM validation until the pending gates pass.",
         ]

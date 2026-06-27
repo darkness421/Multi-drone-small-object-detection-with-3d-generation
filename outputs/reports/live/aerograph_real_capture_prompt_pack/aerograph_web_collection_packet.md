@@ -1,6 +1,6 @@
-# AeroGraph 23-Prompt Real-Capture Smoke Web Collection Packet
+# AeroGraph 49-Prompt Web Collection Packet
 
-Purpose: collect compact non-mock AeroGraph responses for the current 23-token real-Cesium detector smoke run. This validates provider behavior on current captures before the final 49-prompt paper-table gate.
+Purpose: collect final non-mock AeroGraph Reasoner responses from a web LLM provider such as ChatGPT/Codex, then promote them to the paper table only after all rows pass schema validation.
 
 ## Current Coverage
 
@@ -38,10 +38,14 @@ python scripts/check_aerograph_prompt_pack_integrity.py
 python scripts/import_aerograph_manual_responses.py \
   --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl \
   --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl \
-  --provider-label "Factory/ChatGPT web real-capture smoke" \
+  --provider-label "ChatGPT/Codex web" \
   --out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web
-# Compact smoke only: inspect the manifest before any paper-table promotion.
-cat outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json
+python scripts/build_aerograph_reasoner_table.py
+python scripts/check_aerograph_nonmock_readiness.py
+python scripts/check_paper_artifact_readiness.py
+python scripts/check_latex_patch_integrity.py
+PYTHONPATH=. python scripts/build_live_training_dashboard.py --out outputs/reports/live/training_dashboard.png
+python scripts/build_accv_status_snapshot.py
 ```
 
 ## Pending Items
