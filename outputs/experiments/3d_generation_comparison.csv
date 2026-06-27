@@ -1,1 +1,2 @@
 method,display_name,scene,status,PSNR,SSIM,LPIPS,FPS,train_time_min,VRAM_GB,disk_GB,advantage,limitation,result_path
+nerf,Nerfacto (torch smoke),marinecity_real_capture,complete_native_nerfacto_torch_split067_noapp_2k,22.657567977905273,0.9188224673271179,0.08246536552906036,0.546074628829956,3.0,,,canonical quality baseline; clean conceptual comparison,slow training; slow rendering; hard to scale to large outdoor scenes,/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/nerf_marinecity_real_capture_result.json

@@ -135,6 +135,13 @@ ASSETS = [
         "Depth-backed 3D geometry smoke preview. Use as handoff context, not as neural 3D completion evidence.",
     ),
     Asset(
+        "Nerfacto held-out smoke render",
+        Path("paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png"),
+        "fig3_nerfacto_heldout_smoke_contact_sheet.png",
+        "Fig. 3/Supp.",
+        "Verified Nerfstudio/Nerfacto torch-backend held-out smoke result; use as neural-3D handoff evidence, not as a full multi-method benchmark.",
+    ),
+    Asset(
         "Scenario S0 panel",
         Path("paper/figures/results/marinecity_system/s0_scenario_panel.png"),
         "fig3_s0_locked_roi_panel.png",
@@ -194,7 +201,7 @@ ASSETS = [
 
 
 PLACEHOLDERS = [
-    ("fig3_final_neural3d_completion_render.png", "Final neural 3D completion or novel-view rendering after NeRF/Instant-NGP/3DGS-style evaluation."),
+    ("fig3_final_neural3d_completion_render.png", "Final multi-method neural 3D completion or novel-view rendering after Instant-NGP/3DGS/Mip-NeRF-style evaluation, if added beyond the current Nerfacto smoke result."),
     ("fig3_final_nonmock_aerograph_decision_panel.png", "Final non-mock AeroGraph Reasoner output panel: belief, uncertainty, action, verifier result."),
 ]
 
@@ -227,8 +234,8 @@ def _write_manifest(rows: list[dict[str, str]], out_dir: Path) -> Path:
         "## Current Revision Decision",
         "",
         "- Fig. 1 should be revised with the current real-Cesium MarineCity 3-UAV captures and should no longer rely on generic/synthetic city panels.",
-        "- Fig. 3 should be revised now for detector previews and cross-view EvidenceToken graph, but the neural 3D completion panel and non-mock AeroGraph output panel must stay visually marked as pending until those gates finish.",
-        "- Use the current smoke-test assets as visual/evidence-flow material, not as final neural 3D reconstruction or external LLM validation.",
+        "- Fig. 3 should be revised now for detector previews, cross-view EvidenceToken graph, and the available Nerfacto smoke render. A full multi-method 3D benchmark panel and non-mock AeroGraph output panel must stay visually marked as pending until those gates finish.",
+        "- Use the current smoke-test assets as visual/evidence-flow material. The Nerfacto contact sheet verifies neural-3D execution, but it is not a final multi-method reconstruction benchmark.",
         "",
         "## Copied Assets",
         "",
@@ -262,8 +269,8 @@ def _write_manifest(rows: list[dict[str, str]], out_dir: Path) -> Path:
             "## Figure Update Guidance",
             "",
             "- Fig. 1 should use `fig1_map_multiuav_preview.png`, the three `fig1_uav*_rgb.png` views, and the three `fig1_uav*_isaac_bbox.png` previews while keeping the high-level CoM3D-ACE pipeline layout.",
-            "- Fig. 3 should use `fig3_real_cesium_detector_preview_contact_sheet.png`, `fig3_crossview_evidence_graph_smoke.png`, and `fig3_depth_pointcloud_smoke_topdown.png` for the current evidence-flow story.",
-            "- Fig. 3's final neural 3D completion and non-mock AeroGraph panels should be replaced later by actual runner/provider outputs.",
+            "- Fig. 3 should use `fig3_real_cesium_detector_preview_contact_sheet.png`, `fig3_crossview_evidence_graph_smoke.png`, `fig3_depth_pointcloud_smoke_topdown.png`, and `fig3_nerfacto_heldout_smoke_contact_sheet.png` for the current evidence-flow story.",
+            "- Fig. 3's final multi-method 3D completion and non-mock AeroGraph panels should be replaced later by additional runner/provider outputs if those become available.",
             "- Keep diagrams compact. Detailed equations and module internals stay in Fig. 2 and supplementary figures.",
             "- Do not present the current smoke-test detector output as the final 3D/reasoner result until the full simulation experiment is completed.",
             "",

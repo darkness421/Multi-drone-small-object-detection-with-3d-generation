@@ -6,7 +6,7 @@ verified real-Cesium smoke-test artifacts. We do not present the smoke test as a
 full benchmark result yet: it validates scene loading, multi-UAV capture,
 SAFR-YOLO EvidenceToken export, 3D evidence grouping, and AeroGraph Reasoner
 plumbing. A reviewed 49-prompt AeroGraph candidate table is available for the
-current prompt pack, while external GPT/Factory/local-provider replication is
+current prompt pack, while external OpenAI/ChatGPT/local-provider replication is
 kept as pending before making a stronger final reasoning claim.
 
 The scene is centered on the Haeundae MarineCity region and is constructed in
@@ -22,17 +22,22 @@ structured EvidenceTokens for the 3D graph and \textbf{AeroGraph Reasoner}.
 The current actor-layer audit confirms six VisDrone-derived object cards
 (vehicle classes plus pedestrian/person actors), three UAV markers, and three
 UAV camera prims on the real-Cesium stage without synthetic city replacement.
-The current SAFR-YOLO smoke run produces vehicle tokens (car/bus) from the UAV
-views; pedestrian actor placement is therefore verified, but pedestrian
-detection is reserved for the next recapture or threshold-tuning pass rather
-than claimed as a completed quantitative result.
+The current SAFR-YOLO smoke runs produce detector EvidenceTokens for cars,
+buses, vans, and pedestrians from the UAV views. The latest integration audit
+reports 128 detector tokens over the three scenarios at the diagnostic
+confidence setting, including 24 pedestrian tokens. The compact system table
+below keeps the deterministic reasoner subset separate from this larger
+detector aggregate, because the table is intended as pipeline validation rather
+than as a final class-balanced quantitative benchmark.
 
 Table~\ref{tab:marinecity_real_capture_benchmark} summarizes the real-Cesium
 capture source now used for the 3D/reasoner handoff. The table is intentionally
-reported as capture evidence rather than as a neural reconstruction benchmark:
-the RGB/depth/pose captures are available, while NeRF, Instant-NGP, Mip-NeRF
-360, and 3D Gaussian Splatting training remain pending until the external
-upstream runners are connected.
+reported as capture evidence rather than as a full neural reconstruction
+benchmark. We additionally run a short Nerfstudio/Nerfacto torch-backend smoke
+experiment on the exported MarineCity views to verify that a neural 3D runner
+can be trained and evaluated on the scene. Larger Instant-NGP, Mip-NeRF 360, and
+3D Gaussian Splatting comparisons are left as optional follow-up rows rather
+than used as current main-paper claims.
 To verify that the captures are usable before installing the upstream neural
 3D runners, we also export a NeRF-style \texttt{transforms.json} package and a
 depth-fused colored point-cloud smoke artifact from the same nine
@@ -84,15 +89,16 @@ The validated smoke test already runs: (1) SAFR-YOLO on each UAV view, (2)
 detector outputs as EvidenceTokens, (3) token grouping into 3D evidence
 hypotheses, and (4) \textbf{AeroGraph Reasoner}, the drone-specialized
 graph-grounded LLM/VLM reasoner, to propose verified class/action decisions
-under a safety-verifier schema. The current reasoner provider is deterministic
-mock logic for system validation, not a final external-provider LLM/VLM result.
-The local 3D runner preflight currently finds the geometry-smoke dependencies
-available but does not find a local Nerfstudio, Instant-NGP, COLMAP, or 3DGS
-runner. Therefore, full neural 3D metrics remain a pending experiment rather
-than a current paper claim.
-Table~\ref{tab:marinecity_3d_completion_results} is kept as a pending-safe
-metric slot: it remains visibly pending until verified upstream runner metrics
-are imported, and it excludes placeholder or dry-run rows by construction.
+under a safety-verifier schema. The current system-smoke reasoner provider is
+deterministic mock logic for system validation, not a final external-provider
+LLM/VLM result. A separate 49-prompt AeroGraph candidate table has valid
+Codex-reviewed JSON outputs, but it remains labeled as a reviewed candidate
+until an OpenAI/ChatGPT/local provider replication is imported. For 3D
+completion, Table~\ref{tab:marinecity_3d_completion_results} now contains one
+non-placeholder Nerfacto smoke row on the real-Cesium capture package. This row
+is used only to demonstrate that the neural-3D handoff is executable; it is not
+claimed as a full multi-method 3D benchmark until more runner families or longer
+validation runs are added.
 Table~\ref{tab:marinecity_system_smoke} summarizes the completed smoke-test
 artifacts, and Table~\ref{tab:aerograph_reasoner_pending} reports the current
 reviewed AeroGraph candidate while keeping external-provider replication
@@ -102,9 +108,9 @@ explicit.
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{MarineCity neural 3D completion metric slot. Rows are populated only
-after verified upstream runner outputs provide non-placeholder PSNR, SSIM, and
-LPIPS metrics.}
+\caption{MarineCity neural 3D completion smoke metric. The current row is a
+short Nerfstudio/Nerfacto torch-backend validation on held-out MarineCity views;
+placeholder and dry-run rows are excluded.}
 \label{tab:marinecity_3d_completion_results}
 \input{tables/marinecity_3d_completion_results_table}
 \end{table}
@@ -114,7 +120,7 @@ LPIPS metrics.}
 \begin{table}[t]
 \centering
 \caption{AeroGraph Reasoner evaluation slot. The current table reports a
-reviewed 49-prompt candidate; external GPT/Factory/local-provider replication
+reviewed 49-prompt candidate; external OpenAI/ChatGPT/local-provider replication
 remains pending before promoting this to a final reasoning benchmark claim.}
 \label{tab:aerograph_reasoner_pending}
 \input{tables/aerograph_reasoner_results_placeholder}

@@ -77,6 +77,8 @@ def build_report() -> dict[str, Any]:
     pointcloud_ready = pointcloud_smoke.get("status") == "marinecity_depth_pointcloud_smoke_ready"
     if source_ready and len(metric_rows) >= 2:
         status = "marinecity_3d_completion_ready"
+    elif source_ready and len(metric_rows) >= 1:
+        status = "marinecity_3d_single_runner_smoke_ready"
     elif source_ready and dataset_ready:
         status = "marinecity_3d_input_dataset_ready_metrics_pending"
     else:
@@ -123,8 +125,9 @@ def build_report() -> dict[str, Any]:
         "methods_ready": methods_ready,
         "missing_expected_methods": missing_methods,
         "claiming_rule": (
-            "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. "
-            "Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected."
+            "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. "
+            "At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. "
+            "Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected."
         ),
     }
 
@@ -170,7 +173,7 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
             "",
             f"Claiming rule: {report['claiming_rule']}",
             "",
-            "Next action: run the 3D generation/completion runner on the verified MarineCity captures and collect PSNR/SSIM/LPIPS/FPS/runtime rows before upgrading this from pending to a paper benchmark claim.",
+            "Next action: keep the single-runner Nerfacto row as system smoke evidence, then add Instant-NGP/3DGS or longer validation only if time allows before upgrading to a full benchmark claim.",
         ]
     )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")

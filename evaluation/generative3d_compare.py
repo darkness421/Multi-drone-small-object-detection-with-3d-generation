@@ -29,6 +29,18 @@ COLUMNS = [
     "result_path",
 ]
 
+METHOD_ALIASES = {
+    "3dgs": "gaussian_splatting",
+    "3d_gaussian_splatting": "gaussian_splatting",
+    "gaussian": "gaussian_splatting",
+    "gaussian-splatting": "gaussian_splatting",
+    "instant-ngp": "instant_ngp",
+    "instantngp": "instant_ngp",
+    "mip-nerf-360": "mip_nerf_360",
+    "mipnerf360": "mip_nerf_360",
+    "nerfacto": "nerf",
+}
+
 
 def read_json(path: Path) -> dict[str, Any]:
     try:
@@ -51,15 +63,30 @@ def first(payload: dict[str, Any], *keys: str) -> Any:
     return ""
 
 
+def canonical_method(value: str) -> str:
+    normalized = value.strip().lower().replace(" ", "_")
+    return METHOD_ALIASES.get(normalized, normalized)
+
+
+def display_name_for(method: str, payload: dict[str, Any], spec: Any) -> str:
+    explicit = str(payload.get("display_name") or "").strip()
+    if explicit:
+        return explicit
+    status_notes = f"{payload.get('status', '')} {payload.get('notes', '')}".lower()
+    if method == "nerf" and "nerfacto" in status_notes:
+        return "Nerfacto (torch smoke)"
+    return spec.display_name if spec else method
+
+
 def normalize_result(path: Path) -> dict[str, Any]:
     payload = read_json(path)
-    method = str(payload.get("method") or payload.get("model") or path.stem.split("_")[0])
+    method = canonical_method(str(payload.get("method") or payload.get("model") or path.stem.split("_")[0]))
     spec = specs_by_key().get(method)
     strengths = spec.expected_strengths if spec else []
     weaknesses = spec.expected_weaknesses if spec else []
     return {
         "method": method,
-        "display_name": spec.display_name if spec else method,
+        "display_name": display_name_for(method, payload, spec),
         "scene": payload.get("scene", ""),
         "status": payload.get("status", ""),
         "PSNR": first(payload, "PSNR", "psnr"),

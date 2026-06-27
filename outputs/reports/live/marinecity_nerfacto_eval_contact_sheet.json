@@ -1,0 +1,22 @@
+{
+  "status": "marinecity_nerfacto_eval_contact_sheet_ready",
+  "updated_at_kst": "2026-06-27 16:09:31 KST",
+  "render_dir": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_2k_20260627_160000_renders",
+  "eval_json": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_2k_20260627_160000_ns_eval.json",
+  "out": "/home/oem/projects/multi-uav-marine-city/paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png",
+  "rgb_count": 2,
+  "depth_count": 2,
+  "metrics": {
+    "psnr": 22.657567977905273,
+    "psnr_std": 0.9083245992660522,
+    "ssim": 0.9188224673271179,
+    "ssim_std": 0.002465000608935952,
+    "lpips": 0.08246536552906036,
+    "lpips_std": 0.007461556699126959,
+    "num_rays_per_sec": 125815.5859375,
+    "num_rays_per_sec_std": 28414.3671875,
+    "fps": 0.546074628829956,
+    "fps_std": 0.12332624942064285
+  },
+  "claiming_rule": "Qualitative held-out Nerfacto smoke visualization; not a final multi-method benchmark figure."
+}
