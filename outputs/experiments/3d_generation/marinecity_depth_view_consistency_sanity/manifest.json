@@ -1,0 +1,64 @@
+{
+  "status": "marinecity_depth_view_consistency_sanity_ready",
+  "updated_at_kst": "2026-06-27 13:45:26 KST",
+  "dataset_manifest": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/dataset_manifest.json",
+  "out_dir": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_view_consistency_sanity",
+  "contact_sheet": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_view_consistency_sanity/marinecity_depth_view_consistency_contact_sheet.png",
+  "live_contact_sheet": "/home/oem/projects/multi-uav-marine-city/outputs/reports/live/marinecity_depth_view_consistency_sanity.png",
+  "target_uav": "uav_03",
+  "source_uavs": [
+    "uav_01",
+    "uav_02"
+  ],
+  "stride": 2,
+  "max_depth_m": 600.0,
+  "scenario_count": 3,
+  "mean_psnr": 10.006380179999477,
+  "mean_ssim_luma": 0.41711997326617684,
+  "mean_fill_ratio": 0.23139286747685184,
+  "rows": [
+    {
+      "scenario_id": "uavmarine_s0_viewer160_session_recapture",
+      "target_uav": "uav_03",
+      "source_uavs": [
+        "uav_01",
+        "uav_02"
+      ],
+      "source_point_count": 329530,
+      "filled_pixel_count": 212954,
+      "fill_ratio": 0.2310698784722222,
+      "PSNR": 9.991695212429336,
+      "SSIM_luma": 0.4169833308507122,
+      "MAE": 54.80692672729492
+    },
+    {
+      "scenario_id": "uavmarine_s1_viewer160_session_recapture",
+      "target_uav": "uav_03",
+      "source_uavs": [
+        "uav_01",
+        "uav_02"
+      ],
+      "source_point_count": 329530,
+      "filled_pixel_count": 213118,
+      "fill_ratio": 0.23124782986111111,
+      "PSNR": 10.05300313258779,
+      "SSIM_luma": 0.42596200654596017,
+      "MAE": 54.132389068603516
+    },
+    {
+      "scenario_id": "uavmarine_s2_viewer160_session_recapture",
+      "target_uav": "uav_03",
+      "source_uavs": [
+        "uav_01",
+        "uav_02"
+      ],
+      "source_point_count": 329530,
+      "filled_pixel_count": 213683,
+      "fill_ratio": 0.23186089409722221,
+      "PSNR": 9.974442194981307,
+      "SSIM_luma": 0.4084145824018582,
+      "MAE": 54.718326568603516
+    }
+  ],
+  "claiming_rule": "This is a depth-backed cross-view sanity check from real RGB/depth/pose captures. It is not a neural 3D reconstruction benchmark and must not be reported as NeRF/3DGS performance."
+}

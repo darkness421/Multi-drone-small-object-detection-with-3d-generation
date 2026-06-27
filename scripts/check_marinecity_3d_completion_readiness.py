@@ -16,8 +16,10 @@ COMPARISON = REPO_ROOT / "outputs/experiments/3d_generation_comparison.csv"
 RESULT_DIR = REPO_ROOT / "outputs/experiments/3d_generation"
 DATASET_EXPORT = RESULT_DIR / "marinecity_real_capture_neural3d/dataset_manifest.json"
 POINTCLOUD_SMOKE = RESULT_DIR / "marinecity_depth_pointcloud_smoke/manifest.json"
+DEPTH_VIEW_CONSISTENCY = RESULT_DIR / "marinecity_depth_view_consistency_sanity/manifest.json"
 RUNNER_PREFLIGHT = LIVE_DIR / "marinecity_3d_runner_preflight.json"
 EXPECTED_METHODS = ["nerf", "instant_ngp", "mip_nerf_360", "gaussian_splatting"]
+REQUIRED_QUALITY_METRICS = ["PSNR", "SSIM", "LPIPS"]
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -57,13 +59,14 @@ def build_report() -> dict[str, Any]:
     benchmark = read_json(BENCHMARK)
     dataset_export = read_json(DATASET_EXPORT)
     pointcloud_smoke = read_json(POINTCLOUD_SMOKE)
+    view_consistency = read_json(DEPTH_VIEW_CONSISTENCY)
     runner_preflight = read_json(RUNNER_PREFLIGHT)
     summary = benchmark.get("summary", {}) or {}
     rows = read_csv(COMPARISON)
     metric_rows = [
         row
         for row in rows
-        if any(numeric_present(row, metric) for metric in ["PSNR", "SSIM", "LPIPS", "FPS"])
+        if all(numeric_present(row, metric) for metric in REQUIRED_QUALITY_METRICS)
         and (row.get("status", "") or "").lower() not in {"pending", "placeholder", "missing"}
     ]
     json_paths = result_jsons()
@@ -91,6 +94,12 @@ def build_report() -> dict[str, Any]:
         "depth_pointcloud_smoke_manifest": str(POINTCLOUD_SMOKE.relative_to(REPO_ROOT)),
         "depth_pointcloud_point_count": pointcloud_smoke.get("point_count"),
         "depth_pointcloud_preview": pointcloud_smoke.get("preview"),
+        "depth_view_consistency_sanity_ready": view_consistency.get("status") == "marinecity_depth_view_consistency_sanity_ready",
+        "depth_view_consistency_manifest": str(DEPTH_VIEW_CONSISTENCY.relative_to(REPO_ROOT)),
+        "depth_view_consistency_contact_sheet": view_consistency.get("live_contact_sheet") or view_consistency.get("contact_sheet"),
+        "depth_view_consistency_mean_psnr": view_consistency.get("mean_psnr"),
+        "depth_view_consistency_mean_ssim_luma": view_consistency.get("mean_ssim_luma"),
+        "depth_view_consistency_mean_fill_ratio": view_consistency.get("mean_fill_ratio"),
         "neural3d_dataset_manifest": str(DATASET_EXPORT.relative_to(REPO_ROOT)),
         "neural3d_dataset_frame_count": dataset_export.get("frame_count"),
         "neural3d_dataset_train_frame_count": dataset_export.get("train_frame_count"),
@@ -145,6 +154,10 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
         f"- Depth point-cloud smoke ready: `{report['depth_pointcloud_smoke_ready']}`",
         f"- Depth point-cloud points: `{report['depth_pointcloud_point_count']}`",
         f"- Depth point-cloud preview: `{report['depth_pointcloud_preview']}`",
+        f"- Depth view-consistency sanity ready: `{report['depth_view_consistency_sanity_ready']}`",
+        f"- Depth view-consistency manifest: `{report['depth_view_consistency_manifest']}`",
+        f"- Depth view-consistency contact sheet: `{report['depth_view_consistency_contact_sheet']}`",
+        f"- Depth view-consistency mean PSNR/SSIM/fill: `{report['depth_view_consistency_mean_psnr']}` / `{report['depth_view_consistency_mean_ssim_luma']}` / `{report['depth_view_consistency_mean_fill_ratio']}`",
         f"- Input dataset manifest: `{report['neural3d_dataset_manifest']}`",
         f"- Dataset frames train/heldout: `{report['neural3d_dataset_frame_count']}` / `{report['neural3d_dataset_train_frame_count']}` / `{report['neural3d_dataset_heldout_frame_count']}`",
         f"- Transforms: `{report['neural3d_dataset_transforms']}`",

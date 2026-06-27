@@ -1,6 +1,6 @@
 # MarineCity 3D Completion Readiness
 
-Updated: `2026-06-27 13:34:57 KST`
+Updated: `2026-06-27 13:45:26 KST`
 Status: `marinecity_3d_input_dataset_ready_metrics_pending`
 
 ## Capture Source
@@ -24,6 +24,10 @@ Status: `marinecity_3d_input_dataset_ready_metrics_pending`
 - Depth point-cloud smoke ready: `True`
 - Depth point-cloud points: `7584`
 - Depth point-cloud preview: `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/marinecity_depth_pointcloud_smoke_topdown.png`
+- Depth view-consistency sanity ready: `True`
+- Depth view-consistency manifest: `outputs/experiments/3d_generation/marinecity_depth_view_consistency_sanity/manifest.json`
+- Depth view-consistency contact sheet: `/home/oem/projects/multi-uav-marine-city/outputs/reports/live/marinecity_depth_view_consistency_sanity.png`
+- Depth view-consistency mean PSNR/SSIM/fill: `10.006380179999477` / `0.41711997326617684` / `0.23139286747685184`
 - Input dataset manifest: `outputs/experiments/3d_generation/marinecity_real_capture_neural3d/dataset_manifest.json`
 - Dataset frames train/heldout: `9` / `6` / `3`
 - Transforms: `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/transforms.json`

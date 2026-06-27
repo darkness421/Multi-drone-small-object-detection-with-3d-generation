@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 13:34:55 KST",
+  "updated_at_kst": "2026-06-27 13:45:24 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 58,
   "missing_required_count": 0,
@@ -571,7 +571,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2483,
+      "size_bytes": 2484,
       "status": "ok",
       "note": "External provider and neural-3D runner capability check"
     },

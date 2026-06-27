@@ -114,6 +114,11 @@ Current live bundle:
 - `marinecity_depth_pointcloud_smoke.md`: depth-fused colored point-cloud smoke
   generated from the same RGB/depth/pose captures. Use it to visually sanity
   check 3D handoff geometry; it is not a neural reconstruction benchmark.
+- `marinecity_depth_view_consistency_sanity.md` and
+  `marinecity_depth_view_consistency_sanity.png`: depth-splat cross-view
+  sanity from `uav_01,uav_02` into held-out `uav_03` for the three MarineCity
+  scenarios. Use it as 3D evidence-handoff support only; it is not a NeRF/3DGS
+  metric row.
 - `marinecity_3d_runner_preflight.md`: local dependency preflight for
   Nerfstudio/COLMAP/Instant-NGP/3DGS-style runners. The current state records
   that the dataset and geometry smoke are ready, while neural runner execution
