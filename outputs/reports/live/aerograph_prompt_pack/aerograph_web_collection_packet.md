@@ -1,6 +1,6 @@
 # AeroGraph 49-Prompt Web Collection Packet
 
-Purpose: collect final non-mock AeroGraph Reasoner responses from a web LLM provider such as Factory/ChatGPT, then promote them to the paper table only after all rows pass schema validation.
+Purpose: collect final non-mock AeroGraph Reasoner responses from a web LLM provider, then promote them to the paper table only after all rows pass schema validation.
 
 ## Current Coverage
 
@@ -40,7 +40,7 @@ python scripts/check_aerograph_prompt_pack_integrity.py
 python scripts/import_aerograph_manual_responses.py \
   --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl \
   --responses outputs/reasoning/aerograph_manual_responses.jsonl \
-  --provider-label "Factory/ChatGPT web" \
+  --provider-label "External web LLM" \
   --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web
 python scripts/build_aerograph_reasoner_table.py
 python scripts/check_aerograph_nonmock_readiness.py

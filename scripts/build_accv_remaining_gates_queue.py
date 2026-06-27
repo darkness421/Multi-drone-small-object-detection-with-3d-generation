@@ -144,7 +144,7 @@ def build_rows() -> list[dict[str, str]]:
                 f"{effective_coverage.get('prompt_count', '-')}; "
                 f"external replication={aerograph.get('external_provider_replication_ready')}"
             ),
-            "next_action": "Keep Codex-assisted reviewed candidate visible; collect OpenAI/ChatGPT/local-provider replication before making a final external-provider reasoner claim.",
+            "next_action": "Keep the reviewed candidate internal; collect OpenAI/ChatGPT/local-provider replication before making a final external-provider reasoner claim.",
             "paper_use": "pending_reasoner",
         },
         {
@@ -203,7 +203,7 @@ def write_outputs(rows: list[dict[str, str]]) -> None:
         "1. Close TinyPerson as an internal archive-only diagnostic; do not spend more GPU time or default paper space on it.",
         "2. Keep VisDrone detector results as the main 2D claim: `Ours` in tables, SAFR-YOLO/P2P4-SelfAttnFR in method text.",
         "3. For 3D, use the verified MarineCity RGB/depth/pose package plus Nerfacto and Splatfacto/3DGS-style smoke rows as system evidence; collect longer validation only before claiming a full 3D benchmark.",
-        "4. For AeroGraph, keep the reviewed candidate visible and collect external OpenAI/ChatGPT/local-provider replication before final reasoner claims.",
+        "4. For AeroGraph, keep the reviewed candidate internal and collect external OpenAI/ChatGPT/local-provider replication before final reasoner claims.",
             "",
         ]
     )

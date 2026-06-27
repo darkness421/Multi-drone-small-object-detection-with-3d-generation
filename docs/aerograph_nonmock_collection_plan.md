@@ -31,13 +31,13 @@ the final AeroGraph result table must use non-mock LLM/VLM responses.
   `outputs/reasoning/aerograph_real_capture_web_raw_batches/` and import them
   into `outputs/reasoning/aerograph_real_capture_manual_responses.jsonl`.
 - Current external-provider blocker: no `OPENAI_API_KEY`,
-  `AEROGRAPH_COMMAND`, Factory CLI, or local LLM command is configured in the
+  `AEROGRAPH_COMMAND`, OpenAI/ChatGPT CLI, or local LLM command is configured in the
   active shell.
 
 ## Acceptance Criteria
 
-The current Codex-assisted manual review candidate is paper-visible with a
-clear caveat. Promote AeroGraph to a final external-provider benchmark only
+The current internal reviewed candidate is available for internal checking with
+a clear caveat. Promote AeroGraph to a final external-provider benchmark only
 when all conditions below are true:
 
 1. All 49 current prompts have valid-schema non-mock responses.
@@ -53,7 +53,7 @@ when all conditions below are true:
 6. The status dashboard shows `49/49` valid-schema coverage for the selected
    final provider manifest.
 
-## Option A: Factory / ChatGPT Web
+## Option A: ChatGPT / Codex Web
 
 Paste each batch file into the web model and collect JSONL output lines into:
 
@@ -87,7 +87,7 @@ Import the compact smoke responses with:
 python scripts/import_aerograph_manual_responses.py \
   --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl \
   --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl \
-  --provider-label "Factory/ChatGPT web real-capture smoke" \
+  --provider-label "External web LLM real-capture smoke" \
   --out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web
 ```
 
@@ -106,7 +106,7 @@ AEROGRAPH_OPENAI_MODEL=gpt-5.1 \
 SESSION=aerograph-real-capture-smoke \
 bash scripts/ubuntu/start_aerograph_real_capture_smoke_queue.sh
 
-# Factory/local command smoke
+# local command smoke
 AEROGRAPH_PROVIDER=command \
 AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' \
 SESSION=aerograph-real-capture-smoke-command \
@@ -118,7 +118,7 @@ The compact smoke writes:
 ```text
 outputs/reports/live/aerograph_real_capture_nonmock_smoke_status.md
 outputs/reasoning/aerograph_real_capture_eval_openai/manifest.json
-outputs/reasoning/aerograph_real_capture_eval_factory/manifest.json
+outputs/reasoning/aerograph_real_capture_eval_command/manifest.json
 ```
 
 This smoke gate is only a provider-connection and current-capture validation
@@ -164,7 +164,7 @@ python scripts/check_aerograph_prompt_pack_integrity.py
 python scripts/build_aerograph_web_collection_packet.py
 python scripts/import_aerograph_manual_responses.py \
   --responses outputs/reasoning/aerograph_manual_responses.jsonl \
-  --provider-label "Factory/ChatGPT web" \
+  --provider-label "External web LLM" \
   --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web
 python scripts/build_aerograph_reasoner_table.py
 python scripts/check_aerograph_nonmock_readiness.py
@@ -194,7 +194,7 @@ Preflight behavior:
 - The wrapper refuses to start tmux if `OPENAI_API_KEY` is missing for
   `AEROGRAPH_PROVIDER=openai`.
 - The wrapper refuses to start tmux if `AEROGRAPH_COMMAND` is missing for
-  `AEROGRAPH_PROVIDER=command` or `AEROGRAPH_PROVIDER=factory`.
+  `AEROGRAPH_PROVIDER=command` or `AEROGRAPH_PROVIDER=command`.
 - If `AEROGRAPH_ENV_FILE` is provided, it must be readable before tmux starts.
   This avoids a silent background session that immediately exits without
   producing non-mock evidence.
@@ -235,7 +235,7 @@ The queue wrapper runs the prompt pack, rebuilds the AeroGraph table, refreshes
 readiness checks, and updates the live dashboards. It exits without producing
 mock evidence if the API key is missing.
 
-## Option C: Local / Factory Command Provider
+## Option C: Local Command Provider
 
 Use this when a CLI reads the prompt from stdin and returns only AeroGraph JSON.
 
@@ -248,7 +248,7 @@ SESSION=aerograph-nonmock-49-command \
 bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
 ```
 
-For Factory or any other hosted agent exposed through a local CLI, wrap the
+For any hosted or local agent exposed through a local CLI, wrap the
 provider so the command reads one AeroGraph prompt from `stdin` and returns one
 JSON object with the required fields only. Use a private env file when the
 command contains credentials, browser profile paths, or machine-local tokens.
@@ -261,7 +261,7 @@ AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' \
 python scripts/run_aerograph_prompt_pack.py \
   --provider command \
   --command "$AEROGRAPH_COMMAND" \
-  --out-dir outputs/reasoning/aerograph_prompt_pack_eval_factory \
+  --out-dir outputs/reasoning/aerograph_prompt_pack_eval_command \
   --resume \
   --retry-unconfigured \
   --checkpoint-every 1
@@ -276,7 +276,7 @@ Until the external-provider acceptance criteria pass, use only this wording:
 
 > AeroGraph prompt pack and import pipeline are ready; current MarineCity
 > outputs validate detector-to-evidence-token integration, and a reviewed
-> 49-prompt AeroGraph candidate table is available. Final GPT/Factory/local
+> 49-prompt AeroGraph candidate table is available. Final OpenAI/ChatGPT/local
 > provider replication remains pending.
 
 After the criteria pass, report the non-mock table and cite the provider/model

@@ -1,7 +1,7 @@
 # AeroGraph Web Batch Index
 
 Use these batches when no CLI/API provider is configured. Paste one batch
-file into Factory/ChatGPT/web LLM, collect JSONL output, and append it to:
+file into an external web LLM, collect JSONL output, and append it to:
 
 ```text
 outputs/reasoning/aerograph_manual_responses.jsonl
@@ -67,7 +67,7 @@ python scripts/normalize_aerograph_web_responses.py \
 ```bash
 python scripts/check_aerograph_prompt_pack_integrity.py
 python scripts/build_aerograph_web_collection_packet.py
-python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label "Factory/ChatGPT web" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web
+python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label "External web LLM" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web
 python scripts/build_aerograph_reasoner_table.py
 python scripts/check_aerograph_nonmock_readiness.py
 python scripts/check_paper_artifact_readiness.py

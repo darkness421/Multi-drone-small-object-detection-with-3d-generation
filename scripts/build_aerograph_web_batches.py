@@ -104,7 +104,7 @@ def write_index(path: Path, manifest: dict[str, Any]) -> None:
         "# AeroGraph Web Batch Index",
         "",
         "Use these batches when no CLI/API provider is configured. Paste one batch",
-        "file into Factory/ChatGPT/web LLM, collect JSONL output, and append it to:",
+        "file into an external web LLM, collect JSONL output, and append it to:",
         "",
         "```text",
         manifest["responses"],
@@ -284,7 +284,7 @@ def main() -> None:
     parser.add_argument("--responses", default="outputs/reasoning/aerograph_manual_responses.jsonl")
     parser.add_argument("--raw-output-dir", default="outputs/reasoning/aerograph_web_raw_batches")
     parser.add_argument("--normalized-responses", default="outputs/reasoning/aerograph_manual_responses.normalized.jsonl")
-    parser.add_argument("--provider-label", default="Factory/ChatGPT web")
+    parser.add_argument("--provider-label", default="External web LLM")
     parser.add_argument("--import-out-dir", default="outputs/reasoning/aerograph_prompt_pack_eval_manual_web")
     parser.add_argument("--promotion-mode", choices=["full", "smoke"], default="full")
     parser.add_argument("--collection-packet-command", default="python scripts/build_aerograph_web_collection_packet.py")

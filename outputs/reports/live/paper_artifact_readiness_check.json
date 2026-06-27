@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 20:37:46 KST",
+  "updated_at_kst": "2026-06-27 21:21:45 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 58,
   "missing_required_count": 0,
@@ -441,7 +441,7 @@
       "placement": "pending",
       "required_now": true,
       "exists": true,
-      "size_bytes": 452,
+      "size_bytes": 322,
       "status": "ok",
       "note": "AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete"
     },
@@ -451,7 +451,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 11493,
+      "size_bytes": 11498,
       "status": "ok",
       "note": "Non-mock reasoner collection gate"
     },
@@ -471,7 +471,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 5320,
+      "size_bytes": 5297,
       "status": "ok",
       "note": "One-file web LLM handoff for AeroGraph collection"
     },
@@ -551,7 +551,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9527,
+      "size_bytes": 9530,
       "status": "ok",
       "note": "Human-readable artifact manifest"
     },
@@ -561,7 +561,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1855,
+      "size_bytes": 1761,
       "status": "ok",
       "note": "LaTeX input/figure/label integrity check"
     },
@@ -571,7 +571,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2526,
+      "size_bytes": 2524,
       "status": "ok",
       "note": "External provider and neural-3D runner capability check"
     },

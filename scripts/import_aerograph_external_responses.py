@@ -1,6 +1,6 @@
 """One-command import for external AeroGraph web/provider responses.
 
-Use this after collecting ChatGPT/Codex/OpenAI-web/local-LLM answers in raw
+Use this after collecting external-web-LLM/local-LLM answers in raw
 Markdown, text, JSON, or JSONL files. The script normalizes raw responses,
 imports them against either the compact 23-prompt real-capture pack or the full
 49-prompt final pack, and rebuilds the paper/readiness artifacts.
@@ -25,7 +25,7 @@ MODES = {
         "normalized": "outputs/reasoning/aerograph_manual_responses.normalized.jsonl",
         "manual": "outputs/reasoning/aerograph_manual_responses.jsonl",
         "out_dir": "outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
-        "provider_default": "ChatGPT/Codex web final49",
+        "provider_default": "External web LLM final49",
         "normalization_report_json": "outputs/reports/live/aerograph_web_response_normalization_report.json",
         "normalization_report_md": "outputs/reports/live/aerograph_web_response_normalization_report.md",
     },
@@ -34,7 +34,7 @@ MODES = {
         "normalized": "outputs/reasoning/aerograph_real_capture_manual_responses.normalized.jsonl",
         "manual": "outputs/reasoning/aerograph_real_capture_manual_responses.jsonl",
         "out_dir": "outputs/reasoning/aerograph_real_capture_eval_manual_web",
-        "provider_default": "ChatGPT/Codex web compact23",
+        "provider_default": "External web LLM compact23",
         "normalization_report_json": "outputs/reports/live/aerograph_real_capture_web_response_normalization_report.json",
         "normalization_report_md": "outputs/reports/live/aerograph_real_capture_web_response_normalization_report.md",
     },

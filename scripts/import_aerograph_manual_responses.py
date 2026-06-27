@@ -1,4 +1,4 @@
-"""Import manual Factory/ChatGPT AeroGraph responses into paper artifacts.
+"""Import manual external-web-LLM AeroGraph responses into paper artifacts.
 
 This is for the no-CLI case: the user can paste prompts into a web UI, collect
 JSON responses, and then import them into the same CSV/LaTeX format produced by
@@ -23,6 +23,13 @@ from scripts.run_aerograph_prompt_pack import write_jsonl
 from scripts.run_aerograph_prompt_pack import write_latex_table
 from vlm.aerograph_prompt import parse_aerograph_response
 from scripts.aerograph_response_validation import validate_response_row
+
+
+def display_path(path: Path, repo_root: Path) -> str:
+    try:
+        return str(path.relative_to(repo_root))
+    except ValueError:
+        return str(path)
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -193,8 +200,8 @@ def import_responses(args: argparse.Namespace) -> dict[str, Any]:
         "status": status,
         "provider": args.provider_label,
         "prompt_pack": str(prompt_path.relative_to(repo_root)),
-        "responses": str(response_path.relative_to(repo_root)),
-        "out_dir": str(out_dir.relative_to(repo_root)),
+        "responses": display_path(response_path, repo_root),
+        "out_dir": display_path(out_dir, repo_root),
         "summary": summary,
         "non_mock_output_count": nonmock_count,
         "valid_non_mock_output_count": valid_nonmock_count,

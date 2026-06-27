@@ -19,9 +19,10 @@ Companion paper artifact index:
   smoke/protocol result**, but not yet as a final 3D reconstruction benchmark.
 - AeroGraph reasoner section: **reviewed 49-prompt candidate table available;
   external-provider replication still pending**.
-- TinyPerson 640 stress test and eval-size diagnostic: **completed, paper
-  figure/table refreshed, but weak; use only as supplementary
-  domain-shift/limitation evidence**.
+- TinyPerson 640 legacy diagnostic and eval-size diagnostic: **completed, but
+  retained only as a protocol audit** because the first conversion did not
+  materialize TinyPerson corner windows. The paper-facing TinyPerson check is
+  the corrected corner/original-window run.
 
 ## Paper-Claimable Now
 
@@ -36,8 +37,8 @@ Companion paper artifact index:
 | MarineCity visual QA and crop candidates | Complete for figure selection guidance | `paper/figures/results/marinecity_system/marinecity_capture_quality_rank.csv`, `paper/figures/results/marinecity_system/marinecity_real_capture_crop_candidates.csv` |
 | MarineCity qualitative gate | Complete as a promotion gate | `outputs/reports/live/marinecity_qualitative_gate.md`, `paper/figures/results/marinecity_system/marinecity_qualitative_gate.md` |
 | UAV/camera altitude policy | Complete | `outputs/reports/live/accv_workflow_status_snapshot.md`, `docs/uavmarine_multiuav_scenarios.md`, `paper/sections/06_marinecity_3d_readiness.tex` |
-| TinyPerson 640 supplementary stress test | Complete as limitation evidence | `paper/tables/tinyperson_640_stress_table.tex`, `paper/figures/results/paper_fig12_tinyperson_640_stress.png`, `outputs/experiments/tinyperson_640/summary.csv` |
-| TinyPerson transfer and eval-size diagnostic | Complete as supplementary-only diagnostic evidence | `paper/tables/tinyperson_eval_imgsz_sweep_table.tex`, `paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png`, `outputs/experiments/tinyperson_eval_imgsz_sweep/summary.csv` |
+| TinyPerson 640 legacy diagnostic | Complete as protocol-audit evidence only | `paper/tables/tinyperson_640_stress_table.tex`, `paper/figures/results/paper_fig12_tinyperson_640_stress.png`, `outputs/experiments/tinyperson_640/summary.csv` |
+| Corrected TinyPerson corner/original-window check | Running | `outputs/reports/live/tinyperson_corner_original_dashboard.png`, `outputs/experiments/tinyperson_corner_original/prepare_summary.json` |
 
 ## Must Stay Pending Or Carefully Worded
 
@@ -52,20 +53,21 @@ Companion paper artifact index:
 
 ## TinyPerson Status
 
-TinyPerson640 is finished as a stress-test queue, and the VisDrone-initialized
-SAFR-YOLO transfer row plus eval-only input-size sweep are also complete. The
-values are still near zero for all tested models, so this is not useful as a
-primary comparison table. It can be used in supplementary material as evidence
-that cross-dataset tiny-person transfer at 640px is a hard domain-shift case.
-The transfer row improves recall, and the eval-size sweep shows that the sparse
-converted split is most stable at 640px, but neither result changes the main
-VisDrone detector claim.
+The first TinyPerson640 queue is finished, but it is now treated as a legacy
+protocol diagnostic rather than a detector claim. The initial conversion linked
+full images while TinyPerson corner annotations are defined on crop windows, and
+the train/validation category policy was inconsistent. The corrected protocol
+materializes the corner windows, collapses all person categories to one class,
+uses 1280 input, and compares Ours against a strong YOLOv9m baseline before any
+TinyPerson generalization statement is made.
 
 Authoritative source:
 
 - `outputs/experiments/tinyperson_640/summary.csv`
 - `outputs/experiments/tinyperson_640_transfer/summary.csv`
 - `outputs/experiments/tinyperson_eval_imgsz_sweep/summary.csv`
+- `outputs/experiments/tinyperson_corner_original/prepare_summary.json`
+- `outputs/reports/live/tinyperson_corner_original_dashboard.png`
 - `outputs/reports/live/tinyperson_640_dashboard.png`
 - `outputs/reports/live/tinyperson_eval_imgsz_sweep_dashboard.png`
 - `paper/tables/tinyperson_640_stress_table.tex`
@@ -80,7 +82,7 @@ stress-test naming.
 ## AeroGraph Next Action
 
 The active shell currently has no `OPENAI_API_KEY`, `AEROGRAPH_COMMAND`,
-Factory CLI, OpenAI CLI, Ollama CLI, or equivalent provider command configured.
+OpenAI/ChatGPT CLI, OpenAI CLI, Ollama CLI, or equivalent provider command configured.
 Therefore the remaining AeroGraph gate is not compute-bound; it is a provider
 connection/data-entry gate.
 
@@ -98,7 +100,7 @@ Use the web batches if no CLI provider key is configured:
 ```bash
 python scripts/import_aerograph_manual_responses.py \
   --responses outputs/reasoning/aerograph_manual_responses.jsonl \
-  --provider-label "Factory/ChatGPT web" \
+  --provider-label "External web LLM" \
   --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web
 ```
 

@@ -65,5 +65,5 @@
   "promotion_mode": "full",
   "collection_packet_command": "python scripts/build_aerograph_web_collection_packet.py",
   "import_out_dir": "outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
-  "import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"Factory/ChatGPT web\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web"
+  "import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"External web LLM\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web"
 }

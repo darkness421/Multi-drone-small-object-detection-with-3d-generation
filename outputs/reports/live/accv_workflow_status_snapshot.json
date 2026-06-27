@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 20:37:53 KST",
+  "updated_at_kst": "2026-06-27 21:19:37 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -462,7 +462,7 @@
     "web_batch_status": "aerograph_web_batches_ready",
     "web_batch_count": 5,
     "web_batch_dir": "outputs/reports/live/aerograph_prompt_pack/web_batches",
-    "web_batch_import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"ChatGPT/Codex web\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
+    "web_batch_import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"External web LLM\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
     "dry_run_status": "aerograph_eval_dry_run_ready",
     "dry_run_summary": {
       "total": 79,

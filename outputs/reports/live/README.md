@@ -8,6 +8,9 @@ progress, but do not treat it as the final paper report.
 Current live bundle:
 
 - `training_dashboard.png`: active detector queue view.
+- `current_work_status.md`: text version of the live current-work queue shown
+  in `training_dashboard.png`. It lists only paper-facing gates; TinyPerson is
+  archived and hidden from active work.
 - `tinyperson_640_dashboard.png`: archived legacy TinyPerson 640 diagnostic dashboard, now including the VisDrone-initialized Ours transfer row. Do not use it as a paper-facing TinyPerson comparison because the initial conversion did not materialize corner crops and the protocol is not aligned with the original-window 1280 setup.
 - `tinyperson_640_transfer_dashboard.png`: archived transfer diagnostic; not planned for the default main or supplementary paper.
 - `tinyperson_eval_imgsz_sweep_dashboard.png`: archived eval-only input-size diagnostic for legacy TinyPerson checkpoints at 640/960/1280.
@@ -43,7 +46,7 @@ Current live bundle:
   AeroGraph readiness, dashboards, and remaining-gate summaries.
 - `external_gate_capabilities.md`: current-shell capability audit for the two
   remaining external gates. It reports whether an AeroGraph provider
-  (`OPENAI_API_KEY`, `AEROGRAPH_COMMAND`, ChatGPT/Codex manual web review, or Ollama) and
+  (`OPENAI_API_KEY`, `AEROGRAPH_COMMAND`, external web LLM review, or Ollama) and
   neural-3D runner (`ns-train`, `instant-ngp`, etc.) are actually configured,
   without printing secret values.
 - `accv_research_package_readiness_audit.md`: paper-claim readiness audit that
@@ -164,12 +167,12 @@ Current live bundle:
   per-prompt tracking sheet for the 23-prompt compact real-capture smoke check.
 - `aerograph_prompt_pack/aerograph_manual_response_template_sample10.jsonl`:
   manual web-provider response template. Use
-  `scripts/import_aerograph_manual_responses.py` to convert ChatGPT/Codex web
+  `scripts/import_aerograph_manual_responses.py` to convert external web LLM
   JSON responses into the same CSV/LaTeX artifacts as the CLI runner.
 - `aerograph_prompt_pack/aerograph_manual_response_template_all.jsonl`:
   full 49-prompt manual response template for the final non-mock AeroGraph run.
 - `aerograph_prompt_pack/web_batches/`: paste-ready 10-prompt Markdown batches
-  for ChatGPT/Codex web non-mock AeroGraph evaluation. Collect the JSONL
+  for external web LLM non-mock AeroGraph evaluation. Collect the JSONL
   responses and import them with `scripts/import_aerograph_manual_responses.py`.
 - `aerograph_prompt_pack/aerograph_web_collection_packet.md`: one-file web LLM
   handoff with all batch paths, raw-output targets, promotion commands, and the
@@ -177,13 +180,13 @@ Current live bundle:
 - `aerograph_prompt_pack/aerograph_web_collection_checklist.csv`: per-prompt
   tracking sheet for the 49 non-mock AeroGraph responses.
 - `../../reasoning/aerograph_web_raw_batches/README.md`: drop-folder guide for
-  saving ChatGPT/Codex raw batch answers as `batch_01.md` ... `batch_05.md`
+  saving external web LLM raw batch answers as `batch_01.md` ... `batch_05.md`
   before normalization and import.
 - `../../scripts/normalize_aerograph_web_responses.py`: optional cleanup helper
   for web outputs that contain markdown fences, JSON arrays, or prose around
   the AeroGraph JSONL responses.
 - `../../scripts/import_aerograph_external_responses.py`: one-command importer
-  for raw ChatGPT/Codex/OpenAI-web/local-LLM response files. It normalizes
+  for raw external-web/OpenAI-web/local-LLM response files. It normalizes
   raw `.md`, `.txt`, `.json`, or `.jsonl` outputs, imports them against either
   the compact 23-prompt or final 49-prompt pack, and rebuilds readiness reports.
 - `aerograph_prompt_pack/web_batches/README.md`: batch index, required response
@@ -195,8 +198,8 @@ Current live bundle:
   that all 49 prompts can be evaluated into JSONL/CSV/LaTeX outputs. This is
   not a non-mock result; it is a provider-readiness check.
 - `../../paper/tables/aerograph_reasoner_results_placeholder.tex`: current
-  AeroGraph reasoner table slot. It is filled by the transparent
-  `Codex-assisted manual LLM review candidate` import for now; replace it with
+  AeroGraph reasoner table slot. It remains pending until an
+  external-provider import is available; replace it with
   OpenAI/ChatGPT/local-LLM output before making a stronger external-provider
   claim.
 - `../../scripts/ubuntu/start_aerograph_nonmock_queue.sh`: tmux wrapper for the

@@ -22,7 +22,7 @@ blocking start dates.
 | TinyPerson | closed archive-only | Protocol/class mismatch; corrected diagnostic does not support our main claim. | Exclude by default |
 | MarineCity system smoke | smoke-ready | Real-Cesium stage, 3-UAV captures, detector tokens, and cross-view evidence graph are ready. | Main smoke or supplementary |
 | MarineCity neural 3D | smoke-ready | RGB/depth/pose, transforms, point-cloud smoke, and three held-out neural-runner metric rows are ready: Nerfacto 12k, Instant-NGP 5k, and Splatfacto/3DGS-style 5k. | Main smoke or supplementary |
-| AeroGraph reasoner | pending external validation | Codex-assisted candidates exist; external non-mock replication is not yet complete. | Pending |
+| AeroGraph reasoner | pending external validation | Internal reviewed candidate responses exist; external non-mock replication is not yet complete. | Pending |
 | Paper sync/compile | pending full check | GitHub artifacts are updated; full Overleaf/main.tex compile still needs final check. | Paper ops |
 
 ## Date Plan

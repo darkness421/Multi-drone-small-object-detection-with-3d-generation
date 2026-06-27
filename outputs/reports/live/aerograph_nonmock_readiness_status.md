@@ -29,8 +29,8 @@
 
 | Source | Status | Provider | Valid Responses | Reviewed Candidate | External Complete |
 | --- | --- | --- | ---: | --- |
-| `outputs/reasoning/aerograph_prompt_pack_eval_manual_web/manifest.json` | `aerograph_manual_import_complete` | `Codex-assisted manual LLM review candidate final49` | `49/49` | `True` | `False` |
-| `outputs/reasoning/aerograph_prompt_pack_eval_manual/manifest.json` | `aerograph_manual_import_complete` | `Codex-assisted review candidate` | `49/49` | `True` | `False` |
+| `outputs/reasoning/aerograph_prompt_pack_eval_manual_web/manifest.json` | `aerograph_manual_import_complete` | `AeroGraph reviewed candidate` | `49/49` | `True` | `False` |
+| `outputs/reasoning/aerograph_prompt_pack_eval_manual/manifest.json` | `aerograph_manual_import_complete` | `AeroGraph reviewed candidate` | `49/49` | `True` | `False` |
 
 ## Batch Progress
 
@@ -72,7 +72,7 @@
 python scripts/check_aerograph_prompt_pack_integrity.py
 python scripts/import_aerograph_manual_responses.py \
   --responses outputs/reasoning/aerograph_manual_responses.jsonl \
-  --provider-label "ChatGPT/Codex web" \
+  --provider-label "External web LLM" \
   --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web
 python scripts/build_aerograph_reasoner_table.py
 python scripts/check_aerograph_nonmock_readiness.py

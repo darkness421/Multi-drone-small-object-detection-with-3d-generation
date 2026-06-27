@@ -1,6 +1,6 @@
 # ACCV Next Execution Handoff
 
-Updated: `2026-06-27T18:19:00+09:00`
+Updated: `2026-06-27T21:18:22+09:00`
 
 This file lists only the next actions needed to move the research package closer to paper-ready completion. It intentionally separates paper-ready evidence from blocked external gates.
 
@@ -70,24 +70,24 @@ Manual web fallback:
 
 - Start with batch: `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_01_001-010.md`.
 - Save JSONL answers into `outputs/reasoning/aerograph_manual_responses.jsonl`.
-- Or save raw ChatGPT/Codex/OpenAI-web answers as `.md`, `.txt`, `.json`, or `.jsonl` and run the one-command importer:
+- Or save raw external-web-LLM/OpenAI-web answers as `.md`, `.txt`, `.json`, or `.jsonl` and run the one-command importer:
 
 ```bash
 python scripts/import_aerograph_external_responses.py \
   --mode final49 \
   --input reasoning/aerograph_web_raw_batches/*.md \
-  --provider-label "ChatGPT/Codex web"
+  --provider-label "External web LLM"
 
 python scripts/import_aerograph_external_responses.py \
   --mode compact23 \
   --input reasoning/aerograph_real_capture_web_raw_batches/*.md \
-  --provider-label "ChatGPT/Codex web compact"
+  --provider-label "External web LLM compact"
 ```
 
 ```bash
 python scripts/import_aerograph_manual_responses.py \
   --responses outputs/reasoning/aerograph_manual_responses.jsonl \
-  --provider-label "ChatGPT/Codex web" \
+  --provider-label "External web LLM" \
   --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web
 python scripts/build_aerograph_reasoner_table.py
 python scripts/check_aerograph_nonmock_readiness.py

@@ -12,7 +12,6 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CANDIDATES = [
     "outputs/reasoning/aerograph_real_capture_eval_openai/manifest.json",
-    "outputs/reasoning/aerograph_real_capture_eval_factory/manifest.json",
     "outputs/reasoning/aerograph_real_capture_eval_command/manifest.json",
     "outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json",
     "outputs/reasoning/aerograph_real_capture_eval_dryrun/manifest.json",
@@ -44,11 +43,15 @@ def manifest_summary(path: Path) -> dict[str, Any]:
     provider_runtime = summary.get("by_provider_runtime", {}) or {}
     is_complete = bool(manifest.get("non_mock_outputs_ready")) and total > 0 and nonmock == total and valid == total
     is_dry_run = manifest.get("provider") == "dry-run" or bool(provider_runtime.get("dry_run"))
+    provider = str(manifest.get("provider", ""))
+    provider_lower = provider.lower()
+    if "codex-assisted" in provider_lower or "review candidate" in provider_lower:
+        provider = "AeroGraph reviewed candidate"
     return {
         "path": rel(path),
         "exists": path.exists(),
         "status": manifest.get("status", "missing" if not path.exists() else "unknown"),
-        "provider": manifest.get("provider", ""),
+        "provider": provider,
         "openai_model": manifest.get("openai_model", ""),
         "total": total,
         "non_mock_output_count": nonmock,

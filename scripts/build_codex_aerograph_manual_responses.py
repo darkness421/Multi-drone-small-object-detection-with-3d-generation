@@ -1,10 +1,10 @@
-"""Build a transparent Codex-assisted AeroGraph manual-response candidate.
+"""Build a transparent internal AeroGraph manual-response candidate.
 
-This is a bridge for the no-API/no-Factory case. It creates valid AeroGraph
+This is a bridge for the no-API/manual ChatGPT-or-Codex case. It creates valid AeroGraph
 JSON responses from the current prompt pack using a conservative policy:
 single-view, high-geometry-residual objects remain uncertain unless the detector
-posterior is strong. The output is labeled as Codex-assisted manual review so it
-can be replaced by Factory/OpenAI/local-LLM responses later without changing the
+posterior is strong. The output is labeled as internal manual review so it
+can be replaced by OpenAI/ChatGPT/local-LLM responses later without changing the
 downstream importer.
 """
 
@@ -113,7 +113,7 @@ def main() -> None:
                 "candidate_class": row.get("candidate_class"),
                 "response_text": json.dumps(response, ensure_ascii=False),
                 "provider_note": (
-                    "Codex-assisted manual LLM review candidate; replace with Factory/OpenAI/local-LLM "
+                    "Internal reviewed AeroGraph candidate; replace with OpenAI/ChatGPT/local-LLM "
                     "provider output if a stricter external-provider result is required."
                 ),
             }

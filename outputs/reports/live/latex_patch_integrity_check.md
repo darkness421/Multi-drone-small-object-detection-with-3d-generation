@@ -1,6 +1,6 @@
 # LaTeX Patch Integrity Check
 
-Updated: `2026-06-27 20:37:46 KST`
+Updated: `2026-06-27 21:21:45 KST`
 Status: `latex_patch_integrity_ok`
 
 ## Summary
@@ -28,5 +28,5 @@ Status: `latex_patch_integrity_ok`
 | paper/sections/06_marinecity_3d_readiness.tex | 127 | allowed | remains pending before promoting this to a final reasoning benchmark claim.} |
 | paper/sections/06_marinecity_3d_readiness.tex | 128 | allowed | \label{tab:aerograph_reasoner_pending} |
 | paper/sections/main_results_patch_bundle.tex | 12 | allowed | % - AeroGraph has a reviewed 49-prompt candidate table; external provider replication remains pending. |
-| paper/tables/aerograph_reasoner_results_placeholder.tex | 7 | allowed | Codex-assisted manual LLM review candidate final49 & 49 & 13 & 36 & 0 & Candidate; external replication pending; mismatches=0; source=aerograph_prompt_pack_eval_manual_web \\ |
+| paper/tables/aerograph_reasoner_results_placeholder.tex | 7 | allowed | AeroGraph Reasoner & 49 & -- & -- & -- & External provider validation pending \\ |
 | paper/tables/marinecity_system_scenario_table.tex | 3 | allowed | \caption{MarineCity multi-UAV system smoke-test results. The current reasoner provider is a deterministic AeroGraph mock; non-mock LLM/VLM validation is marked as pending for the final system study.} |

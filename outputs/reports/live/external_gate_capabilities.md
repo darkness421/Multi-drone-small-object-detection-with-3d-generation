@@ -1,6 +1,6 @@
 # External Gate Capabilities
 
-Updated: `2026-06-27 20:37:46 KST`
+Updated: `2026-06-27 21:21:45 KST`
 Status: `three_d_runner_available_aerograph_provider_missing`
 
 This report checks whether the remaining external gates can be executed from the current shell. Secret values are never printed.
@@ -53,13 +53,13 @@ This report checks whether the remaining external gates can be executed from the
 ### AeroGraph manual web fallback
 
 ```bash
-python scripts/import_aerograph_external_responses.py --mode final49 --input reasoning/aerograph_web_raw_batches/*.md --provider-label "ChatGPT/Codex web"
+python scripts/import_aerograph_external_responses.py --mode final49 --input reasoning/aerograph_web_raw_batches/*.md --provider-label "External web LLM"
 ```
 
 ### AeroGraph compact manual fallback
 
 ```bash
-python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label "ChatGPT/Codex web compact"
+python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label "External web LLM compact"
 ```
 
 ### Neural 3D runner preflight

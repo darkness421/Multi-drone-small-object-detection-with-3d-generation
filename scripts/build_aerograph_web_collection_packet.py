@@ -227,7 +227,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
     defaults = {
         "raw_output_dir": "outputs/reasoning/aerograph_web_raw_batches",
         "normalized_responses": "outputs/reasoning/aerograph_manual_responses.normalized.jsonl",
-        "provider_label": "Factory/ChatGPT web",
+        "provider_label": "External web LLM",
         "import_out_dir": "outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
         "gate_label": "49-Prompt",
         "promotion_mode": "full",
@@ -270,7 +270,7 @@ def main() -> None:
     parser.add_argument("--manual-responses", default="outputs/reasoning/aerograph_manual_responses.jsonl")
     parser.add_argument("--raw-output-dir", default="outputs/reasoning/aerograph_web_raw_batches")
     parser.add_argument("--normalized-responses", default="outputs/reasoning/aerograph_manual_responses.normalized.jsonl")
-    parser.add_argument("--provider-label", default="Factory/ChatGPT web")
+    parser.add_argument("--provider-label", default="External web LLM")
     parser.add_argument("--import-out-dir", default="outputs/reasoning/aerograph_prompt_pack_eval_manual_web")
     parser.add_argument("--gate-label", default="49-Prompt")
     parser.add_argument("--promotion-mode", choices=["full", "smoke"], default="full")
@@ -278,7 +278,7 @@ def main() -> None:
         "--purpose",
         default=(
             "Purpose: collect final non-mock AeroGraph Reasoner responses from a web "
-            "LLM provider such as Factory/ChatGPT, then promote them to the paper table "
+            "LLM provider, then promote them to the paper table "
             "only after all rows pass schema validation."
         ),
     )

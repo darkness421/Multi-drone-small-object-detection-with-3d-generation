@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 20:37:46 KST",
+  "updated_at_kst": "2026-06-27 21:21:45 KST",
   "status": "three_d_runner_available_aerograph_provider_missing",
   "env": {
     "OPENAI_API_KEY": {
@@ -84,11 +84,11 @@
   "next_commands": [
     {
       "gate": "AeroGraph manual web fallback",
-      "command": "python scripts/import_aerograph_external_responses.py --mode final49 --input reasoning/aerograph_web_raw_batches/*.md --provider-label \"ChatGPT/Codex web\""
+      "command": "python scripts/import_aerograph_external_responses.py --mode final49 --input reasoning/aerograph_web_raw_batches/*.md --provider-label \"External web LLM\""
     },
     {
       "gate": "AeroGraph compact manual fallback",
-      "command": "python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label \"ChatGPT/Codex web compact\""
+      "command": "python scripts/import_aerograph_external_responses.py --mode compact23 --input reasoning/aerograph_real_capture_web_raw_batches/*.md --provider-label \"External web LLM compact\""
     },
     {
       "gate": "Neural 3D runner preflight",

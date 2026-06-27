@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 20:37:46 KST",
+  "updated_at_kst": "2026-06-27 21:21:45 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
@@ -82,7 +82,7 @@
       "source": "paper/tables/aerograph_reasoner_results_placeholder.tex",
       "line": "7",
       "status": "allowed",
-      "text": "Codex-assisted manual LLM review candidate final49 & 49 & 13 & 36 & 0 & Candidate; external replication pending; mismatches=0; source=aerograph_prompt_pack_eval_manual_web \\\\"
+      "text": "AeroGraph Reasoner & 49 & -- & -- & -- & External provider validation pending \\\\"
     },
     {
       "source": "paper/tables/marinecity_system_scenario_table.tex",

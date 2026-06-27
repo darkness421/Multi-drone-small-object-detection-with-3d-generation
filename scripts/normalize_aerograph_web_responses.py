@@ -1,6 +1,6 @@
 """Normalize raw web LLM AeroGraph responses into importable JSONL.
 
-Factory/ChatGPT web UIs often return JSONL inside markdown fences, a JSON array,
+External web LLM UIs often return JSONL inside markdown fences, a JSON array,
 or a short prose wrapper. This helper extracts JSON objects, validates the
 AeroGraph response schema, and optionally merges them into the manual response
 file used by ``scripts/import_aerograph_manual_responses.py``.

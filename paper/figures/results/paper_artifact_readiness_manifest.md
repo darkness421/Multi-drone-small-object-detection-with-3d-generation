@@ -51,7 +51,7 @@ main-paper-ready items from supplementary items and explicit pending slots.
 | MarineCity crop candidates | `paper/figures/results/marinecity_system/marinecity_real_capture_crop_top12.png` | Review/selection aid | Crop-only framing guidance, not final replacement |
 | MarineCity qualitative selection manifest | `paper/figures/results/marinecity_system/marinecity_qualitative_selection_manifest.md` | Ready | Captions and placement rules for current real-Cesium qualitative assets |
 | MarineCity qualitative gate | `paper/figures/results/marinecity_system/marinecity_qualitative_gate.md` | Ready | Explicit full-frame-vs-crop promotion gate |
-| AeroGraph reviewed candidate table | `paper/tables/aerograph_reasoner_results_placeholder.tex` | Candidate ready | 49-prompt Codex-assisted manual review candidate; external provider replication pending |
+| AeroGraph external-provider table | `paper/tables/aerograph_reasoner_results_placeholder.tex` | Pending | External provider replication pending; internal reviewed outputs are not promoted as a paper result |
 
 ## Pending Slots
 

@@ -174,7 +174,7 @@ def next_commands(aerograph: dict[str, Any], threed: dict[str, Any]) -> list[dic
                     "python scripts/import_aerograph_external_responses.py "
                     "--mode final49 "
                     "--input reasoning/aerograph_web_raw_batches/*.md "
-                    "--provider-label \"ChatGPT/Codex web\""
+                    "--provider-label \"External web LLM\""
                 ),
             }
         )
@@ -185,7 +185,7 @@ def next_commands(aerograph: dict[str, Any], threed: dict[str, Any]) -> list[dic
                     "python scripts/import_aerograph_external_responses.py "
                     "--mode compact23 "
                     "--input reasoning/aerograph_real_capture_web_raw_batches/*.md "
-                    "--provider-label \"ChatGPT/Codex web compact\""
+                    "--provider-label \"External web LLM compact\""
                 ),
             }
         )
