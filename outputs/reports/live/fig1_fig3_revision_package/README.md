@@ -7,9 +7,8 @@ Stable figures: Fig. 2, SelfAttnFR, TinyFReLU, and overlap-aware NMS are treated
 ## Current Revision Decision
 
 - Fig. 1 should be revised with the current real-Cesium MarineCity 3-UAV captures and should no longer rely on generic/synthetic city panels.
-- Fig. 3 should be revised now for detector previews, cross-view EvidenceToken graph, and a verified neural-3D smoke panel. The neural-3D panel should be labeled as runner-family smoke validation, not as a full optimized benchmark.
-- The non-mock AeroGraph output panel must stay visually marked as pending until external OpenAI/ChatGPT/local-provider replication is imported.
-- Use the current smoke-test assets as visual/evidence-flow material, not as final external LLM validation.
+- Fig. 3 should be revised now for detector previews, cross-view EvidenceToken graph, and the available Nerfacto smoke render. A full multi-method 3D benchmark panel and external-provider AeroGraph output panel must stay visually marked as pending until those gates finish.
+- Use the current smoke-test assets as visual/evidence-flow material. The Nerfacto contact sheet verifies neural-3D execution, but it is not a final multi-method reconstruction benchmark.
 
 ## Copied Assets
 
@@ -17,23 +16,21 @@ Stable figures: Fig. 2, SelfAttnFR, TinyFReLU, and overlap-aware NMS are treated
 |---|---|---|---|---|
 | copied | Fig. 1 | `fig1_map_multiuav_preview.png` | `outputs/reports/live/marinecity_real_capture_benchmark_contact_sheet.png` | Use as the real MarineCity multi-UAV observation/map panel. Shows 3 scenarios x 3 UAV captures at 140-160 m. |
 | copied | Fig. 1/Fig. 3 | `fig1_fig3_three_scenario_system_panel.png` | `outputs/reports/live/marinecity_system_test_10plus/contact_sheet_3_scenarios.png` | Compact system-level visual summary for locked ROI, adjacent overlap, and coastline multi-view scenarios. |
-| copied | Fig. 1 | `fig1_uav01_rgb.png` | `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_001_uav_01_rgb.png` | Raw UAV view for the multi-UAV observations column. |
-| copied | Fig. 1 | `fig1_uav02_rgb.png` | `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_002_uav_02_rgb.png` | Raw UAV view for the multi-UAV observations column. |
-| copied | Fig. 1 | `fig1_uav03_rgb.png` | `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_003_uav_03_rgb.png` | Raw UAV view for the multi-UAV observations column. |
+| copied | Fig. 1 | `fig1_uav01_rgb.png` | `/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_rgb.png` | Raw UAV view for the multi-UAV observations column. |
+| copied | Fig. 1 | `fig1_uav02_rgb.png` | `/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png` | Raw UAV view for the multi-UAV observations column. |
+| copied | Fig. 1 | `fig1_uav03_rgb.png` | `/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_rgb.png` | Raw UAV view for the multi-UAV observations column. |
 | copied | Fig. 1 | `fig1_uav01_isaac_bbox.png` | `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_001_uav_01_bbox_preview.png` | Ground-truth-like Isaac object layout/bbox preview. |
 | copied | Fig. 1 | `fig1_uav02_isaac_bbox.png` | `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_002_uav_02_bbox_preview.png` | Ground-truth-like Isaac object layout/bbox preview. |
 | copied | Fig. 1 | `fig1_uav03_isaac_bbox.png` | `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_003_uav_03_bbox_preview.png` | Ground-truth-like Isaac object layout/bbox preview. |
-| copied | Fig. 3 | `fig3_uav01_yolo_detection.png` | `outputs/evidence/marinecity_detector_smoke_20260623_conf001/previews/frame_001_uav_01_rgb_pred.png` | P2P4-SelfAttnFR output from one simulated UAV view. |
-| copied | Fig. 3 | `fig3_uav02_yolo_detection.png` | `outputs/evidence/marinecity_detector_smoke_20260623_conf001/previews/frame_002_uav_02_rgb_pred.png` | P2P4-SelfAttnFR output from one simulated UAV view. |
-| copied | Fig. 3 | `fig3_uav03_yolo_detection.png` | `outputs/evidence/marinecity_detector_smoke_20260623_conf001/previews/frame_003_uav_03_rgb_pred.png` | P2P4-SelfAttnFR output from one simulated UAV view. |
-| copied | Fig. 3 | `fig3_evidence_tokens.jsonl` | `outputs/evidence/marinecity_detector_smoke_20260623_conf001/evidence_tokens.jsonl` | Structured detector output to drive the 3D evidence graph/reasoner panel. |
-| copied | Fig. 3 | `fig3_detector_smoke_summary.json` | `outputs/evidence/marinecity_detector_smoke_20260623_conf001/detector_smoke_summary.json` | Summary for current detector-on-simulation smoke test. |
+| copied | Fig. 3 | `fig3_uav01_yolo_detection.png` | `outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/previews/frame_001_uav_01_rgb_pred.png` | P2P4-SelfAttnFR output from one simulated UAV view. |
+| copied | Fig. 3 | `fig3_uav02_yolo_detection.png` | `outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/previews/frame_002_uav_02_rgb_pred.png` | P2P4-SelfAttnFR output from one simulated UAV view. |
+| copied | Fig. 3 | `fig3_uav03_yolo_detection.png` | `outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/previews/frame_003_uav_03_rgb_pred.png` | P2P4-SelfAttnFR output from one simulated UAV view. |
+| copied | Fig. 3 | `fig3_evidence_tokens.jsonl` | `outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/evidence_tokens.jsonl` | Structured detector output to drive the 3D evidence graph/reasoner panel. |
+| copied | Fig. 3 | `fig3_detector_smoke_summary.json` | `outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/detector_smoke_summary.json` | Summary for current detector-on-simulation smoke test. |
 | copied | Fig. 3 | `fig3_real_cesium_detector_preview_contact_sheet.png` | `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png` | Current real-Cesium SAFR-YOLO detector-preview sheet from the 3-scenario smoke run. |
 | copied | Fig. 3 | `fig3_crossview_evidence_graph_smoke.png` | `outputs/reports/live/marinecity_crossview_evidence_graph.png` | Current real-Cesium cross-view EvidenceToken graph with support/conflict/missing edges. |
 | copied | Fig. 3 | `fig3_depth_pointcloud_smoke_topdown.png` | `paper/figures/results/marinecity_system/marinecity_depth_pointcloud_smoke_topdown.png` | Depth-backed 3D geometry smoke preview. Use as handoff context, not as neural 3D completion evidence. |
-| copied | Fig. 3 | `fig3_final_neural3d_completion_render.png` | `paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png` | Primary neural-3D smoke visual. Shows held-out GT/render/depth for the current Nerfacto quality row. Label as smoke validation, not final benchmark. |
-| copied | Fig. 3/supp | `fig3_instant_ngp_heldout_smoke_contact_sheet.png` | `paper/figures/results/marinecity_system/marinecity_instant_ngp_eval_contact_sheet.png` | Additional verified Instant-NGP runner-family visual for supplementary/supporting evidence. |
-| copied | Fig. 3/supp | `fig3_splatfacto_heldout_smoke_contact_sheet.png` | `paper/figures/results/marinecity_system/marinecity_splatfacto_eval_contact_sheet.png` | Additional Splatfacto/3DGS-style runner-family visual. Use as lower-quality/faster support row or limitation. |
+| copied | Fig. 3/Supp. | `fig3_nerfacto_heldout_smoke_contact_sheet.png` | `paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png` | Verified Nerfstudio/Nerfacto torch-backend held-out smoke result; use as neural-3D handoff evidence, not as a full multi-method benchmark. |
 | copied | Fig. 3 | `fig3_s0_locked_roi_panel.png` | `paper/figures/results/marinecity_system/s0_scenario_panel.png` | Locked MarineCity ROI scenario panel. |
 | copied | Fig. 3 | `fig3_s1_adjacent_overlap_panel.png` | `paper/figures/results/marinecity_system/s1_scenario_panel.png` | Adjacent/overlap ambiguity scenario panel. |
 | copied | Fig. 3 | `fig3_s2_coastline_multiview_panel.png` | `paper/figures/results/marinecity_system/s2_scenario_panel.png` | Coastline multi-view scenario panel. |
@@ -47,13 +44,13 @@ Stable figures: Fig. 2, SelfAttnFR, TinyFReLU, and overlap-aware NMS are treated
 
 | File | Needed After Final Simulation/Reasoner Experiments |
 |---|---|
-| `fig3_final_neural3d_completion_render.png` | Available as Nerfacto held-out render smoke visual. Replace again only if the running 12k validation produces a clearly better panel. |
-| `fig3_final_nonmock_aerograph_decision_panel.png` | Final non-mock AeroGraph Reasoner output panel: belief, uncertainty, action, verifier result. |
+| `fig3_final_neural3d_completion_render.png` | Final multi-method neural 3D completion or novel-view rendering after Instant-NGP/3DGS/Mip-NeRF-style evaluation, if added beyond the current Nerfacto smoke result. |
+| `fig3_final_external_provider_aerograph_decision_panel.png` | Final external-provider AeroGraph Reasoner output panel: belief, uncertainty, action, verifier result. |
 
 ## Figure Update Guidance
 
 - Fig. 1 should use `fig1_map_multiuav_preview.png`, the three `fig1_uav*_rgb.png` views, and the three `fig1_uav*_isaac_bbox.png` previews while keeping the high-level CoM3D-ACE pipeline layout.
-- Fig. 3 should use `fig3_real_cesium_detector_preview_contact_sheet.png`, `fig3_crossview_evidence_graph_smoke.png`, `fig3_depth_pointcloud_smoke_topdown.png`, and `fig3_final_neural3d_completion_render.png` for the current evidence-flow story.
-- Fig. 3's non-mock AeroGraph panel should be replaced later by actual external-provider output. The current neural-3D panel is available as verified smoke evidence, with optional replacement after the 12k run if it improves.
+- Fig. 3 should use `fig3_real_cesium_detector_preview_contact_sheet.png`, `fig3_crossview_evidence_graph_smoke.png`, `fig3_depth_pointcloud_smoke_topdown.png`, and `fig3_nerfacto_heldout_smoke_contact_sheet.png` for the current evidence-flow story.
+- Fig. 3's final multi-method 3D completion and external-provider AeroGraph panels should be replaced later by additional runner/provider outputs if those become available.
 - Keep diagrams compact. Detailed equations and module internals stay in Fig. 2 and supplementary figures.
 - Do not present the current smoke-test detector output as the final 3D/reasoner result until the full simulation experiment is completed.
