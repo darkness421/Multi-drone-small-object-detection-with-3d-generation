@@ -20,18 +20,17 @@ for model-scale and protocol coverage.
 \centering
 \tiny
 \setlength{\tabcolsep}{2pt}
-\caption{Completed 1280-pixel detector ranking for supplementary reporting.
-Rows use VisDrone2019-DET validation with seeds 42, 123, and 2026. The main
-paper reports only the selected detector and representative strong baselines;
-this table provides full scale coverage for reviewer inspection. ``Ours''
-denotes the SAFR-YOLO/P2P4-SelfAttnFR implementation described in the method.}
+\caption{Completed 1280-pixel detector scale coverage for supplementary
+reporting. Rows use VisDrone2019-DET validation with seeds 42, 123, and 2026.
+Baseline detectors are sorted by AP; ``Ours'' is placed last to follow the
+comparison-table convention used in the main paper. ``Ours'' denotes the
+SAFR-YOLO/P2P4-SelfAttnFR implementation described in the method.}
 \label{tab:supp_yolo_scale_sweep}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{rlrrrrrr}
 \toprule
 Rank & Method & AP & AP50 & F1 & Params(M) & GFLOPs & $\Delta$AP \\
 \midrule
-1 & Ours & 0.3822 $\pm$ 0.0007 & 0.6052 $\pm$ 0.0012 & 0.6273 & 20.82 & 109.30 & +0.0045 \\
 2 & YOLOv11l & 0.3777 $\pm$ 0.0004 & 0.5981 $\pm$ 0.0011 & 0.6248 & 25.32 & 87.30 & +0.0000 \\
 3 & YOLOv12l & 0.3771 $\pm$ 0.0020 & 0.5958 $\pm$ 0.0025 & 0.6219 & 26.40 & 89.40 & -0.0006 \\
 4 & YOLOv8l & 0.3765 $\pm$ 0.0003 & 0.5963 $\pm$ 0.0008 & 0.6198 & 43.64 & 165.40 & -0.0011 \\
@@ -61,6 +60,8 @@ Rank & Method & AP & AP50 & F1 & Params(M) & GFLOPs & $\Delta$AP \\
 28 & YOLOv10n & 0.2856 $\pm$ 0.0022 & 0.4703 $\pm$ 0.0039 & 0.5160 & 2.71 & 8.40 & -0.0920 \\
 29 & YOLOv5nu & 0.2835 $\pm$ 0.0006 & 0.4696 $\pm$ 0.0015 & 0.5120 & 2.51 & 7.20 & -0.0942 \\
 30 & YOLOv26n & 0.2835 $\pm$ 0.0019 & 0.4673 $\pm$ 0.0027 & 0.5164 & 2.51 & 5.80 & -0.0942 \\
+\midrule
+1 & \textbf{Ours} & \textbf{0.3822 $\pm$ 0.0007} & \textbf{0.6052 $\pm$ 0.0012} & \textbf{0.6273} & \textbf{20.82} & \textbf{109.30} & \textbf{+0.0045} \\
 \bottomrule
 \end{tabular}
 }
@@ -83,18 +84,20 @@ in the current manuscript.
 \caption{Measured cited related-work checks. Rows use VisDrone2019-DET
 validation at 1280 input with seeds 42, 123, and 2026 unless otherwise noted.}
 \label{tab:supp_related_work_eval_rows}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{llrrrrrr}
 \toprule
 Method & Protocol & AP & AP50 & P & R & F1 & Params(M) \\
 \midrule
-CSFPR-RTDETR [11] & VisDrone val, 1280, 3-seed & 0.2784 $\pm$ 0.0070 & 0.4431 $\pm$ 0.0094 & 0.5766 & 0.4292 & 0.4921 & 14.09 \\
-MFFSODNet [2] & VisDrone val, 1280, 3-seed & 0.0975 $\pm$ 0.0034 & 0.1830 $\pm$ 0.0070 & 0.6418 & 0.2465 & 0.3562 & 4.54 \\
-SFFEF-YOLO [4] & VisDrone val, 1280, 3-seed & 0.3749 $\pm$ 0.0040 & 0.5914 $\pm$ 0.0039 & 0.6540 & 0.5781 & 0.6137 & 20.87 \\
-BPD-YOLO [7] & VisDrone val, 1280, 3-seed & 0.3804 $\pm$ 0.0035 & 0.5986 $\pm$ 0.0027 & 0.6626 & 0.5802 & 0.6187 & 24.53 \\
-HF-D-FINE [12] & VisDrone val, 1280, 3-seed & 0.3619 $\pm$ 0.0129 & 0.5764 $\pm$ 0.0186 & 0.6685 & 0.5555 & 0.6067 & 25.48 \\
-UAVDet [16] & VisDrone val, 1280, 3-seed & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.0036 & 0.6542 & 0.5899 & 0.6203 & 33.55 \\
+CSFPR-RTDETR~\cite{hu2025csfprrtdetr} & VisDrone val, 1280, 3-seed & 0.2784 $\pm$ 0.0070 & 0.4431 $\pm$ 0.0094 & 0.5766 & 0.4292 & 0.4921 & 14.09 \\
+MFFSODNet~\cite{jiang2024mffsodnet} & VisDrone val, 1280, 3-seed & 0.0975 $\pm$ 0.0034 & 0.1830 $\pm$ 0.0070 & 0.6418 & 0.2465 & 0.3562 & 4.54 \\
+SFFEF-YOLO~\cite{bai2025sffefyolo} & VisDrone val, 1280, 3-seed & 0.3749 $\pm$ 0.0040 & 0.5914 $\pm$ 0.0039 & 0.6540 & 0.5781 & 0.6137 & 20.87 \\
+BPD-YOLO~\cite{chao2025bpdyolo} & VisDrone val, 1280, 3-seed & 0.3804 $\pm$ 0.0035 & 0.5986 $\pm$ 0.0027 & 0.6626 & 0.5802 & 0.6187 & 24.53 \\
+HF-D-FINE~\cite{hu2026hfdifine} & VisDrone val, 1280, 3-seed & 0.3619 $\pm$ 0.0129 & 0.5764 $\pm$ 0.0186 & 0.6685 & 0.5555 & 0.6067 & 25.48 \\
+UAVDet~\cite{yang2026uavdet} & VisDrone val, 1280, 3-seed & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.0036 & 0.6542 & 0.5899 & 0.6203 & 33.55 \\
 \bottomrule
 \end{tabular}
+}
 \end{table*}
 
 \begin{table*}[t]
@@ -103,16 +106,18 @@ UAVDet [16] & VisDrone val, 1280, 3-seed & 0.3812 $\pm$ 0.0013 & 0.6005 $\pm$ 0.
 \setlength{\tabcolsep}{3pt}
 \caption{Related-work coverage matrix. Models discussed in Related Work are not removed from the evaluation plan; each is marked as measured, runnable assets not staged, or citation-only. The live CSV version is stored in \texttt{paper/tables/related\_work\_coverage\_matrix.csv}.}
 \label{tab:supp_related_work_coverage}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{llll}
 \toprule
 Model group & Examples & Status & Paper use \\
 \midrule
-Completed reproduction & CSFPR-RTDETR [11], MFFSODNet [2], SFFEF-YOLO [4], BPD-YOLO [7], HF-D-FINE [12], UAVDet [16] & normalized 1280 three-seed records complete & Main compact status table + supplementary protocol table \\
-Cited prior; assets not staged & LRDS-YOLO [8] & compatible code/weights/adapter not staged & Coverage table and citation discussion \\
-Citation-only/method motivation & DG-TSOD [6], D2A-Detector [10], UFO-DETR [14], CFIA [9], DFFormer [13], RT-UAV-SOD [15] & not fairly runnable today & Related-work motivation and coverage row \\
+Completed reproduction & CSFPR-RTDETR, MFFSODNet, SFFEF-YOLO, BPD-YOLO, HF-D-FINE, UAVDet & normalized 1280 three-seed records complete & Main compact status table + supplementary protocol table \\
+Cited prior; assets not staged & LRDS-YOLO~\cite{han2025lrds} & compatible code/weights/adapter not staged & Coverage table and citation discussion \\
+Citation-only/method motivation & DG-TSOD~\cite{xie2026dgtsod}, D2A-Detector~\cite{wang2026d2adetector}, UFO-DETR~\cite{chen2026ufodetr}, CFIA~\cite{bi2025cfia}, DFFormer~\cite{li2026dfformer}, RT-UAV-SOD~\cite{tan2025rtuavsod} & not fairly runnable today & Related-work motivation and coverage row \\
 Internal-only sanity check & LEAF-YOLO-N/S & external eval rows exist, but the model is not cited in the current manuscript & excluded from paper-facing comparison \\
 \bottomrule
 \end{tabular}
+}
 \end{table*}
 
 \paragraph{Module-search rows.}
@@ -131,7 +136,9 @@ AP50, and F1 deltas relative to YOLOv11l.
 component rows use the three-seed protocol. Exploratory rows are retained only
 as design-search evidence and are not interpreted as final competing methods.}
 \label{tab:supp_final_detector_ablation}
+\resizebox{\textwidth}{!}{%
 \input{tables/final_ablation_supplementary_table}
+}
 \end{table*}
 
 \begin{figure*}[t]

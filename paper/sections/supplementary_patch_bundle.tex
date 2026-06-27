@@ -4,10 +4,26 @@
 %
 % Keep this bundle separate from the main paper to avoid repeating large tables
 % and qualitative smoke-test figures inside the 13/14-page main-paper budget.
+\providecommand{\FloatBarrier}{}
+
+This supplementary material expands the UAV detector comparisons and system
+validation artifacts from the main paper. The cited detector priors include
+MFFSODNet~\cite{jiang2024mffsodnet}, SFFEF-YOLO~\cite{bai2025sffefyolo},
+BPD-YOLO~\cite{chao2025bpdyolo}, CSFPR-RTDETR~\cite{hu2025csfprrtdetr},
+HF-D-FINE~\cite{hu2026hfdifine}, UAVDet~\cite{yang2026uavdet}, and related
+UAV small-object methods~\cite{han2025lrds,xie2026dgtsod,wang2026d2adetector,
+chen2026ufodetr,bi2025cfia,li2026dfformer,tan2025rtuavsod}. The module and
+post-processing discussion follows the activation and NMS literature
+where appropriate~\cite{ma2020frelu,bodla2017softnms}, while the graph-reasoner
+motivation is grounded in UAV/LLM reasoning studies~\cite{tian2025uavsmeetllms,
+cai2025neusis}.
 
 \input{sections/supp_detector_experiment_inventory}
+\FloatBarrier
 \input{sections/supp_marinecity_system_details}
+\FloatBarrier
 
 % Real-Cesium MarineCity qualitative slots. Use here unless the main paper has
 % enough page budget for one clearly labeled smoke/protocol figure.
 \input{sections/07_marinecity_qualitative_figure_slots}
+\FloatBarrier
