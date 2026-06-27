@@ -136,7 +136,11 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--conda-env", default="com3d-ace")
+    parser.add_argument(
+        "--conda-env",
+        default="marinecity-nerfstudio",
+        help="Conda environment used for neural-3D runners. Use com3d-ace only for geometry-smoke checks.",
+    )
     parser.add_argument("--out-json", default=str(LIVE_DIR / "marinecity_3d_runner_preflight.json"))
     parser.add_argument("--out-md", default=str(LIVE_DIR / "marinecity_3d_runner_preflight.md"))
     args = parser.parse_args()

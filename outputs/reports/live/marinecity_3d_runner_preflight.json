@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-27 13:34:57 KST",
+  "updated_at_kst": "2026-06-27 22:28:57 KST",
   "status": "marinecity_3d_runner_preflight_ready",
-  "neural_runner_available": false,
+  "neural_runner_available": true,
   "geometry_smoke_available": true,
   "current_python": "/home/oem/anaconda3/bin/python",
   "current_env": {
@@ -42,30 +42,30 @@
       }
     }
   },
-  "conda_env": "com3d-ace",
+  "conda_env": "marinecity-nerfstudio",
   "conda_env_status": {
     "commands": {
-      "ns-train": null,
-      "ns-process-data": null,
+      "ns-train": "/home/oem/anaconda3/envs/marinecity-nerfstudio/bin/ns-train",
+      "ns-process-data": "/home/oem/anaconda3/envs/marinecity-nerfstudio/bin/ns-process-data",
       "colmap": null,
       "instant-ngp": null
     },
     "modules": {
       "nerfstudio": {
-        "available": false,
-        "error": "ModuleNotFoundError: No module named 'nerfstudio'"
+        "available": true,
+        "error": ""
       },
       "open3d": {
-        "available": false,
-        "error": "ModuleNotFoundError: No module named 'open3d'"
+        "available": true,
+        "error": ""
       },
       "plyfile": {
-        "available": false,
-        "error": "ModuleNotFoundError: No module named 'plyfile'"
+        "available": true,
+        "error": ""
       },
       "trimesh": {
-        "available": false,
-        "error": "ModuleNotFoundError: No module named 'trimesh'"
+        "available": true,
+        "error": ""
       },
       "cv2": {
         "available": true,
