@@ -1,6 +1,6 @@
 # ACCV Workflow Status Snapshot
 
-Updated: `2026-06-27 13:45:24 KST`
+Updated: `2026-06-27 16:35:12 KST`
 
 ## Detector Status
 
@@ -39,8 +39,8 @@ Updated: `2026-06-27 13:45:24 KST`
 - Real-capture detector/reasoner smoke: `marinecity_detector_reasoner_smoke_artifacts_ready`; tokens `23`; report `outputs/reports/live/marinecity_detector_reasoner_smoke.md`
 - Detector preview sheet: `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png`
 - Cross-view evidence graph: `marinecity_crossview_evidence_graph_smoke_ready`; hypotheses `13`; multi-view `5`; edges support/conflict/missing `23`/`4`/`20`; claim `real_cesium_crossview_association_smoke_not_final_3d_reconstruction`
-- Integration check: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; actor classes `['bus', 'car', 'pedestrian', 'person', 'truck', 'van']`; detector classes `{'car': 74, 'bus': 16, 'van': 10, 'pedestrian': 24, 'truck': 1}`; report `outputs/reports/live/marinecity_system_integration_check.md`
-- Neural 3D completion gate: `marinecity_3d_input_dataset_ready_metrics_pending`; metric rows `0`; report `outputs/reports/live/marinecity_3d_completion_readiness.md`
+- Integration check: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; actor classes `['bus', 'car', 'pedestrian', 'person', 'truck', 'van']`; detector classes `{'car': 77, 'bus': 17, 'van': 10, 'pedestrian': 24}`; report `outputs/reports/live/marinecity_system_integration_check.md`
+- Neural 3D completion gate: `marinecity_3d_single_runner_smoke_ready`; metric rows `1`; report `outputs/reports/live/marinecity_3d_completion_readiness.md`
 - Neural 3D input dataset: `marinecity_neural3d_dataset_export_ready`; frames `9`; split `{'train': 6, 'heldout': 3}`; report `outputs/reports/live/marinecity_neural3d_dataset_export.md`
 - Depth point-cloud smoke: `marinecity_depth_pointcloud_smoke_ready`; points `7584`; preview `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke/marinecity_depth_pointcloud_smoke_topdown.png`; report `outputs/reports/live/marinecity_depth_pointcloud_smoke.md`
 - Neural 3D runner preflight: `marinecity_3d_runner_preflight_ready`; runner available `False`; report `outputs/reports/live/marinecity_3d_runner_preflight.md`
@@ -54,7 +54,7 @@ Updated: `2026-06-27 13:45:24 KST`
 - Full-frame ready: `True`; best full void `0.017828`; mean top-3 void `0.087552`
 - Crop supplementary ready: `True`; best crop void `0.003577`; area `0.9025`
 - Clean full-frame recapture plan: `outputs/reports/live/marinecity_clean_recapture_plan.json`; status `main_full_frame_ready`; needed improvement `{'best_black_ratio_delta_to_threshold': 0.0, 'mean_top3_black_ratio_delta_to_threshold': 0.0}`
-- 3D claiming rule: The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected.
+- 3D claiming rule: The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected.
 - Dashboard: `outputs/reports/live/marinecity_simulation_dashboard.png`
 
 ## AeroGraph Reasoner

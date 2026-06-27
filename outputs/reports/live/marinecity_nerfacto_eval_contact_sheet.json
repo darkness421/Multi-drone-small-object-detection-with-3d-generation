@@ -1,22 +1,22 @@
 {
   "status": "marinecity_nerfacto_eval_contact_sheet_ready",
-  "updated_at_kst": "2026-06-27 16:09:31 KST",
-  "render_dir": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_2k_20260627_160000_renders",
-  "eval_json": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_2k_20260627_160000_ns_eval.json",
-  "out": "/home/oem/projects/multi-uav-marine-city/paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png",
+  "updated_at_kst": "2026-06-27 16:34:34 KST",
+  "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_5k_20260627_161000_renders",
+  "eval_json": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_5k_20260627_161000_ns_eval.json",
+  "out": "paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png",
   "rgb_count": 2,
   "depth_count": 2,
   "metrics": {
-    "psnr": 22.657567977905273,
-    "psnr_std": 0.9083245992660522,
-    "ssim": 0.9188224673271179,
-    "ssim_std": 0.002465000608935952,
-    "lpips": 0.08246536552906036,
-    "lpips_std": 0.007461556699126959,
-    "num_rays_per_sec": 125815.5859375,
-    "num_rays_per_sec_std": 28414.3671875,
-    "fps": 0.546074628829956,
-    "fps_std": 0.12332624942064285
+    "psnr": 22.66234588623047,
+    "psnr_std": 0.951836347579956,
+    "ssim": 0.9328128695487976,
+    "ssim_std": 0.0013934591552242637,
+    "lpips": 0.07473479956388474,
+    "lpips_std": 0.0027240561321377754,
+    "num_rays_per_sec": 2176.509521484375,
+    "num_rays_per_sec_std": 11.64654541015625,
+    "fps": 0.009446656331419945,
+    "fps_std": 5.054921712144278e-05
   },
   "claiming_rule": "Qualitative held-out Nerfacto smoke visualization; not a final multi-method benchmark figure."
 }

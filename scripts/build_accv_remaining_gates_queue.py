@@ -83,6 +83,14 @@ def build_rows() -> list[dict[str, str]]:
     pending_checks = [check for check in system.get("checks", []) if check.get("status") == "PENDING"]
     main_tex_gate = readiness.get("main_tex_gate") or {}
     latex_gate = readiness.get("latex_integrity_gate") or {}
+    threed_metric_rows = threed.get("metric_result_row_count") or 0
+    threed_has_metric = bool(threed_metric_rows)
+    threed_next_action = (
+        "Use the verified single-runner Nerfacto row as system-smoke evidence; add Instant-NGP/3DGS or longer validation only if time remains."
+        if threed_has_metric
+        else "Attach/install an upstream NeRF/3DGS/Instant-NGP runner and collect PSNR/SSIM/LPIPS/FPS/runtime rows; placeholders are not paper-valid."
+    )
+    threed_paper_use = "main_smoke_or_supp" if threed_has_metric else "pending_3d"
 
     return [
         {
@@ -115,8 +123,8 @@ def build_rows() -> list[dict[str, str]]:
                 f"runner available={threed.get('neural_runner_available')}; "
                 f"metric rows={threed.get('metric_result_row_count')}"
             ),
-            "next_action": "Attach/install an upstream NeRF/3DGS/Instant-NGP runner and collect PSNR/SSIM/LPIPS/FPS/runtime rows; placeholders are not paper-valid.",
-            "paper_use": "pending_3d",
+            "next_action": threed_next_action,
+            "paper_use": threed_paper_use,
         },
         {
             "priority": "P1",
@@ -187,7 +195,7 @@ def write_outputs(rows: list[dict[str, str]]) -> None:
             "",
         "1. Close TinyPerson as an internal archive-only diagnostic; do not spend more GPU time or default paper space on it.",
         "2. Keep VisDrone detector results as the main 2D claim: `Ours` in tables, SAFR-YOLO/P2P4-SelfAttnFR in method text.",
-        "3. For 3D, use the verified MarineCity RGB/depth/pose package as input and collect real neural metrics before any reconstruction claim.",
+        "3. For 3D, use the verified MarineCity RGB/depth/pose package and the available single-runner Nerfacto metric row as system-smoke evidence; collect more runner families only before claiming a full 3D benchmark.",
         "4. For AeroGraph, keep the reviewed candidate visible and collect external OpenAI/ChatGPT/local-provider replication before final reasoner claims.",
             "",
         ]

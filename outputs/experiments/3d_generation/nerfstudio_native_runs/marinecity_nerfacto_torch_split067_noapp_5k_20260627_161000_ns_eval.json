@@ -1,0 +1,17 @@
+{
+  "experiment_name": "marinecity_nerfacto_torch_split067_noapp_5k",
+  "method_name": "nerfacto",
+  "checkpoint": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_5k/nerfacto/20260627_161000/nerfstudio_models/step-000004999.ckpt",
+  "results": {
+    "psnr": 22.66234588623047,
+    "psnr_std": 0.951836347579956,
+    "ssim": 0.9328128695487976,
+    "ssim_std": 0.0013934591552242637,
+    "lpips": 0.07473479956388474,
+    "lpips_std": 0.0027240561321377754,
+    "num_rays_per_sec": 2176.509521484375,
+    "num_rays_per_sec_std": 11.64654541015625,
+    "fps": 0.009446656331419945,
+    "fps_std": 5.054921712144278e-05
+  }
+}

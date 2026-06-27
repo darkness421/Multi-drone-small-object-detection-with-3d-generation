@@ -1,6 +1,6 @@
 # ACCV Next Execution Handoff
 
-Updated: `2026-06-26T19:59:42+09:00`
+Updated: `2026-06-27T16:35:12+09:00`
 
 This file lists only the next actions needed to move the research package closer to paper-ready completion. It intentionally separates paper-ready evidence from blocked external gates.
 
@@ -19,10 +19,10 @@ This file lists only the next actions needed to move the research package closer
 
 ## Gate 1: Neural 3D Completion Metrics
 
-- Current status: `marinecity_3d_input_dataset_ready_metrics_pending`.
+- Current status: `marinecity_3d_single_runner_smoke_ready`.
 - Source capture ready: `True`; dataset ready: `True`; neural runner available: `False`.
 - Transforms input: `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/transforms.json`.
-- Missing metric rows: `0`; missing methods: `['nerf', 'instant_ngp', 'mip_nerf_360', 'gaussian_splatting']`.
+- Metric state: `single-runner smoke metric available`; metric rows `1`; missing optional methods: `['instant_ngp', 'mip_nerf_360', 'gaussian_splatting']`.
 
 Next executable options:
 
@@ -39,7 +39,7 @@ python scripts/build_marinecity_3d_results_table.py
 python scripts/check_marinecity_3d_completion_readiness.py
 ```
 
-To complete this gate, attach an actual upstream runner such as Nerfstudio, Instant-NGP, or a 3DGS implementation to the exported MarineCity transforms and write non-placeholder PSNR/SSIM/LPIPS/FPS/runtime rows to `outputs/experiments/3d_generation_comparison.csv`.
+Keep the verified Nerfacto row as paper-safe system-smoke evidence. Add another runner only if time allows before upgrading to a full benchmark claim.
 
 ## Gate 2: AeroGraph External Non-Mock Reasoner
 
@@ -54,7 +54,7 @@ Fast smoke path:
 OPENAI_API_KEY=... AEROGRAPH_PROVIDER=openai bash scripts/ubuntu/start_aerograph_real_capture_smoke_queue.sh
 # or
 AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' AEROGRAPH_PROVIDER=command bash scripts/ubuntu/start_aerograph_real_capture_smoke_queue.sh
-# FACTORY_COMMAND can be used instead of AEROGRAPH_COMMAND when the Factory/local command reads stdin and returns AeroGraph JSON.
+# AEROGRAPH_COMMAND can point to any local command that reads stdin and returns AeroGraph JSON.
 ```
 
 Final 49-prompt path:
@@ -63,31 +63,31 @@ Final 49-prompt path:
 OPENAI_API_KEY=... AEROGRAPH_PROVIDER=openai bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
 # or
 AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' AEROGRAPH_PROVIDER=command bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
-# FACTORY_COMMAND can be used instead of AEROGRAPH_COMMAND when the Factory/local command reads stdin and returns AeroGraph JSON.
+# AEROGRAPH_COMMAND can point to any local command that reads stdin and returns AeroGraph JSON.
 ```
 
 Manual web fallback:
 
 - Start with batch: `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_01_001-010.md`.
 - Save JSONL answers into `outputs/reasoning/aerograph_manual_responses.jsonl`.
-- Or save raw Factory/ChatGPT answers as `.md`, `.txt`, `.json`, or `.jsonl` and run the one-command importer:
+- Or save raw ChatGPT/Codex/OpenAI-web answers as `.md`, `.txt`, `.json`, or `.jsonl` and run the one-command importer:
 
 ```bash
 python scripts/import_aerograph_external_responses.py \
   --mode final49 \
   --input reasoning/aerograph_web_raw_batches/*.md \
-  --provider-label "Factory/ChatGPT web"
+  --provider-label "ChatGPT/Codex web"
 
 python scripts/import_aerograph_external_responses.py \
   --mode compact23 \
   --input reasoning/aerograph_real_capture_web_raw_batches/*.md \
-  --provider-label "Factory/ChatGPT web compact"
+  --provider-label "ChatGPT/Codex web compact"
 ```
 
 ```bash
 python scripts/import_aerograph_manual_responses.py \
   --responses outputs/reasoning/aerograph_manual_responses.jsonl \
-  --provider-label "Factory/ChatGPT web" \
+  --provider-label "ChatGPT/Codex web" \
   --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web
 python scripts/build_aerograph_reasoner_table.py
 python scripts/check_aerograph_nonmock_readiness.py

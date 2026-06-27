@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 13:45:24 KST",
+  "updated_at_kst": "2026-06-27 16:35:12 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -288,7 +288,7 @@
       {
         "name": "safr_yolo_from_uav_views",
         "status": "PASS",
-        "evidence": "tokens=125, device=0, classes={'car': 74, 'bus': 16, 'van': 10, 'pedestrian': 24, 'truck': 1}"
+        "evidence": "tokens=128, device=1, classes={'car': 77, 'bus': 17, 'van': 10, 'pedestrian': 24}"
       },
       {
         "name": "pedestrian_detection_from_current_views",
@@ -302,7 +302,7 @@
       },
       {
         "name": "neural_3d_completion_benchmark",
-        "status": "PENDING",
+        "status": "PASS",
         "evidence": "Current real-Cesium RGB/depth/pose captures are valid source evidence. Do not claim NeRF/Instant-NGP/Mip-NeRF/3DGS completion until metric rows exist."
       },
       {
@@ -322,11 +322,10 @@
       }
     ],
     "integration_detector_classes": {
-      "car": 74,
-      "bus": 16,
+      "car": 77,
+      "bus": 17,
       "van": 10,
-      "pedestrian": 24,
-      "truck": 1
+      "pedestrian": 24
     },
     "integration_actor_classes": [
       "bus",
@@ -336,7 +335,7 @@
       "truck",
       "van"
     ],
-    "neural_3d_completion_status": "marinecity_3d_input_dataset_ready_metrics_pending",
+    "neural_3d_completion_status": "marinecity_3d_single_runner_smoke_ready",
     "neural_3d_input_dataset_status": "marinecity_neural3d_dataset_export_ready",
     "neural_3d_input_dataset_report": "outputs/reports/live/marinecity_neural3d_dataset_export.md",
     "neural_3d_input_dataset_frames": 9,
@@ -351,9 +350,9 @@
     "neural_3d_runner_preflight_status": "marinecity_3d_runner_preflight_ready",
     "neural_3d_runner_available": false,
     "neural_3d_runner_preflight_report": "outputs/reports/live/marinecity_3d_runner_preflight.md",
-    "neural_3d_metric_result_rows": 0,
+    "neural_3d_metric_result_rows": 1,
     "neural_3d_readiness_report": "outputs/reports/live/marinecity_3d_completion_readiness.md",
-    "neural_3d_claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready for the 3D handoff. Neural 3D completion/reconstruction remains pending until non-placeholder metric rows are collected.",
+    "neural_3d_claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected.",
     "dashboard": "outputs/reports/live/marinecity_simulation_dashboard.png",
     "live_overlay_status": "session_overlay_added",
     "camera_set": true,

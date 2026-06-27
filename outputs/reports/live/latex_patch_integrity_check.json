@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 13:34:55 KST",
+  "updated_at_kst": "2026-06-27 16:35:14 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
@@ -56,43 +56,19 @@
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "34",
-      "status": "allowed",
-      "text": "360, and 3D Gaussian Splatting training remain pending until the external"
-    },
-    {
-      "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "91",
-      "status": "allowed",
-      "text": "runner. Therefore, full neural 3D metrics remain a pending experiment rather"
-    },
-    {
-      "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "93",
-      "status": "allowed",
-      "text": "Table~\\ref{tab:marinecity_3d_completion_results} is kept as a pending-safe"
-    },
-    {
-      "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "94",
-      "status": "allowed",
-      "text": "metric slot: it remains visibly pending until verified upstream runner metrics"
-    },
-    {
-      "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "97",
+      "line": "103",
       "status": "allowed",
       "text": "artifacts, and Table~\\ref{tab:aerograph_reasoner_pending} reports the current"
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "118",
+      "line": "124",
       "status": "allowed",
       "text": "remains pending before promoting this to a final reasoning benchmark claim.}"
     },
     {
       "source": "paper/sections/06_marinecity_3d_readiness.tex",
-      "line": "119",
+      "line": "125",
       "status": "allowed",
       "text": "\\label{tab:aerograph_reasoner_pending}"
     },

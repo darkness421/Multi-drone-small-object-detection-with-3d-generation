@@ -45,6 +45,17 @@ def main() -> None:
     first_batch = web_batches[0] if web_batches else {}
     external_aerograph = (external_caps.get("aerograph_execution", {}) or {})
     external_3d = (external_caps.get("neural_3d_execution", {}) or {})
+    metric_rows = threed.get("metric_result_row_count") or 0
+    metric_status = (
+        "single-runner smoke metric available"
+        if metric_rows
+        else "metric rows still missing"
+    )
+    metric_next = (
+        "Keep the verified Nerfacto row as paper-safe system-smoke evidence. Add another runner only if time allows before upgrading to a full benchmark claim."
+        if metric_rows
+        else "Attach an upstream runner such as Nerfstudio, Instant-NGP, or 3DGS and write non-placeholder PSNR/SSIM/LPIPS/FPS/runtime rows."
+    )
 
     lines = [
         "# ACCV Next Execution Handoff",
@@ -71,7 +82,7 @@ def main() -> None:
         f"- Current status: `{threed.get('status')}`.",
         f"- Source capture ready: `{threed.get('source_capture_ready')}`; dataset ready: `{threed.get('neural3d_dataset_ready')}`; neural runner available: `{threed.get('neural_runner_available')}`.",
         f"- Transforms input: `{threed.get('neural3d_dataset_transforms')}`.",
-        f"- Missing metric rows: `{threed.get('metric_result_row_count')}`; missing methods: `{threed.get('missing_expected_methods')}`.",
+        f"- Metric state: `{metric_status}`; metric rows `{metric_rows}`; missing optional methods: `{threed.get('missing_expected_methods')}`.",
         "",
         "Next executable options:",
         "",
@@ -88,7 +99,7 @@ def main() -> None:
         "python scripts/check_marinecity_3d_completion_readiness.py",
         "```",
         "",
-        "To complete this gate, attach an actual upstream runner such as Nerfstudio, Instant-NGP, or a 3DGS implementation to the exported MarineCity transforms and write non-placeholder PSNR/SSIM/LPIPS/FPS/runtime rows to `outputs/experiments/3d_generation_comparison.csv`.",
+        metric_next,
         "",
         "## Gate 2: AeroGraph External Non-Mock Reasoner",
         "",
@@ -103,7 +114,7 @@ def main() -> None:
         "OPENAI_API_KEY=... AEROGRAPH_PROVIDER=openai bash scripts/ubuntu/start_aerograph_real_capture_smoke_queue.sh",
         "# or",
         "AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' AEROGRAPH_PROVIDER=command bash scripts/ubuntu/start_aerograph_real_capture_smoke_queue.sh",
-        "# FACTORY_COMMAND can be used instead of AEROGRAPH_COMMAND when the Factory/local command reads stdin and returns AeroGraph JSON.",
+        "# AEROGRAPH_COMMAND can point to any local command that reads stdin and returns AeroGraph JSON.",
         "```",
         "",
         "Final 49-prompt path:",
@@ -112,31 +123,31 @@ def main() -> None:
         "OPENAI_API_KEY=... AEROGRAPH_PROVIDER=openai bash scripts/ubuntu/start_aerograph_nonmock_queue.sh",
         "# or",
         "AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' AEROGRAPH_PROVIDER=command bash scripts/ubuntu/start_aerograph_nonmock_queue.sh",
-        "# FACTORY_COMMAND can be used instead of AEROGRAPH_COMMAND when the Factory/local command reads stdin and returns AeroGraph JSON.",
+        "# AEROGRAPH_COMMAND can point to any local command that reads stdin and returns AeroGraph JSON.",
         "```",
         "",
         "Manual web fallback:",
         "",
         f"- Start with batch: `{first_batch.get('path', 'outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_01_001-010.md')}`.",
         "- Save JSONL answers into `outputs/reasoning/aerograph_manual_responses.jsonl`.",
-        "- Or save raw Factory/ChatGPT answers as `.md`, `.txt`, `.json`, or `.jsonl` and run the one-command importer:",
+        "- Or save raw ChatGPT/Codex/OpenAI-web answers as `.md`, `.txt`, `.json`, or `.jsonl` and run the one-command importer:",
         "",
         "```bash",
         "python scripts/import_aerograph_external_responses.py \\",
         "  --mode final49 \\",
         "  --input reasoning/aerograph_web_raw_batches/*.md \\",
-        "  --provider-label \"Factory/ChatGPT web\"",
+        "  --provider-label \"ChatGPT/Codex web\"",
         "",
         "python scripts/import_aerograph_external_responses.py \\",
         "  --mode compact23 \\",
         "  --input reasoning/aerograph_real_capture_web_raw_batches/*.md \\",
-        "  --provider-label \"Factory/ChatGPT web compact\"",
+        "  --provider-label \"ChatGPT/Codex web compact\"",
         "```",
         "",
         "```bash",
         "python scripts/import_aerograph_manual_responses.py \\",
         "  --responses outputs/reasoning/aerograph_manual_responses.jsonl \\",
-        "  --provider-label \"Factory/ChatGPT web\" \\",
+        "  --provider-label \"ChatGPT/Codex web\" \\",
         "  --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
         "python scripts/build_aerograph_reasoner_table.py",
         "python scripts/check_aerograph_nonmock_readiness.py",
