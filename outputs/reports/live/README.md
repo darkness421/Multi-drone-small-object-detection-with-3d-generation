@@ -1,6 +1,6 @@
 # Live Training Reports
 
-Last organized: `2026-06-26`
+Last organized: `2026-06-27`
 
 This folder is refreshed by active server experiments. Use it to watch training
 progress, but do not treat it as the final paper report.
@@ -22,14 +22,18 @@ Current live bundle:
 - `accv_workflow_status_snapshot.md`: compact current-state handoff for
   detector, MarineCity, AeroGraph, and queue gates.
 - `accv_remaining_gates_queue.md`: concise remaining-gates queue that separates
-  paper-ready evidence from archived TinyPerson diagnostics, pending neural-3D, AeroGraph,
-  and Overleaf/local-compile gates.
+  paper-ready evidence from archived TinyPerson diagnostics, neural-3D smoke
+  evidence, AeroGraph external-provider status, and Overleaf/local-compile
+  gates.
 - `accv_next_execution_handoff.md`: exact next commands and external inputs for
   the two remaining hard gates: neural-3D metrics and external non-mock
   AeroGraph responses.
 - `accv_submission_execution_plan.md`: 2026-06-27 to 2026-07-07 execution plan
   that merges the detector freeze, MarineCity system work, neural-3D/reasoner
   gates, main-paper writing, and supplementary submission schedule.
+- `accv_gate_execution_status_20260627.md`: gate-first current status and
+  next-queue handoff. Use this when continuing work before the next calendar
+  checkpoint.
 - `external_gate_capabilities.md`: current-shell capability audit for the two
   remaining external gates. It reports whether an AeroGraph provider
   (`OPENAI_API_KEY`, `AEROGRAPH_COMMAND`, ChatGPT/Codex manual web review, or Ollama) and
@@ -77,8 +81,8 @@ Current live bundle:
   reviewer questions about image-size sensitivity.
 - `fig1_fig3_revision_package/`: clean handoff package for revising Main Fig. 1
   and Main Fig. 3 from the current real-Cesium MarineCity evidence. It contains
-  24 copied assets and 2 explicitly marked pending placeholders for final neural
-  3D completion and non-mock AeroGraph output.
+  copied real-Cesium assets plus current neural-3D smoke sheets; AeroGraph
+  external-provider output remains the explicit pending item.
 - `final_detector_feature_activation_manifest.json`: source metadata for the feature activation heatmap sheet.
 - `final_ablation_main_table.csv`: source CSV for the completed main ablation table.
 - `supplementary_detector_analysis/final_ablation_supplementary_table.csv`: source CSV for the supplementary ablation table.
@@ -104,9 +108,10 @@ Current live bundle:
   captures, SAFR-YOLO smoke tokens, cross-view graph, TinyPerson stress test,
   and the remaining neural-3D/non-mock-LLM gates.
 - `marinecity_3d_completion_readiness.md`: explicit readiness gate for NeRF,
-  Instant-NGP, Mip-NeRF/3DGS-style completion. It currently treats the
-  real-Cesium RGB/depth/pose captures as ready source evidence and keeps neural
-  3D metric rows pending.
+  Instant-NGP, Mip-NeRF/3DGS-style completion. The paper-safe status is now
+  runner-family smoke evidence: Nerfacto 12k, Instant-NGP 5k, and
+  Splatfacto/3DGS-style 5k have metric rows; a full optimized benchmark remains
+  future/pending.
 - `marinecity_neural3d_dataset_export.md`: NeRF/Instant-NGP/Nerfstudio-style
   `transforms.json` export generated from the verified 3-scenario x 3-UAV
   MarineCity real-Cesium captures. Use this as the upstream 3D runner input,

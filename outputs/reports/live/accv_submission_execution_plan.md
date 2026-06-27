@@ -6,6 +6,13 @@ This plan merges the original submission schedule with the current evidence
 state. It separates paper-ready claims from pending gates so that the main paper
 does not overclaim unfinished 3D or reasoner results.
 
+## Execution Rule
+
+The schedule is now gate-driven rather than date-locked. If a gate finishes
+early, continue immediately to the next gate instead of waiting for the nominal
+calendar date. Dates below are latest target checkpoints for review, not
+blocking start dates.
+
 ## Current State
 
 | Track | Status | Current Evidence | Paper Use |
@@ -29,6 +36,16 @@ does not overclaim unfinished 3D or reasoner results.
 | 6/30-7/5 | Main paper writing and revision | Tighten introduction/related work, contribution wording, method, experiments, references, table/figure overflow, equations. | Main paper submission on 7/5 |
 | 7/6 | Supplementary polish | Move long ablations, implementation details, Grad-CAM/heatmaps, extra qualitative/failure cases into supplementary. | Supplementary final draft |
 | 7/7 | Supplementary submission | Final compile, reference/order check, figure/table path check. | Supplementary submission |
+
+## Gate-First Queue
+
+| Gate | Start Condition | Work | Exit Condition |
+| --- | --- | --- | --- |
+| G1 fixed 2D detector bundle | Current state | Keep VisDrone 1280 three-seed detector, ablation, p-value, and related-work rows frozen; only formatting and reference labels may change. | Main detector tables/figures compile without stale or TinyPerson claims |
+| G2 MarineCity smoke bundle | Current state | Keep real-Cesium captures, UAV camera altitude band, detector tokens, cross-view graph, and neural-3D smoke rows synchronized with the dashboard. | Fig. 1/Fig. 3 handoff has real screenshots, detector overlays, graph/3D panels, and no fake-city assets |
+| G3 AeroGraph provider status | After G2 or in parallel | Use the reviewed 49-prompt Codex candidate as the current table; do not promote to external validation without imported provider responses. | Reasoner table is labeled candidate/pending or replaced by a verified external-provider table |
+| G4 main/supp draft assembly | Starts immediately after G1/G2 are paper-safe | Insert 2D core result, compact ablation, AP/Params figure, MarineCity smoke table, and pending-safe 3D/reasoner wording into the main patch; move long inventories to supplementary. | Local patch integrity passes and Overleaf can pull the GitHub update |
+| G5 final QA | After draft assembly | Check reference order in the actual Overleaf main file, table/figure overflow, equation consistency, contribution wording, and main/supp duplication. | Professor-review draft ready |
 
 ## Work Breakdown
 
@@ -62,7 +79,7 @@ does not overclaim unfinished 3D or reasoner results.
 | --- | --- | --- | --- |
 | P0 | Paper-safe 2D bundle | Already ready | Keep frozen; only formatting/table cleanup |
 | P1 | Neural 3D result | At least one real runner result or defensible reconstruction sanity result | Done with three runner-family smoke rows; Nerfacto 12k is the current quality row |
-| P1 | AeroGraph non-mock | 23-prompt compact non-mock first, then 49-prompt final if time allows | Run/import ChatGPT/Codex/OpenAI/local responses |
+| P1 | AeroGraph non-mock | 23-prompt compact non-mock first, then 49-prompt final if time allows | Keep the Codex-reviewed 49-prompt candidate table; import external ChatGPT/OpenAI/local responses only if provider access is available |
 | P2 | MarineCity qualitative package | Natural object placement, 3 UAV views, detector overlays, evidence graph panels | Refresh capture/detector/reasoner smoke and update Fig. 1/3 handoff package |
 | P2 | Paper QA | Reference order, formula consistency, figure/table overflow, main/supp split | Run final checks after draft assembly |
 

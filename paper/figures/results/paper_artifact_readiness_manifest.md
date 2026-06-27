@@ -1,6 +1,6 @@
 # Paper Artifact Readiness Manifest
 
-Updated: `2026-06-26 KST`
+Updated: `2026-06-27 KST`
 
 This manifest is the paper-facing index for current ACCV artifacts. It separates
 main-paper-ready items from supplementary items and explicit pending slots.
@@ -37,9 +37,9 @@ main-paper-ready items from supplementary items and explicit pending slots.
 | Final ablation delta chart | `paper/figures/results/paper_fig09_final_ablation_delta_bar.png` | Ready | Supplementary ablation visual |
 | Final ablation heatmap | `paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png` | Ready | Supplementary heatmap |
 | Detector feature activation sheet | `paper/figures/results/paper_fig11_final_detector_feature_activation_heatmap.png` | Ready | Supplementary Fig. S4, Grad-CAM-style qualitative evidence |
-| TinyPerson 640 stress-test table | `paper/tables/tinyperson_640_stress_table.tex` | Ready | Supplementary domain-shift diagnostic only |
-| TinyPerson eval-size sensitivity table | `paper/tables/tinyperson_eval_imgsz_sweep_table.tex` | Ready | Supplementary input-size diagnostic only |
-| TinyPerson eval-size sensitivity figure | `paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png` | Ready | Supplementary input-size diagnostic only |
+| TinyPerson 640 stress-test table | `paper/tables/tinyperson_640_stress_table.tex` | Archived | Internal diagnostic only; excluded from default paper |
+| TinyPerson eval-size sensitivity table | `paper/tables/tinyperson_eval_imgsz_sweep_table.tex` | Archived | Internal diagnostic only; excluded from default paper |
+| TinyPerson eval-size sensitivity figure | `paper/figures/results/paper_fig13_tinyperson_eval_imgsz_sweep.png` | Archived | Internal diagnostic only; excluded from default paper |
 | MarineCity scenario contact sheet | `paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png` | Smoke-test ready | Main only if clearly labeled; otherwise supplementary |
 | MarineCity real-capture benchmark sheet | `paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png` | Capture-source ready | Supplementary capture evidence for the 3-scenario x 3-UAV RGB/depth/pose source |
 | MarineCity detector-to-reasoner report | `outputs/reports/live/marinecity_detector_reasoner_smoke.md` | Smoke-test ready | Live report for the 23-token SAFR-YOLO to AeroGraph mock plumbing run |
@@ -57,11 +57,11 @@ main-paper-ready items from supplementary items and explicit pending slots.
 
 | Artifact | Path | Current Status | Required Before Claim |
 |---|---|---|---|
-| AeroGraph external-provider replication | `paper/tables/aerograph_reasoner_results_placeholder.tex` | Candidate table ready; external GPT/Factory/local run pending | Re-run all 49 prompts with selected final provider and rebuild table |
+| AeroGraph external-provider replication | `paper/tables/aerograph_reasoner_results_placeholder.tex` | Candidate table ready; external OpenAI/ChatGPT/local run pending | Re-run all 49 prompts with selected final provider and rebuild table |
 | AeroGraph direct manual/API response file | `outputs/reports/live/aerograph_nonmock_readiness_status.md` | Provider-manifest coverage 49/49; direct manual response file 0/49 | Fill `outputs/reasoning/aerograph_manual_responses.jsonl` or configure provider if replacing the candidate manifest |
 | AeroGraph non-mock collection plan | `docs/aerograph_nonmock_collection_plan.md` | Ready | Use as the acceptance gate before promoting the reasoner table |
 | AeroGraph real-capture compact non-mock smoke | `outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/` | Prompt batches ready; provider responses pending | Collect 23 valid-schema provider responses to sanity-check the current real-Cesium smoke setting |
-| Final 3D completion/restoration result | TBD | Not complete | Run validated NeRF/3DGS/restoration or keep as future/pilot protocol |
+| Full optimized 3D completion/restoration benchmark | `paper/tables/marinecity_3d_completion_results_table.tex` | Runner-family smoke rows are ready for Nerfacto, Instant-NGP, and Splatfacto/3DGS-style methods | Longer optimized reconstruction/restoration validation before claiming a full benchmark |
 | Final MarineCity main qualitative image | `uavmarine_s2_viewer160_session_recapture/frame_002_uav_02_rgb.png` | Qualitative gate says full-frame main ready is true; crop supplementary ready is true | Keep as candidate and re-check during final paper layout review |
 
 ## Claiming Rules
@@ -74,9 +74,7 @@ main-paper-ready items from supplementary items and explicit pending slots.
   caption explicitly says crop-only.
 - The AeroGraph table must remain pending until a complete non-mock provider
   manifest is selected by `scripts/build_aerograph_reasoner_table.py`.
-- TinyPerson640 should be used only as supplementary domain-shift/limitation
-  evidence. The 640px core-model table now has 18 diagnostic rows
-  (six models over seeds 42, 123, and 2026), but AP/AP50 values remain near
-  zero, so it should not be used as a main detector claim. The eval-size
-  sensitivity table reuses completed TinyPerson checkpoints at 640/960/1280
-  and is also supplementary-only.
+- TinyPerson is closed as an internal archive-only diagnostic. Its 640px,
+  transfer, eval-size, and corrected original-window artifacts remain in the
+  repository for auditability, but they are excluded from the default main and
+  supplementary paper drafts.

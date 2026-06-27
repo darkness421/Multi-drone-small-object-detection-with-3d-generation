@@ -1,6 +1,6 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-06-27 17:29:20 KST`
+Updated: `2026-06-27 19:55:28 KST`
 Status: `paper_artifact_audit_ok_with_pending_gates`
 
 ## Summary
@@ -14,7 +14,7 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 - AeroGraph table status: `aerograph_reasoner_table_candidate_external_pending`
 - MarineCity qualitative gate: `marinecity_qualitative_gate_main_ready`
 - MarineCity integration gate: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; fails `0`, warnings `0`, pending `2`
-- MarineCity 3D completion gate: `marinecity_3d_completion_ready`; metric rows `2`
+- MarineCity 3D completion gate: `marinecity_3d_completion_ready`; metric rows `3`
 - External gate capabilities: `three_d_runner_available_aerograph_provider_missing`; AeroGraph provider `False`; neural-3D runner `True`
 - MarineCity main full-frame ready: `True`
 - Corrected TinyPerson status: `comparison_complete`; methods `['Ours', 'YOLOv9m']`; complete `['Ours', 'YOLOv9m']`
@@ -54,9 +54,9 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 - Neural-3D input dataset ready: `True`
 - Neural runner available: `True`
 - Depth point-cloud smoke ready: `True`; points `7584`
-- Metric result rows: `2`
-- Methods ready: `['gaussian_splatting', 'nerf']`
-- Missing expected methods: `['instant_ngp', 'mip_nerf_360']`
+- Metric result rows: `3`
+- Methods ready: `['gaussian_splatting', 'instant_ngp', 'nerf']`
+- Missing expected methods: `['mip_nerf_360']`
 - Claiming rule: The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected.
 
 ## External Gate Capabilities
@@ -66,7 +66,7 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 - AeroGraph provider modes: `[]`
 - Neural 3D runner configured: `True`
 - Neural 3D dataset ready: `True`
-- Neural 3D metric rows: `2`
+- Neural 3D metric rows: `3`
 
 ## MarineCity Qualitative Gate
 

@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-27 17:29:20 KST",
+  "updated_at_kst": "2026-06-27 19:55:28 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 58,
   "missing_required_count": 0,
@@ -81,7 +81,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 8518,
+      "size_bytes": 8756,
       "status": "ok",
       "note": "MarineCity protocol section patch"
     },
@@ -141,7 +141,7 @@
       "placement": "main_bundle",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1000,
+      "size_bytes": 1012,
       "status": "ok",
       "note": "Overleaf-ready main results patch bundle"
     },
@@ -411,7 +411,7 @@
       "placement": "pending_table",
       "required_now": true,
       "exists": true,
-      "size_bytes": 542,
+      "size_bytes": 641,
       "status": "ok",
       "note": "Pending-safe neural 3D completion metric table slot"
     },
@@ -421,7 +421,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 602,
+      "size_bytes": 697,
       "status": "ok",
       "note": "Live summary for verified neural 3D metric rows"
     },
@@ -551,7 +551,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9359,
+      "size_bytes": 9527,
       "status": "ok",
       "note": "Human-readable artifact manifest"
     },
@@ -642,13 +642,13 @@
     "depth_pointcloud_smoke_ready": true,
     "depth_pointcloud_point_count": 7584,
     "neural_runner_available": true,
-    "metric_result_row_count": 2,
+    "metric_result_row_count": 3,
     "methods_ready": [
       "gaussian_splatting",
+      "instant_ngp",
       "nerf"
     ],
     "missing_expected_methods": [
-      "instant_ngp",
       "mip_nerf_360"
     ],
     "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected."
@@ -681,7 +681,7 @@
     "aerograph_provider_modes": [],
     "neural_3d_runner_configured": true,
     "neural_3d_dataset_ready": true,
-    "neural_3d_metric_rows": 2
+    "neural_3d_metric_rows": 3
   },
   "main_tex_gate": {
     "main_tex_candidates": [],
