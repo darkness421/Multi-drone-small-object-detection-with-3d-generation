@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-26 19:59:41 KST",
+  "updated_at_kst": "2026-06-27 13:34:55 KST",
   "status": "paper_artifact_audit_ok_with_pending_gates",
   "artifact_count": 58,
   "missing_required_count": 0,
@@ -11,7 +11,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 7897,
+      "size_bytes": 7673,
       "status": "ok",
       "note": "Detector result section patch"
     },
@@ -81,7 +81,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 8013,
+      "size_bytes": 8019,
       "status": "ok",
       "note": "MarineCity protocol section patch"
     },
@@ -91,7 +91,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 771,
+      "size_bytes": 794,
       "status": "ok",
       "note": "Real-Cesium smoke/protocol table"
     },
@@ -101,7 +101,7 @@
       "placement": "main_source",
       "required_now": true,
       "exists": true,
-      "size_bytes": 431,
+      "size_bytes": 30362,
       "status": "ok",
       "note": "Source CSV for real-Cesium detector-to-reasoner smoke table"
     },
@@ -161,7 +161,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 15260,
+      "size_bytes": 11681,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },
@@ -201,7 +201,7 @@
       "placement": "supp_pending",
       "required_now": true,
       "exists": true,
-      "size_bytes": 432,
+      "size_bytes": 694,
       "status": "ok",
       "note": "Corrected TinyPerson original-window/1280 live table"
     },
@@ -251,7 +251,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 94297,
+      "size_bytes": 139870,
       "status": "ok",
       "note": "Corrected TinyPerson original-window/1280 dashboard"
     },
@@ -261,7 +261,7 @@
       "placement": "source",
       "required_now": true,
       "exists": true,
-      "size_bytes": 513,
+      "size_bytes": 1298,
       "status": "ok",
       "note": "Corrected TinyPerson original-window/1280 live summary"
     },
@@ -321,7 +321,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2147,
+      "size_bytes": 2150,
       "status": "ok",
       "note": "MarineCity full-frame vs crop-only qualitative gate"
     },
@@ -361,7 +361,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 4108,
+      "size_bytes": 4005,
       "status": "ok",
       "note": "Real-Cesium object/UAV/camera/YOLO/3D/LLM integration gate"
     },
@@ -441,7 +441,7 @@
       "placement": "pending",
       "required_now": true,
       "exists": true,
-      "size_bytes": 444,
+      "size_bytes": 452,
       "status": "ok",
       "note": "AeroGraph table slot must stay pending until all prompt-pack non-mock responses are valid-schema complete"
     },
@@ -451,7 +451,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 11515,
+      "size_bytes": 11493,
       "status": "ok",
       "note": "Non-mock reasoner collection gate"
     },
@@ -471,7 +471,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 5324,
+      "size_bytes": 5320,
       "status": "ok",
       "note": "One-file web LLM handoff for AeroGraph collection"
     },
@@ -501,7 +501,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2906,
+      "size_bytes": 3083,
       "status": "ok",
       "note": "Compact real-capture web-provider batch index"
     },
@@ -511,7 +511,7 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 4492,
+      "size_bytes": 4686,
       "status": "ok",
       "note": "Compact real-capture web-provider collection packet"
     },
@@ -541,7 +541,7 @@
       "placement": "runbook_helper",
       "required_now": true,
       "exists": true,
-      "size_bytes": 11355,
+      "size_bytes": 11353,
       "status": "ok",
       "note": "Web LLM raw-output normalizer for AeroGraph manual responses"
     },
@@ -551,7 +551,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9452,
+      "size_bytes": 9359,
       "status": "ok",
       "note": "Human-readable artifact manifest"
     },
@@ -561,7 +561,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2440,
+      "size_bytes": 2427,
       "status": "ok",
       "note": "LaTeX input/figure/label integrity check"
     },
@@ -571,7 +571,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2607,
+      "size_bytes": 2483,
       "status": "ok",
       "note": "External provider and neural-3D runner capability check"
     },
@@ -581,7 +581,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9085,
+      "size_bytes": 9090,
       "status": "ok",
       "note": "Claim readiness audit"
     }
@@ -614,12 +614,15 @@
   "marinecity_system_integration_gate": {
     "status": "marinecity_system_integration_smoke_ready_with_pending_final_gates",
     "fail_count": 0,
-    "warn_count": 1,
-    "pending_count": 2,
-    "detector_token_count": 23,
+    "warn_count": 0,
+    "pending_count": 3,
+    "detector_token_count": 125,
     "detector_classes": {
-      "car": 15,
-      "bus": 8
+      "car": 74,
+      "bus": 16,
+      "van": 10,
+      "pedestrian": 24,
+      "truck": 1
     },
     "actor_classes": [
       "bus",
@@ -631,7 +634,7 @@
     ],
     "three_d_status": "pending_upstream_runner_connection",
     "llm_external_ready": false,
-    "tinyperson_status": "comparison_complete"
+    "tinyperson_status": "closed_archive_only"
   },
   "marinecity_3d_completion_gate": {
     "status": "marinecity_3d_input_dataset_ready_metrics_pending",
@@ -665,7 +668,7 @@
       "Ours",
       "YOLOv9m"
     ],
-    "row_count": 2,
+    "row_count": 6,
     "best_ap_by_method": {
       "Ours": 0.18271,
       "YOLOv9m": 0.20348

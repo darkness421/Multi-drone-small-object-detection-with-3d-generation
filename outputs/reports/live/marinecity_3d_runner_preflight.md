@@ -1,6 +1,6 @@
 # MarineCity 3D Runner Preflight
 
-Updated: `2026-06-26 13:42:09 KST`
+Updated: `2026-06-27 13:34:57 KST`
 Status: `marinecity_3d_runner_preflight_ready`
 Neural runner available: `False`
 Geometry smoke available: `True`

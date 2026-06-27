@@ -1,6 +1,6 @@
 # External Gate Capabilities
 
-Updated: `2026-06-26 22:07:13 KST`
+Updated: `2026-06-27 13:34:57 KST`
 Status: `external_gates_missing_provider_and_3d_runner`
 
 This report checks whether the remaining external gates can be executed from the current shell. Secret values are never printed.
@@ -22,7 +22,7 @@ This report checks whether the remaining external gates can be executed from the
 | `aerograph_final_external_ready` | `False` |
 | `aerograph_final_valid_direct_responses` | `0` |
 | `aerograph_final_prompt_count` | `49` |
-| `aerograph_compact_smoke_status` | `aerograph_real_capture_nonmock_smoke_pending` |
+| `aerograph_compact_smoke_status` | `aerograph_real_capture_nonmock_smoke_complete` |
 | `marinecity_3d_completion_status` | `marinecity_3d_input_dataset_ready_metrics_pending` |
 | `marinecity_3d_runner_available` | `False` |
 | `marinecity_3d_metric_rows` | `0` |

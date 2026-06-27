@@ -1,6 +1,6 @@
 # MarineCity 3D Completion Readiness
 
-Updated: `2026-06-27 13:12:40 KST`
+Updated: `2026-06-27 13:34:57 KST`
 Status: `marinecity_3d_input_dataset_ready_metrics_pending`
 
 ## Capture Source

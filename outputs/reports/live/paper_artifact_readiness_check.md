@@ -1,6 +1,6 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-06-26 19:59:41 KST`
+Updated: `2026-06-27 13:34:55 KST`
 Status: `paper_artifact_audit_ok_with_pending_gates`
 
 ## Summary
@@ -13,7 +13,7 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 - AeroGraph external-provider replication ready: `False`
 - AeroGraph table status: `aerograph_reasoner_table_candidate_external_pending`
 - MarineCity qualitative gate: `marinecity_qualitative_gate_main_ready`
-- MarineCity integration gate: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; fails `0`, warnings `1`, pending `2`
+- MarineCity integration gate: `marinecity_system_integration_smoke_ready_with_pending_final_gates`; fails `0`, warnings `0`, pending `3`
 - MarineCity 3D completion gate: `marinecity_3d_input_dataset_ready_metrics_pending`; metric rows `0`
 - External gate capabilities: `external_gates_missing_provider_and_3d_runner`; AeroGraph provider `False`; neural-3D runner `False`
 - MarineCity main full-frame ready: `True`
@@ -35,13 +35,13 @@ Status: `paper_artifact_audit_ok_with_pending_gates`
 ## MarineCity Integration Gate
 
 - Status: `marinecity_system_integration_smoke_ready_with_pending_final_gates`
-- Fail/warn/pending count: `0` / `1` / `2`
-- Detector token count: `23`
-- Detector classes: `{'car': 15, 'bus': 8}`
+- Fail/warn/pending count: `0` / `0` / `3`
+- Detector token count: `125`
+- Detector classes: `{'car': 74, 'bus': 16, 'van': 10, 'pedestrian': 24, 'truck': 1}`
 - Actor classes: `['bus', 'car', 'pedestrian', 'person', 'truck', 'van']`
 - 3D status: `pending_upstream_runner_connection`
 - LLM external ready: `False`
-- TinyPerson status: `comparison_complete`
+- TinyPerson status: `closed_archive_only`
 - Corrected TinyPerson status: `comparison_complete`
 - Corrected TinyPerson data: train `1221` images / `36855` boxes; val `3998` images / `18937` boxes
 - Corrected TinyPerson methods: `['Ours', 'YOLOv9m']`; complete `['Ours', 'YOLOv9m']`; best AP by method `{'Ours': 0.18271, 'YOLOv9m': 0.20348}`
