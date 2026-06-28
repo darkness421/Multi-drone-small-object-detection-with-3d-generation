@@ -5,14 +5,28 @@ We presented CoM3D-ACE, an ambiguity-centric cooperative multi-UAV perception
 framework that connects UAV small-object detection, cross-view 3D evidence, and
 graph-grounded reasoning. The 2D frontend, SAFR-YOLO, improves the normalized
 three-seed VisDrone detector comparison while using fewer parameters than the
-strongest stock YOLO baseline in our table. Beyond the detector, the MarineCity
-real-Cesium protocol demonstrates that multi-UAV captures, detector
-EvidenceTokens, cross-view evidence graphs, and neural-3D runner-family smoke
-metrics can be integrated into a single evidence-completion pipeline.
+strongest stock YOLO baseline in our table. The ablation results show that this
+gain is not due to a single isolated change: high-resolution P2/P3/P4 heads
+recover most of the small-object signal, SelfAttnFR refinement improves the
+final AP/AP50/F1 balance, and the EvidenceToken interface turns detector
+outputs into a form that can be consumed by the cooperative system.
+
+Beyond the detector, the MarineCity real-Cesium protocol demonstrates that
+multi-UAV captures, detector EvidenceTokens, cross-view evidence graphs, and
+neural-3D runner-family smoke metrics can be integrated into a single
+evidence-completion pipeline. The current 3D rows are deliberately framed as
+system feasibility evidence: Nerfacto, Instant-NGP, and a 3DGS-style runner can
+all consume the captured scene package, while their PSNR/SSIM/LPIPS/FPS values
+make the quality--speed trade-off visible. The qualitative MarineCity figure
+then verifies that the numerical rows correspond to real scene captures and
+detector outputs rather than a proxy scene.
 
 The current system results are intentionally reported conservatively. We claim
 the 2D detector result as the completed quantitative contribution and report
 MarineCity as real-Cesium system/protocol validation rather than as a finished
-large-scale 3D reconstruction benchmark. Future work will extend the MarineCity
-capture set, add longer optimized 3D validation, and import external-provider
+large-scale 3D reconstruction benchmark. This conservative split is important:
+it keeps the main claim self-contained while still showing how the proposed
+detector, 3D graph, completion runners, and graph-grounded reasoner are wired
+for cooperative UAV perception. Future work will extend the MarineCity capture
+set, add longer optimized 3D validation, and import external-provider
 AeroGraph responses before promoting the reasoner to a final benchmark claim.

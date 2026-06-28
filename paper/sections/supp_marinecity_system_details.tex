@@ -2,9 +2,9 @@
 \label{sec:supp_marinecity_system_details}
 
 This supplementary section records the supporting MarineCity artifacts that are
-too detailed for the 14-page main paper. The main paper keeps the compact
-system-smoke and neural-3D metric tables; this section provides the capture
-source, evidence-graph details, and current reasoner-validation status.
+summarized in the main paper. The main text keeps the compact system-smoke and
+neural-3D metric tables; this section provides the capture source,
+evidence-graph details, and current reasoner-validation status.
 
 \begin{table}[!htbp]
 \centering
@@ -15,6 +15,14 @@ multi-UAV 3D/reasoner handoff.}
 \label{tab:supp_marinecity_real_capture_benchmark}
 \input{tables/marinecity_real_capture_benchmark_table}
 \end{table}
+
+\paragraph{Capture-source analysis.}
+Table~\ref{tab:supp_marinecity_real_capture_benchmark} verifies that the
+MarineCity scene used for the system smoke test is a real-Cesium capture source
+with synchronized UAV viewpoints, camera metadata, RGB frames, and depth-like
+exports. These records support the main qualitative figure by showing that the
+detector and 3D graph operate on saved geospatial captures rather than on a
+procedural stand-in scene.
 
 \begin{table*}[!htbp]
 \centering
@@ -28,6 +36,14 @@ truth.}
 \input{tables/marinecity_crossview_evidence_graph_table}
 \end{table*}
 
+\paragraph{Evidence-graph analysis.}
+Table~\ref{tab:supp_marinecity_crossview_evidence_graph} gives the intermediate
+3D evidence representation used by the reasoner. Multi-view support edges
+indicate observations that agree across UAVs, while conflict and missing-view
+edges identify object hypotheses that require re-observation or cautious
+verification. The table is therefore interpreted as an ambiguity-routing
+artifact, not as a metric 3D localization benchmark.
+
 \begin{table}[!htbp]
 \centering
 \scriptsize
@@ -37,6 +53,14 @@ reported only after all prompts are imported and schema-validated.}
 \label{tab:supp_aerograph_reasoner_validation_slot}
 \input{tables/aerograph_reasoner_validation_summary}
 \end{table}
+
+\paragraph{Reasoner-validation analysis.}
+Table~\ref{tab:supp_aerograph_reasoner_validation_slot} separates the completed
+rule-based system check from external-provider LLM/VLM validation. The current
+rule-based verifier is useful for confirming schema, graph consistency, and
+allowed-action logic. It is not used as evidence that a final external reasoner
+has been benchmarked; that claim requires the provider responses to be imported
+and checked under the same prompt schema.
 
 \begin{table*}[!htbp]
 \centering
@@ -58,3 +82,10 @@ AeroGraph Reasoner & conservative system-smoke wording & prompt template, JSON s
 \bottomrule
 \end{tabular}
 \end{table*}
+
+\paragraph{Reporting-split analysis.}
+Table~\ref{tab:supp_marinecity_reporting_split} states how the system evidence
+is divided between the main paper and supplementary material. The main paper
+contains the self-contained claims: detector performance, real-Cesium system
+operation, and neural-3D smoke metrics. The supplementary material stores the
+larger operational details needed for reproduction and reviewer inspection.

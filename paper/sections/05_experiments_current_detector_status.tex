@@ -7,9 +7,9 @@ P2P4-SelfAttnFR denotes the selected implementation and ablation component
 combination. The detector contribution is evaluated with two
 paper-facing views: a normalized three-seed comparison against strong
 YOLO-family, transformer, and cited related-work baselines, plus a compact
-ablation table for the selected modules. This keeps the main paper self-contained while
-preventing single-seed architecture search rows and dry-run scripts from being
-mixed with the final detector claim.
+ablation table for the selected modules. This keeps the main paper
+self-contained while preventing exploratory single-seed architecture-search
+rows from being mixed with the final detector claim.
 
 \paragraph{Implementation and evaluation setup.}
 Unless otherwise specified, detector experiments use VisDrone2019-DET with
@@ -35,28 +35,35 @@ The main normalized detector table contains the selected detector, the strongest
 completed YOLO-family and transformer baselines, and the completed cited
 related-work reproductions under the same VisDrone2019-DET 1280-pixel,
 three-seed protocol. Detailed related-work reproduction status and protocol
-caveats are moved to the supplementary material to preserve the main-paper
-page budget. The full YOLO nano/small/medium/large scale sweep,
-protocol details, heat maps, NMS sensitivity, and module-search trails are
-moved to the supplementary material. This gives reviewers both a clean
-fair-comparison table and transparent coverage of the prior methods discussed
-in Related Work.
+caveats are reported in the supplementary material. The full YOLO
+nano/small/medium/large scale sweep, protocol details, heat maps, NMS
+sensitivity, and module-search trails are also reported there. The main table
+therefore focuses on the rows that directly support the detector claim under a
+single controlled protocol.
 At the current checkpoint, six cited related-work detector rows have normalized
 1280-pixel three-seed records: CSFPR-RTDETR, MFFSODNet, SFFEF-YOLO, BPD-YOLO,
 HF-D-FINE, and UAVDet.
 
 \input{tables/main_detector_comparison_table}
 
+\paragraph{Main detector result analysis.}
+Table~\ref{tab:detector_preview_overall} shows that the final detector gives
+the highest AP and AP50 among the completed 1280-pixel three-seed rows. The
+margin over YOLOv11l is modest but consistent across seeds, and the gain is
+obtained with 20.82M parameters rather than the 25.32M parameters of YOLOv11l
+or the 33.55M parameters of the strongest reproduced related-work row,
+UAVDet~\cite{yang2026uavdet}. The comparison also clarifies the trade-off:
+SAFR-YOLO is not the lowest-FLOP model, but it occupies the best
+accuracy--parameter point among the paper-facing rows, which is the relevant
+constraint for our cooperative UAV evidence generator.
+
 \paragraph{Related-work comparison and coverage.}
-Among cited UAV small-object detector reproductions, UAVDet~[16] is the
+Among cited UAV small-object detector reproductions, UAVDet~\cite{yang2026uavdet} is the
 strongest completed row under the normalized 1280-pixel, three-seed protocol.
 Its reproduced mean AP/AP50 is 0.3812/0.6005 with 33.55M parameters. Ours
 remains slightly higher at 0.3822/0.6052 while using 20.82M parameters. We
 therefore report UAVDet as an inspired reproduction in the supplementary
 protocol table rather than treating it as an official checkpoint result.
-The full related-work status table and coverage matrix are placed in the
-supplementary material so the main results section can keep the core
-quantitative comparison within the 14-page budget.
 
 \paragraph{Selected detector.}
 The current selected detector, SAFR-YOLO, is reported as \textbf{Ours} in
@@ -88,8 +95,8 @@ figure visualizes AP/AP50 versus parameter count for
 Table~\ref{tab:detector_preview_overall}, while the qualitative figure compares
 YOLOv11l and Ours on crowded UAV crops with adjacent objects. The
 Grad-CAM-style feature activation heat maps for YOLOv11l, YOLOv9c, and
-Ours are provided in the supplementary material so the main detector claim
-is supported without crowding the page budget.
+Ours are provided in the supplementary material as an additional qualitative
+explanation of where the detectors respond on crowded small-object crops.
 
 \paragraph{Ablation reporting.}
 The main paper reports the completed compact final ablation in
@@ -112,23 +119,14 @@ as mean $\pm$ standard deviation over seeds 42, 123, and 2026 when available.}
 \input{tables/final_ablation_main_table}
 \end{table*}
 
-\paragraph{Supplementary protocol notes.}
-The supplementary material expands the comparison into a full inventory with
-protocol notes and coverage labels. Likewise, YOLO nano/small/medium scale sweeps are
-important for reviewer coverage, but the full scale table is better placed in
-the supplementary material to preserve the main paper page budget.
-The supplementary material also contains the Grad-CAM-style detector
-feature-activation sheet. External cross-dataset stress checks are kept outside
-the submitted detector claim unless their protocols are fully aligned with the
-VisDrone-controlled comparison.
-
-Post-processing NMS sweeps are also kept out of the main comparison until they
-are confirmed with the selected detector under the same three-seed protocol. If
-the overlap-aware NMS result remains single-seed only, we present it as
-an explanatory robustness check rather than as the headline detector score.
-
-\paragraph{Related-work coverage rule.}
-Every detector discussed in Related Work is accounted for in the
-supplementary coverage matrix as measured, adapter/code/weights not staged, or
-citation-only. This avoids silently dropping prior methods that are discussed in
-the text but cannot be fairly reproduced under our current protocol.
+\paragraph{Ablation analysis.}
+Table~\ref{tab:main_detector_ablation} indicates that most of the detector gain
+comes from preserving high-resolution P2/P3/P4 prediction heads, which improves
+AP by 0.0030 over YOLOv11l while reducing parameters. Self-attention refinement
+adds a further AP/AP50 gain, and the full SelfAttnFR variant gives the best
+combined AP, AP50, and F1. TinyFReLU alone is not sufficient to improve the
+full detector, but it remains part of the final block because it supports the
+local frequency-refinement path when coupled with SelfAttn. This pattern
+supports the proposed design as a compact combination of high-resolution heads,
+context refinement, and spatial-frequency gating rather than a single isolated
+module.

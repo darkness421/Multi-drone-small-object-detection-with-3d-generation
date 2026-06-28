@@ -1,23 +1,23 @@
 {
   "status": "marinecity_neural3d_eval_contact_sheet_ready",
-  "updated_at_kst": "2026-06-28 08:48:28 KST",
-  "method_label": "Nerfacto full-res 12k",
-  "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_fullres_12k_20260628_081500_fullres12k_renders",
-  "eval_json": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_fullres_12k_20260628_081500_fullres12k_ns_eval.json",
-  "out": "paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png",
+  "updated_at_kst": "2026-06-28 09:47:09 KST",
+  "method_label": "Nerfacto full-res 24k",
+  "render_dir": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_fullres_24k_20260628_0905_fullres24k_renders",
+  "eval_json": "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_torch_split067_noapp_fullres_24k_20260628_0905_fullres24k_ns_eval.json",
+  "out": "/home/oem/projects/multi-uav-marine-city/paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png",
   "rgb_count": 2,
   "depth_count": 2,
   "metrics": {
-    "psnr": 22.270915985107422,
-    "psnr_std": 0.6262617111206055,
-    "ssim": 0.9387807846069336,
-    "ssim_std": 0.0013312502996996045,
-    "lpips": 0.07427991926670074,
-    "lpips_std": 0.0018438772531226277,
-    "num_rays_per_sec": 150857.9375,
-    "num_rays_per_sec_std": 6913.1728515625,
-    "fps": 0.16369135677814484,
-    "fps_std": 0.007501274812966585
+    "psnr": 22.52762794494629,
+    "psnr_std": 1.1866205930709839,
+    "ssim": 0.9438028931617737,
+    "ssim_std": 0.0034781266003847122,
+    "lpips": 0.0720146894454956,
+    "lpips_std": 0.005361189600080252,
+    "num_rays_per_sec": 153627.375,
+    "num_rays_per_sec_std": 11312.31640625,
+    "fps": 0.16669636964797974,
+    "fps_std": 0.012274648062884808
   },
   "claiming_rule": "Qualitative held-out neural-3D smoke visualization; not a final multi-method benchmark figure."
 }

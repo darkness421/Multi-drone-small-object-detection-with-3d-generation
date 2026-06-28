@@ -67,6 +67,15 @@ Rank & Method & AP & AP50 & F1 & Params(M) & GFLOPs & $\Delta$AP \\
 }
 \end{table*}
 
+\paragraph{Scale-sweep analysis.}
+Table~\ref{tab:supp_yolo_scale_sweep} shows that the proposed detector remains
+competitive across the large-model regime while using fewer parameters than
+several high-capacity YOLO-family baselines. The nano and small models provide
+useful efficiency references, but their AP/AP50 drop is large under the
+1280-pixel VisDrone protocol. This supports using a mid-sized detector with
+high-resolution heads for the cooperative system: the frontend must retain
+small-object evidence before the 3D graph and reasoner can use it.
+
 \paragraph{Related-work comparison inventory.}
 The main paper includes a compact related-work comparison/status table so prior
 detectors are visible in the detector results section. This supplementary table
@@ -104,7 +113,10 @@ UAVDet~\cite{yang2026uavdet} & VisDrone val, 1280, 3-seed & 0.3812 $\pm$ 0.0013 
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{Related-work coverage matrix. Models discussed in Related Work are not removed from the evaluation plan; each is marked as measured, runnable assets not staged, or citation-only. The live CSV version is stored in \texttt{paper/tables/related\_work\_coverage\_matrix.csv}.}
+\caption{Related-work coverage matrix. Models discussed in Related Work are
+tracked by whether they are reproduced under the normalized protocol, used as
+method motivation, or excluded from the paper-facing comparison because a
+matched reproduction is not available.}
 \label{tab:supp_related_work_coverage}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{llll}
@@ -119,6 +131,17 @@ Internal-only sanity check & LEAF-YOLO-N/S & external eval rows exist, but the m
 \end{tabular}
 }
 \end{table*}
+
+\paragraph{Related-work analysis.}
+Table~\ref{tab:supp_related_work_eval_rows} separates measured cited models
+from methods that are only used to motivate design choices. Among the measured
+rows, UAVDet is the closest reproduced competitor, but it uses substantially
+more parameters than SAFR-YOLO. SFFEF-YOLO and BPD-YOLO are also strong,
+supporting the paper's emphasis on frequency response and feature refinement;
+however, their measured AP/AP50 remains below Ours in the normalized three-seed
+setting. Table~\ref{tab:supp_related_work_coverage} documents the remaining
+cited methods without turning non-reproduced papers into unfair numerical
+baselines.
 
 \paragraph{Module-search rows.}
 Single-seed DCT, wavelet, CBAM, NMS, and activation-function probes are
@@ -140,6 +163,15 @@ as design-search evidence and are not interpreted as final competing methods.}
 \input{tables/final_ablation_supplementary_table}
 }
 \end{table*}
+
+\paragraph{Ablation-inventory analysis.}
+The supplementary ablation inventory preserves the design history behind the
+final detector. It shows that several frequency, attention, and NMS variants
+were useful for screening but not promoted because they lacked the same
+three-seed support or did not improve the final trade-off. This distinction is
+important for reproducibility: the main paper reports the compact, confirmed
+module combination, while this appendix explains why nearby alternatives were
+not selected.
 
 \begin{figure*}[!htbp]
     \centering

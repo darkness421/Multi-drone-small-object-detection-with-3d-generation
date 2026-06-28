@@ -98,6 +98,17 @@ runner-family execution rather than claim a final optimized benchmark.}
 \input{tables/marinecity_3d_completion_results_table}
 \end{table}
 
+\paragraph{3D completion result analysis.}
+Table~\ref{tab:marinecity_3d_completion_results} provides the current
+neural-3D evidence that the real-Cesium capture package can be consumed by
+standard reconstruction runners. Nerfacto gives the strongest held-out image
+quality in this sparse-view smoke setting, reaching 22.53 PSNR, 0.944 SSIM, and
+0.072 LPIPS after the 24k full-resolution validation run. The 3DGS-style row is
+substantially faster at rendering but lower in reconstruction quality, while the
+Instant-NGP row sits between these extremes. We therefore use this table to
+support system feasibility and runner-family coverage, not to claim that the
+MarineCity scene is a fully optimized 3D benchmark.
+
 \input{tables/marinecity_system_scenario_table}
 
 \begin{figure}[t]
@@ -110,9 +121,19 @@ quantitative detector and 3D smoke tables in the main paper.}
 \label{fig:marinecity_main_qualitative}
 \end{figure}
 
-\paragraph{Reporting rule.}
+\paragraph{System-smoke result analysis.}
+The qualitative evidence in Fig.~\ref{fig:marinecity_main_qualitative} connects
+the numerical rows to the actual system pipeline: the saved real-Cesium
+MarineCity stage is rendered from three UAV viewpoints, SAFR-YOLO produces
+object-level EvidenceTokens, and the same tokens are converted into
+cross-view graph inputs. The figure is therefore used as a visual sanity check
+for geometry-aware evidence flow. It complements the detector table, where the
+2D model is evaluated quantitatively, and the 3D table, where the neural
+runner handoff is evaluated through image-quality metrics.
+
+\paragraph{Claim boundary.}
 Unverified provider outputs and command-contract checks are kept outside the
-headline claim. The main paper reports the verified
-real-Cesium capture, detector-token, and smoke-test tables now, but reserves
-final external-provider LLM/VLM and 3D completion claims until replicated
-provider runs and completion/restoration experiments are validated.
+headline claim. The main paper reports the verified real-Cesium capture,
+detector-token, evidence-graph, and neural-3D smoke-test artifacts, while final
+external-provider LLM/VLM and large-scale 3D completion claims are reserved for
+the supplementary validation record and follow-up experiments.
