@@ -25,4 +25,4 @@ Updated: 2026-06-30 KST
 
 - External OpenAI/ChatGPT/local-provider response replication for AeroGraph can be added later as supplementary evidence.
 - Longer neural-3D runs can strengthen the 3D result but are not required for the current system-validation claim.
-- TinyPerson224 auxiliary stress testing is complete, but AP/AP50 collapses for all checked models under the current 224-pixel conversion. It is documented only as a supplementary limitation/stress-test result and must not be mixed into the main VisDrone detector claim.
+- TinyPerson is removed from the paper-facing plan. No further TinyPerson experiments are required for this ACCV submission; the remaining emphasis is MarineCity 3D handoff, scenario/actor documentation, and AeroGraph verifier/reasoner evidence.

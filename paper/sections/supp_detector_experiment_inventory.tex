@@ -261,28 +261,3 @@ confirmation is added to the main detector protocol. The current NMS snapshot is
 useful because it shows that adjacent-object post-processing can improve AP and
 AP50 on a fixed checkpoint, but the paper labels it as an eval-only
 robustness analysis.
-
-\paragraph{TinyPerson224 auxiliary stress test.}
-TinyPerson is kept as an auxiliary stress test rather than a main comparison
-dataset. We ran a compact 224-pixel protocol for the top-5/core detector set and
-an additional one-seed auxiliary sweep while the VisDrone and MarineCity
-experiments were frozen. The AP/AP50 values are near zero for all methods, as
-shown in Table~\ref{tab:supp_tinyperson224_auxiliary}. This indicates a strong
-dataset/protocol-transfer limitation under the current TinyPerson conversion and
-224-pixel training setting; it does not support a detector-superiority claim.
-Accordingly, TinyPerson is excluded from the main detector table and is retained
-only as supplementary evidence that the final claims remain VisDrone- and
-MarineCity-scoped.
-
-\begin{table*}[!htbp]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\caption{TinyPerson224 auxiliary stress-test summary. These rows are not mixed
-with the VisDrone2019-DET 1280-pixel main detector comparison because the
-protocol produces near-zero AP/AP50 for all methods.}
-\label{tab:supp_tinyperson224_auxiliary}
-\resizebox{\textwidth}{!}{%
-\input{tables/tinyperson224_auxiliary_summary_table}
-}
-\end{table*}

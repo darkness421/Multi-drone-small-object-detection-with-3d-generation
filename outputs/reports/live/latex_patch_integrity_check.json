@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-30 04:50:38 KST",
+  "updated_at_kst": "2026-06-30 05:04:09 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
@@ -36,7 +36,7 @@
         "paper/tables/marinecity_nerfacto_iteration_sweep_table.tex",
         "paper/tables/marinecity_real_capture_benchmark_table.tex",
         "paper/tables/marinecity_reobservation_policy_ablation_table.tex",
-        "paper/tables/tinyperson224_auxiliary_summary_table.tex"
+        "paper/tables/marinecity_scene_actor_scenario_table.tex"
       ],
       "commented_optional_inputs": []
     }

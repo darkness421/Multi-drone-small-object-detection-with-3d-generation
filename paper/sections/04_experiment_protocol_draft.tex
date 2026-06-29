@@ -47,7 +47,9 @@ paper-specific augmentation recipe; promoted rows share the exported
 Ultralytics train-time settings in their run metadata, including standard HSV,
 translation/scale, horizontal flip, mosaic, and close-mosaic settings.
 
-The MarineCity validation experiments use Isaac Sim 5.1 and a saved real-Cesium
-\texttt{uavmarine.usd} stage. The capture and reasoner artifacts are exported
-as reproducible image, JSON, JSONL, and LaTeX-ready table files so that the main
+The MarineCity validation experiments use NVIDIA Isaac Sim Full 5.1.0 with
+Cesium for Omniverse and a saved real-Cesium \texttt{uavmarine.usd} stage. The
+Cesium stage streams Google Photorealistic 3D Tiles and terrain around the
+Haeundae MarineCity anchor. The capture and reasoner artifacts are exported as
+reproducible image, JSON, JSONL, and LaTeX-ready table files so that the main
 paper and supplementary material can be regenerated from the same evidence.

@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-30 04:50:38 KST",
+  "updated_at_kst": "2026-06-30 05:04:09 KST",
   "status": "paper_artifact_audit_submission_ready_with_optional_gates",
   "artifact_count": 53,
   "missing_required_count": 0,
@@ -81,7 +81,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 10223,
+      "size_bytes": 10511,
       "status": "ok",
       "note": "MarineCity protocol section patch"
     },
@@ -111,7 +111,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9992,
+      "size_bytes": 11210,
       "status": "ok",
       "note": "Supplementary MarineCity capture, graph, and reasoner details"
     },
@@ -171,7 +171,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 15840,
+      "size_bytes": 14651,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },

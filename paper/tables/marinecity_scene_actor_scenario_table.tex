@@ -1,0 +1,16 @@
+\begin{tabular}{ll}
+\toprule
+Item & Verified MarineCity setting \\
+\midrule
+Stage / map & real-Cesium Haeundae MarineCity, \texttt{uavmarine.usd} \\
+Simulator & NVIDIA Isaac Sim Full 5.1.0 with Cesium for Omniverse \\
+Cesium anchor & latitude 35.156900, longitude 129.143900, georeference height 200.0 \\
+Map sources & Google Photorealistic 3D Tiles valid; Cesium terrain valid; no synthetic city replacement \\
+Capture altitude & UAV camera band 140--160 m; this is separate from the Cesium georeference height \\
+Fleet / cameras & 3 UAV markers and 3 capture cameras; 9 RGB/depth/pose frames over 3 scenarios \\
+Actor overlay & 6 VisDrone-derived object cards: bus, car, truck, van, pedestrian, person \\
+Scenarios & S0 locked ROI; S1 adjacent/overlapping objects; S2 coastline multi-view ambiguity \\
+Detector evidence & 78 EvidenceTokens: 53 car, 17 bus, 6 pedestrian, 2 van \\
+Graph/action evidence & 17 hypotheses; 78/11/25 support/conflict/missing edges; F/M/R/O = 0/1/7/9 \\
+\bottomrule
+\end{tabular}

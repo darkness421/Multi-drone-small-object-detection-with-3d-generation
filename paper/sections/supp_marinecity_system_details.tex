@@ -28,6 +28,31 @@ procedural stand-in scene.
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
+\caption{MarineCity map, actor placement, and scenario audit used by the
+current 3D/reasoner validation. The Cesium georeference height is the scene
+anchor readback; the UAV capture altitude is reported separately because it is
+the camera operating band used for the detector and 3D handoff.}
+\label{tab:supp_marinecity_scene_actor_scenarios}
+\resizebox{\textwidth}{!}{%
+\input{tables/marinecity_scene_actor_scenario_table}
+}
+\end{table*}
+
+\paragraph{Map and actor-placement analysis.}
+Table~\ref{tab:supp_marinecity_scene_actor_scenarios} makes the simulation
+scope explicit. The validation uses the real-Cesium Haeundae MarineCity stage
+at the saved latitude/longitude anchor, not a proxy city. Six VisDrone-derived
+object cards are placed in the actor overlay to cover vehicle and
+pedestrian/person cases, and three UAV cameras capture three scenario variants:
+a locked ROI, an adjacent-object case, and a coastline ambiguity case. The
+table also ties the placement audit to the downstream evidence counts: 78
+SAFR-YOLO EvidenceTokens are compressed into 17 graph hypotheses before
+AeroGraph receives only the action-relevant graph package.
+
+\begin{table*}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
 \caption{MarineCity real-Cesium cross-view evidence graph validation result. The
 coordinates are heuristic camera-ray projections used for association and
 ambiguity-aware action selection; they are not treated as metric 3D reconstruction ground

@@ -10,18 +10,23 @@ completed quantitative model claim, while the graph, 3D completion, and
 reasoner stages are reported as reproducible system-protocol evidence.
 
 The scene is centered on the Haeundae MarineCity region and is constructed in
-Isaac Sim with Cesium geospatial context. The current verified protocol uses
-three UAV views over the saved real-Cesium \texttt{uavmarine.usd} stage. The UAV
-camera altitude band is fixed to 140--160 m for the current protocol
-(the latest viewer160 recapture uses 140/150/160 m for UAV~1/2/3 across
-S0--S2), which is logged separately from the Cesium georeference height. Each UAV exports
+NVIDIA Isaac Sim Full 5.1.0 with Cesium for Omniverse. The current verified
+protocol uses three UAV views over the saved real-Cesium \texttt{uavmarine.usd}
+stage, with Google Photorealistic 3D Tiles and Cesium terrain enabled. The
+stage readback is anchored at latitude 35.156900, longitude 129.143900, with
+Cesium georeference height 200.0. The UAV camera altitude band is fixed to
+140--160 m for the current protocol (the latest viewer160 recapture uses
+140/150/160 m for UAV~1/2/3 across S0--S2), which is logged separately from the
+Cesium georeference height. Each UAV exports
 RGB/depth-like capture artifacts, camera metadata, pose hints, and timestamp
 fields. Vehicles and pedestrian-like small objects are placed from the detector
 class vocabulary so that the 2D SAFR-YOLO output can be converted into
 structured EvidenceTokens for the 3D graph and \textbf{AeroGraph Reasoner}.
 The current actor-layer audit confirms six VisDrone-derived object cards
 (vehicle classes plus pedestrian/person actors), three UAV markers, and three
-UAV camera prims on the real-Cesium stage without synthetic city replacement.
+UAV camera prims on the real-Cesium stage without synthetic city replacement;
+the supplementary material lists the map anchor, actor classes, scenarios, and
+decision counts.
 The current SAFR-YOLO validation runs produce detector EvidenceTokens for cars,
 buses, vans, and pedestrians from the UAV views. The latest integration audit
 reports 78 detector tokens over the three viewer160 scenarios: 53 cars, 17
