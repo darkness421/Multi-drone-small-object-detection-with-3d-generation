@@ -124,9 +124,15 @@ def project_token(
     metric 3D reconstruction.
     """
 
-    eye = [float(v) for v in token.metadata.get("camera_position") or token.uav_pose or []]
+    extrinsic = token.camera_extrinsic or []
+    eye = [float(v) for v in token.metadata.get("camera_position") or []]
+    if len(eye) != 3 and token.uav_pose and len(token.uav_pose) >= 3:
+        eye = [float(v) for v in token.uav_pose[:3]]
+    if len(eye) != 3 and len(extrinsic) == 4 and len(extrinsic[3]) >= 3:
+        eye = [float(v) for v in extrinsic[3][:3]]
+
     target = [float(v) for v in token.metadata.get("look_at_target") or []]
-    if len(eye) != 3 or len(target) != 3:
+    if len(eye) != 3:
         return {
             "token_id": token.token_id,
             "valid": False,
@@ -139,13 +145,32 @@ def project_token(
     x_norm = 2.0 * (cx / max(width, 1) - 0.5)
     y_norm = 2.0 * (0.5 - cy / max(height, 1))
 
-    forward = normalize(vec_sub(target, eye), fallback=[0.0, 0.0, -1.0])
-    world_up = [0.0, 0.0, 1.0]
-    right = normalize(cross(forward, world_up), fallback=[1.0, 0.0, 0.0])
-    up = normalize(cross(right, forward), fallback=[0.0, 1.0, 0.0])
     htan = math.tan(math.radians(hfov_deg) / 2.0)
     vtan = htan * height / max(width, 1)
-    ray = normalize(vec_add(forward, vec_add(vec_scale(right, x_norm * htan), vec_scale(up, y_norm * vtan))))
+    if len(target) == 3:
+        forward = normalize(vec_sub(target, eye), fallback=[0.0, 0.0, -1.0])
+        world_up = [0.0, 0.0, 1.0]
+        right = normalize(cross(forward, world_up), fallback=[1.0, 0.0, 0.0])
+        up = normalize(cross(right, forward), fallback=[0.0, 1.0, 0.0])
+        ray = normalize(vec_add(forward, vec_add(vec_scale(right, x_norm * htan), vec_scale(up, y_norm * vtan))))
+        camera_model = "look_at"
+    elif len(extrinsic) == 4 and all(len(row) >= 3 for row in extrinsic[:3]):
+        local_ray = normalize([x_norm * htan, y_norm * vtan, -1.0], fallback=[0.0, 0.0, -1.0])
+        rotation = [[float(extrinsic[row][col]) for col in range(3)] for row in range(3)]
+        # Isaac/Omniverse transform matrices commonly store translation in the
+        # final row. Treat the detector export as a row-vector transform.
+        ray = normalize(
+            [
+                sum(local_ray[j] * rotation[j][0] for j in range(3)),
+                sum(local_ray[j] * rotation[j][1] for j in range(3)),
+                sum(local_ray[j] * rotation[j][2] for j in range(3)),
+            ],
+            fallback=[0.0, 0.0, -1.0],
+        )
+        camera_model = "camera_extrinsic"
+    else:
+        ray = [0.0, 0.0, -1.0]
+        camera_model = "vertical_fallback"
 
     ground_point: list[float] | None = None
     if ray[2] < -1e-8:
@@ -170,6 +195,7 @@ def project_token(
         "bbox_center": [cx, cy],
         "hfov_deg": hfov_deg,
         "ground_z": ground_z,
+        "camera_model": camera_model,
     }
 
 
@@ -183,6 +209,31 @@ def point_spread(points: list[list[float]], center: list[float]) -> float:
     if not points:
         return 0.0
     return sum(distance_xy(point, center) for point in points) / len(points)
+
+
+def route_action(
+    *,
+    view_count: int,
+    ambiguity: float,
+    mean_confidence: float,
+    projection_valid_ratio: float,
+) -> str:
+    """Assign the graph-level routing action used by the smoke protocol.
+
+    The action is intentionally conservative: only multi-view, low-ambiguity
+    hypotheses are finalized directly. Moderate multi-view ambiguity is kept
+    under monitoring, severe ambiguity or missing-view evidence triggers
+    targeted re-observation, and very weak single-view hypotheses are rejected
+    from automatic acceptance.
+    """
+
+    if view_count < 2 and mean_confidence < 0.03:
+        return "reject"
+    if view_count >= 2 and ambiguity < 0.55:
+        return "finalize"
+    if view_count >= 2 and ambiguity < 0.75:
+        return "monitor"
+    return "targeted_reobserve"
 
 
 def cluster_tokens(
@@ -250,15 +301,25 @@ def build_graph(tokens: list[EvidenceToken], args: argparse.Namespace) -> dict[s
             conf_values = [float(token.confidence) for token in cluster]
             unc_values = [float(token.uncertainty) for token in cluster]
             black_values = [float(token.metadata.get("rgb_black_ratio") or 0.0) for token in cluster]
+            valid_projection_count = sum(1 for token in cluster if projections[token.token_id].get("valid"))
+            projection_valid_ratio = valid_projection_count / max(1, len(cluster))
             spread = point_spread(points, center)
             missing_uavs = [uav for uav in UAV_IDS if uav not in uavs]
             view_count = len(uavs)
+            mean_confidence = sum(conf_values) / max(1, len(conf_values))
+            mean_uncertainty = sum(unc_values) / max(1, len(unc_values))
             ambiguity = min(
                 1.0,
-                (sum(unc_values) / max(1, len(unc_values)))
+                mean_uncertainty
                 + (0.18 if view_count < 2 else 0.0)
                 + (0.08 if spread > args.cluster_threshold * 0.5 else 0.0)
                 + (0.06 if max(black_values or [0.0]) > 0.15 else 0.0),
+            )
+            action = route_action(
+                view_count=view_count,
+                ambiguity=ambiguity,
+                mean_confidence=mean_confidence,
+                projection_valid_ratio=projection_valid_ratio,
             )
             hypothesis_id = f"{short_scenario(scenario)}_H{hypothesis_index:03d}"
             hypothesis_index += 1
@@ -273,14 +334,15 @@ def build_graph(tokens: list[EvidenceToken], args: argparse.Namespace) -> dict[s
                 "token_count": len(cluster),
                 "view_count": view_count,
                 "class_votes": dict(classes),
-                "mean_confidence": sum(conf_values) / max(1, len(conf_values)),
-                "mean_uncertainty": sum(unc_values) / max(1, len(unc_values)),
+                "mean_confidence": mean_confidence,
+                "mean_uncertainty": mean_uncertainty,
                 "max_rgb_black_ratio": max(black_values or [0.0]),
+                "projection_valid_ratio": projection_valid_ratio,
                 "center_scene_units": center,
                 "association_spread_xy": spread,
                 "ambiguity_score": ambiguity,
                 "association_quality": "multi_view_support" if view_count >= 2 else "single_view_candidate",
-                "recommended_action": "finalize" if view_count >= 2 and ambiguity < 0.62 else "targeted_reobserve",
+                "recommended_action": action,
                 "claim_level": "real_cesium_crossview_association_smoke",
             }
             hypotheses.append(hypothesis)
@@ -357,6 +419,8 @@ def build_graph(tokens: list[EvidenceToken], args: argparse.Namespace) -> dict[s
         "conflict_edge_count": len(conflict_edges),
         "weak_edge_count": len(weak_edges),
         "missing_evidence_edge_count": len(missing_edges),
+        "action_counts": dict(Counter(row["recommended_action"] for row in hypotheses)),
+        "mean_ambiguity": sum(float(row["ambiguity_score"]) for row in hypotheses) / max(1, len(hypotheses)),
         "class_counts": dict(Counter(class_name(token) for token in tokens)),
         "scenario_token_counts": dict(Counter(short_scenario(scenario_id(token)) for token in tokens)),
         "parameters": {
@@ -364,8 +428,12 @@ def build_graph(tokens: list[EvidenceToken], args: argparse.Namespace) -> dict[s
             "ground_z": args.ground_z,
             "cluster_threshold": args.cluster_threshold,
             "conflict_threshold": args.conflict_threshold,
+            "finalize_rule": "view_count>=2 and ambiguity<0.55",
+            "monitor_rule": "view_count>=2 and 0.55<=ambiguity<0.75",
+            "reject_rule": "view_count<2 and mean_confidence<0.03",
+            "reobserve_rule": "remaining high-ambiguity, missing-view, or low-projection-confidence cases",
         },
-        "claiming_rule": "Use as real-Cesium evidence-graph smoke/protocol result. Do not claim completed metric 3D reconstruction or non-mock LLM validation.",
+        "claiming_rule": "Use as real-Cesium evidence-graph smoke/protocol result. Do not claim completed metric 3D reconstruction or external-provider LLM validation.",
     }
     return {
         "summary": summary,
@@ -393,6 +461,7 @@ def write_hypothesis_csv(path: Path, hypotheses: list[dict[str, Any]]) -> None:
         "mean_confidence",
         "mean_uncertainty",
         "association_spread_xy",
+        "projection_valid_ratio",
         "ambiguity_score",
         "association_quality",
         "recommended_action",
@@ -408,6 +477,7 @@ def write_hypothesis_csv(path: Path, hypotheses: list[dict[str, Any]]) -> None:
                     "mean_confidence": f"{row.get('mean_confidence', 0.0):.4f}",
                     "mean_uncertainty": f"{row.get('mean_uncertainty', 0.0):.4f}",
                     "association_spread_xy": f"{row.get('association_spread_xy', 0.0):.2f}",
+                    "projection_valid_ratio": f"{row.get('projection_valid_ratio', 0.0):.2f}",
                     "ambiguity_score": f"{row.get('ambiguity_score', 0.0):.4f}",
                 }
             )
@@ -460,7 +530,7 @@ def write_summary_md(path: Path, graph: dict[str, Any], figure_path: Path, table
         f"- Figure: `{figure_path}`",
         f"- Paper table: `{table_path}`",
         "",
-        "Claiming rule: this is real-Cesium detector-token evidence graph smoke evidence. It is not a completed metric 3D reconstruction, NeRF/3DGS result, or non-mock LLM validation.",
+        "Claiming rule: this is real-Cesium detector-token evidence graph smoke evidence. It is not a completed metric 3D reconstruction, NeRF/3DGS result, or external-provider LLM validation.",
         "",
         "| Scenario | Hypothesis | Class | Tokens | Views | Mean conf. | Ambiguity | Action |",
         "|---|---|---|---:|---:|---:|---:|---|",

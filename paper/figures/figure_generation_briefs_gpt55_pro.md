@@ -13,6 +13,12 @@ SAFR-YOLO / P2P4-SelfAttnFR leading-candidate drawing target and the optional
 22M P2P4-SelfAttnRF-FR receptive-field candidate. The final detector
 combination is not frozen yet.
 
+Naming rule: use `AeroGraph Reasoner` for the drone-specialized LLM/VLM
+reasoning module. Do not use the previous non-drone-specific label in paper figures, captions,
+or prompt/schema diagrams. `AeroGraph Reasoner` means an aerial multi-UAV
+evidence-graph reasoner for ambiguity resolution, targeted re-observation, and
+verified object-state decisions.
+
 Double-blind rule: do not include university names, lab names, author names,
 real logos, real skyline brands, or identifiable map labels. Do not use official
 YOLO, NVIDIA, OpenAI, or model-provider logos in the submission figure.
@@ -27,7 +33,7 @@ Export rule:
 
 Recommended palette:
 
-| Role | Color |
+| Meaning | Color |
 | --- | --- |
 | 2D detector / proposed | Deep blue |
 | 3D geometry / graph | Teal |
@@ -49,7 +55,7 @@ multi-UAV observations
 -> 2D-to-3D evidence graph
 -> ambiguity diagnosis
 -> 3D evidence completion / re-observation
--> graph-grounded ACE-Reasoner
+-> graph-grounded AeroGraph Reasoner
 -> verified object state
 ```
 
@@ -75,9 +81,17 @@ Use a wide two-column pipeline, left to right.
    - Include entropy, view disagreement, occlusion, missing evidence, crowding.
 6. Two right branches:
    - Top: `3D completion / re-observation`.
-   - Bottom: `ACE-Reasoner`.
+   - Bottom: `AeroGraph Reasoner`.
 7. Final small box: `Verified object state`.
    - class belief, 3D position, uncertainty, final action.
+8. Verification labels:
+   - Explicitly split the verifier into `System verification` and
+     `Action verification`.
+   - `System verification`: graph consistency, geometry plausibility, missing
+     evidence, and uncertainty checks.
+   - `Action verification`: allowed final action selected from finalize,
+     monitor, reject, and targeted re-observation.
+   - Show that AeroGraph suggests an action and the verifier gates it.
 
 ### Exact Prompt
 
@@ -90,10 +104,13 @@ feature descriptor, uncertainty, pose, and time; a 2D-to-3D evidence graph with
 camera nodes, observation nodes, object hypothesis nodes, teal support edges and
 amber conflict edges; ambiguity diagnosis using entropy, view disagreement,
 occlusion, missing evidence and crowding; two branches for 3D completion /
-re-observation and graph-grounded ACE-Reasoner; and a final verified object
-state. Use a restrained white-background CV-paper style, thin vector lines,
-blue for detector, teal for 3D graph, amber for ambiguity, green for verified
-completion. No logos, no institution names, no decorative gradients.
+re-observation and graph-grounded AeroGraph Reasoner; and a final verified object
+state. The verifier panel must contain two explicit labels: System verification
+for graph/geometry/uncertainty checks, and Action verification for finalize,
+monitor, reject, or targeted re-observation. Use a restrained white-background
+CV-paper style, thin vector lines, blue for detector, teal for 3D graph, amber
+for ambiguity, green for verified completion. No logos, no institution names,
+no decorative gradients.
 ```
 
 ### Avoid
@@ -265,7 +282,7 @@ No photorealistic city branding, no real map labels, no institution identity.
   chosen.
 - Do not imply real-world flight validation if we only have simulator data.
 
-## Supplementary Method Figure: ACE-Reasoner And Safety Verifier
+## Supplementary Method Figure: AeroGraph Reasoner And Safety Verifier
 
 ### Main Message
 
@@ -280,7 +297,7 @@ directly control the UAV.
    - graph summary
    - geometry residuals
    - allowed actions
-2. ACE-Reasoner prompt builder:
+2. AeroGraph Reasoner prompt builder:
    - protected system rules
    - evidence summary
    - candidate action list
@@ -298,9 +315,9 @@ directly control the UAV.
 
 ```text
 Draw a supplementary method diagram for a graph-grounded VLM/LLM reasoner named
-ACE-Reasoner. The figure should show that only high-ambiguity object hypotheses are sent
+AeroGraph Reasoner. The figure should show that only high-ambiguity object hypotheses are sent
 to the reasoner. Inputs include an ambiguous graph node, multi-view crops, graph
-summary, geometry residuals, and allowed actions. The ACE-Reasoner prompt builder has
+summary, geometry residuals, and allowed actions. The AeroGraph Reasoner prompt builder has
 protected system rules, an evidence summary, and a candidate action list. The
 VLM/LLM returns a constrained JSON output with class, confidence, evidence clues,
 missing evidence, and recommended action. A graph and safety verifier checks
@@ -329,7 +346,7 @@ Recommended main paper:
 
 Recommended supplementary:
 
-1. ACE-Reasoner and safety verifier detailed figure.
+1. AeroGraph Reasoner and safety verifier detailed figure.
 2. Grad-CAM / heat-map figure for baseline vs proposed detector.
 3. Full detector leaderboard plots.
 4. Extra MarineCity layout, camera poses, qualitative cases, and failure cases.

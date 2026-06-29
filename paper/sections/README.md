@@ -30,7 +30,7 @@ Important wording rule:
   the final compact detector changes.
 - Treat MarineCity real-Cesium outputs as system/protocol smoke evidence. Do
   not claim a completed 3D reconstruction/restoration benchmark until the
-  external-provider reasoner and completion/restoration experiments are validated.
+  reasoner response evaluation and completion/restoration experiments are validated.
 - Use `AeroGraph Reasoner` for the drone-specialized graph-grounded LLM/VLM
   module. Avoid previous non-drone-specific reasoner labels in paper sections.
 - Do not mix 640-pixel related-work evaluations with the main 1280-pixel

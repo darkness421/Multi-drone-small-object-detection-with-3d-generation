@@ -16,6 +16,43 @@ sensitivity, heat-map analysis, and secondary dataset stress tests. This split
 keeps the main paper self-contained while preserving reviewer-visible evidence
 for model-scale and protocol coverage.
 
+\paragraph{SAFR-YOLO module figures.}
+The main detector figure shows SAFR-YOLO at the architecture level. The
+following supplementary figures unpack the three detector-side components that
+are visually compressed in the main paper: the SelfAttnFR refinement block, the
+TinyFReLU activation, and overlap-aware post-processing.
+
+\begin{figure*}[!htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/figS1_selfattnfr_module.png}
+    \caption{Supplementary module view of SelfAttnFR. The block combines a
+    pooled-token context path for adjacent-object interactions with a local
+    refinement path that preserves edge and texture cues before the final
+    $1\times1$ fusion.}
+    \label{fig:supp_selfattnfr_module}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/figS2_tinyfrelu_activation.png}
+    \caption{Supplementary module view of TinyFReLU. The activation augments a
+    depthwise spatial-condition branch with a high-frequency residual so weak
+    tiny-object boundaries are preserved with negligible extra cost.}
+    \label{fig:supp_tinyfrelu_activation}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/figS3_overlap_aware_nms.png}
+    \caption{Supplementary decision view of overlap-aware NMS. The module is
+    used as post-processing analysis for adjacent UAV small objects: standard
+    IoU-only suppression can remove nearby true objects, while the proposed
+    rule also considers center separation and size similarity before dropping a
+    candidate.}
+    \label{fig:supp_overlap_aware_nms}
+\end{figure*}
+\FloatBarrier
+
 \begin{table*}[!htbp]
 \centering
 \tiny

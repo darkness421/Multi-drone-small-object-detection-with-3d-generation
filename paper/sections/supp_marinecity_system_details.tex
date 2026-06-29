@@ -44,31 +44,103 @@ edges identify object hypotheses that require re-observation or cautious
 verification. The table is therefore interpreted as an ambiguity-routing
 artifact, not as a metric 3D localization benchmark.
 
+\paragraph{Graph construction and routing details.}
+The supplementary graph uses the same EvidenceToken fields as the main method:
+2D box center, class belief, confidence, detector uncertainty, UAV identifier,
+camera intrinsics, camera extrinsics, and UAV pose. Each token is projected to a
+camera ray and associated to the ground-plane or available depth point. Tokens
+with matching classes are clustered within a support radius
+$\delta_s=55$ scene units; nearby different-class hypotheses within
+$\delta_c=38$ scene units create conflict edges. Missing-evidence edges are
+added when a hypothesis lacks support from an expected UAV view. The ambiguity
+score follows the main method definition: low-confidence
+single-view hypotheses are rejected, multi-view hypotheses with moderate
+ambiguity are monitored, and high-ambiguity or missing-view hypotheses are sent
+to targeted re-observation. In the current viewer160 protocol, the graph
+compresses 78 detector tokens into 17 hypotheses and records 78/11/25
+support/conflict/missing-evidence edges with action counts
+F/M/R/O = 0/1/7/9.
+
 \begin{table}[!htbp]
 \centering
 \scriptsize
-\caption{AeroGraph Reasoner validation summary. The table separates completed
-real-capture system checks from the external-provider replication that will be
-reported only after all prompts are imported and schema-validated.}
+\caption{AeroGraph Reasoner validation summary for the current paper draft.
+The table reports the completed real-capture system check and verifier-controlled
+action schema used by the current draft.}
 \label{tab:supp_aerograph_reasoner_validation_slot}
 \input{tables/aerograph_reasoner_validation_summary}
 \end{table}
 
 \paragraph{Reasoner-validation analysis.}
-Table~\ref{tab:supp_aerograph_reasoner_validation_slot} separates the completed
-rule-based system check from external-provider LLM/VLM validation. The current
-rule-based verifier is useful for confirming schema, graph consistency, and
-allowed-action logic. It is not used as evidence that a final external reasoner
-has been benchmarked; that claim requires the provider responses to be imported
-and checked under the same prompt schema.
+Table~\ref{tab:supp_aerograph_reasoner_validation_slot} reports the completed
+real-capture system check used in this draft. The verifier confirms schema,
+graph consistency, and allowed-action logic for the MarineCity smoke protocol.
+Language/VLM response quality is not mixed into this quantitative row; the row
+is used to document the graph-grounded interface and allowed-action verifier.
+
+\begin{table*}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Auxiliary MarineCity Nerfacto iteration and capture sweep. The main
+paper uses the full-resolution 24k row as the representative Nerfacto smoke
+metric. Longer or alternate capture runs are kept here to show that additional
+iterations do not automatically improve the sparse real-Cesium held-out split.}
+\label{tab:supp_marinecity_nerfacto_sweep}
+\resizebox{\textwidth}{!}{%
+\input{tables/marinecity_nerfacto_iteration_sweep_table}
+}
+\end{table*}
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/results/marinecity_system/marinecity_nerfacto_iteration_sweep.png}
+\caption{Auxiliary Nerfacto iteration sweep for the MarineCity real-Cesium
+capture package. The plot separates the representative full-resolution 24k run
+from supplementary sweep runs and marks the 32k reinforcement run as not
+promoted because quality degraded under the tested split.}
+\label{fig:supp_marinecity_nerfacto_sweep}
+\end{figure*}
+
+\paragraph{Nerfacto-sweep analysis.}
+Table~\ref{tab:supp_marinecity_nerfacto_sweep} and
+Fig.~\ref{fig:supp_marinecity_nerfacto_sweep} provide the supporting evidence
+behind the representative Nerfacto row in the main paper. The full-resolution
+24k run is retained because it gives the most stable SSIM/LPIPS among the
+paper-facing capture settings. A standard 12k run reaches slightly higher PSNR,
+but it is treated as an auxiliary sweep row because it is not the same
+full-resolution validation setting. The 32k reinforcement run decreases PSNR,
+SSIM, and LPIPS, so it is explicitly retained as a non-promoted auxiliary
+result rather than being mixed into the main 3D method table.
+
+\begin{figure*}[!htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/results/marinecity_system/marinecity_depth_view_consistency_sanity.png}
+\caption{Depth-backed cross-view sanity check from the real-Cesium RGB/depth
+and pose package. Two source UAV views are projected into the held-out UAV view
+to visualize whether the saved geometry supports cross-view evidence transfer.
+This is used as supporting geometry evidence, not as a neural-rendering
+benchmark.}
+\label{fig:supp_marinecity_depth_view_consistency}
+\end{figure*}
+
+\paragraph{Depth-view consistency analysis.}
+Fig.~\ref{fig:supp_marinecity_depth_view_consistency} checks whether the
+captured RGB/depth/pose package can support cross-view evidence transfer before
+neural rendering is considered. The sanity check reaches a mean projected fill
+ratio of approximately 0.328 across the three scenarios, which is sufficient
+for visualizing coarse overlap and missing-view regions. Because the projection
+is depth-backed but not optimized by a neural field, we use it only as
+supporting evidence for the 3D evidence graph and not as a reconstruction
+quality metric.
 
 \begin{table*}[!htbp]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
 \caption{MarineCity 3D/reasoner reporting split. Smoke-test rows are available
-now; full benchmark rows are promoted only after external-provider reasoning
-and longer completion/restoration experiments are validated.}
+now; full benchmark rows are promoted only after longer completion/restoration
+experiments and reasoner response validation are completed.}
 \label{tab:supp_marinecity_reporting_split}
 \begin{tabular}{lll}
 \toprule

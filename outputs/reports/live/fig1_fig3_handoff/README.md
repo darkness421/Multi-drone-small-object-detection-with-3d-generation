@@ -19,9 +19,6 @@ Stable figures: Fig. 2, SelfAttnFR, TinyFReLU, and overlap-aware NMS are treated
 | copied | Fig. 1 | `fig1_uav01_rgb.png` | `/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_001_uav_01_rgb.png` | Raw UAV view for the multi-UAV observations column. |
 | copied | Fig. 1 | `fig1_uav02_rgb.png` | `/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png` | Raw UAV view for the multi-UAV observations column. |
 | copied | Fig. 1 | `fig1_uav03_rgb.png` | `/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_003_uav_03_rgb.png` | Raw UAV view for the multi-UAV observations column. |
-| copied | Fig. 1 | `fig1_uav01_isaac_bbox.png` | `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_001_uav_01_bbox_preview.png` | Ground-truth-like Isaac object layout/bbox preview. |
-| copied | Fig. 1 | `fig1_uav02_isaac_bbox.png` | `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_002_uav_02_bbox_preview.png` | Ground-truth-like Isaac object layout/bbox preview. |
-| copied | Fig. 1 | `fig1_uav03_isaac_bbox.png` | `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_003_uav_03_bbox_preview.png` | Ground-truth-like Isaac object layout/bbox preview. |
 | copied | Fig. 3 | `fig3_uav01_yolo_detection.png` | `outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/previews/frame_001_uav_01_rgb_pred.png` | P2P4-SelfAttnFR output from one simulated UAV view. |
 | copied | Fig. 3 | `fig3_uav02_yolo_detection.png` | `outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/previews/frame_002_uav_02_rgb_pred.png` | P2P4-SelfAttnFR output from one simulated UAV view. |
 | copied | Fig. 3 | `fig3_uav03_yolo_detection.png` | `outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/previews/frame_003_uav_03_rgb_pred.png` | P2P4-SelfAttnFR output from one simulated UAV view. |
@@ -49,7 +46,12 @@ Stable figures: Fig. 2, SelfAttnFR, TinyFReLU, and overlap-aware NMS are treated
 
 ## Figure Update Guidance
 
-- Fig. 1 should use `fig1_map_multiuav_preview.png`, the three `fig1_uav*_rgb.png` views, and the three `fig1_uav*_isaac_bbox.png` previews while keeping the high-level CoM3D-ACE pipeline layout.
+- Fig. 1 should use `fig1_map_multiuav_preview.png`, the three `fig1_uav*_rgb.png` views, and the real-Cesium scenario panels while keeping the high-level CoM3D-ACE pipeline layout.
+- Fig. 1's verification block should be split into two visible labels:
+  `System verification` for graph consistency, geometry plausibility, missing
+  evidence, and uncertainty checks; and `Action verification` for finalize,
+  monitor, reject, or targeted re-observation. This should make the verifier
+  role clearer than a single generic shield/check icon.
 - Fig. 3 should use `fig3_real_cesium_detector_preview_contact_sheet.png`, `fig3_crossview_evidence_graph_smoke.png`, `fig3_depth_pointcloud_smoke_topdown.png`, and `fig3_nerfacto_heldout_smoke_contact_sheet.png` for the current evidence-flow story.
 - Fig. 3's final multi-method 3D completion and external-provider AeroGraph panels should be replaced later by additional runner/provider outputs if those become available.
 - Keep diagrams compact. Detailed equations and module internals stay in Fig. 2 and supplementary figures.
