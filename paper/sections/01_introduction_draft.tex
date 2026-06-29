@@ -26,7 +26,7 @@ detector uncertainty and object-level small-object evidence.
 We address this gap with \textbf{CoM3D-ACE}, an ambiguity-centric cooperative
 multi-UAV perception framework. The core idea is to turn 2D detections into
 structured \emph{EvidenceTokens}, associate them across views into a 3D evidence
-graph, and route only high-ambiguity object hypotheses to 3D completion,
+graph, and send only high-ambiguity object hypotheses to 3D completion,
 targeted re-observation, and a graph-grounded reasoner. The 2D frontend is
 \textbf{SAFR-YOLO}, a UAV small-object detector built around high-resolution
 P2/P3/P4 heads, SelfAttnFR refinement, TinyFReLU activation, and an
