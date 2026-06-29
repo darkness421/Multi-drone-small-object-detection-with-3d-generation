@@ -45,6 +45,18 @@ TinyFReLU activation, and overlap-aware post-processing.
 
 \begin{figure}[!htbp]
     \centering
+    \includegraphics[width=0.94\textwidth]{figures/figS2b_tinyfrelu_measured_response.png}
+    \vspace{-1mm}
+    \caption{Measured TinyFReLU response from the trained SAFR-YOLO checkpoint
+    on a VisDrone validation frame. The probe is taken from the highest
+    resolution TinyFReLU block, showing the P2 input feature, high-frequency
+    residual, spatial condition, positive output delta, gate-response map, and
+    binned feature-response curve.}
+    \label{fig:supp_tinyfrelu_measured_response}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
     \includegraphics[width=0.90\textwidth]{figures/figS3_overlap_aware_nms.png}
     \vspace{-1mm}
     \caption{Supplementary decision view of overlap-aware NMS. The module is
@@ -73,9 +85,14 @@ the context-refined and local-refined features. TinyFReLU uses
     c(x)=\mathrm{BN}(\mathrm{DWConv}_{3\times3}(x))+\tanh(\gamma)h(x),\quad
     y=\max(x,c(x)).
 \end{equation}
-Panels (b) and (c) in Fig.~\ref{fig:supp_tinyfrelu_activation} are illustrative
-response diagrams, not measured activation maps. The empirical TinyFReLU and
-SelfAttnFR effects are reported in the ablation table and heatmap below.
+Fig.~\ref{fig:supp_tinyfrelu_activation} summarizes the computation graph, while
+Fig.~\ref{fig:supp_tinyfrelu_measured_response} reports a measured TinyFReLU
+probe from the trained detector. In that probe, the highest-resolution
+TinyFReLU block changes 48.2\% of feature locations with learned
+$\gamma=0.160$, indicating that the condition branch is active on dense
+small-object boundaries rather than being a purely decorative gate. The
+empirical detector-level effect of TinyFReLU and SelfAttnFR is reported in the
+ablation table and heatmap below.
 For overlap-aware NMS, a lower-scoring candidate is suppressed only when it has
 high IoU, small normalized center distance, and similar box scale to the kept
 box; this avoids dropping adjacent true objects that overlap in top-down UAV

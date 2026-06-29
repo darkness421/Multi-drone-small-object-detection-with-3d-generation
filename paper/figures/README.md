@@ -14,6 +14,7 @@ Current Overleaf-ready PNG exports:
 | `fig03_3d_evidence_reasoner.png` | Main Fig. 3, 3D evidence completion and AeroGraph Reasoner |
 | `figS1_selfattnfr_module.png` | Supplementary Fig. S1, SelfAttnFR module |
 | `figS2_tinyfrelu_activation.png` | Supplementary Fig. S2, TinyFReLU activation |
+| `figS2b_tinyfrelu_measured_response.png` | Supplementary Fig. S2b, measured TinyFReLU response from trained SAFR-YOLO |
 | `figS3_overlap_aware_nms.png` | Supplementary Fig. S3, overlap-aware NMS |
 
 Caption-ready detector result PNGs:
