@@ -195,30 +195,11 @@ is depth-backed but not optimized by a neural field, we use it only as
 supporting evidence for the 3D evidence graph and not as a reconstruction
 quality metric.
 
-\begin{table*}[!htbp]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\caption{MarineCity 3D/reasoner reporting split. Validation rows are reported
-now; full benchmark rows are promoted only after longer completion/restoration
-experiments and reasoner response validation are completed.}
-\label{tab:supp_marinecity_reporting_split}
-\begin{tabular}{lll}
-\toprule
-Component & Main paper & Supplementary material \\
-\midrule
-MarineCity scene & geospatial scene overview and final object/camera counts & full camera poses, object placement list, export manifest \\
-Multi-UAV capture & representative three-UAV result & fleet-size and viewpoint details \\
-3D evidence graph & compact system result & graph construction parameters and failure cases \\
-3D completion & runner-family validation metrics & NeRF/3DGS/re-observation settings and extra renders \\
-AeroGraph Reasoner & conservative system-validation wording & prompt template, JSON schema, verifier rules, rejected actions \\
-\bottomrule
-\end{tabular}
-\end{table*}
-
 \paragraph{Reporting-split analysis.}
-Table~\ref{tab:supp_marinecity_reporting_split} states how the system evidence
-is divided between the main paper and supplementary material. The main paper
-contains the self-contained claims: detector performance, real-Cesium system
-operation, and neural-3D validation metrics. The supplementary material stores the
-larger operational details needed for reproduction and reviewer inspection.
+The main paper contains the self-contained claims: detector performance,
+real-Cesium system operation, and neural-3D validation metrics. The
+supplementary material stores the larger operational details needed for
+reproduction and reviewer inspection, including camera poses, object placement,
+graph construction parameters, prompt/schema checks, and additional scenario
+figures. We keep this as text rather than a separate table to avoid repeating
+the main paper's result split.
