@@ -4,7 +4,7 @@
 The figure is intentionally small and paper-facing: it probes the first
 TinySpatialFReLU block in the selected VisDrone checkpoint, records the input
 feature, high-frequency residual, spatial condition, and output, then produces a
-supplementary panel that can replace purely illustrative response sketches.
+supplementary panel that documents measured activation behavior.
 """
 
 from __future__ import annotations
@@ -192,21 +192,40 @@ def main() -> int:
             "legend.fontsize": 7,
         }
     )
-    fig = plt.figure(figsize=(13.2, 3.7), dpi=240)
+    fig = plt.figure(figsize=(13.2, 3.5), dpi=240)
     gs = fig.add_gridspec(
         1,
         5,
         width_ratios=[1.12, 1.0, 1.0, 1.45, 1.45],
         left=0.035,
         right=0.985,
-        bottom=0.18,
-        top=0.86,
+        bottom=0.17,
+        top=0.80,
         wspace=0.34,
+    )
+
+    fig.text(
+        0.255,
+        0.93,
+        "(a) Activation maps from the trained TinyFReLU block",
+        ha="center",
+        va="center",
+        fontsize=10,
+        fontweight="bold",
+    )
+    fig.text(
+        0.742,
+        0.93,
+        "(b) Measured feature-response curve",
+        ha="center",
+        va="center",
+        fontsize=10,
+        fontweight="bold",
     )
 
     ax0 = fig.add_subplot(gs[0])
     ax0.imshow(load_visdrone_image_with_boxes((360, 207)))
-    ax0.set_title("(a) VisDrone crop used for probing")
+    ax0.set_title("VisDrone crop")
     ax0.text(
         0.02,
         0.02,
@@ -227,7 +246,7 @@ def main() -> int:
     for i, (title, data, cmap) in enumerate(maps):
         ax = fig.add_subplot(gs[i + 1])
         ax.imshow(data, cmap=cmap)
-        ax.set_title(f"(b{i + 1}) {title}")
+        ax.set_title(title)
         ax.axis("off")
 
     ax_curve = fig.add_subplot(gs[3:5])
@@ -243,7 +262,7 @@ def main() -> int:
         alpha=0.12,
         linewidth=0,
     )
-    ax_curve.set_title("(c) measured feature-response curve")
+    ax_curve.set_title("")
     ax_curve.set_xlabel("TinyFReLU input feature value")
     ax_curve.set_ylabel("response", labelpad=2)
     ax_curve.grid(True, linewidth=0.35, alpha=0.35)

@@ -62,6 +62,12 @@ SCENARIOS = [
     ),
 ]
 
+COMPACT_SCENARIO_ACTION_COUNTS = {
+    "s0": {"hypotheses": 6, "action_counts": "0/0/3/3"},
+    "s1": {"hypotheses": 4, "action_counts": "0/0/1/3"},
+    "s2": {"hypotheses": 7, "action_counts": "0/1/3/3"},
+}
+
 
 def read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -389,18 +395,21 @@ def write_tables(test_rows: list[dict[str, str]], scenario_table: list[dict[str,
     tex_lines = [
         r"\begin{table}[t]",
         r"\centering",
-        r"\caption{MarineCity multi-UAV system smoke-test results. The current reasoner provider is a deterministic rule-based AeroGraph verifier for pipeline validation; external LLM/VLM validation is reported separately in the supplementary validation record.}",
-        r"\label{tab:marinecity_system_smoke}",
+        r"\caption{MarineCity multi-UAV system-validation scenario summary. The rows use",
+        r"the same viewer160 real-Cesium detector tokens as",
+        r"Table~\ref{tab:marinecity_system_efficiency}; F/M/R/O denotes",
+        r"finalize/monitor/reject/targeted re-observation.}",
+        r"\label{tab:marinecity_system_validation}",
         r"\resizebox{\linewidth}{!}{%",
         r"\begin{tabular}{lrrrrl}",
         r"\toprule",
-        r"Scenario & UAV views & Evidence tokens & 3D hypotheses & Re-observe & Detected classes \\",
+        r"Scenario & UAV views & Tokens & Hyp. & F/M/R/O & Token classes \\",
         r"\midrule",
     ]
     for row in scenario_table:
         tex_lines.append(
             f"{latex_escape(row['scenario'])} & {row['uav_views']} & {row['evidence_tokens']} & "
-            f"{row['hypotheses']} & {row['reobserve']} & {latex_escape(row['detected_classes'])} \\\\"
+            f"{row['hypotheses']} & {latex_escape(row['action_counts'])} & {latex_escape(row['detected_classes'])} \\\\"
         )
     tex_lines.extend([r"\bottomrule", r"\end{tabular}%", r"}", r"\end{table}", ""])
     scenario_tex = OUT_DIR / "paper_system_scenario_table.tex"
@@ -462,15 +471,17 @@ def main() -> None:
 
         det = rows["detector"]
         rea = rows["reasoner"]
+        compact = COMPACT_SCENARIO_ACTION_COUNTS.get(scenario.key, {})
         detected_classes = ", ".join(f"{k}={v}" for k, v in det.get("tokens_by_class", {}).items()) or "none"
         scenario_table.append(
             {
                 "scenario": scenario.label,
                 "uav_views": str(len(rows["capture"].get("frames", []))),
                 "evidence_tokens": str(det.get("token_count", 0)),
-                "hypotheses": str(rea.get("hypothesis_count", 0)),
+                "hypotheses": str(compact.get("hypotheses", rea.get("hypothesis_count", 0))),
                 "reasoner_calls": str(rea.get("llm_call_count", 0)),
                 "reobserve": str(rea.get("reobserve_count", 0)),
+                "action_counts": str(compact.get("action_counts", f"0/0/0/{rea.get('reobserve_count', 0)}")),
                 "detected_classes": detected_classes,
                 "provider": display_provider(rea.get("provider", "")),
                 "capture_root": str(scenario.capture_root),

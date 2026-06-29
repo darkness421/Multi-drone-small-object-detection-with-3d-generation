@@ -35,11 +35,11 @@ TinyFReLU activation, and overlap-aware post-processing.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.84\textwidth]{figures/figS2_tinyfrelu_activation.png}
+    \includegraphics[width=0.86\textwidth]{figures/figS2_tinyfrelu_activation.png}
     \vspace{-1mm}
-    \caption{Supplementary module view of TinyFReLU. The activation augments a
-    depthwise spatial-condition branch with a high-frequency residual so weak
-    tiny-object boundaries are preserved with negligible extra cost.}
+    \caption{TinyFReLU computation graph. The activation augments a depthwise
+    spatial-condition branch with a high-frequency residual and applies an
+    element-wise max gate to preserve weak tiny-object boundaries.}
     \label{fig:supp_tinyfrelu_activation}
 \end{figure}
 
@@ -48,9 +48,11 @@ TinyFReLU activation, and overlap-aware post-processing.
     \includegraphics[width=0.88\textwidth]{figures/figS2b_tinyfrelu_measured_response.png}
     \vspace{-1mm}
     \caption{Measured TinyFReLU response from the trained SAFR-YOLO checkpoint
-    on a VisDrone validation frame. The probe is taken from the highest
-    resolution TinyFReLU block and shows the input crop, high-frequency
-    residual, positive output delta, and binned feature-response curve.}
+    on a VisDrone validation frame. Panel (a) groups the input crop,
+    high-frequency residual, and positive output-delta maps from the
+    highest-resolution TinyFReLU block. Panel (b) plots the binned feature
+    response, showing where the learned max gate lifts the conditioned response
+    above the identity branch.}
     \label{fig:supp_tinyfrelu_measured_response}
 \end{figure}
 
