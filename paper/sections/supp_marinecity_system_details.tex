@@ -30,7 +30,7 @@ procedural stand-in scene.
 \setlength{\tabcolsep}{4pt}
 \caption{MarineCity real-Cesium cross-view evidence graph validation result. The
 coordinates are heuristic camera-ray projections used for association and
-ambiguity routing; they are not treated as metric 3D reconstruction ground
+ambiguity-aware action selection; they are not treated as metric 3D reconstruction ground
 truth.}
 \label{tab:supp_marinecity_crossview_evidence_graph}
 \input{tables/marinecity_crossview_evidence_graph_table}
@@ -41,10 +41,10 @@ Table~\ref{tab:supp_marinecity_crossview_evidence_graph} gives the intermediate
 3D evidence representation used by the reasoner. Multi-view support edges
 indicate observations that agree across UAVs, while conflict and missing-view
 edges identify object hypotheses that require re-observation or cautious
-verification. The table is therefore interpreted as an ambiguity-routing
+verification. The table is therefore interpreted as an ambiguity-aware decision
 artifact, not as a metric 3D localization benchmark.
 
-\paragraph{Graph construction and routing details.}
+\paragraph{Graph construction and decision-policy details.}
 The supplementary graph uses the same EvidenceToken fields as the main method:
 2D box center, class belief, confidence, detector uncertainty, UAV identifier,
 camera intrinsics, camera extrinsics, and UAV pose. Each token is projected to a
@@ -138,7 +138,7 @@ quality metric.
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
-\caption{MarineCity 3D/reasoner reporting split. Smoke-test rows are available
+\caption{MarineCity 3D/reasoner reporting split. Validation rows are reported
 now; full benchmark rows are promoted only after longer completion/restoration
 experiments and reasoner response validation are completed.}
 \label{tab:supp_marinecity_reporting_split}

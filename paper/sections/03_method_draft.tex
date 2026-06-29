@@ -11,14 +11,14 @@ $\mathcal{I}=\{(I_i, K_i, T_i, t_i)\}_{i=1}^{N}$ with image $I_i$, camera
 intrinsics $K_i$, camera pose $T_i$, and timestamp $t_i$, the system first
 extracts 2D object evidence with SAFR-YOLO. Each detection is then represented
 as an EvidenceToken and inserted into a cross-view 3D evidence graph. The graph
-routes confident hypotheses to a verified object state and routes ambiguous
+assigns confident hypotheses to a verified object state and sends ambiguous
 hypotheses to 3D completion, re-observation, and AeroGraph reasoning.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.98\textwidth]{figures/fig01_com3d_ace_overall_framework.png}
 \caption{CoM3D-ACE overview. Multi-UAV observations are converted by SAFR-YOLO
-into EvidenceTokens, associated into a 3D evidence graph, and routed to 3D
+into EvidenceTokens, associated into a 3D evidence graph, and sent to 3D
 completion, targeted re-observation, and the graph-grounded AeroGraph Reasoner
 only when ambiguity remains high. The verifier separates system verification
 (graph, geometry, and uncertainty checks) from action verification (finalize,
@@ -86,7 +86,7 @@ the confidence score, $u$ is an uncertainty descriptor, $f$ is an optional crop
 or feature descriptor, $v$ is the UAV/view identifier, $T$ is the camera pose,
 and $t$ is the timestamp. This representation keeps the detector output
 compatible with ordinary 2D evaluation while exposing the fields required for
-cross-view association.
+cross-view association and ambiguity-aware decision making.
 
 \subsection{Cross-View 3D Evidence Graph}
 \label{sec:method_evidence_graph}
@@ -105,7 +105,7 @@ q_i=c_i+\eta_i r_i .
 \end{equation}
 Here $c_i$ is the camera center and $\eta_i$ is read from depth when available;
 otherwise the MarineCity validation protocol uses a ground-plane intersection. These
-points are used for association and routing diagnostics, not as metric 3D
+points are used for association and decision-policy diagnostics, not as metric 3D
 ground truth.
 
 An observation supports a hypothesis $o$ when its class agrees and its lifted
@@ -137,7 +137,8 @@ A(o)=\mathrm{clip}\big(
 \end{equation}
 where $\bar{u}_o$ is mean detector uncertainty, $n_o$ is the number of
 supporting UAV views, $\sigma_o$ is association spread, and $b_o$ is the
-largest invalid/black-region ratio among supporting crops. The routing policy is
+largest invalid/black-region ratio among supporting crops. The ambiguity-aware
+decision policy is
 \begin{equation}
 \pi(o)=
 \begin{cases}
@@ -165,9 +166,9 @@ and completion. The resulting 3D evidence is not treated as a replacement for
 \centering
 \includegraphics[width=0.98\textwidth]{figures/fig03_3d_evidence_reasoner.png}
 \caption{3D evidence completion and AeroGraph Reasoner interface. The current
-paper reports real-Cesium system/protocol validation, graph-routing diagnostics,
-and neural-3D runner-family validation metrics while keeping final action decisions
-gated by graph and safety verification.}
+paper reports real-Cesium system/protocol validation, evidence-graph action
+diagnostics, and neural-3D runner-family validation metrics while keeping final
+action decisions gated by graph and safety verification.}
 \label{fig:marinecity_3d_reasoner}
 \end{figure*}
 

@@ -25,9 +25,9 @@ UAV camera prims on the real-Cesium stage without synthetic city replacement.
 The current SAFR-YOLO validation runs produce detector EvidenceTokens for cars,
 buses, vans, and pedestrians from the UAV views. The latest integration audit
 reports 78 detector tokens over the three viewer160 scenarios: 53 cars, 17
-buses, 6 pedestrians, and 2 vans. The updated graph-routing diagnostic groups
+buses, 6 pedestrians, and 2 vans. The updated ambiguity-policy diagnostic groups
 these tokens into 17 graph-level object hypotheses and assigns verified actions
-with the graph-routing policy described in the method section. The compact
+with the ambiguity-aware decision policy described in the method section. The compact
 system tables below are intended as pipeline validation rather than as a final
 class-balanced quantitative benchmark.
 
@@ -56,7 +56,7 @@ object hypotheses. Eight hypotheses receive multi-view support, while the graph
 records 78 support edges, 11 conflict edges, and 25 missing-evidence edges for
 downstream ambiguity handling. The action distribution is 0 finalize, 1
 monitor, 7 reject, and 9 targeted re-observation hypotheses. This is a protocol
-validation of evidence association and uncertainty routing, not a completed
+validation of evidence association and uncertainty-aware action selection, not a completed
 metric 3D reconstruction. The detailed graph table is placed in the
 supplementary material.
 
@@ -75,7 +75,7 @@ hypotheses, and (4) \textbf{AeroGraph Reasoner}, the drone-specialized
 graph-grounded LLM/VLM reasoner, to propose verified class/action decisions
 under a safety-verifier schema. In this paper, the reasoner result is used to
 validate the action schema and verifier logic. We therefore report the graph
-routing, allowed actions, and verifier behavior rather than claiming a
+action policy, allowed actions, and verifier behavior rather than claiming a
 standalone language-model benchmark. For 3D
 completion, Table~\ref{tab:marinecity_3d_completion_results} now contains three
 completed validation rows on the real-Cesium capture package: Nerfacto,
@@ -116,22 +116,23 @@ MarineCity scene is a fully optimized 3D benchmark.
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
-\caption{MarineCity system-routing efficiency for the completed real-Cesium
+\caption{MarineCity ambiguity-aware decision efficiency for the completed real-Cesium
 viewer160 validation protocol. $\bar{A}$ is mean ambiguity; S/C/M are
 support/conflict/missing-evidence edge counts; F/M/R/O are
 finalize/monitor/reject/targeted-re-observation action counts. Saved \% is the
-reduction from raw detector tokens to graph-level routing units.}
+reduction from raw detector tokens to graph-level decision candidates.}
 \label{tab:marinecity_system_efficiency}
 \input{tables/marinecity_system_efficiency_table}
 \end{table}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.95\linewidth]{figures/results/marinecity_system/contact_sheet_3_scenarios.png}
-\caption{Representative qualitative MarineCity system-validation evidence. The
-panels show real-Cesium UAV views, detector overlays, and scenario-level
-evidence used to build the cross-view graph. This figure complements the
-quantitative detector and 3D validation tables in the main paper.}
+\includegraphics[trim=0 345 0 0,clip,width=0.98\linewidth]{figures/results/marinecity_system/s2_scenario_panel.png}
+\caption{Representative qualitative MarineCity system-validation evidence for
+the coastline multi-view ambiguity case. The cropped panel shows real-Cesium UAV
+views and SAFR-YOLO detector overlays used to form cross-view EvidenceTokens,
+while the quantitative graph and action-policy counts are reported in
+Table~\ref{tab:marinecity_system_efficiency}.}
 \label{fig:marinecity_main_qualitative}
 \end{figure}
 
@@ -141,9 +142,9 @@ the numerical rows to the actual system pipeline: the saved real-Cesium
 MarineCity stage is rendered from three UAV viewpoints, SAFR-YOLO produces
 object-level EvidenceTokens, and the same tokens are converted into
 cross-view graph inputs. Table~\ref{tab:marinecity_system_efficiency} further
-shows why the graph layer is useful before action reasoning: it routes 78
-token-level detections into 17 ambiguity-aware hypotheses, saving 61 routing
-units under the current validation protocol. The high mean ambiguity, 11 conflict
+shows why the graph layer is useful before action selection: it compresses 78
+token-level detections into 17 ambiguity-aware hypotheses, reducing review
+candidates by 61 under the current validation protocol. The high mean ambiguity, 11 conflict
 edges, and 25 missing-evidence edges explain why most non-rejected hypotheses
 are sent to targeted re-observation rather than directly finalized. The single
 monitor action appears in the coastline multi-view case where a bus hypothesis
@@ -155,7 +156,7 @@ metrics.
 
 \paragraph{Claim boundary.}
 The main paper reports the verified real-Cesium capture, detector-token,
-evidence-graph, routing, and neural-3D system-validation artifacts. We do not claim a
+evidence-graph, action-policy, and neural-3D system-validation artifacts. We do not claim a
 large-scale 3D reconstruction benchmark or an unconstrained autonomous UAV
 planner; the reasoner is evaluated through its graph-grounded action interface
 and verifier-controlled outputs.
