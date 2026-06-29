@@ -192,21 +192,19 @@ def main() -> int:
             "legend.fontsize": 7,
         }
     )
-    fig = plt.figure(figsize=(13.4, 5.0), dpi=240)
+    fig = plt.figure(figsize=(13.2, 3.7), dpi=240)
     gs = fig.add_gridspec(
-        2,
+        1,
         5,
-        width_ratios=[1.15, 1.0, 1.0, 1.0, 1.0],
-        height_ratios=[1.0, 1.0],
+        width_ratios=[1.12, 1.0, 1.0, 1.45, 1.45],
         left=0.035,
         right=0.985,
-        bottom=0.115,
-        top=0.875,
-        wspace=0.28,
-        hspace=0.32,
+        bottom=0.18,
+        top=0.86,
+        wspace=0.34,
     )
 
-    ax0 = fig.add_subplot(gs[0, 0])
+    ax0 = fig.add_subplot(gs[0])
     ax0.imshow(load_visdrone_image_with_boxes((360, 207)))
     ax0.set_title("(a) VisDrone crop used for probing")
     ax0.text(
@@ -222,53 +220,17 @@ def main() -> int:
     )
     ax0.axis("off")
 
-    ax_stats = fig.add_subplot(gs[1, 0])
-    ax_stats.axis("off")
-    ax_stats.text(
-        0.0,
-        0.96,
-        "Trained TinyFReLU probe",
-        fontsize=9,
-        fontweight="bold",
-        color="0.15",
-        va="top",
-    )
-    ax_stats.text(
-        0.0,
-        0.76,
-        (
-            f"module: {module_name}\n"
-            f"P2 feature: {tuple(rec['shape'])[1:]}\n"
-            f"learned edge gain: {summary['edge_gain']:.3f}\n"
-            f"features changed: {100.0 * summary['changed_fraction']:.1f}%\n"
-            f"mean |h(x)|: {summary['mean_abs_edge']:.3f}"
-        ),
-        fontsize=8,
-        color="0.25",
-        va="top",
-        linespacing=1.45,
-    )
-
     maps = [
-        ("P2 input feature energy", feature_energy, "viridis"),
         ("high-frequency residual |h(x)|", residual_energy, "magma"),
-        ("spatial condition |c(x)|", condition_energy, "cividis"),
         ("positive output delta", positive_delta, "inferno"),
     ]
     for i, (title, data, cmap) in enumerate(maps):
-        ax = fig.add_subplot(gs[0, i + 1])
+        ax = fig.add_subplot(gs[i + 1])
         ax.imshow(data, cmap=cmap)
         ax.set_title(f"(b{i + 1}) {title}")
         ax.axis("off")
 
-    ax_gate = fig.add_subplot(gs[1, 1])
-    im = ax_gate.imshow(gate_fraction, cmap="Greens", vmin=0, vmax=1)
-    ax_gate.set_title("(b5) condition > input gate rate")
-    ax_gate.axis("off")
-    cbar = fig.colorbar(im, ax=ax_gate, fraction=0.046, pad=0.02)
-    cbar.ax.tick_params(labelsize=6)
-
-    ax_curve = fig.add_subplot(gs[1, 2:5])
+    ax_curve = fig.add_subplot(gs[3:5])
     centers = response["centers"]
     ax_curve.plot(centers, centers, color="0.45", linestyle="--", linewidth=1.2, label="identity")
     ax_curve.plot(centers, response["condition"], color="#f97316", linewidth=1.7, label="mean c(x)")
@@ -283,16 +245,9 @@ def main() -> int:
     )
     ax_curve.set_title("(c) measured feature-response curve")
     ax_curve.set_xlabel("TinyFReLU input feature value")
-    ax_curve.set_ylabel("binned mean response")
+    ax_curve.set_ylabel("response", labelpad=2)
     ax_curve.grid(True, linewidth=0.35, alpha=0.35)
     ax_curve.legend(loc="upper left", frameon=False)
-
-    fig.suptitle(
-        "Measured TinyFReLU response from trained SAFR-YOLO",
-        y=0.965,
-        fontsize=11,
-        fontweight="bold",
-    )
 
     fig.savefig(PAPER_FIG, bbox_inches="tight", facecolor="white")
     fig.savefig(LIVE_FIG, bbox_inches="tight", facecolor="white")

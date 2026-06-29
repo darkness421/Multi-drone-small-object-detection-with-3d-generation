@@ -49,9 +49,8 @@ TinyFReLU activation, and overlap-aware post-processing.
     \vspace{-1mm}
     \caption{Measured TinyFReLU response from the trained SAFR-YOLO checkpoint
     on a VisDrone validation frame. The probe is taken from the highest
-    resolution TinyFReLU block, showing the P2 input feature, high-frequency
-    residual, spatial condition, positive output delta, gate-response map, and
-    binned feature-response curve.}
+    resolution TinyFReLU block and shows the input crop, high-frequency
+    residual, positive output delta, and binned feature-response curve.}
     \label{fig:supp_tinyfrelu_measured_response}
 \end{figure}
 
@@ -87,10 +86,11 @@ Fig.~\ref{fig:supp_tinyfrelu_activation} summarizes the computation graph, while
 Fig.~\ref{fig:supp_tinyfrelu_measured_response} reports a measured TinyFReLU
 probe from the trained detector. In that probe, the highest-resolution
 TinyFReLU block changes 48.2\% of feature locations with learned
-$\gamma=0.160$, indicating that the condition branch is active on dense
-small-object boundaries rather than being a purely decorative gate. The
-empirical detector-level effect of TinyFReLU and SelfAttnFR is reported in the
-ablation table and heatmap below.
+$\gamma=0.160$. The residual map highlights weak edge and texture responses,
+while the output-delta map and response curve show where the max gate lifts the
+conditioned response above the identity branch. The empirical detector-level
+effect of TinyFReLU and SelfAttnFR is reported in the ablation table and heatmap
+below.
 For overlap-aware NMS, a lower-scoring candidate is suppressed only when it has
 high IoU, small normalized center distance, and similar box scale to the kept
 box; this avoids dropping adjacent true objects that overlap in top-down UAV
