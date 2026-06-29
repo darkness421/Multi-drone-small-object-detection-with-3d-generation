@@ -104,7 +104,7 @@ and obtain an approximate association point
 q_i=c_i+\eta_i r_i .
 \end{equation}
 Here $c_i$ is the camera center and $\eta_i$ is read from depth when available;
-otherwise the MarineCity smoke protocol uses a ground-plane intersection. These
+otherwise the MarineCity validation protocol uses a ground-plane intersection. These
 points are used for association and routing diagnostics, not as metric 3D
 ground truth.
 
@@ -166,7 +166,7 @@ and completion. The resulting 3D evidence is not treated as a replacement for
 \includegraphics[width=0.98\textwidth]{figures/fig03_3d_evidence_reasoner.png}
 \caption{3D evidence completion and AeroGraph Reasoner interface. The current
 paper reports real-Cesium system/protocol validation, graph-routing diagnostics,
-and neural-3D runner-family smoke metrics while keeping final action decisions
+and neural-3D runner-family validation metrics while keeping final action decisions
 gated by graph and safety verification.}
 \label{fig:marinecity_3d_reasoner}
 \end{figure*}

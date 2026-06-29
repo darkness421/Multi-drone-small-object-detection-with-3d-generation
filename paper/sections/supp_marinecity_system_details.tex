@@ -2,7 +2,7 @@
 \label{sec:supp_marinecity_system_details}
 
 This supplementary section records the supporting MarineCity artifacts that are
-summarized in the main paper. The main text keeps the compact system-smoke and
+summarized in the main paper. The main text keeps the compact system-validation and
 neural-3D metric tables; this section provides the capture source,
 evidence-graph details, and current reasoner-validation status.
 
@@ -18,7 +18,7 @@ multi-UAV 3D/reasoner handoff.}
 
 \paragraph{Capture-source analysis.}
 Table~\ref{tab:supp_marinecity_real_capture_benchmark} verifies that the
-MarineCity scene used for the system smoke test is a real-Cesium capture source
+MarineCity scene used for the system validation is a real-Cesium capture source
 with synchronized UAV viewpoints, camera metadata, RGB frames, and depth-like
 exports. These records support the main qualitative figure by showing that the
 detector and 3D graph operate on saved geospatial captures rather than on a
@@ -28,7 +28,7 @@ procedural stand-in scene.
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
-\caption{MarineCity real-Cesium cross-view evidence graph smoke result. The
+\caption{MarineCity real-Cesium cross-view evidence graph validation result. The
 coordinates are heuristic camera-ray projections used for association and
 ambiguity routing; they are not treated as metric 3D reconstruction ground
 truth.}
@@ -64,17 +64,17 @@ F/M/R/O = 0/1/7/9.
 \begin{table}[!htbp]
 \centering
 \scriptsize
-\caption{AeroGraph Reasoner validation summary for the current paper draft.
+\caption{AeroGraph Reasoner validation summary for the current paper.
 The table reports the completed real-capture system check and verifier-controlled
-action schema used by the current draft.}
+action schema used by the current paper.}
 \label{tab:supp_aerograph_reasoner_validation_slot}
 \input{tables/aerograph_reasoner_validation_summary}
 \end{table}
 
 \paragraph{Reasoner-validation analysis.}
 Table~\ref{tab:supp_aerograph_reasoner_validation_slot} reports the completed
-real-capture system check used in this draft. The verifier confirms schema,
-graph consistency, and allowed-action logic for the MarineCity smoke protocol.
+real-capture system check used in this paper. The verifier confirms schema,
+graph consistency, and allowed-action logic for the MarineCity validation protocol.
 Language/VLM response quality is not mixed into this quantitative row; the row
 is used to document the graph-grounded interface and allowed-action verifier.
 
@@ -83,7 +83,7 @@ is used to document the graph-grounded interface and allowed-action verifier.
 \scriptsize
 \setlength{\tabcolsep}{3pt}
 \caption{Auxiliary MarineCity Nerfacto iteration and capture sweep. The main
-paper uses the full-resolution 24k row as the representative Nerfacto smoke
+paper uses the full-resolution 24k row as the representative Nerfacto validation
 metric. Longer or alternate capture runs are kept here to show that additional
 iterations do not automatically improve the sparse real-Cesium held-out split.}
 \label{tab:supp_marinecity_nerfacto_sweep}
@@ -149,8 +149,8 @@ Component & Main paper & Supplementary material \\
 MarineCity scene & geospatial scene overview and final object/camera counts & full camera poses, object placement list, export manifest \\
 Multi-UAV capture & representative three-UAV result & fleet-size and viewpoint details \\
 3D evidence graph & compact system result & graph construction parameters and failure cases \\
-3D completion & runner-family smoke metrics & NeRF/3DGS/re-observation settings and extra renders \\
-AeroGraph Reasoner & conservative system-smoke wording & prompt template, JSON schema, verifier rules, rejected actions \\
+3D completion & runner-family validation metrics & NeRF/3DGS/re-observation settings and extra renders \\
+AeroGraph Reasoner & conservative system-validation wording & prompt template, JSON schema, verifier rules, rejected actions \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -159,5 +159,5 @@ AeroGraph Reasoner & conservative system-smoke wording & prompt template, JSON s
 Table~\ref{tab:supp_marinecity_reporting_split} states how the system evidence
 is divided between the main paper and supplementary material. The main paper
 contains the self-contained claims: detector performance, real-Cesium system
-operation, and neural-3D smoke metrics. The supplementary material stores the
+operation, and neural-3D validation metrics. The supplementary material stores the
 larger operational details needed for reproduction and reviewer inspection.

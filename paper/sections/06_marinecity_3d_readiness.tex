@@ -2,7 +2,7 @@
 \label{sec:marinecity_3d_protocol}
 
 This section reports the current MarineCity 3D/reasoner protocol and the
-verified real-Cesium smoke-test artifacts. We do not present the smoke test as a
+verified real-Cesium validation artifacts. We do not present this protocol as a
 full benchmark result: it validates scene loading, multi-UAV capture,
 SAFR-YOLO EvidenceToken export, 3D evidence grouping, and AeroGraph Reasoner
 interface wiring. This boundary is important: the 2D detector is evaluated as a
@@ -10,7 +10,7 @@ completed quantitative model claim, while the graph, 3D completion, and
 reasoner stages are reported as reproducible system-protocol evidence.
 
 The scene is centered on the Haeundae MarineCity region and is constructed in
-Isaac Sim with Cesium geospatial context. The current verified smoke test uses
+Isaac Sim with Cesium geospatial context. The current verified protocol uses
 three UAV views over the saved real-Cesium \texttt{uavmarine.usd} stage. The UAV
 camera altitude band is fixed to 140--160 m for the current protocol
 (the latest viewer160 recapture uses 140/150/160 m for UAV~1/2/3 across
@@ -22,7 +22,7 @@ structured EvidenceTokens for the 3D graph and \textbf{AeroGraph Reasoner}.
 The current actor-layer audit confirms six VisDrone-derived object cards
 (vehicle classes plus pedestrian/person actors), three UAV markers, and three
 UAV camera prims on the real-Cesium stage without synthetic city replacement.
-The current SAFR-YOLO smoke runs produce detector EvidenceTokens for cars,
+The current SAFR-YOLO validation runs produce detector EvidenceTokens for cars,
 buses, vans, and pedestrians from the UAV views. The latest integration audit
 reports 78 detector tokens over the three viewer160 scenarios: 53 cars, 17
 buses, 6 pedestrians, and 2 vans. The updated graph-routing diagnostic groups
@@ -34,7 +34,7 @@ class-balanced quantitative benchmark.
 The supplementary material summarizes the real-Cesium capture source now used
 for the 3D/reasoner handoff. We intentionally report this as capture evidence
 rather than as a full neural reconstruction benchmark. We additionally run
-short Nerfstudio runner-family smoke experiments
+short Nerfstudio runner-family validation experiments
 on the exported MarineCity views to verify that neural 3D methods can be
 trained and evaluated on the scene. The current verified rows cover Nerfacto,
 Instant-NGP, and a Splatfacto/3DGS-style runner under the same sparse
@@ -43,13 +43,13 @@ than a final optimized 3D benchmark; longer validation is kept as an optional
 late-stage improvement.
 To verify that the captures are usable before installing the upstream neural
 3D runners, we also export a NeRF-style \texttt{transforms.json} package and a
-depth-fused colored point-cloud smoke artifact from the same nine
+depth-fused colored point-cloud validation artifact from the same nine
 real-Cesium views. This point cloud is used only as a geometry handoff sanity
 check in the supplementary material; it is not reported as a neural
 completion/reconstruction result.
 
 We also export the real-Cesium detector outputs into a cross-view evidence graph
-for the current smoke protocol. The graph builder consumes the 78 SAFR-YOLO
+for the current validation protocol. The graph builder consumes the 78 SAFR-YOLO
 EvidenceTokens from the three-scenario, three-UAV viewer160 capture, performs
 camera-metadata-based approximate ray projection, and groups them into 17
 object hypotheses. Eight hypotheses receive multi-view support, while the graph
@@ -64,26 +64,26 @@ The protocol reserves train, validation, and held-out unseen-angle test splits
 with multiple UAV viewpoints, including nadir, front-oblique, side, rear-oblique,
 right-oblique, and left-oblique cameras. The held-out split emphasizes
 unseen viewpoints so that the reconstruction and reasoning components are tested
-on viewpoint generalization rather than memorized camera poses. The first smoke
-test focuses on a small number of manually verified scenes rather than a
+on viewpoint generalization rather than memorized camera poses. The first
+validation run focuses on a small number of manually verified scenes rather than a
 large synthetic dataset claim.
 
-\paragraph{3D and reasoner evaluation slots.}
-The validated smoke test already runs: (1) SAFR-YOLO on each UAV view, (2)
+\paragraph{3D and reasoner evaluation protocol.}
+The validated protocol already runs: (1) SAFR-YOLO on each UAV view, (2)
 detector outputs as EvidenceTokens, (3) token grouping into 3D evidence
 hypotheses, and (4) \textbf{AeroGraph Reasoner}, the drone-specialized
 graph-grounded LLM/VLM reasoner, to propose verified class/action decisions
-under a safety-verifier schema. In this draft, the reasoner result is used to
+under a safety-verifier schema. In this paper, the reasoner result is used to
 validate the action schema and verifier logic. We therefore report the graph
 routing, allowed actions, and verifier behavior rather than claiming a
 standalone language-model benchmark. For 3D
 completion, Table~\ref{tab:marinecity_3d_completion_results} now contains three
-completed smoke rows on the real-Cesium capture package: Nerfacto,
+completed validation rows on the real-Cesium capture package: Nerfacto,
 Instant-NGP, and a Splatfacto/3DGS-style runner. These rows demonstrate that the
 neural-3D handoff is executable across multiple runner families; they are not
 claimed as a full optimized 3D benchmark until longer validation and cleaner
 reconstruction captures are completed.
-Table~\ref{tab:marinecity_system_smoke} summarizes the completed smoke-test
+Table~\ref{tab:marinecity_system_validation} summarizes the completed validation
 artifacts. The current AeroGraph prompt/schema validation details
 remain in the supplementary material as validation support rather than as the
 headline system result.
@@ -92,7 +92,7 @@ headline system result.
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{MarineCity neural 3D completion smoke metrics on held-out real-Cesium
+\caption{MarineCity neural 3D completion validation metrics on held-out real-Cesium
 MarineCity views. Only completed runner rows are included; these rows verify
 runner-family execution rather than claim a final optimized benchmark.}
 \label{tab:marinecity_3d_completion_results}
@@ -103,7 +103,7 @@ runner-family execution rather than claim a final optimized benchmark.}
 Table~\ref{tab:marinecity_3d_completion_results} provides the current
 neural-3D evidence that the real-Cesium capture package can be consumed by
 standard reconstruction runners. Nerfacto gives the strongest held-out image
-quality in this sparse-view smoke setting, reaching 22.53 PSNR, 0.944 SSIM, and
+quality in this sparse-view validation setting, reaching 22.53 PSNR, 0.944 SSIM, and
 0.072 LPIPS after the 24k full-resolution validation run. The 3DGS-style row is
 substantially faster at rendering but lower in reconstruction quality, while the
 Instant-NGP row sits between these extremes. We therefore use this table to
@@ -117,7 +117,7 @@ MarineCity scene is a fully optimized 3D benchmark.
 \scriptsize
 \setlength{\tabcolsep}{4pt}
 \caption{MarineCity system-routing efficiency for the completed real-Cesium
-viewer160 smoke protocol. $\bar{A}$ is mean ambiguity; S/C/M are
+viewer160 validation protocol. $\bar{A}$ is mean ambiguity; S/C/M are
 support/conflict/missing-evidence edge counts; F/M/R/O are
 finalize/monitor/reject/targeted-re-observation action counts. Saved \% is the
 reduction from raw detector tokens to graph-level routing units.}
@@ -128,14 +128,14 @@ reduction from raw detector tokens to graph-level routing units.}
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\linewidth]{figures/results/marinecity_system/contact_sheet_3_scenarios.png}
-\caption{Representative qualitative MarineCity system-smoke evidence. The
+\caption{Representative qualitative MarineCity system-validation evidence. The
 panels show real-Cesium UAV views, detector overlays, and scenario-level
 evidence used to build the cross-view graph. This figure complements the
-quantitative detector and 3D smoke tables in the main paper.}
+quantitative detector and 3D validation tables in the main paper.}
 \label{fig:marinecity_main_qualitative}
 \end{figure}
 
-\paragraph{System-smoke result analysis.}
+\paragraph{System-validation result analysis.}
 The qualitative evidence in Fig.~\ref{fig:marinecity_main_qualitative} connects
 the numerical rows to the actual system pipeline: the saved real-Cesium
 MarineCity stage is rendered from three UAV viewpoints, SAFR-YOLO produces
@@ -143,7 +143,7 @@ object-level EvidenceTokens, and the same tokens are converted into
 cross-view graph inputs. Table~\ref{tab:marinecity_system_efficiency} further
 shows why the graph layer is useful before action reasoning: it routes 78
 token-level detections into 17 ambiguity-aware hypotheses, saving 61 routing
-units under the current smoke protocol. The high mean ambiguity, 11 conflict
+units under the current validation protocol. The high mean ambiguity, 11 conflict
 edges, and 25 missing-evidence edges explain why most non-rejected hypotheses
 are sent to targeted re-observation rather than directly finalized. The single
 monitor action appears in the coastline multi-view case where a bus hypothesis
@@ -155,7 +155,7 @@ metrics.
 
 \paragraph{Claim boundary.}
 The main paper reports the verified real-Cesium capture, detector-token,
-evidence-graph, routing, and neural-3D smoke-test artifacts. We do not claim a
+evidence-graph, routing, and neural-3D system-validation artifacts. We do not claim a
 large-scale 3D reconstruction benchmark or an unconstrained autonomous UAV
 planner; the reasoner is evaluated through its graph-grounded action interface
 and verifier-controlled outputs.

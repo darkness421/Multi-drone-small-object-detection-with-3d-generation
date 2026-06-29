@@ -28,7 +28,7 @@ and GFLOPs. AP and AP50 are the primary detector metrics. Parameter count and
 GFLOPs are used to interpret model complexity, but the main claim is not based
 on a hand-designed weighted trade-off score.
 
-For MarineCity neural-3D smoke validation, we report held-out PSNR, SSIM,
+For MarineCity neural-3D system validation, we report held-out PSNR, SSIM,
 LPIPS, rendering FPS, and training/evaluation time when available. These rows
 verify that the real-Cesium capture package can be consumed by multiple
 runner families. They should not be interpreted as a fully optimized 3D
@@ -47,7 +47,7 @@ paper-specific augmentation recipe; promoted rows share the exported
 Ultralytics train-time settings in their run metadata, including standard HSV,
 translation/scale, horizontal flip, mosaic, and close-mosaic settings.
 
-The MarineCity smoke experiments use Isaac Sim 5.1 and a saved real-Cesium
+The MarineCity validation experiments use Isaac Sim 5.1 and a saved real-Cesium
 \texttt{uavmarine.usd} stage. The capture and reasoner artifacts are exported
 as reproducible image, JSON, JSONL, and LaTeX-ready table files so that the main
 paper and supplementary material can be regenerated from the same evidence.
