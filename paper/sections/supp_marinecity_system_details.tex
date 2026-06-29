@@ -44,6 +44,29 @@ edges identify object hypotheses that require re-observation or cautious
 verification. The table is therefore interpreted as an ambiguity-aware decision
 artifact, not as a metric 3D localization benchmark.
 
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Re-observation policy ablation on the same 17 MarineCity graph
+hypotheses. F/M/R/O denotes finalize, monitor, reject, and targeted
+re-observation. High handled reports the fraction of high-ambiguity hypotheses
+that are either actively re-observed or rejected instead of silently finalized.}
+\label{tab:supp_marinecity_reobservation_policy_ablation}
+\resizebox{\linewidth}{!}{%
+\input{tables/marinecity_reobservation_policy_ablation_table}
+}
+\end{table}
+
+\paragraph{Re-observation-policy analysis.}
+Table~\ref{tab:supp_marinecity_reobservation_policy_ablation} compares simple
+decision policies over the same graph hypotheses. The proposed graph policy is
+selective: it does not send every detector box downstream, but it still handles
+all high-ambiguity hypotheses through either targeted re-observation or
+rejection. This is the main efficiency benefit of the system layer: the
+detector produces 78 token-level observations, whereas the graph exposes 17
+decision units and 9 targeted re-observation actions.
+
 \paragraph{Graph construction and decision-policy details.}
 The supplementary graph uses the same EvidenceToken fields as the main method:
 2D box center, class belief, confidence, detector uncertainty, UAV identifier,

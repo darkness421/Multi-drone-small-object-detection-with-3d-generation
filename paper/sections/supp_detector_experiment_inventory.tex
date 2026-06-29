@@ -22,7 +22,7 @@ following supplementary figures unpack the three detector-side components that
 are visually compressed in the main paper: the SelfAttnFR refinement block, the
 TinyFReLU activation, and overlap-aware post-processing.
 
-\begin{figure*}[!htbp]
+\begin{figure}[!t]
     \centering
     \includegraphics[width=0.98\textwidth]{figures/figS1_selfattnfr_module.png}
     \caption{Supplementary module view of SelfAttnFR. The block combines a
@@ -30,18 +30,18 @@ TinyFReLU activation, and overlap-aware post-processing.
     refinement path that preserves edge and texture cues before the final
     $1\times1$ fusion.}
     \label{fig:supp_selfattnfr_module}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}[!htbp]
+\begin{figure}[!t]
     \centering
     \includegraphics[width=0.98\textwidth]{figures/figS2_tinyfrelu_activation.png}
     \caption{Supplementary module view of TinyFReLU. The activation augments a
     depthwise spatial-condition branch with a high-frequency residual so weak
     tiny-object boundaries are preserved with negligible extra cost.}
     \label{fig:supp_tinyfrelu_activation}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}[!htbp]
+\begin{figure}[!t]
     \centering
     \includegraphics[width=0.98\textwidth]{figures/figS3_overlap_aware_nms.png}
     \caption{Supplementary decision view of overlap-aware NMS. The module is
@@ -50,7 +50,7 @@ TinyFReLU activation, and overlap-aware post-processing.
     rule also considers center separation and size similarity before dropping a
     candidate.}
     \label{fig:supp_overlap_aware_nms}
-\end{figure*}
+\end{figure}
 \FloatBarrier
 
 \begin{table*}[!htbp]
@@ -210,14 +210,14 @@ important for reproducibility: the main paper reports the compact, confirmed
 module combination, while this appendix explains why nearby alternatives were
 not selected.
 
-\begin{figure*}[!htbp]
+\begin{figure}[!t]
     \centering
     \includegraphics[width=0.78\textwidth]{figures/results/paper_fig10_final_ablation_metric_heatmap}
     \caption{Supplementary ablation heatmap showing AP, AP50, and F1 deltas
     relative to YOLOv11l. Green cells indicate improvements over the baseline,
     while red cells indicate regressions.}
     \label{fig:supp_final_detector_ablation_heatmap}
-\end{figure*}
+\end{figure}
 
 \paragraph{Qualitative and explainability figures.}
 Fig.~\ref{fig:supp_final_detector_feature_activation} shows the generated
@@ -227,24 +227,33 @@ response visualizations from fixed checkpoints, not class-logit attribution
 scores; we therefore use them as qualitative support for the detector behavior
 rather than as an additional quantitative claim.
 
-\begin{figure*}[!htbp]
+\begin{figure}[!t]
     \centering
     \includegraphics[width=0.98\textwidth]{figures/results/paper_fig11_final_detector_feature_activation_heatmap}
     \caption{Supplementary detector feature-activation heat maps for YOLOv11l,
     YOLOv9c, and Ours. The panels compare the spatial feature responses on
     crowded UAV crops containing adjacent tiny objects and clutter.}
     \label{fig:supp_final_detector_feature_activation}
-\end{figure*}
+\end{figure}
 
-The remaining qualitative material is maintained for final layout selection:
-\begin{itemize}
-    \item Supp. Fig.~S5: qualitative detection examples grouped by small
-    vehicles, pedestrians, dense adjacent objects, and water/road clutter.
-    \item Supp. Fig.~S6: failure cases, including missed tiny objects,
-    false positives from shadows/reflections, and overlapping-box errors.
-    \item Supp. Fig.~S7: input-resolution stress test, reported only after the
-    final 1280 detector claim is fixed.
-\end{itemize}
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.92\textwidth]{figures/results/final_detector_nms_robustness.png}
+    \caption{Supplementary overlap-aware NMS sensitivity on the fixed final
+    detector checkpoint. The plot is used as robustness evidence for adjacent
+    UAV small objects rather than as an additional training variant.}
+    \label{fig:supp_final_detector_nms_sensitivity}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.92\textwidth]{figures/results/final_detector_input_resolution_sweep.png}
+    \caption{Supplementary input-resolution stress test. The final detector
+    claim remains based on the matched 1280-pixel protocol, while this plot
+    shows how AP/AP50/F1 and cost change when the evaluation resolution is
+    varied.}
+    \label{fig:supp_final_detector_input_resolution}
+\end{figure}
 
 \paragraph{Post-processing sensitivity.}
 Overlap-aware NMS is reported here unless a complete three-seed

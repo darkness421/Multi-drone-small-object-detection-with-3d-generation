@@ -1,6 +1,6 @@
 # MarineCity 3D Completion Readiness
 
-Updated: `2026-06-28 08:10:55 KST`
+Updated: `2026-06-29 23:02:02 KST`
 Status: `marinecity_3d_completion_ready`
 
 ## Capture Source
@@ -11,8 +11,8 @@ Status: `marinecity_3d_completion_ready`
 - `altitude_range_m`: `[140.0, 160.0]`
 - `terrain_all_valid`: `True`
 - `google_tiles_all_valid`: `True`
-- `mean_rgb_black_ratio`: `0.0913768325617284`
-- `mean_depth_finite_ratio`: `0.908344425154321`
+- `mean_rgb_black_ratio`: `0.09315815489969137`
+- `mean_depth_finite_ratio`: `0.9065288628472222`
 
 ## Neural 3D Results
 
@@ -27,7 +27,7 @@ Status: `marinecity_3d_completion_ready`
 - Depth view-consistency sanity ready: `True`
 - Depth view-consistency manifest: `outputs/experiments/3d_generation/marinecity_depth_view_consistency_sanity/manifest.json`
 - Depth view-consistency contact sheet: `/home/oem/projects/multi-uav-marine-city/outputs/reports/live/marinecity_depth_view_consistency_sanity.png`
-- Depth view-consistency mean PSNR/SSIM/fill: `10.006380179999477` / `0.41711997326617684` / `0.23139286747685184`
+- Depth view-consistency mean PSNR/SSIM/fill: `7.800951022764889` / `0.04476469196276306` / `0.32786820023148144`
 - Input dataset manifest: `outputs/experiments/3d_generation/marinecity_real_capture_neural3d/dataset_manifest.json`
 - Dataset frames train/heldout: `9` / `6` / `3`
 - Transforms: `/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/transforms.json`

@@ -580,7 +580,7 @@ def draw_graph_figure(path: Path, graph: dict[str, Any]) -> None:
     fig.text(
         0.01,
         0.01,
-        "Real-Cesium detector-token association smoke. Coordinates are heuristic camera-ray projections, not metric reconstruction ground truth.",
+        "Real-Cesium detector-token association validation. Coordinates are heuristic camera-ray projections, not metric reconstruction ground truth.",
         fontsize=8.5,
         color="#475569",
     )
@@ -589,7 +589,7 @@ def draw_graph_figure(path: Path, graph: dict[str, Any]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build MarineCity real-Cesium cross-view evidence graph smoke artifacts.")
+    parser = argparse.ArgumentParser(description="Build MarineCity real-Cesium cross-view evidence graph validation artifacts.")
     parser.add_argument("--tokens", type=Path, default=DEFAULT_TOKENS)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--live-dir", type=Path, default=DEFAULT_LIVE)

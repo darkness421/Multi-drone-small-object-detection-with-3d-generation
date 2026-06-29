@@ -127,32 +127,33 @@ reduction from raw detector tokens to graph-level decision candidates.}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.98\linewidth]{figures/results/marinecity_system/paper_fig04_marinecity_clean_qualitative.png}
-\caption{Representative qualitative MarineCity system-validation evidence for
-the coastline multi-view ambiguity case. The panel shows clean real-Cesium UAV
-views and matched SAFR-YOLO detector overlays used to form cross-view
-EvidenceTokens, while the quantitative graph and action-policy counts are reported in
-Table~\ref{tab:marinecity_system_efficiency}.}
+\includegraphics[width=0.98\linewidth]{figures/results/marinecity_system/marinecity_crossview_evidence_graph.png}
+\caption{Representative MarineCity cross-view evidence graph validation. Each
+panel shows the graph-level object hypotheses produced from real-Cesium
+multi-UAV SAFR-YOLO EvidenceTokens; marker size indicates the number of
+supporting detector tokens and marker shape separates single-view and
+multi-view hypotheses. The quantitative edge and action-policy counts are
+reported in Table~\ref{tab:marinecity_system_efficiency}.}
 \label{fig:marinecity_main_qualitative}
 \end{figure}
 
 \paragraph{System-validation result analysis.}
-The qualitative evidence in Fig.~\ref{fig:marinecity_main_qualitative} connects
+The validation evidence in Fig.~\ref{fig:marinecity_main_qualitative} connects
 the numerical rows to the actual system pipeline: the saved real-Cesium
 MarineCity stage is rendered from three UAV viewpoints, SAFR-YOLO produces
-object-level EvidenceTokens, and the same tokens are converted into
-cross-view graph inputs. Table~\ref{tab:marinecity_system_efficiency} further
-shows why the graph layer is useful before action selection: it compresses 78
+object-level EvidenceTokens, and the same tokens are converted into graph-level
+object hypotheses. Table~\ref{tab:marinecity_system_efficiency} further shows
+why the graph layer is useful before action selection: it compresses 78
 token-level detections into 17 ambiguity-aware hypotheses, reducing review
-candidates by 61 under the current validation protocol. The high mean ambiguity, 11 conflict
-edges, and 25 missing-evidence edges explain why most non-rejected hypotheses
-are sent to targeted re-observation rather than directly finalized. The single
-monitor action appears in the coastline multi-view case where a bus hypothesis
-has three-view support and moderate ambiguity. The figure is therefore used as
-a visual sanity check for geometry-aware evidence flow. It complements the
-detector table, where the 2D model is evaluated quantitatively, and the 3D
-table, where the neural runner handoff is evaluated through image-quality
-metrics.
+candidates by 61 under the current validation protocol. The high mean
+ambiguity, 11 conflict edges, and 25 missing-evidence edges explain why most
+non-rejected hypotheses are sent to targeted re-observation rather than
+directly finalized. The single monitor action appears in the coastline
+multi-view case where a bus hypothesis has three-view support and moderate
+ambiguity. The figure is therefore used as a visual sanity check for
+geometry-aware evidence flow. It complements the detector table, where the 2D
+model is evaluated quantitatively, and the 3D table, where the neural runner
+handoff is evaluated through image-quality metrics.
 
 \paragraph{Claim boundary.}
 The main paper reports the verified real-Cesium capture, detector-token,

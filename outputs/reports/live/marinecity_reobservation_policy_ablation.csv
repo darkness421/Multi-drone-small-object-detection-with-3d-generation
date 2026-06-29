@@ -1,0 +1,6 @@
+policy,graph_units,mean_ambiguity,finalize,monitor,reject,reobserve,high_ambiguity_handled_pct,action_load
+No active re-observation,17,0.9413352941176472,0,17,0,0,0.0,17
+Support only,17,0.9413352941176472,0,8,0,9,60.0,17
+Uncertainty only,17,0.9413352941176472,0,3,0,14,93.33333333333333,17
+Conflict/missing aware,17,0.9413352941176472,0,3,0,14,93.33333333333333,17
+Ours,17,0.9413352941176472,0,1,7,9,100.0,10
