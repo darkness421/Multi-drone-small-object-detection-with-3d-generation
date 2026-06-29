@@ -569,7 +569,7 @@ def isaac_cesium_status_row() -> dict[str, str]:
             "queue": "Isaac/Cesium map",
             "status": "done",
             "detail": "Real MarineCity Cesium ROI captured for S0/S1/S2 with viewer160 profile",
-            "event": "real Cesium captures 3/3; next paper-quality recapture should reduce black tile/backface regions",
+            "event": "real Cesium captures 3/3; next paper-quality recapture should reduce tile/backface artifacts",
         }
     marker_path = resolve_path(ISAAC_STREAMING_MARKER)
     if marker_path.exists():

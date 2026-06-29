@@ -1,11 +1,11 @@
 {
-  "updated_at_kst": "2026-06-28 05:36:35 KST",
+  "updated_at_kst": "2026-06-30 03:34:57 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
       "bundle": "paper/sections/main_results_patch_bundle.tex",
       "exists": true,
-      "included_file_count": 8,
+      "included_file_count": 9,
       "included_files": [
         "paper/sections/05_experiments_current_detector_status.tex",
         "paper/sections/06_marinecity_3d_readiness.tex",
@@ -14,6 +14,7 @@
         "paper/tables/final_ablation_main_table.tex",
         "paper/tables/main_detector_comparison_table.tex",
         "paper/tables/marinecity_3d_completion_results_table.tex",
+        "paper/tables/marinecity_system_efficiency_table.tex",
         "paper/tables/marinecity_system_scenario_table.tex"
       ],
       "commented_optional_inputs": [
@@ -23,29 +24,31 @@
     {
       "bundle": "paper/sections/supplementary_patch_bundle.tex",
       "exists": true,
-      "included_file_count": 8,
+      "included_file_count": 10,
       "included_files": [
         "paper/sections/07_marinecity_qualitative_figure_slots.tex",
         "paper/sections/supp_detector_experiment_inventory.tex",
         "paper/sections/supp_marinecity_system_details.tex",
         "paper/sections/supplementary_patch_bundle.tex",
-        "paper/tables/aerograph_reasoner_results_placeholder.tex",
+        "paper/tables/aerograph_reasoner_validation_summary.tex",
         "paper/tables/final_ablation_supplementary_table.tex",
         "paper/tables/marinecity_crossview_evidence_graph_table.tex",
-        "paper/tables/marinecity_real_capture_benchmark_table.tex"
+        "paper/tables/marinecity_nerfacto_iteration_sweep_table.tex",
+        "paper/tables/marinecity_real_capture_benchmark_table.tex",
+        "paper/tables/marinecity_reobservation_policy_ablation_table.tex"
       ],
       "commented_optional_inputs": []
     }
   ],
-  "checked_file_count": 15,
+  "checked_file_count": 18,
   "missing_input_count": 0,
   "missing_graphics_count": 0,
   "duplicate_label_count": 0,
   "unresolved_ref_count": 0,
-  "pending_review_count": 0,
+  "open_slot_review_count": 0,
   "missing_inputs": [],
   "missing_graphics": [],
   "duplicate_labels": [],
   "unresolved_refs": [],
-  "pending_rows": []
+  "open_slot_mentions": []
 }

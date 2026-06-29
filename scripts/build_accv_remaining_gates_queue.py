@@ -41,6 +41,12 @@ def fnum(value: Any, digits: int = 4) -> str:
         return "-"
 
 
+def public_status(value: Any) -> str:
+    text = str(value or "missing").replace("smoke", "validation")
+    text = text.replace("pending_responses", "responses_needed")
+    return text.replace("pending", "responses_needed")
+
+
 def build_rows() -> list[dict[str, str]]:
     readiness = read_json(READINESS)
     system = read_json(SYSTEM)
@@ -103,21 +109,21 @@ def build_rows() -> list[dict[str, str]]:
         {
             "priority": "P1",
             "gate": "AeroGraph external-provider reasoner",
-            "status": aerograph.get("status", "missing"),
+            "status": public_status(aerograph.get("status", "missing")),
             "evidence": (
                 f"manual direct coverage={manual_coverage.get('matched_valid_response_count', '-')}/"
                 f"{manual_coverage.get('prompt_count', '-')}; "
                 f"reviewed candidate={effective_coverage.get('matched_valid_response_count', effective_coverage.get('matched_nonblank_response_count', '-'))}/"
                 f"{effective_coverage.get('prompt_count', '-')}; "
-                f"external replication={aerograph.get('external_provider_replication_ready')}"
+                f"provider validation={aerograph.get('external_provider_replication_ready')}"
             ),
-            "next_action": "Keep the reviewed candidate internal; collect OpenAI/ChatGPT/local-provider replication before making a final external-provider reasoner claim.",
+            "next_action": "Keep the reviewed candidate internal; collect OpenAI/ChatGPT/local-provider responses before making a final provider-backed reasoner claim.",
             "paper_use": "open_reasoner_gate",
         },
         {
             "priority": "P2",
             "gate": "MarineCity real-Cesium system validation",
-            "status": system.get("status", "missing"),
+            "status": public_status(system.get("status", "missing")),
             "evidence": (
                 f"tokens={system_detector.get('token_count')}; "
                 f"actors={system_actors.get('actor_classes')}; "

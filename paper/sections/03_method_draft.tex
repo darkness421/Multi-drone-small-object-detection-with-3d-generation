@@ -13,6 +13,10 @@ extracts 2D object evidence with SAFR-YOLO. Each detection is then represented
 as an EvidenceToken and inserted into a cross-view 3D evidence graph. The graph
 assigns confident hypotheses to a verified object state and sends ambiguous
 hypotheses to 3D completion, re-observation, and AeroGraph reasoning.
+The two validation checks are intentionally separated: system verification tests
+whether the graph, geometry, uncertainty, and completion evidence are
+consistent, while action verification tests whether a proposed follow-up action
+is allowed by the evidence graph and safety constraints.
 
 \begin{figure*}[t]
 \centering
@@ -152,6 +156,24 @@ Only the high-ambiguity subgraph and its allowed actions are sent to the
 AeroGraph Reasoner. The reasoner suggests class belief, evidence needs, and an
 action; it does not directly control the UAV. A graph-and-safety verifier checks
 the suggestion before the action is accepted.
+
+The active follow-up routes are defined by two binary gates. Let $c_o$ and
+$m_o$ denote the numbers of conflict and missing-evidence edges incident to
+hypothesis $o$. The targeted re-observation gate is
+\begin{equation}
+g_{\mathrm{view}}(o)=
+\mathbf{1}\!\left[A(o)\ge0.75 \ \lor\ (m_o>0 \land A(o)\ge0.55)\right],
+\end{equation}
+and the graph-grounded reasoner gate is
+\begin{equation}
+g_{\mathrm{reason}}(o)=
+\mathbf{1}\!\left[A(o)\ge0.55 \land (c_o>0 \lor m_o>0 \lor n_o<2)\right].
+\end{equation}
+Thus, re-observation is selected when the current views are insufficient for a
+stable object state, while AeroGraph is invoked only for graph hypotheses whose
+uncertainty, conflicts, or missing views require an explicit evidence-based
+decision. Hypotheses that are rejected by the low-confidence rule are filtered
+before the reasoner, and finalized hypotheses bypass both active routes.
 
 \subsection{MarineCity 3D Evidence Completion And AeroGraph Reasoner}
 \label{sec:method_3d_reasoner}
