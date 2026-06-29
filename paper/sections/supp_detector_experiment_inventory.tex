@@ -56,6 +56,31 @@ TinyFReLU activation, and overlap-aware post-processing.
 \end{figure}
 \FloatBarrier
 
+\paragraph{Module details.}
+SelfAttnFR refines a feature map $F\in\mathbb{R}^{H\times W\times C}$ with two
+low-cost paths. The context path pools $F$ into tokens $T=P(F)$, computes
+$Q=TW_Q$, $K=TW_K$, and $V=TW_V$, and broadcasts the attended tokens back to
+the feature resolution:
+\begin{equation}
+    A=\mathrm{softmax}(QK^\top/\sqrt{d}),\qquad
+    F_{\mathrm{attn}}=F+\lambda U(AV).
+\end{equation}
+The local path applies small spatial filters and TinyFReLU to preserve weak
+edge and texture cues. The final output is produced by a $1\times1$ fusion of
+the context-refined and local-refined features. TinyFReLU uses
+\begin{equation}
+    h(x)=x-\mathrm{AvgPool}_{3\times3}(x),\quad
+    c(x)=\mathrm{BN}(\mathrm{DWConv}_{3\times3}(x))+\tanh(\gamma)h(x),\quad
+    y=\max(x,c(x)).
+\end{equation}
+Panels (b) and (c) in Fig.~\ref{fig:supp_tinyfrelu_activation} are illustrative
+response diagrams, not measured activation maps. The empirical TinyFReLU and
+SelfAttnFR effects are reported in the ablation table and heatmap below.
+For overlap-aware NMS, a lower-scoring candidate is suppressed only when it has
+high IoU, small normalized center distance, and similar box scale to the kept
+box; this avoids dropping adjacent true objects that overlap in top-down UAV
+views.
+
 \begin{table*}[!htbp]
 \centering
 \tiny
@@ -230,12 +255,12 @@ response visualizations from fixed checkpoints, not class-logit attribution
 scores; we therefore use them as qualitative support for the detector behavior
 rather than as an additional quantitative claim.
 
-\begin{figure}[!t]
+\begin{figure}[!p]
     \centering
-    \includegraphics[width=0.98\textwidth]{figures/results/paper_fig11_final_detector_feature_activation_heatmap}
-    \caption{Supplementary detector feature-activation heat maps for YOLOv11l,
-    YOLOv9c, and Ours. The panels compare the spatial feature responses on
-    crowded UAV crops containing adjacent tiny objects and clutter.}
+    \includegraphics[width=0.82\textwidth]{figures/results/paper_fig11_final_detector_feature_activation_heatmap.png}
+    \vspace{-1mm}
+    \caption{Supplementary feature-activation heat maps for YOLOv11l, YOLOv9c,
+    and Ours on crowded UAV crops.}
     \label{fig:supp_final_detector_feature_activation}
 \end{figure}
 
