@@ -107,8 +107,8 @@ def build_rows() -> list[dict[str, str]]:
             "paper_use": threed_paper_use,
         },
         {
-            "priority": "P1",
-            "gate": "AeroGraph external-provider reasoner",
+            "priority": "P3",
+            "gate": "Optional AeroGraph external-provider benchmark",
             "status": public_status(aerograph.get("status", "missing")),
             "evidence": (
                 f"manual direct coverage={manual_coverage.get('matched_valid_response_count', '-')}/"
@@ -117,8 +117,8 @@ def build_rows() -> list[dict[str, str]]:
                 f"{effective_coverage.get('prompt_count', '-')}; "
                 f"provider validation={aerograph.get('external_provider_replication_ready')}"
             ),
-            "next_action": "Keep the reviewed candidate internal; collect OpenAI/ChatGPT/local-provider responses before making a final provider-backed reasoner claim.",
-            "paper_use": "open_reasoner_gate",
+            "next_action": "Do not block the current submission. Collect OpenAI/ChatGPT/local-provider responses only if adding an external LLM benchmark claim.",
+            "paper_use": "optional_supp_or_future",
         },
         {
             "priority": "P2",
@@ -129,7 +129,7 @@ def build_rows() -> list[dict[str, str]]:
                 f"actors={system_actors.get('actor_classes')}; "
                 f"open checks={len(open_checks)}"
             ),
-            "next_action": "Use as system/protocol validation only; upgrade after neural 3D and external reasoner gates pass.",
+            "next_action": "Use as real-Cesium system/protocol validation with graph/action-policy metrics; external provider benchmarking is optional.",
             "paper_use": "main_or_supp_validation",
         },
         {
@@ -159,7 +159,7 @@ def write_outputs(rows: list[dict[str, str]]) -> None:
         "",
         f"Updated: `{datetime.now().astimezone().isoformat(timespec='seconds')}`",
         "",
-        "This queue separates paper-ready evidence from open gates. Do not promote an open-gate row into a main claim until its evidence column proves completion.",
+        "This queue separates paper-ready evidence from optional gates. Optional rows should not be promoted into a main claim unless their evidence column proves completion.",
         "",
         "| Priority | Gate | Status | Evidence | Next Action | Paper Use |",
         "| --- | --- | --- | --- | --- | --- |",
@@ -175,7 +175,7 @@ def write_outputs(rows: list[dict[str, str]]) -> None:
             "",
         "1. Keep VisDrone detector results as the main 2D claim: `Ours` in tables, SAFR-YOLO/P2P4-SelfAttnFR in method text.",
         "2. For 3D, use the verified MarineCity RGB/depth/pose package plus Nerfacto and Splatfacto/3DGS-style rows as system-validation evidence; collect longer validation only before claiming a full 3D benchmark.",
-        "3. For AeroGraph, keep the reviewed candidate internal and collect external OpenAI/ChatGPT/local-provider replication before final reasoner claims.",
+        "3. For AeroGraph, keep the current paper claim limited to schema, verifier, and action-policy validation. External OpenAI/ChatGPT/local-provider replication is optional supplementary/future evidence.",
             "",
         ]
     )

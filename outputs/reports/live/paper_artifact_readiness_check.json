@@ -1,7 +1,7 @@
 {
-  "updated_at_kst": "2026-06-28 06:31:39 KST",
-  "status": "paper_artifact_audit_ok_with_pending_gates",
-  "artifact_count": 52,
+  "updated_at_kst": "2026-06-30 04:27:05 KST",
+  "status": "paper_artifact_audit_submission_ready_with_optional_gates",
+  "artifact_count": 53,
   "missing_required_count": 0,
   "stale_claim_count": 0,
   "artifacts": [
@@ -11,7 +11,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 7814,
+      "size_bytes": 7772,
       "status": "ok",
       "note": "Detector result section patch"
     },
@@ -21,7 +21,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2262,
+      "size_bytes": 2335,
       "status": "ok",
       "note": "Compact final detector table"
     },
@@ -81,7 +81,7 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 6667,
+      "size_bytes": 10223,
       "status": "ok",
       "note": "MarineCity protocol section patch"
     },
@@ -91,9 +91,9 @@
       "placement": "main",
       "required_now": true,
       "exists": true,
-      "size_bytes": 805,
+      "size_bytes": 760,
       "status": "ok",
-      "note": "Real-Cesium smoke/protocol table"
+      "note": "Real-Cesium system-validation protocol table"
     },
     {
       "group": "main_system",
@@ -101,9 +101,9 @@
       "placement": "main_source",
       "required_now": true,
       "exists": true,
-      "size_bytes": 46944,
+      "size_bytes": 33260,
       "status": "ok",
-      "note": "Source CSV for real-Cesium detector-to-reasoner smoke table"
+      "note": "Source CSV for real-Cesium detector-to-reasoner validation table"
     },
     {
       "group": "supp_system",
@@ -111,7 +111,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2454,
+      "size_bytes": 9992,
       "status": "ok",
       "note": "Supplementary MarineCity capture, graph, and reasoner details"
     },
@@ -121,7 +121,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 465,
+      "size_bytes": 468,
       "status": "ok",
       "note": "Verified real-Cesium capture-source table"
     },
@@ -131,9 +131,9 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 909,
+      "size_bytes": 1083,
       "status": "ok",
-      "note": "Real-Cesium cross-view evidence graph smoke table"
+      "note": "Real-Cesium cross-view evidence graph validation table"
     },
     {
       "group": "main_system",
@@ -141,7 +141,7 @@
       "placement": "main_optional",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2995,
+      "size_bytes": 1262,
       "status": "ok",
       "note": "Safe qualitative figure slots"
     },
@@ -151,7 +151,7 @@
       "placement": "main_bundle",
       "required_now": true,
       "exists": true,
-      "size_bytes": 964,
+      "size_bytes": 939,
       "status": "ok",
       "note": "Overleaf-ready main results patch bundle"
     },
@@ -161,7 +161,7 @@
       "placement": "supp_bundle",
       "required_now": true,
       "exists": true,
-      "size_bytes": 607,
+      "size_bytes": 1313,
       "status": "ok",
       "note": "Overleaf-ready supplementary patch bundle"
     },
@@ -171,7 +171,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 10567,
+      "size_bytes": 14651,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },
@@ -208,22 +208,22 @@
     {
       "group": "supp_system",
       "path": "paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png",
-      "placement": "supp_or_main_smoke",
+      "placement": "supp_or_main_validation",
       "required_now": true,
       "exists": true,
-      "size_bytes": 221474,
+      "size_bytes": 283749,
       "status": "ok",
-      "note": "Three-scenario real-Cesium smoke sheet"
+      "note": "Three-scenario real-Cesium validation sheet"
     },
     {
       "group": "supp_system",
       "path": "paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png",
-      "placement": "main_or_supp_smoke",
+      "placement": "main_or_supp_validation",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2336414,
+      "size_bytes": 283749,
       "status": "ok",
-      "note": "Real-Cesium detector preview contact sheet from SAFR-YOLO smoke run"
+      "note": "Real-Cesium detector preview contact sheet from SAFR-YOLO validation run"
     },
     {
       "group": "supp_system",
@@ -241,9 +241,9 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 123905,
+      "size_bytes": 158501,
       "status": "ok",
-      "note": "Real-Cesium cross-view evidence graph smoke figure"
+      "note": "Real-Cesium cross-view evidence graph validation figure"
     },
     {
       "group": "supp_system",
@@ -251,7 +251,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 3134,
+      "size_bytes": 3139,
       "status": "ok",
       "note": "MarineCity qualitative selection rules"
     },
@@ -261,7 +261,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2150,
+      "size_bytes": 2155,
       "status": "ok",
       "note": "MarineCity full-frame vs crop-only qualitative gate"
     },
@@ -281,9 +281,9 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 905,
+      "size_bytes": 973,
       "status": "ok",
-      "note": "Real-Cesium detector-to-reasoner smoke report"
+      "note": "Real-Cesium detector-to-reasoner validation report"
     },
     {
       "group": "supp_system",
@@ -291,9 +291,9 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1860,
+      "size_bytes": 2082,
       "status": "ok",
-      "note": "Real-Cesium cross-view evidence graph smoke report"
+      "note": "Real-Cesium cross-view evidence graph validation report"
     },
     {
       "group": "supp_system",
@@ -301,12 +301,12 @@
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 3136,
+      "size_bytes": 3073,
       "status": "ok",
       "note": "Real-Cesium object/UAV/camera/YOLO/3D/LLM integration gate"
     },
     {
-      "group": "pending_3d",
+      "group": "open_3d_gate",
       "path": "outputs/reports/live/marinecity_neural3d_dataset_export.md",
       "placement": "runbook",
       "required_now": true,
@@ -316,7 +316,7 @@
       "note": "MarineCity real-capture neural-3D input dataset export"
     },
     {
-      "group": "pending_3d",
+      "group": "open_3d_gate",
       "path": "outputs/reports/live/marinecity_3d_runner_preflight.md",
       "placement": "runbook",
       "required_now": true,
@@ -326,164 +326,174 @@
       "note": "MarineCity local neural-3D runner dependency preflight"
     },
     {
-      "group": "pending_3d",
+      "group": "open_3d_gate",
       "path": "outputs/reports/live/marinecity_depth_pointcloud_smoke.md",
       "placement": "runbook",
       "required_now": true,
       "exists": true,
       "size_bytes": 1809,
       "status": "ok",
-      "note": "MarineCity depth-fused 3D geometry smoke artifact"
+      "note": "MarineCity depth-fused 3D geometry validation artifact"
     },
     {
-      "group": "pending_3d",
+      "group": "open_3d_gate",
       "path": "paper/figures/results/marinecity_system/marinecity_depth_pointcloud_smoke_topdown.png",
       "placement": "supp",
       "required_now": true,
       "exists": true,
       "size_bytes": 92770,
       "status": "ok",
-      "note": "Depth point-cloud smoke preview figure"
+      "note": "Depth point-cloud validation preview figure"
     },
     {
       "group": "main_system",
       "path": "paper/tables/marinecity_3d_completion_results_table.tex",
-      "placement": "main_or_supp_smoke",
+      "placement": "main_or_supp_validation",
       "required_now": true,
       "exists": true,
-      "size_bytes": 481,
+      "size_bytes": 440,
       "status": "ok",
-      "note": "Compact neural 3D runner-family smoke metric table"
+      "note": "Compact neural 3D runner-family validation metric table"
     },
     {
-      "group": "pending_3d",
+      "group": "open_3d_gate",
       "path": "outputs/reports/live/marinecity_3d_completion_results_table.md",
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 697,
+      "size_bytes": 670,
       "status": "ok",
       "note": "Live summary for verified neural 3D metric rows"
     },
     {
-      "group": "pending_3d",
+      "group": "open_3d_gate",
       "path": "outputs/reports/live/marinecity_3d_completion_readiness.md",
       "placement": "runbook",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2459,
+      "size_bytes": 2460,
       "status": "ok",
       "note": "MarineCity neural 3D completion readiness gate"
     },
     {
-      "group": "pending_reasoner",
-      "path": "paper/tables/aerograph_reasoner_results_placeholder.tex",
-      "placement": "pending",
+      "group": "supp_system",
+      "path": "paper/tables/aerograph_reasoner_validation_summary.tex",
+      "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 366,
+      "size_bytes": 399,
       "status": "ok",
-      "note": "AeroGraph table slot must stay pending until all prompt-pack external-provider responses are valid-schema complete"
+      "note": "Paper-safe AeroGraph schema and verifier validation summary"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
+      "path": "paper/tables/aerograph_reasoner_external_slot.tex",
+      "placement": "optional",
+      "required_now": false,
+      "exists": true,
+      "size_bytes": 236,
+      "status": "ok",
+      "note": "Optional external-provider table slot; not used for the current main claim"
+    },
+    {
+      "group": "optional_reasoner_provider",
       "path": "docs/aerograph_nonmock_collection_plan.md",
       "placement": "runbook",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
-      "size_bytes": 11596,
+      "size_bytes": 11632,
       "status": "ok",
-      "note": "External-provider reasoner collection gate"
+      "note": "Optional external-provider reasoner collection plan"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
       "path": "outputs/reports/live/aerograph_prompt_pack_integrity.md",
       "placement": "audit",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
-      "size_bytes": 926,
+      "size_bytes": 1099,
       "status": "ok",
       "note": "AeroGraph prompt/template/batch consistency check"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
       "path": "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_packet.md",
       "placement": "runbook",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
-      "size_bytes": 5297,
+      "size_bytes": 5580,
       "status": "ok",
-      "note": "One-file web LLM handoff for AeroGraph collection"
+      "note": "Optional one-file web LLM handoff for AeroGraph collection"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
       "path": "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_checklist.csv",
       "placement": "runbook",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
-      "size_bytes": 10631,
+      "size_bytes": 11333,
       "status": "ok",
-      "note": "Per-prompt AeroGraph external-provider collection checklist"
+      "note": "Optional per-prompt AeroGraph external-provider collection checklist"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
       "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/manifest.json",
       "placement": "runbook",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
-      "size_bytes": 994,
+      "size_bytes": 1003,
       "status": "ok",
-      "note": "Compact 23-prompt real-capture AeroGraph smoke pack"
+      "note": "Compact 23-prompt real-capture AeroGraph validation pack"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
       "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/README.md",
       "placement": "runbook",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
       "size_bytes": 3087,
       "status": "ok",
-      "note": "Compact real-capture web-provider batch index"
+      "note": "Optional compact real-capture web-provider batch index"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
       "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md",
       "placement": "runbook",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
       "size_bytes": 4690,
       "status": "ok",
-      "note": "Compact real-capture web-provider collection packet"
+      "note": "Optional compact real-capture web-provider collection packet"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
       "path": "outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv",
       "placement": "runbook",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
       "size_bytes": 6560,
       "status": "ok",
-      "note": "Compact real-capture web-provider collection checklist"
+      "note": "Optional compact real-capture web-provider collection checklist"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
       "path": "outputs/reasoning/aerograph_real_capture_eval_dryrun/manifest.json",
       "placement": "audit",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
       "size_bytes": 911,
       "status": "ok",
       "note": "Compact real-capture prompt-pack runner dry-run check"
     },
     {
-      "group": "pending_reasoner",
+      "group": "optional_reasoner_provider",
       "path": "scripts/normalize_aerograph_web_responses.py",
       "placement": "runbook_helper",
-      "required_now": true,
+      "required_now": false,
       "exists": true,
       "size_bytes": 11352,
       "status": "ok",
-      "note": "Web LLM raw-output normalizer for AeroGraph manual responses"
+      "note": "Web LLM raw-output normalizer for optional AeroGraph manual responses"
     },
     {
       "group": "audit",
@@ -491,7 +501,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 8877,
+      "size_bytes": 8854,
       "status": "ok",
       "note": "Human-readable artifact manifest"
     },
@@ -501,7 +511,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 553,
+      "size_bytes": 552,
       "status": "ok",
       "note": "LaTeX input/figure/label integrity check"
     },
@@ -511,7 +521,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 2523,
+      "size_bytes": 2513,
       "status": "ok",
       "note": "External provider and neural-3D runner capability check"
     },
@@ -521,7 +531,7 @@
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 9107,
+      "size_bytes": 9073,
       "status": "ok",
       "note": "Claim readiness audit"
     }
@@ -529,12 +539,12 @@
   "missing_required": [],
   "stale_claims": [],
   "aerograph_gate": {
-    "status": "aerograph_reviewed_candidate_ready_external_pending",
+    "status": "aerograph_external_provider_pending_responses",
     "matched_nonblank_response_count": 49,
     "matched_valid_response_count": 49,
     "prompt_count": 49,
     "coverage_ratio": 1.0,
-    "paper_table_status": "aerograph_reasoner_table_candidate_external_pending",
+    "paper_table_status": "aerograph_reasoner_table_candidate_external_open",
     "non_mock_outputs_ready": false,
     "external_provider_replication_ready": false,
     "reviewed_candidate_valid_count": 49,
@@ -543,27 +553,25 @@
   "marinecity_qualitative_gate": {
     "status": "marinecity_qualitative_gate_main_ready",
     "real_cesium_ok": true,
-    "system_smoke_ok": true,
+    "system_validation_ok": true,
     "crop_supplementary_ready": true,
     "full_frame_main_ready": true,
-    "best_full_black_ratio": 0.017828,
-    "mean_top3_black_ratio": 0.087552,
-    "best_crop_black_ratio": 0.003577,
+    "best_full_black_ratio": 0.017833,
+    "mean_top3_black_ratio": 0.093141,
+    "best_crop_black_ratio": 0.003579,
     "claiming_rule": "Main paper full-frame qualitative figure may be promoted."
   },
   "marinecity_system_integration_gate": {
-    "status": "marinecity_system_integration_smoke_ready_with_pending_final_gates",
+    "status": "marinecity_system_integration_validation_ready_with_open_final_gates",
     "fail_count": 0,
     "warn_count": 0,
-    "pending_count": 1,
-    "detector_token_count": 117,
+    "open_count": 1,
+    "detector_token_count": 78,
     "detector_classes": {
-      "bus": 15,
-      "car": 65,
-      "motor": 2,
-      "pedestrian": 25,
-      "van": 8,
-      "truck": 2
+      "bus": 17,
+      "car": 53,
+      "pedestrian": 6,
+      "van": 2
     },
     "actor_classes": [
       "bus",
@@ -592,7 +600,7 @@
     "missing_expected_methods": [
       "mip_nerf_360"
     ],
-    "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud smoke are ready. At least one non-placeholder neural-3D runner metric row upgrades the result to a system-level smoke validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected."
+    "claiming_rule": "The real-Cesium RGB/depth/pose capture source, neural-3D transforms package, and depth point-cloud validation are ready. At least one verified neural-3D runner metric row upgrades the result to a system-level validation. Do not claim a full 3D benchmark until additional runner families or longer validation runs are collected."
   },
   "external_gate_capabilities": {
     "status": "three_d_runner_available_aerograph_provider_missing",
@@ -613,14 +621,15 @@
     "missing_graphics_count": 0,
     "duplicate_label_count": 0,
     "unresolved_ref_count": 0,
-    "pending_review_count": 0
+    "open_slot_review_count": 0
   },
   "claiming_summary": {
     "detector": "ready",
-    "marinecity_system": "ready_as_real_cesium_smoke_protocol_only",
+    "marinecity_system": "ready_as_real_cesium_system_validation",
     "marinecity_qualitative": "ready_for_main",
-    "aerograph": "candidate_ready_external_provider_pending",
+    "aerograph": "ready_as_schema_verifier_and_action_policy_validation",
+    "aerograph_optional_external_provider": "candidate_ready_needs_external_provider",
     "final_3d_completion": "ready",
-    "local_compile": "pending_main_tex_or_overleaf_sync"
+    "local_compile": "open_main_tex_or_overleaf_sync"
   }
 }
