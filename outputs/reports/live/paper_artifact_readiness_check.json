@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-30 04:31:24 KST",
+  "updated_at_kst": "2026-06-30 04:46:24 KST",
   "status": "paper_artifact_audit_submission_ready_with_optional_gates",
   "artifact_count": 53,
   "missing_required_count": 0,
@@ -171,7 +171,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 14651,
+      "size_bytes": 15840,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },

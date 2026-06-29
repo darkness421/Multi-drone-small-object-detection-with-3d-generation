@@ -1,11 +1,11 @@
 # LaTeX Patch Integrity Check
 
-Updated: `2026-06-30 04:31:24 KST`
+Updated: `2026-06-30 04:45:07 KST`
 Status: `latex_patch_integrity_ok`
 
 ## Summary
 
-- Checked files: `18`
+- Checked files: `19`
 - Missing inputs: `0`
 - Missing graphics: `0`
 - Duplicate labels: `0`
@@ -17,4 +17,4 @@ Status: `latex_patch_integrity_ok`
 | bundle | exists | included_file_count | commented_optional_inputs |
 | --- | --- | --- | --- |
 | paper/sections/main_results_patch_bundle.tex | True | 9 | ['sections/07_marinecity_qualitative_figure_slots'] |
-| paper/sections/supplementary_patch_bundle.tex | True | 10 | [] |
+| paper/sections/supplementary_patch_bundle.tex | True | 11 | [] |

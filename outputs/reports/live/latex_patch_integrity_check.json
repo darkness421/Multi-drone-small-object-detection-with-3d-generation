@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-30 04:31:24 KST",
+  "updated_at_kst": "2026-06-30 04:45:07 KST",
   "status": "latex_patch_integrity_ok",
   "bundles": [
     {
@@ -24,7 +24,7 @@
     {
       "bundle": "paper/sections/supplementary_patch_bundle.tex",
       "exists": true,
-      "included_file_count": 10,
+      "included_file_count": 11,
       "included_files": [
         "paper/sections/07_marinecity_qualitative_figure_slots.tex",
         "paper/sections/supp_detector_experiment_inventory.tex",
@@ -35,12 +35,13 @@
         "paper/tables/marinecity_crossview_evidence_graph_table.tex",
         "paper/tables/marinecity_nerfacto_iteration_sweep_table.tex",
         "paper/tables/marinecity_real_capture_benchmark_table.tex",
-        "paper/tables/marinecity_reobservation_policy_ablation_table.tex"
+        "paper/tables/marinecity_reobservation_policy_ablation_table.tex",
+        "paper/tables/tinyperson224_auxiliary_summary_table.tex"
       ],
       "commented_optional_inputs": []
     }
   ],
-  "checked_file_count": 18,
+  "checked_file_count": 19,
   "missing_input_count": 0,
   "missing_graphics_count": 0,
   "duplicate_label_count": 0,
