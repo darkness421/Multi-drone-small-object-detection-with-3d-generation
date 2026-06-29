@@ -24,7 +24,7 @@ TinyFReLU activation, and overlap-aware post-processing.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.90\textwidth]{figures/figS1_selfattnfr_module.png}
+    \includegraphics[width=0.84\textwidth]{figures/figS1_selfattnfr_module.png}
     \vspace{-1mm}
     \caption{Supplementary module view of SelfAttnFR. The block combines a
     pooled-token context path for adjacent-object interactions with a local
@@ -35,7 +35,7 @@ TinyFReLU activation, and overlap-aware post-processing.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.88\textwidth]{figures/figS2_tinyfrelu_activation.png}
+    \includegraphics[width=0.84\textwidth]{figures/figS2_tinyfrelu_activation.png}
     \vspace{-1mm}
     \caption{Supplementary module view of TinyFReLU. The activation augments a
     depthwise spatial-condition branch with a high-frequency residual so weak
@@ -45,7 +45,7 @@ TinyFReLU activation, and overlap-aware post-processing.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.94\textwidth]{figures/figS2b_tinyfrelu_measured_response.png}
+    \includegraphics[width=0.88\textwidth]{figures/figS2b_tinyfrelu_measured_response.png}
     \vspace{-1mm}
     \caption{Measured TinyFReLU response from the trained SAFR-YOLO checkpoint
     on a VisDrone validation frame. The probe is taken from the highest
@@ -57,7 +57,7 @@ TinyFReLU activation, and overlap-aware post-processing.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.90\textwidth]{figures/figS3_overlap_aware_nms.png}
+    \includegraphics[width=0.84\textwidth]{figures/figS3_overlap_aware_nms.png}
     \vspace{-1mm}
     \caption{Supplementary decision view of overlap-aware NMS. The module is
     used as post-processing analysis for adjacent UAV small objects: standard
@@ -66,8 +66,6 @@ TinyFReLU activation, and overlap-aware post-processing.
     candidate.}
     \label{fig:supp_overlap_aware_nms}
 \end{figure}
-\FloatBarrier
-
 \paragraph{Module details.}
 SelfAttnFR refines a feature map $F\in\mathbb{R}^{H\times W\times C}$ with two
 low-cost paths. The context path pools $F$ into tokens $T=P(F)$, computes
@@ -272,9 +270,9 @@ response visualizations from fixed checkpoints, not class-logit attribution
 scores; we therefore use them as qualitative support for the detector behavior
 rather than as an additional quantitative claim.
 
-\begin{figure}[!p]
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.82\textwidth]{figures/results/paper_fig11_final_detector_feature_activation_heatmap.png}
+    \includegraphics[width=0.76\textwidth]{figures/results/paper_fig11_final_detector_feature_activation_heatmap.png}
     \vspace{-1mm}
     \caption{Supplementary feature-activation heat maps for YOLOv11l, YOLOv9c,
     and Ours on crowded UAV crops.}
