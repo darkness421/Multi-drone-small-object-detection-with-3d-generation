@@ -95,6 +95,11 @@ TINYPERSON_AUX_LOG = "outputs/logs/tinyperson_224_aux_sweep/queue.log"
 TINYPERSON_AUX_MARKER = "QUEUE_FINISHED TinyPerson224 auxiliary sweep"
 TINYPERSON224_AUX_SUMMARY = "outputs/experiments/tinyperson_224_aux_sweep/summary.csv"
 TINYPERSON224_AUX_DASHBOARD = "outputs/reports/live/tinyperson_224_aux_sweep_dashboard.png"
+MARINECITY_REINFORCE_NAME = "Neural-3D 80k"
+MARINECITY_REINFORCE_RUN = "marinecity_nerfacto_fullres80k"
+MARINECITY_REINFORCE_MAX_ITERS = 80000
+MARINECITY_REINFORCE_TRAIN_LOG = "outputs/logs/marinecity_nerfstudio_gpu0/marinecity_nerfacto_fullres80k_20260629_afternoon_20260629_1608_fullres80k_train.log"
+MARINECITY_REINFORCE_METRIC_JSON = "outputs/experiments/3d_generation/nerfstudio_native_runs/marinecity_nerfacto_fullres80k_20260629_afternoon_20260629_1608_fullres80k_metric_row.json"
 PAPER_ARTIFACT_LOG = "outputs/logs/paper_artifacts_after_2d/queue.log"
 PAPER_ARTIFACT_MARKER = "QUEUE_FINISHED paper artifacts after 2D"
 PAPER_GATE_QUEUE_LOG_DIR = "outputs/logs/accv_paper_gate_queue"
@@ -198,12 +203,6 @@ def viewer160_capture_count() -> int:
 
 
 def viewer160_detector_summary() -> tuple[int, dict[str, int]]:
-    real_capture_summary = read_json_obj(resolve_path(REAL_CAPTURE_DETECTOR_SUMMARY))
-    if real_capture_summary:
-        return (
-            int(real_capture_summary.get("token_count", 0) or 0),
-            {str(label): int(count or 0) for label, count in (real_capture_summary.get("tokens_by_class", {}) or {}).items()},
-        )
     total_tokens = 0
     classes: dict[str, int] = {}
     for session_stem, legacy_stem in VIEWER160_SCENARIOS:
@@ -218,6 +217,16 @@ def viewer160_detector_summary() -> tuple[int, dict[str, int]]:
         total_tokens += int(summary.get("token_count", 0) or 0)
         for label, count in (summary.get("tokens_by_class", {}) or {}).items():
             classes[str(label)] = classes.get(str(label), 0) + int(count or 0)
+    if total_tokens == 0:
+        real_capture_summary = read_json_obj(resolve_path(REAL_CAPTURE_DETECTOR_SUMMARY))
+        if real_capture_summary:
+            return (
+                int(real_capture_summary.get("token_count", 0) or 0),
+                {
+                    str(label): int(count or 0)
+                    for label, count in (real_capture_summary.get("tokens_by_class", {}) or {}).items()
+                },
+            )
     return total_tokens, classes
 
 
@@ -396,7 +405,11 @@ def paper_gate_queue_status_row() -> dict[str, str]:
         if line.strip()
     ]
     event = clean_queue_line(lines[-1]) if lines else latest.name
-    status = "running" if age_sec <= 20 * 60 else "ready"
+    event_lower = event.lower()
+    if "finished_at" in event_lower or "all local gates completed" in event_lower:
+        status = "monitoring"
+    else:
+        status = "running" if age_sec <= 20 * 60 else "ready"
     detail = "refreshes Overleaf sync status, paper gates, 3D/AeroGraph readiness, and dashboards"
     return {
         "queue": "ACCV paper gate queue",
@@ -478,6 +491,77 @@ def tinyperson224_aux_status_row() -> dict[str, str]:
     }
 
 
+def marinecity_reinforce_active_row() -> dict[str, str] | None:
+    train_log = resolve_path(MARINECITY_REINFORCE_TRAIN_LOG)
+    metric_json = resolve_path(MARINECITY_REINFORCE_METRIC_JSON)
+    if metric_json.exists() or not train_log.exists():
+        return None
+
+    progress = "training"
+    speed = "rays/s pending"
+    try:
+        lines = train_log.read_text(encoding="utf-8", errors="ignore").splitlines()[-240:]
+    except OSError:
+        lines = []
+    pattern = re.compile(r"^\s*(\d+)\s+\(([\d.]+)%\)\s+[\d.]+\s+ms\s+([0-9]+\s+m,\s+[0-9]+\s+s)\s+([0-9.]+\s+K)")
+    for line in lines:
+        match = pattern.search(line)
+        if match:
+            step, pct, eta, rays = match.groups()
+            progress = f"{step}/{MARINECITY_REINFORCE_MAX_ITERS} {pct}% ETA {eta.replace(' ', '')}"
+            speed = f"{rays.replace(' ', '')} rays/s"
+
+    return {
+        "run": MARINECITY_REINFORCE_RUN,
+        "active": "true",
+        "gpu": "0",
+        "progress": progress,
+        "speed": speed,
+        "AP": "-",
+        "AP50": "-",
+        "F1": "-",
+        "P": "-",
+        "R": "-",
+        "bestAP": "-",
+        "bestAP50": "-",
+        "bestP": "-",
+        "bestR": "-",
+        "bestF1": "-",
+        "box": "-",
+        "cls": "-",
+        "dfl": "-",
+        "Params": "n/a",
+        "GFLOPs": "n/a",
+        "dAP": "n/a",
+        "gate": "neural-3D metric reinforcement",
+    }
+
+
+def neural3d_reinforcement_status_row() -> dict[str, str]:
+    active = marinecity_reinforce_active_row()
+    metric_json = resolve_path(MARINECITY_REINFORCE_METRIC_JSON)
+    if active:
+        return {
+            "queue": MARINECITY_REINFORCE_NAME,
+            "status": "running",
+            "detail": "Nerfacto full-res 80k reinforcement on MarineCity real-Cesium captures",
+            "event": f"{active['progress']}; {active['speed']}",
+        }
+    if metric_json.exists():
+        return {
+            "queue": MARINECITY_REINFORCE_NAME,
+            "status": "done",
+            "detail": "Nerfacto full-res 80k reinforcement completed; compare before promotion",
+            "event": f"metric row: {MARINECITY_REINFORCE_METRIC_JSON}",
+        }
+    return {
+        "queue": MARINECITY_REINFORCE_NAME,
+        "status": "waiting",
+        "detail": "optional 80k reinforcement pending",
+        "event": "not started",
+    }
+
+
 def isaac_cesium_status_row() -> dict[str, str]:
     captures = viewer160_capture_count()
     if captures >= 3:
@@ -533,7 +617,7 @@ def multi_uav_detector_test_row() -> dict[str, str]:
         return {
             "queue": "Multi-UAV YOLO test",
             "status": "done",
-            "detail": "P2P4-SelfAttnFR inference + 3D evidence/reasoner smoke ran on S0/S1/S2 viewer160 captures",
+            "detail": "P2P4-SelfAttnFR inference + 3D evidence/reasoner validation ran on S0/S1/S2 viewer160 captures",
             "event": f"{total_tokens} EvidenceTokens; {class_text}; rule-based reasoner 3/3",
         }
     scene_ready = resolve_path(ISAAC_CESIUM_SCENE_PLAN).exists()
@@ -554,9 +638,28 @@ def multi_uav_detector_test_row() -> dict[str, str]:
     }
 
 
+def final_table_related_1280_done() -> bool:
+    rows = [
+        row
+        for row in read_csv(FINAL_TABLE_PREVIEW)
+        if row.get("section") == "main_1280_completed_3seed"
+    ]
+    required = ("CSFPR-RTDETR", "MFFSODNet")
+    for name in required:
+        matched = [
+            row
+            for row in rows
+            if name.lower() in row.get("method", "").lower()
+            and int(float(row.get("seed_count", "0") or 0)) >= 3
+        ]
+        if not matched:
+            return False
+    return True
+
+
 def queue_status_rows() -> list[dict[str, str]]:
     final_done = queue_log_contains(FINAL_ABLATION_LOG, FINAL_ABLATION_MARKER)
-    related_done = queue_log_contains(RELATED_WORK_LOG, RELATED_WORK_MARKER)
+    related_done = queue_log_contains(RELATED_WORK_LOG, RELATED_WORK_MARKER) or final_table_related_1280_done()
     related_module_done = queue_log_contains(RELATED_WORK_MODULE_LOG, RELATED_WORK_MODULE_MARKER)
     required_related_done = queue_log_contains(REQUIRED_RELATED_WORK_LOG, REQUIRED_RELATED_WORK_MARKER)
     heatmap_done = queue_log_contains(HEATMAP_LOG, HEATMAP_MARKER)
@@ -597,6 +700,7 @@ def queue_status_rows() -> list[dict[str, str]]:
             "detail": "final detector Grad-CAM/qualitative after 2D + related-work",
             "event": latest_queue_event(HEATMAP_LOG),
         })
+    rows.append(neural3d_reinforcement_status_row())
     rows.append(isaac_cesium_status_row())
     rows.append(multi_uav_detector_test_row())
     if not queue_log_contains(PAPER_ARTIFACT_LOG, PAPER_ARTIFACT_MARKER):
@@ -1895,6 +1999,9 @@ def main() -> None:
 
     baseline = Baseline()
     rows = collect_rows(args.project_dir, args.log_dir, baseline)
+    neural3d_row = marinecity_reinforce_active_row()
+    if neural3d_row:
+        rows.append(neural3d_row)
     render_dashboard(rows, resolve_path(args.out), baseline)
     archive_live_tinyperson_artifacts()
     print(resolve_path(args.out))

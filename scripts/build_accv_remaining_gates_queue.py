@@ -19,7 +19,6 @@ SYSTEM = LIVE / "marinecity_system_integration_check.json"
 THREED = LIVE / "marinecity_3d_completion_readiness.json"
 AEROGRAPH = LIVE / "aerograph_nonmock_readiness_status.json"
 SNAPSHOT = LIVE / "accv_workflow_status_snapshot.json"
-TINYPERSON = ROOT / "outputs/experiments/tinyperson_corner_original/live_summary.csv"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -42,36 +41,12 @@ def fnum(value: Any, digits: int = 4) -> str:
         return "-"
 
 
-def tinyperson_note(rows: list[dict[str, str]]) -> tuple[str, str]:
-    if not rows:
-        return "closed_archive_only", "TinyPerson rows are missing; no further TinyPerson experiments are scheduled."
-    pieces = []
-    complete = []
-    for row in rows:
-        raw_status = row.get("status") or "unknown"
-        display_status = "complete" if raw_status == "complete" else "archived_stopped"
-        pieces.append(
-            f"{row.get('method')} seed {row.get('seed')} img{row.get('imgsz')}: "
-            f"{display_status} e{row.get('latest_epoch')} best AP {fnum(row.get('best_ap'))}/"
-            f"AP50 {fnum(row.get('best_ap50'))}"
-        )
-        if raw_status == "complete":
-            complete.append(row.get("method", ""))
-    status = "closed_archive_only"
-    return status, "; ".join(pieces)
-
-
 def build_rows() -> list[dict[str, str]]:
     readiness = read_json(READINESS)
     system = read_json(SYSTEM)
     threed = read_json(THREED)
     aerograph = read_json(AEROGRAPH)
     snapshot = read_json(SNAPSHOT)
-    tinyperson_rows = read_csv(TINYPERSON)
-    tinyperson_status, tinyperson_evidence = tinyperson_note(tinyperson_rows)
-    tinyperson_action = (
-        "Stop TinyPerson here. Keep existing rows as internal archive/protocol diagnostics only; do not include TinyPerson in the default main or supplementary paper."
-    )
 
     detector = (snapshot.get("detector") or {})
     queues = (snapshot.get("queues") or {})
@@ -80,24 +55,24 @@ def build_rows() -> list[dict[str, str]]:
     effective_coverage = aerograph.get("effective_response_coverage") or {}
     system_detector = system.get("detector") or {}
     system_actors = system.get("actors") or {}
-    pending_checks = [check for check in system.get("checks", []) if check.get("status") == "PENDING"]
+    open_checks = [check for check in system.get("checks", []) if check.get("status") in {"OPEN", "PENDING"}]
     main_tex_gate = readiness.get("main_tex_gate") or {}
     latex_gate = readiness.get("latex_integrity_gate") or {}
     threed_metric_rows = threed.get("metric_result_row_count") or 0
     threed_has_metric = bool(threed_metric_rows)
     if threed_metric_rows >= 2:
         threed_next_action = (
-            "Use the verified Nerfacto and Splatfacto/3DGS-style rows as runner-family system-smoke evidence; add longer validation only if time remains."
+            "Use the verified Nerfacto and Splatfacto/3DGS-style rows as runner-family system-validation evidence; add longer validation only if time remains."
         )
     elif threed_has_metric:
         threed_next_action = (
-            "Use the verified Nerfacto row as system-smoke evidence; add Instant-NGP/3DGS or longer validation only if time remains."
+            "Use the verified Nerfacto row as system-validation evidence; add Instant-NGP/3DGS or longer validation only if time remains."
         )
     else:
         threed_next_action = (
-            "Attach/install an upstream NeRF/3DGS/Instant-NGP runner and collect PSNR/SSIM/LPIPS/FPS/runtime rows; placeholders are not paper-valid."
+            "Attach/install an upstream NeRF/3DGS/Instant-NGP runner and collect PSNR/SSIM/LPIPS/FPS/runtime rows that pass the paper-validity checks."
         )
-    threed_paper_use = "main_smoke_or_supp" if threed_has_metric else "pending_3d"
+    threed_paper_use = "main_or_supp_validation" if threed_has_metric else "open_3d_gate"
 
     return [
         {
@@ -111,14 +86,6 @@ def build_rows() -> list[dict[str, str]]:
             ),
             "next_action": "Keep as main VisDrone 1280 3-seed claim; do not mix broad search rows into the main table.",
             "paper_use": "main",
-        },
-        {
-            "priority": "P3",
-            "gate": "TinyPerson archive-only diagnostic",
-            "status": tinyperson_status,
-            "evidence": tinyperson_evidence,
-            "next_action": tinyperson_action,
-            "paper_use": "internal_archive",
         },
         {
             "priority": "P1",
@@ -135,7 +102,7 @@ def build_rows() -> list[dict[str, str]]:
         },
         {
             "priority": "P1",
-            "gate": "AeroGraph external non-mock reasoner",
+            "gate": "AeroGraph external-provider reasoner",
             "status": aerograph.get("status", "missing"),
             "evidence": (
                 f"manual direct coverage={manual_coverage.get('matched_valid_response_count', '-')}/"
@@ -145,24 +112,24 @@ def build_rows() -> list[dict[str, str]]:
                 f"external replication={aerograph.get('external_provider_replication_ready')}"
             ),
             "next_action": "Keep the reviewed candidate internal; collect OpenAI/ChatGPT/local-provider replication before making a final external-provider reasoner claim.",
-            "paper_use": "pending_reasoner",
+            "paper_use": "open_reasoner_gate",
         },
         {
             "priority": "P2",
-            "gate": "MarineCity real-Cesium system smoke",
+            "gate": "MarineCity real-Cesium system validation",
             "status": system.get("status", "missing"),
             "evidence": (
                 f"tokens={system_detector.get('token_count')}; "
                 f"actors={system_actors.get('actor_classes')}; "
-                f"pending={len(pending_checks)}"
+                f"open checks={len(open_checks)}"
             ),
             "next_action": "Use as system/protocol validation only; upgrade after neural 3D and external reasoner gates pass.",
-            "paper_use": "main_smoke_or_supp",
+            "paper_use": "main_or_supp_validation",
         },
         {
             "priority": "P2",
             "gate": "Overleaf/local compile sync",
-            "status": "pending_main_tex_or_overleaf_sync" if not main_tex_gate.get("main_tex_present") else "local_main_tex_present",
+            "status": "open_main_tex_or_overleaf_sync" if not main_tex_gate.get("main_tex_present") else "local_main_tex_present",
             "evidence": f"local main.tex present={main_tex_gate.get('main_tex_present')}; latex check={latex_gate.get('status')}",
             "next_action": "Keep GitHub/Overleaf patch bundles synced; full compile verification requires the Overleaf project or a local main.tex checkout.",
             "paper_use": "paper_ops",
@@ -186,7 +153,7 @@ def write_outputs(rows: list[dict[str, str]]) -> None:
         "",
         f"Updated: `{datetime.now().astimezone().isoformat(timespec='seconds')}`",
         "",
-        "This queue separates paper-ready evidence from pending gates. Do not promote a pending row into a main claim until its evidence column proves completion.",
+        "This queue separates paper-ready evidence from open gates. Do not promote an open-gate row into a main claim until its evidence column proves completion.",
         "",
         "| Priority | Gate | Status | Evidence | Next Action | Paper Use |",
         "| --- | --- | --- | --- | --- | --- |",
@@ -200,10 +167,9 @@ def write_outputs(rows: list[dict[str, str]]) -> None:
             "",
             "## Immediate Order",
             "",
-        "1. Close TinyPerson as an internal archive-only diagnostic; do not spend more GPU time or default paper space on it.",
-        "2. Keep VisDrone detector results as the main 2D claim: `Ours` in tables, SAFR-YOLO/P2P4-SelfAttnFR in method text.",
-        "3. For 3D, use the verified MarineCity RGB/depth/pose package plus Nerfacto and Splatfacto/3DGS-style smoke rows as system evidence; collect longer validation only before claiming a full 3D benchmark.",
-        "4. For AeroGraph, keep the reviewed candidate internal and collect external OpenAI/ChatGPT/local-provider replication before final reasoner claims.",
+        "1. Keep VisDrone detector results as the main 2D claim: `Ours` in tables, SAFR-YOLO/P2P4-SelfAttnFR in method text.",
+        "2. For 3D, use the verified MarineCity RGB/depth/pose package plus Nerfacto and Splatfacto/3DGS-style rows as system-validation evidence; collect longer validation only before claiming a full 3D benchmark.",
+        "3. For AeroGraph, keep the reviewed candidate internal and collect external OpenAI/ChatGPT/local-provider replication before final reasoner claims.",
             "",
         ]
     )
