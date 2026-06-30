@@ -21,6 +21,7 @@ RUN_DIR = ROOT / "outputs/experiments/3d_generation/nerfstudio_native_runs"
 OUT_CSV = ROOT / "outputs/reports/live/marinecity_nerfacto_iteration_sweep.csv"
 OUT_MD = ROOT / "outputs/reports/live/marinecity_nerfacto_iteration_sweep.md"
 OUT_PNG = ROOT / "outputs/reports/live/marinecity_nerfacto_iteration_sweep.png"
+PAPER_PNG = ROOT / "paper/figures/results/marinecity_system/marinecity_nerfacto_iteration_sweep.png"
 OUT_TEX = ROOT / "paper/tables/marinecity_nerfacto_iteration_sweep_table.tex"
 
 REPRESENTATIVE_STATUS = "complete_native_marinecity_nerfacto_torch_split067_noapp_fullres_24k"
@@ -213,7 +214,7 @@ def write_png(rows: list[dict[str, Any]]) -> None:
     if not plotted:
         return
 
-    fig, ax1 = plt.subplots(figsize=(8.8, 4.8), dpi=180)
+    fig, ax1 = plt.subplots(figsize=(9.2, 4.9), dpi=180)
     variants = [row["variant"] for row in plotted]
     x = list(range(len(plotted)))
     psnr = [row["PSNR"] for row in plotted]
@@ -221,7 +222,7 @@ def write_png(rows: list[dict[str, Any]]) -> None:
     lpips = [row["LPIPS"] for row in plotted]
 
     ax1.plot(x, psnr, marker="o", linewidth=2.0, color="#2563eb", label="PSNR")
-    ax1.set_ylabel("PSNR", color="#1d4ed8")
+    ax1.set_ylabel("PSNR (dB)", color="#1d4ed8", labelpad=8)
     ax1.tick_params(axis="y", labelcolor="#1d4ed8")
     ax1.grid(axis="y", color="#d4d4d8", linewidth=0.7, alpha=0.65)
     ax1.set_xticks(x)
@@ -230,8 +231,9 @@ def write_png(rows: list[dict[str, Any]]) -> None:
     ax2 = ax1.twinx()
     ax2.plot(x, ssim, marker="s", linewidth=1.7, color="#16a34a", label="SSIM")
     ax2.plot(x, lpips, marker="^", linewidth=1.7, color="#dc2626", label="LPIPS")
-    ax2.set_ylabel("SSIM / LPIPS")
+    ax2.set_ylabel("SSIM / LPIPS", labelpad=10)
     ax2.set_ylim(0.0, 1.0)
+    ax2.spines["right"].set_position(("outward", 8))
 
     for idx, row in enumerate(plotted):
         if row["paper_use"] == "representative":
@@ -242,10 +244,20 @@ def write_png(rows: list[dict[str, Any]]) -> None:
 
     lines1, labels1 = ax1.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
-    ax1.legend(lines1 + lines2, labels1 + labels2, loc="lower left", fontsize=8)
-    fig.tight_layout()
+    ax1.legend(
+        lines1 + lines2,
+        labels1 + labels2,
+        loc="upper center",
+        bbox_to_anchor=(0.5, 1.13),
+        ncol=3,
+        fontsize=8,
+        frameon=False,
+    )
+    fig.subplots_adjust(left=0.085, right=0.90, bottom=0.22, top=0.85)
     OUT_PNG.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT_PNG)
+    PAPER_PNG.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUT_PNG, bbox_inches="tight", pad_inches=0.04)
+    fig.savefig(PAPER_PNG, bbox_inches="tight", pad_inches=0.04)
     plt.close(fig)
 
 
@@ -262,6 +274,7 @@ def main() -> None:
                 "csv": str(OUT_CSV.relative_to(ROOT)),
                 "markdown": str(OUT_MD.relative_to(ROOT)),
                 "png": str(OUT_PNG.relative_to(ROOT)),
+                "paper_png": str(PAPER_PNG.relative_to(ROOT)),
                 "tex": str(OUT_TEX.relative_to(ROOT)),
             },
             indent=2,
