@@ -1,7 +1,8 @@
 # Paper Section Patches
 
-This folder stores LaTeX-ready section patches before the Overleaf source is
-available in this workspace.
+Updated: `2026-07-02 KST`
+
+This folder stores LaTeX-ready section patches for the Overleaf submission package.
 
 Current files:
 
@@ -21,13 +22,13 @@ Current files:
 | `supp_detector_experiment_inventory.tex` | Supplementary detector inventory for full YOLO scale sweeps, protocol-mismatched related-work checks, and search-only module rows. |
 | `supp_marinecity_system_details.tex` | Supplementary MarineCity capture-source, cross-view graph, AeroGraph validation slot, and reporting-split details. |
 
-Important wording rule:
+Important wording rules:
 
 - Treat `SAFR-YOLO` as the selected detector candidate. Use
-  `P2P4-SelfAttnFR` only as the current implementation/run label unless a later
-  repeated-seed run replaces it.
-- Keep Proposed Method wording flexible enough to update the candidate name if
-  the final compact detector changes.
+  `P2P4-SelfAttnFR` only as the implementation/run label for reproducibility
+  and ablation metadata.
+- Keep Proposed Method wording aligned with the selected SAFR-YOLO detector and
+  the completed VisDrone 1280 three-seed protocol.
 - Treat MarineCity real-Cesium outputs as system/protocol validation evidence. Do
   not claim a completed 3D reconstruction/restoration benchmark until the
   reasoner response evaluation and completion/restoration experiments are validated.

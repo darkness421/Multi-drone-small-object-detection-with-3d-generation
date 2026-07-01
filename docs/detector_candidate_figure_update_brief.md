@@ -38,17 +38,10 @@ Current 1280 / 3-seed result for the leading candidate:
 | --- | ---: | ---: | ---: | ---: | ---: |
 | P2P4-SelfAttnFR | 0.3822 | 0.6052 | 0.6273 | 20.82M | 109.3 |
 
-High-capacity comparison context:
-
-| Model | Status | AP | AP50 | F1 | Params | GFLOPs |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| YOLOv9e | partial 2-seed, still running | about 0.3853 | about 0.6108 | about 0.6334 | 58.15M | 192.7 |
-
 Main interpretation:
 
 ```text
-YOLOv9e is a stronger high-capacity baseline, but it is much larger.
-SAFR-YOLO is the current strongest parameter-performance trade-off candidate.
+SAFR-YOLO is the current strongest parameter-performance trade-off candidate among the paper-facing comparison set.
 ```
 
 Do not write "outperforms all models" or "SOTA" in any figure.
@@ -61,7 +54,7 @@ We may test stretch variants before freezing the detector figure:
 Candidate label: P2P4-SelfAttnRF-FR
 Public label if selected: SAFR-YOLO-B22 or SAFR-YOLO with RF context
 Target budget: <= 22M params
-Reason: improve raw AP while remaining far smaller than YOLOv9e
+Reason: improve raw AP while staying within the compact detector budget
 ```
 
 Candidate module change:
@@ -226,7 +219,7 @@ Use these names consistently:
 | Public detector name | SAFR-YOLO |
 | Current implementation label | P2P4-SelfAttnFR |
 | Optional 22M stretch label | P2P4-SelfAttnRF-FR |
-| Reasoner | ACE-Reasoner |
+| Reasoner | AeroGraph Reasoner |
 | Whole system | CoM3D-ACE |
 
 Avoid these names in candidate / paper figures unless they are selected:

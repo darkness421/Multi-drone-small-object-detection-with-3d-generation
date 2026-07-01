@@ -13,11 +13,11 @@ All listed images are generated from real-Cesium MarineCity captures or detector
 
 ## Current Best Full-Capture Candidate
 
-- Capture: `uavmarine_s2_viewer160_session_recapture`
-- Best image: `/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png`
-- Mean top-3 black/void ratio: `0.0876`
+- Capture: `uavmarine_s0_viewer160_tight_f52_shift_test`
+- Best image: `/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_tight_f52_shift_test/real_cesium_capture/frame_002_uav_02_rgb.png`
+- Mean top-3 black/void ratio: `0.0931`
 - Best image black/void ratio: `0.0178`
-- Camera profile: `viewer160_clean_fullframe`
+- Camera profile: `viewer160_marinecity_roi`
 
 ## Current Best Crop Candidate
 
@@ -27,7 +27,7 @@ All listed images are generated from real-Cesium MarineCity captures or detector
 - Crop box: `[0, 0, 1216, 684]`
 - Black/void ratio: `0.0036`
 - Area ratio: `0.9025`
-- Score: `1.1152`
+- Score: `1.1156`
 
 ## Paper-Facing Assets
 

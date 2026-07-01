@@ -238,7 +238,11 @@ def main() -> None:
     parser.add_argument("--session-overlay-status", default="/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json")
     parser.add_argument("--out-json", default="outputs/reports/live/marinecity_qualitative_gate.json")
     parser.add_argument("--out-md", default="outputs/reports/live/marinecity_qualitative_gate.md")
-    parser.add_argument("--paper-md", default="paper/figures/results/marinecity_system/marinecity_qualitative_gate.md")
+    parser.add_argument(
+        "--paper-md",
+        default="",
+        help="Optional extra Markdown copy. Leave empty so paper/ stays Overleaf-clean.",
+    )
     parser.add_argument("--full-black-max", type=float, default=0.10)
     parser.add_argument("--mean-top3-black-max", type=float, default=0.15)
     parser.add_argument("--crop-black-max", type=float, default=0.02)
@@ -249,12 +253,15 @@ def main() -> None:
     report = build_gate(args)
     out_json = REPO_ROOT / args.out_json
     out_md = REPO_ROOT / args.out_md
-    paper_md = REPO_ROOT / args.paper_md
     out_json.parent.mkdir(parents=True, exist_ok=True)
     out_json.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     write_markdown(out_md, report)
-    write_markdown(paper_md, report)
-    print(json.dumps({"json": rel(out_json), "markdown": rel(out_md), "paper_markdown": rel(paper_md), "status": report["status"]}, indent=2))
+    payload = {"json": rel(out_json), "markdown": rel(out_md), "status": report["status"]}
+    if args.paper_md:
+        paper_md = REPO_ROOT / args.paper_md
+        write_markdown(paper_md, report)
+        payload["paper_markdown"] = rel(paper_md)
+    print(json.dumps(payload, indent=2))
 
 
 if __name__ == "__main__":

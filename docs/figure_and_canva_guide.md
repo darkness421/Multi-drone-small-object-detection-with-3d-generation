@@ -43,7 +43,7 @@ detector becomes a clear main contribution.
 
 ## Main Paper Figure Plan
 
-| Figure | Main Message | Source | Final Format | Canva Role |
+| Figure | Main Message | Source | Final Format | Artist Task |
 | --- | --- | --- | --- | --- |
 | Fig. 1: CoM3D-ACE Pipeline | Multi-UAV images become 3D evidence, ambiguity diagnosis, completion, and re-observation | `fig01_overall_framework.svg`, method text | PDF export, PNG preview | Redraw as clean pipeline |
 | Fig. 2: Proposed YOLO Evidence Generator | Shows the detector-side module without overclaiming final results | `fig02_detector_module.svg`, method text, final detector table | PDF export, PNG preview | Draw with SAFR-YOLO labels |
@@ -83,7 +83,7 @@ Use a restrained research-paper style:
 
 Suggested palette:
 
-| Role | Hex |
+| Meaning | Hex |
 | --- | --- |
 | Evidence graph / proposed | `#2563EB` |
 | 3D geometry / camera rays | `#0F766E` |

@@ -74,6 +74,10 @@ outputs/reports/archive/*
 !outputs/reports/live/
 outputs/reports/live/*
 !outputs/reports/live/README.md
+!outputs/reports/live/marinecity_system_figures_index.md
+!outputs/reports/live/marinecity_qualitative_selection_manifest.md
+!outputs/reports/live/paper_artifact_readiness_manifest.md
+!outputs/reports/live/paper_detector_figures_manifest.md
 !outputs/reports/server_with_proposed/
 outputs/reports/server_with_proposed/*
 !outputs/reports/server_with_proposed/README.md
@@ -126,6 +130,7 @@ outputs/qualitative/gradcam/*
 runs/
 weights/*
 !weights/.gitkeep
+external/
 *.pt
 *.pth
 *.ckpt

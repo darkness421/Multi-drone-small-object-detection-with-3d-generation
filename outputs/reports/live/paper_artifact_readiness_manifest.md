@@ -14,7 +14,7 @@ main-paper-ready items from supplementary items and explicit validation slots.
 | Detector result table figure | `paper/figures/results/paper_fig01_main_detector_table.png` | Ready | Optional compact visual version of detector table |
 | AP/AP50 bar chart | `paper/figures/results/paper_fig04_ap_ap50_bar_chart.png` | Ready | Main or supplementary quantitative visual |
 | AP vs parameter scatter | `paper/figures/results/paper_fig05_ap_params_scatter.png` | Ready | Trade-off visual |
-| Gated trade-off chart | `paper/figures/results/paper_fig06_gated_tradeoff_bar.png` | Ready | Trade-off visual if page budget allows |
+| Gated trade-off chart | `paper/figures/results/paper_fig06_gated_tradeoff_bar.png` | Ready | Optional compact trade-off visual |
 | MarineCity system smoke table | `paper/tables/marinecity_system_scenario_table.tex` | Ready with wording limit | Real-Cesium system/protocol smoke-test table |
 | MarineCity smoke source CSV | `paper/tables/marinecity_system_token_results.csv` | Ready with wording limit | Source rows for detector-to-reasoner smoke-test table |
 | MarineCity detector-preview sheet | `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png` | Smoke-test ready | Real-Cesium detector preview sheet; use only with system-smoke wording |
@@ -42,20 +42,20 @@ main-paper-ready items from supplementary items and explicit validation slots.
 | MarineCity detector-to-reasoner report | `outputs/reports/live/marinecity_detector_reasoner_smoke.md` | Smoke-test ready | Live report for the 23-token SAFR-YOLO to rule-based AeroGraph verifier run |
 | MarineCity cross-view evidence graph figure | `paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png` | Smoke-test ready | Supplementary graph view of support/conflict/missing-evidence links; not metric 3D reconstruction |
 | MarineCity cross-view evidence graph report | `outputs/reports/live/marinecity_crossview_evidence_graph.md` | Smoke-test ready | Live report and source summary for the current cross-view evidence graph |
-| AeroGraph real-capture compact prompt pack | `outputs/reports/live/aerograph_real_capture_prompt_pack/manifest.json` | Provider-ready smoke gate | 23 prompts matching the latest real-Cesium detector smoke; use before the full 49-prompt final gate |
+| AeroGraph real-capture compact prompt pack | `outputs/reports/live/aerograph_real_capture_prompt_pack/manifest.json` | Provider-ready smoke gate | 23 prompts matching the latest real-Cesium detector smoke; use before the full 54-prompt final gate |
 | MarineCity token contact sheet | `paper/figures/results/marinecity_system/contact_sheet_token_tests.png` | Smoke-test ready | Supplementary token-level qualitative cases |
 | MarineCity capture QA sheet | `paper/figures/results/marinecity_system/marinecity_capture_quality_top8.png` | Review/selection aid | Use to choose final recapture |
 | MarineCity crop candidates | `paper/figures/results/marinecity_system/marinecity_real_capture_crop_top12.png` | Review/selection aid | Crop-only framing guidance, not final replacement |
-| MarineCity qualitative selection manifest | `paper/figures/results/marinecity_system/marinecity_qualitative_selection_manifest.md` | Ready | Captions and placement rules for current real-Cesium qualitative assets |
-| MarineCity qualitative gate | `paper/figures/results/marinecity_system/marinecity_qualitative_gate.md` | Ready | Explicit full-frame-vs-crop promotion gate |
-| AeroGraph external-provider table | `paper/tables/aerograph_reasoner_validation_summary.tex` | Validation summary | External-provider replication is imported separately; schema-check records are not promoted as the headline paper result |
+| MarineCity qualitative selection manifest | `outputs/reports/live/marinecity_qualitative_selection_manifest.md` | Ready | Captions and placement rules for current real-Cesium qualitative assets |
+| MarineCity qualitative gate | `outputs/reports/live/marinecity_qualitative_gate.md` | Ready | Explicit full-frame-vs-crop promotion gate |
+| AeroGraph external-provider table | `paper/tables/aerograph_reasoner_validation_summary.tex` | Validation summary | External-provider replication is imported separately; internal format checks are not promoted as the headline paper result |
 
 ## Validation Slots
 
 | Artifact | Path | Current Status | Required Before Claim |
 |---|---|---|---|
-| AeroGraph external-provider replication | `paper/tables/aerograph_reasoner_validation_summary.tex` | Schema-check record ready; external OpenAI/ChatGPT/local run to be imported | Re-run all 49 prompts with selected final provider and rebuild table |
-| AeroGraph direct manual/API response file | `outputs/reports/live/aerograph_nonmock_readiness_status.md` | Provider-manifest coverage 49/49; direct manual response file 0/49 | Fill `outputs/reasoning/aerograph_manual_responses.jsonl` or configure provider if replacing the candidate manifest |
+| AeroGraph external-provider replication | `paper/tables/aerograph_reasoner_validation_summary.tex` | Provider-ready prompt pack; external OpenAI/ChatGPT/local run to be imported | Re-run all 54 prompts with selected final provider and rebuild table |
+| AeroGraph direct manual/API response file | `outputs/reports/live/aerograph_nonmock_readiness_status.md` | Final prompt-pack external response file 0/54 | Fill `outputs/reasoning/aerograph_manual_responses.jsonl` or configure provider before promoting the reasoner table |
 | AeroGraph external-provider collection plan | `docs/aerograph_nonmock_collection_plan.md` | Ready | Use as the acceptance gate before promoting the reasoner table |
 | AeroGraph real-capture compact provider smoke | `outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/` | Prompt batches ready; provider responses to be imported | Collect 23 valid-schema provider responses to sanity-check the current real-Cesium smoke setting |
 | Full optimized 3D completion/restoration benchmark | `paper/tables/marinecity_3d_completion_results_table.tex` | Runner-family smoke rows are ready for Nerfacto, Instant-NGP, and Splatfacto/3DGS-style methods | Longer optimized reconstruction/restoration validation before claiming a full benchmark |

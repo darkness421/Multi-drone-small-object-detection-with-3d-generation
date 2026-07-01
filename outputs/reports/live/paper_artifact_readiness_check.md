@@ -1,6 +1,6 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-06-30 05:04:09 KST`
+Updated: `2026-07-02 01:17:45 KST`
 Status: `paper_artifact_audit_submission_ready_with_optional_gates`
 
 ## Summary
@@ -103,8 +103,8 @@ Status: `paper_artifact_audit_submission_ready_with_optional_gates`
 | supp_system | paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png | main_or_supp_validation | True | ok | Real-Cesium detector preview contact sheet from SAFR-YOLO validation run |
 | supp_system | paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png | supp | True | ok | Real-Cesium 3-scenario x 3-UAV capture contact sheet |
 | supp_system | paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png | supp | True | ok | Real-Cesium cross-view evidence graph validation figure |
-| supp_system | paper/figures/results/marinecity_system/marinecity_qualitative_selection_manifest.md | supp | True | ok | MarineCity qualitative selection rules |
-| supp_system | paper/figures/results/marinecity_system/marinecity_qualitative_gate.md | supp | True | ok | MarineCity full-frame vs crop-only qualitative gate |
+| supp_system | outputs/reports/live/marinecity_qualitative_selection_manifest.md | runbook | True | ok | MarineCity qualitative selection rules |
+| supp_system | outputs/reports/live/marinecity_qualitative_gate.md | runbook | True | ok | MarineCity full-frame vs crop-only qualitative gate |
 | supp_system | outputs/reports/live/marinecity_real_capture_benchmark.md | runbook | True | ok | Real-Cesium capture benchmark manifest summary |
 | supp_system | outputs/reports/live/marinecity_detector_reasoner_smoke.md | runbook | True | ok | Real-Cesium detector-to-reasoner validation report |
 | supp_system | outputs/reports/live/marinecity_crossview_evidence_graph.md | runbook | True | ok | Real-Cesium cross-view evidence graph validation report |
@@ -128,7 +128,7 @@ Status: `paper_artifact_audit_submission_ready_with_optional_gates`
 | optional_reasoner_provider | outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv | runbook | True | ok | Optional compact real-capture web-provider collection checklist |
 | optional_reasoner_provider | outputs/reasoning/aerograph_real_capture_eval_dryrun/manifest.json | audit | True | ok | Compact real-capture prompt-pack runner dry-run check |
 | optional_reasoner_provider | scripts/normalize_aerograph_web_responses.py | runbook_helper | True | ok | Web LLM raw-output normalizer for optional AeroGraph manual responses |
-| audit | paper/figures/results/paper_artifact_readiness_manifest.md | audit | True | ok | Human-readable artifact manifest |
+| audit | outputs/reports/live/paper_artifact_readiness_manifest.md | audit | True | ok | Human-readable artifact manifest |
 | audit | outputs/reports/live/latex_patch_integrity_check.md | audit | True | ok | LaTeX input/figure/label integrity check |
 | audit | outputs/reports/live/external_gate_capabilities.md | audit | True | ok | External provider and neural-3D runner capability check |
 | audit | docs/accv_research_package_readiness_audit_2026-06-25.md | audit | True | ok | Claim readiness audit |

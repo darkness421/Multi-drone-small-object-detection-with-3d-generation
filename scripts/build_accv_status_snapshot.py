@@ -34,7 +34,7 @@ SIM_DASHBOARD = LIVE_DIR / "marinecity_simulation_dashboard.png"
 TRAIN_DASHBOARD = LIVE_DIR / "training_dashboard.png"
 READINESS_AUDIT = LIVE_DIR / "accv_research_package_readiness_audit.md"
 TRACKED_READINESS_AUDIT = REPO_ROOT / "docs/accv_research_package_readiness_audit_2026-06-25.md"
-PAPER_ARTIFACT_MANIFEST = REPO_ROOT / "paper/figures/results/paper_artifact_readiness_manifest.md"
+PAPER_ARTIFACT_MANIFEST = LIVE_DIR / "paper_artifact_readiness_manifest.md"
 PAPER_ARTIFACT_CHECK = LIVE_DIR / "paper_artifact_readiness_check.json"
 LATEX_PATCH_CHECK = LIVE_DIR / "latex_patch_integrity_check.json"
 MARINECITY_QUALITATIVE_GATE = LIVE_DIR / "marinecity_qualitative_gate.json"
@@ -45,7 +45,7 @@ MARINECITY_NEURAL3D_DATASET_EXPORT = LIVE_DIR / "marinecity_neural3d_dataset_exp
 MARINECITY_DEPTH_POINTCLOUD_SMOKE = LIVE_DIR / "marinecity_depth_pointcloud_smoke.json"
 MARINECITY_3D_RUNNER_PREFLIGHT = LIVE_DIR / "marinecity_3d_runner_preflight.json"
 AEROGRAPH_COLLECTION_PLAN = REPO_ROOT / "docs/aerograph_nonmock_collection_plan.md"
-AEROGRAPH_PLACEHOLDER_TABLE = REPO_ROOT / "paper/tables/aerograph_reasoner_results_placeholder.tex"
+AEROGRAPH_REASONER_SLOT_TABLE = REPO_ROOT / "paper/tables/aerograph_reasoner_external_slot.tex"
 MARINECITY_SESSION_OVERLAY_STATUS = Path("/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json")
 MARINECITY_TARGET_GEOREF_HEIGHT_M = 160
 UAV_ALTITUDE_POLICY = {
@@ -418,8 +418,8 @@ def build_snapshot() -> dict[str, Any]:
             "marinecity_system_table": "paper/tables/marinecity_system_scenario_table.tex",
             "marinecity_crossview_graph_table": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
             "marinecity_crossview_graph_figure": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
-            "aerograph_placeholder_table": str(AEROGRAPH_PLACEHOLDER_TABLE.relative_to(REPO_ROOT)),
-            "aerograph_placeholder_exists": AEROGRAPH_PLACEHOLDER_TABLE.exists(),
+            "aerograph_reasoner_slot_table": str(AEROGRAPH_REASONER_SLOT_TABLE.relative_to(REPO_ROOT)),
+            "aerograph_reasoner_slot_exists": AEROGRAPH_REASONER_SLOT_TABLE.exists(),
         },
     }
 
@@ -551,7 +551,7 @@ def write_markdown(path: Path, snapshot: dict[str, Any]) -> None:
         f"- MarineCity system table: `{snapshot['paper_ready_artifacts']['marinecity_system_table']}`",
         f"- MarineCity cross-view graph table: `{snapshot['paper_ready_artifacts']['marinecity_crossview_graph_table']}`",
         f"- MarineCity cross-view graph figure: `{snapshot['paper_ready_artifacts']['marinecity_crossview_graph_figure']}`",
-        f"- AeroGraph placeholder table: `{snapshot['paper_ready_artifacts']['aerograph_placeholder_table']}`",
+        f"- AeroGraph external-provider table slot: `{snapshot['paper_ready_artifacts']['aerograph_reasoner_slot_table']}`",
         "",
     ]
     path.write_text("\n".join(lines), encoding="utf-8")

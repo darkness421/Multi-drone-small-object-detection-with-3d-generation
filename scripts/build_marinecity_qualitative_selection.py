@@ -10,7 +10,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 MARINE_DIR = REPO_ROOT / "paper/figures/results/marinecity_system"
 CAPTURE_QA = MARINE_DIR / "marinecity_capture_quality_rank.csv"
 CROP_QA = MARINE_DIR / "marinecity_real_capture_crop_candidates.csv"
-OUT_MD = MARINE_DIR / "marinecity_qualitative_selection_manifest.md"
+OUT_MD = REPO_ROOT / "outputs/reports/live/marinecity_qualitative_selection_manifest.md"
 OUT_TEX = REPO_ROOT / "paper/sections/07_marinecity_qualitative_figure_slots.tex"
 
 

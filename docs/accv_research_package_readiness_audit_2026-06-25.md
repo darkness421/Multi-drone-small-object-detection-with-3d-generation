@@ -7,7 +7,7 @@ evidence. Use it before updating the main paper, supplementary material, or
 Overleaf/GitHub status.
 
 Companion paper artifact index:
-`paper/figures/results/paper_artifact_readiness_manifest.md`.
+`outputs/reports/live/paper_artifact_readiness_manifest.md`.
 
 ## Current Decision
 
@@ -44,8 +44,8 @@ Companion paper artifact index:
 
 | Area | Current State | Required Before Final Claim |
 |---|---|---|
-| AeroGraph external-provider reasoning accuracy | Reviewed 49-prompt candidate table, web batches, dry-run, and table builder exist; final paper claim remains pending | Complete one external-provider run over all 49 prompts and rebuild `paper/tables/aerograph_reasoner_results_placeholder.tex` |
-| AeroGraph real-capture compact smoke | 23-prompt current-capture prompt pack and dry-run exist, but no non-mock provider manifest is present | Configure `OPENAI_API_KEY` or `AEROGRAPH_COMMAND`, or import web answers into `outputs/reasoning/aerograph_real_capture_manual_responses.jsonl` |
+| AeroGraph external-provider reasoning accuracy | Prompt-pack table builder and web batches exist; final paper claim remains conservative | Complete one external-provider run over the final prompt pack and rebuild `paper/tables/aerograph_reasoner_external_slot.tex` |
+| AeroGraph real-capture compact smoke | 23-prompt current-capture prompt pack and dry-run exist, but no external-provider provider manifest is present | Configure `OPENAI_API_KEY` or `AEROGRAPH_COMMAND`, or import web answers into `outputs/reasoning/aerograph_real_capture_manual_responses.jsonl` |
 | 3D reconstruction/restoration benchmark | Current evidence is detector-to-graph/system smoke, not final NeRF/3DGS/3D-completion benchmark | Run final 3D completion/restoration experiment or phrase as planned/initial protocol |
 | Final MarineCity qualitative figure | Real-Cesium smoke, crop supplementary evidence, and clean full-frame main candidate are ready (`best full-frame void=0.017828`, `mean top-3 void=0.087552`) | Keep as paper candidate and re-check during final layout review |
 | Isaac live GUI state | User-visible GUI has real Cesium, but paper evidence should come from saved screenshots/manifests | Export clean screenshots/panels after final altitude and ROI are locked |
@@ -110,12 +110,12 @@ Then rebuild the paper table:
 python scripts/build_aerograph_reasoner_table.py
 ```
 
-The table builder should only promote complete non-mock manifests. Current
+The table builder should only promote complete external-provider manifests. Current
 status is intentionally pending in:
 
 - `outputs/reports/live/aerograph_nonmock_readiness_status.md`
 - `outputs/reports/live/aerograph_reasoner_table_manifest.json`
-- `paper/tables/aerograph_reasoner_results_placeholder.tex`
+- `paper/tables/aerograph_reasoner_external_slot.tex`
 
 ## MarineCity Qualitative Status
 

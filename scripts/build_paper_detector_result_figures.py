@@ -1079,8 +1079,8 @@ def export_internal_proposed_search(out_dir: Path = INTERNAL_OUT_DIR) -> list[Pa
     return files
 
 
-def export_manifest(out_dir: Path, files: Iterable[Path]) -> Path:
-    manifest = out_dir / "paper_detector_figures_manifest.md"
+def export_manifest(out_dir: Path, files: Iterable[Path], manifest_dir: Path = OUT_DIR) -> Path:
+    manifest = manifest_dir / "paper_detector_figures_manifest.md"
     lines = [
         "# Paper Detector Figure PNG Manifest",
         "",
@@ -1114,6 +1114,7 @@ def export_manifest(out_dir: Path, files: Iterable[Path]) -> Path:
             "- Auxiliary cross-dataset stress-test artifacts are intentionally excluded from this paper-facing figure manifest.",
         ]
     )
+    manifest.parent.mkdir(parents=True, exist_ok=True)
     manifest.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return manifest
 
