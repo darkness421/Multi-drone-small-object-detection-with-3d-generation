@@ -2,8 +2,8 @@ name: top3_proposed_detector_main
 description: >
   Main statistical follow-up for the best model found by
   top3_proposed_detector_screening. Edit base_models/ablations to the winning
-  backbone and module pair, then run 3 seeds for preliminary statistics or 5
-  seeds for the main paper table.
+  backbone and module pair, then run the same 3 seeds used by the main
+  comparison models for a consistent paper table.
 
 data_yaml: configs/detector/visdrone_yolo_data.yaml
 dataset_tag: visdrone_top3_main
@@ -15,7 +15,7 @@ command_csv: outputs/experiments/top3_proposed_main_commands.csv
 training:
   imgsz: 1280
   epochs: 100
-  patience: 50
+  patience: 5
   batch: 8
   seeds: [42, 123, 2026]
   deterministic: true
@@ -37,4 +37,4 @@ ablations:
     enabled: true
     requires:
       - detectors/proposed/modules.py
-    notes: Main candidate after screening. Expand seeds to [42, 123, 2026, 7, 3407] for final paper statistics.
+    notes: Main candidate after screening. Keep seeds at [42, 123, 2026] for consistency with the comparison models; use extra seeds only as optional supplementary robustness checks.

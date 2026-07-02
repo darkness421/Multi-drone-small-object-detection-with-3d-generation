@@ -1,0 +1,46 @@
+{
+  "session": "server-yolov11-p2-confirm",
+  "job_root": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/yolov11_p2_tiny_frelu_confirm_jobs",
+  "queued_count": 2,
+  "skipped_count": 0,
+  "skipped_completed_count": 0,
+  "patience": 20,
+  "jobs": [
+    {
+      "ablation": "p2_tiny_frelu",
+      "method": "ProposedNext-P2TinyFReLU-yolo11l",
+      "base_model": "yolo11l.pt",
+      "train_model": "configs/detector/yolo11l-p2.yaml",
+      "init_weights": "yolo11l.pt",
+      "proposed_module": "p2_head+tiny_frelu_neck",
+      "model_patches": "tiny_frelu_neck",
+      "implementation_status": "implemented",
+      "seed": 123,
+      "gpu": 0,
+      "patience": 20,
+      "run_name": "proposed_p2_tiny_frelu_yolo11l_visdrone_yolov11_p2_confirm_seed123",
+      "log_file": "/home/oem/projects/multi-uav-marine-city/outputs/logs/server_yolov11_p2_confirm/proposed_p2_tiny_frelu_yolo11l_visdrone_yolov11_p2_confirm_seed123.log",
+      "status": "queued",
+      "skip_reason": "",
+      "command": "CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=0 conda run --no-capture-output -n com3d-ace python -m detectors.train_yolo train --model configs/detector/yolo11l-p2.yaml --data-yaml configs/detector/visdrone_yolo_data.yaml --epochs 100 --imgsz 1280 --batch 4 --device 0 --seed 123 --project outputs/detectors/server_yolov11_p2_confirm --name proposed_p2_tiny_frelu_yolo11l_visdrone_yolov11_p2_confirm_seed123 --method ProposedNext-P2TinyFReLU-yolo11l --ablation p2_tiny_frelu --base-model yolo11l.pt --proposed-module p2_head+tiny_frelu_neck --model-patches tiny_frelu_neck --implementation-status implemented --patience 20 --init-weights yolo11l.pt"
+    },
+    {
+      "ablation": "p2_tiny_frelu",
+      "method": "ProposedNext-P2TinyFReLU-yolo11l",
+      "base_model": "yolo11l.pt",
+      "train_model": "configs/detector/yolo11l-p2.yaml",
+      "init_weights": "yolo11l.pt",
+      "proposed_module": "p2_head+tiny_frelu_neck",
+      "model_patches": "tiny_frelu_neck",
+      "implementation_status": "implemented",
+      "seed": 2026,
+      "gpu": 1,
+      "patience": 20,
+      "run_name": "proposed_p2_tiny_frelu_yolo11l_visdrone_yolov11_p2_confirm_seed2026",
+      "log_file": "/home/oem/projects/multi-uav-marine-city/outputs/logs/server_yolov11_p2_confirm/proposed_p2_tiny_frelu_yolo11l_visdrone_yolov11_p2_confirm_seed2026.log",
+      "status": "queued",
+      "skip_reason": "",
+      "command": "CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=1 conda run --no-capture-output -n com3d-ace python -m detectors.train_yolo train --model configs/detector/yolo11l-p2.yaml --data-yaml configs/detector/visdrone_yolo_data.yaml --epochs 100 --imgsz 1280 --batch 4 --device 0 --seed 2026 --project outputs/detectors/server_yolov11_p2_confirm --name proposed_p2_tiny_frelu_yolo11l_visdrone_yolov11_p2_confirm_seed2026 --method ProposedNext-P2TinyFReLU-yolo11l --ablation p2_tiny_frelu --base-model yolo11l.pt --proposed-module p2_head+tiny_frelu_neck --model-patches tiny_frelu_neck --implementation-status implemented --patience 20 --init-weights yolo11l.pt"
+    }
+  ]
+}

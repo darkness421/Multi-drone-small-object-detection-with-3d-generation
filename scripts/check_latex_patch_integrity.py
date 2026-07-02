@@ -20,7 +20,7 @@ REF_RE = re.compile(r"\\(?:ref|autoref|cref|Cref)\{([^}]+)\}")
 COMMENTED_INPUT_RE = re.compile(r"^\s*%\s*\\input\{([^}]+)\}", re.MULTILINE)
 
 ALLOWED_PENDING_CONTEXT = {
-    "paper/tables/aerograph_reasoner_results_placeholder.tex",
+    "paper/tables/aerograph_reasoner_external_slot.tex",
     "paper/tables/marinecity_system_scenario_table.tex",
     "paper/sections/06_marinecity_3d_readiness.tex",
     "paper/sections/main_results_patch_bundle.tex",
@@ -151,10 +151,10 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
 
     missing_graphics = check_graphics(all_files)
     _labels, duplicate_labels, unresolved_refs = label_report(all_files)
-    pending = pending_rows(all_files)
-    pending_review = [row for row in pending if row["status"] != "allowed"]
+    open_slots = pending_rows(all_files)
+    open_slot_review = [row for row in open_slots if row["status"] != "allowed"]
     status = "latex_patch_integrity_ok"
-    if all_missing_inputs or missing_graphics or duplicate_labels or unresolved_refs or pending_review:
+    if all_missing_inputs or missing_graphics or duplicate_labels or unresolved_refs or open_slot_review:
         status = "latex_patch_integrity_needs_attention"
 
     return {
@@ -166,12 +166,12 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
         "missing_graphics_count": len(missing_graphics),
         "duplicate_label_count": len(duplicate_labels),
         "unresolved_ref_count": len(unresolved_refs),
-        "pending_review_count": len(pending_review),
+        "open_slot_review_count": len(open_slot_review),
         "missing_inputs": all_missing_inputs,
         "missing_graphics": missing_graphics,
         "duplicate_labels": duplicate_labels,
         "unresolved_refs": unresolved_refs,
-        "pending_rows": pending,
+        "open_slot_mentions": open_slots,
     }
 
 
@@ -199,7 +199,7 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
         f"- Missing graphics: `{report['missing_graphics_count']}`",
         f"- Duplicate labels: `{report['duplicate_label_count']}`",
         f"- Unresolved refs: `{report['unresolved_ref_count']}`",
-        f"- Pending rows needing review: `{report['pending_review_count']}`",
+        f"- Open slots needing review: `{report['open_slot_review_count']}`",
         "",
         "## Bundles",
         "",
@@ -210,7 +210,7 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
         ("missing_graphics", "Missing Graphics", ["source", "figure", "expected_any"]),
         ("duplicate_labels", "Duplicate Labels", ["label", "sources"]),
         ("unresolved_refs", "Unresolved Refs", ["source", "ref"]),
-        ("pending_rows", "Pending Mentions", ["source", "line", "status", "text"]),
+        ("open_slot_mentions", "Open Slot Mentions", ["source", "line", "status", "text"]),
     ]:
         rows = report[key]
         if rows:

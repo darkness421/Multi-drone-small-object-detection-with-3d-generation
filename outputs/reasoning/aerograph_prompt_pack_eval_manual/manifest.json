@@ -1,8 +1,8 @@
 {
   "status": "aerograph_manual_import_complete",
-  "provider": "Codex-assisted review candidate",
+  "provider": "Internal reviewed candidate",
   "prompt_pack": "outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl",
-  "responses": "outputs/reasoning/aerograph_manual_responses.codex_candidate.jsonl",
+  "responses": "outputs/reasoning/aerograph_manual_responses.reviewed_candidate.jsonl",
   "out_dir": "outputs/reasoning/aerograph_prompt_pack_eval_manual",
   "summary": {
     "total": 49,

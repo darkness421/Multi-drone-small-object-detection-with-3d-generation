@@ -36,8 +36,8 @@ def default_model_specs() -> list[ModelSpec]:
             representation="MLP continuous 5D radiance field with volume rendering",
             expected_strengths=["canonical quality baseline", "clean conceptual comparison"],
             expected_weaknesses=["slow training", "slow rendering", "hard to scale to large outdoor scenes"],
-            default_train_command="python -m generative3d.external_runner --method nerf --scene {scene} --data {data}",
-            default_render_command="python -m generative3d.external_runner --method nerf --render --checkpoint {checkpoint}",
+            default_train_command="ns-train nerfacto --data {data}",
+            default_render_command="ns-render camera-path --load-config {checkpoint} --output-path {scene}_nerf_renders",
             notes="Use as the classic reference baseline, not as the expected fastest method.",
         ),
         ModelSpec(
@@ -47,8 +47,8 @@ def default_model_specs() -> list[ModelSpec]:
             representation="multiresolution hash-grid encoding with compact neural field",
             expected_strengths=["very fast convergence", "practical single-scene iteration"],
             expected_weaknesses=["CUDA/tiny-cuda-nn dependency", "quality can vary with camera coverage"],
-            default_train_command="python -m generative3d.external_runner --method instant-ngp --scene {scene} --data {data}",
-            default_render_command="python -m generative3d.external_runner --method instant-ngp --render --checkpoint {checkpoint}",
+            default_train_command="<instant-ngp-upstream-train> --scene {scene} --data {data}",
+            default_render_command="<instant-ngp-upstream-render> --checkpoint {checkpoint}",
             notes="Good speed/quality baseline for iterative Marine City scene capture.",
         ),
         ModelSpec(
@@ -58,8 +58,8 @@ def default_model_specs() -> list[ModelSpec]:
             representation="anti-aliased unbounded-scene radiance field",
             expected_strengths=["outdoor/unbounded-scene quality", "strong novel-view synthesis reference"],
             expected_weaknesses=["high compute cost", "not real-time", "heavier implementation"],
-            default_train_command="python -m generative3d.external_runner --method mip-nerf-360 --scene {scene} --data {data}",
-            default_render_command="python -m generative3d.external_runner --method mip-nerf-360 --render --checkpoint {checkpoint}",
+            default_train_command="<mip-nerf-360-upstream-train> --scene {scene} --data {data}",
+            default_render_command="<mip-nerf-360-upstream-render> --checkpoint {checkpoint}",
             notes="Use when Marine City viewpoints include wide outdoor trajectories.",
         ),
         ModelSpec(
@@ -69,8 +69,8 @@ def default_model_specs() -> list[ModelSpec]:
             representation="optimized anisotropic 3D Gaussians with visibility-aware splat rendering",
             expected_strengths=["real-time rendering", "strong visual quality", "fast interactive inspection"],
             expected_weaknesses=["memory footprint", "floaters under sparse views", "less natural uncertainty output"],
-            default_train_command="python -m generative3d.external_runner --method 3dgs --scene {scene} --data {data}",
-            default_render_command="python -m generative3d.external_runner --method 3dgs --render --checkpoint {checkpoint}",
+            default_train_command="<3dgs-upstream-train> --scene {scene} --source_path {data}",
+            default_render_command="<3dgs-upstream-render> --model_path {checkpoint}",
             notes="Likely best qualitative renderer for same-scene visual inspection.",
         ),
     ]

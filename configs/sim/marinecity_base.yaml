@@ -7,7 +7,7 @@ scene:
   origin:
     latitude_deg: 35.1569
     longitude_deg: 129.1456
-    height_m: 80.0
+    height_m: 160.0
 
 objects:
   fine_classes:
@@ -21,4 +21,3 @@ objects:
     - worker
     - small_boat
     - debris
-

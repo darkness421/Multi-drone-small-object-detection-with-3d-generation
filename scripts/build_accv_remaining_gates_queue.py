@@ -117,7 +117,7 @@ def build_rows() -> list[dict[str, str]]:
                 f"{effective_coverage.get('prompt_count', '-')}; "
                 f"provider validation={aerograph.get('external_provider_replication_ready')}"
             ),
-            "next_action": "Do not block the current submission. Collect OpenAI/ChatGPT/local-provider responses only if adding an external LLM benchmark claim.",
+            "next_action": "Do not block the current submission. Collect external-provider or local-model responses only if adding a separate LLM benchmark claim.",
             "paper_use": "optional_supp_or_future",
         },
         {
@@ -134,10 +134,10 @@ def build_rows() -> list[dict[str, str]]:
         },
         {
             "priority": "P2",
-            "gate": "Overleaf/local compile sync",
-            "status": "open_main_tex_or_overleaf_sync" if not main_tex_gate.get("main_tex_present") else "local_main_tex_present",
+            "gate": "Manuscript/local compile package",
+            "status": "open_main_tex_or_manuscript_package" if not main_tex_gate.get("main_tex_present") else "local_main_tex_present",
             "evidence": f"local main.tex present={main_tex_gate.get('main_tex_present')}; latex check={latex_gate.get('status')}",
-            "next_action": "Keep GitHub/Overleaf patch bundles synced; full compile verification requires the Overleaf project or a local main.tex checkout.",
+            "next_action": "Keep GitHub paper artifacts and LaTeX patch bundles aligned; full compile verification requires a local main.tex checkout.",
             "paper_use": "paper_ops",
         },
     ]
@@ -175,7 +175,7 @@ def write_outputs(rows: list[dict[str, str]]) -> None:
             "",
         "1. Keep VisDrone detector results as the main 2D claim: `Ours` in tables, SAFR-YOLO/P2P4-SelfAttnFR in method text.",
         "2. For 3D, use the verified MarineCity RGB/depth/pose package plus Nerfacto and Splatfacto/3DGS-style rows as system-validation evidence; collect longer validation only before claiming a full 3D benchmark.",
-        "3. For AeroGraph, keep the current paper claim limited to schema, verifier, and action-policy validation. External OpenAI/ChatGPT/local-provider replication is optional supplementary/future evidence.",
+        "3. For AeroGraph, keep the current paper claim limited to schema, verifier, and action-policy validation. External-provider or local-model replication is optional supplementary/future evidence.",
             "",
         ]
     )

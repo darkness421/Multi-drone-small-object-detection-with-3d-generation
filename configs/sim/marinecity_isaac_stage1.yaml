@@ -1,0 +1,80 @@
+name: marinecity_isaac_gpu1_stage1
+dataset_name: CoM3D-MarineCity
+output_root: /tmp/com3d_isaac_stage_exports
+
+scene:
+  name: CoM3D-MarineCity
+  area: Busan Haeundae Marine City
+  digital_twin:
+    engine: NVIDIA Isaac Sim
+    geospatial: Cesium for Omniverse
+    current_stage: proxy_usd_before_cesium_tiles
+  origin:
+    latitude_deg: 35.1569
+    longitude_deg: 129.1456
+    height_m: 160.0
+  usd_stage: /tmp/com3d_isaac_stage_exports/marinecity_proxy_stage.usda
+
+map:
+  proxy_extent_m: [240, 180]
+  road_width_m: 18
+  coastal_axis: east_west
+  building_count: 14
+  note: Proxy geometry is used to validate UAV altitude, object placement, and capture schema before Cesium tiles are attached.
+
+camera:
+  width: 1280
+  height: 720
+  focal_px: 780
+  output_format: png
+
+capture:
+  default_uav_count: 3
+  timestamps: [0.0]
+  altitudes_m: [140, 150, 160]
+  view_angles: [nadir, front_oblique, side_view]
+  weather: [clear]
+  lighting: [day]
+  radius_scale: 0.75
+  export_rgb: true
+  export_depth: true
+  export_masks: true
+  export_2d_bbox: true
+  export_3d_bbox: true
+  export_camera_params: true
+
+scenes:
+  - scene_id: stage1_dense_traffic_intersection
+    description: Marine City proxy intersection with adjacent vehicles, pedestrians, and ambiguous small-object cases.
+    uav_count: 3
+    object_density: dense
+
+objects:
+  classes:
+    - sedan
+    - pickup
+    - van
+    - ambulance
+    - police_car
+    - truck
+    - pedestrian
+    - worker
+    - small_boat
+    - debris
+  ambiguity_pairs:
+    - [sedan, van]
+    - [van, pickup]
+    - [pickup, delivery_truck]
+    - [pedestrian, pole]
+    - [small_boat, buoy]
+
+cutout_overlays:
+  enabled: true
+  manifest: outputs/isaac_assets/visdrone_cutouts_min24/manifest.json
+  z_offset_m: 0.06
+  length_scale: 1.04
+  width_scale: 1.08
+
+splits:
+  val_angles: [side_view]
+  test_angles: [rear_oblique, right_oblique]

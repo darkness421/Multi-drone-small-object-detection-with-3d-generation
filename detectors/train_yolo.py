@@ -22,6 +22,10 @@ def main() -> None:
     parser.add_argument("--batch", type=int, default=8)
     parser.add_argument("--workers", type=int, default=4, help="Dataloader workers. Keep modest on shared servers.")
     parser.add_argument("--device", default=None, help="Ultralytics device string, for example '0' or '0,1'.")
+    parser.add_argument("--conf", type=float, default=None, help="Eval-time confidence threshold.")
+    parser.add_argument("--iou", type=float, default=None, help="Eval-time NMS IoU threshold.")
+    parser.add_argument("--agnostic-nms", action="store_true", help="During eval, use class-agnostic NMS.")
+    parser.add_argument("--max-det", type=int, default=None, help="Eval-time maximum detections per image.")
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--non-deterministic", action="store_true")
     parser.add_argument("--from-scratch", action="store_true", help="Train from model YAML instead of pretrained .pt weights.")
@@ -69,6 +73,10 @@ def main() -> None:
             imgsz=args.imgsz,
             workers=args.workers,
             device=args.device,
+            conf=args.conf,
+            iou=args.iou,
+            agnostic_nms=args.agnostic_nms,
+            max_det=args.max_det,
             roc_auc=args.roc_auc,
             roc_auc_split=args.roc_auc_split,
             roc_auc_max_images=args.roc_auc_max_images,

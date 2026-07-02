@@ -1,0 +1,202 @@
+{
+  "generated_at": "2026-06-18T17:17:46+09:00",
+  "dataset": "VisDrone2019-DET",
+  "primary_metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "min_delta": 0.0,
+  "secondary_min_delta": 0.0,
+  "status": "not_yet",
+  "best_proposed": {
+    "method": "ProposedP2FR-CBAM-yolo11l",
+    "dataset": "VisDrone2019-DET",
+    "scale": "unknown",
+    "seed_count": "1",
+    "best_AP_mean": 0.38481,
+    "best_AP50_mean": 0.60793,
+    "best_F1_mean": 0.6242692817776642,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "best_comparison_primary": null,
+  "best_comparison_secondary": null,
+  "primary_delta": null,
+  "secondary_delta": null,
+  "proposed_rows": [
+    {
+      "method": "ProposedP2FR-CBAM-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38481,
+      "best_AP50_mean": 0.60793,
+      "best_F1_mean": 0.6242692817776642,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedP2FR-WaveletCBAM-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38429,
+      "best_AP50_mean": 0.60547,
+      "best_F1_mean": 0.6256725538515384,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedP2FR-DCT-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.383635,
+      "best_AP50_mean": 0.60457,
+      "best_F1_mean": 0.6250734614310514,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2CompressV3SETinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38247,
+      "best_AP50_mean": 0.6039,
+      "best_F1_mean": 0.6274692956136592,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedP2FR-SE-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38237,
+      "best_AP50_mean": 0.60515,
+      "best_F1_mean": 0.6303315279094759,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "3",
+      "best_AP_mean": 0.3822425,
+      "best_AP50_mean": 0.6053975,
+      "best_F1_mean": 0.6270083051485623,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2CompressV3DynFreqP2TinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38213,
+      "best_AP50_mean": 0.6047,
+      "best_F1_mean": 0.6277621079948573,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2EfficientV3DynFreqP2TinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38194,
+      "best_AP50_mean": 0.60637,
+      "best_F1_mean": 0.626722028720606,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2P4BalancedDynFreqSmallTinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38149,
+      "best_AP50_mean": 0.60335,
+      "best_F1_mean": 0.6232772777658158,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2EfficientV3SETinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38132,
+      "best_AP50_mean": 0.60759,
+      "best_F1_mean": 0.6322157513623495,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedP2FR-Wavelet-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.380805,
+      "best_AP50_mean": 0.602525,
+      "best_F1_mean": 0.6237401087829725,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2P4BalancedSETinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38035,
+      "best_AP50_mean": 0.60083,
+      "best_F1_mean": 0.624293509902057,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2P4BalancedDynFreqP2TinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38013,
+      "best_AP50_mean": 0.60091,
+      "best_F1_mean": 0.6213231065292096,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2BalancedV2TinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "3",
+      "best_AP_mean": 0.3800733333333333,
+      "best_AP50_mean": 0.6011433333333334,
+      "best_F1_mean": 0.6239210490223766,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2EfficientV3TinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.37996,
+      "best_AP50_mean": 0.60088,
+      "best_F1_mean": 0.6257116355738709,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedSize-P2CompressV3TinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.3799,
+      "best_AP50_mean": 0.60214,
+      "best_F1_mean": 0.6256806315554919,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    }
+  ]
+}

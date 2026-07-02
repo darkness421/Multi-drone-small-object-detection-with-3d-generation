@@ -79,6 +79,23 @@ def method_fields(metadata: dict[tuple[str, str], dict[str, str]], dataset: str,
     }
 
 
+def analysis_level(seed_count: int) -> str:
+    if seed_count < 3:
+        return "insufficient_for_pvalue"
+    if seed_count == 3:
+        return "main_3seed"
+    if seed_count < 5:
+        return f"main_{seed_count}seed"
+    return "robust_5plus_seed"
+
+
+def paired_tests(candidate_values: list[float], baseline_values: list[float]) -> tuple[dict[str, Any], dict[str, Any]]:
+    if len(candidate_values) < 3:
+        blank = {"statistic": "", "pvalue": ""}
+        return blank, blank
+    return paired_t_test(candidate_values, baseline_values), wilcoxon_signed_rank(candidate_values, baseline_values)
+
+
 def compare_against_baseline(rows: list[dict[str, str]], metrics: list[str], baseline_method: str | None = None) -> list[dict[str, Any]]:
     metadata = metadata_by_method(rows)
     datasets = sorted({row.get("dataset") or "unknown" for row in rows if row.get("status", "completed") == "completed"})
@@ -98,16 +115,16 @@ def compare_against_baseline(rows: list[dict[str, str]], metrics: list[str], bas
                     continue
                 baseline_values = [baseline[seed] for seed in seeds]
                 candidate_values = [candidate[seed] for seed in seeds]
-                t_test = paired_t_test(candidate_values, baseline_values)
-                wilcoxon = wilcoxon_signed_rank(candidate_values, baseline_values)
+                t_test, wilcoxon = paired_tests(candidate_values, baseline_values)
+                seed_count = len(seeds)
                 result = {
                     "dataset": dataset,
                     "metric": metric,
                     "baseline_method": dataset_baseline_method,
                     "candidate_method": method,
                     "paired_seeds": ",".join(str(seed) for seed in seeds),
-                    "seed_count": len(seeds),
-                    "analysis_level": "main" if len(seeds) >= 5 else "preliminary",
+                    "seed_count": seed_count,
+                    "analysis_level": analysis_level(seed_count),
                     "baseline_mean": mean(baseline_values),
                     "candidate_mean": mean(candidate_values),
                     "delta_candidate_minus_baseline": mean([b - a for a, b in zip(baseline_values, candidate_values)]),

@@ -20,7 +20,7 @@ scene:
   origin:
     latitude_deg: 35.1569
     longitude_deg: 129.1456
-    height_m: 80.0
+    height_m: 160.0
   usd_stage: assets/marinecity/marinecity_base.usd
 
 camera:
@@ -32,8 +32,8 @@ camera:
 capture:
   default_uav_count: 3
   timestamps: [0.0, 1.0, 2.0]
-  altitudes_m: [60, 100, 150]
-  view_angles: [nadir, front_oblique, side_view, rear_oblique]
+  altitudes_m: [140, 150, 160]
+  view_angles: [nadir, front_oblique, side_view, rear_oblique, right_oblique, left_oblique]
   weather: [clear, rain, snow]
   lighting: [day, shadow, sunset]
   radius_scale: 0.9

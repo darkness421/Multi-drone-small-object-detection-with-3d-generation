@@ -3,7 +3,7 @@
 Use this after collecting external-web-LLM/local-LLM answers in raw
 Markdown, text, JSON, or JSONL files. The script normalizes raw responses,
 imports them against either the compact 23-prompt real-capture pack or the full
-49-prompt final pack, and rebuilds the paper/readiness artifacts.
+54-prompt final pack, and rebuilds the paper/readiness artifacts.
 """
 
 from __future__ import annotations
@@ -20,12 +20,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 MODES = {
+    "final54": {
+        "prompt_pack": "outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl",
+        "normalized": "outputs/reasoning/aerograph_manual_responses.normalized.jsonl",
+        "manual": "outputs/reasoning/aerograph_manual_responses.jsonl",
+        "out_dir": "outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
+        "provider_default": "External web LLM final54",
+        "normalization_report_json": "outputs/reports/live/aerograph_web_response_normalization_report.json",
+        "normalization_report_md": "outputs/reports/live/aerograph_web_response_normalization_report.md",
+    },
+    # Backward-compatible alias for older runbooks. The current prompt pack
+    # contains 54 prompts.
     "final49": {
         "prompt_pack": "outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl",
         "normalized": "outputs/reasoning/aerograph_manual_responses.normalized.jsonl",
         "manual": "outputs/reasoning/aerograph_manual_responses.jsonl",
         "out_dir": "outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
-        "provider_default": "External web LLM final49",
+        "provider_default": "External web LLM final54",
         "normalization_report_json": "outputs/reports/live/aerograph_web_response_normalization_report.json",
         "normalization_report_md": "outputs/reports/live/aerograph_web_response_normalization_report.md",
     },
@@ -57,7 +68,7 @@ def run_cmd(cmd: list[str], *, allow_failure: bool = False) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", choices=sorted(MODES), default="final49")
+    parser.add_argument("--mode", choices=sorted(MODES), default="final54")
     parser.add_argument("--input", nargs="+", required=True, help="Raw web response files, directories, or globs.")
     parser.add_argument("--provider-label", default="", help="Provider label to write into the imported manifest.")
     parser.add_argument("--allow-partial", action="store_true", help="Allow import before all prompts have responses.")
@@ -100,7 +111,7 @@ def main() -> None:
         import_cmd.append("--allow-partial")
 
     commands = [run_cmd(normalize_cmd), run_cmd(import_cmd, allow_failure=args.allow_partial)]
-    if args.mode == "final49" and not args.skip_table:
+    if args.mode in {"final49", "final54"} and not args.skip_table:
         commands.append(run_cmd([sys.executable, "scripts/build_aerograph_reasoner_table.py"]))
     commands.append(run_cmd([sys.executable, "scripts/check_aerograph_nonmock_readiness.py"]))
     commands.append(run_cmd([sys.executable, "scripts/check_paper_artifact_readiness.py"]))

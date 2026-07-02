@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import math
 import random
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -24,6 +25,10 @@ def bootstrap_ci(values: Sequence[float], *, samples: int = 1000, confidence: fl
 
 
 def paired_t_test(a: Sequence[float], b: Sequence[float]) -> dict[str, float]:
+    if len(a) < 2 or len(b) < 2:
+        diff = np.asarray(a, dtype=float) - np.asarray(b, dtype=float)
+        statistic = float(np.mean(diff)) if diff.size else math.nan
+        return {"statistic": statistic, "pvalue": math.nan}
     try:
         from scipy.stats import ttest_rel
 
@@ -35,13 +40,19 @@ def paired_t_test(a: Sequence[float], b: Sequence[float]) -> dict[str, float]:
 
 
 def wilcoxon_signed_rank(a: Sequence[float], b: Sequence[float]) -> dict[str, float]:
+    if len(a) < 2 or len(b) < 2:
+        return {"statistic": math.nan, "pvalue": math.nan}
     try:
         from scipy.stats import wilcoxon
 
         stat, pvalue = wilcoxon(a, b)
         return {"statistic": float(stat), "pvalue": float(pvalue)}
+    except ValueError:
+        return {"statistic": math.nan, "pvalue": math.nan}
     except ImportError:
-        return {"statistic": 0.0, "pvalue": 1.0}
+        diff = np.asarray(a, dtype=float) - np.asarray(b, dtype=float)
+        statistic = float(np.mean(diff)) if diff.size else math.nan
+        return {"statistic": statistic, "pvalue": math.nan}
 
 
 def write_metrics_csv(

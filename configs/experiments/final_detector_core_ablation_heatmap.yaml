@@ -1,0 +1,87 @@
+name: final_detector_core_ablation_heatmap
+status: planned_after_best_detector_selection
+description: >
+  Core-module ablation heatmap protocol for the final proposed detector. Fill
+  weight paths after the best detector family is selected.
+
+outputs:
+  quantitative:
+    csv: outputs/reports/supplementary_detector/core_ablation_delta_heatmap.csv
+    figure: outputs/reports/supplementary_detector/figures/core_ablation_delta_heatmap.png
+  qualitative:
+    plan: outputs/qualitative/gradcam/core_ablation_gradcam_plan.json
+    figure_dir: outputs/qualitative/gradcam/core_ablation_panels
+
+metrics:
+  - AP
+  - AP50
+  - Recall
+  - F1
+  - Params
+  - GFLOPs
+  - FPS
+
+rows:
+  - key: baseline
+    label: YOLOv11l baseline
+    modules: []
+    weight: TODO
+    purpose: Strong baseline reference.
+
+  - key: core1_size
+    label: Core 1 only
+    modules:
+      - compact_capacity_redistribution
+    weight: TODO
+    purpose: Show model-size reduction and capacity redistribution effect.
+
+  - key: core2_multiscale
+    label: Core 2 only
+    modules:
+      - p2_p3_p4_multiscale_head
+      - tiny_frelu_or_dynfreq_c3
+    weight: TODO
+    purpose: Show 4x/8x/16x and frequency-aware small-object evidence effect.
+
+  - key: core3_overlap
+    label: Core 3 only
+    modules:
+      - overlap_aware_nms
+    weight: TODO
+    purpose: Show adjacent-object decision refinement without architecture change.
+
+  - key: core1_core2
+    label: Core 1 + Core 2
+    modules:
+      - compact_capacity_redistribution
+      - p2_p3_p4_multiscale_head
+      - tiny_frelu_or_dynfreq_c3
+    weight: TODO
+    purpose: Main architecture ablation before overlap-aware decision.
+
+  - key: full
+    label: Core 1 + Core 2 + Core 3
+    modules:
+      - compact_capacity_redistribution
+      - p2_p3_p4_multiscale_head
+      - tiny_frelu_or_dynfreq_c3
+      - overlap_aware_nms
+    weight: TODO
+    purpose: Final proposed detector.
+
+image_cases:
+  - tiny_true_positive_recovered
+  - adjacent_objects_standard_nms_suppression
+  - low_contrast_false_negative
+  - dense_background_false_positive
+
+gradcam_targets:
+  yolo_default: auto-neck-last
+  preferred: detection_head_pre_logit_or_last_high_resolution_neck
+
+paper_usage:
+  main_paper: >
+    Include one compact qualitative panel only if page budget allows.
+  supplementary: >
+    Include full quantitative heatmap, Grad-CAM panels, adjacent-object cases,
+    and failure cases.

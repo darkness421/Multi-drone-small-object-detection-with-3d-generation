@@ -1,0 +1,19 @@
+{
+  "method": "CSFPR-RTDETR",
+  "weights": "/home/oem/projects/multi-uav-marine-city/external/CSFPR-RTDETR/weights/visdrone.pt",
+  "data": "/home/oem/projects/multi-uav-marine-city/external/CSFPR-RTDETR/dataset/visdrone_local.yaml",
+  "split": "val",
+  "imgsz": 1280,
+  "batch": 1,
+  "device": "1",
+  "project": "../../outputs/detectors/related_work_detectors",
+  "name": "csfpr_rtdetr_visdrone_eval_img1280",
+  "results_dict": {
+    "metrics/precision(B)": 0.2804866615286601,
+    "metrics/recall(B)": 0.16606480129286874,
+    "metrics/mAP50(B)": 0.14818926730327894,
+    "metrics/mAP50-95(B)": 0.04203877906974471,
+    "fitness": 0.05265382789309814
+  },
+  "save_dir": "../../outputs/detectors/related_work_detectors/csfpr_rtdetr_visdrone_eval_img12802"
+}

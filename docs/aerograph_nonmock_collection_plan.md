@@ -2,9 +2,9 @@
 
 Updated: 2026-06-26 KST
 
-This runbook is the paper-facing gate for the AeroGraph Reasoner experiment.
-Current detector-to-3D-graph smoke outputs are valid integration evidence, but
-the final AeroGraph result table must use external-provider LLM/VLM responses.
+This runbook describes the AeroGraph Reasoner validation workflow. Current
+detector-to-3D-graph outputs are valid integration evidence; external LLM/VLM
+responses are used only when benchmarking the reasoning layer itself.
 
 ## Current State
 
@@ -31,14 +31,13 @@ the final AeroGraph result table must use external-provider LLM/VLM responses.
   `outputs/reasoning/aerograph_real_capture_web_raw_batches/` and import them
   into `outputs/reasoning/aerograph_real_capture_manual_responses.jsonl`.
 - Current external-provider blocker: no `OPENAI_API_KEY`,
-  `AEROGRAPH_COMMAND`, OpenAI/ChatGPT CLI, or local LLM command is configured in the
-  active shell.
+  `AEROGRAPH_COMMAND`, or local model command is configured in the active shell.
 
 ## Acceptance Criteria
 
-The current internal reviewed candidate is available for internal checking with
-a clear caveat. Promote AeroGraph to a final external-provider benchmark only
-when all conditions below are true:
+The current reviewed candidate is available for internal checking. Promote
+AeroGraph to an external-provider benchmark only when all conditions below are
+true:
 
 1. All 49 current prompts have valid-schema external-provider responses.
 2. Each row preserves either `index` or both `scenario_id` and `object_id`.
@@ -48,14 +47,14 @@ when all conditions below are true:
 4. The importer produces a manifest with
    `non_mock_outputs_ready: true`.
 5. `scripts/build_aerograph_reasoner_table.py` promotes that manifest and
-   rewrites `paper/tables/aerograph_reasoner_results_placeholder.tex` from a
+   rewrites `paper/tables/aerograph_reasoner_external_slot.tex` from a
    complete external-provider run.
 6. The status dashboard shows `49/49` valid-schema coverage for the selected
    final provider manifest.
 
-## Option A: ChatGPT / OpenAI coding agent Web
+## Manual External-Provider Collection
 
-Paste each batch file into the web model and collect JSONL output lines into:
+Run each batch with the selected provider and collect JSONL output lines into:
 
 ```text
 outputs/reasoning/aerograph_manual_responses.jsonl
@@ -276,7 +275,7 @@ Until the external-provider acceptance criteria pass, use only this wording:
 
 > AeroGraph prompt pack and import pipeline are ready; current MarineCity
 > outputs validate detector-to-evidence-token integration, and a reviewed
-> 49-prompt AeroGraph candidate table is available. Final OpenAI/ChatGPT/local
+> 49-prompt AeroGraph candidate table is available. Final external/local
 > provider replication remains pending.
 
 After the criteria pass, report the external-provider table and cite the provider/model
@@ -297,4 +296,4 @@ Expected behavior:
   reports `aerograph_eval_plumbing_test_complete`.
 - The same manifest has `paper_claim_allowed: false` and
   `non_mock_outputs_ready: false`.
-- `paper/tables/aerograph_reasoner_results_placeholder.tex` remains pending.
+- `paper/tables/aerograph_reasoner_external_slot.tex` remains conservative until an external-provider run is imported.

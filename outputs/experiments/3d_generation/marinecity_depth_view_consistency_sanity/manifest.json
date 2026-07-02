@@ -1,6 +1,6 @@
 {
   "status": "marinecity_depth_view_consistency_sanity_ready",
-  "updated_at_kst": "2026-06-27 13:45:26 KST",
+  "updated_at_kst": "2026-06-29 03:06:17 KST",
   "dataset_manifest": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/dataset_manifest.json",
   "out_dir": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_view_consistency_sanity",
   "contact_sheet": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_view_consistency_sanity/marinecity_depth_view_consistency_contact_sheet.png",
@@ -13,9 +13,9 @@
   "stride": 2,
   "max_depth_m": 600.0,
   "scenario_count": 3,
-  "mean_psnr": 10.006380179999477,
-  "mean_ssim_luma": 0.41711997326617684,
-  "mean_fill_ratio": 0.23139286747685184,
+  "mean_psnr": 7.800951022764889,
+  "mean_ssim_luma": 0.04476469196276306,
+  "mean_fill_ratio": 0.32786820023148144,
   "rows": [
     {
       "scenario_id": "uavmarine_s0_viewer160_session_recapture",
@@ -24,12 +24,12 @@
         "uav_01",
         "uav_02"
       ],
-      "source_point_count": 329530,
-      "filled_pixel_count": 212954,
-      "fill_ratio": 0.2310698784722222,
-      "PSNR": 9.991695212429336,
-      "SSIM_luma": 0.4169833308507122,
-      "MAE": 54.80692672729492
+      "source_point_count": 447000,
+      "filled_pixel_count": 303436,
+      "fill_ratio": 0.32924913194444444,
+      "PSNR": 7.73940124739179,
+      "SSIM_luma": 0.031665071660275476,
+      "MAE": 82.53490447998047
     },
     {
       "scenario_id": "uavmarine_s1_viewer160_session_recapture",
@@ -38,12 +38,12 @@
         "uav_01",
         "uav_02"
       ],
-      "source_point_count": 329530,
-      "filled_pixel_count": 213118,
-      "fill_ratio": 0.23124782986111111,
-      "PSNR": 10.05300313258779,
-      "SSIM_luma": 0.42596200654596017,
-      "MAE": 54.132389068603516
+      "source_point_count": 447000,
+      "filled_pixel_count": 303841,
+      "fill_ratio": 0.32968858506944443,
+      "PSNR": 7.755918842015852,
+      "SSIM_luma": 0.03486392665769602,
+      "MAE": 82.30773162841797
     },
     {
       "scenario_id": "uavmarine_s2_viewer160_session_recapture",
@@ -52,12 +52,12 @@
         "uav_01",
         "uav_02"
       ],
-      "source_point_count": 329530,
-      "filled_pixel_count": 213683,
-      "fill_ratio": 0.23186089409722221,
-      "PSNR": 9.974442194981307,
-      "SSIM_luma": 0.4084145824018582,
-      "MAE": 54.718326568603516
+      "source_point_count": 447000,
+      "filled_pixel_count": 299213,
+      "fill_ratio": 0.3246668836805556,
+      "PSNR": 7.907532978887028,
+      "SSIM_luma": 0.06776507757031769,
+      "MAE": 80.211181640625
     }
   ],
   "claiming_rule": "This is a depth-backed cross-view sanity check from real RGB/depth/pose captures. It is not a neural 3D reconstruction benchmark and must not be reported as NeRF/3DGS performance."

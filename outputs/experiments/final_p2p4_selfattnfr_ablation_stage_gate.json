@@ -1,0 +1,67 @@
+{
+  "metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "candidate_regex": "(?i)(proposed|com3d|ace|wavelet|deformable|tiling|ours)",
+  "lightweight_max_params": 15000000,
+  "min_delta": 0.0,
+  "require_main": false,
+  "baseline_count": 25,
+  "candidate_count": 7,
+  "best_overall_baseline": {
+    "method": "yolov9e",
+    "model": "yolov9e.pt",
+    "detector_family": "Other",
+    "model_version": "unknown",
+    "model_scale": "unknown",
+    "param_size_group": "large",
+    "seed_count": 1,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.38643,
+    "best_AP50_mean": 0.61393,
+    "Params_mean": 58152622.0,
+    "GFLOPs_mean": 192.7
+  },
+  "best_lightweight_baseline": {
+    "method": "YOLOv9s",
+    "model": "yolov9s.pt",
+    "detector_family": "YOLO",
+    "model_version": "v9",
+    "model_scale": "small",
+    "param_size_group": "small",
+    "seed_count": 3,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.3454,
+    "best_AP50_mean": 0.5573433333333333,
+    "Params_mean": 7291278.0,
+    "GFLOPs_mean": 27.4
+  },
+  "best_proposed_candidate": {
+    "method": "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l",
+    "model": "configs/detector/yolo11l-p2p4-balanced-v1.yaml",
+    "detector_family": "Other",
+    "model_version": "unknown",
+    "model_scale": "unknown",
+    "param_size_group": "unknown",
+    "seed_count": 3,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.3822425,
+    "best_AP50_mean": 0.6053975,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "candidate_vs_best_overall": {
+    "baseline_method": "yolov9e",
+    "candidate_method": "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l",
+    "best_AP_mean_delta": -0.004187500000000011,
+    "best_AP50_mean_delta": -0.008532499999999943
+  },
+  "candidate_vs_best_lightweight": {
+    "baseline_method": "YOLOv9s",
+    "candidate_method": "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l",
+    "best_AP_mean_delta": 0.0368425,
+    "best_AP50_mean_delta": 0.04805416666666673
+  },
+  "recommended_next_stage": "iterate_proposed_detector",
+  "rationale": "The proposed detector does not yet beat the selected baseline thresholds.",
+  "dataset": "all"
+}

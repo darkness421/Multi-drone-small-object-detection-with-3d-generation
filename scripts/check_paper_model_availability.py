@@ -4,16 +4,22 @@ from __future__ import annotations
 
 import argparse
 import csv
+import sys
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from runtime.config import resolve_path
 
 
 LOCAL_STATUS = {"external_required", "local_required"}
 BUILTIN_STATUS = {"ultralytics_available_check", "already_in_queue"}
+CITATION_ONLY_STATUS = {"citation_only_until_code"}
 
 
 def as_list(value: Any) -> list[str]:
@@ -48,18 +54,31 @@ def is_builtin_or_remote_weight(path: str) -> bool:
     return path.endswith(".pt") and "/" not in path and "\\" not in path
 
 
+def has_public_code_hint(model: dict[str, Any]) -> bool:
+    code = str(model.get("code") or "").lower()
+    source = str(model.get("source") or "").lower()
+    return "github.com" in code or "github.com" in source
+
+
 def classify_model(model: dict[str, Any]) -> dict[str, str]:
     paths = candidate_weight_paths(model)
     local = find_local_weight(paths)
     status = str(model.get("status") or "")
     has_builtin_hint = any(is_builtin_or_remote_weight(path) for path in paths)
+    has_code = has_public_code_hint(model)
 
     if local is not None:
         runnable = "local_weight_found"
         action = "Queue after active VisDrone/proposed jobs if the adapter matches the current trainer."
+    elif status in CITATION_ONLY_STATUS:
+        runnable = "citation_only_until_code"
+        action = "Do not queue yet; cite the paper or stage compatible code/weights first."
+    elif status in LOCAL_STATUS and has_code:
+        runnable = "github_code_needs_adapter_or_checkpoint"
+        action = "Prioritize this candidate: stage repo/checkpoint or build a small adapter before running."
     elif status in LOCAL_STATUS:
-        runnable = "blocked_external_assets"
-        action = "Stage compatible code/checkpoint first; do not count as executed comparison yet."
+        runnable = "pass_no_public_github"
+        action = "Pass full reproduction for now; only test simple transferable mechanisms as our own ablations."
     elif status in BUILTIN_STATUS or has_builtin_hint:
         runnable = "ultralytics_or_queue_candidate"
         action = "Can be checked by the training launcher with CHECK_MODELS=1 once GPUs are idle."
@@ -76,6 +95,7 @@ def classify_model(model: dict[str, Any]) -> dict[str, str]:
         "weights": ";".join(paths),
         "local_weight_found": "true" if local is not None else "false",
         "local_weight_path": str(local) if local is not None else "",
+        "public_code_hint": "true" if has_code else "false",
         "runnable_status": runnable,
         "recommended_action": action,
         "source": str(model.get("source") or ""),
@@ -121,13 +141,14 @@ def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
         "weights",
         "local_weight_found",
         "local_weight_path",
+        "public_code_hint",
         "runnable_status",
         "recommended_action",
         "source",
         "code",
     ]
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -135,23 +156,25 @@ def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
 def write_markdown(path: Path, rows: list[dict[str, str]], config_path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     runnable = [row for row in rows if row["runnable_status"] in {"local_weight_found", "ultralytics_or_queue_candidate"}]
-    blocked = [row for row in rows if row["runnable_status"] == "blocked_external_assets"]
+    github_backed = [row for row in rows if row["runnable_status"] == "github_code_needs_adapter_or_checkpoint"]
+    passed = [row for row in rows if row["runnable_status"] == "pass_no_public_github"]
     lines = [
         "# Paper Model Availability",
         "",
         f"Source config: `{config_path.as_posix()}`",
         "",
-        "This file separates runnable comparison candidates from models that still need external code, adapters, or checkpoints.",
+        "This file separates runnable comparison candidates, GitHub-backed candidates that need adapters/checkpoints, and no-code papers that should be passed for full reproduction.",
         "",
         f"- Runnable or queue-check candidates: `{len(runnable)}`",
-        f"- External-asset blocked candidates: `{len(blocked)}`",
+        f"- GitHub-backed but adapter/checkpoint-needed candidates: `{len(github_backed)}`",
+        f"- Passed for full reproduction because no public GitHub/code is staged: `{len(passed)}`",
         f"- Total candidates: `{len(rows)}`",
         "",
         "## Recommendation",
         "",
-        "Use the already queued YOLO/RT-DETR family as the primary reproducible comparison set.",
-        "For the paper-specific comparison row, add only 2-3 external models after local weights/adapters are staged:",
-        "`LRDS-YOLO` or another YOLO-specialized UAV model, one DETR/D-FINE family model, and optionally `UAVDet`.",
+        "Run models with public GitHub/code and staged assets first. If code exists but the format differs, build only the adapter needed for fair evaluation.",
+        "Pass no-code/no-weight papers for full reproduction, but keep simple transferable mechanisms such as NMS, activation, wavelet/DCT, attention, and P2-head changes as lightweight ablations inside our proposed detector.",
+        "For the paper-specific comparison row, prioritize `CSFPR-RTDETR`, `LEAF-YOLO`, and `DR-YOLO` before lower-priority generic or modality-mismatched models.",
         "",
         "## Candidate Table",
         "",

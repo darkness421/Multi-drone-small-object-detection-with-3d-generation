@@ -10,7 +10,7 @@ protocol:
   data_yaml: configs/detector/visdrone_yolo_data.yaml
   imgsz: 1280
   epochs: 100
-  patience: 20
+  patience: 5
   batch: 4
   seeds: [42, 123, 2026]
   init_weights: yolo11l.pt
@@ -73,8 +73,24 @@ supplementary_rows:
   - p2p4_balanced_se_tiny_frelu
   - p2p4_balanced_dynfreq_p2_tiny_frelu
   - p2p4_balanced_dynfreq_small_tiny_frelu
-  - input_size_sweep_960_1280_1536
+  - fixed_1280_input_control
   - gradcam_core_ablation_panel
+
+stretch_candidates:
+  - key: p2p4_selfattnrf
+    label: P2P4-SelfAttnRF-FR
+    ablation: p2p4_balanced_selfattn_rf_tiny_frelu
+    train: optional
+    suggested_protocol: seed123 smoke test first, then 3-seed only if AP/AP50 improves
+    modules:
+      - p2p4_balanced_head
+      - lite_self_attention_neck
+      - lightweight_dilated_rf_context
+      - tiny_frelu_neck
+    purpose: >
+      Slightly expands the receptive field of the selected SelfAttnFR detector
+      while keeping the added parameter cost small. This is a stretch candidate,
+      not part of the main ablation table unless it beats the confirmed model.
 
 outputs:
   queue_log: outputs/logs/final_p2p4_selfattnfr_ablation_queue/queue.log
@@ -89,5 +105,5 @@ paper_usage:
     Use a compact 4-5 row table or grouped bar chart. Do not place the long
     exhaustive detector table in the main paper.
   supplementary: >
-    Put full 3-seed tables, NMS sweeps, input-size sensitivity, Grad-CAM panels,
-    per-category metrics, and failure cases in supplementary material.
+    Put full 3-seed tables, NMS sweeps, fixed-1280 control notes, Grad-CAM
+    panels, per-category metrics, and failure cases in supplementary material.

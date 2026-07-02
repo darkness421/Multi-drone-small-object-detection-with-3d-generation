@@ -23,7 +23,7 @@ VLM_METHODS = [
     "Always-on VLM",
     "Random VLM",
     "Uncertainty-triggered VLM",
-    "SAGE-triggered VLM",
+    "AeroGraph-triggered VLM",
 ]
 
 

@@ -29,14 +29,14 @@ RUN_RE = re.compile(r"(?P<method>.+)_img(?P<imgsz>\d+)_seed(?P<seed>\d+)$")
 TIMESTAMP_PREFIX_RE = re.compile(r"^\d{8}_\d{6}_")
 
 LABELS = {
-    "tinyperson_safr": "SAFR-YOLO",
-    "tinyperson_safr_transfer": "SAFR-YOLO transfer",
+    "tinyperson_safr": "Ours",
+    "tinyperson_safr_transfer": "Ours transfer",
     "tinyperson_yolov9m": "YOLOv9m",
 }
 
 NOTES = {
-    "SAFR-YOLO": "from TinyPerson scratch run",
-    "SAFR-YOLO transfer": "VisDrone-init TinyPerson fine-tune",
+    "Ours": "legacy TinyPerson scratch run",
+    "Ours transfer": "VisDrone-init TinyPerson fine-tune",
     "YOLOv9m": "strongest TinyPerson stress-test baseline",
 }
 
@@ -175,8 +175,8 @@ def draw_dashboard(path: Path, rows: list[dict[str, Any]], *, paper_style: bool 
     methods = sorted({str(row["method"]) for row in rows})
     sizes = sorted({int(row["imgsz"]) for row in rows})
     colors = {
-        "SAFR-YOLO": "#2563eb",
-        "SAFR-YOLO transfer": "#f97316",
+        "Ours": "#2563eb",
+        "Ours transfer": "#f97316",
         "YOLOv9m": "#16a34a",
     }
     fig, axes = plt.subplots(1, 2, figsize=(13, 5.5), dpi=170)

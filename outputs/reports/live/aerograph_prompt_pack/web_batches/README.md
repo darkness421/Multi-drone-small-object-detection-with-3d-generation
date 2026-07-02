@@ -7,15 +7,16 @@ file into an external web LLM, collect JSONL output, and append it to:
 outputs/reasoning/aerograph_manual_responses.jsonl
 ```
 
-The active prompt pack has 49 prompts across 5 batches.
+The active prompt pack has 54 prompts across 6 batches.
 
 | Batch | Items | Count | Scenario Counts | File |
 | ---: | --- | ---: | --- | --- |
 | 1 | 1-10 | 10 | S0:10 | `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_01_001-010.md` |
-| 2 | 11-20 | 10 | S0:3, S1:7 | `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_02_011-020.md` |
+| 2 | 11-20 | 10 | S0:9, S1:1 | `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_02_011-020.md` |
 | 3 | 21-30 | 10 | S1:10 | `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_03_021-030.md` |
-| 4 | 31-40 | 10 | S2:10 | `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_04_031-040.md` |
-| 5 | 41-49 | 9 | S2:9 | `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_05_041-049.md` |
+| 4 | 31-40 | 10 | S1:3, S2:7 | `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_04_031-040.md` |
+| 5 | 41-50 | 10 | S2:10 | `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_05_041-050.md` |
+| 6 | 51-54 | 4 | S2:4 | `outputs/reports/live/aerograph_prompt_pack/web_batches/aerograph_web_batch_06_051-054.md` |
 
 ## Required Response Shape
 

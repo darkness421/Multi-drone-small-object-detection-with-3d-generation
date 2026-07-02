@@ -1,43 +1,50 @@
 # Reports Index
 
-Last organized: `2026-05-30`
+Updated: `2026-07-02 KST`
 
-This folder is the small, Git-friendly report area. It should contain only
-Markdown, CSV tables, JSON summaries, and compact PNG figures. Raw datasets,
-weights, raw training runs, logs, and caches stay outside Git.
+This directory stores compact experiment summaries and final figures that are small enough to track. It should not contain raw detector runs, weights, datasets, cache folders, or long logs.
 
-## Open First
+## Detector Results
 
 | Path | Use |
 | --- | --- |
-| `server_with_proposed/README.md` | Current consolidated detector report for paper writing |
-| `detector_experiment_status.md` | Current queue status, dataset readiness, model availability, and next actions |
-| `live/README.md` | Live dashboard files generated while tmux training is running |
-| `archive/README.md` | Older report bundles and presentation-only assets |
+| `final_detector_table_preview.csv` | Main detector comparison snapshot |
+| `final_detector_table_preview.md` | Human-readable detector comparison summary |
+| `final_detector_table_preview.tex` | LaTeX detector table source |
+| `final_detector_tables/main_1280_completed_3seed.csv` | Main 1280-resolution, three-seed detector source table |
+| `final_detector_tables/current_1280_sweep_status.csv` | Sweep status source |
+| `detector_rankings/` | Ranked detector result CSVs |
 
-## Current Paper Report
+## Live System Reports
 
-| Path | Contents |
+| Path | Use |
 | --- | --- |
-| `server_with_proposed/figures/` | Paper-facing plots split by AP/AP50, PR/F1, params, GFLOPs, speed, and seed spread |
-| `server_with_proposed/tables/` | Results, summary, and p-value CSVs |
-| `server_with_proposed/stage_gate.md` | Current detector stage-gate decision |
-| `server_with_proposed/paper_model_availability.md` | Runnable or external-required status for recent comparison models |
+| `live/marinecity_system_integration_check.md` | MarineCity system artifact check |
+| `live/marinecity_system_efficiency_report.md` | MarineCity system efficiency summary |
+| `live/marinecity_detector_reasoner_smoke.md` | Detector-to-reasoner validation summary |
+| `live/marinecity_3d_completion_readiness.md` | Neural 3D readiness gate |
+| `live/marinecity_depth_pointcloud_smoke.md` | Depth-fused geometry validation summary |
 
-## Live Monitoring
+## Figures
 
-`live/` is for active training visibility only. Treat those files as temporary
-monitoring artifacts until the collector promotes a clean snapshot into
-`server_with_proposed/`.
+Publication-quality figures are kept either directly in this directory or under `paper/figures/results/`.
 
-## Archive
+Main detector figures:
 
-`archive/` holds superseded snapshots and non-current presentation assets. Do
-not use archive files as the current paper result unless the README explicitly
-points to them.
+- `paper_fig01_main_detector_table.png`
+- `paper_fig04_ap_ap50_bar_chart.png`
+- `paper_fig05_ap_params_scatter.png`
+- `paper_fig06_gated_tradeoff_bar.png`
+- `paper_fig08_final_ablation_main_table.png`
+- `paper_fig09_final_ablation_delta_bar.png`
 
-## Regenerate
+MarineCity figures:
 
-```bash
-bash scripts/ubuntu/collect_proposed_results.sh
-```
+- `paper/figures/results/marinecity_system/contact_sheet_3_scenarios.png`
+- `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png`
+- `paper/figures/results/marinecity_system/marinecity_real_capture_benchmark_contact_sheet.png`
+- `paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png`
+
+## Reporting Rule
+
+Main comparison rows should come from completed, matched-protocol detector results. Exploratory queue outputs, failed runs, single-seed monitoring rows, and implementation-only checks should stay out of the main detector table.

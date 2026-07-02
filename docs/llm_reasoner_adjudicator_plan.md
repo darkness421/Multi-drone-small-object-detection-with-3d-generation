@@ -2,10 +2,16 @@
 
 ## Goal
 
-Add a final decision layer after detector, 3D geometry, ambiguity scoring, and
-optional VLM/LLM verification. The goal is not to call an LLM for every object,
-but to evaluate whether selective semantic reasoning improves hard-case
-decisions enough to justify latency and cost.
+Add `AeroGraph Reasoner`, a drone-specialized final decision layer after the
+detector, 3D geometry, ambiguity scoring, and optional VLM/LLM verification.
+The goal is not to call an LLM for every object, but to evaluate whether
+selective multi-UAV semantic reasoning improves hard-case decisions enough to
+justify latency and cost.
+
+Naming rule: do not use the previous non-drone-specific label for this paper. `AeroGraph
+Reasoner` denotes the aerial multi-UAV evidence-graph reasoner used for
+ambiguity resolution, targeted re-observation, and verified object-state
+decisions.
 
 ## Inputs
 
@@ -19,7 +25,12 @@ decisions enough to justify latency and cost.
 
 - detector only
 - detector + geometry + ambiguity
-- LLM-assisted final adjudicator
+- AeroGraph Reasoner-assisted final adjudicator
+- AeroGraph Reasoner-assisted final adjudicator + re-observation request policy
+
+The LLM/VLM reasoner is a system-level ablation, not a detector baseline. It
+should be evaluated after detector/proposed-module checkpoints and MarineCity
+multi-view evidence are available.
 
 ## Metrics
 
@@ -30,6 +41,7 @@ decisions enough to justify latency and cost.
 - latency
 - cost proxy
 - failure taxonomy
+- delta over detector-only and detector+3D baselines
 
 ## Advantages
 

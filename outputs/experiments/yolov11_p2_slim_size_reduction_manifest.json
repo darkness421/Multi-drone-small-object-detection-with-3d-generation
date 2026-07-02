@@ -1,0 +1,46 @@
+{
+  "session": "server-yolov11-p2-slim",
+  "job_root": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/yolov11_p2_slim_size_reduction_jobs",
+  "queued_count": 2,
+  "skipped_count": 0,
+  "skipped_completed_count": 0,
+  "patience": 20,
+  "jobs": [
+    {
+      "ablation": "p2_slim_tiny_frelu",
+      "method": "ProposedSize-P2SlimTinyFReLU-yolo11l",
+      "base_model": "yolo11l.pt",
+      "train_model": "configs/detector/yolo11l-p2-slim.yaml",
+      "init_weights": "yolo11l.pt",
+      "proposed_module": "p2_slim_head+tiny_frelu_neck",
+      "model_patches": "tiny_frelu_neck",
+      "implementation_status": "implemented",
+      "seed": 42,
+      "gpu": 0,
+      "patience": 20,
+      "run_name": "proposed_p2_slim_tiny_frelu_yolo11l_visdrone_yolov11_p2_slim_seed42",
+      "log_file": "/home/oem/projects/multi-uav-marine-city/outputs/logs/server_yolov11_p2_slim/proposed_p2_slim_tiny_frelu_yolo11l_visdrone_yolov11_p2_slim_seed42.log",
+      "status": "queued",
+      "skip_reason": "",
+      "command": "CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=0 conda run --no-capture-output -n com3d-ace python -m detectors.train_yolo train --model configs/detector/yolo11l-p2-slim.yaml --data-yaml configs/detector/visdrone_yolo_data.yaml --epochs 100 --imgsz 1280 --batch 4 --device 0 --seed 42 --project outputs/detectors/server_yolov11_p2_slim --name proposed_p2_slim_tiny_frelu_yolo11l_visdrone_yolov11_p2_slim_seed42 --method ProposedSize-P2SlimTinyFReLU-yolo11l --ablation p2_slim_tiny_frelu --base-model yolo11l.pt --proposed-module p2_slim_head+tiny_frelu_neck --model-patches tiny_frelu_neck --implementation-status implemented --patience 20 --init-weights yolo11l.pt"
+    },
+    {
+      "ablation": "p2_slim_wavelet_tiny_frelu",
+      "method": "ProposedSize-P2SlimWaveTinyFReLU-yolo11l",
+      "base_model": "yolo11l.pt",
+      "train_model": "configs/detector/yolo11l-p2-slim.yaml",
+      "init_weights": "yolo11l.pt",
+      "proposed_module": "p2_slim_head+wavelet_stem+tiny_frelu_neck",
+      "model_patches": "wavelet_stem,tiny_frelu_neck",
+      "implementation_status": "implemented",
+      "seed": 42,
+      "gpu": 1,
+      "patience": 20,
+      "run_name": "proposed_p2_slim_wavelet_tiny_frelu_yolo11l_visdrone_yolov11_p2_slim_seed42",
+      "log_file": "/home/oem/projects/multi-uav-marine-city/outputs/logs/server_yolov11_p2_slim/proposed_p2_slim_wavelet_tiny_frelu_yolo11l_visdrone_yolov11_p2_slim_seed42.log",
+      "status": "queued",
+      "skip_reason": "",
+      "command": "CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=1 conda run --no-capture-output -n com3d-ace python -m detectors.train_yolo train --model configs/detector/yolo11l-p2-slim.yaml --data-yaml configs/detector/visdrone_yolo_data.yaml --epochs 100 --imgsz 1280 --batch 4 --device 0 --seed 42 --project outputs/detectors/server_yolov11_p2_slim --name proposed_p2_slim_wavelet_tiny_frelu_yolo11l_visdrone_yolov11_p2_slim_seed42 --method ProposedSize-P2SlimWaveTinyFReLU-yolo11l --ablation p2_slim_wavelet_tiny_frelu --base-model yolo11l.pt --proposed-module p2_slim_head+wavelet_stem+tiny_frelu_neck --model-patches wavelet_stem,tiny_frelu_neck --implementation-status implemented --patience 20 --init-weights yolo11l.pt"
+    }
+  ]
+}

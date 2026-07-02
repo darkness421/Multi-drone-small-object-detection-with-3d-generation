@@ -966,7 +966,7 @@ def main() -> None:
     parser.add_argument("--csv-out", type=Path, default=Path("outputs/reports/final_detector_table_preview.csv"))
     parser.add_argument("--tex-out", type=Path, default=Path("outputs/reports/final_detector_table_preview.tex"))
     parser.add_argument("--split-dir", type=Path, default=Path("outputs/reports/final_detector_tables"))
-    parser.add_argument("--overleaf-repo", type=Path, default=Path("/tmp/accv-overleaf"))
+    parser.add_argument("--latex-export-repo", type=Path, default=Path("/tmp/accv-latex-export"))
     args = parser.parse_args()
 
     main_entries, current_sweep_entries, nms_entries, related_entries = build_preview()
@@ -989,12 +989,12 @@ def main() -> None:
     print(args.csv_out)
     print(args.tex_out)
     print(args.split_dir)
-    if args.overleaf_repo.exists():
-        overleaf_tex = args.overleaf_repo / "tables" / "final_detector_table_preview.tex"
-        write_latex(main_entries, overleaf_tex)
-        write_latex(main_entries, args.overleaf_repo / "tables" / "main_detector_comparison_table.tex", limit=14)
-        write_related_work_latex(related_entries, args.overleaf_repo / "tables" / "related_work_detector_status_table.tex")
-        print(overleaf_tex)
+    if args.latex_export_repo.exists():
+        export_tex = args.latex_export_repo / "tables" / "final_detector_table_preview.tex"
+        write_latex(main_entries, export_tex)
+        write_latex(main_entries, args.latex_export_repo / "tables" / "main_detector_comparison_table.tex", limit=14)
+        write_related_work_latex(related_entries, args.latex_export_repo / "tables" / "related_work_detector_status_table.tex")
+        print(export_tex)
 
 
 if __name__ == "__main__":

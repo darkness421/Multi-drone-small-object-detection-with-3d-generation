@@ -4,19 +4,16 @@ Date: 2026-06-08
 
 Purpose:
 
-- Filter the Notion `Related Research` list by dataset overlap with our detector
+- Filter the related-work model list by dataset overlap with our detector
   experiments.
 - Prioritize comparison models that evaluated UAV or aerial small-object
   detection on `VisDrone`, `UAVDT`, `TinyPerson`, `AI-TOD`, `HIT-UAV`, or
   `DroneVehicle`.
 - Keep plain YOLO family baselines separate from prior-art paper models, and
   keep runnable baselines separate from citation-only or adapter-hold papers.
-
-Live Notion note:
-
-- The current chat session's legacy Notion connector still returns an expired
-  token. This matrix uses the exported Notion research page plus public source
-  checks.
+- Ensure that every detector mentioned in Related Work is explicitly accounted
+  for in either a measured table, an adapter/pending row, or a citation-only
+  coverage row.
 
 ## Main Recommendation
 
@@ -26,44 +23,57 @@ The strongest same-dataset comparison set is:
    exact VisDrone protocol.
 2. Generic non-YOLO baselines: stock RT-DETR-style rows when memory and protocol
    are stable.
-3. Related-work prior models: `SFFEF-YOLO`, `LSOD-YOLO`, `HF-D-FINE`,
-   `CSFPR-RTDETR`, `UAVDet`, `LEAF-YOLO`, `GCL-YOLO`, `SRTSOD-YOLO`, and
-   `YOLO11s-UAV`.
+3. Related-work prior models must be cited in the current manuscript subsection
+   `2.1 UAV Small-object Evidence Generation`. Under the current draft this
+   means `Universal YOLO`, `MFFSODNet`, `DS-YOLOv5s`, `SFFEF-YOLO`,
+   `FMFN-YOLO`, `BPD-YOLO`, `LRDS-YOLO`, `DG-TSOD`, `D2A-Detector`,
+   `CSFPR-RTDETR`, `UFO-DETR`, `CFIA`, `HF-D-FINE`, `DFFormer`,
+   `RT-UAV-SOD`, and `UAVDet`.
 
 Important naming rule:
 
 - A plain YOLO family baseline is a stock family/scale row such as `YOLOv11l`,
   `YOLOv12m`, or `YOLOv8s`.
-- A related-work prior model is a detector proposed by another paper. This
-  includes models with YOLO in the name, such as `LEAF-YOLO`, `SFFEF-YOLO`, and
-  `LSOD-YOLO`; they must not be mixed into the stock YOLO scale sweep.
+- A related-work prior model is a detector proposed by another paper and cited
+  in our Related Work section. Models with public code but no current citation,
+  such as `LEAF-YOLO`, must stay internal-only until the manuscript explicitly
+  cites them.
+- Do not drop a related-work model just because it is not runnable today. Mark
+  it as `measured`, `pending_adapter`, `pending_assets`, or `citation_only`.
 
 For the main paper table, use only models we can run fairly or whose official
 paper numbers are directly comparable on the same dataset split. Put broader
 paper-only comparisons in supplementary.
 
+Canonical coverage files:
+
+- `paper/tables/related_work_coverage_matrix.csv`
+- `outputs/reports/live/related_work_coverage_matrix.md`
+
 ## Dataset-Overlap Matrix
 
-| Model | From Notion Related Research | Dataset Overlap | Best Use | Runnable Status |
+| Model | Source Category | Dataset Overlap | Best Use | Runnable Status |
 | --- | --- | --- | --- | --- |
-| YOLO size baselines | Yes, as baseline family | `VisDrone`, `UAVDT` if converted | Main fair comparison under our protocol | Already running/runnable |
-| RT-DETR-L/R18 | Yes, as non-YOLO baseline | `VisDrone`, `UAVDT` if memory permits | Main non-YOLO anchor | Runnable if memory stable |
-| SFFEF-YOLO | Yes | `VisDrone2019-DET`, `UAVDT`, `TinyPerson` | Strongest citation for tiny-head / remove-large-head design | Citation/adapter-hold |
-| LSOD-YOLO | Yes | `VisDrone2019`, `TinyPerson`, `LEVIR-Ship`, `UAVDT` | Strong lightweight cross-dataset reference | Citation/adapter-hold |
-| HF-D-FINE | Yes | `VisDrone`, `AI-TOD`, `UAVDT` | Strong non-YOLO high-resolution tiny-object reference | Adapter-hold |
-| CSFPR-RTDETR | Yes | `VisDrone`, `AI-TOD`, `HIT-UAV` | Strong RT-DETR/frequency/P2 reference | Public code, adapter needed |
-| UAVDet | Yes | `VisDrone`, `UAVDT`, `DroneVehicle` | Strong CNN-Mamba efficient UAV reference | Adapter-hold |
-| LEAF-YOLO | Added from public code check | `VisDrone`, reported `TinyPerson` | Best near-term lightweight external candidate | Public code, YOLOv7-style adapter needed |
-| GCL-YOLO | Same-dataset scan | `VisDrone-DET2021`, `UAVDT` | Strong lightweight/P5-removal reference | Citation/possible reproduction |
-| SRTSOD-YOLO | Same-dataset scan | `VisDrone`, `UAVDT` | Recent YOLO11 same-dataset reference | Citation/adapter-hold |
-| YOLO11s-UAV | Same-dataset scan | `VisDrone-DET2019`, `UAVDT-DET`, `TinyPerson` | Recent YOLO11 same-dataset reference | Citation/adapter-hold |
-| Universal YOLO small-object structure | Yes / ACCV support | `VisDrone`, `TinyPerson` | Methodological support for 4x feature map and P2 path | Citation/supporting baseline logic |
-| LRDS-YOLO | Yes | `VisDrone` clearly verified | Lightweight YOLO11 UAV reference | Adapter-hold |
-| SOD-YOLO | Yes | UAV small-object, VisDrone-oriented record | P2/Soft-NMS direction | Hold until code/weights mature |
-| MASF-YOLO | Yes | `VisDrone2019` | YOLO11 UAV multi-scale/attention reference | Hold unless code/checkpoint appears |
-| UFO-DETR | Yes | UAV tiny-object/frequency, exact runnable split pending | Frequency-guided DETR citation | Citation/adapter-hold |
-| UAVD-Mamba | Yes | Multimodal UAV detection; direct RGB-only fairness unclear | Mamba/SSM related work | Citation unless modality aligns |
-| BPD-YOLO | Yes | UAV aerial images; exact same-dataset/run source needs deeper check | Lightweight semantic integration citation | Citation-only |
+| YOLO size baselines | Stock baseline family | `VisDrone`, `UAVDT` if converted | Main fair comparison under our protocol | Already running/runnable |
+| RT-DETR-L/R18 | Stock non-YOLO baseline | `VisDrone`, `UAVDT` if memory permits | Main non-YOLO anchor | Runnable if memory stable |
+| Universal YOLO small-object structure | Cited prior | `VisDrone`, `TinyPerson` | Methodological support for 4x feature map and P2 path | Citation/supporting baseline logic |
+| MFFSODNet | Cited prior | UAV aerial imagery; VisDrone compatibility to audit | Multi-scale fusion prior | Official repo cloned; scratch 1280 retrain queued |
+| DS-YOLOv5s | Cited prior | UAV dense/small object imagery | Dense-scene small-object prior | Citation/adapter-hold |
+| SFFEF-YOLO | Cited prior | `VisDrone2019-DET`, `UAVDT`, `TinyPerson` | Strongest citation for tiny-head / remove-large-head design | Citation/adapter-hold |
+| FMFN-YOLO | Cited prior | UAV aerial small-object detection | Feature preservation and FPN balancing prior | Citation/adapter-hold |
+| HF-D-FINE | Cited prior | `VisDrone`, `AI-TOD`, `UAVDT` | Strong non-YOLO high-resolution tiny-object reference | Adapter-hold |
+| CSFPR-RTDETR | Cited prior with code | `VisDrone`, `AI-TOD`, `HIT-UAV` | Strong RT-DETR/frequency/P2 reference | Public code, adapter needed |
+| UAVDet | Cited prior | `VisDrone`, `UAVDT`, `DroneVehicle` | Strong CNN-Mamba efficient UAV reference | Adapter-hold |
+| LRDS-YOLO | Cited prior | `VisDrone` clearly verified | Lightweight YOLO11 UAV reference | Adapter-hold |
+| BPD-YOLO | Cited prior | UAV aerial images; exact same-dataset/run source needs deeper check | Lightweight semantic integration citation | Citation-only |
+| DG-TSOD | Cited prior | `VisDrone`, `UAVDT`, `TinyPerson` | Density-guided refinement prior | Citation/adapter-hold |
+| D2A-Detector | Cited prior | UAV small-object detection | Dual-domain attention prior | Citation/adapter-hold |
+| UFO-DETR | Cited prior | UAV tiny-object/frequency, exact runnable split pending | Frequency-guided DETR citation | Citation/adapter-hold |
+| CFIA | Cited prior | UAV object detection | Coarse-fine feature interaction prior | Citation/adapter-hold |
+| DFFormer | Cited prior | UAV object detection | Feature scaling and interaction prior | Citation/adapter-hold |
+| RT-UAV-SOD | Cited prior | UAV aerial images | Real-time UAV efficiency prior | Citation/adapter-hold |
+| LEAF-YOLO | Internal extra check | `VisDrone`, reported `TinyPerson` | Internal sanity check only unless cited later | Public code; exclude from paper-facing related-work table |
+| GCL-YOLO / SRTSOD-YOLO / YOLO11s-UAV | Internal extra check | UAV/VisDrone-style datasets | Exclude unless manuscript is revised | Do not queue as paper-facing related work |
 
 ## Priority For Our Queue
 
@@ -77,39 +87,40 @@ paper-only comparisons in supplementary.
 
 ### P1: Same-Dataset External Targets
 
-- `LEAF-YOLO`: public repo; best practical lightweight external target.
 - `CSFPR-RTDETR`: public source/code pointer; best frequency/RT-DETR target.
-- `SFFEF-YOLO`: same datasets and directly supports tiny-head replacement.
-- `LSOD-YOLO`: same datasets and strong lightweight cross-layer reference.
-- `HF-D-FINE`: same UAV datasets and strong high-resolution non-YOLO reference.
-- `UAVDet`: same UAV datasets and strong CNN-Mamba reference.
+- `MFFSODNet`: cited multi-scale fusion model; official repo cloned, zip
+  extracted, and scratch 1280 retrain queued after CSFPR.
+- `UAVDet`: cited CNN-Mamba efficient UAV detector; official repo candidate
+  needs dependency/modality audit before queueing.
+- `SFFEF-YOLO`, `FMFN-YOLO`, `DS-YOLOv5s`, and `HF-D-FINE`: cited same-task
+  methods; queue only when compatible assets appear.
 
 ### P2: Backup / Supplementary Same-Dataset References
 
-- `GCL-YOLO`: useful because it uses `VisDrone-DET2021` and `UAVDT`, removes
-  the large prediction head, and reports parameter/FLOP trade-offs.
-- `SRTSOD-YOLO` and `YOLO11s-UAV`: useful as recent YOLO11 same-dataset
-  references, but only after we confirm code/checkpoint quality.
 - `Universal YOLO`: strong citation for 4x/high-resolution feature maps, but not
   a direct required runnable baseline.
+- `BPD-YOLO`, `LRDS-YOLO`, `DG-TSOD`, `D2A-Detector`, `UFO-DETR`, `CFIA`,
+  `DFFormer`, and `RT-UAV-SOD`: cited in Sec. 2.1, but citation-only until
+  reproducible code/weights are staged.
 
 ## Tested So Far
 
 The following same-dataset external evaluations have already been run from
-staged local assets on `VisDrone2019-DET val` at `imgsz=640`.
+staged local assets on `VisDrone2019-DET val`. These are eval-only rows from
+external checkpoints, not our 3-seed training protocol.
 
 | Method | P | R | F1 | AP50 | AP | ParamsM | GFLOPs | Speed ms/img | Note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `CSFPR-RTDETR` | 0.6336 | 0.5145 | 0.5679 | 0.5253 | 0.3279 | 14.0892 | 63.9000 | 27.1000 | Staged official checkpoint; frequency/RT-DETR comparison |
-| `LEAF-YOLO-S` | 0.5770 | 0.4850 | 0.5270 | 0.4820 | 0.2810 | 4.2840 | 20.9000 | 10.0000 | Staged LEAF small checkpoint |
-| `LEAF-YOLO-N` | 0.4800 | 0.4330 | 0.4553 | 0.3970 | 0.2190 | 1.1958 | 5.6000 | 8.9000 | Staged LEAF nano checkpoint |
+| `CSFPR-RTDETR` | see CSV | see CSV | see CSV | see CSV | see CSV | 14.0892 | 63.9000 | see CSV | 1280 eval-only row collected; prior 640 attempt failed from CUDA/NVML environment issue |
+| `LEAF-YOLO-S/N` | see CSV | see CSV | see CSV | see CSV | see CSV | see CSV | see CSV | see CSV | internal-only because LEAF-YOLO is not cited in current Sec. 2.1 |
 
 Important fairness note:
 
-- These are useful paper-facing same-dataset references, but they use the
-  external models' `640` evaluation setting. Our strict official table uses
-  `1280` for trained YOLO/proposed runs, so keep these in a separate external
-  comparison table unless we rerun them under a matched protocol.
+- CSFPR-RTDETR is paper-facing because it is cited in Sec. 2.1. LEAF-YOLO is
+  internal-only because it is not cited in the current manuscript. Our strict
+  official table uses `1280` and 3 seeds for trained YOLO/proposed runs, so
+  external eval-only rows remain separate unless we complete a matched training
+  protocol.
 
 ## Paper Table Strategy
 
@@ -130,12 +141,14 @@ Supplementary:
 ## Source Checks
 
 - CSFPR-RTDETR: `VisDrone`, `AI-TOD`, `HIT-UAV`; public code pointer.
+- MFFSODNet: official repository cloned and extracted; no pretrained checkpoint
+  found, so the queue uses scratch retraining with an explicit protocol note.
+- UAVDet: official repository candidate identified; MMDetection/Mamba and
+  modality-fairness audit pending.
 - SFFEF-YOLO: `VisDrone2019-DET`, `UAVDT`, `TinyPerson`; tiny head replaces
   large head.
-- LSOD-YOLO: `VisDrone2019`, `TinyPerson`, `LEVIR-Ship`, `UAVDT`.
+- FMFN-YOLO: feature preservation and multi-scale pyramid balancing prior.
+- DS-YOLOv5s: dense and small UAV object detection prior.
 - HF-D-FINE: `VisDrone`, `AI-TOD`, `UAVDT`.
-- UAVDet: `VisDrone`, `UAVDT`, `DroneVehicle`.
-- GCL-YOLO: `VisDrone-DET2021`, `UAVDT`; removes P5/large head and adds shallow
-  fusion/prediction head.
-- SRTSOD-YOLO: `VisDrone`, `UAVDT`.
-- YOLO11s-UAV: `VisDrone-DET2019`, `UAVDT-DET`, `TinyPerson`.
+- LEAF-YOLO, GCL-YOLO, SRTSOD-YOLO, and YOLO11s-UAV are excluded from the
+  paper-facing related-work queue unless the manuscript is revised to cite them.

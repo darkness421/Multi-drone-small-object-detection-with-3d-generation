@@ -1,9 +1,9 @@
 {
   "status": "aerograph_web_collection_packet_ready",
-  "prompt_count": 49,
+  "prompt_count": 54,
   "valid_schema_responses": 0,
   "invalid_responses": 0,
-  "pending_responses": 49,
+  "pending_responses": 54,
   "packet": "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_packet.md",
   "checklist": "outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_checklist.csv"
 }

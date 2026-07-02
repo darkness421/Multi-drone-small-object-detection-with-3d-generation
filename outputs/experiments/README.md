@@ -1,31 +1,42 @@
 # Experiment Outputs Index
 
-This directory keeps compact CSV/JSON/manifests that are safe to version.
-Raw detector runs, weights, datasets, caches, and large logs stay outside Git.
+Updated: `2026-07-02 KST`
 
-## Current Detector Results
+This directory keeps small CSV/JSON/manifests that are safe to version. It is not a raw-run storage area.
 
-- `server_with_proposed_results.csv`: consolidated detector/proposed result rows.
-- `server_with_proposed_summary.csv`: model-level summary table.
-- `server_with_proposed_pvalues.csv`: seed statistics and p-values.
-- `server_with_proposed_stage_gate.*`: detector stage-gate decision.
-- `top3_proposed_ablation_commands.csv`: pending top-3 proposed-module screening queue.
-- `paper_model_availability.csv`: local runnable/external-required status for
-  recent paper comparison detector candidates.
+## Paper-Facing Detector Results
 
-## Current Planning Artifacts
+| Path | Use |
+| --- | --- |
+| `server_with_proposed_results.csv` | Consolidated detector/proposed result rows |
+| `server_with_proposed_summary.csv` | Model-level detector summary |
+| `server_with_proposed_pvalues.csv` | Seed statistics and p-values |
+| `server_with_top3_proposed_results.csv` | Top proposed-candidate comparison rows |
+| `server_with_yolov11_p2_next_results.csv` | YOLOv11/P2 follow-up result rows |
+| `final_p2p4_selfattnfr_ablation_results.csv` | Final SAFR-YOLO/P2P4-SelfAttnFR ablation rows |
+| `final_p2p4_selfattnfr_ablation_summary.csv` | Final ablation summary table |
+| `server_baseline_results.csv` | Baseline detector result rows |
+| `server_baseline_summary.csv` | Baseline detector summary table |
 
-- `marinecity_multiview_benchmark.json`: Marine City multi-view benchmark design.
-- `marinecity_isaac_capture_plan.json`: Isaac capture plan.
-- `marinecity_isaac_dry_run_manifest.json`: synthetic dry-run manifest.
-- `3d_generation_comparison.csv`: 3D reconstruction comparison scaffold.
+## MarineCity And 3D Validation
 
-## Active Runtime Folders
-
-- `server_fresh/`: reproducible server queue manifests and live CSVs for baseline/large-model runs.
-- `proposed_ablation_jobs/`: generated proposed-module queue scripts.
+| Path | Use |
+| --- | --- |
+| `marinecity_real_capture_benchmark.csv` | Real-Cesium MarineCity capture benchmark rows |
+| `marinecity_multiview_benchmark.json` | Multi-view benchmark design/manifest |
+| `marinecity_viewer160_pipeline_status.csv` | Viewer160 capture pipeline status |
+| `marinecity_isaac_capture_plan.json` | Isaac/Cesium capture plan |
+| `3d_generation/` | Small neural-3D manifests and validation figures |
 
 ## Archive
 
-Superseded smoke tests, initial baseline summaries, and older official snapshots
-are collected in `archive/`.
+Superseded smoke tests, old server queues, generated job scripts, and stale live CSVs belong under `archive/`.
+Do not use archived rows as current paper evidence unless they are explicitly promoted into `outputs/reports/` or `paper/`.
+
+## Do Not Store Here
+
+- raw datasets
+- `best.pt` / `last.pt` weights
+- full Ultralytics run folders
+- raw logs
+- cache folders

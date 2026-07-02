@@ -45,7 +45,7 @@ def manifest_summary(path: Path) -> dict[str, Any]:
     is_dry_run = manifest.get("provider") == "dry-run" or bool(provider_runtime.get("dry_run"))
     provider = str(manifest.get("provider", ""))
     provider_lower = provider.lower()
-    if "codex-assisted" in provider_lower or "review candidate" in provider_lower:
+    if "internal reviewed" in provider_lower or "review candidate" in provider_lower:
         provider = "AeroGraph reviewed candidate"
     return {
         "path": rel(path),

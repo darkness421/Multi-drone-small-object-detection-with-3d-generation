@@ -1,0 +1,49 @@
+{
+  "metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "candidate_regex": "(?i)(proposed|com3d|ace|wavelet|deformable|tiling|ours)",
+  "lightweight_max_params": 15000000,
+  "min_delta": 0.0,
+  "require_main": false,
+  "baseline_count": 6,
+  "candidate_count": 6,
+  "best_overall_baseline": {
+    "method": "YOLOv11l",
+    "model": "yolo11l.pt",
+    "detector_family": "YOLO",
+    "model_version": "v11",
+    "model_scale": "large",
+    "param_size_group": "medium",
+    "seed_count": 3,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.3776566666666667,
+    "best_AP50_mean": 0.59809,
+    "Params_mean": 25318190.0,
+    "GFLOPs_mean": 87.3
+  },
+  "best_lightweight_baseline": null,
+  "best_proposed_candidate": {
+    "method": "ProposedNext-P2TinyFReLU-yolo11l",
+    "model": "configs/detector/yolo11l-p2.yaml",
+    "detector_family": "Other",
+    "model_version": "unknown",
+    "model_scale": "unknown",
+    "param_size_group": "unknown",
+    "seed_count": 3,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.3823166666666667,
+    "best_AP50_mean": 0.60505,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "candidate_vs_best_overall": {
+    "baseline_method": "YOLOv11l",
+    "candidate_method": "ProposedNext-P2TinyFReLU-yolo11l",
+    "best_AP_mean_delta": 0.0046599999999999975,
+    "best_AP50_mean_delta": 0.006959999999999966
+  },
+  "candidate_vs_best_lightweight": null,
+  "recommended_next_stage": "proceed_to_3d_benchmark",
+  "rationale": "The best proposed detector meets or exceeds the best overall and best lightweight baselines.",
+  "dataset": "all"
+}

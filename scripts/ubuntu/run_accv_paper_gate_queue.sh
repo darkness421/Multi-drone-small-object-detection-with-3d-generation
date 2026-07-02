@@ -5,7 +5,6 @@ REPO_ROOT=${REPO_ROOT:-/home/oem/projects/multi-uav-marine-city}
 QUEUE_LOOP=${QUEUE_LOOP:-0}
 QUEUE_INTERVAL_SEC=${QUEUE_INTERVAL_SEC:-900}
 QUEUE_MAX_ITER=${QUEUE_MAX_ITER:-1}
-OVERLEAF_WORKTREE=${OVERLEAF_WORKTREE:-/tmp/accv-overleaf-sync}
 
 cd "$REPO_ROOT"
 
@@ -42,22 +41,14 @@ run_once() {
     run_step "latex patch integrity" python scripts/check_latex_patch_integrity.py
     run_step "paper artifact readiness" python scripts/check_paper_artifact_readiness.py
     run_step "MarineCity 3D completion readiness" python scripts/check_marinecity_3d_completion_readiness.py
-    run_step "AeroGraph non-mock readiness" python scripts/check_aerograph_nonmock_readiness.py
+    run_step "AeroGraph external-provider readiness" python scripts/check_aerograph_nonmock_readiness.py
     run_step "external gate capabilities" python scripts/check_external_gate_capabilities.py
     run_step "AeroGraph reasoner table refresh" python scripts/build_aerograph_reasoner_table.py
     run_step "MarineCity simulation dashboard" python scripts/build_marinecity_simulation_dashboard.py
     run_step "live detector dashboard" env PYTHONPATH=. python scripts/build_live_training_dashboard.py --out outputs/reports/live/training_dashboard.png
+    run_step "current work status" env PYTHONPATH=scripts python scripts/build_current_work_status.py
     run_step "ACCV workflow snapshot" python scripts/build_accv_status_snapshot.py
     run_step "ACCV remaining gates queue" python scripts/build_accv_remaining_gates_queue.py
-
-    echo
-    echo "===== Overleaf linked repo status ====="
-    if [[ -d "$OVERLEAF_WORKTREE/.git" || -f "$OVERLEAF_WORKTREE/.git" ]]; then
-      git -C "$OVERLEAF_WORKTREE" log --oneline -3 || true
-      git -C "$OVERLEAF_WORKTREE" status --short --branch || true
-    else
-      echo "[WARN] Overleaf worktree not found: $OVERLEAF_WORKTREE"
-    fi
 
     echo
     if [[ ${#FAILED_STEPS[@]} -eq 0 ]]; then

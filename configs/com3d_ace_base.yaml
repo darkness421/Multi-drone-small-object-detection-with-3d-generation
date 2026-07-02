@@ -27,7 +27,7 @@ policy:
 
 vlm:
   enabled: false
-  prompt: SAGE
+  prompt: AeroGraph
   call_policy: selective
 
 outputs:

@@ -62,7 +62,7 @@ def _write_markdown(path: Path, rows: list[dict[str, Any]]) -> None:
         "# MarineCity Real-Capture AeroGraph Prompt Pack",
         "",
         "This compact pack matches the current 23-token real-Cesium detector smoke run.",
-        "Use it for a quick GPT/Factory/local non-mock smoke before the full 49-prompt final gate.",
+        "Use it for a quick external-provider/local-model validation before the full 49-prompt final gate.",
         "",
     ]
     for index, row in enumerate(rows, start=1):
@@ -141,7 +141,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
         "markdown": str(markdown_path.relative_to(repo_root)),
         "manual_response_template_all": str(template_path.relative_to(repo_root)),
         "source": "current 23-token real-Cesium MarineCity detector-to-reasoner smoke outputs",
-        "claiming_rule": "Use as compact non-mock smoke only; full AeroGraph paper-table promotion still requires the 49-prompt final provider gate unless the paper explicitly switches to this 23-prompt protocol.",
+        "claiming_rule": "Use as compact external-provider smoke only; full AeroGraph paper-table promotion still requires the 49-prompt final provider gate unless the paper explicitly switches to this 23-prompt protocol.",
     }
     manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
     return manifest

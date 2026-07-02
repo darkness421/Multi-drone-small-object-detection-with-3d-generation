@@ -164,7 +164,7 @@ def _sample_objects(scene: dict[str, Any], classes: list[str], ambiguity_pairs: 
 
 def build_capture_plan(config: dict[str, Any]) -> list[PlannedUAVView]:
     capture = config.get("capture", {})
-    altitudes = [float(v) for v in _as_list(capture.get("altitudes_m"), [60.0, 100.0])]
+    altitudes = [float(v) for v in _as_list(capture.get("altitudes_m"), [140.0, 150.0, 160.0])]
     view_angles = [normalize_view_angle(str(v)) for v in _as_list(capture.get("view_angles"), ["nadir", "front_oblique", "side_view"])]
     timestamps = [float(v) for v in _as_list(capture.get("timestamps"), [0.0])]
     weather_values = [str(v) for v in _as_list(capture.get("weather"), ["clear"])]
@@ -182,7 +182,7 @@ def build_capture_plan(config: dict[str, Any]) -> list[PlannedUAVView]:
             lighting = lighting_values[ts_idx % len(lighting_values)]
             for uav_idx in range(uav_count):
                 altitude = altitudes[uav_idx % len(altitudes)]
-                view_angle = view_angles[uav_idx % len(view_angles)]
+                view_angle = view_angles[(uav_idx + ts_idx * uav_count) % len(view_angles)]
                 uav_id = f"uav_{uav_idx + 1:02d}"
                 frame_id = f"{scene_id}_{uav_id}_t{ts_idx:03d}_{view_angle}"
                 pose = _pose_for_view(uav_idx, uav_count, altitude, view_angle, radius_scale)
@@ -261,4 +261,3 @@ def write_capture_plan(views: list[PlannedUAVView], out_path: str | Path) -> Pat
     payload = {"summary": summarize_plan(views), "views": [view.to_dict() for view in views]}
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     return out
-

@@ -222,9 +222,17 @@ def export_dataset(args: argparse.Namespace) -> dict[str, Any]:
         ),
         "runner_commands": [
             f"ns-train nerfacto --data {out_root}",
-            f"python -m generative3d.external_runner --method instant_ngp --scene marinecity_real_capture --data {out_root}",
-            f"python -m generative3d.external_runner --method gaussian_splatting --scene marinecity_real_capture --data {out_root}",
+            f"<instant-ngp-upstream-train> --scene marinecity_real_capture --data {out_root}",
+            f"<3dgs-upstream-train> --scene marinecity_real_capture --source_path {out_root}",
         ],
+        "placeholder_smoke_command": (
+            f"python -m generative3d.external_runner --allow-placeholder "
+            f"--method instant_ngp --scene marinecity_real_capture --data {out_root}"
+        ),
+        "runner_requirement": (
+            "Install/connect an upstream NeRF/Instant-NGP/Mip-NeRF/3DGS runner before collecting paper-facing metrics. "
+            "The local generative3d.external_runner is a command-contract placeholder only."
+        ),
     }
     write_json(out_root / "dataset_manifest.json", manifest)
     return manifest
@@ -253,7 +261,16 @@ def write_live_report(manifest: dict[str, Any], path: Path) -> None:
     ]
     for command in manifest["runner_commands"]:
         lines.append(f"- `{command}`")
-    lines.extend(["", f"Claiming rule: {manifest['claiming_rule']}", ""])
+    lines.extend(
+        [
+            "",
+            f"- Placeholder smoke only: `{manifest['placeholder_smoke_command']}`",
+            f"- Requirement: {manifest['runner_requirement']}",
+            "",
+            f"Claiming rule: {manifest['claiming_rule']}",
+            "",
+        ]
+    )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")
 

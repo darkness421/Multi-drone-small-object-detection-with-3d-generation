@@ -9,7 +9,7 @@
     "uavmarine_s2_viewer160_session_recapture": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/evidence_tokens_uavmarine_s2_viewer160_session_recapture.jsonl"
   },
   "preview_contact_sheet": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/marinecity_real_capture_detector_smoke/marinecity_detector_preview_contact_sheet.png",
-  "device": "cpu",
+  "device": "1",
   "imgsz": 1280,
   "conf": 0.15,
   "frame_count": 9,

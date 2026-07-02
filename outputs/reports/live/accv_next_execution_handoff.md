@@ -1,6 +1,6 @@
 # ACCV Next Execution Handoff
 
-Updated: `2026-06-27T21:18:22+09:00`
+Updated: `2026-06-29T02:36:18+09:00`
 
 This file lists only the next actions needed to move the research package closer to paper-ready completion. It intentionally separates paper-ready evidence from blocked external gates.
 
@@ -14,7 +14,7 @@ This file lists only the next actions needed to move the research package closer
 ## Already Paper-Ready
 
 - Detector main claim: `Ours`, AP/AP50/F1 `0.382163`/`0.605173`/`0.627275`, params `20.82M`, seeds `42,123,2026`.
-- TinyPerson: corrected original-window/1280 diagnostic is complete, but Ours is below YOLOv9m; keep it as an internal archive-only diagnostic, excluded from default main/supplementary claims.
+- TinyPerson224: Top5/3-seed auxiliary stress test is complete at 224 input, but AP is near zero across methods; keep it internal and exclude it from default main/supplementary claims.
 - Paper artifact audit: `paper_artifact_audit_ok_with_pending_gates`.
 
 ## Gate 1: Neural 3D Completion Metrics
@@ -43,9 +43,9 @@ Keep the verified Nerfacto and Splatfacto/3DGS-style rows as paper-safe system-s
 
 ## Gate 2: AeroGraph External Non-Mock Reasoner
 
-- Current status: `aerograph_reviewed_candidate_ready_external_pending`.
-- Prompt-pack integrity: `aerograph_prompt_pack_integrity_ok`, prompts `49`.
-- Manual/direct valid responses: `0/49`.
+- Current status: `aerograph_external_provider_pending_responses`.
+- Prompt-pack integrity: `aerograph_prompt_pack_integrity_ok`, prompts `54`.
+- Manual/direct valid responses: `0/54`.
 - External-provider replication ready: `False`.
 
 Fast smoke path:
@@ -57,7 +57,7 @@ AEROGRAPH_COMMAND='COMMAND_THAT_READS_STDIN_AND_RETURNS_JSON' AEROGRAPH_PROVIDER
 # AEROGRAPH_COMMAND can point to any local command that reads stdin and returns AeroGraph JSON.
 ```
 
-Final 49-prompt path:
+Final 54-prompt path:
 
 ```bash
 OPENAI_API_KEY=... AEROGRAPH_PROVIDER=openai bash scripts/ubuntu/start_aerograph_nonmock_queue.sh
@@ -74,7 +74,7 @@ Manual web fallback:
 
 ```bash
 python scripts/import_aerograph_external_responses.py \
-  --mode final49 \
+  --mode final54 \
   --input reasoning/aerograph_web_raw_batches/*.md \
   --provider-label "External web LLM"
 

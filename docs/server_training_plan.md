@@ -40,15 +40,28 @@ Expanded comparison sweep after the top-3 seed extension:
 - YOLOv26n
 - YOLOv26s
 - YOLOv12m
-- LRDS-YOLO, as an external paper-specific UAV small-object detector if a
-  loadable implementation/checkpoint is available
+- paper-driven external candidates if compatible code/checkpoints are staged:
+  LEAF-YOLO, LRDS-YOLO, CSFPR-RTDETR, UAVDet/UAVD-Mamba, HF-D-FINE, and
+  RF-DETR-B as a secondary generic transformer check
 
 The expanded sweep fills comparison gaps across older YOLO generations, YOLO26,
-YOLOv10, paper-specific UAV detectors, and medium-capacity models. These runs
-use the preliminary 3-seed set first.
+YOLOv10, paper-specific UAV detectors, non-YOLO transformer/Mamba families, and
+medium-capacity models. These runs use the preliminary 3-seed set first.
 YOLOv6s and YOLOv7 are treated as optional legacy checkpoints: the queue checks
 whether the weights are loadable in the current Ultralytics environment and
 skips them automatically if no compatible checkpoint is available.
+
+Paper-model priority after the 2026-05-30 public-code re-check:
+
+1. Built-in/reproducible rows first: YOLOv5/8/9/10/11/12/26 by size and
+   RT-DETR where memory allows.
+2. Add 2-3 external paper rows only after local adapters are ready:
+   `LEAF-YOLO` as a lightweight YOLO-family UAV model, `CSFPR-RTDETR` as the
+   UAV-specific RT-DETR/frequency model, and one Mamba/CNN or D-FINE candidate
+   if runnable.
+3. Keep `SOD-YOLO`, `DR-YOLO`, `LRDS-YOLO`, `UAVDet`, `HF-D-FINE`,
+   `UFO-DETR`, `UAVD-Mamba`, and `RF-DETR-B` in the paper availability table
+   until code, weights, and fair dataset adapters are verified.
 
 ## Seeds
 
@@ -58,16 +71,18 @@ Preliminary seed set:
 
 Main statistical seed set:
 
-- `42, 123, 2026, 7, 3407`
+- `42, 123, 2026`
 
-Three seeds are preliminary statistical analysis only. Five or more seeds are
-used for the main statistical result.
+Use three seeds for the main detector statistics so the proposed model and the
+comparison models are evaluated consistently. Extra seeds such as `7` and
+`3407` can be reported only as optional supplementary robustness checks.
 
 ## Strategy
 
 1. Train all YOLO and non-YOLO baseline/comparison models with the preliminary
    3-seed set.
-2. Extend the top 2-3 models to the 5-seed main statistical set.
+2. Keep the top comparison models and final proposed model on the same 3-seed
+   main statistical set.
 3. Freeze the best overall baseline and best lightweight baseline as the
    comparison targets.
 4. Modify the proposed perception model around the selected base detector.
@@ -102,6 +117,39 @@ data/raw/UAVDT/
 
 The converter also accepts common frame names such as `img000001.jpg` and
 `000001.jpg`.
+
+TinyPerson should be added as a detector-only supplementary stress test after
+the best proposed detector family is selected. This is not the main stage gate,
+but it is useful because ACCV 2024 small-object YOLO work also evaluates
+VisDrone-style dense UAV scenes together with TinyPerson-style ultra-small
+person detection.
+
+Recommended TinyPerson scope:
+
+- baseline: YOLOv11l
+- final proposed detector
+- Core 1 + Core 2 architecture before overlap-aware NMS, if time allows
+- optional external comparison: LSOD-YOLO or a Universal-YOLO-style reproduced
+  row only if code/weights/adapters are easy to stage
+- seed: start with `42`, expand to `42, 123, 2026` only if the first run is
+  promising
+- report: AP, AP50, recall, F1, Params, GFLOPs, FPS
+
+Keep TinyPerson in the supplementary material unless it becomes a very strong
+result. The main detector table remains VisDrone-first, with UAVDT/TinyPerson
+used to show generalization rather than to tune the proposed modules.
+
+Cross-dataset comparison width:
+
+| Dataset | Comparison width | Models |
+| --- | --- | --- |
+| VisDrone2019-DET | full | size-grouped YOLO rows, YOLOv11l/12l/8l, RT-DETR, selected runnable related-work models, final proposed |
+| UAVDT | compact | YOLOv11l, best lightweight YOLO, best medium/large YOLO already trained, RT-DETR if available, final proposed |
+| TinyPerson | minimal supplementary | YOLOv11l, final proposed, Core 1 + Core 2 variant, optional easy external tiny-person row |
+
+Do not rerun every paper-specific external detector on every dataset. External
+models are most valuable on VisDrone; UAVDT/TinyPerson mainly test whether the
+final detector behavior transfers.
 
 ## Core Metrics
 
@@ -192,11 +240,11 @@ bash scripts/ubuntu/train_visdrone_baselines_tmux.sh server-visdrone-baselines 1
 For a clean from-scratch server comparison restart, use the unified fresh queue:
 
 ```bash
-bash scripts/ubuntu/restart_fresh_server_queue.sh
+GPUS=0 bash scripts/ubuntu/restart_fresh_server_queue.sh
 ```
 
 This stops older training/pending tmux sessions, preserves existing outputs,
-starts one `server-fresh-baselines` queue with GPU0/GPU1 workers, opens a
+starts one `server-fresh-baselines` detector queue on GPU0, opens a
 side-by-side viewer, and points the live dashboard at a run-specific detector
 root.
 
@@ -282,17 +330,17 @@ Queue the proposed detector ablation supervisor after the comparison queues:
 bash scripts/ubuntu/train_proposed_ablation_after_session.sh
 ```
 
-Queue paper-driven additions such as YOLOv10n and LRDS-YOLO after the main
-comparison queues:
+Queue paper-driven additions such as YOLOv10n, LEAF-YOLO, LRDS-YOLO, and
+CSFPR-RTDETR after the main comparison queues:
 
 ```bash
 bash scripts/ubuntu/train_paper_comparison_models_after_session.sh
 ```
 
-LRDS-YOLO is not assumed to be an Ultralytics built-in checkpoint. The script
-checks `weights/lrds-yolo.pt` and `lrds-yolo.pt` by default, or a user-provided
-`LRDS_MODELS=/path/to/checkpoint.pt`, and skips it if the current environment
-cannot load it.
+External paper models are not assumed to be Ultralytics built-in checkpoints.
+The availability checker keeps them blocked until a compatible local
+checkpoint/config or adapter is staged, so unavailable paper models do not get
+mixed into official CSVs as failed baseline runs.
 
 The proposed queue defaults to `WAIT_FOR=server-uavdt-comparisons-pending`.
 If UAVDT is not ready, that supervisor exits safely and the proposed queue can

@@ -17,8 +17,8 @@ methods:
     description: Call VLM for a random object subset.
   - name: Uncertainty-triggered VLM
     description: Call VLM when uncertainty exceeds a threshold.
-  - name: SAGE-triggered VLM
-    description: Call VLM using ambiguity score, graph summary, and SAGE prompt.
+  - name: AeroGraph-triggered VLM
+    description: Call VLM using ambiguity score, graph summary, and AeroGraph prompt.
 
 metrics:
   quality:

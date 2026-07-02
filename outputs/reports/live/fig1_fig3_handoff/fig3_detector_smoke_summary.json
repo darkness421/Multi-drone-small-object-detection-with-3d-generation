@@ -5,21 +5,20 @@
   "capture_plan": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/capture_plan.json",
   "out_jsonl": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/evidence_tokens.jsonl",
   "preview_dir": "/home/oem/projects/multi-uav-marine-city/outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/previews",
-  "device": "1",
+  "device": "cpu",
   "imgsz": 1280,
   "conf": 0.01,
   "uav_count": 3,
-  "token_count": 41,
+  "token_count": 30,
   "tokens_by_uav": {
-    "uav_01": 17,
-    "uav_02": 17,
-    "uav_03": 7
+    "uav_01": 4,
+    "uav_02": 23,
+    "uav_03": 3
   },
   "tokens_by_class": {
-    "car": 25,
-    "bus": 4,
-    "van": 4,
-    "pedestrian": 6,
-    "truck": 2
+    "bus": 6,
+    "car": 20,
+    "pedestrian": 3,
+    "van": 1
   }
 }

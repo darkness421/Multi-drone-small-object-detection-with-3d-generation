@@ -42,6 +42,33 @@ models:
       Queue only runs this model if the checkpoint/config is loadable by the
       current environment. Otherwise it is skipped and documented.
 
+  - name: BPD-YOLO
+    weights: weights/bpd-yolo.pt
+    fallback_weights: bpd-yolo.pt
+    family: BPD-YOLO
+    size: lightweight
+    status: citation_only_until_code
+    source: https://pubmed.ncbi.nlm.nih.gov/40883434/
+    rationale: Recent UAV lightweight detector based on L-FPN, DAFF, and DSPF, cited in the paper related work for semantic integration and complexity control.
+    note: >
+      The previous DOI/source duplicated LRDS-YOLO and was corrected on
+      2026-06-08. Keep as citation/adapter-hold unless a public compatible
+      checkpoint/config appears or we decide to implement a lightweight clone
+      after the proposed-model search.
+
+  - name: SFFEF-YOLO
+    weights: weights/sffef-yolo.pt
+    fallback_weights: sffef-yolo.pt
+    family: SFFEF-YOLO
+    size: lightweight
+    status: citation_only_until_code
+    source: https://doi.org/10.1016/j.imavis.2025.105469
+    rationale: 2025 UAV small-object detector that replaces the large-object head with a tiny-object head and uses fine-grained extraction/fusion; strongly supports our P2/P3/P4-only design.
+    note: >
+      Use as a strong related-work citation and architecture motivation. Queue
+      only if code/weights become available or if we implement a compact
+      head-swap reproduction for supplementary comparison.
+
   - name: SOD-YOLO
     weights: weights/sod-yolo.pt
     fallback_weights: sod-yolo.pt
@@ -79,6 +106,51 @@ models:
     note: >
       Add if a compatible checkpoint/config is available; otherwise cite as a
       recent paper comparison target and document why it was not runnable.
+
+  - name: GCL-YOLO
+    weights: weights/gcl-yolo.pt
+    fallback_weights:
+      - gcl-yolo.pt
+      - external/GCL-YOLO/weights/gcl-yolo.pt
+      - external/GCL-YOLO/runs/train/exp/weights/best.pt
+    family: GCL-YOLO
+    size: lightweight
+    status: external_required
+    source: https://www.mdpi.com/2072-4292/15/20/4932
+    rationale: Lightweight UAV small-object detector evaluated on VisDrone-DET2021 and UAVDT; removes the large prediction head and adds shallow feature fusion.
+    note: >
+      Useful backup same-dataset comparison if a compatible checkpoint or a
+      quick reproduction is staged.
+
+  - name: SRTSOD-YOLO
+    weights: weights/srtsod-yolo.pt
+    fallback_weights:
+      - srtsod-yolo.pt
+      - external/SRTSOD-YOLO/weights/srtsod-yolo.pt
+      - external/SRTSOD-YOLO/runs/train/exp/weights/best.pt
+    family: SRTSOD-YOLO
+    size: lightweight
+    status: external_required
+    source: https://www.mdpi.com/2072-4292/17/20/3414
+    rationale: Recent YOLO11-style UAV small-object detector evaluated on VisDrone and UAVDT.
+    note: >
+      Queue only if code/weights become locally available. Otherwise keep as a
+      same-dataset related-work row.
+
+  - name: YOLO11s-UAV
+    weights: weights/yolo11s-uav.pt
+    fallback_weights:
+      - yolo11s-uav.pt
+      - external/YOLO11s-UAV/weights/yolo11s-uav.pt
+      - external/YOLO11s-UAV/runs/train/exp/weights/best.pt
+    family: YOLO11
+    size: small
+    status: external_required
+    source: https://pmc.ncbi.nlm.nih.gov/articles/PMC12942582/
+    rationale: Recent YOLO11 UAV small-object reference using VisDrone-DET2019, UAVDT-DET, and TinyPerson.
+    note: >
+      Add only after local code/weights are staged and the evaluation protocol
+      can be made fair.
 
   - name: MASF-YOLO
     weights: weights/masf-yolo.pt
@@ -124,7 +196,7 @@ models:
     architecture_group: non_yolo
     status: external_required
     source: https://doi.org/10.1016/j.cviu.2026.104637
-    rationale: 2026 CNN-Mamba hybrid UAV small-object detector from the Notion research list; reports VisDrone/UAVDT/DroneVehicle evaluation and strong parameter/FPS tradeoff.
+    rationale: 2026 CNN-Mamba hybrid UAV small-object detector from the related-work list; reports VisDrone/UAVDT/DroneVehicle evaluation and strong parameter/FPS tradeoff.
     note: >
       Non-YOLO RTMDet-style implementation. Run only if a compatible adapter or
       checkpoint/export path is prepared.
@@ -137,14 +209,18 @@ models:
     architecture_group: non_yolo
     status: external_required
     source: https://doi.org/10.1016/j.imavis.2025.105834
-    rationale: 2026 high-resolution-feature D-FINE variant for UAV tiny-object detection from the Notion research list; useful as a recent non-YOLO real-time detector comparison.
+    rationale: 2026 high-resolution-feature D-FINE variant for UAV tiny-object detection from the related-work list; useful as a recent non-YOLO real-time detector comparison.
     note: >
       Prefer as the D-FINE family comparison if authors release weights or if we
       implement a D-FINE adapter.
 
   - name: CSFPR-RTDETR
-    weights: weights/csfpr-rtdetr.pt
-    fallback_weights: csfpr-rtdetr.pt
+    weights:
+      - external/CSFPR-RTDETR/weights/visdrone.pt
+      - weights/csfpr-rtdetr.pt
+    fallback_weights:
+      - csfpr-rtdetr.pt
+      - external/CSFPR-RTDETR/ultralytics/cfg/modelY/CSFPR-RTDETR.yaml
     family: RT-DETR
     size: small
     architecture_group: non_yolo
@@ -163,7 +239,48 @@ models:
     architecture_group: non_yolo
     status: external_required
     source: https://arxiv.org/abs/2602.22712
-    rationale: 2026 frequency-guided end-to-end detector for UAV tiny objects from the Notion research list; useful as a recent DETR/frequency-domain comparison target.
+    rationale: 2026 frequency-guided end-to-end detector for UAV tiny objects from the related-work list; useful as a recent DETR/frequency-domain comparison target.
     note: >
       Track as a paper-facing candidate first. Queue only after public code or a
       compatible checkpoint becomes available.
+
+  - name: LEAF-YOLO
+    weights: weights/leaf-yolo.pt
+    fallback_weights: leaf-yolo.pt
+    family: LEAF-YOLO
+    size: nano_lightweight
+    status: external_required
+    source: https://doi.org/10.1016/j.iswa.2025.200484
+    code: https://github.com/highquanglity/LEAF-YOLO
+    rationale: 2025 public lightweight edge-real-time UAV detector with VisDrone2019-DET training/evaluation instructions, reported AP/AP50/APS/latency, and linked LEAF-YOLO-N/LEAF-YOLO weights.
+    note: >
+      Strong paper-facing lightweight comparison candidate. Requires a YOLOv7-style
+      adapter or an exported checkpoint bridge before it can be mixed with the
+      Ultralytics result collector.
+
+  - name: UAVD-Mamba
+    weights: weights/uavd-mamba.pt
+    fallback_weights: uavd-mamba.pt
+    family: Mamba
+    size: lightweight
+    architecture_group: non_yolo
+    status: external_required
+    source: https://github.com/GreatPlum-hnu/UAVD-Mamba
+    rationale: 2025 deformable token fusion Vision Mamba detector for multimodal UAV detection; useful for related-work coverage of Mamba/SSM detector families.
+    note: >
+      Treat as related-work or cross-dataset candidate first because the public
+      repo targets multimodal UAV detection. Queue only if the input modality and
+      annotation format can be adapted fairly to VisDrone/UAVDT.
+
+  - name: RF-DETR-B
+    weights: weights/rf-detr-b.pt
+    fallback_weights: rf-detr-b.pt
+    family: RF-DETR
+    size: base
+    architecture_group: non_yolo
+    status: external_required
+    source: https://github.com/roboflow/rf-detr
+    rationale: ICLR 2026 real-time Detection Transformer family with public code; useful as a modern non-YOLO transformer sanity check if UAV-specific DETR/D-FINE candidates remain blocked.
+    note: >
+      Not UAV-specific. Use only as a secondary non-YOLO comparison after a UAV
+      RT-DETR/D-FINE candidate such as CSFPR-RTDETR or HF-D-FINE is considered.

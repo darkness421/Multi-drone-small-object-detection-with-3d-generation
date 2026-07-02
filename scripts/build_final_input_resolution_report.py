@@ -255,8 +255,9 @@ def plot_summary(summary: list[dict[str, Any]], out: Path) -> Path:
     axes[0].set_ylabel("AP (mAP50-95)")
     axes[1].set_xlabel("Evaluation image size")
     axes[1].set_ylabel("AP50")
+    xticks = sorted({row["imgsz"] for row in summary})
     for ax in axes:
-        ax.set_xticks([640, 960, 1280, 1536])
+        ax.set_xticks(xticks or [640, 960, 1280, 1536])
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
         ax.legend(frameon=True)

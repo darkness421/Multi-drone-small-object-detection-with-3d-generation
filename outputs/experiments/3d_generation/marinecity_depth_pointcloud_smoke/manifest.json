@@ -1,6 +1,6 @@
 {
   "status": "marinecity_depth_pointcloud_smoke_ready",
-  "updated_at_kst": "2026-06-26 13:42:08 KST",
+  "updated_at_kst": "2026-06-26 22:50:56 KST",
   "dataset_manifest": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d/dataset_manifest.json",
   "dataset_status": "marinecity_neural3d_dataset_export_ready",
   "out_dir": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_depth_pointcloud_smoke",

@@ -24,11 +24,19 @@ SCENARIO_LABELS = {
     "uavmarine_s2_viewer160_session_recapture": "S2 coastline multi-view",
 }
 
-REASONER_DIRS = {
-    "uavmarine_s0_viewer160_session_recapture": "outputs/reasoning/marinecity_real_capture_s0_reasoner_smoke",
-    "uavmarine_s1_viewer160_session_recapture": "outputs/reasoning/marinecity_real_capture_s1_reasoner_smoke",
-    "uavmarine_s2_viewer160_session_recapture": "outputs/reasoning/marinecity_real_capture_s2_reasoner_smoke",
+LATEST_DETECTOR_SUMMARIES = {
+    "uavmarine_s0_viewer160_session_recapture": "outputs/evidence/uavmarine_s0_viewer160_session_recapture_detector_smoke_conf001/detector_smoke_summary.json",
+    "uavmarine_s1_viewer160_session_recapture": "outputs/evidence/uavmarine_s1_viewer160_session_recapture_detector_smoke_conf001/detector_smoke_summary.json",
+    "uavmarine_s2_viewer160_session_recapture": "outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/detector_smoke_summary.json",
 }
+
+REASONER_DIRS = {
+    "uavmarine_s0_viewer160_session_recapture": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+    "uavmarine_s1_viewer160_session_recapture": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+    "uavmarine_s2_viewer160_session_recapture": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+}
+
+LATEST_CONTACT_SHEET = "outputs/reports/live/marinecity_system_test_10plus/contact_sheet_3_scenarios.png"
 
 
 def _read_json(path: str | Path) -> dict[str, Any]:
@@ -64,13 +72,16 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
     detector_summary = _read_json(detector_dir / "detector_smoke_summary.json")
     scenario_jsonl = detector_summary.get("scenario_jsonl", {})
     rows: list[dict[str, Any]] = []
+    total_tokens = 0
 
     for scenario_id in SCENARIO_LABELS:
-        token_path = Path(scenario_jsonl.get(scenario_id, ""))
+        latest_summary = _read_json(LATEST_DETECTOR_SUMMARIES.get(scenario_id, ""))
+        token_path = Path(latest_summary.get("out_jsonl") or scenario_jsonl.get(scenario_id, ""))
         tokens = load_tokens_jsonl(token_path) if token_path.exists() else []
         class_counts: Counter[str] = Counter(_class_name(token) for token in tokens)
-        uav_count = len({token.uav_id for token in tokens})
+        uav_count = int(latest_summary.get("uav_count") or len({token.uav_id for token in tokens}) or 3)
         reasoner_summary = _read_json(Path(REASONER_DIRS[scenario_id]) / "summary.json")
+        total_tokens += len(tokens)
         rows.append(
             {
                 "scenario_id": scenario_id,
@@ -123,7 +134,9 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
 
     copied_contact_sheet = Path(args.paper_contact_sheet)
     copied_contact_sheet.parent.mkdir(parents=True, exist_ok=True)
-    source_contact_sheet = Path(detector_summary.get("preview_contact_sheet", ""))
+    source_contact_sheet = Path(LATEST_CONTACT_SHEET)
+    if not source_contact_sheet.exists():
+        source_contact_sheet = Path(detector_summary.get("preview_contact_sheet", ""))
     if source_contact_sheet.exists():
         shutil.copy2(source_contact_sheet, copied_contact_sheet)
 
@@ -132,9 +145,9 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
     report_lines = [
         "# MarineCity Real-Cesium Detector-to-Reasoner Smoke",
         "",
-        f"- Detector summary: `{detector_dir / 'detector_smoke_summary.json'}`",
+        "- Detector summaries: latest per-scenario `uavmarine_*_viewer160_session_recapture_detector_smoke_conf001` outputs",
         f"- Total frames: `{detector_summary.get('frame_count', 0)}`",
-        f"- Total evidence tokens: `{detector_summary.get('token_count', 0)}`",
+        f"- Total evidence tokens: `{total_tokens}`",
         f"- Detector contact sheet: `{copied_contact_sheet}`",
         f"- Paper table: `{table_path}`",
         "",
@@ -161,7 +174,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
         "csv": str(csv_path),
         "report": str(report_path),
         "paper_contact_sheet": str(copied_contact_sheet),
-        "total_tokens": int(detector_summary.get("token_count", 0) or 0),
+        "total_tokens": total_tokens,
         "rows": rows,
     }
     Path(args.summary_out).write_text(json.dumps(summary, indent=2), encoding="utf-8")

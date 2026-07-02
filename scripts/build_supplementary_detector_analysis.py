@@ -17,6 +17,8 @@ from typing import Any
 
 from runtime.config import resolve_path
 
+os.environ.setdefault("MPLBACKEND", "Agg")
+
 
 DEFAULT_SUMMARY_CSVS = [
     Path("outputs/experiments/server_with_proposed_summary.csv"),
@@ -71,6 +73,9 @@ def mean(values: list[float]) -> float | None:
 def setup_matplotlib() -> Any:
     os.environ.setdefault("MPLCONFIGDIR", str(resolve_path(".cache/matplotlib")))
     os.environ.setdefault("XDG_CACHE_HOME", str(resolve_path(".cache")))
+    import matplotlib
+
+    matplotlib.use("Agg", force=True)
     import matplotlib.pyplot as plt
 
     plt.rcParams.update(

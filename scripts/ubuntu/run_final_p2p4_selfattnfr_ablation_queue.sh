@@ -9,7 +9,7 @@ POLL_SECONDS=${POLL_SECONDS:-300}
 GPU_LIST=${GPU_LIST:-0,1}
 SEEDS=${SEEDS:-42,123,2026}
 EPOCHS=${EPOCHS:-100}
-PATIENCE=${PATIENCE:-20}
+PATIENCE=${PATIENCE:-5}
 BATCH=${BATCH:-4}
 IMG_SIZE=${IMG_SIZE:-1280}
 DATA_YAML=${DATA_YAML:-configs/detector/visdrone_yolo_data.yaml}
@@ -79,7 +79,7 @@ wait_for_sessions() {
 completed_best_exists() {
   local ablation="$1"
   local seed="$2"
-  find "$PROJECT" -maxdepth 3 \
+  find "$PROJECT" -maxdepth 4 \
     -path "*proposed_${ablation}_yolo11l*seed${seed}/ultralytics/weights/best.pt" \
     -type f -print -quit | grep -q .
 }
@@ -87,7 +87,7 @@ completed_best_exists() {
 latest_weight() {
   local ablation="$1"
   local seed="$2"
-  find "$PROJECT" -maxdepth 3 \
+  find "$PROJECT" -maxdepth 4 \
     -path "*proposed_${ablation}_yolo11l*seed${seed}/ultralytics/weights/best.pt" \
     -printf "%T@ %p\n" | sort -nr | head -n 1 | cut -d" " -f2-
 }
@@ -113,7 +113,7 @@ start_train_session() {
   log "Starting final ablation train session=$session gpu=$gpu ablation=$ablation seed=$seed"
   record_plan "$ablation" "started" "session=$session gpu=$gpu seed=$seed"
   tmux new-session -d -s "$session" -n train \
-    "cd '$PWD' && TARGET_GPU='$gpu' SEED='$seed' ABLATION='$ablation' MODEL_YAML='$MODEL_YAML' P2P4_MODEL_YAML='$MODEL_YAML' INIT_WEIGHTS='$INIT_WEIGHTS' DATA_YAML='$DATA_YAML' PROJECT='$PROJECT' LOG_DIR='$LOG_DIR' CONDA_ENV='$CONDA_ENV' EPOCHS='$EPOCHS' PATIENCE='$PATIENCE' BATCH='$BATCH' IMG_SIZE='$IMG_SIZE' GUARD_WAIT_SECONDS=120 MIN_GPU_FREE_GB=8 LOCK_PROPOSED_TO_GPU0=0 bash scripts/ubuntu/start_yolov11_p2_balanced_search.sh; exec bash"
+    "cd '$PWD' && TARGET_GPU='$gpu' SEED='$seed' ABLATION='$ablation' MODEL_YAML='$MODEL_YAML' P2P4_MODEL_YAML='$MODEL_YAML' INIT_WEIGHTS='$INIT_WEIGHTS' DATA_YAML='$DATA_YAML' PROJECT='$PROJECT' LOG_DIR='$LOG_DIR' CONDA_ENV='$CONDA_ENV' EPOCHS='$EPOCHS' PATIENCE='$PATIENCE' BATCH='$BATCH' IMG_SIZE='$IMG_SIZE' GUARD_WAIT_SECONDS=120 MIN_GPU_FREE_GB=8 LOCK_PROPOSED_TO_GPU0=0 bash scripts/ubuntu/start_yolov11_p2_balanced_search.sh"
   return 0
 }
 

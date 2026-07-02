@@ -6,36 +6,180 @@ datasets:
   required:
     - VisDrone2019-DET
     - UAVDT
+  strongly_recommended_supplementary:
+    - TinyPerson
   optional:
     - AI-TOD
 
 p0_required:
-  - YOLOv8n/s
-  - YOLOv11n/s
-  - YOLOv8n+P2
+  - YOLO family scale sweep by parameter size:
+      nano:
+        - YOLOv5u-n
+        - YOLOv8n
+        - YOLOv9t
+        - YOLOv10n
+        - YOLO11n
+        - YOLO12n
+        - YOLO26n
+      small:
+        - YOLOv5u-s
+        - YOLOv8s
+        - YOLOv9s
+        - YOLOv10s
+        - YOLO11s
+        - YOLO12s
+        - YOLO26s
+      medium:
+        - YOLOv5u-m
+        - YOLOv8m
+        - YOLOv9m
+        - YOLOv10m
+        - YOLO11m
+        - YOLO12m
+        - YOLO26m
+      large:
+        - YOLOv5u-l
+        - YOLOv8l
+        - YOLOv9c
+        - YOLOv10l
+        - YOLO11l
+        - YOLO12l
+        - YOLO26l
   - RT-DETR-R18
-  - D-FINE-S
-  - Ours Always-on Evidence Generator
+  - Ours detector proposal
 
 p1_if_possible:
+  - LEAF-YOLO
+  - CSFPR-RTDETR
   - UAVDet
   - LRDS-YOLO
-  - BPD-YOLO / L-FPN
+  - SFFEF-YOLO
+  - LSOD-YOLO
   - HF-D-FINE
+  - D-FINE-S
+  - RF-DETR-B
+
+minimum_related_work_targets:
+  required_count: 5
+  primary:
+    - LEAF-YOLO
+    - CSFPR-RTDETR
+    - SFFEF-YOLO
+    - LSOD-YOLO
+    - UAVDet
+    - HF-D-FINE
+  backup:
+    - DR-YOLO
+    - SOD-YOLO
+    - UAVD-Mamba
+    - GCL-YOLO
+    - SRTSOD-YOLO
+    - YOLO11s-UAV
+    - RF-DETR-B
+  rule: >
+    Main measured table uses only runnable/fair-adapter rows. Adapter-blocked
+    or citation-only models stay in the availability table and supplementary
+    comparison discussion.
 
 p2_time_permitting:
-  - CSFPR-RTDETR
+  - SOD-YOLO
+  - DR-YOLO
+  - UAVD-Mamba
+  - GCL-YOLO
+  - SRTSOD-YOLO
+  - YOLO11s-UAV
   - DG-TSOD
   - CFIA
 
 final_recommended_set:
-  - YOLOv8n
-  - YOLOv11n
-  - YOLOv8n+P2
-  - RT-DETR-R18
-  - D-FINE-S
-  - UAVDet or LRDS-YOLO
-  - Ours AEG
+  - Best YOLO nano/small/medium/large rows by measured params
+  - RT-DETR-L or RT-DETR-R18 if memory/code permits
+  - LEAF-YOLO if adapter is ready
+  - CSFPR-RTDETR if adapter is ready
+  - SFFEF-YOLO or LSOD-YOLO as same-dataset paper-facing rows if official metrics are comparable
+  - UAVDet/UAVD-Mamba or HF-D-FINE if code and modality assumptions are fair
+  - Ours detector proposal
+
+same_dataset_external_targets:
+  strongest_overlap:
+    - name: SFFEF-YOLO
+      datasets: [VisDrone2019-DET, UAVDT, TinyPerson]
+      use: tiny-head / remove-large-head paper reference
+      status: citation_or_adapter
+    - name: LSOD-YOLO
+      datasets: [VisDrone2019, TinyPerson, LEVIR-Ship, UAVDT]
+      use: lightweight cross-layer small-object reference
+      status: citation_or_adapter
+    - name: HF-D-FINE
+      datasets: [VisDrone, AI-TOD, UAVDT]
+      use: non-YOLO high-resolution tiny-object reference
+      status: adapter_needed
+    - name: CSFPR-RTDETR
+      datasets: [VisDrone, AI-TOD, HIT-UAV]
+      use: RT-DETR frequency-domain / P2 reference
+      status: public_code_adapter_needed
+    - name: UAVDet
+      datasets: [VisDrone, UAVDT, DroneVehicle]
+      use: CNN-Mamba efficient UAV reference
+      status: adapter_needed
+    - name: LEAF-YOLO
+      datasets: [VisDrone, TinyPerson]
+      use: lightweight public-code UAV reference
+      status: public_code_adapter_needed
+  backup_same_dataset:
+    - name: GCL-YOLO
+      datasets: [VisDrone-DET2021, UAVDT]
+      use: lightweight P5-removal / shallow-fusion reference
+      status: citation_or_reproduction
+    - name: SRTSOD-YOLO
+      datasets: [VisDrone, UAVDT]
+      use: recent YOLO11 UAV small-object reference
+      status: citation_or_adapter
+    - name: YOLO11s-UAV
+      datasets: [VisDrone-DET2019, UAVDT-DET, TinyPerson]
+      use: recent YOLO11 same-dataset reference
+      status: citation_or_adapter
+
+dataset_scopes:
+  VisDrone2019-DET:
+    role: main_detector_gate
+    comparison_width: full
+    models:
+      - Best YOLO rows by measured params: nano/small/medium/large
+      - YOLOv11l, YOLOv12l, YOLOv8l as strong large anchors
+      - RT-DETR-L/R18 if memory/code permits
+      - LEAF-YOLO if adapter is ready
+      - CSFPR-RTDETR if adapter is ready
+      - final proposed detector
+    note: >
+      This is the primary table used to decide whether the proposed detector
+      passes the paper gate.
+
+  UAVDT:
+    role: cross_dataset_generalization
+    comparison_width: compact
+    models:
+      - YOLOv11l baseline
+      - best lightweight YOLO baseline
+      - best medium/large YOLO competitor if already trained
+      - RT-DETR-L/R18 if available
+      - final proposed detector
+    note: >
+      Use UAVDT to show the detector is not overfit to VisDrone. Do not rerun
+      every paper-specific external model unless the adapter is already ready.
+
+  TinyPerson:
+    role: supplementary_tiny_object_stress_test
+    comparison_width: minimal
+    models:
+      - YOLOv11l baseline
+      - final proposed detector
+      - Core 1 + Core 2 architecture-only variant if time allows
+      - LSOD-YOLO or Universal-YOLO-style external row only if code/weights are easy
+    note: >
+      TinyPerson is for supplementary stress testing of extreme tiny/crowded
+      objects. Start with seed 42 and expand to 3 seeds only if the result is
+      promising.
 
 metrics:
   - AP
@@ -46,3 +190,31 @@ metrics:
   - Params
   - GFLOPs
 
+supplementary_decision_experiments:
+  overlap_aware_nms:
+    purpose: Separate adjacent tiny objects that standard NMS may suppress.
+    candidates:
+      - class_aware_nms_iou_050
+      - class_aware_nms_iou_055
+      - class_aware_nms_iou_060
+      - soft_nms_if_available
+      - diou_nms_if_available
+    report_with:
+      - adjacent_object_subset
+      - full_validation_set
+      - latency
+  rotation_tta_reference30:
+    purpose: >
+      Eval-only orientation-aware inference inspired by related work reference
+      [30]. It rotates images, maps horizontal predictions back to the original
+      frame, and merges boxes; it is not a true OBB detector because the current
+      VisDrone protocol uses horizontal boxes.
+    angles_deg: [-10, 0, 10]
+    merge:
+      - weighted_boxes_fusion_if_available
+      - class_aware_nms_iou_055
+    report_with:
+      - full_validation_set
+      - oblique_or_adjacent_object_subset
+      - added_latency
+    paper_location: supplementary_first_unless_gain_is_large

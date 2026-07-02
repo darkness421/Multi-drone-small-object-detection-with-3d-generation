@@ -1,0 +1,49 @@
+{
+  "metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "candidate_regex": "(?i)(proposed|com3d|ace|wavelet|deformable|tiling|ours)",
+  "lightweight_max_params": 15000000,
+  "min_delta": 0.0,
+  "require_main": false,
+  "baseline_count": 1,
+  "candidate_count": 1,
+  "best_overall_baseline": {
+    "method": "YOLOv9m-TinyPersonCornerOriginal",
+    "model": "yolov9m.pt",
+    "detector_family": "YOLO",
+    "model_version": "v9",
+    "model_scale": "medium",
+    "param_size_group": "unknown",
+    "seed_count": 2,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.19974999999999998,
+    "best_AP50_mean": 0.5290900000000001,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "best_lightweight_baseline": null,
+  "best_proposed_candidate": {
+    "method": "Ours-TinyPersonCornerOriginal",
+    "model": "configs/detector/yolo11l-p2p4-balanced-v1.yaml",
+    "detector_family": "Other",
+    "model_version": "unknown",
+    "model_scale": "unknown",
+    "param_size_group": "unknown",
+    "seed_count": 2,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.167485,
+    "best_AP50_mean": 0.44293,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "candidate_vs_best_overall": {
+    "baseline_method": "YOLOv9m-TinyPersonCornerOriginal",
+    "candidate_method": "Ours-TinyPersonCornerOriginal",
+    "best_AP_mean_delta": -0.03226499999999999,
+    "best_AP50_mean_delta": -0.08616000000000007
+  },
+  "candidate_vs_best_lightweight": null,
+  "recommended_next_stage": "iterate_proposed_detector",
+  "rationale": "The proposed detector does not yet beat the selected baseline thresholds.",
+  "dataset": "TinyPerson"
+}

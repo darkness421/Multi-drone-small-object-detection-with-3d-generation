@@ -15,8 +15,8 @@ from matplotlib.patches import Rectangle
 
 
 NAME_MAP = {
-    "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l-TinyPerson640": "SAFR-YOLO",
-    "ProposedTransfer-P2P4SelfAttnFR-yolo11l-TinyPerson640": "SAFR-YOLO transfer",
+    "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l-TinyPerson640": "Ours",
+    "ProposedTransfer-P2P4SelfAttnFR-yolo11l-TinyPerson640": "Ours transfer",
     "ProposedSize-P2P4HeadOnly-yolo11l-TinyPerson640": "P2P4 head only",
     "YOLOv11l-TinyPerson640": "YOLOv11l",
     "YOLOv8l-TinyPerson640": "YOLOv8l",
@@ -25,8 +25,8 @@ NAME_MAP = {
 }
 
 INTERPRETATION = {
-    "SAFR-YOLO": "domain-shift limitation",
-    "SAFR-YOLO transfer": "VisDrone-init diagnostic",
+    "Ours": "legacy crop diagnostic",
+    "Ours transfer": "VisDrone-init diagnostic",
     "P2P4 head only": "core ablation",
     "YOLOv11l": "near-zero transfer",
     "YOLOv8l": "near-zero transfer",
@@ -130,7 +130,7 @@ def draw_table(ax: plt.Axes, rows: list[dict[str, float | str]]) -> None:
     y -= row_h
     for idx, row in enumerate(rows):
         method = str(row["method"])
-        face = "#fff5c7" if method.startswith("SAFR-YOLO") else ("#eef7ee" if idx == 0 else "#ffffff")
+        face = "#fff5c7" if method.startswith("Ours") else ("#eef7ee" if idx == 0 else "#ffffff")
         ax.add_patch(Rectangle((x0, y), sum(widths), row_h, facecolor=face, edgecolor=line_color))
         cells = [
             method,
@@ -142,7 +142,7 @@ def draw_table(ax: plt.Axes, rows: list[dict[str, float | str]]) -> None:
         ]
         x = x0
         for cell, width in zip(cells, widths):
-            weight = "bold" if method.startswith("SAFR-YOLO") else "normal"
+            weight = "bold" if method.startswith("Ours") else "normal"
             ax.text(x + 0.008, y + row_h * 0.55, cell, va="center", ha="left", fontsize=8.5, color="#172033", weight=weight)
             x += width
         y -= row_h
@@ -168,7 +168,7 @@ def build_dashboard(rows: list[dict[str, float | str]], out_path: Path, *, paper
         fig.text(
             0.04,
             0.925,
-            "Six detector variants plus SAFR-YOLO VisDrone-transfer diagnostic, seeds 42/123/2026. Values are diagnostic only because the converted TinyPerson split is sparse.",
+            "Six detector variants plus Ours VisDrone-transfer diagnostic, seeds 42/123/2026. Values are diagnostic only because the legacy conversion did not materialize TinyPerson corner crops.",
             fontsize=10,
             color="#475569",
         )
@@ -208,7 +208,7 @@ def build_dashboard(rows: list[dict[str, float | str]], out_path: Path, *, paper
         fig.text(
             0.04,
             0.04,
-            "Use in supplementary as a domain-shift and dataset-conversion limitation check, not as the main VisDrone detector claim. The transfer row is VisDrone-initialized SAFR-YOLO.",
+            "Use in supplementary only as a legacy data-conversion diagnostic, not as the main VisDrone detector claim. The corrected TinyPerson corner/original-window queue materializes crop windows and collapses classes to person.",
             fontsize=9,
             color="#64748b",
         )

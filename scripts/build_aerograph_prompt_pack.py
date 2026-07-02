@@ -1,4 +1,4 @@
-"""Build a compact prompt pack for non-mock AeroGraph Reasoner evaluation."""
+"""Build a compact prompt pack for external-provider AeroGraph Reasoner evaluation."""
 
 from __future__ import annotations
 
@@ -10,9 +10,9 @@ from typing import Any
 
 
 DEFAULT_RUNS = [
-    ("S0", "s0_locked_roi", "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_mock"),
-    ("S1", "s1_adjacent_overlap", "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_mock"),
-    ("S2", "s2_coastline_multiview", "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_mock"),
+    ("S0", "s0_locked_roi", "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based"),
+    ("S1", "s1_adjacent_overlap", "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based"),
+    ("S2", "s2_coastline_multiview", "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based"),
 ]
 
 
@@ -102,7 +102,7 @@ def write_markdown(path: Path, rows: list[dict[str, Any]]) -> None:
     lines = [
         "# AeroGraph Non-Mock Prompt Pack",
         "",
-        "Use these prompts for GPT/Factory/local LLM evaluation. Return only the JSON schema requested inside each prompt.",
+        "Use these prompts for external-provider or local-LLM evaluation. Return only the JSON schema requested inside each prompt.",
         "",
     ]
     for idx, row in enumerate(rows, start=1):
@@ -192,14 +192,14 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "manual_response_template_all": str(template_all.relative_to(repo_root)),
         "manual_response_template_sample": str(template_sample.relative_to(repo_root)),
         "archived_legacy_prompt_packs": archived_legacy_prompt_packs,
-        "note": "These are real-Cesium detector-token prompts. Non-mock GPT/Factory responses are pending provider/API execution.",
+        "note": "These are real-Cesium detector-token prompts. Non-mock external-provider responses are pending provider/API execution.",
     }
     manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
     return manifest
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build AeroGraph prompt pack for non-mock LLM evaluation.")
+    parser = argparse.ArgumentParser(description="Build AeroGraph prompt pack for external-provider LLM evaluation.")
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--out-dir", default="outputs/reports/live/aerograph_prompt_pack")
     parser.add_argument("--archive-dir", default="outputs/reports/archive/aerograph_prompt_pack")

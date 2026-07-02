@@ -1,8 +1,8 @@
 {
-  "updated_at_kst": "2026-06-30 05:04:09 KST",
-  "status": "paper_artifact_audit_submission_ready_with_optional_gates",
+  "updated_at_kst": "2026-07-02 16:36:58 KST",
+  "status": "paper_artifact_audit_needs_attention",
   "artifact_count": 53,
-  "missing_required_count": 0,
+  "missing_required_count": 1,
   "stale_claim_count": 0,
   "artifacts": [
     {
@@ -111,7 +111,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 11210,
+      "size_bytes": 9762,
       "status": "ok",
       "note": "Supplementary MarineCity capture, graph, and reasoner details"
     },
@@ -141,7 +141,7 @@
       "placement": "main_optional",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1262,
+      "size_bytes": 1697,
       "status": "ok",
       "note": "Safe qualitative figure slots"
     },
@@ -151,9 +151,9 @@
       "placement": "main_bundle",
       "required_now": true,
       "exists": true,
-      "size_bytes": 939,
+      "size_bytes": 936,
       "status": "ok",
-      "note": "Overleaf-ready main results patch bundle"
+      "note": "LaTeX-ready main results patch bundle"
     },
     {
       "group": "bundle",
@@ -161,9 +161,9 @@
       "placement": "supp_bundle",
       "required_now": true,
       "exists": true,
-      "size_bytes": 1313,
+      "size_bytes": 1310,
       "status": "ok",
-      "note": "Overleaf-ready supplementary patch bundle"
+      "note": "LaTeX-ready supplementary patch bundle"
     },
     {
       "group": "supp_detector",
@@ -171,7 +171,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 14651,
+      "size_bytes": 16879,
       "status": "ok",
       "note": "Supplementary detector inventory"
     },
@@ -191,7 +191,7 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 139781,
+      "size_bytes": 124843,
       "status": "ok",
       "note": "Ablation heatmap"
     },
@@ -241,14 +241,14 @@
       "placement": "supp",
       "required_now": true,
       "exists": true,
-      "size_bytes": 158501,
+      "size_bytes": 143218,
       "status": "ok",
       "note": "Real-Cesium cross-view evidence graph validation figure"
     },
     {
       "group": "supp_system",
-      "path": "paper/figures/results/marinecity_system/marinecity_qualitative_selection_manifest.md",
-      "placement": "supp",
+      "path": "outputs/reports/live/marinecity_qualitative_selection_manifest.md",
+      "placement": "runbook",
       "required_now": true,
       "exists": true,
       "size_bytes": 3139,
@@ -257,8 +257,8 @@
     },
     {
       "group": "supp_system",
-      "path": "paper/figures/results/marinecity_system/marinecity_qualitative_gate.md",
-      "placement": "supp",
+      "path": "outputs/reports/live/marinecity_qualitative_gate.md",
+      "placement": "runbook",
       "required_now": true,
       "exists": true,
       "size_bytes": 2155,
@@ -401,7 +401,7 @@
       "placement": "runbook",
       "required_now": false,
       "exists": true,
-      "size_bytes": 11632,
+      "size_bytes": 11553,
       "status": "ok",
       "note": "Optional external-provider reasoner collection plan"
     },
@@ -451,7 +451,7 @@
       "placement": "runbook",
       "required_now": false,
       "exists": true,
-      "size_bytes": 3087,
+      "size_bytes": 3081,
       "status": "ok",
       "note": "Optional compact real-capture web-provider batch index"
     },
@@ -461,7 +461,7 @@
       "placement": "runbook",
       "required_now": false,
       "exists": true,
-      "size_bytes": 4690,
+      "size_bytes": 4672,
       "status": "ok",
       "note": "Optional compact real-capture web-provider collection packet"
     },
@@ -497,11 +497,11 @@
     },
     {
       "group": "audit",
-      "path": "paper/figures/results/paper_artifact_readiness_manifest.md",
+      "path": "outputs/reports/live/paper_artifact_readiness_manifest.md",
       "placement": "audit",
       "required_now": true,
       "exists": true,
-      "size_bytes": 8854,
+      "size_bytes": 8810,
       "status": "ok",
       "note": "Human-readable artifact manifest"
     },
@@ -530,13 +530,24 @@
       "path": "docs/accv_research_package_readiness_audit_2026-06-25.md",
       "placement": "audit",
       "required_now": true,
-      "exists": true,
-      "size_bytes": 9073,
-      "status": "ok",
+      "exists": false,
+      "size_bytes": 0,
+      "status": "missing",
       "note": "Claim readiness audit"
     }
   ],
-  "missing_required": [],
+  "missing_required": [
+    {
+      "group": "audit",
+      "path": "docs/accv_research_package_readiness_audit_2026-06-25.md",
+      "placement": "audit",
+      "required_now": true,
+      "exists": false,
+      "size_bytes": 0,
+      "status": "missing",
+      "note": "Claim readiness audit"
+    }
+  ],
   "stale_claims": [],
   "aerograph_gate": {
     "status": "aerograph_external_provider_pending_responses",
@@ -613,7 +624,7 @@
   "main_tex_gate": {
     "main_tex_candidates": [],
     "main_tex_present": false,
-    "note": "No local main.tex means current files are Overleaf-ready patches rather than a full local paper build."
+    "note": "No local main.tex means current files are manuscript patches rather than a full local paper build."
   },
   "latex_integrity_gate": {
     "status": "latex_patch_integrity_ok",
@@ -630,6 +641,6 @@
     "aerograph": "ready_as_schema_verifier_and_action_policy_validation",
     "aerograph_optional_external_provider": "candidate_ready_needs_external_provider",
     "final_3d_completion": "ready",
-    "local_compile": "open_main_tex_or_overleaf_sync"
+    "local_compile": "open_main_tex_or_manuscript_package"
   }
 }

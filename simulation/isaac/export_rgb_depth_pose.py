@@ -10,12 +10,40 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 from typing import Any
 
 from runtime import load_config, prepare_run_dir, setup_logging
 from runtime.config import resolve_path
 from simulation.isaac.marinecity_plan import build_capture_plan, build_dry_run_manifest, write_capture_plan
+
+
+def start_isaac_simulation_app(active_gpu: int | None = None) -> Any:
+    """Start Isaac Sim so extension modules such as Replicator are importable."""
+    try:
+        from isaacsim import SimulationApp  # type: ignore
+    except ImportError:
+        from omni.isaac.kit import SimulationApp  # type: ignore
+
+    launch_config = {
+        "headless": True,
+        "hide_ui": True,
+        "renderer": "RaytracedLighting",
+        "multi_gpu": False,
+        "max_gpu_count": 1,
+        "width": 640,
+        "height": 360,
+        "sync_loads": False,
+        "create_new_stage": False,
+        "samples_per_pixel_per_frame": 1,
+        "anti_aliasing": 0,
+        "extra_args": ["--/app/window/hideUi=1"],
+    }
+    if active_gpu is not None:
+        launch_config["active_gpu"] = active_gpu
+        launch_config["physics_gpu"] = active_gpu
+    return SimulationApp(launch_config)
 
 
 def write_manifest(manifest: dict[str, Any], out_path: str | Path) -> Path:
@@ -108,6 +136,12 @@ def main() -> None:
     parser.add_argument("--template-out", default=None, help="Optional Isaac Replicator template path.")
     parser.add_argument("--create-placeholders", action="store_true", help="Create tiny placeholder files for dry-run frame paths.")
     parser.add_argument("--isaac-smoke", action="store_true", help="Inside Isaac Python, only verify Replicator import and write plan/template.")
+    parser.add_argument(
+        "--active-gpu",
+        type=int,
+        default=int(os.environ["ISAAC_ACTIVE_GPU"]) if os.environ.get("ISAAC_ACTIVE_GPU") else None,
+        help="Isaac renderer/physics GPU index for smoke validation.",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Generate a schema-valid manifest without Isaac imports.")
     args = parser.parse_args()
 
@@ -133,16 +167,24 @@ def main() -> None:
         print(out_path)
         return
 
-    try:
-        import omni.replicator.core as rep  # type: ignore  # noqa: F401
-    except ImportError as exc:
-        raise RuntimeError("Run this script with Isaac Sim python.bat, or use --dry-run outside Isaac Sim.") from exc
-
+    simulation_app = None
     if args.isaac_smoke:
-        logger.info("Isaac Replicator import OK. Capture plan/template are ready.")
-        print(f"Isaac Replicator import OK. Plan: {plan_path}")
-        print(f"Template: {template_path}")
-        return
+        simulation_app = start_isaac_simulation_app(active_gpu=args.active_gpu)
+
+    try:
+        try:
+            import omni.replicator.core as rep  # type: ignore  # noqa: F401
+        except ImportError as exc:
+            raise RuntimeError("Run this script with Isaac Sim python.bat, or use --dry-run outside Isaac Sim.") from exc
+
+        if args.isaac_smoke:
+            logger.info("Isaac Replicator import OK. Capture plan/template are ready.")
+            print(f"Isaac Replicator import OK. Plan: {plan_path}")
+            print(f"Template: {template_path}")
+            return
+    finally:
+        if simulation_app is not None:
+            simulation_app.close()
 
     raise NotImplementedError("Isaac runtime capture is scaffolded; implement Replicator capture calls here.")
 

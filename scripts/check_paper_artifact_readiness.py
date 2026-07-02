@@ -1,4 +1,4 @@
-"""Audit paper-facing ACCV artifacts before Overleaf integration."""
+"""Audit paper-facing ACCV artifacts before manuscript packaging."""
 
 from __future__ import annotations
 
@@ -38,8 +38,8 @@ ARTIFACTS = [
     Artifact("supp_system", "paper/tables/marinecity_real_capture_benchmark_table.tex", "supp", True, "Verified real-Cesium capture-source table"),
     Artifact("supp_system", "paper/tables/marinecity_crossview_evidence_graph_table.tex", "supp", True, "Real-Cesium cross-view evidence graph validation table"),
     Artifact("main_system", "paper/sections/07_marinecity_qualitative_figure_slots.tex", "main_optional", True, "Safe qualitative figure slots"),
-    Artifact("bundle", "paper/sections/main_results_patch_bundle.tex", "main_bundle", True, "Overleaf-ready main results patch bundle"),
-    Artifact("bundle", "paper/sections/supplementary_patch_bundle.tex", "supp_bundle", True, "Overleaf-ready supplementary patch bundle"),
+    Artifact("bundle", "paper/sections/main_results_patch_bundle.tex", "main_bundle", True, "LaTeX-ready main results patch bundle"),
+    Artifact("bundle", "paper/sections/supplementary_patch_bundle.tex", "supp_bundle", True, "LaTeX-ready supplementary patch bundle"),
     Artifact("supp_detector", "paper/sections/supp_detector_experiment_inventory.tex", "supp", True, "Supplementary detector inventory"),
     Artifact("supp_detector", "paper/tables/final_ablation_supplementary_table.tex", "supp", True, "Full ablation table"),
     Artifact("supp_detector", "paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png", "supp", True, "Ablation heatmap"),
@@ -216,7 +216,7 @@ def main_tex_gate() -> dict[str, Any]:
     return {
         "main_tex_candidates": [rel(path) for path in local_candidates],
         "main_tex_present": bool(local_candidates),
-        "note": "No local main.tex means current files are Overleaf-ready patches rather than a full local paper build."
+        "note": "No local main.tex means current files are manuscript patches rather than a full local paper build."
         if not local_candidates
         else "Local main.tex exists; run LaTeX compile/page audit next.",
     }
@@ -353,7 +353,7 @@ def build_report() -> dict[str, Any]:
             "final_3d_completion": "ready"
             if marinecity_3d.get("status") == "marinecity_3d_completion_ready"
             else "open_neural_3d_completion_metrics",
-            "local_compile": "open_main_tex_or_overleaf_sync",
+            "local_compile": "open_main_tex_or_manuscript_package",
         },
     }
 

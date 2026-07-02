@@ -13,6 +13,8 @@ from typing import Any
 
 from runtime.config import resolve_path
 
+os.environ.setdefault("MPLBACKEND", "Agg")
+
 
 FAMILY_COLORS = {
     "YOLO": "#4C78A8",
@@ -300,10 +302,19 @@ def scatter_label_offset(index: int, method: str, x_value: float, ap: float, row
     return offsets[index % len(offsets)]
 
 
-def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str | Path, dataset: str | None = None) -> Path:
+def build_dashboard(
+    results_csv: str | Path,
+    summary_csv: str | Path,
+    out: str | Path,
+    dataset: str | None = None,
+    title: str = "CoM3D-ACE Server Detector Baselines",
+) -> Path:
     os.environ.setdefault("MPLCONFIGDIR", str(resolve_path(".cache/matplotlib")))
     os.environ.setdefault("XDG_CACHE_HOME", str(resolve_path(".cache")))
 
+    import matplotlib
+
+    matplotlib.use("Agg", force=True)
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
 
@@ -345,7 +356,7 @@ def build_dashboard(results_csv: str | Path, summary_csv: str | Path, out: str |
     fig_height = max(11.0, min(18.0, 6.8 + row_count * 0.42))
     fig, axes = plt.subplots(2, 2, figsize=(fig_width, fig_height), constrained_layout=False)
     fig.subplots_adjust(left=0.16, right=0.985, top=0.91, bottom=0.15, hspace=0.38, wspace=0.24)
-    fig.suptitle(f"CoM3D-ACE Server Detector Baselines{title_suffix}", fontsize=17, y=0.965)
+    fig.suptitle(f"{title}{title_suffix}", fontsize=17, y=0.965)
 
     if not summary_rows:
         for ax in axes.ravel():
@@ -503,8 +514,9 @@ def main() -> None:
     parser.add_argument("--summary-csv", default="outputs/experiments/server_baseline_summary.csv")
     parser.add_argument("--out", default="outputs/reports/server_baseline_dashboard.png")
     parser.add_argument("--dataset", default=None, help="Optional dataset filter, for example UAVDT or VisDrone2019-DET.")
+    parser.add_argument("--title", default="CoM3D-ACE Server Detector Baselines")
     args = parser.parse_args()
-    print(build_dashboard(args.results_csv, args.summary_csv, args.out, dataset=args.dataset))
+    print(build_dashboard(args.results_csv, args.summary_csv, args.out, dataset=args.dataset, title=args.title))
 
 
 if __name__ == "__main__":

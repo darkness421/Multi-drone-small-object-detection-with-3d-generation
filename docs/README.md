@@ -2,42 +2,51 @@
 
 Updated: `2026-07-02 KST`
 
-Start here when the repository feels crowded. Active docs below are the ones to keep visible for paper writing and final artifact checks; older planning notes should stay in `docs/archive/` or remain internal.
+This directory keeps implementation, experiment, dataset, and simulation documentation. It should describe how the code works and how to reproduce the compact results, not internal writing notes or tool-specific sync procedures.
 
-## Submission-Facing Docs
-
-| File | Use |
-| --- | --- |
-| `accv_final_submission_readiness_2026-06-30.md` | Current claim boundaries and what is safe to submit |
-| `revised_accv_contributions_and_figures.md` | Contribution and figure story |
-| `accv_main_vs_supplement_strategy.md` | What belongs in main paper vs supplementary |
-| `proposed_detector_three_core_modules.md` | Detector-module description for SAFR-YOLO/P2P4-SelfAttnFR |
-| `proposed_perception_module_plan.md` | Detector ablation and final detector selection notes |
-| `llm_reasoner_adjudicator_plan.md` | AeroGraph/ACE reasoner and re-observation policy plan |
-| `3d_generation_experiment_plan.md` | MarineCity neural-3D comparison plan and scope |
-| `github_overleaf_automation.md` | Guarded GitHub and Overleaf sync workflow |
-| `overleaf_sync.md` | Exact Overleaf include/sync scope; excludes Markdown and README files from `paper/` |
-
-## Execution And Setup Docs
+## Start Here
 
 | File | Use |
 | --- | --- |
-| `UBUNTU_SERVER_SETUP.md` | Ubuntu server setup and paths |
-| `WINDOWS_MARINECITY_ISAAC_SETUP.md` | Windows/Isaac setup |
-| `dataset_setup.md` | Dataset location and conversion notes |
-| `server_gpu_allocation.md` | GPU lane policy |
-| `visible_execution_workflow.md` | Visible terminal/tmux monitoring workflow |
+| `dataset_setup.md` | Dataset roots, conversion expectations, and readiness checks |
+| `UBUNTU_SERVER_SETUP.md` | Ubuntu server environment and paths |
+| `WINDOWS_MARINECITY_ISAAC_SETUP.md` | Windows/Isaac setup for MarineCity simulation |
+| `visible_execution_workflow.md` | tmux/live monitoring workflow |
+| `server_gpu_allocation.md` | GPU lane policy for detector and 3D jobs |
+| `current_workspace_layout.md` | Current folder policy and tracked artifact scope |
 
-## Internal Status Docs
+## Detector Implementation
 
 | File | Use |
 | --- | --- |
-| `experiment_steps_and_progress_summary.md` | One-file history of completed and pending experiments |
-| `current_experiment_steps.md` | Execution tracker |
-| `current_workspace_layout.md` | Current folder policy |
-| `server_progress.md` | Server-side experiment log |
-| `survey_workspace.md` | Literature survey workspace |
+| `server_training_plan.md` | Detector training protocol and queue structure |
+| `server_progress.md` | Server-side detector experiment log |
+| `proposed_perception_module_plan.md` | SAFR-YOLO/P2P4-SelfAttnFR detector design and ablation protocol |
+| `proposed_detector_three_core_modules.md` | Detector module implementation details |
+| `system_ablation_evaluation_plan.md` | Ablation and evaluation checklist |
+| `supplementary_small_object_analysis_plan.md` | Additional small-object analysis protocol |
+| `uav_small_object_same_dataset_comparison_models.md` | Same-dataset comparison model matrix |
 
-## Archive
+## 3D, Simulation, And Reasoning
 
-Use `docs/archive/` for superseded design sketches, old progress reports, and exploratory notes. Do not cite archive notes directly in the main paper unless the result has been promoted into `paper/`, `outputs/reports/`, or a submission-facing doc above.
+| File | Use |
+| --- | --- |
+| `3d_generation_experiment_plan.md` | MarineCity neural-3D comparison protocol |
+| `isaac_3d_reasoner_readiness_2026-06-16.md` | Isaac, 3D, and reasoner readiness status |
+| `llm_reasoner_adjudicator_plan.md` | Evidence graph reasoning and re-observation policy |
+| `qualitative_gradcam_plan.md` | Detector qualitative and activation analysis |
+| `uavmarine_multiuav_scenarios.md` | Multi-UAV MarineCity scenario definitions |
+
+## Result Summaries
+
+| File | Use |
+| --- | --- |
+| `current_experiment_steps.md` | Active experiment checklist |
+| `current_experiment_execution_order.md` | Execution order for remaining jobs |
+| `experiment_steps_and_progress_summary.md` | Compact project progress summary |
+| `accv_final_submission_readiness_2026-06-30.md` | Final claim and artifact readiness summary |
+| `accv_supplementary_cleanup_audit_2026-06-30.md` | Supplementary artifact cleanup audit |
+
+## Archive Policy
+
+Keep only reproducibility and implementation documents in the main docs index. Superseded planning notes, prompt drafts, and editor-specific sync notes should be removed or kept outside the public repository.

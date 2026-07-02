@@ -1,6 +1,6 @@
 {
   "summary": {
-    "updated": "2026-06-26T06:23:58+09:00",
+    "updated": "2026-06-28T22:30:18+09:00",
     "source_export_root": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports",
     "scenario_count": 3,
     "frame_count": 9,
@@ -9,8 +9,8 @@
       140.0,
       160.0
     ],
-    "mean_rgb_black_ratio": 0.0913768325617284,
-    "mean_depth_finite_ratio": 0.908344425154321,
+    "mean_rgb_black_ratio": 0.09315815489969137,
+    "mean_depth_finite_ratio": 0.9065288628472222,
     "terrain_all_valid": true,
     "google_tiles_all_valid": true,
     "external_neural_3d_runner_status": "pending_upstream_runner_connection"
@@ -191,10 +191,10 @@
         1280,
         720
       ],
-      "rgb_black_ratio": 0.042082248263888886,
+      "rgb_black_ratio": 0.04210394965277778,
       "depth_finite_ratio": 0.9575911458333334,
-      "depth_min_m": 123.54351043701172,
-      "depth_median_m": 320.9843292236328,
+      "depth_min_m": 123.34263610839844,
+      "depth_median_m": 321.3421936035156,
       "depth_max_m": 342.24591064453125
     },
     {
@@ -220,10 +220,10 @@
         1280,
         720
       ],
-      "rgb_black_ratio": 0.017840711805555555,
+      "rgb_black_ratio": 0.017847222222222223,
       "depth_finite_ratio": 0.9819748263888889,
-      "depth_min_m": 132.50718688964844,
-      "depth_median_m": 326.2165985107422,
+      "depth_min_m": 133.28964233398438,
+      "depth_median_m": 325.93853759765625,
       "depth_max_m": 345.2665710449219
     },
     {
@@ -249,10 +249,10 @@
         1280,
         720
       ],
-      "rgb_black_ratio": 0.21953776041666667,
+      "rgb_black_ratio": 0.21954861111111112,
       "depth_finite_ratio": 0.7800206163194444,
-      "depth_min_m": 144.68748474121094,
-      "depth_median_m": 344.34576416015625,
+      "depth_min_m": 142.72943115234375,
+      "depth_median_m": 344.7294921875,
       "depth_max_m": 367.87109375
     },
     {
@@ -278,10 +278,10 @@
         1280,
         720
       ],
-      "rgb_black_ratio": 0.04237847222222222,
+      "rgb_black_ratio": 0.042080078125,
       "depth_finite_ratio": 0.9575911458333334,
-      "depth_min_m": 124.1441421508789,
-      "depth_median_m": 321.08558654785156,
+      "depth_min_m": 123.80792999267578,
+      "depth_median_m": 321.3009948730469,
       "depth_max_m": 342.24591064453125
     },
     {
@@ -307,10 +307,10 @@
         1280,
         720
       ],
-      "rgb_black_ratio": 0.018120659722222224,
+      "rgb_black_ratio": 0.01783962673611111,
       "depth_finite_ratio": 0.9819748263888889,
-      "depth_min_m": 132.87252807617188,
-      "depth_median_m": 326.2919464111328,
+      "depth_min_m": 133.62188720703125,
+      "depth_median_m": 325.88726806640625,
       "depth_max_m": 345.2665710449219
     },
     {
@@ -336,10 +336,10 @@
         1280,
         720
       ],
-      "rgb_black_ratio": 0.21972547743055557,
+      "rgb_black_ratio": 0.21953993055555557,
       "depth_finite_ratio": 0.7800206163194444,
-      "depth_min_m": 145.33045959472656,
-      "depth_median_m": 344.5174865722656,
+      "depth_min_m": 143.02816772460938,
+      "depth_median_m": 344.7294921875,
       "depth_max_m": 367.87109375
     },
     {
@@ -367,8 +367,8 @@
       ],
       "rgb_black_ratio": 0.042084418402777775,
       "depth_finite_ratio": 0.9575911458333334,
-      "depth_min_m": 123.88387298583984,
-      "depth_median_m": 320.6683349609375,
+      "depth_min_m": 122.33397674560547,
+      "depth_median_m": 321.12535095214844,
       "depth_max_m": 342.24591064453125
     },
     {
@@ -394,10 +394,10 @@
         1280,
         720
       ],
-      "rgb_black_ratio": 0.017836371527777777,
+      "rgb_black_ratio": 0.017838541666666666,
       "depth_finite_ratio": 0.9819748263888889,
-      "depth_min_m": 131.60153198242188,
-      "depth_median_m": 325.97491455078125,
+      "depth_min_m": 132.3472137451172,
+      "depth_median_m": 326.1361846923828,
       "depth_max_m": 345.2665710449219
     },
     {
@@ -423,10 +423,10 @@
         1280,
         720
       ],
-      "rgb_black_ratio": 0.2027853732638889,
-      "depth_finite_ratio": 0.7963606770833334,
-      "depth_min_m": 143.8474578857422,
-      "depth_median_m": 344.450927734375,
+      "rgb_black_ratio": 0.219541015625,
+      "depth_finite_ratio": 0.7800206163194444,
+      "depth_min_m": 142.41184997558594,
+      "depth_median_m": 344.7294921875,
       "depth_max_m": 367.87109375
     }
   ],

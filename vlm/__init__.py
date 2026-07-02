@@ -1,6 +1,5 @@
-"""Selective VLM verification with SAGE prompts."""
+"""Selective VLM verification with AeroGraph Reasoner prompts."""
 
-from .sage_prompt import build_sage_prompt, parse_sage_response
+from .aerograph_prompt import build_aerograph_prompt, parse_aerograph_response
 
-__all__ = ["build_sage_prompt", "parse_sage_response"]
-
+__all__ = ["build_aerograph_prompt", "parse_aerograph_response"]

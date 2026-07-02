@@ -15,7 +15,7 @@
 - The `Use` column in the auxiliary Nerfacto sweep table was removed. The
   representative row is now marked by bold formatting and explained in the
   caption instead of using an operations-note column.
-- Legacy Overleaf-only `table10_system_stack.tex` no longer contains
+- Legacy publication-only `table10_system_stack.tex` no longer contains
   `\pending` markers. It is retained only as a layout-compatible fallback;
   the paper-facing system evidence is the MarineCity validation table set.
 

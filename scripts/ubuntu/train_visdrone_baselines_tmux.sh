@@ -15,6 +15,7 @@ EXPERIMENT_ROOT=${EXPERIMENT_ROOT:-outputs/experiments}
 LOG_DIR=${LOG_DIR:-outputs/logs/server_baselines}
 RUN_EVAL=${RUN_EVAL:-1}
 ROC_AUC=${ROC_AUC:-1}
+GPU_LIST=${GPU_LIST:-0,1}
 
 cd "$(dirname "$0")/../.."
 ROOT=$PWD
@@ -48,7 +49,12 @@ if [[ ! -f "$COMMAND_CSV" ]]; then
   echo "created_at,session,model,seed,physical_gpu,ultralytics_device,imgsz,batch,epochs,data_yaml,run_name,log_file,status,command" > "$COMMAND_CSV"
 fi
 
-for gpu in 0 1; do
+IFS=',' read -r -a gpu_list <<< "$GPU_LIST"
+active_gpus=()
+for gpu in "${gpu_list[@]}"; do
+  gpu=${gpu//[[:space:]]/}
+  [[ -z "$gpu" ]] && continue
+  active_gpus+=("$gpu")
   script="$JOB_ROOT/gpu${gpu}.sh"
   {
     echo "#!/usr/bin/env bash"
@@ -64,6 +70,11 @@ for gpu in 0 1; do
   chmod +x "$script"
 done
 
+if [[ ${#active_gpus[@]} -eq 0 ]]; then
+  echo "GPU_LIST did not contain any GPU ids: $GPU_LIST" >&2
+  exit 2
+fi
+
 IFS=',' read -r -a model_list <<< "$MODELS"
 IFS=',' read -r -a seed_list <<< "$SEEDS"
 
@@ -77,7 +88,7 @@ for model in "${model_list[@]}"; do
   for seed in "${seed_list[@]}"; do
     seed=${seed//[[:space:]]/}
     [[ -z "$seed" ]] && continue
-    gpu=$((job_index % 2))
+    gpu="${active_gpus[$((job_index % ${#active_gpus[@]}))]}"
     run_name="${model_slug}_${DATASET_TAG}_seed${seed}"
     log_file="$LOG_DIR/${run_name}.log"
     job_script="$JOB_ROOT/gpu${gpu}.sh"
@@ -102,11 +113,15 @@ for model in "${model_list[@]}"; do
   done
 done
 
-tmux new-session -d -s "$SESSION" -n gpu0 "$JOB_ROOT/gpu0.sh"
-tmux new-window -t "$SESSION" -n gpu1 "$JOB_ROOT/gpu1.sh"
+first_gpu="${active_gpus[0]}"
+tmux new-session -d -s "$SESSION" -n "gpu${first_gpu}" "$JOB_ROOT/gpu${first_gpu}.sh"
+for gpu in "${active_gpus[@]:1}"; do
+  tmux new-window -t "$SESSION" -n "gpu${gpu}" "$JOB_ROOT/gpu${gpu}.sh"
+done
 
 echo "Started tmux session: $SESSION"
 echo "Dataset tag: $DATASET_TAG"
+echo "GPU list: ${active_gpus[*]}"
 echo "Attach: tmux attach -t $SESSION"
 echo "Job scripts: $JOB_ROOT"
 echo "Command CSV: $COMMAND_CSV"

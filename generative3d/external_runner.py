@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 
@@ -20,7 +21,20 @@ def main() -> None:
     parser.add_argument("--checkpoint", default=None)
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--out", default=None)
+    parser.add_argument(
+        "--allow-placeholder",
+        action="store_true",
+        help="Write the placeholder command-contract JSON. Do not use for paper-facing 3D metrics.",
+    )
     args = parser.parse_args()
+    if not args.allow_placeholder:
+        message = (
+            "generative3d.external_runner is only a command-contract placeholder. "
+            "Install/connect an upstream NeRF/Instant-NGP/Mip-NeRF/3DGS runner, "
+            "or rerun with --allow-placeholder for a non-paper smoke artifact."
+        )
+        print(message, file=sys.stderr)
+        raise SystemExit(2)
     payload = {
         "status": "placeholder",
         "method": args.method,

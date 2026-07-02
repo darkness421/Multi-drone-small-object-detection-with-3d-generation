@@ -24,12 +24,17 @@ LIVE_DIR = REPO_ROOT / "outputs/reports/live"
 OUT_PATH = LIVE_DIR / "marinecity_simulation_dashboard.png"
 SYSTEM_DIR = LIVE_DIR / "marinecity_system_test_10plus"
 PROMPT_PACK_MANIFEST = LIVE_DIR / "aerograph_prompt_pack/manifest.json"
+MARINECITY_QUALITATIVE_GATE = LIVE_DIR / "marinecity_qualitative_gate.json"
 STATUS_PATH = LIVE_DIR / "marinecity_3d_reasoner_status_2026-06-24.md"
 VIEWER160_STATUS_CSV = REPO_ROOT / "outputs/experiments/marinecity_viewer160_pipeline_status.csv"
 VIEWER160_STATUS_MD = REPO_ROOT / "outputs/experiments/marinecity_viewer160_pipeline_status.md"
 VIEWER160_QUEUE_LOG = REPO_ROOT / "outputs/logs/marinecity_viewer160_pipeline/queue.log"
 ISAAC_EXPORT_ROOT = Path("/home/oem/UAV/uav_marinecity/outputs/isaac_exports")
 SESSION_OVERLAY_STATUS = Path("/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json")
+TARGET_GEOREF_HEIGHT_M = 160
+UAV_ALTITUDE_BAND = "140-160 m"
+USER_REVIEW_HEIGHT_M = 160
+UAV_ALTITUDE_SCHEDULE = "UAV01/02/03: 140/150/160 m"
 
 VIEWER160_SCENARIOS = [
     ("S0", "locked ROI", "uavmarine_s0_viewer160_session_recapture", "uavmarine_s0_viewer160_recapture"),
@@ -98,7 +103,9 @@ def viewer160_result_rows() -> list[dict[str, Any]]:
         detector = read_json(
             REPO_ROOT / f"outputs/evidence/{stem}_detector_smoke_conf001/detector_smoke_summary.json"
         )
-        reasoner = read_json(REPO_ROOT / f"outputs/reasoning/{stem}_from_detector_conf001_mock/summary.json")
+        rule_based_reasoner = REPO_ROOT / f"outputs/reasoning/{stem}_from_detector_conf001_rule_based/summary.json"
+        mock_reasoner = REPO_ROOT / f"outputs/reasoning/{stem}_from_detector_conf001_mock/summary.json"
+        reasoner = read_json(rule_based_reasoner if rule_based_reasoner.exists() else mock_reasoner)
         preview_dir = REPO_ROOT / f"outputs/evidence/{stem}_detector_smoke_conf001/previews"
         preview = next(iter(sorted(preview_dir.glob("*_pred.png"))), None) if preview_dir.exists() else None
         rows.append(
@@ -208,6 +215,7 @@ def status_badge(draw: ImageDraw.ImageDraw, xy: tuple[int, int], text: str, fill
 def main() -> None:
     manifest = read_json(SYSTEM_DIR / "manifest.json")
     prompt_pack = read_json(PROMPT_PACK_MANIFEST)
+    qualitative_gate = read_json(MARINECITY_QUALITATIVE_GATE)
     session_overlay = read_json(SESSION_OVERLAY_STATUS)
     scenario_rows = read_csv(SYSTEM_DIR / "paper_system_scenario_table.csv")
     token_rows = read_csv(SYSTEM_DIR / "system_test_token_results.csv")
@@ -229,7 +237,13 @@ def main() -> None:
         }
     )
     viewer_started = VIEWER160_QUEUE_LOG.exists()
-    viewer_badge = "paper recapture: running" if viewer_started and viewer_reasoner_ok < 3 else "paper recapture: done" if viewer_reasoner_ok >= 3 else "paper recapture: pending"
+    viewer_badge = (
+        "real-Cesium smoke: running"
+        if viewer_started and viewer_reasoner_ok < 3
+        else "real-Cesium smoke: done"
+        if viewer_reasoner_ok >= 3
+        else "real-Cesium smoke: pending"
+    )
     viewer_badge_color = "#f97316" if viewer_started and viewer_reasoner_ok < 3 else "#16a34a" if viewer_reasoner_ok >= 3 else "#7c3aed"
     camera_profile = str(session_overlay.get("camera_profile", "manual_user_camera"))
     camera_set = bool(session_overlay.get("camera_set", False))
@@ -243,7 +257,6 @@ def main() -> None:
         "YOLO11s-UAV repro": result_count(
             detector_results_root / "related_work_module_reproductions", "*/ultralytics/results.csv"
         ),
-        "TinyPerson 640": result_count(detector_results_root / "tinyperson_640", "*/ultralytics/results.csv"),
         "CSFPR/MFFSOD consistency": result_count(detector_results_root / "related_work_consistency", "*/*/results.csv"),
     }
 
@@ -274,15 +287,13 @@ def main() -> None:
     active_camera = Path(str(session_overlay.get("active_camera_path", "unknown"))).name
     if camera_set:
         live_text = (
-            "Current visible Isaac GUI is the real-time view you can inspect manually. "
-            "The encoded viewer160 runtime camera keeps the real MarineCity ROI visible "
-            "without creating any fake city geometry."
+            "Real Cesium GUI is inspectable now. Use the 160 m review view; "
+            "no fake city geometry is created."
         )
     else:
         live_text = (
-            "Current visible Isaac GUI is the real-time view you can inspect manually. "
-            "You reported the viewport altitude around 160 m. The automation will not "
-            "blindly replace this view; it should recapture from a matching viewer160 profile."
+            "Real Cesium GUI is inspectable manually. Keep the 160 m review "
+            "view and recapture from a matching profile."
         )
     y = wrapped(
         draw,
@@ -290,22 +301,29 @@ def main() -> None:
         x,
         y,
         48,
-        29,
+        25,
     )
     camera_altitude = viewer_eye[2] if isinstance(viewer_eye, list) and len(viewer_eye) >= 3 else "unknown"
-    draw.text((x, y + 18), f"Viewer camera altitude: {camera_altitude} m", fill="#0f172a", font=FONT_H)
+    draw.text((x, y + 18), f"Viewer/review height target: {USER_REVIEW_HEIGHT_M} m", fill="#0f172a", font=FONT_H)
     draw.text((x, y + 58), f"Camera profile: {camera_profile}; active: {active_camera}", fill="#334155", font=FONT_SMALL)
-    draw.text((x, y + 88), f"Live overlay: {overlay_status}", fill="#0f172a", font=FONT_SMALL)
-    draw.text((x, y + 114), f"Root: {root_layer}; actor: {actor_layer}", fill="#334155", font=FONT_SMALL)
-    draw.text((x, y + 140), f"Google tiles={google_ok}, terrain={terrain_ok}, fake city={fake_city}", fill="#b45309", font=FONT_SMALL)
+    draw.text((x, y + 88), f"Status altitude readback: viewer eye z={camera_altitude} m", fill="#334155", font=FONT_SMALL)
+    draw.text((x, y + 114), f"Live overlay: {overlay_status}", fill="#0f172a", font=FONT_SMALL)
+    draw.text((x, y + 140), f"Root: {root_layer}; actor: {actor_layer}", fill="#334155", font=FONT_SMALL)
+    draw.text((x, y + 166), f"Google tiles={google_ok}, terrain={terrain_ok}, fake city={fake_city}", fill="#b45309", font=FONT_SMALL)
     draw.text(
-        (x, y + 166),
-        f"georef h={georef_height}, requested/applied={requested_georef_height}/{applied_georef_height}",
-        fill="#b45309",
+        (x, y + 192),
+        f"target georef h={TARGET_GEOREF_HEIGHT_M} m; last GUI readback={georef_height}; requested/applied={requested_georef_height}/{applied_georef_height}",
+        fill="#64748b",
+        font=FONT_SMALL,
+    )
+    draw.text(
+        (x, y + 218),
+        f"UAV band: {UAV_ALTITUDE_BAND}; {UAV_ALTITUDE_SCHEDULE}",
+        fill="#15803d",
         font=FONT_SMALL,
     )
 
-    x, y = card(draw, (730, 130, 1420, 500), "Viewer160 Real-Cesium Queue", "#0f766e")
+    x, y = card(draw, (730, 130, 1420, 500), "Viewer160 Real-Cesium Smoke Queue", "#0f766e")
     smoke_summary = (
         f"Scenarios complete: {viewer_reasoner_ok}/3\n"
         f"Real Cesium captures: {viewer_capture_ok}/3\n"
@@ -315,19 +333,24 @@ def main() -> None:
         f"Detected classes in this smoke pass: {', '.join(viewer_classes) if viewer_classes else 'none'}"
     )
     wrapped(draw, smoke_summary, x, y, 50, 31)
-    draw.text((x, 438), "Integration works; paper-quality visuals still need a cleaner recapture.", fill="#b45309", font=FONT_SMALL)
+    draw.text(
+        (x, 438),
+        "System smoke ready; optional visual polish + external LLM replication remain.",
+        fill="#047857",
+        font=FONT_SMALL,
+    )
 
     x, y = card(draw, (1460, 130, 2164, 500), "Next Paper-Facing Queue", "#7c3aed")
     next_steps = [
-        f"1. Recapture S0/S1/S2 with viewer160 ({viewer_capture_ok}/3 done)",
-        f"2. Run P2P4-SelfAttnFR detector ({viewer_detector_ok}/3 done)",
-        f"3. Build 3D evidence + reasoner outputs ({viewer_reasoner_ok}/3 done)",
-        "4. Improve object placement/scale for stronger car/person detections",
-        f"5. Run non-mock AeroGraph LLM ({prompt_pack.get('total_prompts', 0)} prompts ready)",
+        "1. Use latest S0/S1/S2 corrected real-Cesium smoke sheets",
+        "2. Keep 78-token detector/reasoner table as system-protocol evidence",
+        "3. Keep 3D metric table as smoke, not a full benchmark claim",
+        "4. Optional: add drone mesh / re-observation path for demo visuals",
+        "5. Replicate with external-provider/local-model output before final reasoner claims",
     ]
     for step in next_steps:
-        draw.text((x, y), step, fill="#0f172a", font=FONT_BODY)
-        y += 35
+        y = wrapped(draw, step, x, y, 54, 26, fill="#0f172a", font_obj=FONT_BODY)
+        y += 8
 
     x, y = card(draw, (36, 540, 690, 900), "2D Experiment Situation", "#1d4ed8")
     for label, count in related_counts.items():
@@ -336,7 +359,6 @@ def main() -> None:
     queue_paths = [
         ("required related-work", REPO_ROOT / "outputs/logs/required_related_work_models/queue.log"),
         ("related module repro", REPO_ROOT / "outputs/logs/related_work_module_reproductions/queue.log"),
-        ("TinyPerson 640", REPO_ROOT / "outputs/logs/tinyperson_640/queue.log"),
     ]
     y += 14
     for label, path in queue_paths:
@@ -356,20 +378,37 @@ def main() -> None:
         y = wrapped(draw, line, x, y, 68, 22, fill="#0f172a", font_obj=FONT_SMALL)
         y += 4
     y += 8
-    wrapped(
+    qual_checks = qualitative_gate.get("checks", {}) or {}
+    qual_full = qualitative_gate.get("best_full_capture", {}) or {}
+    qual_crop = qualitative_gate.get("best_crop_candidate", {}) or {}
+    y = wrapped(
         draw,
-        "These rows are valid as real-Cesium system integration smoke-test records. They should not be presented as final 3D/reasoner quantitative results until the non-mock LLM/VLM study is complete.",
+        f"Qual gate: {qualitative_gate.get('status', 'missing')}; full-main={qual_checks.get('full_frame_main_ready')} "
+        f"(void {qual_full.get('best_black_ratio')}), crop-supp={qual_checks.get('crop_supplementary_ready')} "
+        f"(void {qual_crop.get('black_ratio')}).",
         x,
         y,
-        54,
-        28,
+        63,
+        21,
+        fill="#14532d",
+        font_obj=FONT_SMALL,
+    )
+    y += 8
+    wrapped(
+        draw,
+        "Smoke evidence only. Use corrected low-black frames for paper figures; external reasoner replication is still pending.",
+        x,
+        y,
+        64,
+        23,
         fill="#334155",
+        font_obj=FONT_SMALL,
     )
 
     x, y = card(draw, (1460, 540, 2164, 900), "Live Viewing Reality", "#dc2626")
     wrapped(
         draw,
-        "You can watch the current Isaac GUI in real time. Codex-side scripts normally launch or drive a separate capture process, so they do not automatically inherit the exact manual viewport unless we encode it as a profile or save it into a camera prim.",
+        "You can watch the current Isaac GUI in real time. Automation scripts normally launch or drive a separate capture process, so they do not automatically inherit the exact manual viewport unless we encode it as a profile or save it into a camera prim.",
         x,
         y,
         54,
@@ -377,7 +416,7 @@ def main() -> None:
     )
     wrapped(
         draw,
-        "Current move: viewer160 runtime camera is active. Next, recapture clean S0/S1/S2 views and keep the GUI stage unsaved.",
+        "Current move: use corrected S0/S1/S2 sheets for paper, keep 3D metrics as smoke evidence, and avoid external-LLM claims until replicated.",
         x,
         790,
         50,
@@ -398,12 +437,12 @@ def main() -> None:
     x, y = card(draw, (1484, 960, 2164, 1344), "Concrete Commands", "#0f172a")
     commands = [
         "bash scripts/ubuntu/start_accv_continuous_queue.sh",
-        "COM3D_KEEP_USER_CAMERA=0 COM3D_VIEWER_PROFILE=bright160 COM3D_GEOREF_HEIGHT=160 SESSION=uav-marinecity-s0-bright160-gui bash scripts/ubuntu/start_uavmarine_overlay_gui.sh s0",
+        "COM3D_KEEP_USER_CAMERA=1 COM3D_VIEWER_PROFILE=viewer160 COM3D_GEOREF_HEIGHT=160 SESSION=uav-marinecity-s0-viewer160-gui bash scripts/ubuntu/start_uavmarine_overlay_gui.sh s0",
         "tmux attach -t live-training-scoreboard",
         "python scripts/build_live_training_dashboard.py --out outputs/reports/live/training_dashboard.png",
         "python scripts/build_aerograph_prompt_pack.py",
-        "capture_realcities_multiuav.py --camera-profile viewer160 --stage /workspace/uav_marinecity/uavmarine_multiuav_overlay_s0_locked_roi.usda",
-        "run_marinecity_3d_reasoner_smoke.py --provider openai|command",
+        "capture_realcities_multiuav.py --camera-profile viewer160-clean --stage /workspace/uav_marinecity/uavmarine_multiuav_overlay_s0_locked_roi.usda",
+        "run_marinecity_3d_reasoner_smoke.py --provider openai",
     ]
     for cmd in commands:
         y = wrapped(draw, cmd, x, y, 58, 20, fill="#334155", font_obj=FONT_SMALL)

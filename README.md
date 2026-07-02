@@ -1,146 +1,130 @@
 # CoM3D-ACE
 
-CoM3D-ACE is the research codebase for **Cooperative Multi-UAV 3D Ambiguity-Centric Evidence Completion**.
-The current paper package targets cooperative UAV small-object perception in a Marine City scenario, combining a compact detector, multi-view evidence graphs, neural 3D validation, and ambiguity-aware re-observation reasoning.
+CoM3D-ACE is a cooperative multi-UAV perception research codebase for small-object detection, multi-view evidence construction, neural 3D validation, and ambiguity-aware re-observation in a MarineCity-style UAV scenario.
 
-## Paper-Facing Status
+The repository is organized for reproducible implementation work: detector training/evaluation, simulation capture utilities, evidence graph construction, 3D reconstruction runners, and compact experiment summaries.
 
-Updated: `2026-07-02 KST`
+## Implemented Components
 
-The repository is organized around the current ACCV/Overleaf submission package:
-
-- **Detector claim:** `SAFR-YOLO`, implemented as the `P2P4-SelfAttnFR` detector candidate, is the selected detector result.
-- **Detector protocol:** VisDrone2019-DET validation, image size 1280, three seeds `42, 123, 2026`.
-- **Main result snapshot:** Ours AP `0.3822 +/- 0.0007`, AP50 `0.6052 +/- 0.0012`, F1 `0.6273`, Params `20.82M`, GFLOPs `109.30`.
-- **Reference baseline:** YOLOv11l AP `0.3777 +/- 0.0004`, AP50 `0.5981 +/- 0.0011`, F1 `0.6248`, Params `25.32M`.
-- **System validation:** MarineCity real-Cesium multi-UAV capture, EvidenceToken generation, cross-view graph construction, neural-3D runner-family validation, and AeroGraph/ACE-style reasoning tables are prepared as paper or supplementary evidence.
-
-Claim boundaries are tracked in [docs/accv_final_submission_readiness_2026-06-30.md](docs/accv_final_submission_readiness_2026-06-30.md).
-
-## Naming
-
-- **CoM3D-ACE:** full cooperative multi-UAV 3D evidence-completion system.
-- **SAFR-YOLO:** paper-facing name for the detector contribution.
-- **P2P4-SelfAttnFR:** implementation/run label for the selected SAFR-YOLO detector candidate.
-- **AeroGraph Reasoner / ACE-Reasoner:** graph-grounded ambiguity and re-observation reasoning module.
-
-Use `SAFR-YOLO` in the main paper. Use `P2P4-SelfAttnFR` only when describing the exact implementation, ablation, or reproducibility metadata.
-
-## Where To Look First
-
-| Path | Purpose |
+| Area | Implementation |
 | --- | --- |
-| [docs/overleaf_sync.md](docs/overleaf_sync.md) | What to copy/include in Overleaf |
-| [paper/sections/](paper/sections) | LaTeX-ready main and supplementary bundles |
-| [paper/tables/](paper/tables) | LaTeX/CSV paper tables |
-| [paper/figures/results/](paper/figures/results) | Paper-facing detector and MarineCity figures |
-| [outputs/reports/final_detector_table_preview.md](outputs/reports/final_detector_table_preview.md) | Detector comparison snapshot and protocol notes |
-| [outputs/reports/README.md](outputs/reports/README.md) | Compact report index |
-| [docs/README.md](docs/README.md) | Active documentation index |
+| Detector training | Ultralytics YOLO/RT-DETR wrappers, VisDrone/TinyPerson/UAVDT-oriented configs, tmux queue scripts |
+| Proposed detector | SAFR-YOLO / `P2P4-SelfAttnFR` modules and ablation configs |
+| Evaluation | Metric collection, seed summaries, p-values, detector tables, ROC/qualitative/activation utilities |
+| Evidence graph | EvidenceToken generation, cross-view grouping, support/conflict/missing-evidence links |
+| 3D validation | MarineCity RGB/depth/pose export, Nerfacto/Instant-NGP/3DGS-style runner registry, depth point-cloud checks |
+| Reasoning | AeroGraph/ACE-style rule and prompt interfaces for ambiguity diagnosis and re-observation decisions |
+| Simulation | Isaac/Cesium MarineCity scene setup, multi-UAV camera capture helpers, Windows and Ubuntu separated workflows |
 
-Internal queues, raw detector runs, logs, weights, datasets, and cache folders are not part of the paper-facing sync.
-Markdown notes and README files are kept outside `paper/`; Overleaf should receive only LaTeX sources, tables, final figures, and required CSV assets.
+## Current Detector Snapshot
+
+The main completed detector protocol is VisDrone2019-DET validation at image size `1280` with seeds `42`, `123`, and `2026`.
+
+| Method | AP | AP50 | F1 | Params | GFLOPs |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| SAFR-YOLO / P2P4-SelfAttnFR | `0.3822 +/- 0.0007` | `0.6052 +/- 0.0012` | `0.6273` | `20.82M` | `109.30` |
+| YOLOv11l reference | `0.3777 +/- 0.0004` | `0.5981 +/- 0.0011` | `0.6248` | `25.32M` | `109.10` |
+
+Primary detector result files:
+
+- `outputs/reports/final_detector_table_preview.csv`
+- `outputs/reports/final_detector_table_preview.md`
+- `outputs/reports/final_detector_tables/main_1280_completed_3seed.csv`
+- `outputs/experiments/final_p2p4_selfattnfr_ablation_summary.csv`
 
 ## Repository Layout
 
 ```text
-configs/             Experiment, detector, dataset, and simulation configs
-data/, datasets/     Dataset converters and small schema/sample files
-detectors/           YOLO/RT-DETR wrappers, SAFR-YOLO modules, detector training utilities
-evidence/            EvidenceToken generation, crops, uncertainty, and visualization helpers
+configs/             Dataset, detector, experiment, simulation, and automation configs
+data/, datasets/     Dataset converters and lightweight schema/sample files
+detectors/           YOLO/RT-DETR runners, SAFR-YOLO modules, detector wrappers
+evaluation/          Metric collection, statistics, ROC-AUC, qualitative and activation analysis
+evidence/            EvidenceToken generation, crops, uncertainty, visualization helpers
 alignment/           Cross-view and cross-resolution matching costs
-graph/               Evidence-graph construction utilities
+graph/               Evidence graph construction utilities
 ambiguity/           Ambiguity scoring and diagnostic helpers
-generative3d/        NeRF/Instant-NGP/3DGS runner registry and external-runner interface
-simulation/isaac/    MarineCity Isaac/Cesium scene and capture helpers
-evaluation/          Detector metrics, seed statistics, ROC-AUC, system/reasoner evaluation
-scripts/             Report builders and experiment orchestration scripts
-scripts/ubuntu/      Ubuntu/tmux server runners
-paper/               Overleaf-ready section, table, and figure assets
+generative3d/        Neural 3D runner registry and external runner interface
+simulation/isaac/    MarineCity Isaac/Cesium scene and capture utilities
+scripts/             Report builders, preparation scripts, and experiment orchestration
+scripts/ubuntu/      Ubuntu/tmux server runners and live monitoring helpers
+paper/               Publication tables and final figure assets
 outputs/             Small CSV/JSON/PNG summaries only; no raw runs or weights
 ```
 
-## Overleaf Sync
+## Setup And Checks
 
-Use the patch bundles from `paper/sections/`:
-
-```latex
-% Main paper result/protocol patch
-\input{sections/main_results_patch_bundle}
-
-% Supplementary material
-\input{sections/supplementary_patch_bundle}
-```
-
-If the Overleaf project needs a full body replacement, use:
-
-```latex
-\input{sections/full_main_draft_bundle}
-```
-
-Before syncing, run:
-
-```bash
-python scripts/check_latex_patch_integrity.py
-python scripts/check_paper_artifact_readiness.py
-```
-
-Expected live checks:
-
-- `outputs/reports/live/latex_patch_integrity_check.md`
-- `outputs/reports/live/paper_artifact_readiness_check.md`
-
-## Reproduce The Detector Tables
-
-The paper table sources are already exported:
-
-- `paper/tables/main_detector_comparison_table.tex`
-- `paper/tables/final_ablation_main_table.tex`
-- `outputs/reports/final_detector_table_preview.{md,csv,tex}`
-- `outputs/reports/final_detector_tables/main_1280_completed_3seed.csv`
-
-To refresh detector summaries from current small CSV artifacts:
-
-```bash
-python scripts/build_final_ablation_paper_artifacts.py
-python scripts/build_server_report_figures.py
-python scripts/check_latex_patch_integrity.py
-```
-
-Long training should be launched only through the Ubuntu/tmux scripts in `scripts/ubuntu/`.
-Do not commit datasets, weights, raw run directories, cache folders, or large logs.
-
-## Ubuntu Server Entry Points
+Ubuntu server:
 
 ```bash
 cd /home/oem/projects/multi-uav-marine-city
 bash scripts/ubuntu/check_env.sh
 bash scripts/ubuntu/check_dataset_ready.sh
+```
+
+Python module checks:
+
+```bash
+python -m scripts.check_env
+python -m py_compile detectors/train_yolo.py detectors/ultralytics_runner.py evaluation/collect_detector_metrics.py
+```
+
+Windows/Isaac setup is documented separately:
+
+- `docs/WINDOWS_MARINECITY_ISAAC_SETUP.md`
+- `isaac/README.md`
+
+## Detector Experiments
+
+Baseline and proposed detector runs are launched through tmux scripts so long jobs remain visible and resumable:
+
+```bash
+bash scripts/ubuntu/train_visdrone_baselines_tmux.sh
+bash scripts/ubuntu/train_proposed_ablation_after_session.sh
 bash scripts/ubuntu/watch_live_training_scoreboard.sh
 ```
 
-The main detector training/comparison queues are retained for reproducibility, but the current paper package should rely on completed 1280 three-seed summary tables rather than active queue notes.
+Result collection and tables:
 
-## Windows / Isaac Entry Points
+```bash
+bash scripts/ubuntu/collect_server_results.sh
+python scripts/build_final_ablation_paper_artifacts.py
+python scripts/build_server_report_figures.py
+```
 
-Windows and Isaac/Cesium setup instructions are separated from the Ubuntu server workflow:
+## MarineCity / 3D / Reasoner Workflow
 
-- [docs/WINDOWS_MARINECITY_ISAAC_SETUP.md](docs/WINDOWS_MARINECITY_ISAAC_SETUP.md)
-- [docs/visible_execution_workflow.md](docs/visible_execution_workflow.md)
-- [isaac/README.md](isaac/README.md)
+The MarineCity stack uses real or simulated multi-UAV captures, detector outputs, evidence graph construction, and 3D validation artifacts.
+
+Key entry points:
+
+- `simulation/isaac/marinecity_plan.py`
+- `simulation/isaac/export_rgb_depth_pose.py`
+- `scripts/export_marinecity_neural3d_dataset.py`
+- `scripts/build_marinecity_depth_pointcloud_smoke.py`
+- `scripts/check_marinecity_system_integration.py`
+- `scripts/build_marinecity_detector_reasoner_smoke_artifacts.py`
+
+Compact outputs are stored under:
+
+- `outputs/experiments/3d_generation/`
+- `outputs/reports/live/marinecity_*`
+- `paper/figures/results/marinecity_system/`
 
 ## Git Policy
 
-Commit/push targets:
+Commit and push:
 
-- source code, configs, docs, LaTeX patches
-- small CSV/JSON summaries
-- paper-facing PNG/PDF figures
+- source code
+- configs
+- documentation needed to run the implementation
+- compact CSV/JSON summaries
+- final PNG/PDF figures and LaTeX/CSV publication tables
 
-Do not commit/push:
+Do not commit or push:
 
 - raw datasets
-- detector weights
-- raw training run folders
+- detector weights or checkpoints
+- raw training run directories
 - cache folders
-- large logs or temporary queue folders
+- large logs
+- temporary queue folders

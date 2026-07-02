@@ -1,0 +1,11 @@
+{
+  "status": "ready",
+  "raw_root": "data/raw/TinyPerson",
+  "yolo_out": "data/processed/tinyperson_yolo",
+  "data_yaml": "data/processed/tinyperson_yolo/data.yaml",
+  "splits": {
+    "train": "data/raw/TinyPerson/extracted/tiny_set/annotations/corner/tiny_set_train_with_dense_sw256_sh192.normalized_for_yolo.json",
+    "test": "data/raw/TinyPerson/extracted/tiny_set/annotations/corner/task/tiny_set_test_all_sw160_sh128.normalized_for_yolo.json",
+    "val": "data/raw/TinyPerson/extracted/tiny_set/annotations/corner/task/tiny_set_test_all_sw160_sh128.normalized_for_yolo.json"
+  }
+}

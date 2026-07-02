@@ -1,8 +1,8 @@
-name: supp_detector_input_size_sweep
+name: supp_detector_input_size_control_1280
 description: >
-  Supplementary-only detector input pixel-size sweep. The goal is to separate
-  architectural gains from plain resolution gains for UAV small-object
-  detection.
+  Supplementary-only detector input-size control fixed to the paper protocol.
+  The active queue should not spend time on low-resolution 640/650-style
+  training; all new detector runs stay at 1280-pixel input.
 
 data_yaml: configs/detector/visdrone_yolo_data.yaml
 dataset_tag: visdrone_input_size_sweep
@@ -12,24 +12,22 @@ experiment_root: outputs/experiments
 command_csv: outputs/experiments/supp_detector_input_size_sweep_commands.csv
 
 training:
-  imgsz_list: [960, 1280, 1536]
+  imgsz_list: [1280]
   epochs: 100
-  patience: 30
+  patience: 5
   seeds: [42]
   deterministic: true
   run_eval: true
   roc_auc: true
   batch_by_imgsz:
-    960: 6
     1280: 4
-    1536: 2
 
 final_statistical_expansion:
   seeds: [42, 123, 2026]
-  patience: 50
+  patience: 5
   trigger: >
-    Expand only the strongest baseline and strongest proposed detector after
-    the one-seed resolution pilot identifies the useful input size range.
+    Expand only the strongest baseline and strongest proposed detector at the
+    fixed 1280-pixel paper protocol.
 
 base_models:
   - yolo11l.pt
@@ -44,8 +42,7 @@ ablations:
     model_patches: ""
     enabled: true
     notes: >
-      Strongest current baseline family. This row tells reviewers how much of
-      the gain is due to input pixels alone.
+      Strongest current baseline family under the fixed paper input protocol.
 
   - name: p2_tiny_frelu
     method_template: InputSize-P2TinyFReLU-{base_slug}
@@ -60,13 +57,11 @@ ablations:
       - yolo11l.pt
       - detectors/proposed/modules.py
     notes: >
-      Proposed small-object detector candidate. Compare against the resolution
-      control at the same input size, not only against the 1280 baseline.
+      Proposed small-object detector candidate. Compare against the fixed
+      1280-pixel control.
 
 supplementary_reporting:
   figures:
-    - input_size_ap_ap50.png
-    - input_size_efficiency.png
     - ablation_delta_heatmap.png
   metrics:
     - AP
@@ -78,6 +73,5 @@ supplementary_reporting:
     - Params
     - GFLOPs
   reviewer_question_answered: >
-    Does the proposed detector improve small-object evidence beyond the
-    expected AP increase from high-resolution input scaling around the official
-    1280 protocol?
+    Does the proposed detector improve small-object evidence under the fixed
+    1280-pixel protocol?

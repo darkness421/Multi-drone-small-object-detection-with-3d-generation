@@ -1,0 +1,7 @@
+path: data/processed/tinyperson_yolo
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: sea_person
+  1: earth_person

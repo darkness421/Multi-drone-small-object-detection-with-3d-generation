@@ -62,7 +62,8 @@ scripts\23_prepare_visdrone_visible_terminal.bat
 1. `VisDrone2019-DET-train`
 2. `VisDrone2019-DET-val`
 3. `UAVDT`
-4. `AI-TOD`
+4. `TinyPerson`
+5. `AI-TOD`
 
 VisDrone train/val이 준비되면 detector baseline 학습을 시작할 수 있다.
 
@@ -112,3 +113,67 @@ bash scripts/ubuntu/collect_cross_dataset_results.sh
 
 UAVDT raw 파일이 비어 있으면 readiness check가 실패하고 학습은 시작하지
 않는다.
+
+## TinyPerson
+
+TinyPerson은 final detector가 정해진 뒤 detector-only supplementary stress
+test로 추가한다. VisDrone이 multi-class UAV dense detection의 primary
+benchmark라면, TinyPerson은 4x/8x/16x head와 overlap-aware decision module이
+극소 사람 객체에도 도움이 되는지 보여주는 보조 근거다.
+
+공식 다운로드:
+
+- Official benchmark repo: `https://github.com/ucas-vg/PointTinyBenchmark/tree/TinyBenchmark`
+- Official Google Drive id listed in the repo README:
+  `1KrH9uEC9q4RdKJz-k34Q6v5hRewU5HOw`
+
+서버에서 다운로드를 먼저 시작한다.
+
+```bash
+bash scripts/ubuntu/download_tinyperson_dataset_tmux.sh
+tmux attach -t server-tinyperson-download
+```
+
+다운로드와 압축 해제가 끝나면 COCO-style annotation을 YOLO tree로 변환한다.
+watcher가 raw JSON을 발견하면 자동 변환도 시도하지만, 수동으로 확인할 때는
+아래 명령을 쓴다.
+
+```bash
+bash scripts/ubuntu/prepare_tinyperson_dataset.sh
+```
+
+기대하는 변환 결과:
+
+```text
+data/processed/tinyperson_yolo/
+  images/train/
+  images/val/
+  labels/train/
+  labels/val/
+  data.yaml
+```
+
+권장 범위:
+
+- YOLOv11l baseline
+- final proposed detector
+- 가능하면 Core 1 + Core 2 architecture-only variant
+- input size `1280` under the corrected TinyPerson corner/original-window
+  protocol
+- 먼저 seed `42`만 GPU0에서 실행하고, 결과가 좋으면 `42, 123, 2026`으로 확장
+- GPU1은 TinyPerson에 쓰지 않고 Isaac/3D/reasoner lane에 남겨둔다.
+
+TinyPerson은 main detector gate가 아니라 supplementary validation으로 둔다.
+즉, VisDrone 결과를 튜닝한 뒤 TinyPerson으로 generalization/stress-test를
+보여주는 방식이 안전하다.
+
+자동 큐:
+
+```bash
+bash scripts/ubuntu/start_tinyperson_corner_original_queue.sh
+```
+
+이 큐는 TinyPerson corner annotation window를 실제 crop image로 materialize하고,
+모든 person category를 단일 `person` class로 collapse한 뒤 GPU0에서 corrected
+TinyPerson check를 시작한다. 기존 640 변환 결과는 full image와 corner annotation
+좌표계가 섞였기 때문에 supplementary diagnostic으로만 유지한다.

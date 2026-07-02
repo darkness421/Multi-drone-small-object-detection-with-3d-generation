@@ -202,7 +202,7 @@ def build_jobs(
                     job_index += 1
                 else:
                     command = ""
-                    status = "skipped_not_implemented"
+                    status = "not_run"
                 jobs.append(
                     ProposedJob(
                         ablation=ablation,

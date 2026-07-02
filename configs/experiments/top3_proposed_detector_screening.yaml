@@ -2,7 +2,7 @@ name: top3_proposed_detector_screening
 description: >
   Screening queue for the proposed perception module on the current VisDrone
   top-3 baselines. This stage uses one seed to identify the best backbone/module
-  pair before expanding the winner to the main 3-seed or 5-seed statistical set.
+  pair before expanding the winner to the main 3-seed statistical set.
 
 data_yaml: configs/detector/visdrone_yolo_data.yaml
 dataset_tag: visdrone_top3
@@ -14,7 +14,7 @@ command_csv: outputs/experiments/top3_proposed_ablation_commands.csv
 training:
   imgsz: 1280
   epochs: 100
-  patience: 30
+  patience: 5
   batch: 8
   seeds: [42]
   deterministic: true

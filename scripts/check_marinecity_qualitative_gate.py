@@ -111,7 +111,7 @@ def build_gate(args: argparse.Namespace) -> dict[str, Any]:
             "Use the current full-frame real-Cesium MarineCity capture as the main-paper qualitative candidate.",
             "Keep the live real-Cesium MarineCity GUI at the user-verified 160 m review view.",
             "Use the reviewed AeroGraph candidate table with a caveat; reserve final reasoning claims for external-provider replication.",
-            "Regenerate paper tables and figure manifests after any OpenAI/ChatGPT/local provider replication pass.",
+            "Regenerate paper tables and figure manifests after any external-provider/local-model replication pass.",
         ]
     else:
         next_actions = [
@@ -241,7 +241,7 @@ def main() -> None:
     parser.add_argument(
         "--paper-md",
         default="",
-        help="Optional extra Markdown copy. Leave empty so paper/ stays Overleaf-clean.",
+        help="Optional extra Markdown copy. Leave empty so paper/ stays publication-asset clean.",
     )
     parser.add_argument("--full-black-max", type=float, default=0.10)
     parser.add_argument("--mean-top3-black-max", type=float, default=0.15)

@@ -1,6 +1,6 @@
 # External Gate Capabilities
 
-Updated: `2026-06-27 21:21:45 KST`
+Updated: `2026-07-02 16:36:58 KST`
 Status: `three_d_runner_available_aerograph_provider_missing`
 
 This report checks whether the remaining external gates can be executed from the current shell. Secret values are never printed.
@@ -18,13 +18,13 @@ This report checks whether the remaining external gates can be executed from the
 
 | Gate | Value |
 |---|---|
-| `aerograph_final_status` | `aerograph_reviewed_candidate_ready_external_pending` |
+| `aerograph_final_status` | `aerograph_external_provider_pending_responses` |
 | `aerograph_final_external_ready` | `False` |
 | `aerograph_final_valid_direct_responses` | `0` |
-| `aerograph_final_prompt_count` | `49` |
+| `aerograph_final_prompt_count` | `54` |
 | `aerograph_compact_smoke_status` | `aerograph_real_capture_nonmock_smoke_complete` |
 | `marinecity_3d_completion_status` | `marinecity_3d_completion_ready` |
-| `marinecity_3d_runner_available` | `False` |
+| `marinecity_3d_runner_available` | `True` |
 | `marinecity_3d_metric_rows` | `3` |
 
 ## Environment Flags
@@ -53,7 +53,7 @@ This report checks whether the remaining external gates can be executed from the
 ### AeroGraph manual web fallback
 
 ```bash
-python scripts/import_aerograph_external_responses.py --mode final49 --input reasoning/aerograph_web_raw_batches/*.md --provider-label "External web LLM"
+python scripts/import_aerograph_external_responses.py --mode final54 --input reasoning/aerograph_web_raw_batches/*.md --provider-label "External web LLM"
 ```
 
 ### AeroGraph compact manual fallback
@@ -76,4 +76,4 @@ python scripts/import_marinecity_3d_metrics.py PATH_TO_RUNNER_METRICS.json --ove
 
 ## Claiming Rule
 
-This report only indicates whether external execution is configured. It does not promote AeroGraph or neural-3D results unless the corresponding readiness reports contain complete, non-placeholder outputs.
+This report only indicates whether external execution is configured. It does not promote AeroGraph or neural-3D results unless the corresponding readiness reports contain complete, paper-valid outputs.

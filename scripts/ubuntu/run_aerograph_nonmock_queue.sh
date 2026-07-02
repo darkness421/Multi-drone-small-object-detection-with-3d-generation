@@ -14,7 +14,7 @@ TIMEOUT=${AEROGRAPH_TIMEOUT:-180}
 case "$PROVIDER" in
   openai)
     if [[ -z "${OPENAI_API_KEY:-}" ]]; then
-      echo "[AeroGraph] OPENAI_API_KEY is not set; cannot run non-mock OpenAI provider." >&2
+      echo "[AeroGraph] OPENAI_API_KEY is not set; cannot run external-provider OpenAI provider." >&2
       exit 2
     fi
     OUT_DIR=${AEROGRAPH_OUT_DIR:-outputs/reasoning/aerograph_prompt_pack_eval_openai}

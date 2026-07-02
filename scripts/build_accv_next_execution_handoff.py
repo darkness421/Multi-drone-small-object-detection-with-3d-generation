@@ -59,7 +59,7 @@ def main() -> None:
     else:
         metric_status = "metric rows still missing"
         metric_next = (
-            "Attach an upstream runner such as Nerfstudio, Instant-NGP, or 3DGS and write non-placeholder PSNR/SSIM/LPIPS/FPS/runtime rows."
+            "Attach an upstream runner such as Nerfstudio, Instant-NGP, or 3DGS and write paper-valid PSNR/SSIM/LPIPS/FPS/runtime rows."
         )
 
     lines = [
@@ -79,7 +79,7 @@ def main() -> None:
         "## Already Paper-Ready",
         "",
         f"- Detector main claim: `Ours`, AP/AP50/F1 `{detector_top.get('ap')}`/`{detector_top.get('ap50')}`/`{detector_top.get('f1')}`, params `{detector_top.get('params_m')}M`, seeds `{detector_top.get('seeds')}`.",
-        "- TinyPerson: corrected original-window/1280 diagnostic is complete, but Ours is below YOLOv9m; keep it as an internal archive-only diagnostic, excluded from default main/supplementary claims.",
+        "- TinyPerson224: Top5/3-seed auxiliary stress test is complete at 224 input, but AP is near zero across methods; keep it internal and exclude it from default main/supplementary claims.",
         f"- Paper artifact audit: `{paper.get('status')}`.",
         "",
         "## Gate 1: Neural 3D Completion Metrics",
@@ -122,7 +122,7 @@ def main() -> None:
         "# AEROGRAPH_COMMAND can point to any local command that reads stdin and returns AeroGraph JSON.",
         "```",
         "",
-        "Final 49-prompt path:",
+        "Final 54-prompt path:",
         "",
         "```bash",
         "OPENAI_API_KEY=... AEROGRAPH_PROVIDER=openai bash scripts/ubuntu/start_aerograph_nonmock_queue.sh",
@@ -139,7 +139,7 @@ def main() -> None:
         "",
         "```bash",
         "python scripts/import_aerograph_external_responses.py \\",
-        "  --mode final49 \\",
+        "  --mode final54 \\",
         "  --input reasoning/aerograph_web_raw_batches/*.md \\",
         "  --provider-label \"External web LLM\"",
         "",

@@ -1084,7 +1084,7 @@ def export_manifest(out_dir: Path, files: Iterable[Path], manifest_dir: Path = O
     lines = [
         "# Paper Detector Figure PNG Manifest",
         "",
-        "Generated files for LaTeX/Overleaf insertion. The PNGs intentionally omit large embedded titles because the paper captions carry the figure titles.",
+        "Generated files for LaTeX manuscript insertion. The PNGs intentionally omit large embedded titles because the paper captions carry the figure titles.",
         "Rows with only 640-pixel evaluation are excluded from paper-facing 1280-pixel figures. Blank cells in the YOLO-family scale overview are unselected family-scale combinations, not unfinished paper claims. YOLOv9c is included as the YOLOv9 large-anchor row; YOLOv9e is excluded from the paper-facing comparison because it is outside the target size regime.",
         "Paper-facing detector figures are restricted to final Ours, YOLO-family baselines, final ablations, and related-work comparison/status rows. Broad proposed-search candidates are exported separately under `outputs/reports/internal/proposed_search/` for lab review only.",
         "",

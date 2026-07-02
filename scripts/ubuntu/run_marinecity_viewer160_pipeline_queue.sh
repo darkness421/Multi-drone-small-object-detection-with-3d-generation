@@ -81,11 +81,11 @@ update_status_md() {
     echo "- Detector device: \`$DETECTOR_DEVICE\`"
     echo "- Reasoner provider: \`$REASONER_PROVIDER\`"
     if [[ "$REASONER_PROVIDER" == "openai" ]]; then
-      echo "- ChatGPT/OpenAI reasoner: configured through \`OPENAI_API_KEY\`"
+      echo "- External API reasoner: configured through \`OPENAI_API_KEY\`"
     elif [[ "$REASONER_PROVIDER" == "command" ]]; then
-      echo "- ChatGPT/LLM command reasoner: configured through \`AEROGRAPH_COMMAND\`"
+      echo "- Local/command LLM reasoner: configured through \`AEROGRAPH_COMMAND\`"
     else
-      echo "- ChatGPT/OpenAI reasoner: not configured; using rule-based verifier until \`OPENAI_API_KEY\` or \`AEROGRAPH_COMMAND\` is set"
+      echo "- External/local reasoner: not configured; using rule-based verifier until \`OPENAI_API_KEY\` or \`AEROGRAPH_COMMAND\` is set"
     fi
     echo
     echo "## Scenario Queue"

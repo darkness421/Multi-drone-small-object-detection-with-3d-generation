@@ -48,5 +48,5 @@
   "promotion_mode": "full",
   "collection_packet_command": "python scripts/build_aerograph_web_collection_packet.py",
   "import_out_dir": "outputs/reasoning/aerograph_real_capture_eval_manual_web",
-  "import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl --provider-label \"ChatGPT/Codex web\" --out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web"
+  "import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_real_capture_prompts_all.jsonl --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl --provider-label \"External web LLM\" --out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web"
 }

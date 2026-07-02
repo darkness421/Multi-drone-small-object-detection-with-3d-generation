@@ -1,0 +1,50 @@
+name: yolov11_p2_tiny_frelu_confirm
+description: >
+  Multi-seed confirmation for the strongest one-seed proposed detector found
+  so far: YOLOv11l with a stride-4 P2 head and TinySpatialFReLU neck patches.
+
+data_yaml: configs/detector/visdrone_yolo_data.yaml
+dataset_tag: visdrone_yolov11_p2_confirm
+project: outputs/detectors/server_yolov11_p2_confirm
+log_dir: outputs/logs/server_yolov11_p2_confirm
+experiment_root: outputs/experiments
+command_csv: outputs/experiments/yolov11_p2_tiny_frelu_confirm_commands.csv
+
+training:
+  imgsz: 1280
+  epochs: 100
+  patience: 5
+  batch: 4
+  seeds: [123, 2026]
+  deterministic: true
+  run_eval: true
+  roc_auc: true
+
+baseline_reference:
+  method: YOLOv11l
+  model: yolo11l.pt
+  AP: 0.3776566666666667
+  AP50: 0.59809
+  F1: 0.624751330466615
+  Params_M: 25.32
+  GFLOPs: 87.3
+
+base_models:
+  - yolo11l.pt
+
+ablations:
+  - name: p2_tiny_frelu
+    method_template: ProposedNext-P2TinyFReLU-{base_slug}
+    train_model_template: configs/detector/yolo11l-p2.yaml
+    init_weights_template: yolo11l.pt
+    implementation_status: implemented
+    proposed_module: p2_head+tiny_frelu_neck
+    model_patches: tiny_frelu_neck
+    enabled: true
+    requires:
+      - configs/detector/yolo11l-p2.yaml
+      - detectors/proposed/modules.py
+    notes: >
+      Confirmation seeds for the current best proposed detector. Seed 42
+      already reached AP=0.38168 and AP50=0.60305, so these runs test whether
+      the gain is stable enough to claim as the detector contribution.

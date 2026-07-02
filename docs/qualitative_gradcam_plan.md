@@ -62,6 +62,18 @@ For the supplementary material, include two heat-map styles:
 - Qualitative Grad-CAM/attention panels: same validation images for the baseline,
   P2/TinyFReLU, NMS-tuned variant, and final proposed detector.
 
+After the best detector family is selected, use a core-module panel rather than
+only a loose module list:
+
+| Row | Meaning | Expected evidence |
+| --- | --- | --- |
+| Baseline | YOLOv11l or final strongest comparison baseline | Reference attention and detections |
+| Core 1 only | compact capacity redistribution | Smaller model without losing key object focus |
+| Core 2 only | 4x/8x/16x multi-scale + TinyFReLU/DynFreq-C3 | Stronger focus on tiny objects |
+| Core 3 only | overlap-aware NMS/decision | Adjacent objects less suppressed |
+| Core 1 + Core 2 | final architecture before decision module | Main architecture gain |
+| Core 1 + Core 2 + Core 3 | final proposed detector | Full detection and decision behavior |
+
 Recommended cases:
 
 - tiny true positive recovered by the proposed detector
@@ -75,11 +87,25 @@ Build current quantitative heat-map artifacts from collected CSVs:
 python -m scripts.build_supplementary_detector_analysis
 ```
 
+Prepare the final qualitative core-ablation Grad-CAM plan:
+
+```bash
+BASELINE_WEIGHT=outputs/detectors/.../baseline/best.pt \
+CORE1_WEIGHT=outputs/detectors/.../core1/best.pt \
+CORE2_WEIGHT=outputs/detectors/.../core2/best.pt \
+CORE3_WEIGHT=outputs/detectors/.../core3/best.pt \
+CORE12_WEIGHT=outputs/detectors/.../core1_core2/best.pt \
+FULL_WEIGHT=outputs/detectors/.../full/best.pt \
+IMAGES="data/processed/visdrone_yolo/images/val/case1.jpg data/processed/visdrone_yolo/images/val/case2.jpg" \
+bash scripts/ubuntu/run_core_ablation_gradcam_plan.sh
+```
+
 Expected outputs:
 
 ```text
 outputs/reports/supplementary_detector/ablation_delta_heatmap.csv
 outputs/reports/supplementary_detector/figures/ablation_delta_heatmap.png
+outputs/qualitative/gradcam/core_ablation/gradcam_run_plan.json
 outputs/reports/supplementary_detector/input_size_sweep.csv
 outputs/reports/supplementary_detector/figures/input_size_ap_ap50.png
 outputs/reports/supplementary_detector/figures/input_size_efficiency.png

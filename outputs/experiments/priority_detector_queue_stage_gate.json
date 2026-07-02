@@ -1,0 +1,31 @@
+{
+  "metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "candidate_regex": "(?i)(proposed|com3d|ace|wavelet|deformable|tiling|ours)",
+  "lightweight_max_params": 15000000,
+  "min_delta": 0.0,
+  "require_main": false,
+  "baseline_count": 0,
+  "candidate_count": 16,
+  "best_overall_baseline": null,
+  "best_lightweight_baseline": null,
+  "best_proposed_candidate": {
+    "method": "ProposedP2FR-CBAM-yolo11l",
+    "model": "configs/detector/yolo11l-p2.yaml",
+    "detector_family": "Other",
+    "model_version": "unknown",
+    "model_scale": "unknown",
+    "param_size_group": "unknown",
+    "seed_count": 1,
+    "analysis_level": "preliminary",
+    "best_AP_mean": 0.38481,
+    "best_AP50_mean": 0.60793,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "candidate_vs_best_overall": null,
+  "candidate_vs_best_lightweight": null,
+  "recommended_next_stage": "run_baseline_sweep",
+  "rationale": "No completed baseline summary rows were found.",
+  "dataset": "all"
+}

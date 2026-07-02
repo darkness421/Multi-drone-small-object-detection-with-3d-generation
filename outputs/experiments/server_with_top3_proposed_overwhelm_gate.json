@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-06-04T15:33:54+09:00",
+  "dataset": "VisDrone2019-DET",
+  "primary_metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "min_delta": 0.0,
+  "secondary_min_delta": 0.0,
+  "status": "not_yet",
+  "best_proposed": {
+    "method": "ProposedTop3-SE-yolo12m",
+    "dataset": "VisDrone2019-DET",
+    "scale": "medium",
+    "seed_count": "1",
+    "best_AP_mean": 0.36436,
+    "best_AP50_mean": 0.58038,
+    "best_F1_mean": 0.6107693750101802,
+    "Params_mean": 20145198.0,
+    "GFLOPs_mean": 67.8
+  },
+  "best_comparison_primary": {
+    "method": "YOLOv12m",
+    "dataset": "VisDrone2019-DET",
+    "scale": "medium",
+    "seed_count": "3",
+    "best_AP_mean": 0.3668766666666667,
+    "best_AP50_mean": 0.58482,
+    "best_F1_mean": 0.6133048513601007,
+    "Params_mean": 20145198.0,
+    "GFLOPs_mean": 67.8
+  },
+  "best_comparison_secondary": {
+    "method": "YOLOv12m",
+    "dataset": "VisDrone2019-DET",
+    "scale": "medium",
+    "seed_count": "3",
+    "best_AP_mean": 0.3668766666666667,
+    "best_AP50_mean": 0.58482,
+    "best_F1_mean": 0.6133048513601007,
+    "Params_mean": 20145198.0,
+    "GFLOPs_mean": 67.8
+  },
+  "primary_delta": -0.002516666666666667,
+  "secondary_delta": -0.0044399999999999995,
+  "proposed_rows": [
+    {
+      "method": "ProposedTop3-SE-yolo12m",
+      "dataset": "VisDrone2019-DET",
+      "scale": "medium",
+      "seed_count": "1",
+      "best_AP_mean": 0.36436,
+      "best_AP50_mean": 0.58038,
+      "best_F1_mean": 0.6107693750101802,
+      "Params_mean": 20145198.0,
+      "GFLOPs_mean": 67.8
+    }
+  ]
+}

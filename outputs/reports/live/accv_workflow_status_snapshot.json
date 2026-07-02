@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-06-28 04:38:57 KST",
+  "updated_at_kst": "2026-07-02 16:37:03 KST",
   "detector": {
     "paper_facing_top_rows": [
       {
@@ -213,40 +213,40 @@
   },
   "marinecity_system": {
     "scenario_count": 3,
-    "token_level_test_count": 76,
+    "token_level_test_count": 54,
     "artifact_status": "marinecity_system_test_artifacts_complete",
     "detector_reasoner_smoke_status": "marinecity_detector_reasoner_smoke_artifacts_ready",
-    "detector_reasoner_smoke_tokens": 23,
+    "detector_reasoner_smoke_tokens": 78,
     "detector_reasoner_smoke_rows": [
       {
         "scenario_id": "uavmarine_s0_viewer160_session_recapture",
         "scenario": "S0 locked MarineCity ROI",
         "uav_views": 3,
-        "evidence_tokens": 7,
-        "hypotheses": 7,
-        "reobserve": 7,
-        "detected_classes": "car=5, bus=2",
-        "provider": "mock_symbolic_aerograph"
+        "evidence_tokens": 26,
+        "hypotheses": 19,
+        "reobserve": 19,
+        "detected_classes": "car=18, bus=6, pedestrian=1, van=1",
+        "provider": "rule_based_aerograph"
       },
       {
         "scenario_id": "uavmarine_s1_viewer160_session_recapture",
         "scenario": "S1 adjacent overlap",
         "uav_views": 3,
-        "evidence_tokens": 8,
-        "hypotheses": 8,
-        "reobserve": 8,
-        "detected_classes": "car=5, bus=3",
-        "provider": "mock_symbolic_aerograph"
+        "evidence_tokens": 22,
+        "hypotheses": 14,
+        "reobserve": 14,
+        "detected_classes": "car=15, bus=5, pedestrian=2",
+        "provider": "rule_based_aerograph"
       },
       {
         "scenario_id": "uavmarine_s2_viewer160_session_recapture",
         "scenario": "S2 coastline multi-view",
         "uav_views": 3,
-        "evidence_tokens": 8,
-        "hypotheses": 8,
-        "reobserve": 8,
-        "detected_classes": "car=5, bus=3",
-        "provider": "mock_symbolic_aerograph"
+        "evidence_tokens": 30,
+        "hypotheses": 21,
+        "reobserve": 21,
+        "detected_classes": "car=20, bus=6, pedestrian=3, van=1",
+        "provider": "rule_based_aerograph"
       }
     ],
     "detector_reasoner_smoke_report": "outputs/reports/live/marinecity_detector_reasoner_smoke.md",
@@ -262,7 +262,7 @@
     "crossview_graph_report": "outputs/reports/live/marinecity_crossview_evidence_graph.md",
     "crossview_graph_table": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
     "crossview_graph_figure": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
-    "integration_check_status": "marinecity_system_integration_smoke_ready_with_pending_final_gates",
+    "integration_check_status": "marinecity_system_integration_smoke_ready_with_open_final_gates",
     "integration_check": "outputs/reports/live/marinecity_system_integration_check.md",
     "integration_checks": [
       {
@@ -288,12 +288,12 @@
       {
         "name": "safr_yolo_from_uav_views",
         "status": "PASS",
-        "evidence": "tokens=117, device=1, classes={'bus': 15, 'car': 65, 'motor': 2, 'pedestrian': 25, 'van': 8, 'truck': 2}"
+        "evidence": "tokens=78, device=cpu, classes={'bus': 17, 'car': 53, 'pedestrian': 6, 'van': 2}"
       },
       {
         "name": "pedestrian_detection_from_current_views",
         "status": "PASS",
-        "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=25, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
+        "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=6, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
       },
       {
         "name": "crossview_evidence_graph",
@@ -303,21 +303,19 @@
       {
         "name": "neural_3d_completion_benchmark",
         "status": "PASS",
-        "evidence": "Current real-Cesium RGB/depth/pose captures are valid source evidence. Do not claim NeRF/Instant-NGP/Mip-NeRF/3DGS completion until metric rows exist."
+        "evidence": "Runner-family smoke metrics available for 3 method rows; use as MarineCity system-smoke evidence, not as a full reconstruction benchmark."
       },
       {
         "name": "external_llm_reasoner",
-        "status": "PENDING",
-        "evidence": "49-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_complete"
+        "status": "OPEN",
+        "evidence": "54-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_complete"
       }
     ],
     "integration_detector_classes": {
-      "bus": 15,
-      "car": 65,
-      "motor": 2,
-      "pedestrian": 25,
-      "van": 8,
-      "truck": 2
+      "bus": 17,
+      "car": 53,
+      "pedestrian": 6,
+      "van": 2
     },
     "integration_actor_classes": [
       "bus",
@@ -403,19 +401,19 @@
       "fake_or_substitute_city_created": false
     },
     "best_full_capture": {
-      "capture_name": "uavmarine_s2_viewer160_session_recapture",
-      "best_image": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
-      "best_black_ratio": 0.017828,
-      "mean_top3_black_ratio": 0.087552,
-      "camera_profile": "viewer160_clean_fullframe"
+      "capture_name": "uavmarine_s0_viewer160_tight_f52_shift_test",
+      "best_image": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s0_viewer160_tight_f52_shift_test/real_cesium_capture/frame_002_uav_02_rgb.png",
+      "best_black_ratio": 0.017833,
+      "mean_top3_black_ratio": 0.093141,
+      "camera_profile": "viewer160_marinecity_roi"
     },
     "best_crop_candidate": {
       "capture_name": "uavmarine_s2_viewer160_session_recapture",
       "source": "/home/oem/UAV/uav_marinecity/outputs/isaac_exports/uavmarine_s2_viewer160_session_recapture/real_cesium_capture/frame_002_uav_02_rgb.png",
       "crop_path": "outputs/reports/live/marinecity_real_capture_crops/crops/uavmarine_s2_viewer160_session_recapture_frame_002_uav_02_rgb_crop.png",
-      "black_ratio": 0.003577,
+      "black_ratio": 0.003579,
       "area_ratio": 0.9025,
-      "score": 1.115215
+      "score": 1.115553
     },
     "qualitative_claiming_rule": "Main paper full-frame qualitative figure may be promoted.",
     "clean_recapture_plan": "outputs/reports/live/marinecity_clean_recapture_plan.json",
@@ -427,12 +425,13 @@
   },
   "aerograph": {
     "prompt_pack_status": "aerograph_prompt_pack_ready",
-    "total_prompts": 49,
+    "total_prompts": 54,
     "sample_prompts": 10,
     "class_counts": {
-      "bus": 16,
-      "car": 29,
-      "pedestrian": 4
+      "bus": 14,
+      "car": 32,
+      "pedestrian": 6,
+      "van": 2
     },
     "real_capture_prompt_pack_status": "aerograph_real_capture_prompt_pack_ready",
     "real_capture_prompt_count": 23,
@@ -452,7 +451,7 @@
     "real_capture_external_provider_smoke_selected_manifest": "outputs/reasoning/aerograph_real_capture_eval_manual_web/manifest.json",
     "real_capture_external_provider_smoke_expected_prompt_count": 23,
     "web_batch_status": "aerograph_web_batches_ready",
-    "web_batch_count": 5,
+    "web_batch_count": 6,
     "web_batch_dir": "outputs/reports/live/aerograph_prompt_pack/web_batches",
     "web_batch_import_command": "python scripts/import_aerograph_manual_responses.py --prompt-pack outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl --responses outputs/reasoning/aerograph_manual_responses.jsonl --provider-label \"External web LLM\" --out-dir outputs/reasoning/aerograph_prompt_pack_eval_manual_web",
     "dry_run_status": "aerograph_eval_dry_run_ready",
@@ -467,9 +466,9 @@
       "class_mismatch_count": 0,
       "reobserve_or_expected_count": 79
     },
-    "paper_table_status": "aerograph_reasoner_table_candidate_external_pending",
-    "paper_table_selected_manifest": "",
-    "non_mock_status": "aerograph_reviewed_candidate_ready_external_pending",
+    "paper_table_status": "aerograph_reasoner_table_complete",
+    "paper_table_selected_manifest": "outputs/reasoning/aerograph_prompt_pack_eval_manual/manifest.json",
+    "non_mock_status": "aerograph_external_provider_pending_responses",
     "non_mock_coverage_ratio": 1.0,
     "non_mock_matched_responses": 49,
     "non_mock_nonblank_responses": 49,
@@ -492,12 +491,12 @@
     "readiness_audit": "outputs/reports/live/accv_research_package_readiness_audit.md",
     "readiness_audit_exists": true,
     "tracked_readiness_audit": "docs/accv_research_package_readiness_audit_2026-06-25.md",
-    "tracked_readiness_audit_exists": true,
-    "paper_artifact_manifest": "paper/figures/results/paper_artifact_readiness_manifest.md",
+    "tracked_readiness_audit_exists": false,
+    "paper_artifact_manifest": "outputs/reports/live/paper_artifact_readiness_manifest.md",
     "paper_artifact_manifest_exists": true,
     "paper_artifact_check": "outputs/reports/live/paper_artifact_readiness_check.json",
-    "paper_artifact_check_status": "paper_artifact_audit_ok_with_pending_gates",
-    "paper_artifact_missing_required_count": 0,
+    "paper_artifact_check_status": "paper_artifact_audit_needs_attention",
+    "paper_artifact_missing_required_count": 1,
     "paper_artifact_stale_claim_count": 0,
     "latex_patch_check": "outputs/reports/live/latex_patch_integrity_check.json",
     "latex_patch_check_status": "latex_patch_integrity_ok",
@@ -505,7 +504,7 @@
     "marinecity_system_table": "paper/tables/marinecity_system_scenario_table.tex",
     "marinecity_crossview_graph_table": "paper/tables/marinecity_crossview_evidence_graph_table.tex",
     "marinecity_crossview_graph_figure": "paper/figures/results/marinecity_system/marinecity_crossview_evidence_graph.png",
-    "aerograph_placeholder_table": "paper/tables/aerograph_reasoner_results_placeholder.tex",
-    "aerograph_placeholder_exists": true
+    "aerograph_reasoner_slot_table": "paper/tables/aerograph_reasoner_external_slot.tex",
+    "aerograph_reasoner_slot_exists": true
   }
 }

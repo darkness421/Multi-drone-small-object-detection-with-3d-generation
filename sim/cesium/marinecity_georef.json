@@ -4,8 +4,23 @@
   "origin": {
     "latitude_deg": 35.1569,
     "longitude_deg": 129.1456,
-    "height_m": 80.0
+    "height_m": 160.0
   },
-  "local_frame": "ENU"
+  "local_frame": "ENU",
+  "reference_points": [
+    {
+      "name": "Haeundae Marine City origin",
+      "latitude_deg": 35.1569,
+      "longitude_deg": 129.1456,
+      "height_m": 160.0,
+      "role": "simulation_origin"
+    },
+    {
+      "name": "Haeundae Beach reference",
+      "latitude_deg": 35.1587,
+      "longitude_deg": 129.1604,
+      "height_m": 35.0,
+      "role": "visual_landmark"
+    }
+  ]
 }
-

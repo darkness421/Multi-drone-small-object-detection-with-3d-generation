@@ -285,6 +285,6 @@ Figure work should begin before final 3D results are complete.
 | 2026-06-25 to 2026-06-28 | Freeze main-paper figures; move extra detector/3D/restoration/LLM panels to supplement |
 | 2026-06-29 to 2026-07-05 | Only polish captions, labels, and readability; avoid changing figure claims |
 
-The final figure should not wait until every 3D model is finished. A rough Canva
+The final figure should not wait until every 3D model is finished. A rough draft
 or SVG layout can be ready now, then real 3D result panels can be dropped in once
 the smoke tests and final runs finish.

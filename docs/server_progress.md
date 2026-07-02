@@ -27,7 +27,7 @@ Next:
 1. Run environment and dataset checks on the Ubuntu server.
 2. Launch preliminary 3-seed baseline sweep in tmux.
 3. Collect CSV/PNG summaries.
-4. Extend top models to 5 seeds for main statistical analysis.
+4. Keep top models on the comparison-consistent 3-seed main statistical set.
 5. Add the proposed module to the best overall or best lightweight baseline.
 6. Build Marine City multi-angle benchmark splits for 3D generation and reasoner ablations.
 
@@ -37,8 +37,9 @@ Baseline execution status:
 
 - Completed the initial 3-seed baseline sweep for YOLOv8n/s, YOLOv11n/s,
   YOLOv12n/s, and RT-DETR-L.
-- Extended the current top-3 models to the 5-seed main statistical set:
-  YOLOv8s, YOLOv12s, and YOLOv11s.
+- Historical note: YOLOv8s, YOLOv12s, and YOLOv11s were extended to five
+  seeds, but the current paper policy is to use the comparison-consistent
+  3-seed set for the main detector table.
 - Added parameter-count based model size grouping to the result collector.
 - Planned an expanded comparison sweep with YOLOv5su, YOLOv9s, YOLOv10s,
   YOLOv26n, YOLOv26s, and YOLOv12m after the top-3 seed extension completes.
@@ -157,8 +158,9 @@ bash scripts/ubuntu/collect_proposed_results.sh
 - Added `scripts/ubuntu/restart_fresh_server_queue.sh` for a clean
   from-scratch comparison restart.
 - The script stops old training/pending monitor sessions, preserves previous
-  outputs, then starts one `server-fresh-baselines` tmux session with GPU0/GPU1
-  workers and a collector window.
+  outputs, then starts one `server-fresh-baselines` tmux session. Under the
+  current server policy, detector queues default to GPU0; the script also starts
+  a collector window.
 - The default order starts with `yolov10s.pt` so the first visible runs match
   the current comparison focus, then continues through YOLOv10n, YOLOv9s,
   YOLOv5su, YOLOv8/11/12 nano/small, YOLO26 nano/small, RT-DETR-L, YOLOv10m,
@@ -290,7 +292,8 @@ Added a follow-up queue for reviewer-facing L-size baseline coverage:
 - Config: `configs/experiments/large_detector_comparison.yaml`
 - Launcher: `scripts/ubuntu/train_large_comparison_after_session.sh`
 - Default wait target: `server-proposed-ablation`
-- Default GPU policy: GPU0 only until the GPU1 CUDA allocation issue is fixed.
+- Default GPU policy: GPU0 for detector work; GPU1 is reserved for 3D/system
+  experiments.
 - Default model specs:
   `yolov8l.pt:2,yolov10l.pt:2,yolo11l.pt:2,yolo12l.pt:2,yolo26l.pt:2,rtdetr-l.pt:2`
 
@@ -318,8 +321,8 @@ Decision:
   `full_proposed`.
 - Use existing baseline rows as the baseline/control ablation reference instead
   of retraining duplicate control runs for every backbone.
-- Select the best backbone/module pair, then expand only that winner to 3 seeds
-  or 5 seeds for final paper statistics.
+- Select the best backbone/module pair, then expand only that winner to the
+  comparison-consistent 3-seed set.
 
 Implementation updates:
 
@@ -337,10 +340,13 @@ Implementation updates:
 
 Current queue policy:
 
-- Keep the active `server-large-comparison` run alive.
-- Do not use GPU1 for training until the CUDA allocation issue is fixed.
+- Keep the active `server-large-comparison` run alive on GPU0.
+- Use GPU0 for detector baselines, comparison models, proposed ablations, and
+  UAVDT validation.
+- Reserve GPU1 for MarineCity 3D reconstruction, Isaac Sim export/smoke tasks,
+  and local VLM/LLM reasoner experiments.
 - After `server-large-comparison` finishes, start the top-3 proposed screening
-  queue on GPU0.
+  queue on GPU0 while GPU1 can begin 3D/system smoke tests.
 
 Recent paper comparison candidates added to the comparison plan:
 
@@ -359,8 +365,8 @@ Recent paper comparison candidates added to the comparison plan:
 These are marked `external_required`; they should be run only if compatible
 checkpoints/configs are staged locally or adapters are implemented.
 
-The Notion research database shared on 2026-05-26 was readable through the
-public Notion collection API. It contains 70 rows; the detector-related rows
+The related-work research database shared on 2026-05-26 was readable through the
+public collection export. It contains 70 rows; the detector-related rows
 include recent YOLO, RT-DETR/DETR, D-FINE, Mamba, coarse-fine alignment,
 density-guided, and frequency-domain UAV small-object papers. For experiment
 planning, the key additions are:
@@ -384,7 +390,7 @@ The report/result tree was reorganized so the next paper-writing pass has a
 clear entry point:
 
 - `docs/README.md` is now the documentation index.
-- `outputs/reports/README.md` points to the current report, live dashboard, PPT,
+- `outputs/reports/README.md` points to the current report, live dashboard, presentation assets,
   and archive.
 - `outputs/experiments/README.md` points to the current result CSV/JSON files
   and archive.
@@ -441,3 +447,58 @@ runs with organized outputs:
 - Commands/jobs: `outputs/experiments/uavdt/`
 - Logs: `outputs/logs/server_uavdt_baselines/`
 - Runs: `outputs/detectors/server_uavdt_baselines/`
+
+## 2026-05-30 Docs And Paper-Model Recheck
+
+Reviewed the active docs after the related-paper pass and updated the
+paper-facing comparison/model story:
+
+- Working full name is now recorded as
+  `Cooperative Multi-UAV 3D Ambiguity-Centric Evidence Completion`.
+- The main figure plan is four paper figures plus one optional appendix figure:
+  overall system, detector module, Isaac/MarineCity benchmark, weather+3D
+  reconstruction/evidence completion, and optional LLM re-observation.
+- The 3D comparison set is aligned across docs as NeRF, Instant-NGP,
+  Mip-NeRF 360, and 3D Gaussian Splatting, with our object/evidence-aware
+  method compared after MarineCity data is available.
+- Added `LEAF-YOLO`, `UAVD-Mamba`, and `RF-DETR-B` to
+  `configs/experiments/paper_detector_comparison.yaml`.
+- Updated the practical external-model priority:
+  `LEAF-YOLO` as the strongest public lightweight YOLO-family UAV candidate,
+  `CSFPR-RTDETR` as the strongest public UAV-specific RT-DETR/frequency
+  candidate, and Mamba/D-FINE/RF-DETR rows as adapter-dependent follow-ups.
+- Regenerated `outputs/reports/server_with_proposed/paper_model_availability.md`
+  and `outputs/experiments/paper_model_availability.csv`.
+
+Important distinction:
+
+- These paper-model additions are not automatically counted as completed
+  baselines.
+- They remain `external_required` until compatible code, checkpoints, and
+  adapter scripts are staged locally.
+- The official detector table still uses completed VisDrone/UAVDT runs under
+  the agreed protocol.
+
+## 2026-05-30 Step-By-Step Experiment Control
+
+Added `docs/current_experiment_steps.md` as the operational tracker so the
+experiments advance one gate at a time:
+
+1. finish large detector anchors on GPU0
+2. collect and freeze the baseline table
+3. run top-3 proposed detector screening
+4. expand the winning proposed variant to repeated seeds
+5. run UAVDT cross-dataset validation
+6. add external paper models only when adapters/checkpoints are fair
+7. run detector-to-graph transfer
+8. run MarineCity 3D reconstruction and selective LLM/VLM reasoner tests
+
+Current active detector run at the last check:
+
+- `YOLOv12l`, seed `123`, VisDrone2019-DET, `imgsz=1280`, `epochs=100`,
+  `batch=2`, GPU0.
+
+Pending sessions already exist for the next detector stages:
+
+- `server-top3-proposed-pending`
+- `server-uavdt-comparisons-pending`

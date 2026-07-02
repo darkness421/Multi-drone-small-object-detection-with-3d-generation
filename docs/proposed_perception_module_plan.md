@@ -50,7 +50,7 @@ Updated next-step rule:
   or below 25.32M. A small AP tie is only useful if Params/GFLOPs and crowded
   small-object recall improve.
 
-## Module Ideas
+## Three-Core Module Direction
 
 Current paper-facing framing:
 
@@ -63,17 +63,47 @@ structured uncertainty/evidence that can be consumed later by 3D reconstruction
 and the LLM/VLM reasoner. The detector claim remains AP/AP50/APsmall/FPS; the
 system claim is tested later through ambiguity resolution and re-observation.
 
-- Wavelet stem for small-object high-frequency detail.
-- SE neck attention as a low-cost channel recalibration baseline.
-- CBAM neck attention as a stronger channel+spatial attention baseline.
-- Partial deformable neck for limited geometric flexibility without making the
-  model too heavy.
-- Patch / tiling inference for dense small-object scenes.
-- P2 / stride-4 small-object detection head. The motivation is that stride-32
-  features are too coarse for tiny UAV objects; a P2 branch preserves local
-  edges and texture before objects collapse to a sub-cell signal.
-- Tiny-object spatial activation. We add a FReLU-style activation with a
-  learnable high-frequency condition:
+The current detector direction is organized into three core modules. See
+`docs/proposed_detector_three_core_modules.md` for the detailed experiment map.
+
+### Core 1. Compact Capacity Redistribution Module
+
+Goal:
+
+- reduce model size or keep the proposed detector below the YOLOv11l parameter
+  budget
+- redistribute capacity toward P2/P3 small-object evidence instead of spending
+  too much capacity on heavy large-object branches
+
+Current candidates:
+
+- `P2CompV3-FR`
+- `P2EffV3-FR`
+- `P2BalV3-FR`
+- `P2P4-FR`, a 4x/8x/16x-only detection-head candidate with `20.82M`
+  parameters
+
+### Core 2. Multi-Scale High-Resolution Evidence Module
+
+Goal:
+
+- preserve tiny-object features using P2/stride-4 and high-resolution neck
+  outputs
+- test the research hypothesis that 4x/8x/16x detection heads are more useful
+  for UAV tiny objects than relying on a 32x detection head
+- add dynamic frequency refinement around C3/C3k2 outputs, not only a fixed
+  input wavelet stem
+
+Current candidates:
+
+- P2 detection head
+- P2/P3/P4-only detection head: `Detect(P2/4, P3/8, P4/16)`
+- `tiny_frelu_neck`
+- `dynfreq_c3_p2`
+- `dynfreq_c3_small`
+- DCT/wavelet/CBAM variants as supporting ablations
+
+Tiny-object spatial activation:
 
 ```text
 h(x) = x - AvgPool3x3(x)
@@ -81,24 +111,46 @@ c(x) = DWConv3x3(x) + BN(x) + tanh(gamma) h(x)
 y = max(x, c(x))
 ```
 
-This keeps the spatially conditioned FReLU idea while biasing the condition
+This keeps the spatially conditioned FReLU mechanism while biasing the condition
 toward small edge/texture evidence. The current implementation is
 `tiny_frelu_neck` in `detectors/proposed/modules.py`.
-- Crowded-object NMS ablation: standard NMS, Soft-NMS, DIoU/CIoU-NMS, WBF for
-  TTA/ensembles, and IoU/confidence sweeps on adjacent-object subsets.
+
+Dynamic frequency C3 refinement:
+
+```text
+low = AvgPool3x3(x)
+high = x - low
+[g_h, g_l] = Gate(GAP(x))
+y = x + tanh(alpha) * (g_h * DWConv(high) + g_l * (DWConv(low) - x))
+```
+
+The current implementation is `DynFreqC3Refine` in
+`detectors/proposed/modules.py`.
+
+### Core 3. Overlap-Aware Small-Object Decision Module
+
+Goal:
+
+- reduce suppression errors for adjacent tiny objects
+- separate crowded objects that standard NMS can collapse into one detection
+- produce an ambiguity signal for later 3D/reasoner stages
+
+Current candidates:
+
+- class-aware NMS IoU sweep
+- Soft-NMS or DIoU/CIoU-NMS if locally implemented
+- WBF only for TTA/ensemble supplementary analysis
+- adjacent-object subset evaluation for crowded scenes
 
 ## Ablation
 
 - baseline
-- + Wavelet stem
-- + SE neck
-- + CBAM neck
-- + partial deformable neck
-- + Wavelet stem + SE neck
-- + Wavelet stem + CBAM neck
-- + patch/tiling inference
-- full trainable proposed perception module:
-  Wavelet stem + CBAM neck + partial deformable neck
+- + Core 1 compact/balanced P2 capacity redistribution
+- + Core 2 TinyFReLU
+- + Core 2 DynFreq-C3 P2 or P2/P3 refinement
+- + Core 3 overlap-aware NMS decision
+- supplementary module probes: wavelet stem, DCT stem, SE, CBAM, pooled
+  self-attention, partial deformable neck, patch/tiling inference
 
 The dashboard/stage gate should select the best proposed variant after all
 implemented ablations finish. The final proposed model name should not be fixed
@@ -112,8 +164,8 @@ Top-3 proposed-module screening:
 - Use the existing baseline rows as the `baseline/control` ablation reference.
 - Select the best backbone/module pair by AP first, AP50/recall/F1 second, and
   Params/GFLOPs/FPS as the deployability tie-breaker.
-- Expand only the winner to 3 seeds, then 5 seeds if it becomes the final paper
-  candidate.
+- Expand only the winner to the same 3 seeds used by the comparison models:
+  `42`, `123`, and `2026`.
 
 YOLOv11/P2 next-step screening:
 
@@ -146,13 +198,16 @@ Code scaffold:
 - `detectors/proposed/`
 - `scripts/proposed_ablation_jobs.py`
 - `scripts/ubuntu/train_proposed_ablation_after_session.sh`
+- `scripts/ubuntu/start_yolov11_p2_balanced_search.sh`
+- `scripts/ubuntu/run_under_param_target_queue.sh`
 
 ## Evaluation
 
 Use the same VisDrone protocol as the baseline:
 
 - preliminary 3 seeds: `42, 123, 2026`
-- main 5 seeds: `42, 123, 2026, 7, 3407`
+- main comparison-consistent seeds: `42, 123, 2026`
+- optional supplementary robustness seeds: `7, 3407`
 - AP/AP50/APsmall/FPS as core metrics
 - p-values from paired seed results
 - qualitative examples and Grad-CAM cases matched to the baseline models

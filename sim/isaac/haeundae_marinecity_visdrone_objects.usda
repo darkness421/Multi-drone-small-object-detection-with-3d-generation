@@ -1,0 +1,357 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+    subLayers = [
+        @./haeundae_marinecity_roi_prep.usd@
+    ]
+)
+
+over "World"
+{
+    def Xform "VisDroneObjects"
+    {
+        custom string com3d:dataset = "VisDrone2019-DET"
+        custom string com3d:purpose = "MarineCity Isaac/Cesium object placement smoke test"
+        custom string com3d:note = "Textured top-plane cards are generated from VisDrone cutout PNGs and placed in the local MarineCity USD frame."
+
+        def Scope "Looks"
+        {
+            def Material "car_01"
+            {
+                token outputs:surface.connect = </World/VisDroneObjects/Looks/car_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/VisDroneObjects/Looks/car_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/VisDroneObjects/Looks/car_01/DiffuseTexture.outputs:a>
+                    float inputs:metallic = 0
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/car_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "van_01"
+            {
+                token outputs:surface.connect = </World/VisDroneObjects/Looks/van_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/VisDroneObjects/Looks/van_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/VisDroneObjects/Looks/van_01/DiffuseTexture.outputs:a>
+                    float inputs:metallic = 0
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/van_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "truck_01"
+            {
+                token outputs:surface.connect = </World/VisDroneObjects/Looks/truck_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/VisDroneObjects/Looks/truck_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/VisDroneObjects/Looks/truck_01/DiffuseTexture.outputs:a>
+                    float inputs:metallic = 0
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/truck_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "bus_01"
+            {
+                token outputs:surface.connect = </World/VisDroneObjects/Looks/bus_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/VisDroneObjects/Looks/bus_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/VisDroneObjects/Looks/bus_01/DiffuseTexture.outputs:a>
+                    float inputs:metallic = 0
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/bus_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "pedestrian_01"
+            {
+                token outputs:surface.connect = </World/VisDroneObjects/Looks/pedestrian_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/VisDroneObjects/Looks/pedestrian_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/VisDroneObjects/Looks/pedestrian_01/DiffuseTexture.outputs:a>
+                    float inputs:metallic = 0
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/pedestrian_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "person_01"
+            {
+                token outputs:surface.connect = </World/VisDroneObjects/Looks/person_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/VisDroneObjects/Looks/person_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/VisDroneObjects/Looks/person_01/DiffuseTexture.outputs:a>
+                    float inputs:metallic = 0
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/person_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+        }
+
+        def Xform "vehicle_cluster"
+        {
+            custom string com3d:ambiguity_group = "adjacent_vehicle_overlap"
+
+            def Xform "car_01"
+            {
+                custom string com3d:class_name = "car"
+                custom string com3d:source_cutout = "VisDrone2019-DET train crop"
+                double3 xformOp:translate = (-30, -12, 55.0)
+                float3 xformOp:rotateXYZ = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+
+                def Mesh "TexturePlane" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    point3f[] points = [(-5.5, -2.3, 0), (5.5, -2.3, 0), (5.5, 2.3, 0), (-5.5, 2.3, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    bool doubleSided = 1
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    rel material:binding = </World/VisDroneObjects/Looks/car_01>
+                }
+            }
+
+            def Xform "van_01"
+            {
+                custom string com3d:class_name = "van"
+                custom string com3d:source_cutout = "VisDrone2019-DET train crop"
+                double3 xformOp:translate = (-18.0, -12, 55.0)
+                float3 xformOp:rotateXYZ = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+
+                def Mesh "TexturePlane" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    point3f[] points = [(-6.4, -2.55, 0), (6.4, -2.55, 0), (6.4, 2.55, 0), (-6.4, 2.55, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    bool doubleSided = 1
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    rel material:binding = </World/VisDroneObjects/Looks/van_01>
+                }
+            }
+
+            def Xform "truck_01"
+            {
+                custom string com3d:class_name = "truck"
+                custom string com3d:source_cutout = "VisDrone2019-DET train crop"
+                double3 xformOp:translate = (-5.0, -12, 55.0)
+                float3 xformOp:rotateXYZ = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+
+                def Mesh "TexturePlane" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    point3f[] points = [(-8.5, -3.0, 0), (8.5, -3.0, 0), (8.5, 3.0, 0), (-8.5, 3.0, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    bool doubleSided = 1
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    rel material:binding = </World/VisDroneObjects/Looks/truck_01>
+                }
+            }
+        }
+
+        def Xform "context_objects"
+        {
+            def Xform "bus_01"
+            {
+                custom string com3d:class_name = "bus"
+                custom string com3d:source_cutout = "VisDrone2019-DET train crop"
+                double3 xformOp:translate = (18, 8.5, 55.0)
+                float3 xformOp:rotateXYZ = (0, 0, 90)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+
+                def Mesh "TexturePlane" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    point3f[] points = [(-10.0, -2.6, 0), (10.0, -2.6, 0), (10.0, 2.6, 0), (-10.0, 2.6, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    bool doubleSided = 1
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    rel material:binding = </World/VisDroneObjects/Looks/bus_01>
+                }
+            }
+
+            def Xform "pedestrian_01"
+            {
+                custom string com3d:class_name = "pedestrian"
+                custom string com3d:source_cutout = "VisDrone2019-DET train crop"
+                double3 xformOp:translate = (-6, 14, 55.0)
+                float3 xformOp:rotateXYZ = (0, 0, -10)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+
+                def Mesh "TexturePlane" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    point3f[] points = [(-1.3, -1.3, 0), (1.3, -1.3, 0), (1.3, 1.3, 0), (-1.3, 1.3, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    bool doubleSided = 1
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    rel material:binding = </World/VisDroneObjects/Looks/pedestrian_01>
+                }
+            }
+
+            def Xform "person_01"
+            {
+                custom string com3d:class_name = "people"
+                custom string com3d:source_cutout = "VisDrone2019-DET train crop"
+                double3 xformOp:translate = (-1.8, 14.6, 55.0)
+                float3 xformOp:rotateXYZ = (0, 0, 15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+
+                def Mesh "TexturePlane" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    point3f[] points = [(-1.3, -1.3, 0), (1.3, -1.3, 0), (1.3, 1.3, 0), (-1.3, 1.3, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    bool doubleSided = 1
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    rel material:binding = </World/VisDroneObjects/Looks/person_01>
+                }
+            }
+        }
+
+        def Xform "UAVMarkers"
+        {
+            def Cube "uav_01"
+            {
+                custom string com3d:role = "multi_uav_observer"
+                double size = 1
+                double3 xformOp:translate = (8.457, 3.078, 60)
+                float3 xformOp:scale = (2.2, 2.2, 0.35)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                color3f[] primvars:displayColor = [(0.05, 0.65, 0.18)]
+            }
+
+            def Cube "uav_02"
+            {
+                custom string com3d:role = "multi_uav_observer"
+                double size = 1
+                double3 xformOp:translate = (-57.453, 48.209, 100)
+                float3 xformOp:scale = (2.2, 2.2, 0.35)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                color3f[] primvars:displayColor = [(0.05, 0.45, 0.95)]
+            }
+
+            def Cube "uav_03"
+            {
+                custom string com3d:role = "multi_uav_observer"
+                double size = 1
+                double3 xformOp:translate = (-21.88, -124.086, 140)
+                float3 xformOp:scale = (2.2, 2.2, 0.35)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                color3f[] primvars:displayColor = [(0.95, 0.45, 0.05)]
+            }
+        }
+    }
+}

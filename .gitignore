@@ -4,6 +4,7 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.mplconfig/
 .venv/
 venv/
 
@@ -66,11 +67,6 @@ outputs/reports/*
 !outputs/reports/archive/
 outputs/reports/archive/*
 !outputs/reports/archive/README.md
-!outputs/reports/archive/**/
-!outputs/reports/archive/**/*.md
-!outputs/reports/archive/**/*.json
-!outputs/reports/archive/**/*.csv
-!outputs/reports/archive/**/*.png
 !outputs/reports/live/
 outputs/reports/live/*
 !outputs/reports/live/README.md
@@ -142,6 +138,8 @@ external/
 .env
 *.secret
 cesium_token.txt
+notion_exports/
+latex_full_draft_integrity_check.*
 
 # Editor / OS
 .vscode/settings.json

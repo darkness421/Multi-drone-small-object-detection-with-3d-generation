@@ -1,13 +1,13 @@
 # AeroGraph 49-Prompt Web Collection Packet
 
-Purpose: collect final non-mock AeroGraph Reasoner responses from a web LLM provider, then promote them to the paper table only after all rows pass schema validation.
+Purpose: collect final external-provider AeroGraph Reasoner responses from a web LLM provider, then promote them to the paper table only after all rows pass schema validation.
 
 ## Current Coverage
 
-- Total prompts: `49`
-- Valid schema responses: `0/49`
+- Total prompts: `54`
+- Valid schema responses: `0/54`
 - Invalid responses: `0`
-- Pending responses: `49`
+- Pending responses: `54`
 - Checklist CSV: `outputs/reports/live/aerograph_prompt_pack/aerograph_web_collection_checklist.csv`
 
 ## Batch Files
@@ -54,52 +54,57 @@ python scripts/build_accv_status_snapshot.py
 
 | Index | Batch | Scenario | Object | Candidate | Status |
 | ---: | ---: | --- | --- | --- | --- |
-| 1 | 1 | S0 | `uav_01_bus_12_2` | bus | pending |
-| 2 | 1 | S0 | `uav_01_bus_9_3` | bus | pending |
-| 3 | 1 | S0 | `uav_01_car_6_8` | car | pending |
+| 1 | 1 | S0 | `uav_01_bus_3_7` | bus | pending |
+| 2 | 1 | S0 | `uav_01_car_6_8` | car | pending |
+| 3 | 1 | S0 | `uav_01_pedestrian_13_2` | pedestrian | pending |
 | 4 | 1 | S0 | `uav_02_bus_0_3` | bus | pending |
-| 5 | 1 | S0 | `uav_02_bus_13_3` | bus | pending |
-| 6 | 1 | S0 | `uav_02_car_0_3` | car | pending |
-| 7 | 1 | S0 | `uav_02_car_0_5` | car | pending |
-| 8 | 1 | S0 | `uav_02_car_10_6` | car | pending |
-| 9 | 1 | S0 | `uav_02_car_10_7` | car | pending |
-| 10 | 1 | S0 | `uav_02_car_1_5` | car | pending |
-| 11 | 2 | S0 | `uav_02_car_8_5` | car | pending |
-| 12 | 2 | S0 | `uav_02_car_9_8` | car | pending |
-| 13 | 2 | S0 | `uav_03_bus_11_2` | bus | pending |
-| 14 | 2 | S1 | `uav_01_bus_11_3` | bus | pending |
-| 15 | 2 | S1 | `uav_01_car_6_8` | car | pending |
-| 16 | 2 | S1 | `uav_01_pedestrian_13_2` | pedestrian | pending |
-| 17 | 2 | S1 | `uav_02_bus_0_3` | bus | pending |
-| 18 | 2 | S1 | `uav_02_bus_11_4` | bus | pending |
-| 19 | 2 | S1 | `uav_02_bus_12_4` | bus | pending |
-| 20 | 2 | S1 | `uav_02_bus_5_6` | bus | pending |
-| 21 | 3 | S1 | `uav_02_car_0_3` | car | pending |
-| 22 | 3 | S1 | `uav_02_car_0_5` | car | pending |
-| 23 | 3 | S1 | `uav_02_car_10_6` | car | pending |
-| 24 | 3 | S1 | `uav_02_car_10_7` | car | pending |
-| 25 | 3 | S1 | `uav_02_car_13_7` | car | pending |
-| 26 | 3 | S1 | `uav_02_car_1_5` | car | pending |
-| 27 | 3 | S1 | `uav_02_car_8_5` | car | pending |
-| 28 | 3 | S1 | `uav_02_car_9_6` | car | pending |
-| 29 | 3 | S1 | `uav_02_car_9_8` | car | pending |
-| 30 | 3 | S1 | `uav_03_bus_11_3` | bus | pending |
-| 31 | 4 | S2 | `uav_01_bus_15_2` | bus | pending |
-| 32 | 4 | S2 | `uav_01_car_6_8` | car | pending |
-| 33 | 4 | S2 | `uav_01_pedestrian_13_2` | pedestrian | pending |
-| 34 | 4 | S2 | `uav_01_pedestrian_14_1` | pedestrian | pending |
-| 35 | 4 | S2 | `uav_01_pedestrian_7_3` | pedestrian | pending |
-| 36 | 4 | S2 | `uav_02_bus_0_3` | bus | pending |
-| 37 | 4 | S2 | `uav_02_bus_15_4` | bus | pending |
-| 38 | 4 | S2 | `uav_02_bus_7_6` | bus | pending |
-| 39 | 4 | S2 | `uav_02_car_0_3` | car | pending |
-| 40 | 4 | S2 | `uav_02_car_0_5` | car | pending |
-| 41 | 5 | S2 | `uav_02_car_10_6` | car | pending |
-| 42 | 5 | S2 | `uav_02_car_10_7` | car | pending |
-| 43 | 5 | S2 | `uav_02_car_13_7` | car | pending |
-| 44 | 5 | S2 | `uav_02_car_1_5` | car | pending |
-| 45 | 5 | S2 | `uav_02_car_7_6` | car | pending |
-| 46 | 5 | S2 | `uav_02_car_8_5` | car | pending |
-| 47 | 5 | S2 | `uav_02_car_9_6` | car | pending |
-| 48 | 5 | S2 | `uav_02_car_9_8` | car | pending |
-| 49 | 5 | S2 | `uav_03_bus_13_1` | bus | pending |
+| 5 | 1 | S0 | `uav_02_bus_3_4` | bus | pending |
+| 6 | 1 | S0 | `uav_02_bus_5_5` | bus | pending |
+| 7 | 1 | S0 | `uav_02_bus_7_6` | bus | pending |
+| 8 | 1 | S0 | `uav_02_car_0_3` | car | pending |
+| 9 | 1 | S0 | `uav_02_car_0_5` | car | pending |
+| 10 | 1 | S0 | `uav_02_car_10_6` | car | pending |
+| 11 | 2 | S0 | `uav_02_car_10_7` | car | pending |
+| 12 | 2 | S0 | `uav_02_car_13_7` | car | pending |
+| 13 | 2 | S0 | `uav_02_car_1_5` | car | pending |
+| 14 | 2 | S0 | `uav_02_car_2_3` | car | pending |
+| 15 | 2 | S0 | `uav_02_car_5_6` | car | pending |
+| 16 | 2 | S0 | `uav_02_car_7_6` | car | pending |
+| 17 | 2 | S0 | `uav_02_car_8_5` | car | pending |
+| 18 | 2 | S0 | `uav_02_car_9_8` | car | pending |
+| 19 | 2 | S0 | `uav_02_van_0_5` | van | pending |
+| 20 | 2 | S1 | `uav_01_bus_2_7` | bus | pending |
+| 21 | 3 | S1 | `uav_01_car_6_8` | car | pending |
+| 22 | 3 | S1 | `uav_01_pedestrian_13_2` | pedestrian | pending |
+| 23 | 3 | S1 | `uav_01_pedestrian_15_3` | pedestrian | pending |
+| 24 | 3 | S1 | `uav_02_bus_0_3` | bus | pending |
+| 25 | 3 | S1 | `uav_02_bus_2_5` | bus | pending |
+| 26 | 3 | S1 | `uav_02_bus_5_5` | bus | pending |
+| 27 | 3 | S1 | `uav_02_car_0_3` | car | pending |
+| 28 | 3 | S1 | `uav_02_car_0_5` | car | pending |
+| 29 | 3 | S1 | `uav_02_car_10_6` | car | pending |
+| 30 | 3 | S1 | `uav_02_car_1_5` | car | pending |
+| 31 | 4 | S1 | `uav_02_car_2_3` | car | pending |
+| 32 | 4 | S1 | `uav_02_car_8_5` | car | pending |
+| 33 | 4 | S1 | `uav_02_car_9_8` | car | pending |
+| 34 | 4 | S2 | `uav_01_bus_5_6` | bus | pending |
+| 35 | 4 | S2 | `uav_01_car_6_8` | car | pending |
+| 36 | 4 | S2 | `uav_01_pedestrian_13_2` | pedestrian | pending |
+| 37 | 4 | S2 | `uav_01_pedestrian_3_5` | pedestrian | pending |
+| 38 | 4 | S2 | `uav_02_bus_0_3` | bus | pending |
+| 39 | 4 | S2 | `uav_02_bus_5_4` | bus | pending |
+| 40 | 4 | S2 | `uav_02_bus_7_6` | bus | pending |
+| 41 | 5 | S2 | `uav_02_car_0_3` | car | pending |
+| 42 | 5 | S2 | `uav_02_car_0_5` | car | pending |
+| 43 | 5 | S2 | `uav_02_car_10_6` | car | pending |
+| 44 | 5 | S2 | `uav_02_car_10_7` | car | pending |
+| 45 | 5 | S2 | `uav_02_car_10_8` | car | pending |
+| 46 | 5 | S2 | `uav_02_car_13_6` | car | pending |
+| 47 | 5 | S2 | `uav_02_car_1_5` | car | pending |
+| 48 | 5 | S2 | `uav_02_car_7_6` | car | pending |
+| 49 | 5 | S2 | `uav_02_car_8_5` | car | pending |
+| 50 | 5 | S2 | `uav_02_car_9_8` | car | pending |
+| 51 | 6 | S2 | `uav_02_van_0_5` | van | pending |
+| 52 | 6 | S2 | `uav_03_bus_7_7` | bus | pending |
+| 53 | 6 | S2 | `uav_03_car_5_8` | car | pending |
+| 54 | 6 | S2 | `uav_03_pedestrian_0_7` | pedestrian | pending |

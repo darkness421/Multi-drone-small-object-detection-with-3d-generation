@@ -46,7 +46,7 @@ python scripts/build_aerograph_web_batches.py \
   --responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl \
   --raw-output-dir outputs/reasoning/aerograph_real_capture_web_raw_batches \
   --normalized-responses outputs/reasoning/aerograph_real_capture_manual_responses.normalized.jsonl \
-  --provider-label "ChatGPT/Codex web real-capture smoke" \
+  --provider-label "External web LLM real-capture validation" \
   --import-out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web \
   --promotion-mode smoke
 python scripts/build_aerograph_web_collection_packet.py \
@@ -55,11 +55,11 @@ python scripts/build_aerograph_web_collection_packet.py \
   --manual-responses outputs/reasoning/aerograph_real_capture_manual_responses.jsonl \
   --raw-output-dir outputs/reasoning/aerograph_real_capture_web_raw_batches \
   --normalized-responses outputs/reasoning/aerograph_real_capture_manual_responses.normalized.jsonl \
-  --provider-label "ChatGPT/Codex web real-capture smoke" \
+  --provider-label "External web LLM real-capture validation" \
   --import-out-dir outputs/reasoning/aerograph_real_capture_eval_manual_web \
   --gate-label "23-Prompt Real-Capture Smoke" \
   --promotion-mode smoke \
-  --purpose "Purpose: collect compact non-mock AeroGraph responses for the current 23-token real-Cesium detector smoke run before the final 49-prompt paper-table gate." \
+  --purpose "Purpose: collect compact external-provider AeroGraph responses for the current 23-token real-Cesium detector smoke run before the final 49-prompt paper-table gate." \
   --out-md outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.md \
   --out-csv outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_checklist.csv \
   --out-json outputs/reports/live/aerograph_real_capture_prompt_pack/aerograph_web_collection_packet.json

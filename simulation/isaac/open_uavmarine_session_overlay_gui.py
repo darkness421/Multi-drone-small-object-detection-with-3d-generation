@@ -39,6 +39,9 @@ RUNTIME_ROOT = f"{ROOT}/RuntimeView"
 VIEWER160_CAMERA = f"{RUNTIME_ROOT}/viewer160_OverviewCamera"
 VIEWER160_TARGET = [-22.0, -13.0, 15.0]
 VIEWER160_EYE = [8.0, -2.0, 160.0]
+UAV_ALTITUDE_MIN_M = 140.0
+UAV_ALTITUDE_MAX_M = 160.0
+UAV_REVIEW_HEIGHT_M = 160.0
 
 VIEW_PROFILES = {
     "viewer160": {
@@ -265,6 +268,11 @@ async def main() -> None:
             "active_camera_path": active_camera,
             "camera_set": camera_set,
             "camera_profile": camera_profile,
+            "uav_altitude_policy_m": {
+                "min": UAV_ALTITUDE_MIN_M,
+                "max": UAV_ALTITUDE_MAX_M,
+                "review_height": UAV_REVIEW_HEIGHT_M,
+            },
             "viewer_eye": list(view_profile["eye"]) if not keep_user_camera else None,
             "viewer_target": list(view_profile["target"]) if not keep_user_camera else None,
             "viewer_note": str(view_profile["note"]) if not keep_user_camera else None,

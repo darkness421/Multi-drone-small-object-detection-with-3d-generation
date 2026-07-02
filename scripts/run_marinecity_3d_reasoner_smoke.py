@@ -3,7 +3,7 @@
 This script can run before the full Isaac capture is available by using the
 scenario overlay metadata as planned evidence. When detector EvidenceTokens are
 available, pass ``--tokens`` and the same pipeline will summarize real detections
-instead. LLM providers are intentionally abstracted so OpenAI/ChatGPT, a generic
+instead. LLM providers are intentionally abstracted so external APIs, a generic
 stdin/stdout command, or a deterministic mock can be plugged in without changing
 the pipeline.
 """

@@ -1,0 +1,462 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+    subLayers = [
+        @./haeundae_marinecity_base_map.usd@
+    ]
+)
+
+# Non-destructive real-Cesium overlay for the 2026-06-24 Marine City smoke test.
+# This layer must be opened from /isaac-sim/.local/share/ov/data so the relative
+# base USD and VisDrone texture paths resolve correctly.
+
+over "CesiumGeoreference"
+{
+    double cesium:georeferenceOrigin:latitude = 35.156900
+    double cesium:georeferenceOrigin:longitude = 129.143900
+    double cesium:georeferenceOrigin:height = 160.0
+}
+
+over "Cesium_World_Terrain"
+{
+    token visibility = "inherited"
+}
+
+over "Cesium_OSM_Buildings"
+{
+    token visibility = "inherited"
+}
+
+over "Google_Photorealistic_3D_Tiles"
+{
+    token visibility = "inherited"
+}
+
+over "World"
+{
+    def Xform "CoM3D_ACE_RealMarineCity"
+    {
+        custom string com3d:scene = "Real Cesium Haeundae Marine City multi-UAV object-placement smoke test"
+        custom string com3d:base_usd = "haeundae_marinecity_base_map.usd"
+        custom string com3d:date = "2026-06-24"
+        custom string com3d:note = "Only VisDrone object cards, UAV markers, and cameras are added; no fake/proxy city geometry is created."
+
+        def Scope "Materials"
+        {
+            def Material "car_01"
+            {
+                token outputs:surface.connect = </World/CoM3D_ACE_RealMarineCity/Materials/car_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/CoM3D_ACE_RealMarineCity/Materials/car_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/CoM3D_ACE_RealMarineCity/Materials/car_01/DiffuseTexture.outputs:a>
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/car_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "van_01"
+            {
+                token outputs:surface.connect = </World/CoM3D_ACE_RealMarineCity/Materials/van_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/CoM3D_ACE_RealMarineCity/Materials/van_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/CoM3D_ACE_RealMarineCity/Materials/van_01/DiffuseTexture.outputs:a>
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/van_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "truck_01"
+            {
+                token outputs:surface.connect = </World/CoM3D_ACE_RealMarineCity/Materials/truck_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/CoM3D_ACE_RealMarineCity/Materials/truck_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/CoM3D_ACE_RealMarineCity/Materials/truck_01/DiffuseTexture.outputs:a>
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/truck_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "bus_01"
+            {
+                token outputs:surface.connect = </World/CoM3D_ACE_RealMarineCity/Materials/bus_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/CoM3D_ACE_RealMarineCity/Materials/bus_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/CoM3D_ACE_RealMarineCity/Materials/bus_01/DiffuseTexture.outputs:a>
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/bus_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "pedestrian_01"
+            {
+                token outputs:surface.connect = </World/CoM3D_ACE_RealMarineCity/Materials/pedestrian_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/CoM3D_ACE_RealMarineCity/Materials/pedestrian_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/CoM3D_ACE_RealMarineCity/Materials/pedestrian_01/DiffuseTexture.outputs:a>
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/pedestrian_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+
+            def Material "person_01"
+            {
+                token outputs:surface.connect = </World/CoM3D_ACE_RealMarineCity/Materials/person_01/PreviewSurface.outputs:surface>
+
+                def Shader "PreviewSurface"
+                {
+                    uniform token info:id = "UsdPreviewSurface"
+                    color3f inputs:diffuseColor.connect = </World/CoM3D_ACE_RealMarineCity/Materials/person_01/DiffuseTexture.outputs:rgb>
+                    float inputs:opacity.connect = </World/CoM3D_ACE_RealMarineCity/Materials/person_01/DiffuseTexture.outputs:a>
+                    float inputs:roughness = 0.82
+                    token outputs:surface
+                }
+
+                def Shader "DiffuseTexture"
+                {
+                    uniform token info:id = "UsdUVTexture"
+                    asset inputs:file = @./visdrone_objects/person_01.png@
+                    token inputs:sourceColorSpace = "sRGB"
+                    token inputs:wrapS = "clamp"
+                    token inputs:wrapT = "clamp"
+                    float3 outputs:rgb
+                    float outputs:a
+                }
+            }
+        }
+
+        def Xform "VisDroneObjects"
+        {
+            custom string com3d:source_dataset = "VisDrone2019-DET"
+            custom int com3d:object_count = 6
+            custom string com3d:placement = "CesiumGlobeAnchor WGS84 coordinates near Haeundae Marine City road/coast ROI"
+
+            def Xform "car_01" (
+                prepend apiSchemas = ["CesiumGlobeAnchorAPI"]
+            )
+            {
+                double cesium:anchor:latitude = 35.156730
+                double cesium:anchor:longitude = 129.144140
+                double cesium:anchor:height = 55.0
+                rel cesium:anchor:georeferenceBinding = </CesiumGeoreference>
+                custom string com3d:class_name = "car"
+                custom string com3d:source_dataset = "VisDrone2019-DET"
+
+                def Mesh "TextureCard"
+                {
+                    point3f[] points = [(-1.45, -2.7, 0), (1.45, -2.7, 0), (1.45, 2.7, 0), (-1.45, 2.7, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    bool doubleSided = true
+                    rel material:binding = </World/CoM3D_ACE_RealMarineCity/Materials/car_01>
+                }
+            }
+
+            def Xform "van_01" (
+                prepend apiSchemas = ["CesiumGlobeAnchorAPI"]
+            )
+            {
+                double cesium:anchor:latitude = 35.156670
+                double cesium:anchor:longitude = 129.144270
+                double cesium:anchor:height = 55.0
+                rel cesium:anchor:georeferenceBinding = </CesiumGeoreference>
+                custom string com3d:class_name = "van"
+                custom string com3d:source_dataset = "VisDrone2019-DET"
+
+                def Mesh "TextureCard"
+                {
+                    point3f[] points = [(-1.65, -3.1, 0), (1.65, -3.1, 0), (1.65, 3.1, 0), (-1.65, 3.1, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    bool doubleSided = true
+                    rel material:binding = </World/CoM3D_ACE_RealMarineCity/Materials/van_01>
+                }
+            }
+
+            def Xform "truck_01" (
+                prepend apiSchemas = ["CesiumGlobeAnchorAPI"]
+            )
+            {
+                double cesium:anchor:latitude = 35.156610
+                double cesium:anchor:longitude = 129.144390
+                double cesium:anchor:height = 55.0
+                rel cesium:anchor:georeferenceBinding = </CesiumGeoreference>
+                custom string com3d:class_name = "truck"
+                custom string com3d:source_dataset = "VisDrone2019-DET"
+
+                def Mesh "TextureCard"
+                {
+                    point3f[] points = [(-1.95, -4.4, 0), (1.95, -4.4, 0), (1.95, 4.4, 0), (-1.95, 4.4, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    bool doubleSided = true
+                    rel material:binding = </World/CoM3D_ACE_RealMarineCity/Materials/truck_01>
+                }
+            }
+
+            def Xform "bus_01" (
+                prepend apiSchemas = ["CesiumGlobeAnchorAPI"]
+            )
+            {
+                double cesium:anchor:latitude = 35.156820
+                double cesium:anchor:longitude = 129.144060
+                double cesium:anchor:height = 55.0
+                rel cesium:anchor:georeferenceBinding = </CesiumGeoreference>
+                custom string com3d:class_name = "bus"
+                custom string com3d:source_dataset = "VisDrone2019-DET"
+
+                def Mesh "TextureCard"
+                {
+                    point3f[] points = [(-2.15, -6.4, 0), (2.15, -6.4, 0), (2.15, 6.4, 0), (-2.15, 6.4, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    bool doubleSided = true
+                    rel material:binding = </World/CoM3D_ACE_RealMarineCity/Materials/bus_01>
+                }
+            }
+
+            def Xform "pedestrian_01" (
+                prepend apiSchemas = ["CesiumGlobeAnchorAPI"]
+            )
+            {
+                double cesium:anchor:latitude = 35.156780
+                double cesium:anchor:longitude = 129.144430
+                double cesium:anchor:height = 56.0
+                rel cesium:anchor:georeferenceBinding = </CesiumGeoreference>
+                custom string com3d:class_name = "pedestrian"
+                custom string com3d:source_dataset = "VisDrone2019-DET"
+
+                def Mesh "TextureCard"
+                {
+                    point3f[] points = [(-0.85, -0.85, 0), (0.85, -0.85, 0), (0.85, 0.85, 0), (-0.85, 0.85, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    bool doubleSided = true
+                    rel material:binding = </World/CoM3D_ACE_RealMarineCity/Materials/pedestrian_01>
+                }
+            }
+
+            def Xform "person_01" (
+                prepend apiSchemas = ["CesiumGlobeAnchorAPI"]
+            )
+            {
+                double cesium:anchor:latitude = 35.156840
+                double cesium:anchor:longitude = 129.144360
+                double cesium:anchor:height = 56.0
+                rel cesium:anchor:georeferenceBinding = </CesiumGeoreference>
+                custom string com3d:class_name = "person"
+                custom string com3d:source_dataset = "VisDrone2019-DET"
+
+                def Mesh "TextureCard"
+                {
+                    point3f[] points = [(-0.85, -0.85, 0), (0.85, -0.85, 0), (0.85, 0.85, 0), (-0.85, 0.85, 0)]
+                    int[] faceVertexCounts = [4]
+                    int[] faceVertexIndices = [0, 1, 2, 3]
+                    texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                        interpolation = "vertex"
+                    )
+                    bool doubleSided = true
+                    rel material:binding = </World/CoM3D_ACE_RealMarineCity/Materials/person_01>
+                }
+            }
+        }
+
+        def Xform "UAVs"
+        {
+            custom int com3d:uav_count = 3
+            custom string com3d:altitude_policy = "60/100/140m detector-style relative viewpoints over the same Marine City ROI"
+
+            def Xform "uav_01" (
+                prepend apiSchemas = ["CesiumGlobeAnchorAPI"]
+            )
+            {
+                double cesium:anchor:latitude = 35.156510
+                double cesium:anchor:longitude = 129.143960
+                double cesium:anchor:height = 140.0
+                rel cesium:anchor:georeferenceBinding = </CesiumGeoreference>
+                custom string com3d:role = "low-altitude detector view"
+
+                def Sphere "Body"
+                {
+                    double radius = 3.5
+                    color3f[] primvars:displayColor = [(0.0, 0.65, 0.25)]
+                }
+
+                def Cube "ArmEastWest"
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.02, 0.08, 0.04)]
+                    double3 xformOp:scale = (10.0, 0.5, 0.35)
+                    uniform token[] xformOpOrder = ["xformOp:scale"]
+                }
+
+                def Cube "ArmNorthSouth"
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.02, 0.08, 0.04)]
+                    double3 xformOp:scale = (0.5, 10.0, 0.35)
+                    uniform token[] xformOpOrder = ["xformOp:scale"]
+                }
+            }
+
+            def Xform "uav_02" (
+                prepend apiSchemas = ["CesiumGlobeAnchorAPI"]
+            )
+            {
+                double cesium:anchor:latitude = 35.156970
+                double cesium:anchor:longitude = 129.143420
+                double cesium:anchor:height = 150.0
+                rel cesium:anchor:georeferenceBinding = </CesiumGeoreference>
+                custom string com3d:role = "cross-view confirmation"
+
+                def Sphere "Body"
+                {
+                    double radius = 3.5
+                    color3f[] primvars:displayColor = [(0.05, 0.25, 1.0)]
+                }
+
+                def Cube "ArmEastWest"
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.02, 0.04, 0.10)]
+                    double3 xformOp:scale = (10.0, 0.5, 0.35)
+                    uniform token[] xformOpOrder = ["xformOp:scale"]
+                }
+
+                def Cube "ArmNorthSouth"
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.02, 0.04, 0.10)]
+                    double3 xformOp:scale = (0.5, 10.0, 0.35)
+                    uniform token[] xformOpOrder = ["xformOp:scale"]
+                }
+            }
+
+            def Xform "uav_03" (
+                prepend apiSchemas = ["CesiumGlobeAnchorAPI"]
+            )
+            {
+                double cesium:anchor:latitude = 35.157150
+                double cesium:anchor:longitude = 129.144580
+                double cesium:anchor:height = 160.0
+                rel cesium:anchor:georeferenceBinding = </CesiumGeoreference>
+                custom string com3d:role = "wide-area context"
+
+                def Sphere "Body"
+                {
+                    double radius = 3.5
+                    color3f[] primvars:displayColor = [(1.0, 0.48, 0.0)]
+                }
+
+                def Cube "ArmEastWest"
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.10, 0.04, 0.01)]
+                    double3 xformOp:scale = (10.0, 0.5, 0.35)
+                    uniform token[] xformOpOrder = ["xformOp:scale"]
+                }
+
+                def Cube "ArmNorthSouth"
+                {
+                    double size = 1
+                    color3f[] primvars:displayColor = [(0.10, 0.04, 0.01)]
+                    double3 xformOp:scale = (0.5, 10.0, 0.35)
+                    uniform token[] xformOpOrder = ["xformOp:scale"]
+                }
+            }
+        }
+
+        def Scope "SystemExperimentPlaceholders"
+        {
+            custom string com3d:yolo_detector = "P2P4-SelfAttnFR best checkpoint will be attached in detector smoke stage"
+            custom string com3d:three_d_generation = "After RGB/depth/pose capture, EvidenceToken graph and 3D evidence-completion smoke are generated outside USD"
+            custom string com3d:reasoner = "AeroGraph Reasoner consumes high-ambiguity nodes after detector and 3D evidence smoke"
+        }
+    }
+}

@@ -201,20 +201,36 @@ Procedure:
 - finish the current one-seed architecture search first
 - freeze one winning proposed detector family before statistical expansion
 - edit config to keep only the winning backbone/module pair and exact modules
+- if no candidate passes the strict compact gate, confirm the best under-param
+  trade-off candidate instead; current default is
+  `p2p4_balanced_selfattn_tiny_frelu` / `P2P4-SelfAttnFR`
 - run seeds `42`, `123`, and `2026` for the main comparison-consistent
   statistics; do this after the winning model is fixed, not during exploratory
   screening
 - use extra seeds only as optional supplementary robustness checks, not as the
   main detector table
 
-Do not compute p-values from one-seed screening. After the final candidate is
-frozen, compute mean/std and paired p-values against the strongest baseline
-groups:
+Do not compute p-values from one-seed screening. The collector may keep
+one-seed rows in the CSV, but it marks them as `insufficient_for_pvalue` until
+the paired 3-seed set exists. After the final candidate is frozen, compute
+mean/std and paired p-values against the strongest baseline groups:
 
 - strongest YOLO large baseline, currently YOLOv11l
 - strongest compact/lightweight baseline
 - strongest runnable related-work comparison model, where protocol-compatible
   results are available
+
+Priority queue enforcement:
+
+- `scripts/ubuntu/run_priority_detector_queue.sh` uses seed `123` for
+  screening and `CONFIRM_SEEDS=42,2026` for confirmation, giving the final
+  3-seed set `42,123,2026`.
+- If AP `> 0.3835` and Params `< 25.32M`, the strict-pass candidate is
+  confirmed.
+- If no strict-pass candidate appears after DCT/Wavelet/NMS, the best
+  under-param trade-off model is confirmed instead.
+- Related-work defaults are `RELATED_WORK_SEEDS=42,123,2026` and
+  `RELATED_WORK_IMGSZ=1280` for consistency with the main detector protocol.
 
 Primary statistical metrics:
 
@@ -256,14 +272,14 @@ Rationale:
 
 Queue defaults:
 
-- YOLOv5u: `n/s/m/l`
-- YOLOv8: `n/s/m/l`
-- YOLOv9: `t/s/m/c/e` practical anchors, because `n/l` are not always exposed
-  as Ultralytics checkpoints
-- YOLOv10: `n/s/m/l`
-- YOLO11: `n/s/m/l`
-- YOLO12: `n/s/m/l`
-- YOLO26: `n/s/m/l`
+- Nano group: YOLOv5u-n, YOLOv8n, YOLOv9t, YOLOv10n, YOLO11n, YOLO12n,
+  YOLO26n
+- Small group: YOLOv5u-s, YOLOv8s, YOLOv9s, YOLOv10s, YOLO11s, YOLO12s,
+  YOLO26s
+- Medium group: YOLOv5u-m, YOLOv8m, YOLOv9m, YOLOv10m, YOLO11m, YOLO12m,
+  YOLO26m
+- Large group: YOLOv5u-l, YOLOv8l, YOLOv9c/e practical large anchors,
+  YOLOv10l, YOLO11l, YOLO12l, YOLO26l
 - RT-DETR-L as the non-YOLO large anchor
 
 Launcher:
@@ -273,7 +289,9 @@ bash scripts/ubuntu/train_extra_comparison_models_after_session.sh
 ```
 
 The launcher uses `CHECK_MODELS=1`, so unavailable checkpoints are skipped and
-documented rather than blocking the queue.
+documented rather than blocking the queue. The priority detector runner now
+calls this launcher automatically after proposed-model exploration/confirmation
+and before the related-work queue.
 
 Paper/table grouping:
 
@@ -309,15 +327,31 @@ Purpose:
 
 Status: adapter-gated.
 
-Do not try to reproduce every survey paper. Add only models with practical
-code/checkpoint support.
+Do not try to reproduce every survey paper. Add at least five related-work
+comparison targets to the queue/report, prioritizing models with practical
+code/checkpoint support. If a model is not runnable yet, keep it in the
+availability/adapter table rather than mixing citation-only rows with measured
+results.
 
 Priority:
 
 1. LEAF-YOLO as the lightweight YOLO-family UAV comparison.
 2. CSFPR-RTDETR as the UAV-specific RT-DETR/frequency comparison.
-3. One of UAVDet, UAVD-Mamba, HF-D-FINE, or RF-DETR-B only if the adapter is
-   fair and stable.
+3. SFFEF-YOLO or LSOD-YOLO as same-dataset YOLO-style paper comparisons if
+   compatible weights/configs are staged.
+4. UAVDet or UAVD-Mamba as the Mamba/CNN UAV detector family if modality and
+   adapter assumptions are fair.
+5. HF-D-FINE, UFO-DETR, or RF-DETR-B as the DETR/D-FINE/transformer family,
+   with UAV-specific models preferred over generic ones.
+
+Minimum-five queue/report policy:
+
+- Primary related-work target set: `LEAF-YOLO`, `CSFPR-RTDETR`,
+  `SFFEF-YOLO`, `LSOD-YOLO`, `UAVDet`, `HF-D-FINE`.
+- Backup target set: `DR-YOLO`, `SOD-YOLO`, `UAVD-Mamba`, `GCL-YOLO`,
+  `SRTSOD-YOLO`, `YOLO11s-UAV`, `RF-DETR-B`.
+- The runner logs whether at least five related-work candidates were recorded
+  and whether at least five are runnable or adapter-staged today.
 
 Tracking config:
 

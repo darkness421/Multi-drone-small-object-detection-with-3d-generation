@@ -1,0 +1,56 @@
+name: marinecity_isaac_container_smoke
+dataset_name: CoM3D-MarineCity
+output_root: /tmp/com3d_isaac_smoke_exports
+
+scene:
+  name: CoM3D-MarineCity
+  area: Busan Haeundae Marine City
+  digital_twin:
+    engine: NVIDIA Isaac Sim
+    geospatial: Cesium for Omniverse
+  origin:
+    latitude_deg: 35.1569
+    longitude_deg: 129.1456
+    height_m: 160.0
+  usd_stage: assets/marinecity/marinecity_base.usd
+
+camera:
+  width: 640
+  height: 360
+  focal_px: 400
+  output_format: png
+
+capture:
+  default_uav_count: 3
+  timestamps: [0.0]
+  altitudes_m: [140, 150, 160]
+  view_angles: [nadir]
+  weather: [clear]
+  lighting: [day]
+  radius_scale: 0.9
+  export_rgb: true
+  export_depth: true
+  export_masks: true
+  export_2d_bbox: true
+  export_3d_bbox: true
+  export_camera_params: true
+
+scenes:
+  - scene_id: smoke_scene_001
+    description: Minimal MarineCity container smoke scene.
+    uav_count: 3
+    object_density: sparse
+
+objects:
+  classes:
+    - sedan
+    - pickup
+    - van
+    - pedestrian
+  ambiguity_pairs:
+    - [sedan, van]
+    - [van, pickup]
+
+splits:
+  val_angles: []
+  test_angles: []

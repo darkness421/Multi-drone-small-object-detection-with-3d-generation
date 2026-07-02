@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CoM3D-ACE Haeundae MarineCity Cesium Viewer</title>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: Inter, Arial, sans-serif;
+      background: #0f172a;
+    }
+
+    .panel {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: min(390px, calc(100vw - 28px));
+      color: #0f172a;
+      background: rgba(248, 250, 252, 0.94);
+      border: 1px solid rgba(148, 163, 184, 0.48);
+      border-radius: 8px;
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.28);
+      z-index: 5;
+    }
+
+    .panel header {
+      padding: 12px 14px 9px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.38);
+    }
+
+    .panel h1 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.25;
+      letter-spacing: 0;
+      color: #0f3b7c;
+    }
+
+    .panel p {
+      margin: 5px 0 0;
+      color: #475569;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .panel section {
+      padding: 11px 14px 13px;
+    }
+
+    .coord-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .coord-table th,
+    .coord-table td {
+      padding: 5px 4px;
+      text-align: left;
+      border-bottom: 1px solid rgba(203, 213, 225, 0.8);
+      vertical-align: top;
+    }
+
+    .coord-table th {
+      color: #334155;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .coord-table td {
+      color: #1e293b;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    button {
+      min-height: 34px;
+      border: 1px solid rgba(37, 99, 235, 0.52);
+      border-radius: 6px;
+      background: #eff6ff;
+      color: #174ea6;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #dbeafe;
+    }
+
+    .status {
+      margin-top: 10px;
+      padding: 7px 8px;
+      border-radius: 6px;
+      color: #14532d;
+      background: rgba(220, 252, 231, 0.92);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .token-box {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(203, 213, 225, 0.8);
+    }
+
+    .token-box input {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 32px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      border-radius: 6px;
+      padding: 6px 8px;
+      color: #0f172a;
+      background: #ffffff;
+      font-size: 12px;
+    }
+
+    .token-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .legend {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-width: min(720px, calc(100vw - 28px));
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #e2e8f0;
+      background: rgba(15, 23, 42, 0.84);
+      border: 1px solid rgba(148, 163, 184, 0.34);
+      font-size: 12px;
+      z-index: 5;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      margin-right: 5px;
+      vertical-align: -1px;
+    }
+
+    .origin { background: #ef4444; }
+    .landmark { background: #38bdf8; }
+    .uav { background: #22c55e; }
+    .object { background: #f97316; }
+
+    @media (max-width: 720px) {
+      .panel {
+        top: 8px;
+        left: 8px;
+        width: calc(100vw - 16px);
+      }
+
+      .legend {
+        left: 8px;
+        bottom: 8px;
+        max-width: calc(100vw - 16px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <aside class="panel">
+    <header>
+      <h1>Haeundae MarineCity Cesium View</h1>
+      <p>Real WGS84 coordinate bookmark for the CoM3D-ACE MarineCity scene.</p>
+    </header>
+    <section>
+      <table class="coord-table" aria-label="Cesium coordinate bookmarks">
+        <tbody>
+          <tr>
+            <th>MarineCity origin</th>
+            <td>35.156900, 129.145600, 160 m</td>
+          </tr>
+          <tr>
+            <th>Haeundae Beach ref.</th>
+            <td>35.158700, 129.160400, 35 m</td>
+          </tr>
+          <tr>
+            <th>Fleet</th>
+            <td>3 UAV markers at 140 m, 150 m, and 160 m AGL-style heights</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="actions">
+        <button id="flyUavLow" type="button">UAV 140m View</button>
+        <button id="flyUavMid" type="button">UAV 160m View</button>
+        <button id="flyOrigin" type="button">MarineCity Overview</button>
+        <button id="flyHaeundae" type="button">Haeundae Ref.</button>
+      </div>
+      <div class="token-box">
+        <input id="tokenInput" type="password" placeholder="Paste Cesium ion token for real 3D buildings/tiles">
+        <input id="assetInput" type="text" placeholder="Ion asset id" value="2275207">
+        <div class="token-actions">
+          <button id="saveToken" type="button">Save Token</button>
+          <button id="loadReal3d" type="button">Load Real 3D</button>
+        </div>
+        <button id="showProxy" type="button">Show Proxy Fallback</button>
+      </div>
+      <div id="status" class="status">Cesium viewer booting. Add a Cesium ion token to load real 3D buildings/tiles.</div>
+    </section>
+  </aside>
+  <div class="legend">
+    <span><i class="dot origin"></i>MarineCity origin</span>
+    <span><i class="dot landmark"></i>Haeundae reference</span>
+    <span><i class="dot uav"></i>UAV camera pose</span>
+    <span><i class="dot object"></i>Planned object cluster</span>
+  </div>
+
+  <script>
+    const origin = {
+      name: "CoM3D-ACE MarineCity origin",
+      lon: 129.1456,
+      lat: 35.1569,
+      height: 160.0
+    };
+
+    const haeundaeBeach = {
+      name: "Haeundae Beach reference",
+      lon: 129.1604,
+      lat: 35.1587,
+      height: 35.0
+    };
+
+    const uavs = [
+      { id: "uav_01", east: 10.149, north: 3.694, up: 140.0, label: "UAV 1 / nadir / 140m" },
+      { id: "uav_02", east: -84.572, north: -30.782, up: 150.0, label: "UAV 2 / oblique / 150m" },
+      { id: "uav_03", east: 60.892, north: 22.163, up: 160.0, label: "UAV 3 / side / 160m" }
+    ];
+
+    const objects = [
+      {
+        id: "car_01",
+        className: "car",
+        east: -30.0,
+        north: -12.0,
+        up: 2.0,
+        image: "assets/visdrone_objects/car_01.png",
+        width: 42,
+        height: 58
+      },
+      {
+        id: "van_01",
+        className: "van",
+        east: -24.5,
+        north: -12.0,
+        up: 2.25,
+        image: "assets/visdrone_objects/van_01.png",
+        width: 70,
+        height: 28
+      },
+      {
+        id: "truck_01",
+        className: "truck",
+        east: -18.5,
+        north: -12.0,
+        up: 2.85,
+        image: "assets/visdrone_objects/truck_01.png",
+        width: 58,
+        height: 92
+      },
+      {
+        id: "bus_01",
+        className: "bus",
+        east: 18.0,
+        north: 8.5,
+        up: 2.6,
+        image: "assets/visdrone_objects/bus_01.png",
+        width: 44,
+        height: 104
+      },
+      {
+        id: "pedestrian_01",
+        className: "pedestrian",
+        east: -6.0,
+        north: 14.0,
+        up: 1.75,
+        image: "assets/visdrone_objects/pedestrian_01.png",
+        width: 24,
+        height: 68
+      },
+      {
+        id: "person_01",
+        className: "people",
+        east: -3.2,
+        north: 14.6,
+        up: 1.75,
+        image: "assets/visdrone_objects/person_01.png",
+        width: 26,
+        height: 44
+      }
+    ];
+
+    const proxyBuildings = [
+      { id: "tower_01", east: -74, north: 22, width: 28, depth: 34, height: 210, heading: 8 },
+      { id: "tower_02", east: -38, north: 30, width: 24, depth: 30, height: 185, heading: 6 },
+      { id: "tower_03", east: 4, north: 26, width: 30, depth: 38, height: 230, heading: 3 },
+      { id: "tower_04", east: 42, north: 18, width: 26, depth: 34, height: 175, heading: -8 },
+      { id: "tower_05", east: 82, north: 10, width: 24, depth: 32, height: 150, heading: -10 },
+      { id: "podium_01", east: -22, north: -24, width: 120, depth: 18, height: 28, heading: 4 },
+      { id: "podium_02", east: 54, north: -18, width: 92, depth: 20, height: 24, heading: -7 }
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    const tokenParam = params.get("ion_token") || "";
+    const assetParam = params.get("asset_id") || "";
+    const ionToken = tokenParam || window.localStorage.getItem("CESIUM_ION_TOKEN") || "";
+    const savedAssetId = assetParam || window.localStorage.getItem("CESIUM_ION_ASSET_ID") || "2275207";
+    if (ionToken) {
+      Cesium.Ion.defaultAccessToken = ionToken;
+    }
+
+    const status = document.getElementById("status");
+    const tokenInput = document.getElementById("tokenInput");
+    const assetInput = document.getElementById("assetInput");
+    tokenInput.value = ionToken;
+    assetInput.value = savedAssetId;
+
+    const viewer = new Cesium.Viewer("cesiumContainer", {
+      animation: false,
+      timeline: false,
+      geocoder: true,
+      homeButton: true,
+      sceneModePicker: true,
+      baseLayerPicker: false,
+      navigationHelpButton: false,
+      shadows: true,
+      terrainProvider: new Cesium.EllipsoidTerrainProvider(),
+      imageryProvider: new Cesium.UrlTemplateImageryProvider({
+        url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        credit: "OpenStreetMap contributors"
+      })
+    });
+
+    viewer.scene.globe.enableLighting = true;
+    viewer.scene.globe.depthTestAgainstTerrain = false;
+    viewer.scene.camera.percentageChanged = 0.01;
+    viewer.scene.screenSpaceCameraController.minimumZoomDistance = 10.0;
+    viewer.scene.screenSpaceCameraController.maximumZoomDistance = 6000.0;
+
+    const originCartesian = Cesium.Cartesian3.fromDegrees(origin.lon, origin.lat, origin.height);
+    const enuToFixed = Cesium.Transforms.eastNorthUpToFixedFrame(originCartesian);
+    const proxyBuildingEntities = [];
+
+    function fromEnu(east, north, up) {
+      const local = new Cesium.Cartesian3(east, north, up);
+      return Cesium.Matrix4.multiplyByPoint(enuToFixed, local, new Cesium.Cartesian3());
+    }
+
+    function addPin(point, color, pixelSize) {
+      viewer.entities.add({
+        name: point.name,
+        position: Cesium.Cartesian3.fromDegrees(point.lon, point.lat, point.height),
+        point: {
+          pixelSize,
+          color,
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 2,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        },
+        label: {
+          text: point.name,
+          font: "13px sans-serif",
+          pixelOffset: new Cesium.Cartesian2(0, -28),
+          fillColor: Cesium.Color.WHITE,
+          outlineColor: Cesium.Color.BLACK,
+          outlineWidth: 3,
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        }
+      });
+    }
+
+    function addLocalBox(spec, color) {
+      const center = fromEnu(spec.east, spec.north, spec.height / 2);
+      const entity = viewer.entities.add({
+        name: `proxy MarineCity building: ${spec.id}`,
+        show: false,
+        position: center,
+        orientation: Cesium.Transforms.headingPitchRollQuaternion(
+          center,
+          new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(spec.heading), 0, 0)
+        ),
+        box: {
+          dimensions: new Cesium.Cartesian3(spec.width, spec.depth, spec.height),
+          material: color.withAlpha(0.62),
+          outline: true,
+          outlineColor: Cesium.Color.WHITE.withAlpha(0.72)
+        },
+        label: {
+          text: spec.id,
+          font: "10px sans-serif",
+          pixelOffset: new Cesium.Cartesian2(0, -16),
+          fillColor: Cesium.Color.WHITE,
+          outlineColor: Cesium.Color.BLACK,
+          outlineWidth: 3,
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          disableDepthTestDistance: 900.0
+        }
+      });
+      proxyBuildingEntities.push(entity);
+    }
+
+    function showProxyBuildings(show) {
+      for (const entity of proxyBuildingEntities) {
+        entity.show = show;
+      }
+      if (show) {
+        status.textContent = "Proxy fallback is visible. This is not the final real Cesium 3D tile layer.";
+      }
+    }
+
+    addPin(origin, Cesium.Color.RED, 13);
+    addPin(haeundaeBeach, Cesium.Color.DEEPSKYBLUE, 11);
+
+    viewer.entities.add({
+      name: "MarineCity test zone radius",
+      position: originCartesian,
+      ellipse: {
+        semiMajorAxis: 180.0,
+        semiMinorAxis: 180.0,
+        material: Cesium.Color.RED.withAlpha(0.13),
+        outline: true,
+        outlineColor: Cesium.Color.RED.withAlpha(0.85),
+        height: origin.height
+      }
+    });
+
+    for (const building of proxyBuildings) {
+      addLocalBox(building, Cesium.Color.SKYBLUE);
+    }
+
+    for (const uav of uavs) {
+      const position = fromEnu(uav.east, uav.north, uav.up + origin.height);
+      viewer.entities.add({
+        name: uav.label,
+        position,
+        billboard: {
+          image: "data:image/svg+xml;charset=utf-8," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'><circle cx='28' cy='28' r='24' fill='#16a34a' stroke='white' stroke-width='4'/><path d='M17 29h22M28 18v22M18 18l7 7M38 18l-7 7M18 38l7-7M38 38l-7-7' stroke='white' stroke-width='4' stroke-linecap='round'/></svg>"),
+          width: 32,
+          height: 32,
+          verticalOrigin: Cesium.VerticalOrigin.CENTER,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        },
+        label: {
+          text: uav.id,
+          font: "12px sans-serif",
+          pixelOffset: new Cesium.Cartesian2(0, -30),
+          fillColor: Cesium.Color.WHITE,
+          outlineColor: Cesium.Color.BLACK,
+          outlineWidth: 3,
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        },
+        polyline: {
+          positions: [position, fromEnu(uav.east, uav.north, 0.0)],
+          width: 2,
+          material: Cesium.Color.LIME.withAlpha(0.74)
+        }
+      });
+    }
+
+    for (const obj of objects) {
+      viewer.entities.add({
+        name: `VisDrone object: ${obj.id}`,
+        position: fromEnu(obj.east, obj.north, obj.up),
+        billboard: {
+          image: obj.image,
+          width: obj.width,
+          height: obj.height,
+          verticalOrigin: Cesium.VerticalOrigin.CENTER,
+          scaleByDistance: new Cesium.NearFarScalar(80.0, 1.15, 900.0, 0.42),
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        },
+        label: {
+          text: `${obj.className}`,
+          font: "11px sans-serif",
+          pixelOffset: new Cesium.Cartesian2(0, obj.height / 2 + 12),
+          fillColor: Cesium.Color.WHITE,
+          outlineColor: Cesium.Color.BLACK,
+          outlineWidth: 3,
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY
+        }
+      });
+    }
+
+    async function loadReal3D() {
+      const token = tokenInput.value.trim();
+      const assetText = assetInput.value.trim();
+      if (!token) {
+        status.textContent = "Paste a Cesium ion token first, then press Save Token or Load Real 3D.";
+        return;
+      }
+      Cesium.Ion.defaultAccessToken = token;
+      status.textContent = "Loading real Cesium 3D layer...";
+      showProxyBuildings(false);
+
+      let loaded = false;
+      if (assetText && Cesium.Cesium3DTileset && Cesium.Cesium3DTileset.fromIonAssetId) {
+        const assetId = Number(assetText);
+        if (Number.isFinite(assetId)) {
+          try {
+            const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(assetId);
+            viewer.scene.primitives.add(tileset);
+            loaded = true;
+            status.textContent = `Loaded Cesium ion asset ${assetId}.`;
+          } catch (error) {
+            status.textContent = `Could not load ion asset ${assetId}. Check token access or asset id. Trying OSM Buildings next.`;
+            console.warn(error);
+          }
+        }
+      }
+
+      try {
+        if (Cesium.createOsmBuildingsAsync) {
+          const buildings = await Cesium.createOsmBuildingsAsync();
+          viewer.scene.primitives.add(buildings);
+          loaded = true;
+          status.textContent = loaded && assetText
+            ? "Loaded real Cesium 3D layer and OSM Buildings."
+            : "Loaded Cesium ion OSM Buildings.";
+        }
+      } catch (error) {
+        if (!loaded) {
+          status.textContent = "Real Cesium 3D layer failed. Check token/asset access, then retry.";
+        }
+        console.warn(error);
+      }
+
+      if (!loaded) {
+        showProxyBuildings(false);
+      }
+    }
+
+    function saveTokenAndReload() {
+      const token = tokenInput.value.trim();
+      const assetText = assetInput.value.trim();
+      if (token) {
+        window.localStorage.setItem("CESIUM_ION_TOKEN", token);
+      }
+      if (assetText) {
+        window.localStorage.setItem("CESIUM_ION_ASSET_ID", assetText);
+      } else {
+        window.localStorage.removeItem("CESIUM_ION_ASSET_ID");
+      }
+      const url = new URL(window.location.href);
+      url.searchParams.set("v", `real3d_${Date.now()}`);
+      window.location.href = url.toString();
+    }
+
+    function flyTo(point, rangeMeters, headingDeg = 18.0, pitchDeg = -62.0) {
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(point.lon, point.lat, rangeMeters),
+        orientation: {
+          heading: Cesium.Math.toRadians(headingDeg),
+          pitch: Cesium.Math.toRadians(pitchDeg),
+          roll: 0.0
+        },
+        duration: 1.2
+      });
+    }
+
+    function flyUavLow() {
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(origin.lon - 0.00185, origin.lat - 0.00115, 155.0),
+        orientation: {
+          heading: Cesium.Math.toRadians(42.0),
+          pitch: Cesium.Math.toRadians(-28.0),
+          roll: 0.0
+        },
+        duration: 1.1
+      });
+    }
+
+    function flyUavMid() {
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(origin.lon - 0.0028, origin.lat - 0.0020, 285.0),
+        orientation: {
+          heading: Cesium.Math.toRadians(38.0),
+          pitch: Cesium.Math.toRadians(-38.0),
+          roll: 0.0
+        },
+        duration: 1.1
+      });
+    }
+
+    document.getElementById("flyUavLow").addEventListener("click", flyUavLow);
+    document.getElementById("flyUavMid").addEventListener("click", flyUavMid);
+    document.getElementById("flyOrigin").addEventListener("click", () => flyTo(origin, 700, 20.0, -58.0));
+    document.getElementById("flyHaeundae").addEventListener("click", () => flyTo(haeundaeBeach, 1200, 18.0, -62.0));
+    document.getElementById("saveToken").addEventListener("click", saveTokenAndReload);
+    document.getElementById("loadReal3d").addEventListener("click", loadReal3D);
+    document.getElementById("showProxy").addEventListener("click", () => showProxyBuildings(true));
+
+    flyUavMid();
+    if (ionToken) {
+      loadReal3D();
+    } else {
+      status.textContent = "Low-altitude view ready. Paste a Cesium ion token to load real 3D buildings/tiles.";
+    }
+  </script>
+</body>
+</html>

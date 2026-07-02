@@ -14,7 +14,7 @@ training:
   default_batch: 2
   deterministic: true
   default_gpus: [0]
-  note: GPU1 is not used by default until the server CUDA allocation issue is resolved.
+  note: GPU0 is reserved for detector work; GPU1 is reserved for 3D/system experiments.
 
 models:
   - name: YOLOv8l

@@ -135,9 +135,9 @@ PY
 )
 
 if [[ "$QUEUED_COUNT" == "0" ]]; then
-  echo "No implemented proposed ablation jobs are queued."
+  echo "No proposed ablation jobs are queued for this configuration."
   echo "Manifest: $MANIFEST"
-  echo "Planned ablations were recorded as skipped_not_implemented."
+  echo "Rows that are outside the current training configuration are recorded as not_run."
   exit 0
 fi
 

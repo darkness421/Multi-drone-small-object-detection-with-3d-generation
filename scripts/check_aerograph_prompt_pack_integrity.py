@@ -1,4 +1,4 @@
-"""Validate active AeroGraph prompt-pack files for non-mock collection.
+"""Validate active AeroGraph prompt-pack files for external-provider collection.
 
 This catches the easy-to-miss case where the active prompt pack has been
 reduced to 49 prompts but stale 79-row templates or web batches remain in the

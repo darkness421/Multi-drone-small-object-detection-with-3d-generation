@@ -1,6 +1,6 @@
 # MarineCity Depth Point-Cloud Smoke
 
-Updated: `2026-06-26 13:42:08 KST`
+Updated: `2026-06-26 22:50:56 KST`
 Status: `marinecity_depth_pointcloud_smoke_ready`
 
 - Dataset status: `marinecity_neural3d_dataset_export_ready`

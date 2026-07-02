@@ -1,0 +1,67 @@
+name: required_related_work_models
+dataset: VisDrone2019-DET
+protocol:
+  imgsz: 1280
+  seeds: [42, 123, 2026]
+  patience: 5
+  note: >
+    Required paper-facing related-work comparison set. Official/staged models
+    are kept separate from paper-faithful reimplementations when public
+    checkpoints or runnable adapters are not available.
+
+models:
+  - model: CSFPR-RTDETR
+    reference: "[11]"
+    status: official_completed
+    source: external/CSFPR-RTDETR
+    result_root: outputs/detectors/related_work_consistency/csfpr_rtdetr
+    note: Official/staged RT-DETR fork; 1280 three-seed results exist.
+
+  - model: MFFSODNet
+    reference: "[2]"
+    status: official_scratch_completed
+    source: external/MFFSODNet/tph-yolov5
+    result_root: outputs/detectors/related_work_consistency/mffsodnet
+    note: Official repo scratch retrain; no pretrained checkpoint found.
+
+  - model: UAVDet
+    reference: "[16]"
+    status: official_repo_dependency_pending
+    source: external/UAVDet
+    config: external/UAVDet/configs/uavdet/uavdet-200e_visdrone.py
+    note: Official repo is staged, but current env lacks mmcv/mmengine for a fair MMDetection run.
+
+  - model: UAVDet-inspired reproduction
+    reference: "[16]"
+    status: queued_after_required_related_work_reimplementations
+    base: configs/detector/yolo11l-p2p4-balanced-v1.yaml
+    init_weights: yolo11l.pt
+    patches: uavdet_mamba_neck,dwr_neck
+    note: >
+      Fallback paper-facing reproduction using high-resolution P2/P3/P4 heads,
+      lightweight SSM-style directional context, and DWR local refinement. This
+      is explicitly not the official UAVDet checkpoint.
+
+  - model: SFFEF-YOLO
+    reference: "[4]"
+    status: paper_faithful_reimplementation_queue
+    base: configs/detector/yolo11l-p2p4-balanced-v1.yaml
+    init_weights: yolo11l.pt
+    patches: cbam_neck,tiny_frelu_neck
+    note: Reimplements tiny-head and fine-grained fusion ideas; not an official checkpoint.
+
+  - model: BPD-YOLO
+    reference: "[7]"
+    status: paper_faithful_reimplementation_queue
+    base: configs/detector/yolo11l-p2-balanced-v2.yaml
+    init_weights: yolo11l.pt
+    patches: se_neck,rf_context_neck
+    note: Reimplements P2/L-FPN-style lightweight semantic/detail refinement; not an official checkpoint.
+
+  - model: HF-D-FINE
+    reference: "[12]"
+    status: paper_faithful_reimplementation_queue
+    base: yolo11l.pt
+    init_weights: ""
+    patches: dct_stem,dynfreq_c3_neck,tiny_frelu_neck
+    note: High-resolution/frequency-detail inspired reproduction because no D-FINE adapter/checkpoint is staged.

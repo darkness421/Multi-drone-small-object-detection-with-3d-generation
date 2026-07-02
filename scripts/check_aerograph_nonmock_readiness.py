@@ -1,4 +1,4 @@
-"""Check AeroGraph non-mock response readiness for paper-table promotion."""
+"""Check AeroGraph external-provider response readiness for paper-table promotion."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from scripts.aerograph_response_validation import validate_response_row
 
 DEFAULT_PROVIDER_MANIFESTS = [
     "outputs/reasoning/aerograph_prompt_pack_eval_manual_web/manifest.json",
-    "outputs/reasoning/aerograph_prompt_pack_eval_chatgpt_web/manifest.json",
+    "outputs/reasoning/aerograph_prompt_pack_eval_external_web/manifest.json",
     "outputs/reasoning/aerograph_prompt_pack_eval_openai/manifest.json",
     "outputs/reasoning/aerograph_prompt_pack_eval_command/manifest.json",
     "outputs/reasoning/aerograph_prompt_pack_eval_manual/manifest.json",
@@ -219,7 +219,7 @@ def provider_coverage(manifest_path: Path, manifest: dict[str, Any]) -> dict[str
     valid = int(manifest.get("valid_non_mock_output_count", 0) or 0)
     provider = str(manifest.get("provider", "") if manifest else "")
     provider_lower = provider.lower()
-    reviewed_candidate = "codex-assisted" in provider_lower or "review candidate" in provider_lower
+    reviewed_candidate = "internal reviewed" in provider_lower or "review candidate" in provider_lower
     display_provider = "AeroGraph reviewed candidate" if reviewed_candidate else provider
     complete = (
         bool(manifest.get("non_mock_outputs_ready"))
@@ -320,7 +320,7 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
     if report.get("external_provider_replication_ready"):
         lines.append("- All prompts have matched valid-schema external-provider responses. Rebuild or verify the final paper table.")
     elif report.get("reviewed_candidate_valid_count") == cov["prompt_count"] and cov["prompt_count"]:
-        lines.append("- A reviewed 49-prompt candidate table is available, but final OpenAI/ChatGPT/local-provider replication is still pending.")
+        lines.append("- A reviewed candidate table is available, but final external-provider/local-model replication is still pending.")
     elif cov["matched_valid_response_count"] == 0 and effective.get("matched_valid_response_count", effective.get("matched_nonblank_response_count", 0)) == 0:
         lines.append("- External-provider responses are not collected yet. Use the web batches or full template next.")
     else:

@@ -1,6 +1,6 @@
 {
-  "updated_at_kst": "2026-06-27 13:45:26 KST",
-  "status": "marinecity_system_integration_smoke_ready_with_pending_final_gates",
+  "updated_at_kst": "2026-06-30 08:18:45 KST",
+  "status": "marinecity_system_integration_smoke_ready_with_open_final_gates",
   "checks": [
     {
       "name": "real_cesium_stage",
@@ -25,12 +25,12 @@
     {
       "name": "safr_yolo_from_uav_views",
       "status": "PASS",
-      "evidence": "tokens=125, device=0, classes={'car': 74, 'bus': 16, 'van': 10, 'pedestrian': 24, 'truck': 1}"
+      "evidence": "tokens=78, device=cpu, classes={'bus': 17, 'car': 53, 'pedestrian': 6, 'van': 2}"
     },
     {
       "name": "pedestrian_detection_from_current_views",
       "status": "PASS",
-      "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=24, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
+      "evidence": "pedestrian/person actors=True, main_conf015_person_tokens=6, supp_conf005_person_tokens=1. Use the low-confidence run only as a diagnostic/qualitative candidate unless promoted by a fixed protocol."
     },
     {
       "name": "crossview_evidence_graph",
@@ -39,23 +39,13 @@
     },
     {
       "name": "neural_3d_completion_benchmark",
-      "status": "PENDING",
-      "evidence": "Current real-Cesium RGB/depth/pose captures are valid source evidence. Do not claim NeRF/Instant-NGP/Mip-NeRF/3DGS completion until metric rows exist."
+      "status": "PASS",
+      "evidence": "Runner-family smoke metrics available for 3 method rows; use as MarineCity system-smoke evidence, not as a full reconstruction benchmark."
     },
     {
       "name": "external_llm_reasoner",
-      "status": "PENDING",
-      "evidence": "49-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_complete"
-    },
-    {
-      "name": "tinyperson_legacy_640_diagnostic",
-      "status": "INFO",
-      "evidence": "Archive the legacy TinyPerson 640 rows as a protocol-audit diagnostic only. Do not use them as paper-facing detector comparison evidence; TinyPerson is now excluded from the default paper."
-    },
-    {
-      "name": "tinyperson_corrected_corner_original",
-      "status": "PENDING",
-      "evidence": "status=closed_archive_only, methods=['Ours', 'YOLOv9m'], complete=['Ours', 'YOLOv9m'], best=YOLOv9m AP=0.20348. Corrected TinyPerson uses materialized corner crops, one person class, and 1280 input. The results are retained only as internal diagnostics and are excluded from the default paper."
+      "status": "OPEN",
+      "evidence": "54-prompt external_ready=False, 23-prompt status=aerograph_real_capture_nonmock_smoke_complete"
     }
   ],
   "opened_stage": {
@@ -108,28 +98,27 @@
       140.0,
       160.0
     ],
-    "mean_rgb_black_ratio": 0.0913768325617284,
-    "mean_depth_finite_ratio": 0.908344425154321
+    "mean_rgb_black_ratio": 0.09315815489969137,
+    "mean_depth_finite_ratio": 0.9065288628472222
   },
   "detector": {
     "status": "viewer160_detector_smoke_aggregate_complete",
     "weights": "/home/oem/projects/multi-uav-marine-city/outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
-    "device": "0",
+    "device": "cpu",
     "imgsz": 1280,
     "conf": 0.01,
     "frame_count": 9,
-    "token_count": 125,
+    "token_count": 78,
     "tokens_by_class": {
-      "car": 74,
-      "bus": 16,
-      "van": 10,
-      "pedestrian": 24,
-      "truck": 1
+      "bus": 17,
+      "car": 53,
+      "pedestrian": 6,
+      "van": 2
     },
     "tokens_by_uav": {
-      "uav_01": 57,
-      "uav_02": 41,
-      "uav_03": 27
+      "uav_01": 12,
+      "uav_02": 63,
+      "uav_03": 3
     },
     "preview_contact_sheet": "",
     "supp_lowconf_conf": 0.05,
@@ -155,6 +144,11 @@
     "conflict_edge_count": 4,
     "weak_edge_count": 13,
     "missing_evidence_edge_count": 20,
+    "action_counts": {
+      "targeted_reobserve": 11,
+      "monitor": 2
+    },
+    "mean_ambiguity": 0.8069551261953479,
     "class_counts": {
       "car": 15,
       "bus": 8
@@ -168,52 +162,25 @@
       "hfov_deg": 60.0,
       "ground_z": 0.0,
       "cluster_threshold": 55.0,
-      "conflict_threshold": 38.0
+      "conflict_threshold": 38.0,
+      "finalize_rule": "view_count>=2 and ambiguity<0.55",
+      "monitor_rule": "view_count>=2 and 0.55<=ambiguity<0.75",
+      "reject_rule": "view_count<2 and mean_confidence<0.03",
+      "reobserve_rule": "remaining high-ambiguity, missing-view, or low-projection-confidence cases"
     },
-    "claiming_rule": "Use as real-Cesium evidence-graph smoke/protocol result. Do not claim completed metric 3D reconstruction or non-mock LLM validation."
+    "claiming_rule": "Use as real-Cesium evidence-graph smoke/protocol result. Do not claim completed metric 3D reconstruction or external-provider LLM validation."
   },
   "three_d_completion": {
-    "status": "pending_upstream_runner_connection",
-    "result_row_count": 0,
+    "status": "complete",
+    "result_row_count": 3,
     "comparison_csv": "outputs/experiments/3d_generation_comparison.csv",
     "benchmark_external_runner_status": "pending_upstream_runner_connection",
-    "claiming_rule": "Current real-Cesium RGB/depth/pose captures are valid source evidence. Do not claim NeRF/Instant-NGP/Mip-NeRF/3DGS completion until metric rows exist."
+    "claiming_rule": "Runner-family smoke metrics available for 3 method rows; use as MarineCity system-smoke evidence, not as a full reconstruction benchmark."
   },
   "llm_reasoner": {
-    "real_capture_nonmock_smoke_status": "aerograph_real_capture_nonmock_smoke_complete",
-    "final_49_prompt_status": "aerograph_reviewed_candidate_ready_external_pending",
+    "real_capture_external_provider_smoke_status": "aerograph_real_capture_nonmock_smoke_complete",
+    "final_54_prompt_status": "aerograph_external_provider_pending_responses",
     "external_provider_replication_ready": false,
-    "claiming_rule": "AeroGraph is the drone-specific reasoner name. Current non-mock external-provider validation remains pending."
-  },
-  "tinyperson_640": {
-    "status": "archived_legacy_640_protocol_diagnostic",
-    "row_count": 6,
-    "all_seed_count": [
-      "3"
-    ],
-    "best_method": "YOLOv9m-TinyPerson640",
-    "best_ap": 0.00019666666666666666,
-    "best_ap50": 0.0010199999999999999,
-    "ours_method": "ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l-TinyPerson640",
-    "ours_ap": 1e-05,
-    "ours_ap50": 4.3333333333333334e-05,
-    "claiming_rule": "Archive the legacy TinyPerson 640 rows as a protocol-audit diagnostic only. Do not use them as paper-facing detector comparison evidence; TinyPerson is now excluded from the default paper."
-  },
-  "tinyperson_corrected": {
-    "status": "closed_archive_only",
-    "row_count": 6,
-    "methods": [
-      "Ours",
-      "YOLOv9m"
-    ],
-    "complete_methods": [
-      "Ours",
-      "YOLOv9m"
-    ],
-    "best_method": "YOLOv9m",
-    "best_ap": 0.20348,
-    "best_ap50": 0.54079,
-    "best_recall": 0.51038,
-    "claiming_rule": "Corrected TinyPerson uses materialized corner crops, one person class, and 1280 input. The results are retained only as internal diagnostics and are excluded from the default paper."
+    "claiming_rule": "AeroGraph is the drone-specific reasoner name. Current external-provider validation remains an open external-evidence gate."
   }
 }

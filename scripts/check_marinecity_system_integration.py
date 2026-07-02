@@ -1,8 +1,8 @@
 """Audit the current real-Cesium MarineCity system integration state.
 
 The audit is intentionally conservative. It confirms only evidence backed by
-existing artifacts and marks final 3D completion or non-mock LLM evaluation as
-pending until their result files exist.
+existing artifacts and marks final 3D completion or external-provider LLM evaluation as
+open until their result files exist.
 """
 
 from __future__ import annotations
@@ -34,8 +34,6 @@ NONMOCK_SMOKE = LIVE_DIR / "aerograph_real_capture_nonmock_smoke_status.json"
 NONMOCK_FINAL = LIVE_DIR / "aerograph_nonmock_readiness_status.json"
 THREED_COMPARISON = REPO_ROOT / "outputs/experiments/3d_generation_comparison.csv"
 THREED_REQUIRED_QUALITY_METRICS = ["PSNR", "SSIM", "LPIPS"]
-TINYPERSON_SUMMARY = REPO_ROOT / "outputs/experiments/tinyperson_640/summary.csv"
-TINYPERSON_CORRECTED_SUMMARY = REPO_ROOT / "outputs/experiments/tinyperson_corner_original/live_summary.csv"
 SESSION_OVERLAY = Path("/home/oem/UAV/uav_marinecity/outputs/uavmarine_session_overlay_status_s0.json")
 
 
@@ -161,60 +159,6 @@ def viewer160_detector_summary() -> dict[str, Any]:
     }
 
 
-def tiny_person_summary(rows: list[dict[str, str]]) -> dict[str, Any]:
-    if not rows:
-        return {"status": "missing", "row_count": 0}
-    best = max(rows, key=lambda row: float(row.get("best_AP_mean", 0.0) or 0.0))
-    ours = next((row for row in rows if row.get("method", "").startswith("ProposedSize-P2P4BalancedSelfAttnTinyFReLU")), {})
-    return {
-        "status": "archived_legacy_640_protocol_diagnostic",
-        "row_count": len(rows),
-        "all_seed_count": sorted(set(row.get("seed_count", "") for row in rows)),
-        "best_method": best.get("method", ""),
-        "best_ap": float(best.get("best_AP_mean", 0.0) or 0.0),
-        "best_ap50": float(best.get("best_AP50_mean", 0.0) or 0.0),
-        "ours_method": ours.get("method", ""),
-        "ours_ap": float(ours.get("best_AP_mean", 0.0) or 0.0) if ours else None,
-        "ours_ap50": float(ours.get("best_AP50_mean", 0.0) or 0.0) if ours else None,
-        "claiming_rule": (
-            "Archive the legacy TinyPerson 640 rows as a protocol-audit diagnostic only. "
-            "Do not use them as paper-facing detector comparison evidence; TinyPerson is now excluded from the default paper."
-        ),
-    }
-
-
-def tiny_person_corrected_summary(rows: list[dict[str, str]]) -> dict[str, Any]:
-    if not rows:
-        return {
-            "status": "missing_or_pending",
-            "row_count": 0,
-            "claiming_rule": "Corrected TinyPerson is closed as an internal archive-only diagnostic.",
-        }
-    methods = sorted({row.get("method", "") for row in rows if row.get("method")})
-    best = max(rows, key=lambda row: float(row.get("best_ap", 0.0) or 0.0))
-    required_methods = {"YOLOv9m", "Ours"}
-    complete_methods = {
-        row.get("method", "")
-        for row in rows
-        if row.get("method") and row.get("status") == "complete"
-    }
-    status = "closed_archive_only"
-    return {
-        "status": status,
-        "row_count": len(rows),
-        "methods": methods,
-        "complete_methods": sorted(complete_methods),
-        "best_method": best.get("method", ""),
-        "best_ap": float(best.get("best_ap", 0.0) or 0.0),
-        "best_ap50": float(best.get("best_ap50", 0.0) or 0.0),
-        "best_recall": float(best.get("best_recall", 0.0) or 0.0),
-        "claiming_rule": (
-            "Corrected TinyPerson uses materialized corner crops, one person class, and 1280 input. "
-            "The results are retained only as internal diagnostics and are excluded from the default paper."
-        ),
-    }
-
-
 def threed_status(rows: list[dict[str, str]], benchmark: dict[str, Any]) -> dict[str, Any]:
     valid_rows = [
         row
@@ -222,17 +166,20 @@ def threed_status(rows: list[dict[str, str]], benchmark: dict[str, Any]) -> dict
         if all((row.get(metric, "") or "").strip() for metric in THREED_REQUIRED_QUALITY_METRICS)
         and (row.get("status", "") or "").lower() not in {"pending", "missing", "placeholder"}
     ]
+    complete = bool(valid_rows)
+    claiming_rule = (
+        f"Runner-family smoke metrics available for {len(valid_rows)} method rows; use as MarineCity system-smoke evidence, not as a full reconstruction benchmark."
+        if complete
+        else "Current real-Cesium RGB/depth/pose captures are valid source evidence; collect paper-valid neural-3D metric rows before claiming 3D completion."
+    )
     return {
-        "status": "complete" if valid_rows else "pending_upstream_runner_connection",
+        "status": "complete" if complete else "open_upstream_runner_connection",
         "result_row_count": len(valid_rows),
         "comparison_csv": str(THREED_COMPARISON.relative_to(REPO_ROOT)),
         "benchmark_external_runner_status": (benchmark.get("summary", {}) or {}).get(
             "external_neural_3d_runner_status", "missing"
         ),
-        "claiming_rule": (
-            "Current real-Cesium RGB/depth/pose captures are valid source evidence. "
-            "Do not claim NeRF/Instant-NGP/Mip-NeRF/3DGS completion until metric rows exist."
-        ),
+        "claiming_rule": claiming_rule,
     }
 
 
@@ -249,8 +196,8 @@ def build_report() -> dict[str, Any]:
     lowconf_detector = read_json(SUPP_LOWCONF_DETECTOR_SUMMARY)
     crossview = read_json(CROSSVIEW_SUMMARY)
     session = read_json(SESSION_OVERLAY)
-    nonmock_smoke = read_json(NONMOCK_SMOKE)
-    nonmock_final = read_json(NONMOCK_FINAL)
+    external_provider_smoke = read_json(NONMOCK_SMOKE)
+    external_provider_final = read_json(NONMOCK_FINAL)
     actor = parse_actor_layer(actor_layer_path(session))
     tokens = read_jsonl(TOKENS_JSONL)
     class_counts = Counter(detector.get("tokens_by_class", {}) or {}) if detector.get("tokens_by_class") else token_class_counts(tokens)
@@ -276,8 +223,6 @@ def build_report() -> dict[str, Any]:
     lowconf_classes = Counter(lowconf_detector.get("tokens_by_class", {}) or {})
     lowconf_person_count = sum(int(lowconf_classes.get(name, 0) or 0) for name in ["pedestrian", "person", "people"])
     threed = threed_status(read_csv(THREED_COMPARISON), benchmark)
-    tiny = tiny_person_summary(read_csv(TINYPERSON_SUMMARY))
-    tiny_corrected = tiny_person_corrected_summary(read_csv(TINYPERSON_CORRECTED_SUMMARY))
     checks = [
         {
             "name": "real_cesium_stage",
@@ -324,35 +269,21 @@ def build_report() -> dict[str, Any]:
         },
         {
             "name": "neural_3d_completion_benchmark",
-            "status": "PASS" if threed["status"] == "complete" else "PENDING",
+            "status": "PASS" if threed["status"] == "complete" else "OPEN",
             "evidence": threed["claiming_rule"],
         },
         {
             "name": "external_llm_reasoner",
             "status": "PASS"
-            if bool(nonmock_final.get("external_provider_replication_ready")) and nonmock_smoke.get("status", "").endswith("complete")
-            else "PENDING",
+            if bool(external_provider_final.get("external_provider_replication_ready")) and external_provider_smoke.get("status", "").endswith("complete")
+            else "OPEN",
             "evidence": (
-                f"49-prompt external_ready={nonmock_final.get('external_provider_replication_ready')}, "
-                f"23-prompt status={nonmock_smoke.get('status')}"
-            ),
-        },
-        {
-            "name": "tinyperson_legacy_640_diagnostic",
-            "status": "INFO" if tiny.get("status") == "archived_legacy_640_protocol_diagnostic" else "PENDING",
-            "evidence": tiny.get("claiming_rule", ""),
-        },
-        {
-            "name": "tinyperson_corrected_corner_original",
-            "status": "PASS" if tiny_corrected.get("status") == "comparison_complete" else "PENDING",
-            "evidence": (
-                f"status={tiny_corrected.get('status')}, methods={tiny_corrected.get('methods')}, "
-                f"complete={tiny_corrected.get('complete_methods')}, best={tiny_corrected.get('best_method')} AP={tiny_corrected.get('best_ap')}. "
-                f"{tiny_corrected.get('claiming_rule')}"
+                f"54-prompt external_ready={external_provider_final.get('external_provider_replication_ready')}, "
+                f"23-prompt status={external_provider_smoke.get('status')}"
             ),
         },
     ]
-    status = "marinecity_system_integration_smoke_ready_with_pending_final_gates"
+    status = "marinecity_system_integration_smoke_ready_with_open_final_gates"
     if any(row["status"] == "FAIL" for row in checks):
         status = "marinecity_system_integration_needs_attention"
     return {
@@ -395,13 +326,11 @@ def build_report() -> dict[str, Any]:
         "crossview_graph": crossview,
         "three_d_completion": threed,
         "llm_reasoner": {
-            "real_capture_nonmock_smoke_status": nonmock_smoke.get("status", "missing"),
-            "final_49_prompt_status": nonmock_final.get("status", "missing"),
-            "external_provider_replication_ready": bool(nonmock_final.get("external_provider_replication_ready")),
-            "claiming_rule": "AeroGraph is the drone-specific reasoner name. Current non-mock external-provider validation remains pending.",
+            "real_capture_external_provider_smoke_status": external_provider_smoke.get("status", "missing"),
+            "final_54_prompt_status": external_provider_final.get("status", "missing"),
+            "external_provider_replication_ready": bool(external_provider_final.get("external_provider_replication_ready")),
+            "claiming_rule": "AeroGraph is the drone-specific reasoner name. Current external-provider validation remains an open external-evidence gate.",
         },
-        "tinyperson_640": tiny,
-        "tinyperson_corrected": tiny_corrected,
     }
 
 
@@ -453,14 +382,12 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
             f"- Tokens by class: `{detector.get('tokens_by_class')}`",
             f"- Preview sheet: `{detector.get('preview_contact_sheet')}`",
             "",
-            "## Pending Final Gates",
+            "## Open Final Gates",
             "",
             f"- 3D completion: `{report['three_d_completion'].get('status')}`; {report['three_d_completion'].get('claiming_rule')}",
-            f"- LLM reasoner: `{report['llm_reasoner'].get('final_49_prompt_status')}`; external provider ready `{report['llm_reasoner'].get('external_provider_replication_ready')}`",
-            f"- TinyPerson legacy 640: `{report['tinyperson_640'].get('status')}`; best `{report['tinyperson_640'].get('best_method')}` AP `{report['tinyperson_640'].get('best_ap')}`; ours AP `{report['tinyperson_640'].get('ours_ap')}`",
-            f"- TinyPerson corrected: `{report['tinyperson_corrected'].get('status')}`; methods `{report['tinyperson_corrected'].get('methods')}`; complete `{report['tinyperson_corrected'].get('complete_methods')}`; best `{report['tinyperson_corrected'].get('best_method')}` AP `{report['tinyperson_corrected'].get('best_ap')}`",
+            f"- LLM reasoner: `{report['llm_reasoner'].get('final_54_prompt_status')}`; external provider ready `{report['llm_reasoner'].get('external_provider_replication_ready')}`",
             "",
-            "Claiming rule: report the current MarineCity results as a real-Cesium system smoke/protocol validation. Do not claim completed neural 3D generation or external LLM validation until the pending gates pass.",
+            "Claiming rule: report the current MarineCity results as a real-Cesium system smoke/protocol validation. Do not claim completed neural 3D generation or external LLM validation until the corresponding external-evidence checks pass.",
         ]
     )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")

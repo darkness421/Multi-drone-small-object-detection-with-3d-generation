@@ -430,6 +430,21 @@ def model_complexity(run_dir: Path) -> tuple[int | None, float | None]:
 
 
 def infer_dataset(train_summary: dict[str, Any], eval_summary: dict[str, Any], run_dir: Path, results_csv: Path) -> str:
+    data_haystack = " ".join(
+        [
+            str(train_summary.get("data", "")),
+            str(eval_summary.get("data", "")),
+        ]
+    ).lower()
+    if "tinyperson" in data_haystack or "tiny_person" in data_haystack:
+        return "TinyPerson"
+    if "uavdt" in data_haystack:
+        return "UAVDT"
+    if "visdrone" in data_haystack:
+        return "VisDrone2019-DET"
+    if "marine" in data_haystack or "com3d" in data_haystack:
+        return "CoM3D-MarineCity"
+
     for summary in (train_summary, eval_summary):
         dataset = summary.get("dataset")
         if dataset:
@@ -442,6 +457,8 @@ def infer_dataset(train_summary: dict[str, Any], eval_summary: dict[str, Any], r
             str(results_csv),
         ]
     ).lower()
+    if "tinyperson" in haystack or "tiny_person" in haystack:
+        return "TinyPerson"
     if "uavdt" in haystack:
         return "UAVDT"
     if "visdrone" in haystack:

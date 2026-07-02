@@ -41,7 +41,7 @@ from scripts.run_detector_baselines import write_plan
 from scripts.stage_visdrone_dataset import stage_visdrone
 from scripts.track_training_experiment import finish_experiment, start_experiment, write_experiment_index
 from simulation.isaac.export_rgb_depth_pose import build_dry_run_manifest
-from vlm import build_sage_prompt, parse_sage_response
+from vlm import build_aerograph_prompt, parse_aerograph_response
 
 
 def make_token(token_id: str, uav_id: str, logits: list[float], center: list[float]) -> EvidenceToken:
@@ -94,14 +94,14 @@ class TestCom3DAceCore(unittest.TestCase):
         action = select_action(diagnosis)
         self.assertIn(action["action"], {"finalize", "VLM verify", "active re-observe"})
 
-        prompt = build_sage_prompt(
+        prompt = build_aerograph_prompt(
             scene_summary="urban road",
             graph_summary=graph.to_dict(),
             ambiguity_reasons=diagnosis.reasons,
             candidate_classes=["van", "truck"],
         )
-        self.assertIn("SAGE", prompt)
-        parsed = parse_sage_response('{"decision":"verified","predicted_class":"van","confidence":0.8}')
+        self.assertIn("AeroGraph", prompt)
+        parsed = parse_aerograph_response('{"decision":"verified","predicted_class":"van","confidence":0.8}')
         self.assertEqual(parsed["decision"], "verified")
 
     def test_reobservation_table_template(self) -> None:
@@ -114,7 +114,7 @@ class TestCom3DAceCore(unittest.TestCase):
         rows = empty_vlm_table()
         self.assertEqual(len(rows), 5)
         self.assertEqual(rows[0]["Method"], "No VLM")
-        self.assertEqual(rows[-1]["Method"], "SAGE-triggered VLM")
+        self.assertEqual(rows[-1]["Method"], "AeroGraph-triggered VLM")
 
     def test_detector_and_system_table_templates(self) -> None:
         detector_rows = empty_detector_table(["VisDrone2019-DET"])
@@ -164,7 +164,7 @@ class TestCom3DAceCore(unittest.TestCase):
         config = load_config("configs/sim/isaac_export.yaml")
         self.assertEqual(config["name"], "com3d_uav_sim_export")
         manifest = build_dry_run_manifest(config)
-        self.assertEqual(manifest["dataset"], "CoM3D-UAV-Sim")
+        self.assertEqual(manifest["dataset"], "CoM3D-MarineCity")
         self.assertGreaterEqual(len(manifest["frames"]), 3)
 
         with TemporaryDirectory() as tmp:

@@ -18,10 +18,20 @@ paper.
 
 Quantitative heat map:
 
-- rows: proposed detector module variants
+- rows: final core-module ablations
 - columns: AP, AP50, recall, F1
 - cell values: delta against the matching control or baseline run
 - purpose: show which module helps recall and F1 rather than only AP
+
+Final rows after the best detector is selected:
+
+- baseline
+- Core 1 only: compact capacity redistribution
+- Core 2 only: 4x/8x/16x multi-scale high-resolution evidence with
+  TinyFReLU/DynFreq-C3
+- Core 3 only: overlap-aware NMS/decision
+- Core 1 + Core 2
+- Core 1 + Core 2 + Core 3
 
 Qualitative heat map:
 
@@ -36,11 +46,25 @@ Command:
 python -m scripts.build_supplementary_detector_analysis
 ```
 
+Final core-ablation Grad-CAM plan:
+
+```bash
+BASELINE_WEIGHT=outputs/detectors/.../baseline/best.pt \
+CORE1_WEIGHT=outputs/detectors/.../core1/best.pt \
+CORE2_WEIGHT=outputs/detectors/.../core2/best.pt \
+CORE3_WEIGHT=outputs/detectors/.../core3/best.pt \
+CORE12_WEIGHT=outputs/detectors/.../core1_core2/best.pt \
+FULL_WEIGHT=outputs/detectors/.../full/best.pt \
+IMAGES="case1.jpg case2.jpg case3.jpg" \
+bash scripts/ubuntu/run_core_ablation_gradcam_plan.sh
+```
+
 Outputs:
 
 ```text
 outputs/reports/supplementary_detector/ablation_delta_heatmap.csv
 outputs/reports/supplementary_detector/figures/ablation_delta_heatmap.png
+outputs/qualitative/gradcam/core_ablation/gradcam_run_plan.json
 ```
 
 ## Analysis B. High-Resolution Input Pixel-Size Sweep
@@ -88,7 +112,7 @@ Recommended ordering:
 | Fig. S2 | Ablation delta heat map | Shows which module contributes |
 | Fig. S3 | High-resolution AP/AP50 sensitivity curve | Separates module gains from high-resolution scaling |
 | Fig. S4 | High-resolution runtime curve | Shows deployment cost |
-| Fig. S5 | Grad-CAM/attention heat-map panel | Shows focus on tiny and adjacent targets |
+| Fig. S5 | Core-module Grad-CAM/attention heat-map panel | Shows focus changes from Core 1, Core 2, Core 3, and full model |
 
 ## Main-Paper Boundary
 

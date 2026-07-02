@@ -1,0 +1,87 @@
+name: tinyperson_640_core_model_stress_test
+status: queued_after_2d_related_work_1280_and_heatmaps_then_parallel_with_simulation
+purpose: >
+  Supplementary tiny/crowded-object stress test for only the core detector
+  models after the VisDrone 2D detector experiments, runnable related-work 1280
+  comparisons, and final detector heatmap/qualitative preparation are complete.
+  This runs on one spare detector GPU while Isaac/3D/reasoner experiments use
+  the other GPU.
+
+gpu_policy:
+  detector_gpu: 0
+  reserved_system_gpu: 1
+  note: >
+    After the existing 2D detector queue, related-work 1280 queue, and heatmap
+    preparation finish, GPU0 runs TinyPerson 640 core models only. GPU1 remains
+    reserved for Isaac/3D/reasoner simulation.
+
+dependency_order:
+  - final_2d_ablation:
+      marker_log: outputs/logs/final_p2p4_selfattnfr_ablation_queue/queue.log
+      marker: QUEUE_FINISHED final P2P4-SelfAttnFR ablation
+  - related_work_1280:
+      marker_log: outputs/logs/related_work_consistency/queue.log
+      marker: QUEUE_FINISHED related-work 1280 consistency retrain
+  - final_detector_heatmaps:
+      marker_log: outputs/logs/final_detector_heatmaps/queue.log
+      marker: QUEUE_FINISHED final detector heatmaps
+  - tinyperson_640_core_models:
+      launcher: scripts/ubuntu/start_tinyperson_640_after_2d.sh
+
+protocol:
+  dataset: TinyPerson
+  data_yaml: configs/detector/tinyperson_yolo_data.yaml
+  imgsz: 640
+  epochs: 100
+  patience: 5
+  batch: 16
+  initial_seeds: [42]
+  expansion_seeds: [42, 123, 2026]
+  expansion_rule: >
+    Keep seed 42 as the default while simulation is active. Expand to 3 seeds
+    only if TinyPerson becomes a central claim or if reviewer-facing robustness
+    evidence needs strengthening.
+
+main_jobs:
+  - key: yolo11l_tinyperson_640
+    label: YOLOv11l baseline
+    model: yolo11l.pt
+    seeds: [42]
+    gpu: 0
+    role: baseline
+  - key: yolov9c_tinyperson_640
+    label: YOLOv9c strong YOLO baseline
+    model: yolov9c.pt
+    seeds: [42]
+    gpu: 0
+    role: strong_yolo_baseline
+  - key: p2p4_selfattnfr_tinyperson_640
+    label: Ours P2P4-SelfAttnFR
+    model: configs/detector/yolo11l-p2p4-balanced-v1.yaml
+    init_weights: yolo11l.pt
+    patches: [lite_self_attention_neck, tiny_frelu_neck]
+    seeds: [42]
+    gpu: 0
+    role: proposed
+
+disabled_by_default:
+  - key: p2p4_head_only_tinyperson_640
+    label: P2P4 head only
+    model: configs/detector/yolo11l-p2p4-balanced-v1.yaml
+    init_weights: yolo11l.pt
+    patches: []
+    seeds: [42]
+    gpu: 0
+    role: compact ablation
+    enable_with: RUN_CORE_ABLATION=1
+
+related_work_optional:
+  - LEAF-YOLO-S
+  - CSFPR-RTDETR
+  - LSOD-YOLO
+  - SFFEF-YOLO
+notes:
+  - Do not run related-work TinyPerson rows by default.
+  - Do not run broad TinyPerson ablations by default.
+  - TinyPerson must not start before related-work 1280 and final detector heatmap preparation are complete.
+  - Keep TinyPerson in supplementary unless it becomes essential for the main claim.

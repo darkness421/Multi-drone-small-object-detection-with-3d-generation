@@ -58,27 +58,6 @@ ASSETS = [
         "Raw UAV view for the multi-UAV observations column.",
     ),
     Asset(
-        "UAV 1 Isaac bbox preview",
-        Path("outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_001_uav_01_bbox_preview.png"),
-        "fig1_uav01_isaac_bbox.png",
-        "Fig. 1",
-        "Ground-truth-like Isaac object layout/bbox preview.",
-    ),
-    Asset(
-        "UAV 2 Isaac bbox preview",
-        Path("outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_002_uav_02_bbox_preview.png"),
-        "fig1_uav02_isaac_bbox.png",
-        "Fig. 1",
-        "Ground-truth-like Isaac object layout/bbox preview.",
-    ),
-    Asset(
-        "UAV 3 Isaac bbox preview",
-        Path("outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/frame_003_uav_03_bbox_preview.png"),
-        "fig1_uav03_isaac_bbox.png",
-        "Fig. 1",
-        "Ground-truth-like Isaac object layout/bbox preview.",
-    ),
-    Asset(
         "YOLO detection preview UAV 1",
         Path("outputs/evidence/uavmarine_s2_viewer160_session_recapture_detector_smoke_conf001/previews/frame_001_uav_01_rgb_pred.png"),
         "fig3_uav01_yolo_detection.png",
@@ -202,7 +181,7 @@ ASSETS = [
 
 PLACEHOLDERS = [
     ("fig3_final_neural3d_completion_render.png", "Final multi-method neural 3D completion or novel-view rendering after Instant-NGP/3DGS/Mip-NeRF-style evaluation, if added beyond the current Nerfacto smoke result."),
-    ("fig3_final_nonmock_aerograph_decision_panel.png", "Final non-mock AeroGraph Reasoner output panel: belief, uncertainty, action, verifier result."),
+    ("fig3_final_external_provider_aerograph_decision_panel.png", "Final external-provider AeroGraph Reasoner output panel: belief, uncertainty, action, verifier result."),
 ]
 
 
@@ -234,7 +213,7 @@ def _write_manifest(rows: list[dict[str, str]], out_dir: Path) -> Path:
         "## Current Revision Decision",
         "",
         "- Fig. 1 should be revised with the current real-Cesium MarineCity 3-UAV captures and should no longer rely on generic/synthetic city panels.",
-        "- Fig. 3 should be revised now for detector previews, cross-view EvidenceToken graph, and the available Nerfacto smoke render. A full multi-method 3D benchmark panel and non-mock AeroGraph output panel must stay visually marked as pending until those gates finish.",
+        "- Fig. 3 should be revised now for detector previews, cross-view EvidenceToken graph, and the available Nerfacto smoke render. A full multi-method 3D benchmark panel and external-provider AeroGraph output panel must stay visually marked as pending until those gates finish.",
         "- Use the current smoke-test assets as visual/evidence-flow material. The Nerfacto contact sheet verifies neural-3D execution, but it is not a final multi-method reconstruction benchmark.",
         "",
         "## Copied Assets",
@@ -268,9 +247,9 @@ def _write_manifest(rows: list[dict[str, str]], out_dir: Path) -> Path:
             "",
             "## Figure Update Guidance",
             "",
-            "- Fig. 1 should use `fig1_map_multiuav_preview.png`, the three `fig1_uav*_rgb.png` views, and the three `fig1_uav*_isaac_bbox.png` previews while keeping the high-level CoM3D-ACE pipeline layout.",
+        "- Fig. 1 should use `fig1_map_multiuav_preview.png`, the three `fig1_uav*_rgb.png` views, and the real-Cesium scenario panels while keeping the high-level CoM3D-ACE pipeline layout.",
             "- Fig. 3 should use `fig3_real_cesium_detector_preview_contact_sheet.png`, `fig3_crossview_evidence_graph_smoke.png`, `fig3_depth_pointcloud_smoke_topdown.png`, and `fig3_nerfacto_heldout_smoke_contact_sheet.png` for the current evidence-flow story.",
-            "- Fig. 3's final multi-method 3D completion and non-mock AeroGraph panels should be replaced later by additional runner/provider outputs if those become available.",
+            "- Fig. 3's final multi-method 3D completion and external-provider AeroGraph panels should be replaced later by additional runner/provider outputs if those become available.",
             "- Keep diagrams compact. Detailed equations and module internals stay in Fig. 2 and supplementary figures.",
             "- Do not present the current smoke-test detector output as the final 3D/reasoner result until the full simulation experiment is completed.",
             "",

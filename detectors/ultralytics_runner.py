@@ -136,6 +136,10 @@ def eval_yolo(
     imgsz: int = 1280,
     workers: int = 4,
     device: str | None = None,
+    conf: float | None = None,
+    iou: float | None = None,
+    agnostic_nms: bool = False,
+    max_det: int | None = None,
     roc_auc: bool = False,
     roc_auc_split: str = "val",
     roc_auc_max_images: int | None = None,
@@ -167,6 +171,14 @@ def eval_yolo(
     }
     if device:
         val_kwargs["device"] = device
+    if conf is not None:
+        val_kwargs["conf"] = conf
+    if iou is not None:
+        val_kwargs["iou"] = iou
+    if agnostic_nms:
+        val_kwargs["agnostic_nms"] = True
+    if max_det is not None:
+        val_kwargs["max_det"] = max_det
     metrics = yolo.val(**val_kwargs)
     metric_values = extract_ultralytics_val_metrics(metrics)
     roc_auc_payload: dict[str, Any] = {}
@@ -195,6 +207,10 @@ def eval_yolo(
         "imgsz": imgsz,
         "workers": workers,
         "device": device or "auto",
+        "conf": conf,
+        "iou": iou,
+        "agnostic_nms": agnostic_nms,
+        "max_det": max_det,
         "run_dir": str(run_dir),
         "metrics": metric_values,
         "metrics_repr": str(metrics),
@@ -218,6 +234,8 @@ def infer_dataset_name(data_yaml: str | Path) -> str:
     """Infer a readable dataset label from the detector data YAML path."""
 
     value = str(data_yaml).lower()
+    if "tinyperson" in value or "tiny_person" in value:
+        return "TinyPerson"
     if "uavdt" in value:
         return "UAVDT"
     if "visdrone" in value:

@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-06-26T22:36:23+09:00",
+  "dataset": "TinyPerson",
+  "primary_metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "min_delta": 0.0,
+  "secondary_min_delta": 0.0,
+  "status": "not_yet",
+  "best_proposed": {
+    "method": "Ours-TinyPersonCornerOriginal",
+    "dataset": "TinyPerson",
+    "scale": "unknown",
+    "seed_count": "2",
+    "best_AP_mean": 0.167485,
+    "best_AP50_mean": 0.44293,
+    "best_F1_mean": 0.47550559214037946,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "best_comparison_primary": {
+    "method": "YOLOv9m-TinyPersonCornerOriginal",
+    "dataset": "TinyPerson",
+    "scale": "medium",
+    "seed_count": "2",
+    "best_AP_mean": 0.19974999999999998,
+    "best_AP50_mean": 0.5290900000000001,
+    "best_F1_mean": 0.5580758148325462,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "best_comparison_secondary": {
+    "method": "YOLOv9m-TinyPersonCornerOriginal",
+    "dataset": "TinyPerson",
+    "scale": "medium",
+    "seed_count": "2",
+    "best_AP_mean": 0.19974999999999998,
+    "best_AP50_mean": 0.5290900000000001,
+    "best_F1_mean": 0.5580758148325462,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "primary_delta": -0.03226499999999999,
+  "secondary_delta": -0.08616000000000007,
+  "proposed_rows": [
+    {
+      "method": "Ours-TinyPersonCornerOriginal",
+      "dataset": "TinyPerson",
+      "scale": "unknown",
+      "seed_count": "2",
+      "best_AP_mean": 0.167485,
+      "best_AP50_mean": 0.44293,
+      "best_F1_mean": 0.47550559214037946,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    }
+  ]
+}

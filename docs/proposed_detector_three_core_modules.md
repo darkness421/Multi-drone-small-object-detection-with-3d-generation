@@ -2,9 +2,9 @@
 
 Updated: 2026-06-10
 
-This note freezes the detector search direction into three paper-facing core
-modules. The exact final model can still change after the current GPU search,
-but every candidate should be explainable as one or more of these modules.
+This note maps the detector implementation into three core modules. The exact
+final model can still change after GPU search, but every candidate should be
+explainable as one or more of these modules.
 
 ## Goal
 
@@ -33,7 +33,7 @@ Current implementation candidates:
 - `P2BalV3-FR`: balanced model, about `25.28M` params.
 - `P2P4-FR`: 4x/8x/16x detection heads only, `20.82M` params.
 
-Paper role:
+Implementation role:
 
 - This is the efficiency core.
 - It answers the reviewer question: "Is the detector simply larger?"
@@ -73,7 +73,7 @@ high = x - low
 y = x + tanh(alpha) * (g_h * DWConv(high) + g_l * (DWConv(low) - x))
 ```
 
-Paper role:
+Implementation role:
 
 - This is the multi-scale/frequency core.
 - It connects the small-object observation from related work: high downsampling
@@ -112,13 +112,13 @@ Current implementation candidates:
 - Adjacent-object subset evaluation: cases where two or more GT boxes have high
   proximity or non-trivial overlap.
 
-Paper role:
+Implementation role:
 
 - This is the crowded-small-object decision core.
 - It should not be presented as only a post-processing trick. The main claim is
   overlap-aware decision refinement for dense UAV scenes, with NMS variants as
   the first practical implementation.
-- Reference `[30]` supports the idea that UAV/remote-sensing targets can benefit
+- Reference `[30]` supports the observation that UAV/remote-sensing targets can benefit
   from orientation-aware localization in dense or oblique scenes. For our
   current detector table, the fair version is rotation-TTA/merge at inference.
   A true OBB detector requires oriented labels or synthetic oriented labels from
@@ -191,30 +191,30 @@ Newly queued candidates:
 - `p2_dynfreq_frelu`
 - `p2_dynfreq_cbam_frelu`
 
-New compact-performance ideas queued after the current under-parameter stage:
+New compact-performance candidates queued after the current under-parameter stage:
 
 - `p2_efficient_v3_dynfreq_p2_tiny_frelu`
-  - idea: keep the `23.15M` efficient backbone, then recover small-object AP by
+  - implementation intent: keep the `23.15M` efficient backbone, then recover small-object AP by
     adding DynFreq only to the P2 path.
   - expected effect: small AP/recall gain with minimal parameter increase.
 - `p2_efficient_v3_se_tiny_frelu`
-  - idea: add cheap channel gates to the efficient backbone instead of CBAM.
+  - implementation intent: add cheap channel gates to the efficient backbone instead of CBAM.
   - expected effect: better precision/background suppression with lower cost
     than CBAM/self-attention.
 - `p2_compress_v3_dynfreq_p2_tiny_frelu`
-  - idea: keep the `24.08M` compressed model and add only P2 dynamic frequency
+  - implementation intent: keep the `24.08M` compressed model and add only P2 dynamic frequency
     refinement.
   - expected effect: recover detail lost by compression without crossing
     YOLOv11l params.
 - `p2_compress_v3_se_tiny_frelu`
-  - idea: cheap channel recalibration for the compressed model.
+  - implementation intent: cheap channel recalibration for the compressed model.
   - expected effect: parameter-light precision/F1 recovery.
 - `p2p4_balanced_se_tiny_frelu`
-  - idea: keep the `20.82M` P2/P3/P4-only head and add SE gates.
+  - implementation intent: keep the `20.82M` P2/P3/P4-only head and add SE gates.
   - expected effect: test whether the very compact no-P5 detector can recover
     enough AP with low-cost gating.
 - `p2p4_balanced_selfattn_tiny_frelu`
-  - idea: add pooled-token context to the compact P2/P3/P4 detector.
+  - implementation intent: add pooled-token context to the compact P2/P3/P4 detector.
   - expected effect: recover global context lost by removing the 32x/P5 head,
     while still staying far below YOLOv11l params.
 

@@ -139,14 +139,14 @@ def import_responses(args: argparse.Namespace) -> dict[str, Any]:
                 "confidence": 0.0,
                 "evidence_clues": ["manual_response_missing"],
                 "missing_evidence": "manual_response_missing",
-                "recommended_action": "collect non-mock response",
+                "recommended_action": "collect external-provider response",
                 "provider_runtime": "manual_missing",
             }
             raw_text = ""
         else:
             raw_text = response_text(source)
             payload = parse_aerograph_response(raw_text)
-            payload["provider_runtime"] = "manual_nonmock"
+            payload["provider_runtime"] = "manual_external_provider"
             payload["raw_text"] = raw_text
 
         outputs.append(
@@ -157,7 +157,7 @@ def import_responses(args: argparse.Namespace) -> dict[str, Any]:
                 "candidate_class": prompt_row.get("candidate_class"),
                 "graph_reobserve_expected": prompt_row.get("should_reobserve"),
                 "provider": args.provider_label,
-                "provider_runtime": payload.get("provider_runtime", "manual_nonmock"),
+                "provider_runtime": payload.get("provider_runtime", "manual_external_provider"),
                 "decision": payload.get("decision", "uncertain"),
                 "predicted_class": payload.get("predicted_class"),
                 "confidence": payload.get("confidence", 0.0),
@@ -178,13 +178,13 @@ def import_responses(args: argparse.Namespace) -> dict[str, Any]:
 
     out_dir = repo_root / args.out_dir
     summary = summarize(outputs)
-    nonmock_count = int((summary.get("by_provider_runtime", {}) or {}).get("manual_nonmock", 0) or 0)
-    valid_nonmock_count = sum(
+    external_provider_count = int((summary.get("by_provider_runtime", {}) or {}).get("manual_external_provider", 0) or 0)
+    valid_external_provider_count = sum(
         1
         for row in outputs
-        if row.get("provider_runtime") == "manual_nonmock" and validate_response_row(row)["valid"]
+        if row.get("provider_runtime") == "manual_external_provider" and validate_response_row(row)["valid"]
     )
-    invalid_nonmock_examples = [
+    invalid_external_provider_examples = [
         {
             "index": row.get("index"),
             "scenario_id": row.get("scenario_id"),
@@ -192,9 +192,9 @@ def import_responses(args: argparse.Namespace) -> dict[str, Any]:
             "issues": validate_response_row(row)["issues"],
         }
         for row in outputs
-        if row.get("provider_runtime") == "manual_nonmock" and not validate_response_row(row)["valid"]
+        if row.get("provider_runtime") == "manual_external_provider" and not validate_response_row(row)["valid"]
     ][:20]
-    complete = nonmock_count == len(prompt_rows) and valid_nonmock_count == len(prompt_rows)
+    complete = external_provider_count == len(prompt_rows) and valid_external_provider_count == len(prompt_rows)
     status = "aerograph_manual_import_complete" if complete else "aerograph_manual_import_partial"
     manifest = {
         "status": status,
@@ -203,10 +203,10 @@ def import_responses(args: argparse.Namespace) -> dict[str, Any]:
         "responses": display_path(response_path, repo_root),
         "out_dir": display_path(out_dir, repo_root),
         "summary": summary,
-        "non_mock_output_count": nonmock_count,
-        "valid_non_mock_output_count": valid_nonmock_count,
-        "invalid_non_mock_output_count": max(0, nonmock_count - valid_nonmock_count),
-        "invalid_non_mock_examples": invalid_nonmock_examples,
+        "non_mock_output_count": external_provider_count,
+        "valid_non_mock_output_count": valid_external_provider_count,
+        "invalid_non_mock_output_count": max(0, external_provider_count - valid_external_provider_count),
+        "invalid_non_mock_examples": invalid_external_provider_examples,
         "non_mock_outputs_ready": complete,
         "missing_response_count": len(missing),
         "missing_response_keys": missing[:20],
@@ -226,7 +226,7 @@ def main() -> None:
     parser.add_argument("--prompt-pack", default="outputs/reports/live/aerograph_prompt_pack/aerograph_prompts_all.jsonl")
     parser.add_argument("--responses", default="", help="JSONL with index/object_id and response_text/model_output fields.")
     parser.add_argument("--out-dir", default="outputs/reasoning/aerograph_prompt_pack_eval_manual")
-    parser.add_argument("--provider-label", default="Manual non-mock LLM")
+    parser.add_argument("--provider-label", default="Manual external-provider LLM")
     parser.add_argument("--allow-partial", action="store_true")
     parser.add_argument("--template-out", default="", help="Optional JSONL template to write for manual completion.")
     parser.add_argument("--template-limit", type=int, default=0)

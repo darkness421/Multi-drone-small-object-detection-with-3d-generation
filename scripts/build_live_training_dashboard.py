@@ -410,7 +410,7 @@ def paper_gate_queue_status_row() -> dict[str, str]:
         status = "monitoring"
     else:
         status = "running" if age_sec <= 20 * 60 else "ready"
-    detail = "refreshes Overleaf sync status, paper gates, 3D/AeroGraph readiness, and dashboards"
+    detail = "refreshes manuscript gates, 3D/AeroGraph readiness, and dashboards"
     return {
         "queue": "ACCV paper gate queue",
         "status": status,

@@ -1,0 +1,182 @@
+{
+  "status": "rendered",
+  "kind": "feature_activation_heatmap",
+  "weights": [
+    "yolo11l.pt",
+    "outputs/detectors/server_baselines/20260618_204816_yolov9c_visdrone_seed123/ultralytics/weights/best.pt",
+    "outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt"
+  ],
+  "labels": [
+    "YOLOv11l",
+    "YOLOv9c",
+    "Ours-P2P4-SelfAttnFR"
+  ],
+  "images": [
+    "data/processed/visdrone_yolo/images/val/0000001_02999_d_0000005.jpg",
+    "data/processed/visdrone_yolo/images/val/0000001_03499_d_0000006.jpg",
+    "data/processed/visdrone_yolo/images/val/0000001_03999_d_0000007.jpg",
+    "data/processed/visdrone_yolo/images/val/0000001_04527_d_0000008.jpg",
+    "data/processed/visdrone_yolo/images/val/0000001_05249_d_0000009.jpg",
+    "data/processed/visdrone_yolo/images/val/0000001_05499_d_0000010.jpg"
+  ],
+  "target_layer": "auto-neck-last",
+  "imgsz": 1280,
+  "device": "cpu",
+  "conf": 0.25,
+  "dependency_status": {
+    "torch": true,
+    "cv2": true,
+    "ultralytics": true,
+    "pytorch_grad_cam": true
+  },
+  "artifacts": [
+    {
+      "label": "YOLOv11l",
+      "weight": "yolo11l.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_02999_d_0000005.jpg",
+      "target_module_index": 22,
+      "target_module_type": "C3k2",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_02999_d_0000005/YOLOv11l_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv11l",
+      "weight": "yolo11l.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_03499_d_0000006.jpg",
+      "target_module_index": 22,
+      "target_module_type": "C3k2",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_03499_d_0000006/YOLOv11l_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv11l",
+      "weight": "yolo11l.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_03999_d_0000007.jpg",
+      "target_module_index": 22,
+      "target_module_type": "C3k2",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_03999_d_0000007/YOLOv11l_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv11l",
+      "weight": "yolo11l.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_04527_d_0000008.jpg",
+      "target_module_index": 22,
+      "target_module_type": "C3k2",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_04527_d_0000008/YOLOv11l_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv11l",
+      "weight": "yolo11l.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_05249_d_0000009.jpg",
+      "target_module_index": 22,
+      "target_module_type": "C3k2",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_05249_d_0000009/YOLOv11l_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv11l",
+      "weight": "yolo11l.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_05499_d_0000010.jpg",
+      "target_module_index": 22,
+      "target_module_type": "C3k2",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_05499_d_0000010/YOLOv11l_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv9c",
+      "weight": "outputs/detectors/server_baselines/20260618_204816_yolov9c_visdrone_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_02999_d_0000005.jpg",
+      "target_module_index": 21,
+      "target_module_type": "RepNCSPELAN4",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_02999_d_0000005/YOLOv9c_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv9c",
+      "weight": "outputs/detectors/server_baselines/20260618_204816_yolov9c_visdrone_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_03499_d_0000006.jpg",
+      "target_module_index": 21,
+      "target_module_type": "RepNCSPELAN4",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_03499_d_0000006/YOLOv9c_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv9c",
+      "weight": "outputs/detectors/server_baselines/20260618_204816_yolov9c_visdrone_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_03999_d_0000007.jpg",
+      "target_module_index": 21,
+      "target_module_type": "RepNCSPELAN4",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_03999_d_0000007/YOLOv9c_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv9c",
+      "weight": "outputs/detectors/server_baselines/20260618_204816_yolov9c_visdrone_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_04527_d_0000008.jpg",
+      "target_module_index": 21,
+      "target_module_type": "RepNCSPELAN4",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_04527_d_0000008/YOLOv9c_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv9c",
+      "weight": "outputs/detectors/server_baselines/20260618_204816_yolov9c_visdrone_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_05249_d_0000009.jpg",
+      "target_module_index": 21,
+      "target_module_type": "RepNCSPELAN4",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_05249_d_0000009/YOLOv9c_activation_heatmap.png"
+    },
+    {
+      "label": "YOLOv9c",
+      "weight": "outputs/detectors/server_baselines/20260618_204816_yolov9c_visdrone_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_05499_d_0000010.jpg",
+      "target_module_index": 21,
+      "target_module_type": "RepNCSPELAN4",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_05499_d_0000010/YOLOv9c_activation_heatmap.png"
+    },
+    {
+      "label": "Ours-P2P4-SelfAttnFR",
+      "weight": "outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_02999_d_0000005.jpg",
+      "target_module_index": 25,
+      "target_module_type": "PatchedLayer",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_02999_d_0000005/Ours-P2P4-SelfAttnFR_activation_heatmap.png"
+    },
+    {
+      "label": "Ours-P2P4-SelfAttnFR",
+      "weight": "outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_03499_d_0000006.jpg",
+      "target_module_index": 25,
+      "target_module_type": "PatchedLayer",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_03499_d_0000006/Ours-P2P4-SelfAttnFR_activation_heatmap.png"
+    },
+    {
+      "label": "Ours-P2P4-SelfAttnFR",
+      "weight": "outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_03999_d_0000007.jpg",
+      "target_module_index": 25,
+      "target_module_type": "PatchedLayer",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_03999_d_0000007/Ours-P2P4-SelfAttnFR_activation_heatmap.png"
+    },
+    {
+      "label": "Ours-P2P4-SelfAttnFR",
+      "weight": "outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_04527_d_0000008.jpg",
+      "target_module_index": 25,
+      "target_module_type": "PatchedLayer",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_04527_d_0000008/Ours-P2P4-SelfAttnFR_activation_heatmap.png"
+    },
+    {
+      "label": "Ours-P2P4-SelfAttnFR",
+      "weight": "outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_05249_d_0000009.jpg",
+      "target_module_index": 25,
+      "target_module_type": "PatchedLayer",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_05249_d_0000009/Ours-P2P4-SelfAttnFR_activation_heatmap.png"
+    },
+    {
+      "label": "Ours-P2P4-SelfAttnFR",
+      "weight": "outputs/detectors/server_yolov11_p2p4_balanced/20260610_073629_proposed_p2p4_balanced_selfattn_tiny_frelu_yolo11l_visdrone_yolov11_p2_balanced_seed123/ultralytics/weights/best.pt",
+      "image": "data/processed/visdrone_yolo/images/val/0000001_05499_d_0000010.jpg",
+      "target_module_index": 25,
+      "target_module_type": "PatchedLayer",
+      "heatmap": "/home/oem/projects/multi-uav-marine-city/outputs/qualitative/gradcam/final_detector/heatmaps/0000001_05499_d_0000010/Ours-P2P4-SelfAttnFR_activation_heatmap.png"
+    }
+  ],
+  "notes": [
+    "Activation is mean(abs(feature)) from the selected target module.",
+    "This is a qualitative feature-response visualization for supplementary analysis."
+  ]
+}

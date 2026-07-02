@@ -1,12 +1,12 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-07-02 01:17:45 KST`
-Status: `paper_artifact_audit_submission_ready_with_optional_gates`
+Updated: `2026-07-02 16:36:58 KST`
+Status: `paper_artifact_audit_needs_attention`
 
 ## Summary
 
 - Artifacts checked: `53`
-- Missing required artifacts: `0`
+- Missing required artifacts: `1`
 - Stale/unsafe claim matches: `0`
 - AeroGraph effective valid response coverage: `49/49`
 - AeroGraph reviewed-candidate coverage: `49/49`
@@ -20,7 +20,7 @@ Status: `paper_artifact_audit_submission_ready_with_optional_gates`
 - MarineCity main full-frame ready: `True`
 - Local main.tex present: `False`
 - LaTeX patch integrity: `latex_patch_integrity_ok`
-- Main.tex note: No local main.tex means current files are Overleaf-ready patches rather than a full local paper build.
+- Main.tex note: No local main.tex means current files are manuscript patches rather than a full local paper build.
 
 ## Claiming Summary
 
@@ -30,7 +30,7 @@ Status: `paper_artifact_audit_submission_ready_with_optional_gates`
 - `aerograph`: `ready_as_schema_verifier_and_action_policy_validation`
 - `aerograph_optional_external_provider`: `candidate_ready_needs_external_provider`
 - `final_3d_completion`: `ready`
-- `local_compile`: `open_main_tex_or_overleaf_sync`
+- `local_compile`: `open_main_tex_or_manuscript_package`
 
 ## MarineCity Integration Gate
 
@@ -75,6 +75,12 @@ Status: `paper_artifact_audit_submission_ready_with_optional_gates`
 - Best crop void ratio: `0.003579`
 - Claiming rule: Main paper full-frame qualitative figure may be promoted.
 
+## Missing Required Artifacts
+
+| group | path | placement | note |
+| --- | --- | --- | --- |
+| audit | docs/accv_research_package_readiness_audit_2026-06-25.md | audit | Claim readiness audit |
+
 ## Artifact Inventory
 
 | group | path | placement | exists | status | note |
@@ -93,8 +99,8 @@ Status: `paper_artifact_audit_submission_ready_with_optional_gates`
 | supp_system | paper/tables/marinecity_real_capture_benchmark_table.tex | supp | True | ok | Verified real-Cesium capture-source table |
 | supp_system | paper/tables/marinecity_crossview_evidence_graph_table.tex | supp | True | ok | Real-Cesium cross-view evidence graph validation table |
 | main_system | paper/sections/07_marinecity_qualitative_figure_slots.tex | main_optional | True | ok | Safe qualitative figure slots |
-| bundle | paper/sections/main_results_patch_bundle.tex | main_bundle | True | ok | Overleaf-ready main results patch bundle |
-| bundle | paper/sections/supplementary_patch_bundle.tex | supp_bundle | True | ok | Overleaf-ready supplementary patch bundle |
+| bundle | paper/sections/main_results_patch_bundle.tex | main_bundle | True | ok | LaTeX-ready main results patch bundle |
+| bundle | paper/sections/supplementary_patch_bundle.tex | supp_bundle | True | ok | LaTeX-ready supplementary patch bundle |
 | supp_detector | paper/sections/supp_detector_experiment_inventory.tex | supp | True | ok | Supplementary detector inventory |
 | supp_detector | paper/tables/final_ablation_supplementary_table.tex | supp | True | ok | Full ablation table |
 | supp_detector | paper/figures/results/paper_fig10_final_ablation_metric_heatmap.png | supp | True | ok | Ablation heatmap |
@@ -131,4 +137,4 @@ Status: `paper_artifact_audit_submission_ready_with_optional_gates`
 | audit | outputs/reports/live/paper_artifact_readiness_manifest.md | audit | True | ok | Human-readable artifact manifest |
 | audit | outputs/reports/live/latex_patch_integrity_check.md | audit | True | ok | LaTeX input/figure/label integrity check |
 | audit | outputs/reports/live/external_gate_capabilities.md | audit | True | ok | External provider and neural-3D runner capability check |
-| audit | docs/accv_research_package_readiness_audit_2026-06-25.md | audit | True | ok | Claim readiness audit |
+| audit | docs/accv_research_package_readiness_audit_2026-06-25.md | audit | False | missing | Claim readiness audit |

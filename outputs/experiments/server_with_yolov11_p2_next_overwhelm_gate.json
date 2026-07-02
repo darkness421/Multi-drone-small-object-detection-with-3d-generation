@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-06-05T09:58:38+09:00",
+  "dataset": "VisDrone2019-DET",
+  "primary_metric": "best_AP_mean",
+  "secondary_metric": "best_AP50_mean",
+  "min_delta": 0.0,
+  "secondary_min_delta": 0.0,
+  "status": "overwhelmed",
+  "best_proposed": {
+    "method": "ProposedNext-P2TinyFReLU-yolo11l",
+    "dataset": "VisDrone2019-DET",
+    "scale": "unknown",
+    "seed_count": "1",
+    "best_AP_mean": 0.38168,
+    "best_AP50_mean": 0.60305,
+    "best_F1_mean": 0.624214841406599,
+    "Params_mean": null,
+    "GFLOPs_mean": null
+  },
+  "best_comparison_primary": {
+    "method": "YOLOv11l",
+    "dataset": "VisDrone2019-DET",
+    "scale": "large",
+    "seed_count": "3",
+    "best_AP_mean": 0.3776566666666667,
+    "best_AP50_mean": 0.59809,
+    "best_F1_mean": 0.624751330466615,
+    "Params_mean": 25318190.0,
+    "GFLOPs_mean": 87.3
+  },
+  "best_comparison_secondary": {
+    "method": "YOLOv11l",
+    "dataset": "VisDrone2019-DET",
+    "scale": "large",
+    "seed_count": "3",
+    "best_AP_mean": 0.3776566666666667,
+    "best_AP50_mean": 0.59809,
+    "best_F1_mean": 0.624751330466615,
+    "Params_mean": 25318190.0,
+    "GFLOPs_mean": 87.3
+  },
+  "primary_delta": 0.004023333333333323,
+  "secondary_delta": 0.0049599999999999644,
+  "proposed_rows": [
+    {
+      "method": "ProposedNext-P2TinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38168,
+      "best_AP50_mean": 0.60305,
+      "best_F1_mean": 0.624214841406599,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedNext-P2FullLight-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "unknown",
+      "seed_count": "1",
+      "best_AP_mean": 0.38077,
+      "best_AP50_mean": 0.60442,
+      "best_F1_mean": 0.6229111041781661,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedNext-TinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "large",
+      "seed_count": "1",
+      "best_AP_mean": 0.37702,
+      "best_AP50_mean": 0.5963,
+      "best_F1_mean": 0.62249395166516,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    },
+    {
+      "method": "ProposedNext-CBAMTinyFReLU-yolo11l",
+      "dataset": "VisDrone2019-DET",
+      "scale": "large",
+      "seed_count": "1",
+      "best_AP_mean": 0.37497,
+      "best_AP50_mean": 0.59561,
+      "best_F1_mean": 0.621117076395455,
+      "Params_mean": null,
+      "GFLOPs_mean": null
+    }
+  ]
+}

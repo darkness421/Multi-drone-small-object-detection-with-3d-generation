@@ -144,7 +144,7 @@ def next_commands(aerograph: dict[str, Any], threed: dict[str, Any]) -> list[dic
         )
         commands.append(
             {
-                "gate": "AeroGraph final 49-prompt run",
+                "gate": "AeroGraph final prompt-pack run",
                 "command": "AEROGRAPH_PROVIDER=openai bash scripts/ubuntu/start_aerograph_nonmock_queue.sh",
             }
         )
@@ -162,7 +162,7 @@ def next_commands(aerograph: dict[str, Any], threed: dict[str, Any]) -> list[dic
         )
         commands.append(
             {
-                "gate": "AeroGraph final 49-prompt run",
+                "gate": "AeroGraph final prompt-pack run",
                 "command": f"{command_prefix} bash scripts/ubuntu/start_aerograph_nonmock_queue.sh",
             }
         )
@@ -172,7 +172,7 @@ def next_commands(aerograph: dict[str, Any], threed: dict[str, Any]) -> list[dic
                 "gate": "AeroGraph manual web fallback",
                 "command": (
                     "python scripts/import_aerograph_external_responses.py "
-                    "--mode final49 "
+                    "--mode final54 "
                     "--input reasoning/aerograph_web_raw_batches/*.md "
                     "--provider-label \"External web LLM\""
                 ),
@@ -254,7 +254,7 @@ def build_report() -> dict[str, Any]:
         "claiming_rule": (
             "This report only indicates whether external execution is configured. "
             "It does not promote AeroGraph or neural-3D results unless the corresponding "
-            "readiness reports contain complete, non-placeholder outputs."
+            "readiness reports contain complete, paper-valid outputs."
         ),
     }
 

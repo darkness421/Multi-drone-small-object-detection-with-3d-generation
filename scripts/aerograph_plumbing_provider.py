@@ -19,7 +19,7 @@ def main() -> None:
         "confidence": 0.01,
         "evidence_clues": ["plumbing_test_only"],
         "missing_evidence": "non_mock_llm_not_executed",
-        "recommended_action": "run_real_openai_factory_or_local_llm_provider",
+        "recommended_action": "run_external_or_local_llm_provider",
         "prompt_chars": len(prompt),
     }
     print(json.dumps(response, ensure_ascii=False))

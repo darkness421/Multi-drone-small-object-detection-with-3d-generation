@@ -14,7 +14,7 @@ CONDA_ENV=${CONDA_ENV:-com3d-ace}
 RUN_EVAL=${RUN_EVAL:-1}
 ROC_AUC=${ROC_AUC:-1}
 LIVE_INTERVAL=${LIVE_INTERVAL:-60}
-GPUS=${GPUS:-0,1}
+GPUS=${GPUS:-0}
 DEDUP_KEY=${DEDUP_KEY:-dataset,model,seed,ablation,proposed_module}
 WORKERS=${WORKERS:-4}
 RESOURCE_GUARD=${RESOURCE_GUARD:-1}
@@ -109,7 +109,7 @@ job_tsv = Path(os.environ["JOB_TSV"])
 resume_command_csv = Path(os.environ["RESUME_COMMAND_CSV"])
 resume_id = os.environ["RESUME_ID"]
 log_dir = Path(os.environ["LOG_DIR"])
-gpus = [gpu.strip() for gpu in os.environ.get("GPUS", "0,1").split(",") if gpu.strip()]
+gpus = [gpu.strip() for gpu in os.environ.get("GPUS", "0").split(",") if gpu.strip()]
 default_workers = os.environ.get("WORKERS", "4")
 if not gpus:
     raise SystemExit("GPUS must contain at least one GPU id")

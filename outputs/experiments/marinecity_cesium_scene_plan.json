@@ -1,0 +1,712 @@
+{
+  "name": "marinecity_cesium_isaac_scene_plan",
+  "status": "ready_for_gpu_smoke_test",
+  "scene": {
+    "name": "CoM3D-MarineCity",
+    "area": "Busan Haeundae Marine City",
+    "usd_stage": "assets/marinecity/marinecity_base.usd",
+    "cesium_origin": {
+      "latitude_deg": 35.1569,
+      "longitude_deg": 129.1456,
+      "height_m": 160.0
+    }
+  },
+  "object_placement": {
+    "coordinate_frame": "local ENU meters around Cesium origin",
+    "count": 10,
+    "objects": [
+      {
+        "object_id": "mc_obj_001",
+        "class_name": "sedan",
+        "asset_placeholder": "assets/objects/sedan.usd",
+        "position_enu_m": {
+          "east": 0.0,
+          "north": 0.0,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 0.0,
+        "scale": 1.0,
+        "status": "placeholder_asset"
+      },
+      {
+        "object_id": "mc_obj_002",
+        "class_name": "pickup",
+        "asset_placeholder": "assets/objects/pickup.usd",
+        "position_enu_m": {
+          "east": 8.0,
+          "north": 2.5,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 17.0,
+        "scale": 1.0,
+        "status": "placeholder_asset"
+      },
+      {
+        "object_id": "mc_obj_003",
+        "class_name": "van",
+        "asset_placeholder": "assets/objects/van.usd",
+        "position_enu_m": {
+          "east": -7.5,
+          "north": -3.0,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 34.0,
+        "scale": 1.0,
+        "status": "placeholder_asset"
+      },
+      {
+        "object_id": "mc_obj_004",
+        "class_name": "ambulance",
+        "asset_placeholder": "assets/objects/ambulance.usd",
+        "position_enu_m": {
+          "east": 14.0,
+          "north": -2.0,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 51.0,
+        "scale": 1.0,
+        "status": "placeholder_asset"
+      },
+      {
+        "object_id": "mc_obj_005",
+        "class_name": "police_car",
+        "asset_placeholder": "assets/objects/police_car.usd",
+        "position_enu_m": {
+          "east": -13.0,
+          "north": 4.0,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 68.0,
+        "scale": 1.0,
+        "status": "placeholder_asset"
+      },
+      {
+        "object_id": "mc_obj_006",
+        "class_name": "truck",
+        "asset_placeholder": "assets/objects/truck.usd",
+        "position_enu_m": {
+          "east": 22.0,
+          "north": 1.5,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 85.0,
+        "scale": 1.0,
+        "status": "placeholder_asset"
+      },
+      {
+        "object_id": "mc_obj_007",
+        "class_name": "pedestrian",
+        "asset_placeholder": "assets/objects/pedestrian.usd",
+        "position_enu_m": {
+          "east": -21.0,
+          "north": -2.5,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 102.0,
+        "scale": 0.75,
+        "status": "placeholder_asset"
+      },
+      {
+        "object_id": "mc_obj_008",
+        "class_name": "worker",
+        "asset_placeholder": "assets/objects/worker.usd",
+        "position_enu_m": {
+          "east": 3.5,
+          "north": 9.0,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 119.0,
+        "scale": 0.75,
+        "status": "placeholder_asset"
+      },
+      {
+        "object_id": "mc_obj_009",
+        "class_name": "small_boat",
+        "asset_placeholder": "assets/objects/small_boat.usd",
+        "position_enu_m": {
+          "east": -4.0,
+          "north": -10.5,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 136.0,
+        "scale": 1.0,
+        "status": "placeholder_asset"
+      },
+      {
+        "object_id": "mc_obj_010",
+        "class_name": "debris",
+        "asset_placeholder": "assets/objects/debris.usd",
+        "position_enu_m": {
+          "east": 18.0,
+          "north": 11.0,
+          "up": 0.0
+        },
+        "cesium_height_m": 160.0,
+        "heading_deg": 153.0,
+        "scale": 1.0,
+        "status": "placeholder_asset"
+      }
+    ]
+  },
+  "uav_altitude_and_views": {
+    "count": 36,
+    "views": [
+      {
+        "frame_id": "scene_001_sparse_vehicles_uav_01_t000_nadir",
+        "scene_id": "scene_001_sparse_vehicles",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "nadir",
+        "pose": {
+          "x": 10.149,
+          "y": 3.694,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -90.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_001_sparse_vehicles_uav_02_t000_front_oblique",
+        "scene_id": "scene_001_sparse_vehicles",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "front_oblique",
+        "pose": {
+          "x": -84.572,
+          "y": -30.782,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": 20.0
+        }
+      },
+      {
+        "frame_id": "scene_001_sparse_vehicles_uav_01_t001_side_view",
+        "scene_id": "scene_001_sparse_vehicles",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "side_view",
+        "pose": {
+          "x": 60.892,
+          "y": 22.163,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -18.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_001_sparse_vehicles_uav_02_t001_rear_oblique",
+        "scene_id": "scene_001_sparse_vehicles",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "rear_oblique",
+        "pose": {
+          "x": -84.572,
+          "y": -30.782,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": 20.0
+        }
+      },
+      {
+        "frame_id": "scene_001_sparse_vehicles_uav_01_t002_right_oblique",
+        "scene_id": "scene_001_sparse_vehicles",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "right_oblique",
+        "pose": {
+          "x": 50.743,
+          "y": 18.469,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_001_sparse_vehicles_uav_02_t002_left_oblique",
+        "scene_id": "scene_001_sparse_vehicles",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "left_oblique",
+        "pose": {
+          "x": -84.572,
+          "y": -30.782,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": 20.0
+        }
+      },
+      {
+        "frame_id": "scene_002_dense_vehicles_pedestrians_uav_01_t000_nadir",
+        "scene_id": "scene_002_dense_vehicles_pedestrians",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "nadir",
+        "pose": {
+          "x": 10.149,
+          "y": 3.694,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -90.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_002_dense_vehicles_pedestrians_uav_02_t000_front_oblique",
+        "scene_id": "scene_002_dense_vehicles_pedestrians",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "front_oblique",
+        "pose": {
+          "x": -68.944,
+          "y": 57.851,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -40.0
+        }
+      },
+      {
+        "frame_id": "scene_002_dense_vehicles_pedestrians_uav_03_t000_side_view",
+        "scene_id": "scene_002_dense_vehicles_pedestrians",
+        "uav_id": "uav_03",
+        "altitude_m": 150.0,
+        "view_angle": "side_view",
+        "pose": {
+          "x": -28.131,
+          "y": -159.539,
+          "z": 150.0,
+          "roll": 0.0,
+          "pitch": -18.0,
+          "yaw": 80.0
+        }
+      },
+      {
+        "frame_id": "scene_002_dense_vehicles_pedestrians_uav_01_t001_rear_oblique",
+        "scene_id": "scene_002_dense_vehicles_pedestrians",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "rear_oblique",
+        "pose": {
+          "x": 50.743,
+          "y": 18.469,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_002_dense_vehicles_pedestrians_uav_02_t001_right_oblique",
+        "scene_id": "scene_002_dense_vehicles_pedestrians",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "right_oblique",
+        "pose": {
+          "x": -68.944,
+          "y": 57.851,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -40.0
+        }
+      },
+      {
+        "frame_id": "scene_002_dense_vehicles_pedestrians_uav_03_t001_left_oblique",
+        "scene_id": "scene_002_dense_vehicles_pedestrians",
+        "uav_id": "uav_03",
+        "altitude_m": 150.0,
+        "view_angle": "left_oblique",
+        "pose": {
+          "x": -23.443,
+          "y": -132.949,
+          "z": 150.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": 80.0
+        }
+      },
+      {
+        "frame_id": "scene_002_dense_vehicles_pedestrians_uav_01_t002_nadir",
+        "scene_id": "scene_002_dense_vehicles_pedestrians",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "nadir",
+        "pose": {
+          "x": 10.149,
+          "y": 3.694,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -90.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_002_dense_vehicles_pedestrians_uav_02_t002_front_oblique",
+        "scene_id": "scene_002_dense_vehicles_pedestrians",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "front_oblique",
+        "pose": {
+          "x": -68.944,
+          "y": 57.851,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -40.0
+        }
+      },
+      {
+        "frame_id": "scene_002_dense_vehicles_pedestrians_uav_03_t002_side_view",
+        "scene_id": "scene_002_dense_vehicles_pedestrians",
+        "uav_id": "uav_03",
+        "altitude_m": 150.0,
+        "view_angle": "side_view",
+        "pose": {
+          "x": -28.131,
+          "y": -159.539,
+          "z": 150.0,
+          "roll": 0.0,
+          "pitch": -18.0,
+          "yaw": 80.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t000_nadir",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "nadir",
+        "pose": {
+          "x": 10.149,
+          "y": 3.694,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -90.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t000_front_oblique",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "front_oblique",
+        "pose": {
+          "x": -30.782,
+          "y": 84.572,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -70.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t000_side_view",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_03",
+        "altitude_m": 150.0,
+        "view_angle": "side_view",
+        "pose": {
+          "x": -152.23,
+          "y": -55.407,
+          "z": 150.0,
+          "roll": 0.0,
+          "pitch": -18.0,
+          "yaw": 20.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t000_rear_oblique",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_04",
+        "altitude_m": 60.0,
+        "view_angle": "rear_oblique",
+        "pose": {
+          "x": 18.469,
+          "y": -50.743,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": 110.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t001_right_oblique",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "right_oblique",
+        "pose": {
+          "x": 50.743,
+          "y": 18.469,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t001_left_oblique",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "left_oblique",
+        "pose": {
+          "x": -30.782,
+          "y": 84.572,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -70.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t001_nadir",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_03",
+        "altitude_m": 150.0,
+        "view_angle": "nadir",
+        "pose": {
+          "x": -25.372,
+          "y": -9.235,
+          "z": 150.0,
+          "roll": 0.0,
+          "pitch": -90.0,
+          "yaw": 20.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t001_front_oblique",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_04",
+        "altitude_m": 60.0,
+        "view_angle": "front_oblique",
+        "pose": {
+          "x": 18.469,
+          "y": -50.743,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": 110.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_01_t002_side_view",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "side_view",
+        "pose": {
+          "x": 60.892,
+          "y": 22.163,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -18.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_02_t002_rear_oblique",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "rear_oblique",
+        "pose": {
+          "x": -30.782,
+          "y": 84.572,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -70.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_03_t002_right_oblique",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_03",
+        "altitude_m": 150.0,
+        "view_angle": "right_oblique",
+        "pose": {
+          "x": -126.859,
+          "y": -46.173,
+          "z": 150.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": 20.0
+        }
+      },
+      {
+        "frame_id": "scene_003_occlusion_side_view_ambiguity_uav_04_t002_left_oblique",
+        "scene_id": "scene_003_occlusion_side_view_ambiguity",
+        "uav_id": "uav_04",
+        "altitude_m": 60.0,
+        "view_angle": "left_oblique",
+        "pose": {
+          "x": 18.469,
+          "y": -50.743,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": 110.0
+        }
+      },
+      {
+        "frame_id": "scene_004_weather_degraded_small_objects_uav_01_t000_nadir",
+        "scene_id": "scene_004_weather_degraded_small_objects",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "nadir",
+        "pose": {
+          "x": 10.149,
+          "y": 3.694,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -90.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_004_weather_degraded_small_objects_uav_02_t000_front_oblique",
+        "scene_id": "scene_004_weather_degraded_small_objects",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "front_oblique",
+        "pose": {
+          "x": -68.944,
+          "y": 57.851,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -40.0
+        }
+      },
+      {
+        "frame_id": "scene_004_weather_degraded_small_objects_uav_03_t000_side_view",
+        "scene_id": "scene_004_weather_degraded_small_objects",
+        "uav_id": "uav_03",
+        "altitude_m": 150.0,
+        "view_angle": "side_view",
+        "pose": {
+          "x": -28.131,
+          "y": -159.539,
+          "z": 150.0,
+          "roll": 0.0,
+          "pitch": -18.0,
+          "yaw": 80.0
+        }
+      },
+      {
+        "frame_id": "scene_004_weather_degraded_small_objects_uav_01_t001_rear_oblique",
+        "scene_id": "scene_004_weather_degraded_small_objects",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "rear_oblique",
+        "pose": {
+          "x": 50.743,
+          "y": 18.469,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_004_weather_degraded_small_objects_uav_02_t001_right_oblique",
+        "scene_id": "scene_004_weather_degraded_small_objects",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "right_oblique",
+        "pose": {
+          "x": -68.944,
+          "y": 57.851,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -40.0
+        }
+      },
+      {
+        "frame_id": "scene_004_weather_degraded_small_objects_uav_03_t001_left_oblique",
+        "scene_id": "scene_004_weather_degraded_small_objects",
+        "uav_id": "uav_03",
+        "altitude_m": 150.0,
+        "view_angle": "left_oblique",
+        "pose": {
+          "x": -23.443,
+          "y": -132.949,
+          "z": 150.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": 80.0
+        }
+      },
+      {
+        "frame_id": "scene_004_weather_degraded_small_objects_uav_01_t002_nadir",
+        "scene_id": "scene_004_weather_degraded_small_objects",
+        "uav_id": "uav_01",
+        "altitude_m": 60.0,
+        "view_angle": "nadir",
+        "pose": {
+          "x": 10.149,
+          "y": 3.694,
+          "z": 60.0,
+          "roll": 0.0,
+          "pitch": -90.0,
+          "yaw": -160.0
+        }
+      },
+      {
+        "frame_id": "scene_004_weather_degraded_small_objects_uav_02_t002_front_oblique",
+        "scene_id": "scene_004_weather_degraded_small_objects",
+        "uav_id": "uav_02",
+        "altitude_m": 100.0,
+        "view_angle": "front_oblique",
+        "pose": {
+          "x": -68.944,
+          "y": 57.851,
+          "z": 100.0,
+          "roll": 0.0,
+          "pitch": -35.0,
+          "yaw": -40.0
+        }
+      },
+      {
+        "frame_id": "scene_004_weather_degraded_small_objects_uav_03_t002_side_view",
+        "scene_id": "scene_004_weather_degraded_small_objects",
+        "uav_id": "uav_03",
+        "altitude_m": 150.0,
+        "view_angle": "side_view",
+        "pose": {
+          "x": -28.131,
+          "y": -159.539,
+          "z": 150.0,
+          "roll": 0.0,
+          "pitch": -18.0,
+          "yaw": 80.0
+        }
+      }
+    ]
+  },
+  "smoke_test_steps": [
+    "Load Cesium georeferenced MarineCity stage.",
+    "Place placeholder vehicle/person/marine objects at ENU offsets.",
+    "Spawn 2-4 UAV cameras using planned altitudes and view angles.",
+    "Verify object ground height, camera pitch/yaw, RGB/depth/mask export paths.",
+    "Export one short multi-view clip before full dataset generation."
+  ]
+}

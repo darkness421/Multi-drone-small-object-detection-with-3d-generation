@@ -19,7 +19,7 @@ INIT_WEIGHTS=${INIT_WEIGHTS:-yolo11l.pt}
 IMG_SIZE=${IMG_SIZE:-1280}
 BATCH=${BATCH:-4}
 EPOCHS=${EPOCHS:-100}
-PATIENCE=${PATIENCE:-10}
+PATIENCE=${PATIENCE:-5}
 
 mkdir -p "$LOG_DIR"
 
@@ -133,6 +133,36 @@ case "$ABLATION" in
     METHOD="ProposedSize-P2P4BalancedSelfAttnTinyFReLU-yolo11l"
     MODULE="p2p4_balanced_head+lite_self_attention_neck+tiny_frelu_neck"
     PATCHES="lite_self_attention_neck,tiny_frelu_neck"
+    MODEL_YAML="${P2P4_MODEL_YAML:-configs/detector/yolo11l-p2p4-balanced-v1.yaml}"
+    ;;
+  p2p4_balanced_selfattn_rf_tiny_frelu)
+    METHOD="ProposedSize-P2P4BalancedSelfAttnRFTinyFReLU-yolo11l"
+    MODULE="p2p4_balanced_head+lite_self_attention_neck+rf_context_neck+tiny_frelu_neck"
+    PATCHES="lite_self_attention_neck,rf_context_neck,tiny_frelu_neck"
+    MODEL_YAML="${P2P4_MODEL_YAML:-configs/detector/yolo11l-p2p4-balanced-v1.yaml}"
+    ;;
+  p2p4_balanced_selfattn_tiny_frelu_dct_stem)
+    METHOD="ProposedSize-P2P4BalancedSelfAttnTinyFReLUDCTStem-yolo11l"
+    MODULE="p2p4_balanced_head+dct_stem+lite_self_attention_neck+tiny_frelu_neck"
+    PATCHES="dct_stem,lite_self_attention_neck,tiny_frelu_neck"
+    MODEL_YAML="${P2P4_MODEL_YAML:-configs/detector/yolo11l-p2p4-balanced-v1.yaml}"
+    ;;
+  p2p4_balanced_selfattn_tiny_frelu_se)
+    METHOD="ProposedSize-P2P4BalancedSelfAttnTinyFReLUSE-yolo11l"
+    MODULE="p2p4_balanced_head+lite_self_attention_neck+se_neck+tiny_frelu_neck"
+    PATCHES="lite_self_attention_neck,se_neck,tiny_frelu_neck"
+    MODEL_YAML="${P2P4_MODEL_YAML:-configs/detector/yolo11l-p2p4-balanced-v1.yaml}"
+    ;;
+  p2p4_balanced_selfattn_tiny_frelu_cbam)
+    METHOD="ProposedSize-P2P4BalancedSelfAttnTinyFReLUCBAM-yolo11l"
+    MODULE="p2p4_balanced_head+lite_self_attention_neck+cbam_neck+tiny_frelu_neck"
+    PATCHES="lite_self_attention_neck,cbam_neck,tiny_frelu_neck"
+    MODEL_YAML="${P2P4_MODEL_YAML:-configs/detector/yolo11l-p2p4-balanced-v1.yaml}"
+    ;;
+  p2p4_balanced_selfattn_tiny_frelu_dynfreq_p2)
+    METHOD="ProposedSize-P2P4BalancedSelfAttnTinyFReLUDynFreqP2-yolo11l"
+    MODULE="p2p4_balanced_head+lite_self_attention_neck+dynfreq_c3_p2+tiny_frelu_neck"
+    PATCHES="lite_self_attention_neck,dynfreq_c3_p2,tiny_frelu_neck"
     MODEL_YAML="${P2P4_MODEL_YAML:-configs/detector/yolo11l-p2p4-balanced-v1.yaml}"
     ;;
   p2_balanced_wavelet_tiny_frelu)

@@ -14,7 +14,7 @@ command_csv: outputs/experiments/yolov11_p2_tiny_activation_next_step_commands.c
 training:
   imgsz: 1280
   epochs: 100
-  patience: 30
+  patience: 5
   batch: 4
   seeds: [42]
   deterministic: true

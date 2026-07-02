@@ -1,0 +1,38 @@
+name: server_gpu_allocation
+updated: 2026-06-20
+
+policy:
+  gpu0:
+    primary_role: detector_experiments
+    workloads:
+      - final VisDrone proposed detector ablations
+      - runnable related-work 1280 comparisons after final 2D ablation
+      - final detector heatmap/qualitative preparation after related-work 1280
+      - corrected TinyPerson corner/original-window core-model check after heatmaps
+    default_launchers:
+      - scripts/ubuntu/start_related_work_consistency_retrain_queue.sh
+      - scripts/ubuntu/start_final_detector_heatmaps_after_related_work.sh
+      - scripts/ubuntu/start_tinyperson_corner_original_queue.sh
+    default_env:
+      GPUS: "0"
+  gpu1:
+    primary_role: system_experiments_after_detector_evidence
+    workloads:
+      - active final 2D jobs until current queue finishes
+      - MarineCity 3D reconstruction comparisons
+      - Isaac Sim export or smoke tasks when run on Ubuntu
+      - local VLM/LLM reasoner experiments when GPU-backed models are used
+    default_launchers:
+      - scripts/ubuntu/train_3d_generators_tmux.sh
+      - scripts/ubuntu/prepare_marinecity_multiview_benchmark.sh
+    default_env:
+      GPUS: "1"
+      CUDA_VISIBLE_DEVICES: "1"
+
+notes:
+  - First finish the current 2D ablation queue.
+  - Then finish runnable related-work 1280 comparisons and final detector heatmap/qualitative preparation.
+  - After detector-side evidence is complete, split GPUs: GPU0 for corrected TinyPerson corner/original-window models and GPU1 for Isaac/3D/reasoner.
+  - TinyPerson is supplementary and core-model only by default. Use corrected crop-window materialization, 1280 input, and Ours vs a strong baseline before expanding.
+  - Cloud/API LLM reasoner calls do not need a GPU, but local VLM/LLM models should use GPU1.
+  - Keep resource guards enabled for long jobs; lower the scope before lowering safety margins.

@@ -13,7 +13,46 @@ Use this folder for Isaac Sim scripts, USD scene notes, and extension setup.
    UAV pose export.
 6. Save exported data under `outputs/isaac_exports/`.
 
-## Current Readiness - 2026-06-16
+## Current Readiness - 2026-06-22
+
+The active Ubuntu server path is Docker Isaac Sim 5.1.0 on host GPU1. Local
+Isaac 4.5 currently stalls during Kit windowing startup, so do not use it for
+long experiments.
+
+Verified commands:
+
+```bash
+bash scripts/ubuntu/run_gpu1_isaac51_container_smoke.sh
+```
+
+```bash
+bash scripts/ubuntu/run_gpu1_isaac51_marinecity_stage.sh
+```
+
+Current generated GPU1 artifacts:
+
+- `outputs/isaac_exports/marinecity_gpu1_container_smoke/capture_plan.json`
+- `outputs/isaac_exports/marinecity_gpu1_container_smoke/isaac_replicator_capture_template.py`
+- `outputs/isaac_exports/marinecity_gpu1_stage1/marinecity_proxy_stage.usda`
+- `outputs/isaac_exports/marinecity_gpu1_stage1/marinecity_proxy_stage_summary.json`
+- `outputs/isaac_exports/marinecity_gpu1_stage1/capture_plan.json`
+- `outputs/isaac_exports/marinecity_gpu1_stage1/isaac_replicator_capture_template.py`
+- `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct_capture_summary.json`
+- `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/*_rgb.png`
+- `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/*_depth.npy`
+- `outputs/isaac_exports/marinecity_gpu1_replicator_direct_v5/replicator_direct/*_bbox_preview.png`
+
+Tiny real export status:
+
+- Passed on Docker Isaac Sim 5.1.0 / host GPU1.
+- 3 UAV camera views are exported at 1280x720.
+- RGB, distance-to-camera depth, semantic/instance segmentation, tight 2D
+  boxes, 3D boxes, camera parameters, bbox JSON, and bbox preview images are
+  available.
+- Bbox counts in the proxy smoke export are 7, 10, and 12 across the three UAV
+  views.
+- This validates the export schema for the 3D/reasoner lane. The remaining
+  realism upgrade is replacing the proxy geometry with Cesium/MarineCity tiles.
 
 The one-to-two-day startup plan for Isaac / 3D / reasoner experiments is:
 
@@ -40,15 +79,20 @@ Current dry-run split:
   left-oblique
 - 19 train / 7 val / 10 unseen-angle test frames
 
-The actual MarineCity USD/Cesium scene is not present yet. Treat this as capture
-protocol readiness, not a completed rendered dataset.
+The GPU1 proxy USD stage now contains 3 UAV camera rigs, 12 fine-grained proxy
+objects, road/coastal/building context, and ambiguity clusters. Treat this as
+Isaac/protocol readiness, not a completed rendered dataset. Real proxy
+RGB/depth/bbox export is connected; the final Cesium MarineCity scene still
+needs to be connected.
 
 Current start rule:
 
 - Run repo-side readiness anytime.
 - Run Isaac visible smoke once the install path and scene/proxy stage are known.
-- Start full 3D/reasoner experiments only after a tiny real export validates
+- Start proxy 3D/reasoner smoke now that the tiny real export validates
   RGB/depth/pose/bbox schema.
+- Start full MarineCity/Cesium experiments after the geospatial stage is
+  connected.
 
 ## Local Isaac Path
 

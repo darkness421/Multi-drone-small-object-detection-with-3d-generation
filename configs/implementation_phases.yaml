@@ -115,7 +115,7 @@ phases:
     name: Selective VLM Verification
     goal: Send only high-ambiguity object nodes to VLM.
     steps:
-      - SAGE prompt package generation
+      - AeroGraph prompt package generation
       - Subset test with open-source VLM or API
       - JSON output parser
       - Graph confidence update

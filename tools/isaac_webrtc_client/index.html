@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CoM3D-ACE Isaac MarineCity Stream</title>
+  </head>
+  <body>
+    <main class="viewer-shell">
+      <section class="topbar">
+        <div>
+          <strong>Isaac MarineCity Stream</strong>
+          <span id="endpoint"></span>
+        </div>
+        <div id="status">connecting</div>
+      </section>
+      <section class="viewport">
+        <video id="remote-video" muted autoplay playsinline></video>
+        <audio id="remote-audio" autoplay></audio>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -16,6 +16,8 @@ from scripts.build_server_training_dashboard import (
     read_rows,
 )
 
+os.environ.setdefault("MPLBACKEND", "Agg")
+
 
 FIGURE_SPECS = [
     ("ap_ap50_by_model.png", "AP / AP50 by model"),
@@ -79,6 +81,9 @@ def colors_for(rows: list[dict[str, str]]) -> list[str]:
 def setup_matplotlib() -> Any:
     os.environ.setdefault("MPLCONFIGDIR", str(resolve_path(".cache/matplotlib")))
     os.environ.setdefault("XDG_CACHE_HOME", str(resolve_path(".cache")))
+    import matplotlib
+
+    matplotlib.use("Agg", force=True)
     import matplotlib.pyplot as plt
 
     plt.rcParams.update(

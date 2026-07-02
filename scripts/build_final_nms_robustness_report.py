@@ -282,8 +282,9 @@ def plot_summary(summary: list[dict[str, Any]], out: Path) -> Path:
     axes[0].set_ylabel("AP (mAP50-95)")
     axes[1].set_xlabel("NMS IoU threshold")
     axes[1].set_ylabel("AP50")
+    xticks = sorted({row["iou"] for row in summary})
     for ax in axes:
-        ax.set_xticks([0.45, 0.55, 0.65, 0.75])
+        ax.set_xticks(xticks or [0.45, 0.55, 0.65, 0.75])
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
         ax.legend(frameon=True)

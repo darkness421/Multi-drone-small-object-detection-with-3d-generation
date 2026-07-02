@@ -1,6 +1,6 @@
 # MarineCity Neural-3D Dataset Export
 
-Updated: `2026-06-26 13:22:49 KST`
+Updated: `2026-06-29 00:38:35 KST`
 Status: `marinecity_neural3d_dataset_export_ready`
 
 ## Dataset
@@ -17,7 +17,10 @@ Status: `marinecity_neural3d_dataset_export_ready`
 ## Runner Handoff
 
 - `ns-train nerfacto --data /home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d`
-- `python -m generative3d.external_runner --method instant_ngp --scene marinecity_real_capture --data /home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d`
-- `python -m generative3d.external_runner --method gaussian_splatting --scene marinecity_real_capture --data /home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d`
+- `<instant-ngp-upstream-train> --scene marinecity_real_capture --data /home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d`
+- `<3dgs-upstream-train> --scene marinecity_real_capture --source_path /home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d`
+
+- Placeholder smoke only: `python -m generative3d.external_runner --allow-placeholder --method instant_ngp --scene marinecity_real_capture --data /home/oem/projects/multi-uav-marine-city/outputs/experiments/3d_generation/marinecity_real_capture_neural3d`
+- Requirement: Install/connect an upstream NeRF/Instant-NGP/Mip-NeRF/3DGS runner before collecting paper-facing metrics. The local generative3d.external_runner is a command-contract placeholder only.
 
 Claiming rule: This package is a neural-3D input handoff. It upgrades source readiness, but it is not a NeRF/3DGS metric result.

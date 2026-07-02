@@ -2,7 +2,7 @@
 
 The input prompt pack is produced by ``scripts/build_aerograph_prompt_pack.py``.
 This runner keeps provider execution separate from prompt construction so
-OpenAI/ChatGPT, Ollama, or any local command can be swapped in without changing
+External API providers, Ollama, or any local command can be swapped in without changing
 the MarineCity detector/3D pipeline.
 """
 
@@ -95,7 +95,7 @@ def openai_reason(prompt: str, model: str, timeout: int) -> dict[str, Any]:
 
 
 def dry_run_reason(row: dict[str, Any]) -> dict[str, Any]:
-    """Return a pending marker without pretending to be a non-mock result."""
+    """Return a pending marker without pretending to be a external-provider result."""
 
     return {
         "decision": "uncertain",
@@ -315,7 +315,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     complete_valid_real_run = total_prompt_count > 0 and len(valid_real_indices) == total_prompt_count
     if args.provider == "dry-run":
         status = "aerograph_eval_dry_run_ready"
-        note = "Dry-run results are not non-mock LLM evidence."
+        note = "Dry-run results are not external-provider LLM evidence."
     elif args.plumbing_test:
         status = "aerograph_eval_plumbing_test_complete" if complete_real_run else "aerograph_eval_plumbing_test_partial"
         note = "Plumbing-test results verify the runner/import path only; they are not paper evidence."
@@ -326,7 +326,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         status = "aerograph_eval_complete_needs_schema_fix"
         note = "Every prompt has a provider output, but one or more outputs failed strict AeroGraph schema validation."
     elif real_runtime_count:
-        status = "aerograph_eval_partial_nonmock"
+        status = "aerograph_eval_partial_external_provider"
         note = "Some prompts received real provider outputs; inspect failures before paper use."
     else:
         status = "aerograph_eval_provider_unconfigured"

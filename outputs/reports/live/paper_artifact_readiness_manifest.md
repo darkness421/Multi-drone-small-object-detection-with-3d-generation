@@ -19,9 +19,9 @@ main-paper-ready items from supplementary items and explicit validation slots.
 | MarineCity smoke source CSV | `paper/tables/marinecity_system_token_results.csv` | Ready with wording limit | Source rows for detector-to-reasoner smoke-test table |
 | MarineCity detector-preview sheet | `paper/figures/results/marinecity_system/marinecity_detector_preview_contact_sheet.png` | Smoke-test ready | Real-Cesium detector preview sheet; use only with system-smoke wording |
 | MarineCity qualitative figure slots | `paper/sections/07_marinecity_qualitative_figure_slots.tex` | Ready with wording limit | Optional real-Cesium smoke/protocol figure slots |
-| Main result patch bundle | `paper/sections/main_results_patch_bundle.tex` | Ready | Overleaf `\input` bundle for detector + MarineCity protocol sections |
-| Supplementary patch bundle | `paper/sections/supplementary_patch_bundle.tex` | Ready | Overleaf `\input` bundle for supplementary detector and MarineCity qualitative slots |
-| Paper artifact readiness check | `outputs/reports/live/paper_artifact_readiness_check.md` | Ready | Automated existence and stale-claim audit before Overleaf integration |
+| Main result patch bundle | `paper/sections/main_results_patch_bundle.tex` | Ready | LaTeX `\input` bundle for detector + MarineCity protocol sections |
+| Supplementary patch bundle | `paper/sections/supplementary_patch_bundle.tex` | Ready | LaTeX `\input` bundle for supplementary detector and MarineCity qualitative slots |
+| Paper artifact readiness check | `outputs/reports/live/paper_artifact_readiness_check.md` | Ready | Automated existence and stale-claim audit before manuscript packaging |
 | LaTeX patch integrity check | `outputs/reports/live/latex_patch_integrity_check.md` | Ready | Automated `\input`, figure, label, and reference check for patch bundles |
 
 ## Supplementary Recommended
@@ -54,7 +54,7 @@ main-paper-ready items from supplementary items and explicit validation slots.
 
 | Artifact | Path | Current Status | Required Before Claim |
 |---|---|---|---|
-| AeroGraph external-provider replication | `paper/tables/aerograph_reasoner_validation_summary.tex` | Provider-ready prompt pack; external OpenAI/ChatGPT/local run to be imported | Re-run all 54 prompts with selected final provider and rebuild table |
+| AeroGraph external-provider replication | `paper/tables/aerograph_reasoner_validation_summary.tex` | Provider-ready prompt pack; external-provider/local-model run to be imported | Re-run all 54 prompts with selected final provider and rebuild table |
 | AeroGraph direct manual/API response file | `outputs/reports/live/aerograph_nonmock_readiness_status.md` | Final prompt-pack external response file 0/54 | Fill `outputs/reasoning/aerograph_manual_responses.jsonl` or configure provider before promoting the reasoner table |
 | AeroGraph external-provider collection plan | `docs/aerograph_nonmock_collection_plan.md` | Ready | Use as the acceptance gate before promoting the reasoner table |
 | AeroGraph real-capture compact provider smoke | `outputs/reports/live/aerograph_real_capture_prompt_pack/web_batches/` | Prompt batches ready; provider responses to be imported | Collect 23 valid-schema provider responses to sanity-check the current real-Cesium smoke setting |

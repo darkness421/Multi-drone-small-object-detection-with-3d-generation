@@ -232,7 +232,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
         "gate_label": "49-Prompt",
         "promotion_mode": "full",
         "purpose": (
-            "Purpose: collect non-mock AeroGraph reasoner responses from a web LLM "
+            "Purpose: collect external-provider AeroGraph reasoner responses from a web LLM "
             "for the final ACCV paper-table gate."
         ),
     }
@@ -277,7 +277,7 @@ def main() -> None:
     parser.add_argument(
         "--purpose",
         default=(
-            "Purpose: collect final non-mock AeroGraph Reasoner responses from a web "
+            "Purpose: collect final external-provider AeroGraph Reasoner responses from a web "
             "LLM provider, then promote them to the paper table "
             "only after all rows pass schema validation."
         ),

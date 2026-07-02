@@ -1,6 +1,6 @@
 # Detector Ranking Snapshot
 
-Generated: 2026-06-26T11:48:49
+Generated: 2026-06-26T18:06:14
 
 Trade-off score = mean(AP, AP50, F1) * (YOLOv11l params / model params).
 Paper-gated trade-off additionally requires AP and AP50 to be at least YOLOv11l before scoring.
@@ -9,7 +9,7 @@ Paper-gated trade-off additionally requires AP and AP50 to be at least YOLOv11l 
 
 - Raw single-run AP leader is P2-CBAM-FR-s123, with P2-DCT-FR-s123 essentially tied just behind it.
 - P2-DCT-FR-s123 is currently rank 2 by raw single-run AP and rank 1 among the high-AP runs by raw trade-off after Params correction.
-- The paper-ready completed 3-seed 1280 ranking still has Ours: P2P4-SelfAttnFR at rank 1 above YOLOv11l, because DCT/CBAM are not confirmed with 3 seeds yet.
+- The paper-ready completed 3-seed 1280 ranking still has Ours at rank 1 above YOLOv11l; its current implementation is SAFR-YOLO/P2P4-SelfAttnFR, while DCT/CBAM remain unconfirmed search variants.
 
 ## Proposed Search: Single-Run Performance Ranking
 
@@ -107,7 +107,7 @@ Paper-gated trade-off additionally requires AP and AP50 to be at least YOLOv11l 
 
 | rank | name | group | seeds | AP | AP50 | F1 | ParamsM | GFLOPs | dAP |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Ours: P2P4-SelfAttnFR | Ours final candidate | 42,123,2026 | 0.3822 | 0.6052 | 0.6273 | 20.82 | 109.3 | +0.0045 |
+| 1 | Ours | Ours final candidate | 42,123,2026 | 0.3822 | 0.6052 | 0.6273 | 20.82 | 109.3 | +0.0045 |
 | 2 | UAVDet [16] | Cited related work | 42,123,2026 | 0.3812 | 0.6005 | 0.6203 | 33.55 | 201.2 | +0.0035 |
 | 3 | BPD-YOLO [7] | Cited related work | 42,123,2026 | 0.3804 | 0.5986 | 0.6187 | 24.53 | 109.5 | +0.0028 |
 | 4 | YOLOv11l | Best YOLO baseline | 123,2026,42 | 0.3777 | 0.5981 | 0.6248 | 25.32 | 87.3 | +0.0000 |
@@ -148,7 +148,7 @@ Paper-gated trade-off additionally requires AP and AP50 to be at least YOLOv11l 
 
 | rank | name | group | seeds | AP | AP50 | F1 | ParamsM | GFLOPs | gated |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Ours: P2P4-SelfAttnFR | Ours final candidate | 42,123,2026 | 0.3822 | 0.6052 | 0.6273 | 20.82 | 109.3 | 1.228 |
+| 1 | Ours | Ours final candidate | 42,123,2026 | 0.3822 | 0.6052 | 0.6273 | 20.82 | 109.3 | 1.228 |
 | 2 | BPD-YOLO [7] | Cited related work | 42,123,2026 | 0.3804 | 0.5986 | 0.6187 | 24.53 | 109.5 | 1.034 |
 | 3 | YOLOv11l | Best YOLO baseline | 123,2026,42 | 0.3777 | 0.5981 | 0.6248 | 25.32 | 87.3 | 1.000 |
 | 4 | UAVDet [16] | Cited related work | 42,123,2026 | 0.3812 | 0.6005 | 0.6203 | 33.55 | 201.2 | 0.758 |

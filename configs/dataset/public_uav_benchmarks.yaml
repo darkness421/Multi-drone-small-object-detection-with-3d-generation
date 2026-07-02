@@ -8,11 +8,12 @@ minimum:
 strong:
   - VisDrone2019-DET
   - UAVDT
-  - AI-TOD
+  - TinyPerson
 
 extended:
   - VisDrone2019-DET
   - UAVDT
+  - TinyPerson
   - AI-TOD
   - HIT-UAV
 
@@ -30,12 +31,12 @@ datasets:
     priority: recommended
     expected_metrics: [APtiny, APsmall, recall]
   TinyPerson:
-    purpose: extreme tiny person detection
-    priority: optional
+    purpose: extreme tiny person detection and crowded tiny-object stress test
+    priority: strongly_recommended_supplementary
+    expected_metrics: [AP, AP50, recall, F1, tiny_person_AP]
   HIT-UAV:
     purpose: infrared and low-light UAV ambiguity extension
     priority: optional_supplementary
   DroneVehicle:
     purpose: RGB-IR vehicle modality extension
     priority: optional
-
