@@ -8,8 +8,8 @@
   "web_batch_status": "aerograph_web_batches_ready",
   "web_batch_count": 6,
   "paper_table_manifest": "outputs/reports/live/aerograph_reasoner_table_manifest.json",
-  "paper_table_status": "aerograph_reasoner_table_candidate_external_pending",
-  "paper_table_non_mock_outputs_ready": false,
+  "paper_table_status": "aerograph_reasoner_table_complete",
+  "paper_table_non_mock_outputs_ready": true,
   "external_provider_replication_ready": false,
   "reviewed_candidate_valid_count": 49,
   "manual_response_coverage": {

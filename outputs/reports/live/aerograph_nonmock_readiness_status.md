@@ -19,7 +19,7 @@
 - Web batch count: `6`
 - Full manual template: `outputs/reports/live/aerograph_prompt_pack/aerograph_manual_response_template_all.jsonl`
 - Paper table manifest: `outputs/reports/live/aerograph_reasoner_table_manifest.json`
-- Paper table status: `aerograph_reasoner_table_candidate_external_pending`
+- Paper table status: `aerograph_reasoner_table_complete`
 
 ## Interpretation
 

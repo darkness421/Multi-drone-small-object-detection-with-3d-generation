@@ -1,6 +1,6 @@
 # ACCV Remaining Gates Queue
 
-Updated: `2026-07-02T16:37:03+09:00`
+Updated: `2026-07-02T16:38:55+09:00`
 
 This queue separates paper-ready evidence from optional gates. Optional rows should not be promoted into a main claim unless their evidence column proves completion.
 

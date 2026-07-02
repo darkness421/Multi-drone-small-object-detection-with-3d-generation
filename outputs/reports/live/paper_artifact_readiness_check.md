@@ -1,6 +1,6 @@
 # Paper Artifact Readiness Check
 
-Updated: `2026-07-02 16:36:58 KST`
+Updated: `2026-07-02 16:38:51 KST`
 Status: `paper_artifact_audit_needs_attention`
 
 ## Summary
@@ -12,7 +12,7 @@ Status: `paper_artifact_audit_needs_attention`
 - AeroGraph reviewed-candidate coverage: `49/49`
 - AeroGraph external-provider replication ready: `False`
 - AeroGraph provider benchmark is optional for the current submission because the paper claim is limited to schema/verifier/action-policy validation.
-- AeroGraph table status: `aerograph_reasoner_table_candidate_external_open`
+- AeroGraph table status: `aerograph_reasoner_table_complete`
 - MarineCity qualitative gate: `marinecity_qualitative_gate_main_ready`
 - MarineCity integration gate: `marinecity_system_integration_validation_ready_with_open_final_gates`; fails `0`, warnings `0`, open checks `1`
 - MarineCity 3D completion gate: `marinecity_3d_completion_ready`; metric rows `3`

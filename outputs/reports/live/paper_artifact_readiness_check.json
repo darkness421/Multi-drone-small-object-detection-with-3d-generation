@@ -1,5 +1,5 @@
 {
-  "updated_at_kst": "2026-07-02 16:36:58 KST",
+  "updated_at_kst": "2026-07-02 16:38:51 KST",
   "status": "paper_artifact_audit_needs_attention",
   "artifact_count": 53,
   "missing_required_count": 1,
@@ -391,7 +391,7 @@
       "placement": "optional",
       "required_now": false,
       "exists": true,
-      "size_bytes": 236,
+      "size_bytes": 356,
       "status": "ok",
       "note": "Optional external-provider table slot; not used for the current main claim"
     },
@@ -555,8 +555,8 @@
     "matched_valid_response_count": 49,
     "prompt_count": 49,
     "coverage_ratio": 1.0,
-    "paper_table_status": "aerograph_reasoner_table_candidate_external_open",
-    "non_mock_outputs_ready": false,
+    "paper_table_status": "aerograph_reasoner_table_complete",
+    "non_mock_outputs_ready": true,
     "external_provider_replication_ready": false,
     "reviewed_candidate_valid_count": 49,
     "complete": false
