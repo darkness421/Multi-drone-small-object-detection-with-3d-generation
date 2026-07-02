@@ -196,7 +196,6 @@ def write_status(args: argparse.Namespace) -> Path:
         "- `outputs/reports/server_with_proposed/README.md`",
         "- `outputs/reports/server_with_proposed/paper_model_availability.md`",
         "- `outputs/experiments/server_with_proposed_stage_gate.md`",
-        "- `docs/notion_research_comparison_notes.md`",
         "",
     ]
     out.parent.mkdir(parents=True, exist_ok=True)

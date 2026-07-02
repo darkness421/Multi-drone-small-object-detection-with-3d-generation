@@ -1,6 +1,0 @@
-﻿Method,Ambiguous_Acc,Correction_Rate,Over_Correction,VLM_Calls,Avg_Tokens,Latency,Explanation_Usefulness,JSON_Parse_Success
-No VLM,,,,0,0,,,
-Always-on VLM,,,,,,,,
-Random VLM,,,,,,,,
-Uncertainty-triggered VLM,,,,,,,,
-ACE-Reasoner-triggered VLM,,,,,,,,

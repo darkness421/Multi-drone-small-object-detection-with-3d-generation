@@ -267,7 +267,7 @@ def format_metric(value: Any) -> str:
 
 
 def write_markdown_summary(manifest: dict[str, Any], path: Path) -> None:
-    """Write a Notion-friendly Markdown summary for one run."""
+    """Write a Markdown summary for one run."""
 
     metrics = manifest.get("metrics", {}) or {}
     artifacts = manifest.get("artifacts", {}) or {}

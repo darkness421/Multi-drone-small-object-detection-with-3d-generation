@@ -2,8 +2,8 @@
 
 TODO:
 - Read outputs/results/*.json.
-- Produce summary tables for paper.
-- Export Notion-friendly experiment notes.
+- Produce summary tables.
+- Export Markdown experiment notes.
 """
 
 from __future__ import annotations
