@@ -1,0 +1,44 @@
+Claim boundary and wording guide
+
+안전한 표현
+- fresh commanded Isaac/Cesium recapture
+- closed-loop camera-pose/evidence-update validation
+- real-Cesium recapture EvidenceTokens
+- targeted re-observation branch validation
+- graph recomputation after follow-up evidence
+- action transition from targeted_reobserve to monitor
+- bounded system validation
+
+본문에서 사용 가능한 문장
+"The closed-loop result validates the camera-pose/evidence-update branch:
+graph-generated target poses produce fresh Isaac/Cesium recapture tokens that
+reduce graph ambiguity and change the policy decision for matched hypotheses."
+
+"We do not claim a full autonomous physical UAV planner; the current
+contribution is the evidence contract between detector tokens, graph ambiguity,
+graph-generated camera poses, and re-observation-triggered evidence completion."
+
+조심해야 하는 표현
+- autonomous re-observation completed
+- fully closed-loop UAV control
+- real-time multi-UAV planner
+- full 3D benchmark
+- LLM verifier benchmark
+- SOTA closed-loop robotic perception
+
+금지에 가까운 표현
+"Our system autonomously commands UAVs to recapture all ambiguous objects."
+현재 산출물만으로는 이 표현을 쓰면 안 된다.
+
+"The closed-loop planner resolves all ambiguous hypotheses."
+실제로는 9개 중 6개만 monitor로 전환되고 3개는 remain targeted_reobserve이다.
+
+"The 3D/LLM modules are fully evaluated."
+현재 논문 전략상 3D/LLM은 bounded handoff/interface validation으로 두는 편이
+안전하다.
+
+최종 권장 claim
+"The added fresh commanded recapture closes the most visible gap in the current
+paper: it shows that targeted re-observation is not only an action label, but
+an evidence-update path that can reduce ambiguity when matching recapture
+evidence is available."

@@ -1,0 +1,2686 @@
+{
+  "rows": [
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_bus_3_7",
+      "prompt_chars": 955,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['bus']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_01_bus_3_7\",\n  \"class_posterior\": {\n    \"bus\": 0.8531608581542969\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.8231608581542968,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.8231608581542968,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 955
+      },
+      "final_decision": {
+        "object_id": "uav_01_bus_3_7",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.6701852412007003,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.8231608581542968
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_car_6_8",
+      "prompt_chars": 955,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_01_car_6_8\",\n  \"class_posterior\": {\n    \"car\": 0.4902203679084778\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.46022036790847776,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.46022036790847776,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 955
+      },
+      "final_decision": {
+        "object_id": "uav_01_car_6_8",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.46022036790847776
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_pedestrian_13_2",
+      "prompt_chars": 979,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['pedestrian']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_01_pedestrian_13_2\",\n  \"class_posterior\": {\n    \"pedestrian\": 0.016873935237526894\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "pedestrian",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "pedestrian",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 979
+      },
+      "final_decision": {
+        "object_id": "uav_01_pedestrian_13_2",
+        "predicted_class": "pedestrian",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "pedestrian",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "pedestrian",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_0_3",
+      "prompt_chars": 956,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['bus']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_0_3\",\n  \"class_posterior\": {\n    \"bus\": 0.04854663461446762\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 956
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_0_3",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_3_4",
+      "prompt_chars": 955,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['bus']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_3_4\",\n  \"class_posterior\": {\n    \"bus\": 0.4319700002670288\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.4019700002670288,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.4019700002670288,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 955
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_3_4",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.4019700002670288
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_5_5",
+      "prompt_chars": 956,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['bus']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_5_5\",\n  \"class_posterior\": {\n    \"bus\": 0.21509157121181488\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 956
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_5_5",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_7_6",
+      "prompt_chars": 957,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['bus']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_7_6\",\n  \"class_posterior\": {\n    \"bus\": 0.027351105585694313\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 957
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_7_6",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_0_3",
+      "prompt_chars": 956,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_0_3\",\n  \"class_posterior\": {\n    \"car\": 0.40480411797761917\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.37480411797761914,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.37480411797761914,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 956
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_0_3",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.37480411797761914
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_0_5",
+      "prompt_chars": 952,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_0_5\",\n  \"class_posterior\": {\n    \"car\": 0.9100361764431\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.88,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.88,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 952
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_0_5",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.88
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_10_6",
+      "prompt_chars": 957,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_10_6\",\n  \"class_posterior\": {\n    \"car\": 0.04295380786061287\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 957
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_10_6",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_10_7",
+      "prompt_chars": 957,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_10_7\",\n  \"class_posterior\": {\n    \"car\": 0.08571030758321285\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 957
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_10_7",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_13_7",
+      "prompt_chars": 958,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_13_7\",\n  \"class_posterior\": {\n    \"car\": 0.019014544785022736\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 958
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_13_7",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_1_5",
+      "prompt_chars": 955,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_1_5\",\n  \"class_posterior\": {\n    \"car\": 0.7576619982719421\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.7276619982719421,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.7276619982719421,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 955
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_1_5",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.7810619269323591,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.7276619982719421
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_2_3",
+      "prompt_chars": 957,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_2_3\",\n  \"class_posterior\": {\n    \"car\": 0.011287265457212925\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 957
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_2_3",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_5_6",
+      "prompt_chars": 957,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_5_6\",\n  \"class_posterior\": {\n    \"car\": 0.018389292061328888\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 957
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_5_6",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_7_6",
+      "prompt_chars": 957,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_7_6\",\n  \"class_posterior\": {\n    \"car\": 0.020100248977541924\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 957
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_7_6",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_8_5",
+      "prompt_chars": 955,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_8_5\",\n  \"class_posterior\": {\n    \"car\": 0.8324999213218689\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.8024999213218689,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.8024999213218689,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 955
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_8_5",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.6957741067682555,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.8024999213218689
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_9_8",
+      "prompt_chars": 956,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['car']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_9_8\",\n  \"class_posterior\": {\n    \"car\": 0.05178316310048103\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 956
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_9_8",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s0_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s0_locked_roi",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_van_0_5",
+      "prompt_chars": 957,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s0_locked_roi.\nCandidate classes: ['van']\nAmbiguity reasons: ['baseline_multiview_confirmation', 'geometry_residual', 'high_ambiguity', 'small_object_resolution']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's0_locked_roi']\nGraph summary:\n{\n  \"object_id\": \"uav_02_van_0_5\",\n  \"class_posterior\": {\n    \"van\": 0.028635071590542793\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "van",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "van",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 957
+      },
+      "final_decision": {
+        "object_id": "uav_02_van_0_5",
+        "predicted_class": "van",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "baseline_multiview_confirmation",
+          "geometry_residual",
+          "high_ambiguity",
+          "small_object_resolution"
+        ],
+        "evidence": {
+          "detector_top_class": "van",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "van",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_bus_2_7",
+      "prompt_chars": 970,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['bus']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_01_bus_2_7\",\n  \"class_posterior\": {\n    \"bus\": 0.8759081959724426\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.8459081959724426,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.8459081959724426,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 970
+      },
+      "final_decision": {
+        "object_id": "uav_01_bus_2_7",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.6407861720317968,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.8459081959724426
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_car_6_8",
+      "prompt_chars": 971,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['car']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_01_car_6_8\",\n  \"class_posterior\": {\n    \"car\": 0.21747371461242437\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 971
+      },
+      "final_decision": {
+        "object_id": "uav_01_car_6_8",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_pedestrian_13_2",
+      "prompt_chars": 994,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['pedestrian']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_01_pedestrian_13_2\",\n  \"class_posterior\": {\n    \"pedestrian\": 0.010873517952859402\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "pedestrian",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "pedestrian",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 994
+      },
+      "final_decision": {
+        "object_id": "uav_01_pedestrian_13_2",
+        "predicted_class": "pedestrian",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "pedestrian",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "pedestrian",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_pedestrian_15_3",
+      "prompt_chars": 994,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['pedestrian']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_01_pedestrian_15_3\",\n  \"class_posterior\": {\n    \"pedestrian\": 0.014379564672708511\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "pedestrian",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "pedestrian",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 994
+      },
+      "final_decision": {
+        "object_id": "uav_01_pedestrian_15_3",
+        "predicted_class": "pedestrian",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "pedestrian",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "pedestrian",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_0_3",
+      "prompt_chars": 971,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['bus']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_0_3\",\n  \"class_posterior\": {\n    \"bus\": 0.04456796683371067\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 971
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_0_3",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_2_5",
+      "prompt_chars": 970,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['bus']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_2_5\",\n  \"class_posterior\": {\n    \"bus\": 0.7060626149177551\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.6760626149177551,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.6760626149177551,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 970
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_2_5",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.8341596252203902,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.6760626149177551
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_5_5",
+      "prompt_chars": 972,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['bus']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_5_5\",\n  \"class_posterior\": {\n    \"bus\": 0.014304667711257935\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 972
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_5_5",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_0_3",
+      "prompt_chars": 970,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['car']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_0_3\",\n  \"class_posterior\": {\n    \"car\": 0.5543802753090858\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.5243802753090858,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.5243802753090858,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 970
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_0_3",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.5243802753090858
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_0_5",
+      "prompt_chars": 970,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['car']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_0_5\",\n  \"class_posterior\": {\n    \"car\": 0.9503933908417821\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.88,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.88,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 970
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_0_5",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.88
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_10_6",
+      "prompt_chars": 972,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['car']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_10_6\",\n  \"class_posterior\": {\n    \"car\": 0.05173398554325104\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 972
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_10_6",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_1_5",
+      "prompt_chars": 970,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['car']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_1_5\",\n  \"class_posterior\": {\n    \"car\": 0.8283633589744568\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.7983633589744568,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.7983633589744568,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 970
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_1_5",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.7007803030633739,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.7983633589744568
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_2_3",
+      "prompt_chars": 971,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['car']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_2_3\",\n  \"class_posterior\": {\n    \"car\": 0.10082468390464783\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 971
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_2_3",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_8_5",
+      "prompt_chars": 970,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['car']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_8_5\",\n  \"class_posterior\": {\n    \"car\": 0.8269252777099609\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.7969252777099609,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.7969252777099609,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 970
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_8_5",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.7025119483816908,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.7969252777099609
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s1_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s1_adjacent_overlap",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_9_8",
+      "prompt_chars": 971,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s1_adjacent_overlap.\nCandidate classes: ['car']\nAmbiguity reasons: ['adjacent_objects', 'box_overlap', 'geometry_residual', 'high_ambiguity', 'nms_false_suppression_risk']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's1_adjacent_overlap']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_9_8\",\n  \"class_posterior\": {\n    \"car\": 0.04551348835229874\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 971
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_9_8",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "adjacent_objects",
+          "box_overlap",
+          "geometry_residual",
+          "high_ambiguity",
+          "nms_false_suppression_risk"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_bus_5_6",
+      "prompt_chars": 974,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['bus']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_01_bus_5_6\",\n  \"class_posterior\": {\n    \"bus\": 0.8830606341362\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.8530606341361999,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.8530606341361999,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 974
+      },
+      "final_decision": {
+        "object_id": "uav_01_bus_5_6",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.6312486367177792,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.8530606341361999
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_car_6_8",
+      "prompt_chars": 977,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_01_car_6_8\",\n  \"class_posterior\": {\n    \"car\": 0.5688517093658447\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.5388517093658447,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.5388517093658447,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 977
+      },
+      "final_decision": {
+        "object_id": "uav_01_car_6_8",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.9566272122489419,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.5388517093658447
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_pedestrian_13_2",
+      "prompt_chars": 1001,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['pedestrian']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_01_pedestrian_13_2\",\n  \"class_posterior\": {\n    \"pedestrian\": 0.015401923097670078\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "pedestrian",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "pedestrian",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 1001
+      },
+      "final_decision": {
+        "object_id": "uav_01_pedestrian_13_2",
+        "predicted_class": "pedestrian",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "pedestrian",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "pedestrian",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_01_pedestrian_3_5",
+      "prompt_chars": 1000,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['pedestrian']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_01_pedestrian_3_5\",\n  \"class_posterior\": {\n    \"pedestrian\": 0.010032870806753635\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "pedestrian",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "pedestrian",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 1000
+      },
+      "final_decision": {
+        "object_id": "uav_01_pedestrian_3_5",
+        "predicted_class": "pedestrian",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "pedestrian",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "pedestrian",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_0_3",
+      "prompt_chars": 978,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['bus']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_0_3\",\n  \"class_posterior\": {\n    \"bus\": 0.04335934296250343\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 978
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_0_3",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_5_4",
+      "prompt_chars": 977,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['bus']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_5_4\",\n  \"class_posterior\": {\n    \"bus\": 0.6650106310844421\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.6350106310844421,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.6350106310844421,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 977
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_5_4",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.8735150834587389,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.6350106310844421
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_bus_7_6",
+      "prompt_chars": 978,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['bus']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_bus_7_6\",\n  \"class_posterior\": {\n    \"bus\": 0.03881338983774185\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 978
+      },
+      "final_decision": {
+        "object_id": "uav_02_bus_7_6",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_0_3",
+      "prompt_chars": 977,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_0_3\",\n  \"class_posterior\": {\n    \"car\": 0.5150087373331189\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.4850087373331189,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.4850087373331189,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 977
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_0_3",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.4850087373331189
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_0_5",
+      "prompt_chars": 977,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_0_5\",\n  \"class_posterior\": {\n    \"car\": 0.9607190825045109\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.88,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.88,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 977
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_0_5",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.88
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_10_6",
+      "prompt_chars": 979,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_10_6\",\n  \"class_posterior\": {\n    \"car\": 0.09374547377228737\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 979
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_10_6",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_10_7",
+      "prompt_chars": 980,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_10_7\",\n  \"class_posterior\": {\n    \"car\": 0.010660508647561073\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 980
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_10_7",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_10_8",
+      "prompt_chars": 980,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_10_8\",\n  \"class_posterior\": {\n    \"car\": 0.013446365483105183\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 980
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_10_8",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_13_6",
+      "prompt_chars": 980,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_13_6\",\n  \"class_posterior\": {\n    \"car\": 0.011187553405761719\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 980
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_13_6",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_1_5",
+      "prompt_chars": 977,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_1_5\",\n  \"class_posterior\": {\n    \"car\": 0.7463212013244629\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.7163212013244629,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.7163212013244629,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 977
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_1_5",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.793099187052722,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.7163212013244629
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_7_6",
+      "prompt_chars": 978,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_7_6\",\n  \"class_posterior\": {\n    \"car\": 0.02656436152756214\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 978
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_7_6",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_8_5",
+      "prompt_chars": 975,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_8_5\",\n  \"class_posterior\": {\n    \"car\": 0.83827805519104\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.80827805519104,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.80827805519104,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 975
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_8_5",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.6887174781546834,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.80827805519104
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_car_9_8",
+      "prompt_chars": 978,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_car_9_8\",\n  \"class_posterior\": {\n    \"car\": 0.08489528298377991\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 978
+      },
+      "final_decision": {
+        "object_id": "uav_02_car_9_8",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_02_van_0_5",
+      "prompt_chars": 979,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['van']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_02_van_0_5\",\n  \"class_posterior\": {\n    \"van\": 0.010878218337893486\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "van",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "van",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 979
+      },
+      "final_decision": {
+        "object_id": "uav_02_van_0_5",
+        "predicted_class": "van",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "van",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "van",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_03_bus_7_7",
+      "prompt_chars": 976,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['bus']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_03_bus_7_7\",\n  \"class_posterior\": {\n    \"bus\": 0.723760187625885\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "bus",
+      "llm_confidence": 0.693760187625885,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "bus",
+        "confidence": 0.693760187625885,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 976
+      },
+      "final_decision": {
+        "object_id": "uav_03_bus_7_7",
+        "predicted_class": "bus",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "bus",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 0.8164222195515349,
+          "geometry_residual": 0.65,
+          "llm_class": "bus",
+          "llm_confidence": 0.693760187625885
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_03_car_5_8",
+      "prompt_chars": 978,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['car']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_03_car_5_8\",\n  \"class_posterior\": {\n    \"car\": 0.04740682616829872\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "car",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "car",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 978
+      },
+      "final_decision": {
+        "object_id": "uav_03_car_5_8",
+        "predicted_class": "car",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "car",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "car",
+          "llm_confidence": 0.35
+        }
+      }
+    },
+    {
+      "run_dir": "outputs/reasoning/uavmarine_s2_viewer160_session_recapture_from_detector_conf001_rule_based",
+      "scenario": "s2_coastline_multiview",
+      "provider": "rule_based_aerograph",
+      "object_id": "uav_03_pedestrian_0_7",
+      "prompt_chars": 1000,
+      "prompt": "You are AeroGraph Reasoner: a drone-specialized graph-grounded verifier for cooperative multi-UAV small-object perception.\nUse structured 3D evidence-graph metadata and multi-view UAV crop descriptions to verify the object class.\nReturn only valid JSON following this schema:\n{\n  \"decision\": \"verified|rejected|uncertain\",\n  \"predicted_class\": \"string\",\n  \"confidence\": 0.0,\n  \"evidence_clues\": [],\n  \"missing_evidence\": \"string\",\n  \"recommended_action\": \"string\"\n}\n\nScene: Real Cesium Haeundae Marine City multi-UAV scenario: s2_coastline_multiview.\nCandidate classes: ['pedestrian']\nAmbiguity reasons: ['coastline_reflection', 'geometry_residual', 'high_ambiguity', 'missing_side_view', 'view_disagreement']\nROI hints: ['Marine City road/coast ROI', 'multi-UAV views', 's2_coastline_multiview']\nGraph summary:\n{\n  \"object_id\": \"uav_03_pedestrian_0_7\",\n  \"class_posterior\": {\n    \"pedestrian\": 0.010842110961675644\n  },\n  \"view_count\": 1,\n  \"geometry_residual\": 0.65,\n  \"source\": \"detector_tokens\"\n}",
+      "predicted_class": "pedestrian",
+      "llm_confidence": 0.35,
+      "recommended_action": "targeted re-observation",
+      "final_should_reobserve": true,
+      "final_decision_source": "llm_confirmed",
+      "response_raw": {
+        "decision": "uncertain",
+        "predicted_class": "pedestrian",
+        "confidence": 0.35,
+        "evidence_clues": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view"
+        ],
+        "missing_evidence": "side/oblique confirmation",
+        "recommended_action": "targeted re-observation",
+        "provider": "rule_based_aerograph",
+        "raw_prompt_chars": 1000
+      },
+      "final_decision": {
+        "object_id": "uav_03_pedestrian_0_7",
+        "predicted_class": "pedestrian",
+        "confidence": 1.0,
+        "decision_source": "llm_confirmed",
+        "should_reobserve": true,
+        "reason_tags": [
+          "coastline_reflection",
+          "geometry_residual",
+          "high_ambiguity",
+          "missing_side_view",
+          "view_disagreement"
+        ],
+        "evidence": {
+          "detector_top_class": "pedestrian",
+          "detector_confidence": 1.0,
+          "ambiguity_score": 1.0,
+          "geometry_residual": 0.65,
+          "llm_class": "pedestrian",
+          "llm_confidence": 0.35
+        }
+      }
+    }
+  ],
+  "missing": []
+}

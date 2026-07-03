@@ -73,7 +73,13 @@ class UltralyticsWrapper(DetectorWrapper):
                 if crop_dir is not None:
                     crop_path = Path(crop_dir) / f"{token_id.replace(':', '_')}.jpg"
                     extract_crop(image_path, bbox, crop_path)
-                token_metadata = {"crop_path": str(crop_path) if crop_path is not None else None, "image_path": str(Path(image_path).resolve())}
+                token_metadata = {key: value for key, value in metadata.items() if key != "class_logits"}
+                token_metadata.update(
+                    {
+                        "crop_path": str(crop_path) if crop_path is not None else None,
+                        "image_path": str(Path(image_path).resolve()),
+                    }
+                )
                 if names and cls_id in names:
                     token_metadata["class_name"] = str(names[cls_id])
                 tokens.append(

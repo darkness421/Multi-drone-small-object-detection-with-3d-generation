@@ -1,0 +1,112 @@
+{
+  "rows": [
+    {
+      "finalize_threshold": 0.5,
+      "reobserve_threshold": 0.7,
+      "finalize": 0,
+      "monitor": 1,
+      "reject": 7,
+      "reobserve": 9,
+      "action_load": 10,
+      "high_handled_pct": 100.0,
+      "changed_vs_default": 0,
+      "is_default": false
+    },
+    {
+      "finalize_threshold": 0.5,
+      "reobserve_threshold": 0.75,
+      "finalize": 0,
+      "monitor": 1,
+      "reject": 7,
+      "reobserve": 9,
+      "action_load": 10,
+      "high_handled_pct": 100.0,
+      "changed_vs_default": 0,
+      "is_default": false
+    },
+    {
+      "finalize_threshold": 0.5,
+      "reobserve_threshold": 0.8,
+      "finalize": 0,
+      "monitor": 1,
+      "reject": 7,
+      "reobserve": 9,
+      "action_load": 10,
+      "high_handled_pct": 100.0,
+      "changed_vs_default": 0,
+      "is_default": false
+    },
+    {
+      "finalize_threshold": 0.55,
+      "reobserve_threshold": 0.7,
+      "finalize": 0,
+      "monitor": 1,
+      "reject": 7,
+      "reobserve": 9,
+      "action_load": 10,
+      "high_handled_pct": 100.0,
+      "changed_vs_default": 0,
+      "is_default": false
+    },
+    {
+      "finalize_threshold": 0.55,
+      "reobserve_threshold": 0.75,
+      "finalize": 0,
+      "monitor": 1,
+      "reject": 7,
+      "reobserve": 9,
+      "action_load": 10,
+      "high_handled_pct": 100.0,
+      "changed_vs_default": 0,
+      "is_default": true
+    },
+    {
+      "finalize_threshold": 0.55,
+      "reobserve_threshold": 0.8,
+      "finalize": 0,
+      "monitor": 1,
+      "reject": 7,
+      "reobserve": 9,
+      "action_load": 10,
+      "high_handled_pct": 100.0,
+      "changed_vs_default": 0,
+      "is_default": false
+    },
+    {
+      "finalize_threshold": 0.6,
+      "reobserve_threshold": 0.7,
+      "finalize": 0,
+      "monitor": 1,
+      "reject": 7,
+      "reobserve": 9,
+      "action_load": 10,
+      "high_handled_pct": 100.0,
+      "changed_vs_default": 0,
+      "is_default": false
+    },
+    {
+      "finalize_threshold": 0.6,
+      "reobserve_threshold": 0.75,
+      "finalize": 0,
+      "monitor": 1,
+      "reject": 7,
+      "reobserve": 9,
+      "action_load": 10,
+      "high_handled_pct": 100.0,
+      "changed_vs_default": 0,
+      "is_default": false
+    },
+    {
+      "finalize_threshold": 0.6,
+      "reobserve_threshold": 0.8,
+      "finalize": 0,
+      "monitor": 1,
+      "reject": 7,
+      "reobserve": 9,
+      "action_load": 10,
+      "high_handled_pct": 100.0,
+      "changed_vs_default": 0,
+      "is_default": false
+    }
+  ]
+}

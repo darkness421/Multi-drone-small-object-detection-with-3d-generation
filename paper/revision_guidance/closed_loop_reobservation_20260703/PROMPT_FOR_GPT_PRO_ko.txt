@@ -1,0 +1,51 @@
+GPT Pro에 넣을 프롬프트 초안
+
+아래 폴더의 파일들을 참고해서 ACCV 논문을 보수적으로 수정해줘.
+기존 LaTeX 형식과 figure/table numbering을 깨지 말고, main paper에는 짧게,
+supplementary에는 자세히 넣는 방향으로 해줘.
+
+핵심 조건:
+1. 현재 closed-loop 결과는 fresh commanded Isaac/Cesium camera-pose recapture이다.
+   다만 autonomous physical drone flight/planner benchmark는 아니다.
+2. 따라서 "fully autonomous UAV planner"라고 쓰면 안 된다.
+3. 안전한 표현은 "closed-loop camera-pose/evidence-update validation",
+   "fresh commanded Isaac/Cesium recapture", "targeted re-observation branch
+   validation"이다.
+4. Main paper에는 2-3문장과 compact summary만 넣고, 자세한 table/figure는
+   supplementary로 보내라.
+5. Detector contribution은 SOTA 주장으로 과장하지 말고, controlled
+   EvidenceToken generator로 유지하라.
+6. 3D/LLM은 full benchmark가 아니라 bounded handoff/interface validation으로
+   유지하라.
+
+반영할 수치:
+- routed targeted re-observation hypotheses: 9
+- matched re-observation tokens: 6
+- resolved to monitor: 6
+- unresolved/no matching same-class token: 3
+- mean ambiguity before: 0.923
+- mean raw ambiguity after token insertion: 0.901
+- mean closed-loop ambiguity after evidence completion: 0.775
+- action before: targeted_reobserve 9
+- action after: monitor 6, targeted_reobserve 3
+
+추천 수정 위치:
+- Main: Introduction contribution bullet
+- Main: Method targeted re-observation policy paragraph
+- Main: MarineCity 3D Benchmark Protocol / System-validation result analysis
+- Main: Claim boundary and conclusion
+- Supplementary: supp_marinecity_system_details.tex, after Re-observation-policy analysis
+
+참고 파일:
+- 01_main_paper_revision_map_ko.txt
+- 02_supplement_revision_map_ko.txt
+- 03_reviewer_response_bullets_ko.txt
+- 04_claim_boundary_and_wording_ko.txt
+- tables/closed_loop_reobservation_summary_table.tex
+- tables/closed_loop_reobservation_candidate_table.tex
+- figures/closed_loop_summary_card.png
+- figures/closed_loop_contact_sheet.png
+- figures/closed_loop_ambiguity_before_after.png
+- confidence_sensitivity/closed_loop_confidence_sensitivity.md
+- prompt_audit/aerograph_prompt_audit.md
+- 3d_visual_audit/marinecity_3d_visual_audit_sheet.png

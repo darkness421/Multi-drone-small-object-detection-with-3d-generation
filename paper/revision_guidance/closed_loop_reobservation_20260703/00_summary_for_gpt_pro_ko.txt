@@ -1,0 +1,49 @@
+CoM3D-ACE closed-loop re-observation 보완 실험 요약
+
+핵심 목적
+현재 원고는 MarineCity evidence graph에서 9개 hypothesis를 targeted
+re-observation으로 보낸다고 말하지만, reviewer가 "실제로 재관측을 수행했는가,
+재관측 후 ambiguity/action이 얼마나 변했는가"를 물을 가능성이 큼. 이번 보완
+자료는 그 약점을 줄이기 위해 graph target plan에서 생성한 camera pose로
+fresh Isaac/Cesium targeted recapture를 수행하고, detector token을 closed-loop
+evidence update로 다시 넣어 before/after 변화를 측정한 것이다.
+
+현재 산출물의 성격
+이 결과는 "fresh commanded Isaac/Cesium camera-pose recapture"이다. 즉,
+graph가 만든 targeted camera pose로 새 RGB/depth를 캡처하고 detector token을
+다시 생성했다. 다만 이것은 autonomous physical drone flight/planner benchmark가
+아니므로, 논문에서는 "closed-loop camera-pose/evidence-update validation"으로
+스코프를 제한해야 한다.
+
+주요 수치
+- targeted re-observation으로 라우팅된 hypothesis: 9개
+- matching된 recapture token이 있는 hypothesis: 6개
+- resolved_to_monitor로 바뀐 hypothesis: 6개
+- unresolved로 남은 hypothesis: 3개
+- mean ambiguity before: 0.9233
+- mean raw ambiguity after token insertion: 0.9008
+- mean closed-loop ambiguity after evidence completion: 0.7752
+- action before: targeted_reobserve 9개
+- action after: monitor 6개, targeted_reobserve 3개
+
+논문에서의 가장 안전한 주장
+"We execute a fresh commanded Isaac/Cesium camera-pose recapture over the
+targeted re-observation branch using graph-generated target poses. Of the nine
+hypotheses routed to targeted re-observation, six receive matching
+re-observation evidence and move from targeted re-observation to monitor. Mean
+closed-loop ambiguity decreases from 0.923 to 0.775 under the evidence-completion
+update. The remaining three hypotheses stay in targeted re-observation because
+no matching same-class recapture token is available."
+
+절대 피해야 하는 주장
+- "fully autonomous physical re-observation is completed"
+- "the UAV planner actively recaptured all unresolved objects"
+- "closed-loop control in Isaac is fully validated"
+- "3D reconstruction and LLM verifier are fully benchmarked"
+
+논문 전략
+본문에서는 2-3문장과 작은 table/figure reference 정도로 짧게 넣고, 자세한
+before/after table과 contact sheet는 supplementary에 넣는 것이 좋다. 본문이
+너무 무거워지면 detector contribution, evidence graph, 3D handoff가 모두 얕아
+보일 수 있으므로 "closed-loop branch sanity/evidence update validation"으로
+scope를 명확히 제한한다.

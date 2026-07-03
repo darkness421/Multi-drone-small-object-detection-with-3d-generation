@@ -1,0 +1,28 @@
+{
+  "status": "closed_loop_reobservation_update_complete",
+  "evidence_protocol": "fresh_commanded_isaac_cesium_targeted_reobservation",
+  "evidence_protocol_label": "fresh commanded Isaac/Cesium targeted camera-pose recapture",
+  "base_graph": "/home/oem/projects/multi-uav-marine-city/outputs/graphs/marinecity_viewer160_crossview_evidence_graph",
+  "reobserve_tokens": "outputs/evidence/marinecity_targeted_reobservation_fresh_20260703/evidence_tokens.jsonl",
+  "output_dir": "outputs/reports/live/closed_loop_reobservation_fresh_20260703",
+  "routed_hypotheses": 9,
+  "matched_reobservation_tokens": 6,
+  "resolved_hypotheses": 6,
+  "mean_before_ambiguity": 0.9232716967900443,
+  "mean_after_raw_ambiguity": 0.9007838979607319,
+  "mean_after_closed_loop_ambiguity": 0.7752332264254063,
+  "before_action_counts": {
+    "targeted_reobserve": 9
+  },
+  "after_action_counts": {
+    "monitor": 6,
+    "targeted_reobserve": 3
+  },
+  "support_gain": 0.18,
+  "confidence_gain_weight": 0.08,
+  "max_confidence_gain": 0.04,
+  "max_match_distance": 180.0,
+  "claim_boundary": "Fresh camera poses are generated from the graph target plan and recaptured in Isaac/Cesium; this supports closed-loop camera-pose/evidence-update validation, not autonomous physical drone flight.",
+  "panel_count": 9,
+  "contact_sheet": "outputs/reports/live/closed_loop_reobservation_fresh_20260703/closed_loop_contact_sheet.png"
+}

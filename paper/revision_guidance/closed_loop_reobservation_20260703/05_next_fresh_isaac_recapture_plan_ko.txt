@@ -1,0 +1,38 @@
+Next autonomous control validation plan
+
+왜 필요한가
+현재 closed-loop 결과는 fresh commanded Isaac/Cesium camera-pose recapture까지
+완료했다. Reviewer 방어력은 올라가지만, 아직 autonomous physical UAV planner
+benchmark는 아니다. 더 확실하게 하려면 per-hypothesis camera pose뿐 아니라
+드론 제어/스케줄링/충돌 회피/mission queue까지 포함한 closed-loop control
+validation으로 확장해야 한다.
+
+목표
+1. 기존 graph에서 targeted_reobserve 9개 hypothesis를 읽는다.
+2. 각 hypothesis의 missing_uav_id와 projected center를 사용해 per-hypothesis
+   camera pose를 만든다.
+3. Isaac/Cesium stage에서 새 frame_id로 targeted capture를 수행한다. (완료)
+4. 새 이미지에 detector를 실행한다. (완료)
+5. detection token에 hypothesis_id, scenario_id, requested_uav_id를 기록한다. (완료)
+6. graph에 fresh token을 다시 넣어 before/after ambiguity/action을 계산한다. (완료)
+7. 다음 단계에서는 UAV mission queue, pose feasibility, action latency, and
+   repeated re-observation attempts를 추가한다.
+
+구현/검증 완료한 코드
+- scripts/build_marinecity_targeted_reobservation_plan.py
+- simulation/isaac/capture_realcities_multiuav.py (--camera-plan)
+- scripts/run_marinecity_detector_smoke.py (hypothesis metadata 보존)
+- scripts/build_marinecity_closed_loop_reobservation.py
+- scripts/ubuntu/start_marinecity_targeted_reobservation_queue.sh
+
+논문에 반영할 수 있는 강한 결과 조건
+- fresh targeted capture가 9개 hypothesis 중 6개를 실제 추가 evidence와
+  match한다. (현재 완료)
+- ambiguity가 0.923 -> 0.775로 내려간다. (현재 완료)
+- action transition이 targeted_reobserve -> monitor 또는 finalize로 실제 발생한다.
+  (현재 6개가 monitor로 전환)
+
+만약 fresh capture가 일부 실패하면
+실패 자체도 중요한 결과로 정리할 수 있다. 예를 들어 "occlusion or camera-pose
+coverage failure keeps the hypothesis in the re-observation queue"라고 쓰면,
+시스템이 무리하게 확정하지 않는 safety behavior로 해석할 수 있다.

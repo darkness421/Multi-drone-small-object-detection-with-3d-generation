@@ -23,8 +23,20 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def view_metadata(capture_plan: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    return {str(view["uav_id"]): view for view in capture_plan.get("views", [])}
+def view_metadata(capture_plan: dict[str, Any]) -> dict[str, dict[str, dict[str, Any]]]:
+    by_uav: dict[str, dict[str, Any]] = {}
+    by_frame: dict[str, dict[str, Any]] = {}
+    for view in capture_plan.get("views", []):
+        uav_id = str(view.get("uav_id", ""))
+        if uav_id:
+            by_uav[uav_id] = view
+        for key in ("frame_id", "image_id"):
+            value = str(view.get(key, ""))
+            if value:
+                by_frame[value] = view
+                if not value.endswith("_rgb"):
+                    by_frame[f"{value}_rgb"] = view
+    return {"by_uav": by_uav, "by_frame": by_frame}
 
 
 def draw_preview(image_path: Path, tokens: list[EvidenceToken], out_path: Path) -> None:
@@ -63,7 +75,9 @@ def main() -> None:
     out_dir = Path(args.out_dir)
     summary = load_json(summary_path)
     capture_plan = load_json(capture_plan_path)
-    metadata_by_uav = view_metadata(capture_plan)
+    metadata_index = view_metadata(capture_plan)
+    metadata_by_uav = metadata_index["by_uav"]
+    metadata_by_frame = metadata_index["by_frame"]
     capture_root = summary_path.parent
 
     wrapper = UltralyticsWrapper(
@@ -80,9 +94,18 @@ def main() -> None:
     for frame in summary.get("frames", []):
         uav_id = str(frame.get("uav_id", "uav_unknown"))
         image_path = capture_root / str(frame["rgb_path"])
-        view = metadata_by_uav.get(uav_id, {})
+        frame_id = str(frame.get("frame_id", ""))
+        image_id = str(frame.get("image_id", image_path.stem))
+        view = (
+            metadata_by_frame.get(image_path.stem)
+            or metadata_by_frame.get(image_id)
+            or metadata_by_frame.get(frame_id)
+            or metadata_by_uav.get(uav_id, {})
+        )
+        view_meta = view.get("metadata", {}) if isinstance(view.get("metadata"), dict) else {}
         metadata = {
             "image_id": image_path.stem,
+            "frame_id": frame_id or view.get("frame_id", image_path.stem),
             "uav_id": uav_id,
             "timestamp": view.get("timestamp", 0.0),
             "camera_intrinsic": view.get("camera_intrinsic", []),
@@ -90,6 +113,21 @@ def main() -> None:
             "uav_pose": list(view.get("uav_pose", {}).values()) if isinstance(view.get("uav_pose"), dict) else view.get("uav_pose", []),
             "depth_path": str(capture_root / str(frame.get("depth_npy_path", ""))) if frame.get("depth_npy_path") else None,
             "camera_pose_path": str(capture_root / str(view.get("pose_path", ""))) if view.get("pose_path") else None,
+            "scenario_id": frame.get("scenario_id", view_meta.get("scenario_id", view.get("scene_id", ""))),
+            "scenario_short": frame.get("scenario_short", view_meta.get("scenario_short", "")),
+            "hypothesis_id": frame.get("hypothesis_id", view_meta.get("hypothesis_id", "")),
+            "target_class": frame.get("class_name", view_meta.get("class_name", "")),
+            "requested_missing_uav_ids": frame.get("requested_missing_uav_ids", view_meta.get("requested_missing_uav_ids", [])),
+            "before_uav_ids": frame.get("before_uav_ids", view_meta.get("before_uav_ids", [])),
+            "before_view_count": frame.get("before_view_count", view_meta.get("before_view_count", None)),
+            "before_ambiguity": frame.get("before_ambiguity", view_meta.get("before_ambiguity", None)),
+            "before_action": frame.get("before_action", view_meta.get("before_action", "")),
+            "target_scene_units": frame.get("target_scene_units", view_meta.get("target_scene_units", [])),
+            "look_at_target": frame.get("look_at_target", []),
+            "camera_position": frame.get("camera_position", []),
+            "source": "real_cesium_marinecity_targeted_reobservation"
+            if frame.get("hypothesis_id") or view_meta.get("hypothesis_id")
+            else "real_cesium_marinecity_multiuav",
         }
         tokens = wrapper.predict(image_path, metadata, crop_dir=crop_dir / uav_id)
         all_tokens.extend(tokens)

@@ -1,0 +1,30 @@
+{
+  "status": "marinecity_3d_visual_audit_complete",
+  "sheet": "outputs/reports/live/marinecity_3d_visual_audit/marinecity_3d_visual_audit_sheet.png",
+  "items": [
+    {
+      "title": "Input real-Cesium UAV views",
+      "path": "paper/figures/results/marinecity_system/paper_fig04_marinecity_clean_qualitative.png"
+    },
+    {
+      "title": "Nerfacto held-out render",
+      "path": "paper/figures/results/marinecity_system/marinecity_nerfacto_eval_contact_sheet.png"
+    },
+    {
+      "title": "Instant-NGP held-out render",
+      "path": "paper/figures/results/marinecity_system/marinecity_instant_ngp_eval_contact_sheet.png"
+    },
+    {
+      "title": "3DGS/Splatfacto held-out render",
+      "path": "paper/figures/results/marinecity_system/marinecity_splatfacto_eval_contact_sheet.png"
+    },
+    {
+      "title": "Depth-backed view consistency",
+      "path": "paper/figures/results/marinecity_system/marinecity_depth_view_consistency_sanity.png"
+    },
+    {
+      "title": "Nerfacto iteration sweep",
+      "path": "paper/figures/results/marinecity_system/marinecity_nerfacto_iteration_sweep.png"
+    }
+  ]
+}

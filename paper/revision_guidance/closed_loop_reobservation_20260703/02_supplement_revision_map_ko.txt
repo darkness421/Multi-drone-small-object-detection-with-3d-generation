@@ -1,0 +1,79 @@
+Supplementary 수정 지도
+
+주의
+이 문서는 supplementary에 넣을 closed-loop 보강 내용을 정리한 것이다. 기존
+supplementary_patch_bundle.tex는 직접 수정하지 않았다.
+
+추천 삽입 위치
+paper/sections/supp_marinecity_system_details.tex
+
+가장 자연스러운 위치
+1. "Re-observation-policy analysis." 문단 직후
+2. "Graph construction and decision-policy details." 문단 직전
+
+이유
+기존 supplementary는 17개 graph hypothesis에 대해 action policy가 9개를
+targeted re-observation으로 보낸다는 점까지만 설명한다. 따라서 그 직후에
+"그 9개 중 재관측 evidence가 들어왔을 때 어떻게 바뀌는가"를 보여주는 것이
+리뷰어 입장에서 가장 흐름이 좋다.
+
+서플에 추가할 핵심 구성
+1. Closed-loop re-observation evidence-update summary table
+   - candidate file:
+     tables/closed_loop_reobservation_summary_table.tex
+   - 보여줄 내용:
+     routed hypotheses 9, matched tokens 6, resolved 6, before ambiguity
+     0.923, after ambiguity 0.775, action transition 9 O -> 6 M / 3 O.
+
+2. Per-hypothesis before/after table
+   - candidate file:
+     tables/closed_loop_reobservation_candidate_table.tex
+   - 보여줄 내용:
+     hypothesis id, class, views before/after, ambiguity before/after, action
+     before/after, result.
+
+3. Contact sheet figure
+   - candidate figure:
+     figures/closed_loop_contact_sheet.png
+   - 목적:
+     reviewer에게 실제로 어떤 hypothesis들이 before/after로 바뀌었는지
+     qualitative하게 보여준다.
+
+4. Before/after ambiguity plot
+   - candidate figure:
+     figures/closed_loop_ambiguity_before_after.png
+   - 목적:
+     numeric table만으로는 약하므로 "6개는 내려가고 3개는 유지된다"는 패턴을
+     시각적으로 보여준다.
+
+서플 삽입 후보 문단
+"We add a closed-loop evidence-update diagnostic for the nine hypotheses
+selected by the targeted re-observation action. The diagnostic uses fresh
+commanded Isaac/Cesium camera poses generated from the graph target plan and
+therefore evaluates camera-pose/evidence-update closure rather than a fully
+autonomous physical UAV planner. A recapture token is considered useful when
+it matches the routed class and missing-view request within the graph matching
+gate. Six of the nine routed hypotheses receive such evidence and transition
+from targeted re-observation to monitor after graph recomputation; three remain
+queued because no matching same-class recapture token is available. Mean
+closed-loop ambiguity decreases from 0.923 to 0.775."
+
+서플 caption 후보 - contact sheet
+"Closed-loop re-observation evidence update for the nine MarineCity hypotheses
+routed to targeted re-observation. Each panel shows the before state, the
+fresh commanded recapture evidence when available, and the recomputed action.
+Six hypotheses receive additional real-Cesium evidence and move to monitor,
+while three remain in the targeted re-observation queue due to missing
+same-class follow-up evidence."
+
+서플 caption 후보 - ambiguity plot
+"Before/after ambiguity under targeted re-observation evidence. Matching
+real-Cesium recapture tokens reduce ambiguity for six hypotheses, while
+hypotheses without matching same-class tokens remain unchanged and are kept in
+the re-observation queue."
+
+서플에서 같이 써야 하는 한계 문장
+"Because this diagnostic commands Isaac/Cesium camera poses but does not execute
+autonomous physical UAV flight control, we report it as closed-loop
+camera-pose/evidence-update validation rather than as a completed autonomous
+planner benchmark."

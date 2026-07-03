@@ -1,0 +1,39 @@
+Reviewer response bullet draft
+
+Reviewer concern
+"The paper routes ambiguous hypotheses to targeted re-observation, but it does
+not show whether re-observation is actually executed or whether it improves the
+graph state."
+
+Response bullet 1
+We added a fresh commanded Isaac/Cesium camera-pose/evidence-update diagnostic
+for the nine MarineCity hypotheses selected by the targeted re-observation
+policy.
+
+Response bullet 2
+The diagnostic generates targeted camera poses from the evidence graph, captures
+fresh Isaac/Cesium RGB/depth frames, runs the detector on those frames, matches
+the resulting EvidenceTokens back to the routed hypotheses, recomputes graph
+support/ambiguity, and reapplies the action policy.
+
+Response bullet 3
+Six of the nine routed hypotheses receive matching same-class re-observation
+evidence and transition from targeted_reobserve to monitor. Three remain in
+targeted re-observation because no matching same-class recapture token is
+available.
+
+Response bullet 4
+Mean closed-loop ambiguity decreases from 0.923 to 0.775. This shows that the
+feedback branch can reduce ambiguity when missing-view evidence is supplied,
+rather than merely reporting re-observation as an unexecuted action.
+
+Response bullet 5
+We explicitly scope the result as commanded camera-pose/evidence-update
+validation in Isaac/Cesium. We do not claim a completed autonomous physical UAV
+planner or large-scale closed-loop flight benchmark.
+
+Korean explanation for rebuttal tone
+이 답변은 과장하지 않는 것이 중요하다. "재관측을 완전히 자동으로 수행했다"라고
+쓰면 reviewer가 다시 공격할 수 있다. 대신 "기존 약점이었던 unexecuted
+re-observation action을 fresh commanded camera-pose/evidence update로
+검증했다"라고 방어하는 것이 안전하다.

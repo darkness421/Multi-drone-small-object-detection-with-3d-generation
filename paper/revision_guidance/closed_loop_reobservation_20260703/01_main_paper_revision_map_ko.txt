@@ -1,0 +1,84 @@
+Main paper 수정 지도
+
+주의
+아래 내용은 기존 main LaTeX를 직접 바꾸지 않고, GPT Pro 또는 수동 수정 시
+어디를 어떻게 바꾸면 되는지 정리한 안내문이다.
+
+1. Introduction
+추천 수정
+- contribution bullet 중 evidence graph/re-observation 관련 문장에
+  "fresh commanded camera-pose/evidence-update validation"을 한 문장 추가한다.
+- detector SOTA처럼 보이지 않게, "the detector serves as a controlled
+  EvidenceToken generator"라는 기존 claim boundary를 유지한다.
+
+삽입 후보 문장
+"We further validate the targeted re-observation branch through fresh
+commanded Isaac/Cesium camera-pose recapture. The graph-generated target poses
+provide matching follow-up evidence for six of nine routed hypotheses, moving
+them from targeted re-observation to monitor and reducing mean closed-loop
+ambiguity from 0.923 to 0.775."
+
+2. Method / Evidence graph policy
+추천 수정 위치
+- paper/sections/03_method_draft.tex
+- targeted re-observation action을 설명하는 문단 직후
+
+추천 수정
+- targeted_reobserve가 "바로 최종 class를 확정하는 action"이 아니라,
+  missing view 또는 high ambiguity hypothesis에 대해 추가 evidence를 요청하는
+  graph action이라는 점을 더 명확히 한다.
+- 현재 결과는 fresh commanded capture이지만 autonomous physical flight가 아니므로
+  "closed-loop camera-pose/evidence-update validation"이라고 써야 한다.
+
+삽입 후보 문장
+"For the current validation, the action is evaluated as a closed-loop
+camera-pose/evidence update: routed hypotheses generate targeted Isaac/Cesium
+camera poses, the resulting detector tokens are matched back to the hypotheses,
+the graph support and ambiguity terms are recomputed, and the policy is
+re-applied to measure whether the action changes."
+
+3. MarineCity 3D Benchmark Protocol / System-validation result analysis
+추천 수정 위치
+- paper/sections/06_marinecity_3d_readiness.tex
+- "The action distribution is 0 finalize, 1 monitor, 7 reject, and 9 targeted
+  re-observation hypotheses." 직후
+- 또는 "System-validation result analysis" 문단에서 high mean ambiguity를
+  설명한 직후
+
+본문에 넣을 수 있는 짧은 결과 문장
+"We additionally run a fresh commanded camera-pose recapture for the nine
+targeted re-observation hypotheses. Six hypotheses receive matching
+real-Cesium recapture evidence and are downgraded from targeted re-observation
+to monitor; the remaining three stay in the re-observation queue because no
+matching same-class recapture token is available. The mean closed-loop
+ambiguity decreases from 0.923 to 0.775, supporting the intended
+evidence-completion role of the feedback branch."
+
+추천 figure/table reference
+- 본문에는 큰 contact sheet를 넣기보다 작은 before/after bar plot 또는 compact
+  summary table 1개만 권장.
+- 자세한 per-hypothesis table과 contact sheet는 supplementary로 보내는 것이
+  안전하다.
+
+4. Claim boundary paragraph
+추천 수정 위치
+- paper/sections/06_marinecity_3d_readiness.tex 마지막 Claim boundary
+
+수정 방향
+기존 claim boundary에 다음을 추가한다.
+"The closed-loop result is reported as commanded Isaac/Cesium camera-pose and
+evidence-update validation, not as a completed autonomous physical UAV planner
+benchmark."
+
+5. Conclusion
+추천 수정
+- system validation의 약점을 숨기지 말고, controlled detector + evidence graph
+  + fresh commanded recapture + real-Cesium handoff로 정리한다.
+- future work에는 "autonomous flight control and larger scenario count"를
+  넣는 편이 좋다.
+
+결론 삽입 후보 문장
+"The MarineCity validation remains intentionally bounded, but the added fresh
+commanded recapture shows that the graph feedback branch can absorb
+re-observation evidence and reduce ambiguous actions rather than merely
+listing re-observation requests."

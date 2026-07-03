@@ -382,6 +382,11 @@ def main() -> None:
     parser.add_argument("--actor-layer", default=None, help="Actor-only scenario layer to append to the USD session layer.")
     parser.add_argument("--root", default=None, help="Optional CoM3D-ACE root prim. Auto-detected when omitted.")
     parser.add_argument("--out-dir", default="outputs/isaac_exports/marinecity_real_cesium_multiuav_v1")
+    parser.add_argument(
+        "--camera-plan",
+        default=None,
+        help="Optional JSON plan with per-frame camera_position/look_at_target entries for targeted re-observation.",
+    )
     parser.add_argument("--width", type=int, default=1280)
     parser.add_argument("--height", type=int, default=720)
     parser.add_argument("--active-gpu", type=int, default=int(os.environ["ISAAC_ACTIVE_GPU"]) if os.environ.get("ISAAC_ACTIVE_GPU") else None)
@@ -513,18 +518,54 @@ def main() -> None:
                 "using fixed UAV camera poses over the real Cesium stage.",
                 flush=True,
             )
+        camera_plan: dict[str, Any] | None = None
+        planned_frames: list[dict[str, Any]] = []
+        if args.camera_plan:
+            camera_plan_path = Path(args.camera_plan)
+            camera_plan = json.loads(camera_plan_path.read_text(encoding="utf-8"))
+            planned_frames = list(camera_plan.get("frames", []))
+            if not planned_frames:
+                raise RuntimeError(f"Camera plan has no frames: {camera_plan_path}")
+            print(f"[real_capture] loaded camera plan: {camera_plan_path} frames={len(planned_frames)}", flush=True)
+        else:
+            for index, uav_path in enumerate(uav_paths, start=1):
+                uav_id = uav_path.rsplit("/", 1)[-1]
+                valid, eye = _prim_position(stage, uav_path)
+                if not valid or not eye:
+                    raise RuntimeError(f"UAV anchor did not resolve: {uav_path}")
+                if forced_profile is not None:
+                    eye = list(forced_profile["eyes"][uav_id])
+                elif not anchor_positions_resolved:
+                    eye = list(FALLBACK_CAMERA_PROFILE["eyes"][uav_id])
+                planned_frames.append(
+                    {
+                        "frame_id": f"frame_{index:03d}_{uav_id}",
+                        "image_id": f"frame_{index:03d}_{uav_id}",
+                        "uav_id": uav_id,
+                        "camera_position": eye,
+                        "look_at_target": target,
+                        "altitude_m": float(eye[2]),
+                        "view_angle": "multi_uav_real_cesium",
+                        "weather": "clear",
+                        "lighting": "day",
+                    }
+                )
+
         frames = []
         views = []
-        for index, uav_path in enumerate(uav_paths, start=1):
-            uav_id = uav_path.rsplit("/", 1)[-1]
-            valid, eye = _prim_position(stage, uav_path)
-            if not valid or not eye:
-                raise RuntimeError(f"UAV anchor did not resolve: {uav_path}")
-            if forced_profile is not None:
-                eye = list(forced_profile["eyes"][uav_id])
-            elif not anchor_positions_resolved:
-                eye = list(FALLBACK_CAMERA_PROFILE["eyes"][uav_id])
-            camera_path = f"{camera_root}/{uav_id}_Camera"
+        for index, planned in enumerate(planned_frames, start=1):
+            uav_id = str(planned["uav_id"])
+            if uav_id not in UAV_IDS:
+                raise RuntimeError(f"Unsupported UAV id in camera plan: {uav_id}")
+            stem = str(planned.get("frame_id") or planned.get("image_id") or f"frame_{index:03d}_{uav_id}")
+            eye = [float(v) for v in planned.get("camera_position", [])]
+            if len(eye) != 3:
+                raise RuntimeError(f"Camera plan frame lacks 3D camera_position: {stem}")
+            frame_target = planned.get("look_at_target") or planned.get("target_scene_units") or target
+            target_for_frame = [float(v) for v in frame_target]
+            if len(target_for_frame) != 3:
+                raise RuntimeError(f"Camera plan frame lacks 3D look_at_target: {stem}")
+            camera_path = f"{camera_root}/{stem}_Camera"
             focal_length = float(args.focal_length if args.focal_length is not None else camera_profile.get("focal_length", 34.0))
             horizontal_aperture_offset = float(
                 args.horizontal_aperture_offset
@@ -540,15 +581,16 @@ def main() -> None:
                 stage,
                 camera_path,
                 eye,
-                target,
+                target_for_frame,
                 focal_length=focal_length,
                 horizontal_aperture_offset=horizontal_aperture_offset,
                 vertical_aperture_offset=vertical_aperture_offset,
             )
             _wait(simulation_app, 48, f"camera transform settle {uav_id}")
-            stem = f"frame_{index:03d}_{uav_id}"
             capture = _capture_one(rep, simulation_app, camera_path, out_dir, stem, args.width, args.height, args.render_warmup)
             frame = {
+                "frame_id": stem,
+                "image_id": f"{stem}_rgb",
                 "uav_id": uav_id,
                 "camera_prim": camera_path,
                 "rgb_path": capture["rgb_path"],
@@ -557,25 +599,58 @@ def main() -> None:
                 "rgb_available": capture["rgb_available"],
                 "depth_available": capture["depth_available"],
                 "camera_position": eye,
-                "look_at_target": target,
+                "look_at_target": target_for_frame,
             }
+            for key in (
+                "hypothesis_id",
+                "scenario_id",
+                "scenario_short",
+                "class_name",
+                "requested_missing_uav_ids",
+                "before_uav_ids",
+                "before_view_count",
+                "before_ambiguity",
+                "before_action",
+                "target_scene_units",
+            ):
+                if key in planned:
+                    frame[key] = planned[key]
             frames.append(frame)
+            metadata = {
+                "stage": str(args.stage),
+                "real_cesium": True,
+                "camera_plan": str(args.camera_plan or ""),
+            }
+            for key in (
+                "hypothesis_id",
+                "scenario_id",
+                "scenario_short",
+                "class_name",
+                "requested_missing_uav_ids",
+                "before_uav_ids",
+                "before_view_count",
+                "before_ambiguity",
+                "before_action",
+                "target_scene_units",
+            ):
+                if key in planned:
+                    metadata[key] = planned[key]
             views.append(
                 {
-                    "scene_id": "marinecity_real_cesium_multiuav",
-                    "frame_id": f"marinecity_real_cesium_{uav_id}",
-                    "image_id": stem,
+                    "scene_id": planned.get("scenario_id", "marinecity_real_cesium_multiuav"),
+                    "frame_id": stem,
+                    "image_id": f"{stem}_rgb",
                     "uav_id": uav_id,
                     "timestamp": 0.0,
-                    "altitude_m": float(eye[2]),
-                    "view_angle": "multi_uav_real_cesium",
-                    "weather": "clear",
-                    "lighting": "day",
+                    "altitude_m": float(planned.get("altitude_m", eye[2])),
+                    "view_angle": planned.get("view_angle", "targeted_reobservation_missing_view" if args.camera_plan else "multi_uav_real_cesium"),
+                    "weather": planned.get("weather", "clear"),
+                    "lighting": planned.get("lighting", "day"),
                     "object_density": "visdrone_overlay_6",
                     "uav_pose": {"x": eye[0], "y": eye[1], "z": eye[2], "roll": 0.0, "pitch": 0.0, "yaw": 0.0},
                     "camera_intrinsic": [[780.0, 0.0, args.width / 2.0], [0.0, 780.0, args.height / 2.0], [0.0, 0.0, 1.0]],
                     "camera_extrinsic": camera_extrinsic,
-                    "metadata": {"stage": str(args.stage), "real_cesium": True},
+                    "metadata": metadata,
                 }
             )
 
@@ -607,6 +682,8 @@ def main() -> None:
             "hidden_debug_markers": hidden_debug_markers,
             "georeference_readback": _read_georef(stage),
             "camera_profile": camera_profile,
+            "camera_plan": str(args.camera_plan or ""),
+            "camera_plan_status": (camera_plan or {}).get("status", "") if camera_plan else "",
             "anchor_positions_resolved": anchor_positions_resolved,
             "prim_status": prim_status,
             "object_marker_count": len(object_paths),

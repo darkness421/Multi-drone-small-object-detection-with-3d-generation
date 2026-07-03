@@ -1,0 +1,68 @@
+# Closed-loop 재관측 보완 실험 정리
+
+작성일: 2026-07-03
+
+## 리뷰 우려
+
+현재 논문은 ambiguous hypothesis를 `targeted_reobserve`로 routing하는 것까지는 보여주지만, 실제로 재관측 evidence를 graph에 다시 넣었을 때 ambiguity/action이 바뀌는지를 보여주지 못한다. 즉, "routing했다"와 "routing이 유용했다" 사이의 실험적 연결이 약하다.
+
+## 이번에 만든 보완 실험
+
+- Before 상태: `outputs/graphs/marinecity_viewer160_crossview_evidence_graph/`의 78-token real-Cesium viewer160 graph.
+- 대상: before graph에서 `targeted_reobserve`로 라우팅된 9개 hypothesis.
+- After evidence: graph target plan으로 생성한 fresh Isaac/Cesium recapture RGB/depth에 detector를 다시 실행한 token(`outputs/evidence/marinecity_targeted_reobservation_fresh_20260703/evidence_tokens.jsonl`)을 missing UAV 방향, scenario, class 기준으로 매칭.
+- Graph update: 매칭된 re-observation EvidenceToken을 기존 hypothesis에 삽입하고, view count / confidence / ambiguity / action을 재계산.
+- 산출 위치: `outputs/reports/live/closed_loop_reobservation_fresh_20260703/`
+
+주의: 이번 산출물은 fresh Isaac/Cesium camera pose를 새로 명령해 캡처한 결과이지만, 완전 자율 physical drone flight/planner benchmark는 아니다. 논문에 바로 넣을 경우 **closed-loop camera-pose/evidence-update validation**으로 claim boundary를 명확히 써야 한다.
+
+## 핵심 결과
+
+- Reobserve 대상 hypothesis: 9개
+- Missing-view re-observation token 매칭 성공: 6개
+- `targeted_reobserve`에서 `monitor`로 전환: 6개
+- 매칭 실패로 계속 `targeted_reobserve`: 3개
+- Routed subset mean ambiguity:
+  - before A(o): 0.923
+  - raw token insertion after A(o): 0.901
+  - closed-loop missing-evidence completion after A(o): 0.775
+
+요약 문장 후보:
+
+> In a fresh commanded Isaac/Cesium camera-pose recapture over MarineCity, 6 of the 9 hypotheses originally routed to targeted re-observation obtained matching missing-view EvidenceTokens. Updating the graph with these tokens moved all six from targeted re-observation to monitoring and reduced the routed-set mean ambiguity from 0.923 to 0.775 under the closed-loop evidence-completion score. The remaining three cases did not yield same-class evidence in the requested view and therefore remained routed for further re-observation.
+
+## 논문에 나중에 넣을 수 있는 보강 설명
+
+1. 본문 5.2절 또는 MarineCity validation 끝에 `Closed-loop re-observation evidence update` 소절 추가.
+2. Fig. 3의 dotted feedback arrow가 단순 개념이 아니라 graph-generated target pose -> fresh recapture token -> graph update까지 수행되었음을 설명.
+3. Table 후보:
+   - hypothesis ID
+   - before views
+   - before A(o)
+   - before action
+   - requested UAV
+   - matched token
+   - after views
+   - after A(o)
+   - after action
+4. Claim boundary:
+   - 지금은 closed-loop camera-pose/evidence-update validation.
+   - autonomous flight control/planner까지 검증한 것은 아님.
+5. 실패 케이스도 포함:
+   - 3/9는 matching same-class token이 없어 계속 reobserve.
+   - 이는 시스템이 무조건 finalize하는 것이 아니라 missing evidence가 실제로 들어오지 않으면 보수적으로 유지한다는 장점으로 설명 가능.
+
+## 생성된 이미지
+
+- 전체 contact sheet: `closed_loop_contact_sheet.png`
+- Before/after ambiguity bar: `figures/closed_loop_ambiguity_before_after.png`
+- Action distribution: `figures/closed_loop_action_distribution.png`
+- Scenario별 outcome: `figures/closed_loop_outcomes_by_scenario.png`
+- Hypothesis별 panel 9개: `panels/*_closed_loop.png`
+
+## 다음 보완 단계
+
+다음 단계에서 더 강하게 만들려면 autonomous mission queue, pose feasibility,
+latency, repeated re-observation attempts까지 포함한다. 지금 산출물만으로는
+fresh commanded camera-pose closure를 주장하고, autonomous physical flight는
+future/extended validation으로 남기는 것이 안전하다.

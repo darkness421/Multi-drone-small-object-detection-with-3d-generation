@@ -1,0 +1,7 @@
+min_confidence,routed_hypotheses,matched_reobservation_tokens,resolved_hypotheses,mean_before_ambiguity,mean_after_raw_ambiguity,mean_after_closed_loop_ambiguity,after_monitor,after_targeted_reobserve,run_dir
+0.0,9,6,6,0.9232716967900443,0.9007838979607319,0.7752332264254063,6,3,/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p00
+0.01,9,6,6,0.9232716967900443,0.9007838979607319,0.7752332264254063,6,3,/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p01
+0.05,9,5,5,0.9232716967900443,0.9001913440303118,0.794640672494986,5,4,/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p05
+0.1,9,4,4,0.9232716967900443,0.8983647733895963,0.8128141018542707,4,5,/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p10
+0.25,9,4,4,0.9232716967900443,0.8968945584303571,0.8094075216513861,4,5,/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p25
+0.5,9,3,3,0.9232716967900443,0.8882635026942419,0.8151483734782082,3,6,/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p50

@@ -1,0 +1,10 @@
+finalize_threshold,reobserve_threshold,finalize,monitor,reject,reobserve,action_load,high_handled_pct,changed_vs_default,is_default
+0.5,0.7,0,1,7,9,10,100.0,0,False
+0.5,0.75,0,1,7,9,10,100.0,0,False
+0.5,0.8,0,1,7,9,10,100.0,0,False
+0.55,0.7,0,1,7,9,10,100.0,0,False
+0.55,0.75,0,1,7,9,10,100.0,0,True
+0.55,0.8,0,1,7,9,10,100.0,0,False
+0.6,0.7,0,1,7,9,10,100.0,0,False
+0.6,0.75,0,1,7,9,10,100.0,0,False
+0.6,0.8,0,1,7,9,10,100.0,0,False

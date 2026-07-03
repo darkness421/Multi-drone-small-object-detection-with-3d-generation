@@ -1,0 +1,74 @@
+[
+  {
+    "min_confidence": 0.0,
+    "routed_hypotheses": 9,
+    "matched_reobservation_tokens": 6,
+    "resolved_hypotheses": 6,
+    "mean_before_ambiguity": 0.9232716967900443,
+    "mean_after_raw_ambiguity": 0.9007838979607319,
+    "mean_after_closed_loop_ambiguity": 0.7752332264254063,
+    "after_monitor": 6,
+    "after_targeted_reobserve": 3,
+    "run_dir": "/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p00"
+  },
+  {
+    "min_confidence": 0.01,
+    "routed_hypotheses": 9,
+    "matched_reobservation_tokens": 6,
+    "resolved_hypotheses": 6,
+    "mean_before_ambiguity": 0.9232716967900443,
+    "mean_after_raw_ambiguity": 0.9007838979607319,
+    "mean_after_closed_loop_ambiguity": 0.7752332264254063,
+    "after_monitor": 6,
+    "after_targeted_reobserve": 3,
+    "run_dir": "/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p01"
+  },
+  {
+    "min_confidence": 0.05,
+    "routed_hypotheses": 9,
+    "matched_reobservation_tokens": 5,
+    "resolved_hypotheses": 5,
+    "mean_before_ambiguity": 0.9232716967900443,
+    "mean_after_raw_ambiguity": 0.9001913440303118,
+    "mean_after_closed_loop_ambiguity": 0.794640672494986,
+    "after_monitor": 5,
+    "after_targeted_reobserve": 4,
+    "run_dir": "/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p05"
+  },
+  {
+    "min_confidence": 0.1,
+    "routed_hypotheses": 9,
+    "matched_reobservation_tokens": 4,
+    "resolved_hypotheses": 4,
+    "mean_before_ambiguity": 0.9232716967900443,
+    "mean_after_raw_ambiguity": 0.8983647733895963,
+    "mean_after_closed_loop_ambiguity": 0.8128141018542707,
+    "after_monitor": 4,
+    "after_targeted_reobserve": 5,
+    "run_dir": "/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p10"
+  },
+  {
+    "min_confidence": 0.25,
+    "routed_hypotheses": 9,
+    "matched_reobservation_tokens": 4,
+    "resolved_hypotheses": 4,
+    "mean_before_ambiguity": 0.9232716967900443,
+    "mean_after_raw_ambiguity": 0.8968945584303571,
+    "mean_after_closed_loop_ambiguity": 0.8094075216513861,
+    "after_monitor": 4,
+    "after_targeted_reobserve": 5,
+    "run_dir": "/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p25"
+  },
+  {
+    "min_confidence": 0.5,
+    "routed_hypotheses": 9,
+    "matched_reobservation_tokens": 3,
+    "resolved_hypotheses": 3,
+    "mean_before_ambiguity": 0.9232716967900443,
+    "mean_after_raw_ambiguity": 0.8882635026942419,
+    "mean_after_closed_loop_ambiguity": 0.8151483734782082,
+    "after_monitor": 3,
+    "after_targeted_reobserve": 6,
+    "run_dir": "/home/oem/projects/multi-uav-marine-city/outputs/reports/live/closed_loop_reobservation_confidence_sensitivity/runs/conf_0p50"
+  }
+]
