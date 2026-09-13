@@ -16,8 +16,6 @@ from pathlib import Path
 
 import numpy as np
 import torch
-import ultralytics
-from ultralytics import YOLO
 
 
 def sha256(path: Path) -> str:
@@ -66,6 +64,10 @@ def main() -> int:
     parser.add_argument("--nms-iou", type=float, default=0.6)
     parser.add_argument("--max-sequences-per-family", type=int)
     args = parser.parse_args()
+
+    import ultralytics
+    from ultralytics import YOLO
+
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
     torch.manual_seed(0)
