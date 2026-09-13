@@ -1,0 +1,15 @@
+{
+  "command": "<EXPERIMENT_ROOT>/scripts/audit_temporal_protocol.py --output-dir <EXPERIMENT_ROOT>/results_raw/e0",
+  "outputs": {
+    "channel_audit.json": "e0e9d23e864979859d98e69ef9d6084fe1e996187c603650dfa7cdcea74d0e48",
+    "evaluator_sanity_tests.json": "05c3af01b5c7b8180bc62c3485162095b700c37a774fc3af3112a50fce8366b6",
+    "input_manifest.csv": "bd74016b0ddaa85f28d4b211db84d863470d3d1e4ab030ec69819e2c8cb9c57d",
+    "protocol_audit.md": "d8b5fab2a796af134be98446415201d11319f68ada37adf72c24e8924aa97b42",
+    "stage_counts.csv": "ef2167f38d06f45d52fbac78666296a3fdd712dac5705bf69a7776116a5245e3",
+    "tracker_runtime_configs.json": "897e48bb9c339a8232777d9a451be02c115b29e6293b9634f91712ed3b8bdc8b"
+  },
+  "runtime_seconds": 35.51051284279674,
+  "script_sha256": "3e2300a816c566eed8b90b2ef6f43797fabf42359c07896be466f9440d983fe9",
+  "started_unix": 1789310256.3269525,
+  "status": "PASS_WITH_CORRECTED_RERUN_REQUIRED"
+}

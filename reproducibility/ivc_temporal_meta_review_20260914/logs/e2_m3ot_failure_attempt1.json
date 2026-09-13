@@ -1,0 +1,7 @@
+{
+  "status": "FAILED_DURING_IMPORT",
+  "stage": "M3OT fixed-policy failure analysis",
+  "reason": "TrackEval was not importable because the first invocation omitted the official TrackEval directory from PYTHONPATH.",
+  "result_rows_created": false,
+  "recovery": "Reran with the frozen TrackEval checkout on PYTHONPATH. The successful outputs are under results_raw/e2_m3ot_failure_attempt2."
+}

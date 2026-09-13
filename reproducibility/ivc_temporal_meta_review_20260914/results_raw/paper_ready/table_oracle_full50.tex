@@ -1,0 +1,23 @@
+\begin{tabular}{llrrrr}
+\toprule
+Upstream & Refiner & HOTA & AssA & IDF1 & IDSW \\
+\midrule
+ByteTrack & None & 44.20 & 44.69 & 47.44 & 20,056 \\
+ & Geometry greedy & \textbf{45.60} & \textbf{46.97} & \textbf{51.02} & \textbf{15,484} \\
+ & Partial Hungarian & 45.55 & 46.90 & 50.78 & 16,462 \\
+ & AFLink (official) & -- & -- & -- & -- \\
+ & \textbf{CoM3D-ACE} & 45.19 & 46.34 & 49.72 & 17,511 \\
+\midrule
+OC-SORT & None & 44.92 & 51.43 & 42.96 & 6,119 \\
+ & Geometry greedy & 45.90 & 53.68 & 45.41 & 4,122 \\
+ & Partial Hungarian & \textbf{46.26} & \textbf{54.45} & \textbf{46.19} & \textbf{3,547} \\
+ & AFLink (official) & -- & -- & -- & -- \\
+ & \textbf{CoM3D-ACE} & 45.92 & 53.64 & 45.25 & 4,441 \\
+\midrule
+Deep OC-SORT & None & 81.32 & 82.06 & 81.49 & 1,962 \\
+ & Geometry greedy & 82.58 & 84.52 & 83.69 & 1,294 \\
+ & Partial Hungarian & \textbf{82.79} & \textbf{84.93} & \textbf{84.00} & \textbf{1,174} \\
+ & AFLink (official) & -- & -- & -- & -- \\
+ & \textbf{CoM3D-ACE} & 82.60 & 84.54 & 83.67 & 1,377 \\
+\bottomrule
+\end{tabular}

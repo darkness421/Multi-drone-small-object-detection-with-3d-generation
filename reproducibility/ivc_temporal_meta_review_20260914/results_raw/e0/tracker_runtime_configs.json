@@ -1,0 +1,84 @@
+{
+  "audit_finding": "Historical CoM3D association baselines use newer BoxMOT AABB defaults, not the official MMOT rotated-tracker implementation or its runtime thresholds.",
+  "boxmot_bytetrack_defaults": {
+    "buffer_size": 25,
+    "det_thresh": 0.45,
+    "frame_rate": "constructor-only/not-retained",
+    "iou_threshold": 0.3,
+    "match_thresh": 0.8,
+    "max_age": 30,
+    "max_time_lost": 25,
+    "min_conf": 0.1,
+    "min_hits": 3,
+    "per_class": false,
+    "track_buffer": 25,
+    "track_thresh": 0.45
+  },
+  "boxmot_deepocsort_config": {
+    "adapter_overrides": {
+      "half": false,
+      "per_class": false,
+      "precomputed_reid": true
+    },
+    "path": "<FROZEN_WORKSPACE>/third_party/boxmot_official/boxmot/configs/trackers/deepocsort.yaml",
+    "sha256": "5314634ac11b036bba44956c00f883808c12eb8cd7978a0dc799a231f2dbc7eb",
+    "text": "det_thresh:\n  type: uniform\n  default: 0.5  # from the default parameters\n  range: [0.3, 0.6]\n\nmax_age:\n  type: qrandint\n  default: 30  # from the default parameters\n  range: [10, 61, 10]  # step size of 10, upper bound exclusive\n\nmin_hits:\n  type: randint\n  default: 3  # from the default parameters\n  range: [1, 6]  # upper bound exclusive\n\niou_threshold:\n  type: uniform\n  default: 0.3  # from the default parameters\n  range: [0.1, 0.4]\n\ndelta_t:\n  type: randint\n  default: 3  # from the default parameters\n  range: [1, 6]  # upper bound exclusive\n\nasso_func:\n  type: choice\n  default: iou  # from the default parameters\n  options: ['iou', 'giou', 'diou', 'ciou', 'hmiou']\n\ninertia:\n  type: uniform\n  default: 0.2  # from the default parameters\n  range: [0.1, 0.4]\n\nw_association_emb:\n  type: uniform\n  default: 0.75  # from the default parameters\n  range: [0.5, 0.9]\n\nalpha_fixed_emb:\n  type: uniform\n  default: 0.95  # from the default parameters\n  range: [0.9, 0.999]\n\naw_param:\n  type: uniform\n  default: 0.5  # from the default parameters\n  range: [0.3, 0.7]\n\nembedding_off:\n  type: choice\n  default: false  # from the default parameters\n  options: [True, False]\n\ncmc_off:\n  type: choice\n  default: false  # from the default parameters\n  options: [True, False]\n\naw_off:\n  type: choice\n  default: false  # from the default parameters\n  options: [True, False]\n\nQ_xy_scaling:\n  type: uniform\n  default: 0.01  # from the default parameters\n  range: [0.01, 1]\n\nQ_s_scaling:\n  type: uniform\n  default: 0.0001  # from the default parameters\n  range: [0.0001, 1]\n"
+  },
+  "boxmot_ocsort_defaults": {
+    "Q_s_scaling": 0.0001,
+    "Q_xy_scaling": 0.01,
+    "delta_t": 3,
+    "det_thresh": 0.3,
+    "inertia": 0.2,
+    "iou_threshold": 0.3,
+    "max_age": 30,
+    "min_conf": 0.1,
+    "min_hits": 3,
+    "per_class": false,
+    "use_byte": false
+  },
+  "historical_adapter": {
+    "class_handling": "one independent tracker instance per official fine-grained class",
+    "common_source": "<FROZEN_WORKSPACE>/scripts/run_m3ot_tracking_smoke.py",
+    "frame_mapping": "numeric NPY/TXT stem mapped directly to 1-based frame_id; no frames skipped",
+    "input": "official OBB GT converted to AABB envelope, score=1.0",
+    "pre_tracker_filters": "invalid annotation/box only; no min-area, height, or aspect-ratio filter",
+    "sampling": "every released frame in each selected sequence",
+    "source": "<FROZEN_WORKSPACE>/scripts/run_mmot_locked_temporal.py",
+    "source_sha256": "0c8402bebab7ab2a00a733eea1b4b7ae93d8e8949721ece19bbee1349adc98ba"
+  },
+  "implementation_commits": {
+    "boxmot": "6edfa8ad7dc2f24b19a41c0058fc53d8d2c4e8ec",
+    "mmot_official": "4d365c9eab4cefda058f46cdd821ea06b366bfe4",
+    "trackeval": "12c8791b303e0a0b50f753af204249e622d0281a"
+  },
+  "official_mmot_tracker_reference": {
+    "note": "Not the implementation used for historical CoM3D results; official MMOT uses rotated trackers and detector outputs.",
+    "parser_defaults": {
+      "ByteTrack": {
+        "match_thresh": 0.9,
+        "min_box_area": 0,
+        "track_buffer": 30,
+        "track_thresh": 0.6
+      },
+      "OC-SORT": {
+        "iou_threshold": 0.3,
+        "max_age": 30,
+        "min_hits": 3,
+        "oc_track_thresh": 0.6,
+        "use_byte": false
+      },
+      "shared_detector_confidence_from_paper": 0.1
+    },
+    "source": "<FROZEN_WORKSPACE>/third_party/mmot_official/TrackByDetection/association/track_by_dets.py",
+    "source_sha256": "1e0593bf4063bba7bac0cba3c704766f7db2fcd6671afbe1b4ba042d8ade3176"
+  },
+  "runtime_environment": {
+    "cuda_available": true,
+    "cuda_device_count": 2,
+    "numpy": "2.2.6",
+    "platform": "Linux-6.8.0-40-generic-x86_64-with-glibc2.35",
+    "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+    "torch": "2.9.1+cu128"
+  }
+}

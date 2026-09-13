@@ -1,0 +1,23 @@
+	Command being timed: "env PYTHONPATH=<FROZEN_WORKSPACE>/third_party/mmot_official/TrackByDetection/ultralytics:<FROZEN_WORKSPACE>/third_party/trackeval_official:<FROZEN_WORKSPACE>/third_party/boxmot_official <PYTHON_ENV>/bin/python <EXPERIMENT_ROOT>/scripts/run_full50_linker_benchmark.py --workspace <FROZEN_WORKSPACE> --data-cache <DATA_CACHE> --reid-checkpoint <FROZEN_WORKSPACE>/assets/reid_r50_6e_mot17-4bf6b63d.pth --aflink-root <EXPERIMENT_ROOT>/third_party/StrongSORT --aflink-checkpoint <EXPERIMENT_ROOT>/assets/AFLink_epoch20.pth --output-dir <EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1 --tracker-cache-dir <EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1 --family-root data28 <DATA_CACHE>/raw/MMOT/extracted/test --family-root data30 <DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30 --trackers bytetrack ocsort deepocsort --device cuda:0 --batch-size 128 --aflink-batch-size 512"
+	User time (seconds): 1582.70
+	System time (seconds): 78.86
+	Percent of CPU this job got: 382%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 7:14.51
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2397152
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 3375921
+	Voluntary context switches: 259725
+	Involuntary context switches: 17219067
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 57232
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

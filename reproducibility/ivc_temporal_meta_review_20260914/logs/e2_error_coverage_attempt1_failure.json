@@ -1,0 +1,8 @@
+{
+  "status": "FAILED_BEFORE_COMPUTATION",
+  "exit_code": 1,
+  "reason": "The default Python environment could not import the BoxMOT dependency 'lap'.",
+  "exception": "ModuleNotFoundError: No module named 'lap'",
+  "corrective_action": "Rerun with the frozen accv_m3ot Python environment and the same PYTHONPATH used by E1.",
+  "result_integrity": "No metric output was used from this attempt."
+}

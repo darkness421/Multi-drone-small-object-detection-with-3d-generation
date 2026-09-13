@@ -1,0 +1,23 @@
+	Command being timed: "env CUDA_VISIBLE_DEVICES=1 PYTHONPATH=<FROZEN_WORKSPACE>/third_party/mmot_official/TrackByDetection/ultralytics <PYTHON_ENV>/bin/python <EXPERIMENT_ROOT>/scripts/run_mmot_official_detector.py --checkpoint <EXPERIMENT_ROOT>/assets/yolo11L-3ch.pt --output-dir <EXPERIMENT_ROOT>/results_raw/e3_detector_full50_v1 --family-root legacy12 <DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12 --family-root confirmation38 <DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38 --device 0 --imgsz 1280 --confidence 0.1 --nms-iou 0.6"
+	User time (seconds): 150.57
+	System time (seconds): 15.25
+	Percent of CPU this job got: 71%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 3:50.53
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1822844
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 152
+	Minor (reclaiming a frame) page faults: 1073708
+	Voluntary context switches: 86605
+	Involuntary context switches: 4288
+	Swaps: 0
+	File system inputs: 62399336
+	File system outputs: 38240
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

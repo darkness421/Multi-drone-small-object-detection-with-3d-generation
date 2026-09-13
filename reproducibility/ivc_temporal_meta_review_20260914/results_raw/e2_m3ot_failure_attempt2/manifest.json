@@ -1,0 +1,20 @@
+{
+  "accepted_links": 40,
+  "baseline_reproduction_passed": true,
+  "claim_scope": "Post-hoc diagnostic of frozen M3OT development and held-out results; no retuning.",
+  "correct_fragment_opportunities": 42,
+  "crop_area_definition": "Median native-pixel tracker-box area within each endpoint tracklet.",
+  "ground_truth_use": "Only tracker inputs mandated by the historical oracle-box protocol, metrics, and post-hoc edge/opportunity labels.",
+  "inputs": {
+    "<RUNS_ROOT>/results/rebuttal_r3/m3ot_ambiguity_aware/test_final_manifest.json": "355984ed55fbd66e6a0726b3ec28eb18791efd92e2c212af788fbfe670c1db53",
+    "<RUNS_ROOT>/results/rebuttal_r3/m3ot_ambiguity_aware/test_locked_results.json": "3e0b0d8c0f87c20f8a32453cbcb001bce6a3b64ebaf27dc8d739d6b38f57d02d",
+    "<RUNS_ROOT>/results/rebuttal_r3/m3ot_ambiguity_aware/val_development_manifest.json": "099e6bab562938fb4e0696898dd07a4047e42753b573fe34ba3793094d0f5a7c",
+    "<RUNS_ROOT>/results/rebuttal_r3/m3ot_ambiguity_aware/val_policy_results_v2.json": "6788a00f2a71c7ee3e60bc3388ae941fc8cde23eeec74e72d7f8618bd043c212"
+  },
+  "maximum_gap_frames": 30,
+  "normalized_displacement_definition": "Endpoint center distance divided by native frame diagonal.",
+  "policy": "geometry_reid_reciprocal",
+  "runtime_seconds": 12.847378279082477,
+  "script_sha256": "ea892d2cbc67ce18327ab6d39520d434337e202953c88e6e98d5e7573fe9fa9b",
+  "status": "COMPLETE"
+}

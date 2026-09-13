@@ -1,0 +1,62 @@
+{
+  "claim_scope": "Descriptive full-test error--coverage audit; no threshold selection.",
+  "coverage_denominator": "Source tracklets with at least one temporally admissible non-overlapping successor within 30 frames; fixed across curve points.",
+  "error_denominator": "Accepted links with post-hoc auditable GT identities.",
+  "failed_computation_log": {
+    "path": "<EXPERIMENT_ROOT>/logs/e2_error_coverage_attempt2_manifest_failure.json",
+    "sha256": "e3cbd722b5570455a862b4be4bbd19e9404bdefb9f929b17db2a96b7a0ff54b0"
+  },
+  "figures": [
+    "<EXPERIMENT_ROOT>/evidence/error_coverage_full50/mmot_error_coverage.png",
+    "<EXPERIMENT_ROOT>/evidence/error_coverage_full50/mmot_error_coverage.pdf"
+  ],
+  "fixed_operating_points": {
+    "aflink_official": 0.05,
+    "com3d_reciprocal_guard": 0.3,
+    "geometry_reid_hungarian": 0.3
+  },
+  "ground_truth_use": "Post-hoc link audit and trajectory metrics only.",
+  "outputs": {
+    "accepted_links_by_curve_point.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e2_error_coverage_direct_full50_v1/accepted_links_by_curve_point.csv",
+      "sha256": "9dd1d361e2664424b7ef819551e9e81e619c552d600af1e9b8a4b1502379e10a"
+    },
+    "aflink_score_runtime.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e2_error_coverage_direct_full50_v1/aflink_score_runtime.csv",
+      "sha256": "c25840faf386ff7f2e1b1f062cc1b78d30c53da90b853482d9cfa3ebe4a14c5d"
+    },
+    "link_error_coverage.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e2_error_coverage_direct_full50_v1/link_error_coverage.csv",
+      "sha256": "8e551550616a345181d38510257a5f9411cf6b8ad2a92b1774185dff3540d4d3"
+    },
+    "trajectory_error_coverage_aggregate.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e2_error_coverage_direct_full50_v1/trajectory_error_coverage_aggregate.csv",
+      "sha256": "772d2ae444b1d935a011d6c24d46d82438cdd84ffefeb9101dc749fca6e95c53"
+    },
+    "trajectory_error_coverage_per_sequence.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e2_error_coverage_direct_full50_v1/trajectory_error_coverage_per_sequence.csv",
+      "sha256": "dceaf092cf02f4a45df75f759a6a87e7cb5f4435de68fe2d8ae230a1b34a922f"
+    }
+  },
+  "recovery_reason": "The computation wrote all expected CSVs, then failed while hashing the absent manifest of an intentionally preserved interrupted cache-producing run. This utility validates the full Cartesian product and records the complete-run manifest used for provenance.",
+  "source_manifest": {
+    "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_full50_v2_equal/manifest.json",
+    "sha256": "8d8cc61192bccce00721847c9acf014262ebc719d91d0ceffa138f152e1d3ab3"
+  },
+  "status": "COMPLETE_AFTER_METADATA_RECOVERY",
+  "validation": {
+    "expected_per_sequence_rows": 2700,
+    "row_counts": {
+      "accepted_links_by_curve_point.csv": 102206,
+      "aflink_score_runtime.csv": 789,
+      "link_error_coverage.csv": 162,
+      "trajectory_error_coverage_aggregate.csv": 162,
+      "trajectory_error_coverage_per_sequence.csv": 2700
+    },
+    "validated_family_counts": {
+      "confirmation38": 38,
+      "legacy12": 12
+    },
+    "validated_threshold_combinations": 108
+  }
+}

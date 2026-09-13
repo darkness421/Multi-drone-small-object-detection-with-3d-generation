@@ -1,0 +1,11 @@
+{
+  "status": "INCOMPLETE_AGGREGATION_STOPPED",
+  "stopped_at": "2026-09-14T01:53:15+09:00",
+  "reason": "All 789 tracker and descriptor caches were complete, but the optional all-sequence pooled HOTA calculation formed a quadratic identity matrix and did not finish in a practical time. The process was interrupted before any summary CSV or manifest was written.",
+  "preserved_inputs": {
+    "tracker_cache_files": 789,
+    "descriptor_cache_files": 789
+  },
+  "time_log": "logs/e1_direct_full50_v1_time.txt",
+  "disposition": "Preserve this directory unchanged and rerun into e1_direct_full50_v2_equal using the immutable caches and the prespecified equal-sequence aggregation."
+}

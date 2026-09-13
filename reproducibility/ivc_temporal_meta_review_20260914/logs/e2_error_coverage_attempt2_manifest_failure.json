@@ -1,0 +1,15 @@
+{
+  "status": "CSV_COMPUTATION_COMPLETE_MANIFEST_WRITE_FAILED",
+  "exit_code": 1,
+  "elapsed_seconds": 401.14,
+  "reason": "All five CSV outputs were written before the script attempted to hash results_raw/e1_direct_full50_v1/manifest.json. That cache-producing E1 run was intentionally interrupted during a later pooled aggregation and therefore has no manifest.json.",
+  "exception": "FileNotFoundError: results_raw/e1_direct_full50_v1/manifest.json",
+  "computed_outputs": [
+    "aflink_score_runtime.csv",
+    "trajectory_error_coverage_aggregate.csv",
+    "link_error_coverage.csv",
+    "accepted_links_by_curve_point.csv",
+    "trajectory_error_coverage_per_sequence.csv"
+  ],
+  "corrective_action": "Validate the complete sequence/tracker/method/threshold Cartesian product and hash the complete E1 v2 manifest without recomputing or changing any metric."
+}

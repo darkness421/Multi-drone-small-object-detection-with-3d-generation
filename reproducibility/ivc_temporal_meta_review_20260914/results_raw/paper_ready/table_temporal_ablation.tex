@@ -1,0 +1,13 @@
+\begin{tabular}{lrr@{\hspace{7pt}}rr@{\hspace{7pt}}rr}
+\toprule
+& \multicolumn{2}{c}{ByteTrack} & \multicolumn{2}{c}{OC-SORT} & \multicolumn{2}{c}{Deep OC-SORT} \\
+Variant & IDF1 & IDSW & IDF1 & IDSW & IDF1 & IDSW \\
+\midrule
+None & 47.44 & 20,056 & 42.96 & 6,119 & 81.49 & 1,962 \\
+Geometry reciprocal & 49.62 & 17,581 & 45.08 & 4,551 & 83.63 & 1,392 \\
++ReID reciprocal, no guard & 49.72 & 17,511 & 45.25 & 4,441 & 83.67 & 1,377 \\
+CoM3D-ACE & 49.72 & 17,511 & 45.25 & 4,441 & 83.67 & 1,377 \\
+Geometry+ReID greedy & 51.80 & 15,064 & 46.25 & 3,481 & 83.99 & 1,149 \\
+Partial Hungarian & 50.78 & 16,462 & 46.19 & 3,547 & 84.00 & 1,174 \\
+\bottomrule
+\end{tabular}

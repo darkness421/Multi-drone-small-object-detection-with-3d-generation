@@ -1,0 +1,10 @@
+{
+  "command": "<EXPERIMENT_ROOT>/scripts/render_temporal_pipeline.py --output-dir <EXPERIMENT_ROOT>/evidence/temporal_pipeline",
+  "content_scope": "Visualization of the frozen implementation; no learned or unimplemented module is shown.",
+  "outputs": {
+    "temporal_refinement_pipeline.pdf": "699cf0fb355e39136830f9a72a9cba6976887ac146b8ecd7bf42b0e199c53d0d",
+    "temporal_refinement_pipeline.png": "44a61c1ec6c11bdf549fd252e03720ef6b2835386e4c39dd71e0aba932a6f8f3"
+  },
+  "script_sha256": "0f4d5d0d0b51cc1cec9958dd6314ff6304d006ed34d3d96c8ea2e1e1ce4b854e",
+  "status": "COMPLETE"
+}

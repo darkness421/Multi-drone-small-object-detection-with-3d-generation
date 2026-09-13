@@ -1,0 +1,10 @@
+{
+  "status": "BLOCKED",
+  "checked_at": "2026-09-14",
+  "requested_comparison": "Official GIAOTracker global-link stage on the frozen MMOT tracklets",
+  "reason": "The authors' official repository states that the GIAOTracker implementation is not planned for release. The paper also depends on a learned GIModel and a multi-stage pipeline for which compatible official weights and executable global-link code are unavailable.",
+  "decision": "No partial reimplementation is reported as GIAOTracker. The controlled partial-Hungarian comparator is retained under its literal name.",
+  "official_repository": "https://github.com/dyhBUPT/GIAOTracker",
+  "paper": "https://openaccess.thecvf.com/content/ICCV2021W/VisDrone/papers/Du_GIAOTracker_A_Comprehensive_Framework_for_MCMOT_With_Global_Information_and_ICCVW_2021_paper.pdf",
+  "result_rows_created": false
+}

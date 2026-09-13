@@ -1,0 +1,414 @@
+{
+  "command": "<EXPERIMENT_ROOT>/scripts/prepare_mmot_confirmation_split.py --full-root <DATA_CACHE>/raw/MMOT/extracted/test_full50 --split-root <DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split --manifest <EXPERIMENT_ROOT>/results_raw/e1_full50_split/manifest.json --expected-total 50",
+  "counts": {
+    "confirmation38": 38,
+    "legacy12": 12
+  },
+  "full_root": "<DATA_CACHE>/raw/MMOT/extracted/test_full50",
+  "purpose": "Frozen reporting split; no sequence is selected by performance.",
+  "script_sha256": "80f1fc22514f12ddecbaa1e2eaec38c9b4105b09b79ad5adda04dfad79d7c764",
+  "sequences": [
+    {
+      "npy_count": 70,
+      "sequence": "data23-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data23-1",
+      "split": "confirmation38",
+      "txt_count": 70,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data23-1"
+    },
+    {
+      "npy_count": 471,
+      "sequence": "data24-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data24-1",
+      "split": "confirmation38",
+      "txt_count": 471,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data24-1"
+    },
+    {
+      "npy_count": 43,
+      "sequence": "data27-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data27-1",
+      "split": "confirmation38",
+      "txt_count": 43,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data27-1"
+    },
+    {
+      "npy_count": 186,
+      "sequence": "data28-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-1",
+      "split": "legacy12",
+      "txt_count": 186,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data28-1"
+    },
+    {
+      "npy_count": 51,
+      "sequence": "data28-2",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-2",
+      "split": "legacy12",
+      "txt_count": 51,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data28-2"
+    },
+    {
+      "npy_count": 69,
+      "sequence": "data28-3",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-3",
+      "split": "legacy12",
+      "txt_count": 69,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data28-3"
+    },
+    {
+      "npy_count": 43,
+      "sequence": "data28-4",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-4",
+      "split": "legacy12",
+      "txt_count": 43,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data28-4"
+    },
+    {
+      "npy_count": 31,
+      "sequence": "data28-5",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-5",
+      "split": "legacy12",
+      "txt_count": 31,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data28-5"
+    },
+    {
+      "npy_count": 65,
+      "sequence": "data28-6",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-6",
+      "split": "legacy12",
+      "txt_count": 65,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data28-6"
+    },
+    {
+      "npy_count": 68,
+      "sequence": "data30-10",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-10",
+      "split": "legacy12",
+      "txt_count": 68,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data30-10"
+    },
+    {
+      "npy_count": 50,
+      "sequence": "data30-2",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-2",
+      "split": "legacy12",
+      "txt_count": 50,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data30-2"
+    },
+    {
+      "npy_count": 36,
+      "sequence": "data30-3",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-3",
+      "split": "legacy12",
+      "txt_count": 36,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data30-3"
+    },
+    {
+      "npy_count": 50,
+      "sequence": "data30-4",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-4",
+      "split": "legacy12",
+      "txt_count": 50,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data30-4"
+    },
+    {
+      "npy_count": 70,
+      "sequence": "data30-5",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-5",
+      "split": "legacy12",
+      "txt_count": 70,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data30-5"
+    },
+    {
+      "npy_count": 37,
+      "sequence": "data30-9",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-9",
+      "split": "legacy12",
+      "txt_count": 37,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12/data30-9"
+    },
+    {
+      "npy_count": 107,
+      "sequence": "data31-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data31-1",
+      "split": "confirmation38",
+      "txt_count": 107,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data31-1"
+    },
+    {
+      "npy_count": 142,
+      "sequence": "data33-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data33-1",
+      "split": "confirmation38",
+      "txt_count": 142,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data33-1"
+    },
+    {
+      "npy_count": 204,
+      "sequence": "data34-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data34-1",
+      "split": "confirmation38",
+      "txt_count": 204,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data34-1"
+    },
+    {
+      "npy_count": 35,
+      "sequence": "data34-2",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data34-2",
+      "split": "confirmation38",
+      "txt_count": 35,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data34-2"
+    },
+    {
+      "npy_count": 47,
+      "sequence": "data34-3",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data34-3",
+      "split": "confirmation38",
+      "txt_count": 47,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data34-3"
+    },
+    {
+      "npy_count": 209,
+      "sequence": "data36-10",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data36-10",
+      "split": "confirmation38",
+      "txt_count": 209,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data36-10"
+    },
+    {
+      "npy_count": 77,
+      "sequence": "data36-11",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data36-11",
+      "split": "confirmation38",
+      "txt_count": 77,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data36-11"
+    },
+    {
+      "npy_count": 132,
+      "sequence": "data36-12",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data36-12",
+      "split": "confirmation38",
+      "txt_count": 132,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data36-12"
+    },
+    {
+      "npy_count": 53,
+      "sequence": "data36-13",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data36-13",
+      "split": "confirmation38",
+      "txt_count": 53,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data36-13"
+    },
+    {
+      "npy_count": 139,
+      "sequence": "data36-4",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data36-4",
+      "split": "confirmation38",
+      "txt_count": 139,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data36-4"
+    },
+    {
+      "npy_count": 66,
+      "sequence": "data36-5",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data36-5",
+      "split": "confirmation38",
+      "txt_count": 66,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data36-5"
+    },
+    {
+      "npy_count": 269,
+      "sequence": "data37-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data37-1",
+      "split": "confirmation38",
+      "txt_count": 269,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data37-1"
+    },
+    {
+      "npy_count": 177,
+      "sequence": "data37-10",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data37-10",
+      "split": "confirmation38",
+      "txt_count": 177,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data37-10"
+    },
+    {
+      "npy_count": 380,
+      "sequence": "data37-11",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data37-11",
+      "split": "confirmation38",
+      "txt_count": 380,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data37-11"
+    },
+    {
+      "npy_count": 92,
+      "sequence": "data37-12",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data37-12",
+      "split": "confirmation38",
+      "txt_count": 92,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data37-12"
+    },
+    {
+      "npy_count": 118,
+      "sequence": "data37-2",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data37-2",
+      "split": "confirmation38",
+      "txt_count": 118,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data37-2"
+    },
+    {
+      "npy_count": 47,
+      "sequence": "data39-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data39-1",
+      "split": "confirmation38",
+      "txt_count": 47,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data39-1"
+    },
+    {
+      "npy_count": 74,
+      "sequence": "data39-2",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data39-2",
+      "split": "confirmation38",
+      "txt_count": 74,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data39-2"
+    },
+    {
+      "npy_count": 137,
+      "sequence": "data39-3",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data39-3",
+      "split": "confirmation38",
+      "txt_count": 137,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data39-3"
+    },
+    {
+      "npy_count": 145,
+      "sequence": "data39-6",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data39-6",
+      "split": "confirmation38",
+      "txt_count": 145,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data39-6"
+    },
+    {
+      "npy_count": 41,
+      "sequence": "data40-3",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data40-3",
+      "split": "confirmation38",
+      "txt_count": 41,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data40-3"
+    },
+    {
+      "npy_count": 46,
+      "sequence": "data40-4",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data40-4",
+      "split": "confirmation38",
+      "txt_count": 46,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data40-4"
+    },
+    {
+      "npy_count": 287,
+      "sequence": "data40-5",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data40-5",
+      "split": "confirmation38",
+      "txt_count": 287,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data40-5"
+    },
+    {
+      "npy_count": 60,
+      "sequence": "data41-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data41-1",
+      "split": "confirmation38",
+      "txt_count": 60,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data41-1"
+    },
+    {
+      "npy_count": 254,
+      "sequence": "data42-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data42-1",
+      "split": "confirmation38",
+      "txt_count": 254,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data42-1"
+    },
+    {
+      "npy_count": 65,
+      "sequence": "data42-2",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data42-2",
+      "split": "confirmation38",
+      "txt_count": 65,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data42-2"
+    },
+    {
+      "npy_count": 31,
+      "sequence": "data42-3",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data42-3",
+      "split": "confirmation38",
+      "txt_count": 31,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data42-3"
+    },
+    {
+      "npy_count": 80,
+      "sequence": "data46-11",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data46-11",
+      "split": "confirmation38",
+      "txt_count": 80,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data46-11"
+    },
+    {
+      "npy_count": 61,
+      "sequence": "data46-12",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data46-12",
+      "split": "confirmation38",
+      "txt_count": 61,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data46-12"
+    },
+    {
+      "npy_count": 41,
+      "sequence": "data47-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data47-1",
+      "split": "confirmation38",
+      "txt_count": 41,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data47-1"
+    },
+    {
+      "npy_count": 77,
+      "sequence": "data47-2",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data47-2",
+      "split": "confirmation38",
+      "txt_count": 77,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data47-2"
+    },
+    {
+      "npy_count": 129,
+      "sequence": "data47-3",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data47-3",
+      "split": "confirmation38",
+      "txt_count": 129,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data47-3"
+    },
+    {
+      "npy_count": 88,
+      "sequence": "data47-4",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data47-4",
+      "split": "confirmation38",
+      "txt_count": 88,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data47-4"
+    },
+    {
+      "npy_count": 48,
+      "sequence": "data48-1",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data48-1",
+      "split": "confirmation38",
+      "txt_count": 48,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data48-1"
+    },
+    {
+      "npy_count": 168,
+      "sequence": "data49-2",
+      "source": "<DATA_CACHE>/raw/MMOT/extracted/test_full50/data49-2",
+      "split": "confirmation38",
+      "txt_count": 168,
+      "view": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38/data49-2"
+    }
+  ],
+  "split_root": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split",
+  "status": "COMPLETE"
+}

@@ -1,0 +1,50 @@
+{
+  "candidate": {
+    "family": "legacy12",
+    "path": "<EXPERIMENT_ROOT>/results_raw/e3_temporal_full50_v2_equal/results/detector_input_temporal_per_sequence.csv",
+    "rows": 180,
+    "sha256": "ac91eac94afbb041b098a39238eadf544275389aa56696a145e1c446b04fe8ba"
+  },
+  "key_columns": [
+    "sequence",
+    "tracker",
+    "method"
+  ],
+  "key_sets_match": true,
+  "maximum_absolute_difference": {
+    "AssA": 0.0,
+    "DetA": 0.0,
+    "FN": 0.0,
+    "FP": 0.0,
+    "Frag": 0.0,
+    "HOTA": 0.0,
+    "IDF1": 0.0,
+    "IDSW": 0.0,
+    "MOTA": 0.0,
+    "TP": 0.0,
+    "predicted_boxes": 0.0,
+    "valid_gt_boxes": 0.0
+  },
+  "mismatches": [],
+  "numeric_columns": [
+    "HOTA",
+    "AssA",
+    "DetA",
+    "IDF1",
+    "MOTA",
+    "IDSW",
+    "FP",
+    "FN",
+    "TP",
+    "Frag",
+    "predicted_boxes",
+    "valid_gt_boxes"
+  ],
+  "reference": {
+    "path": "<EXPERIMENT_ROOT>/results_raw/e3_temporal_12_v1/results/detector_input_temporal_per_sequence.csv",
+    "rows": 180,
+    "sha256": "619c2ffb5b252b4769e4e7ee9ccd9eeafc4ceb53782553965cda81e657ea39e9"
+  },
+  "status": "PASS",
+  "tolerance": 0.0
+}

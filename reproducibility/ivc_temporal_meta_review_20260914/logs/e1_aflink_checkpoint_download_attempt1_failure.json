@@ -1,0 +1,7 @@
+{
+  "status": "FAILED_BEFORE_DOWNLOAD",
+  "stage": "AFLink official checkpoint acquisition",
+  "reason": "The first download command targeted an assets directory that did not yet exist.",
+  "result_rows_created": false,
+  "recovery": "Created the isolated assets directory, downloaded the official AFLink_epoch20.pth file, verified SHA-256 b35cbeddd3acc48fece820bd640640e6bfb1f5fbf570aa79af26c6a38958daa4, and used it in the completed E1 runs."
+}

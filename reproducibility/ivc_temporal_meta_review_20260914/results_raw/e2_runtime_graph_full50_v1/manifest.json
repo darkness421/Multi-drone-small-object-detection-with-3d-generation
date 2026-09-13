@@ -1,0 +1,29 @@
+{
+  "benchmark_script": "<EXPERIMENT_ROOT>/scripts/run_full50_linker_benchmark.py",
+  "benchmark_script_sha256": "4d240fd1f1339ea67ec28d0f79a6993c41421636452789a5f8ef1a8693ce94eb",
+  "command": "scripts/measure_mmot_graph_runtime.py --benchmark-script scripts/run_full50_linker_benchmark.py --tracker-cache-dir results_raw/e1_direct_full50_v1 --descriptor-cache-dir results_raw/e1_direct_full50_v1 --family-root legacy12 <DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12 --family-root confirmation38 <DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38 --output-dir results_raw/e2_runtime_graph_full50_v1 --trackers bytetrack ocsort deepocsort",
+  "descriptor_cache_dir": "<EXPERIMENT_ROOT>/results_raw/e1_direct_full50_v1",
+  "excluded": [
+    "disk I/O",
+    "upstream tracking",
+    "ReID extraction",
+    "metric evaluation"
+  ],
+  "family_roots": {
+    "confirmation38": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38",
+    "legacy12": "<DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12"
+  },
+  "ground_truth_use": "None.",
+  "instance_count": 789,
+  "maximum_resident_set_kib": 671644,
+  "script_sha256": "0329987bde0b3946767c193fc2e5649fb6bc34d1cb7d6d7f1a8b0141c79b0183",
+  "status": "COMPLETE",
+  "timing_scope": "In-memory candidate construction plus CoM3D-ACE reciprocal/union decision.",
+  "tracker_cache_dir": "<EXPERIMENT_ROOT>/results_raw/e1_direct_full50_v1",
+  "trackers": [
+    "bytetrack",
+    "ocsort",
+    "deepocsort"
+  ],
+  "wall_seconds_including_cache_reads": 17.731647153384984
+}

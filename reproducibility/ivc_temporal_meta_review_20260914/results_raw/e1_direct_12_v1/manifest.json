@@ -1,0 +1,153 @@
+{
+  "ablations": [
+    "no_refinement",
+    "geometry_greedy",
+    "geometry_reciprocal_guard",
+    "geometry_reid_greedy_guard",
+    "geometry_reid_reciprocal_no_guard",
+    "com3d_reciprocal_guard"
+  ],
+  "aflink": {
+    "checkpoint": "<EXPERIMENT_ROOT>/assets/AFLink_epoch20.pth",
+    "checkpoint_sha256": "b35cbeddd3acc48fece820bd640640e6bfb1f5fbf570aa79af26c6a38958daa4",
+    "checkpoint_source": "official StrongSORT Google Drive file AFLink_epoch20.pth",
+    "gates": {
+      "thrP": 0.05,
+      "thrS": 75.0,
+      "thrT": [
+        0,
+        30
+      ]
+    },
+    "repository": "https://github.com/dyhBUPT/StrongSORT",
+    "repository_commit": "ee995076da5083e28d0da1f885297df62705ebd7",
+    "target_adaptation": false
+  },
+  "channel_policy": {
+    "deepocsort_cmc_bgr": "zero-based [1,2,4] -> BGR",
+    "raw": "HWC uint8, bands 1..8",
+    "reid_rgb": "zero-based [4,2,1] -> RGB"
+  },
+  "claim_scope": "MMOT oracle-AABB temporal association; corrected RGB proxy; no detector or cross-UAV claim",
+  "command": "<EXPERIMENT_ROOT>/scripts/run_full50_linker_benchmark.py --workspace <FROZEN_WORKSPACE> --data-cache <DATA_CACHE> --reid-checkpoint <FROZEN_WORKSPACE>/assets/reid_r50_6e_mot17-4bf6b63d.pth --aflink-root <EXPERIMENT_ROOT>/third_party/StrongSORT --aflink-checkpoint <EXPERIMENT_ROOT>/assets/AFLink_epoch20.pth --output-dir <EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1 --tracker-cache-dir <EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1 --family-root data28 <DATA_CACHE>/raw/MMOT/extracted/test --family-root data30 <DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30 --trackers bytetrack ocsort deepocsort --device cuda:0 --batch-size 128 --aflink-batch-size 512",
+  "cuda": {
+    "available": true,
+    "device": "cuda:0",
+    "name": "NVIDIA GeForce RTX 5090",
+    "torch": "2.9.1+cu128"
+  },
+  "families": [
+    "data28",
+    "data30"
+  ],
+  "family_roots": {
+    "data28": "<DATA_CACHE>/raw/MMOT/extracted/test",
+    "data30": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30"
+  },
+  "fixed_thresholds": {
+    "appearance_cosine_distance": 0.3,
+    "geometry_radius_pixels": 55.0,
+    "hungarian_controlled_cost": "mean(geometry/55, appearance/0.30, gap/30)",
+    "hungarian_unmatched_cost": 1.0,
+    "maximum_gap_frames": 30
+  },
+  "ground_truth_use": "Oracle AABB inputs; identities only for metrics and post-hoc link audit. Appearance crops come directly from tracker boxes without GT matching.",
+  "invalid_output_policy": "Sequence and aggregate tracking metrics are N/A when any class output violates MOT identity or geometry invariants.",
+  "invariant_failures": [
+    {
+      "class_name": "car",
+      "duplicate_count": 1,
+      "family": "data30",
+      "geometry_preserved": true,
+      "method": "aflink_official",
+      "sequence": "data30-3",
+      "tracker": "deepocsort"
+    }
+  ],
+  "methods": [
+    "no_refinement",
+    "geometry_greedy",
+    "geometry_reid_hungarian",
+    "aflink_official",
+    "com3d_reciprocal_guard"
+  ],
+  "outputs": {
+    "accepted_links.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/accepted_links.csv",
+      "sha256": "c222f1460c240c1a6e658495615c25a320e4a32167effd2fab97fd42798db9d7"
+    },
+    "candidate_edges.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/candidate_edges.csv",
+      "sha256": "b474491492792ab6b3b973cee8e6c77ecb2f28eb16fbb6b4764d97e3784ff1bf"
+    },
+    "descriptor_runtime.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/descriptor_runtime.csv",
+      "sha256": "9d78db5d6c3d7756d9e669ffd8d50b792d8330b9c31ccaed9cb0e5c1c810c049"
+    },
+    "link_summary.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/link_summary.csv",
+      "sha256": "8e4dbc8a809cd1f1c92ab39121188e51a3af2392fd128f2772eb73d4d1502c13"
+    },
+    "linker_comparison_aggregate.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/linker_comparison_aggregate.csv",
+      "sha256": "afc181bc7c013a830fa45711705d2777ee91799f4046dbb9ad230c9abaeef05a"
+    },
+    "linker_comparison_per_sequence.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/linker_comparison_per_sequence.csv",
+      "sha256": "d2c4c4a1b5b8caf628bc60a9de9a30499fdda3c0c4f74d9ef363fbd49ded3a88"
+    },
+    "refiner_runtime.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/refiner_runtime.csv",
+      "sha256": "dfbbf263a4420f0cd607c32cba702dc90c8505f524a5f50b97e066306d4b06e2"
+    },
+    "rejected_links.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/rejected_links.csv",
+      "sha256": "7e2edff4a3327062a9b9e53f9405563f41679ec21d27be9a87502375ed0b66d3"
+    },
+    "size_stratified_analysis.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/size_stratified_analysis.csv",
+      "sha256": "029ffa7f00b7ef4f40dc96fe86141a06f1c4e2a709ca55e4aa876f21e9e31cc0"
+    },
+    "temporal_ablation.csv": {
+      "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/temporal_ablation.csv",
+      "sha256": "8930014f466cb2c88c14434b53c4b567ce55665d0420cc2273c54106e452cd78"
+    }
+  },
+  "processed_class_tracker_instances": 225,
+  "reid": {
+    "checkpoint_meta": {
+      "CLASSES": null,
+      "config": "dataset_type = 'ReIDDataset'\nimg_norm_cfg = dict(\n    mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)\ntrain_pipeline = [\n    dict(type='LoadMultiImagesFromFile', to_float32=True),\n    dict(\n        type='SeqResize',\n        img_scale=(128, 256),\n        share_params=False,\n        keep_ratio=False,\n        bbox_clip_border=False,\n        override=False),\n    dict(\n        type='SeqRandomFlip',\n        share_params=False,\n        flip_ratio=0.5,\n        direction='horizontal'),\n    dict(\n        type='SeqNormalize',\n        mean=[123.675, 116.28, 103.53],\n        std=[58.395, 57.12, 57.375],\n        to_rgb=True),\n    dict(type='VideoCollect', keys=['img', 'gt_label']),\n    dict(type='ReIDFormatBundle')\n]\ntest_pipeline = [\n    dict(type='LoadImageFromFile'),\n    dict(type='Resize', img_scale=(128, 256), keep_ratio=False),\n    dict(\n        type='Normalize',\n        mean=[123.675, 116.28, 103.53],\n        std=[58.395, 57.12, 57.375],\n        to_rgb=True),\n    dict(type='ImageToTensor', keys=['img']),\n    dict(type='Collect', keys=['img'], meta_keys=[])\n]\ndata = dict(\n    samples_per_gpu=1,\n    workers_per_gpu=2,\n    train=dict(\n        type='ReIDDataset',\n        triplet_sampler=dict(num_ids=8, ins_per_id=4),\n        data_prefix='data/MOT17/reid/img',\n        ann_file='data/MOT17/reid/meta/train_80.txt',\n        pipeline=[\n            dict(type='LoadMultiImagesFromFile', to_float32=True),\n            dict(\n                type='SeqResize',\n                img_scale=(128, 256),\n                share_params=False,\n                keep_ratio=False,\n                bbox_clip_border=False,\n                override=False),\n            dict(\n                type='SeqRandomFlip',\n                share_params=False,\n                flip_ratio=0.5,\n                direction='horizontal'),\n            dict(\n                type='SeqNormalize',\n                mean=[123.675, 116.28, 103.53],\n                std=[58.395, 57.12, 57.375],\n                to_rgb=True),\n            dict(type='VideoCollect', keys=['img', 'gt_label']),\n            dict(type='ReIDFormatBundle')\n        ]),\n    val=dict(\n        type='ReIDDataset',\n        triplet_sampler=None,\n        data_prefix='data/MOT17/reid/img',\n        ann_file='data/MOT17/reid/meta/val_20.txt',\n        pipeline=[\n            dict(type='LoadImageFromFile'),\n            dict(type='Resize', img_scale=(128, 256), keep_ratio=False),\n            dict(\n                type='Normalize',\n                mean=[123.675, 116.28, 103.53],\n                std=[58.395, 57.12, 57.375],\n                to_rgb=True),\n            dict(type='ImageToTensor', keys=['img']),\n            dict(type='Collect', keys=['img'], meta_keys=[])\n        ]),\n    test=dict(\n        type='ReIDDataset',\n        triplet_sampler=None,\n        data_prefix='data/MOT17/reid/img',\n        ann_file='data/MOT17/reid/meta/val_20.txt',\n        pipeline=[\n            dict(type='LoadImageFromFile'),\n            dict(type='Resize', img_scale=(128, 256), keep_ratio=False),\n            dict(\n                type='Normalize',\n                mean=[123.675, 116.28, 103.53],\n                std=[58.395, 57.12, 57.375],\n                to_rgb=True),\n            dict(type='ImageToTensor', keys=['img']),\n            dict(type='Collect', keys=['img'], meta_keys=[])\n        ]))\nevaluation = dict(interval=1, metric='mAP')\noptimizer = dict(type='SGD', lr=0.1, momentum=0.9, weight_decay=0.0001)\noptimizer_config = dict(grad_clip=None)\ncheckpoint_config = dict(interval=1)\nlog_config = dict(interval=50, hooks=[dict(type='TextLoggerHook')])\ndist_params = dict(backend='nccl')\nlog_level = 'INFO'\nload_from = 'https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_batch256_imagenet_20200708-cfb998bf.pth'\nresume_from = None\nworkflow = [('train', 1)]\nUSE_MMCLS = True\nmodel = dict(\n    type='BaseReID',\n    backbone=dict(\n        type='ResNet',\n        depth=50,\n        num_stages=4,\n        out_indices=(3, ),\n        style='pytorch'),\n    neck=dict(type='GlobalAveragePooling', kernel_size=(8, 4), stride=1),\n    head=dict(\n        type='LinearReIDHead',\n        num_fcs=1,\n        in_channels=2048,\n        fc_channels=1024,\n        out_channels=128,\n        num_classes=378,\n        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n        loss_pairwise=dict(type='TripletLoss', margin=0.3, loss_weight=1.0),\n        norm_cfg=dict(type='BN1d'),\n        act_cfg=dict(type='ReLU')))\nlr_config = dict(\n    policy='step',\n    warmup='linear',\n    warmup_iters=1000,\n    warmup_ratio=0.001,\n    step=[5])\ntotal_epochs = 6\nwork_dir = '/mnt/lustre/shensanjing/code/mmtracking/work_dirs/resnet50_b32*8_MOT17_06291108'\ngpu_ids = range(0, 1)\nseed = None\n",
+      "env_info": "sys.platform: linux\nPython: 3.7.6 (default, Jan  8 2020, 19:59:22) [GCC 7.3.0]\nCUDA available: True\nGPU 0,1,2,3,4,5,6,7: TITAN Xp\nCUDA_HOME: /mnt/lustre/share/polaris/dep/cuda-9.0-cudnn7.6.5\nNVCC: Cuda compilation tools, release 9.0, V9.0.176\nGCC: gcc (GCC) 5.4.0\nPyTorch: 1.5.0\nPyTorch compiling details: PyTorch built with:\n  - GCC 5.4\n  - C++ Version: 201402\n  - Intel(R) Math Kernel Library Version 2020.0.1 Product Build 20200208 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v0.21.1 (Git Hash 912ce228837d1ce28e1a61806118835de03f5751)\n  - OpenMP 201307 (a.k.a. OpenMP 4.0)\n  - NNPACK is enabled\n  - CPU capability usage: AVX2\n  - CUDA Runtime 9.0\n  - NVCC architecture flags: -gencode;arch=compute_52,code=sm_52;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_70,code=compute_70\n  - CuDNN 7.6.5\n  - Magma 2.5.0\n  - Build settings: BLAS=MKL, BUILD_TYPE=Release, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -fopenmp -DNDEBUG -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DUSE_INTERNAL_THREADPOOL_IMPL -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, USE_CUDA=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=ON, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_STATIC_DISPATCH=OFF, \n\nTorchVision: 0.6.0\nOpenCV: 4.2.0\nMMCV: 1.3.3\nMMCV Compiler: GCC 5.4\nMMCV CUDA Compiler: 9.0\nMMTracking: 0.5.2+7bb2fcc",
+      "epoch": 6,
+      "hook_msgs": {
+        "last_ckpt": "/mnt/lustre/shensanjing/code/mmtracking/work_dirs/resnet50_b32*8_MOT17_06291108/epoch_5.pth"
+      },
+      "iter": 48000,
+      "mmcv_version": "1.3.3",
+      "mmtrack_version": "0.5.2",
+      "seed": null,
+      "time": "Tue Jun 29 14:01:55 2021"
+    },
+    "ignored_training_only_keys": [
+      "head.bn.bias",
+      "head.bn.num_batches_tracked",
+      "head.bn.running_mean",
+      "head.bn.running_var",
+      "head.bn.weight",
+      "head.classifier.bias",
+      "head.classifier.weight"
+    ],
+    "sha256": "4bf6b63d49235973033c47f77bc9b94a54bdd222bd3f484b4e484aba580254c1",
+    "url": "https://download.openmmlab.com/mmtracking/mot/reid/reid_r50_6e_mot17-4bf6b63d.pth"
+  },
+  "runtime_seconds": 429.32952236384153,
+  "script_sha256": "62b6584ab9d6d542776a23e294a6e3e58fd29a702a2a37292ebc19161b699994",
+  "status": "COMPLETE_WITH_INVALID_OUTPUT_VARIANTS",
+  "tracker_cache_dir": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1",
+  "trackers": [
+    "bytetrack",
+    "ocsort",
+    "deepocsort"
+  ]
+}

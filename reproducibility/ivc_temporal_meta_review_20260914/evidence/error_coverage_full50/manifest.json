@@ -1,0 +1,10 @@
+{
+  "fixed_operating_points_are_circled": true,
+  "outputs": [
+    "<EXPERIMENT_ROOT>/evidence/error_coverage_full50/mmot_error_coverage.png",
+    "<EXPERIMENT_ROOT>/evidence/error_coverage_full50/mmot_error_coverage.pdf"
+  ],
+  "source_manifest": "<EXPERIMENT_ROOT>/results_raw/e2_error_coverage_direct_full50_v1/manifest.json",
+  "source_manifest_sha256": "d3d39a9cf58f3735ebd8b922a2481148a20158128b9c9a0be4cf349035090e89",
+  "status": "COMPLETE"
+}

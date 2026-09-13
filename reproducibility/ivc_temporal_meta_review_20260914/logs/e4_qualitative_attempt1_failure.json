@@ -1,0 +1,7 @@
+{
+  "status": "RECOVERED",
+  "stage": "actual-prediction qualitative panel selection",
+  "reason": "The first invocation requested the nonexistent method label com3d_ace and therefore selected no accepted-link rows.",
+  "scientific_outputs_generated": false,
+  "recovery": "Rerun with the frozen result label com3d_reciprocal_guard. The completed output and deterministic selection rule are recorded in evidence/temporal_link_examples_full50/manifest.json."
+}

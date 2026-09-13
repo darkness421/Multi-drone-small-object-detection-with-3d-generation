@@ -1,0 +1,3560 @@
+{
+  "conversion": {
+    "clipping": "none; source is already uint8 0..255",
+    "corrected_policy": "array[:, :, [4,2,1]] -> contiguous uint8 -> PIL RGB -> 128x256 bilinear -> RGB ImageNet normalization",
+    "float_conversion": "after 128x256 bilinear resize"
+  },
+  "evidence_directory": "<EXPERIMENT_ROOT>/results_raw/e0/evidence/channel_audit",
+  "historical_com3d": {
+    "deep_ocsort": {
+      "interpretation": "PIL RGB",
+      "path": "<FROZEN_WORKSPACE>/scripts/run_ivc_deepocsort_mmot.py",
+      "selection": [
+        0,
+        1,
+        2
+      ],
+      "sha256": "e4062b25149ff82e7213abfc0478861a6da59406d2cbea4cd0a96fc03bafe27a"
+    },
+    "finding": "Bands 1,2,3 were incorrectly treated as RGB. Correct RGB input for the PIL/ImageNet path is bands 5,3,2, zero-based [4,2,1].",
+    "tracklet_reid": {
+      "interpretation": "PIL RGB",
+      "normalization_mean": [
+        123.675,
+        116.28,
+        103.53
+      ],
+      "normalization_std": [
+        58.395,
+        57.12,
+        57.375
+      ],
+      "path": "<FROZEN_WORKSPACE>/scripts/run_mmot_locked_temporal.py",
+      "resize": [
+        128,
+        256
+      ],
+      "resize_mode": "bilinear",
+      "selection": [
+        0,
+        1,
+        2
+      ],
+      "sha256": "0c8402bebab7ab2a00a733eea1b4b7ae93d8e8949721ece19bbee1349adc98ba"
+    }
+  },
+  "official_code": {
+    "files": [
+      {
+        "path": "<FROZEN_WORKSPACE>/third_party/mmot_official/TrackByQuery/MeMOTR/data/seq_dataset.py",
+        "sha256": "1b25abe342462bd96c32c1a1b9793ef98e06982cfec4fae8e2d64d6f6f18fd27"
+      },
+      {
+        "path": "<FROZEN_WORKSPACE>/third_party/mmot_official/TrackByQuery/MOTIP/data/seq_dataset.py",
+        "sha256": "ae6b8ad4675413273853da79567e936592de2c16b77859690ddea6f5c01b02bb"
+      }
+    ],
+    "normalization_order": "to_rgb=False before/around CHW conversion in official tracking paths",
+    "stale_or_unused_loader_conflict": {
+      "behavior": "LoadRgbImageFromNpy slices img[:, :, :3]",
+      "path": "<FROZEN_WORKSPACE>/third_party/mmot_official/mmot/mmot/datasets/pipelines/loading.py",
+      "sha256": "cf57cb45ced422438bea6e6d596ea15bd73445c86c6450643c94557e080a482a",
+      "usage_search_result": "class definition found, but no instantiation in official tracked source paths"
+    },
+    "tracking_paths_select_bgr_zero_based": [
+      1,
+      2,
+      4
+    ]
+  },
+  "official_paper": {
+    "appendix_a6": "band 5=red, band 3=green, band 2=blue",
+    "arxiv": "2510.12565v1",
+    "experimental_setting": "pseudo-RGB selects bands 5, 3, and 2",
+    "rgb_hwc_zero_based_indices": [
+      4,
+      2,
+      1
+    ]
+  },
+  "raw_storage": {
+    "axis_order": "HWC",
+    "band_centers_nm": [
+      422.5,
+      487.5,
+      550.0,
+      602.5,
+      660.0,
+      725.0,
+      785.0,
+      887.2
+    ],
+    "dtype": "uint8",
+    "evidence": "MMOT paper Appendix A.6 and official code's direct channel indexing",
+    "physical_channel_order": "spectral bands 1 through 8 in increasing center wavelength",
+    "shape": [
+      900,
+      1200,
+      8
+    ]
+  },
+  "sample_statistics": [
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 84.89324259259259,
+          "min": 29,
+          "one_based_band": 1,
+          "p01": 38.0,
+          "p99": 230.0,
+          "std": 43.02189910796551,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 83.10038333333334,
+          "min": 26,
+          "one_based_band": 2,
+          "p01": 34.0,
+          "p99": 229.0,
+          "std": 39.687654217155014,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 83.86857222222223,
+          "min": 24,
+          "one_based_band": 3,
+          "p01": 36.0,
+          "p99": 206.0,
+          "std": 30.601012977640895,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 84.594,
+          "min": 23,
+          "one_based_band": 4,
+          "p01": 32.0,
+          "p99": 219.0,
+          "std": 36.281649365301284,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 85.29976111111111,
+          "min": 21,
+          "one_based_band": 5,
+          "p01": 28.0,
+          "p99": 233.0,
+          "std": 42.26213661688691,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 87.65126111111111,
+          "min": 29,
+          "one_based_band": 6,
+          "p01": 44.0,
+          "p99": 199.0,
+          "std": 30.11273198306113,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 89.50240555555555,
+          "min": 21,
+          "one_based_band": 7,
+          "p01": 35.0,
+          "p99": 238.0,
+          "std": 41.429920657597016,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 91.26750925925926,
+          "min": 22,
+          "one_based_band": 8,
+          "p01": 34.0,
+          "p99": 241.0,
+          "std": 43.308864287039995,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-1/000001.npy",
+      "global_max": 255,
+      "global_min": 21,
+      "sequence": "data28-1",
+      "sha256": "cbd3783fc3c2427528cee450074132dc04cd6448a410b2a7872bd707c4590813",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 91.7718824074074,
+          "min": 32,
+          "one_based_band": 1,
+          "p01": 38.0,
+          "p99": 237.0,
+          "std": 46.04606669124216,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 90.30061759259259,
+          "min": 28,
+          "one_based_band": 2,
+          "p01": 35.0,
+          "p99": 237.0,
+          "std": 44.158889214467536,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 88.22635370370371,
+          "min": 25,
+          "one_based_band": 3,
+          "p01": 35.0,
+          "p99": 217.0,
+          "std": 35.08204517456827,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 89.64689814814815,
+          "min": 23,
+          "one_based_band": 4,
+          "p01": 31.0,
+          "p99": 224.0,
+          "std": 40.92448509380821,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 91.64536759259259,
+          "min": 21,
+          "one_based_band": 5,
+          "p01": 28.0,
+          "p99": 239.0,
+          "std": 47.45625853160549,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 86.26752037037038,
+          "min": 27,
+          "one_based_band": 6,
+          "p01": 40.0,
+          "p99": 191.0,
+          "std": 29.729245538002544,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 85.24112314814815,
+          "min": 22,
+          "one_based_band": 7,
+          "p01": 33.0,
+          "p99": 226.0,
+          "std": 39.55936667888952,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 85.365675,
+          "min": 22,
+          "one_based_band": 8,
+          "p01": 32.0,
+          "p99": 228.0,
+          "std": 40.704150340506104,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-1/000094.npy",
+      "global_max": 255,
+      "global_min": 21,
+      "sequence": "data28-1",
+      "sha256": "ccfdfe3017fa026115cafc13438fd5c3a4ca6e584cc1c47008983744604ad9aa",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 90.75964907407408,
+          "min": 29,
+          "one_based_band": 1,
+          "p01": 35.0,
+          "p99": 253.0,
+          "std": 46.4388721366195,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 90.71185740740741,
+          "min": 26,
+          "one_based_band": 2,
+          "p01": 32.0,
+          "p99": 252.0,
+          "std": 45.63893541372526,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 90.76163796296296,
+          "min": 24,
+          "one_based_band": 3,
+          "p01": 34.0,
+          "p99": 245.0100000000093,
+          "std": 37.97356894168534,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 90.95409537037037,
+          "min": 22,
+          "one_based_band": 4,
+          "p01": 29.0,
+          "p99": 246.0,
+          "std": 42.62714029802141,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 92.15700185185185,
+          "min": 20,
+          "one_based_band": 5,
+          "p01": 26.0,
+          "p99": 253.0,
+          "std": 47.46648757819676,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 90.00989444444444,
+          "min": 30,
+          "one_based_band": 6,
+          "p01": 42.0,
+          "p99": 194.0,
+          "std": 30.17320687648365,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 89.64322962962963,
+          "min": 22,
+          "one_based_band": 7,
+          "p01": 34.0,
+          "p99": 232.0,
+          "std": 40.38765361967472,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 87.32251203703704,
+          "min": 22,
+          "one_based_band": 8,
+          "p01": 33.0,
+          "p99": 227.0,
+          "std": 39.88566369503426,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-1/000186.npy",
+      "global_max": 255,
+      "global_min": 20,
+      "sequence": "data28-1",
+      "sha256": "8ed1fcb46fec7b6e71c1981a6edd2b1548c59cc47fa7326baa4ed15ed1fc8e43",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 89.87323981481481,
+          "min": 34,
+          "one_based_band": 1,
+          "p01": 40.0,
+          "p99": 235.0,
+          "std": 48.97710885751259,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 91.04268796296296,
+          "min": 29,
+          "one_based_band": 2,
+          "p01": 36.0,
+          "p99": 239.0,
+          "std": 48.473924863030305,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 90.80910740740741,
+          "min": 26,
+          "one_based_band": 3,
+          "p01": 35.0,
+          "p99": 214.0,
+          "std": 37.11003394336029,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 89.92825462962963,
+          "min": 24,
+          "one_based_band": 4,
+          "p01": 31.0,
+          "p99": 228.0,
+          "std": 43.9178299003649,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 90.97665925925926,
+          "min": 23,
+          "one_based_band": 5,
+          "p01": 28.0,
+          "p99": 242.0,
+          "std": 51.50152697868044,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 86.39203611111111,
+          "min": 29,
+          "one_based_band": 6,
+          "p01": 40.0,
+          "p99": 199.0,
+          "std": 32.61427191717737,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 85.96591296296296,
+          "min": 21,
+          "one_based_band": 7,
+          "p01": 32.0,
+          "p99": 250.0,
+          "std": 48.26937286305288,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 85.92692962962963,
+          "min": 22,
+          "one_based_band": 8,
+          "p01": 31.0,
+          "p99": 252.0,
+          "std": 49.111925812548535,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-2/000001.npy",
+      "global_max": 255,
+      "global_min": 21,
+      "sequence": "data28-2",
+      "sha256": "be4a2ccab30df6a8a55403c84e58f64ab4b21d936fa981f1484d0aa8e3a2d088",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 90.29596759259259,
+          "min": 33,
+          "one_based_band": 1,
+          "p01": 40.0,
+          "p99": 241.0,
+          "std": 49.97938188262557,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 91.54822037037037,
+          "min": 29,
+          "one_based_band": 2,
+          "p01": 36.0,
+          "p99": 243.0,
+          "std": 49.6918919235727,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 91.12110370370371,
+          "min": 25,
+          "one_based_band": 3,
+          "p01": 36.0,
+          "p99": 224.0,
+          "std": 37.34553980266196,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 89.41721944444444,
+          "min": 24,
+          "one_based_band": 4,
+          "p01": 32.0,
+          "p99": 234.0,
+          "std": 44.43732183034545,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 89.84065925925925,
+          "min": 22,
+          "one_based_band": 5,
+          "p01": 28.0,
+          "p99": 247.0,
+          "std": 51.733791784289224,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 88.02707685185185,
+          "min": 31,
+          "one_based_band": 6,
+          "p01": 43.0,
+          "p99": 198.0,
+          "std": 32.63138081764724,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 88.59914537037037,
+          "min": 22,
+          "one_based_band": 7,
+          "p01": 33.0,
+          "p99": 250.0,
+          "std": 49.32089210439437,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 88.56510740740741,
+          "min": 22,
+          "one_based_band": 8,
+          "p01": 32.0,
+          "p99": 251.0,
+          "std": 50.253834439178036,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-2/000026.npy",
+      "global_max": 255,
+      "global_min": 22,
+      "sequence": "data28-2",
+      "sha256": "1af05941277aeebd0b4c57fae1d13869802c8dd11c4ec596d71218d113590cee",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 83.69350740740741,
+          "min": 32,
+          "one_based_band": 1,
+          "p01": 39.0,
+          "p99": 217.0,
+          "std": 44.78729076582482,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 85.40813148148148,
+          "min": 28,
+          "one_based_band": 2,
+          "p01": 36.0,
+          "p99": 225.0,
+          "std": 45.126314354402375,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 87.31727685185186,
+          "min": 23,
+          "one_based_band": 3,
+          "p01": 36.0,
+          "p99": 198.0,
+          "std": 34.24092611934423,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 84.85046851851853,
+          "min": 22,
+          "one_based_band": 4,
+          "p01": 32.0,
+          "p99": 214.0,
+          "std": 40.90110710675528,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 84.77425277777778,
+          "min": 22,
+          "one_based_band": 5,
+          "p01": 28.0,
+          "p99": 233.0,
+          "std": 48.33874755352594,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 89.33417592592592,
+          "min": 30,
+          "one_based_band": 6,
+          "p01": 44.0,
+          "p99": 195.0,
+          "std": 32.73668576641579,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 91.16963888888888,
+          "min": 21,
+          "one_based_band": 7,
+          "p01": 34.0,
+          "p99": 247.0,
+          "std": 48.97426034511475,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 91.86135833333333,
+          "min": 21,
+          "one_based_band": 8,
+          "p01": 35.0,
+          "p99": 248.0,
+          "std": 49.742504886436436,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-2/000051.npy",
+      "global_max": 255,
+      "global_min": 21,
+      "sequence": "data28-2",
+      "sha256": "1c766324ae2069950785565943dd7751efe2dee75170dedc27352568d4b01d04",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 89.81728518518518,
+          "min": 30,
+          "one_based_band": 1,
+          "p01": 34.0,
+          "p99": 233.0,
+          "std": 53.14143431657046,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 90.38505925925926,
+          "min": 27,
+          "one_based_band": 2,
+          "p01": 31.0,
+          "p99": 242.0,
+          "std": 55.114126589625165,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 90.26381018518518,
+          "min": 25,
+          "one_based_band": 3,
+          "p01": 31.0,
+          "p99": 237.0,
+          "std": 50.31933679125866,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 88.04651666666666,
+          "min": 23,
+          "one_based_band": 4,
+          "p01": 27.0,
+          "p99": 243.0,
+          "std": 55.10452234160113,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 88.95460740740741,
+          "min": 21,
+          "one_based_band": 5,
+          "p01": 25.0,
+          "p99": 252.0,
+          "std": 59.604234023990365,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 85.4517824074074,
+          "min": 30,
+          "one_based_band": 6,
+          "p01": 39.0,
+          "p99": 179.0,
+          "std": 33.02385225342975,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 83.49030277777777,
+          "min": 26,
+          "one_based_band": 7,
+          "p01": 34.0,
+          "p99": 215.0,
+          "std": 36.45458247932156,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 85.10923425925925,
+          "min": 26,
+          "one_based_band": 8,
+          "p01": 34.0,
+          "p99": 230.0,
+          "std": 38.53380260078941,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-3/000001.npy",
+      "global_max": 255,
+      "global_min": 21,
+      "sequence": "data28-3",
+      "sha256": "e0026f3ffa9b3deb9f86b3ad7894785402af46272eba602edbc4eec00250f5a4",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 91.85123148148148,
+          "min": 30,
+          "one_based_band": 1,
+          "p01": 33.0,
+          "p99": 232.0,
+          "std": 52.15385477534617,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 89.88815277777778,
+          "min": 26,
+          "one_based_band": 2,
+          "p01": 29.0,
+          "p99": 238.0,
+          "std": 53.595155360926476,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 91.78583888888889,
+          "min": 24,
+          "one_based_band": 3,
+          "p01": 30.0,
+          "p99": 237.0,
+          "std": 50.42566163854625,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 90.69463888888889,
+          "min": 22,
+          "one_based_band": 4,
+          "p01": 26.0,
+          "p99": 244.0,
+          "std": 55.238639882543296,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 92.65881851851852,
+          "min": 20,
+          "one_based_band": 5,
+          "p01": 24.0,
+          "p99": 252.0,
+          "std": 59.63212332488027,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 87.69055833333333,
+          "min": 30,
+          "one_based_band": 6,
+          "p01": 39.0,
+          "p99": 187.0,
+          "std": 35.236104806945406,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 85.91859166666667,
+          "min": 25,
+          "one_based_band": 7,
+          "p01": 35.0,
+          "p99": 242.0,
+          "std": 39.44808958311337,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 85.09402407407407,
+          "min": 25,
+          "one_based_band": 8,
+          "p01": 35.0,
+          "p99": 252.0,
+          "std": 40.75689932768227,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-3/000035.npy",
+      "global_max": 255,
+      "global_min": 20,
+      "sequence": "data28-3",
+      "sha256": "63c8dfbc53fb2c889f36d5b0fd3fa7999dec1b77e03510351364450657eab65c",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 84.04944351851852,
+          "min": 29,
+          "one_based_band": 1,
+          "p01": 34.0,
+          "p99": 235.0,
+          "std": 53.129631168645005,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 84.07041203703703,
+          "min": 25,
+          "one_based_band": 2,
+          "p01": 31.0,
+          "p99": 243.0,
+          "std": 54.762568137340786,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 87.03268055555556,
+          "min": 24,
+          "one_based_band": 3,
+          "p01": 30.0,
+          "p99": 228.0,
+          "std": 46.42413236928125,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 85.7801462962963,
+          "min": 23,
+          "one_based_band": 4,
+          "p01": 27.0,
+          "p99": 241.0,
+          "std": 52.88888150236484,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 85.66574814814815,
+          "min": 21,
+          "one_based_band": 5,
+          "p01": 25.0,
+          "p99": 249.0,
+          "std": 57.99765941761577,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 90.55164722222223,
+          "min": 24,
+          "one_based_band": 6,
+          "p01": 34.0,
+          "p99": 210.0,
+          "std": 39.50971656358481,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 92.55959629629629,
+          "min": 20,
+          "one_based_band": 7,
+          "p01": 30.0,
+          "p99": 254.0,
+          "std": 54.03822578906171,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 90.92187407407407,
+          "min": 21,
+          "one_based_band": 8,
+          "p01": 29.0,
+          "p99": 254.0,
+          "std": 55.687392249942505,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-3/000069.npy",
+      "global_max": 255,
+      "global_min": 20,
+      "sequence": "data28-3",
+      "sha256": "17c1faa30d05e1ca0f567208a85e51d01eae35db748d7256b953bca0b8cbb2ee",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 86.5311787037037,
+          "min": 41,
+          "one_based_band": 1,
+          "p01": 48.0,
+          "p99": 255.0,
+          "std": 41.11868253986697,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 89.28343055555555,
+          "min": 38,
+          "one_based_band": 2,
+          "p01": 45.0,
+          "p99": 255.0,
+          "std": 43.379705481661965,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 87.67824074074075,
+          "min": 31,
+          "one_based_band": 3,
+          "p01": 40.0,
+          "p99": 255.0,
+          "std": 39.59632744213795,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 88.2503962962963,
+          "min": 31,
+          "one_based_band": 4,
+          "p01": 39.0,
+          "p99": 255.0,
+          "std": 44.298886448574436,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 88.39125740740741,
+          "min": 31,
+          "one_based_band": 5,
+          "p01": 37.0,
+          "p99": 255.0,
+          "std": 49.17714057037259,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 83.76114722222222,
+          "min": 29,
+          "one_based_band": 6,
+          "p01": 38.0,
+          "p99": 242.0,
+          "std": 42.1378565642823,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 82.0121037037037,
+          "min": 23,
+          "one_based_band": 7,
+          "p01": 28.0,
+          "p99": 255.0,
+          "std": 52.95493366813571,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 83.14648333333334,
+          "min": 23,
+          "one_based_band": 8,
+          "p01": 29.0,
+          "p99": 255.0,
+          "std": 55.34417771950245,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-4/000001.npy",
+      "global_max": 255,
+      "global_min": 23,
+      "sequence": "data28-4",
+      "sha256": "93290dc2eb13ca4cb0db9f9c49e0a974a6453d3b6044ab03c8d5b3723808fc51",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 87.8390388888889,
+          "min": 33,
+          "one_based_band": 1,
+          "p01": 37.0,
+          "p99": 242.0,
+          "std": 53.625674137542504,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 89.42978518518518,
+          "min": 30,
+          "one_based_band": 2,
+          "p01": 34.0,
+          "p99": 252.0,
+          "std": 56.25876950134714,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 90.17753981481482,
+          "min": 27,
+          "one_based_band": 3,
+          "p01": 33.0,
+          "p99": 242.0,
+          "std": 50.1518629042063,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 89.68100648148148,
+          "min": 26,
+          "one_based_band": 4,
+          "p01": 30.0,
+          "p99": 252.0,
+          "std": 56.44811607906754,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 89.04988703703704,
+          "min": 24,
+          "one_based_band": 5,
+          "p01": 28.0,
+          "p99": 254.0,
+          "std": 61.86844415090706,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 87.73378703703703,
+          "min": 32,
+          "one_based_band": 6,
+          "p01": 40.0,
+          "p99": 225.0,
+          "std": 37.87714789302649,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 82.96049074074074,
+          "min": 25,
+          "one_based_band": 7,
+          "p01": 32.0,
+          "p99": 255.0,
+          "std": 43.76468917572777,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 82.88451481481482,
+          "min": 26,
+          "one_based_band": 8,
+          "p01": 32.0,
+          "p99": 255.0,
+          "std": 45.48938278879299,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-4/000022.npy",
+      "global_max": 255,
+      "global_min": 24,
+      "sequence": "data28-4",
+      "sha256": "81ffefb091415a5e9437542507427a29b90a0471f9ca8787ee42bde2fbe8ae7d",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 91.78818796296297,
+          "min": 29,
+          "one_based_band": 1,
+          "p01": 33.0,
+          "p99": 215.0,
+          "std": 49.27021346346127,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 92.61424166666667,
+          "min": 26,
+          "one_based_band": 2,
+          "p01": 30.0,
+          "p99": 228.0,
+          "std": 51.73318455330951,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 91.71731666666666,
+          "min": 24,
+          "one_based_band": 3,
+          "p01": 30.0,
+          "p99": 224.0,
+          "std": 47.16825768168301,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 91.62663518518518,
+          "min": 23,
+          "one_based_band": 4,
+          "p01": 27.0,
+          "p99": 231.0,
+          "std": 51.96302466223837,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 90.76571203703703,
+          "min": 21,
+          "one_based_band": 5,
+          "p01": 24.0,
+          "p99": 241.0,
+          "std": 55.36704569475624,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 90.4578287037037,
+          "min": 32,
+          "one_based_band": 6,
+          "p01": 41.0,
+          "p99": 185.0,
+          "std": 33.53694534484693,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 81.19454814814814,
+          "min": 26,
+          "one_based_band": 7,
+          "p01": 34.0,
+          "p99": 232.0,
+          "std": 35.188631227780355,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 80.40375648148148,
+          "min": 26,
+          "one_based_band": 8,
+          "p01": 33.0,
+          "p99": 241.0,
+          "std": 36.098549244471215,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-4/000043.npy",
+      "global_max": 255,
+      "global_min": 21,
+      "sequence": "data28-4",
+      "sha256": "63e0219ae8ae05962b54d67beafab4a11783bb695881300d1642eae4e1f1c74f",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 91.18841481481482,
+          "min": 29,
+          "one_based_band": 1,
+          "p01": 33.0,
+          "p99": 214.0,
+          "std": 49.18237526690425,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 90.52053611111111,
+          "min": 25,
+          "one_based_band": 2,
+          "p01": 30.0,
+          "p99": 224.0,
+          "std": 50.990060564940386,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 86.75214351851852,
+          "min": 24,
+          "one_based_band": 3,
+          "p01": 29.0,
+          "p99": 213.0,
+          "std": 44.96739876203478,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 87.07118055555556,
+          "min": 22,
+          "one_based_band": 4,
+          "p01": 26.0,
+          "p99": 221.0,
+          "std": 49.82750147030207,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 88.11098888888888,
+          "min": 21,
+          "one_based_band": 5,
+          "p01": 24.0,
+          "p99": 235.0,
+          "std": 54.15209934017355,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 85.84593611111111,
+          "min": 31,
+          "one_based_band": 6,
+          "p01": 40.0,
+          "p99": 176.0,
+          "std": 31.832780077559804,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 83.52088981481481,
+          "min": 27,
+          "one_based_band": 7,
+          "p01": 35.0,
+          "p99": 233.0,
+          "std": 35.285851333875705,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 84.22226574074074,
+          "min": 27,
+          "one_based_band": 8,
+          "p01": 35.0,
+          "p99": 246.0,
+          "std": 36.67895322903218,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-5/000001.npy",
+      "global_max": 255,
+      "global_min": 21,
+      "sequence": "data28-5",
+      "sha256": "7c7ddb72f66dfc234956316b8ba0f1b7199af66e0eb684d77e9dae482f536bd0",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 90.62562962962963,
+          "min": 29,
+          "one_based_band": 1,
+          "p01": 33.0,
+          "p99": 215.0,
+          "std": 49.06238546173799,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 89.99605925925925,
+          "min": 25,
+          "one_based_band": 2,
+          "p01": 31.0,
+          "p99": 223.0,
+          "std": 50.82577941349332,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 86.13950370370371,
+          "min": 23,
+          "one_based_band": 3,
+          "p01": 30.0,
+          "p99": 211.0,
+          "std": 44.39483036109865,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 86.79897037037037,
+          "min": 22,
+          "one_based_band": 4,
+          "p01": 27.0,
+          "p99": 221.0,
+          "std": 49.6881376041555,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 87.85735092592593,
+          "min": 21,
+          "one_based_band": 5,
+          "p01": 24.0,
+          "p99": 233.0,
+          "std": 53.7529847607192,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 85.46251111111111,
+          "min": 30,
+          "one_based_band": 6,
+          "p01": 41.0,
+          "p99": 174.0,
+          "std": 30.90046721674026,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 82.84044814814814,
+          "min": 23,
+          "one_based_band": 7,
+          "p01": 36.0,
+          "p99": 207.0,
+          "std": 32.73647604090796,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 83.6188675925926,
+          "min": 25,
+          "one_based_band": 8,
+          "p01": 36.0,
+          "p99": 224.0,
+          "std": 34.239430866341614,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-5/000016.npy",
+      "global_max": 255,
+      "global_min": 21,
+      "sequence": "data28-5",
+      "sha256": "8a506a271a17bc74449e2251b84bcb19fac23669d7944665fb05efe4542e3162",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 90.14253981481481,
+          "min": 30,
+          "one_based_band": 1,
+          "p01": 34.0,
+          "p99": 212.0,
+          "std": 48.200848962798624,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 90.05223981481481,
+          "min": 26,
+          "one_based_band": 2,
+          "p01": 31.0,
+          "p99": 224.0,
+          "std": 50.73618446947175,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 86.32766944444444,
+          "min": 23,
+          "one_based_band": 3,
+          "p01": 31.0,
+          "p99": 210.0,
+          "std": 43.071126707846005,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 87.22174351851852,
+          "min": 22,
+          "one_based_band": 4,
+          "p01": 27.0,
+          "p99": 220.0,
+          "std": 48.33688373163985,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 88.24728796296296,
+          "min": 21,
+          "one_based_band": 5,
+          "p01": 25.0,
+          "p99": 233.0,
+          "std": 52.226900418913225,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 87.19186111111111,
+          "min": 31,
+          "one_based_band": 6,
+          "p01": 43.0,
+          "p99": 173.0,
+          "std": 29.302019119835897,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 85.03497685185185,
+          "min": 26,
+          "one_based_band": 7,
+          "p01": 37.0,
+          "p99": 207.0,
+          "std": 33.817198174310285,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 86.33945555555556,
+          "min": 27,
+          "one_based_band": 8,
+          "p01": 37.0,
+          "p99": 225.0,
+          "std": 35.92243629244907,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-5/000031.npy",
+      "global_max": 255,
+      "global_min": 21,
+      "sequence": "data28-5",
+      "sha256": "51230e8bf67b5671a589169cb4805f9e7e34f1a9eddc1ac80ba957ad1e854fd1",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 84.60539907407407,
+          "min": 40,
+          "one_based_band": 1,
+          "p01": 47.0,
+          "p99": 236.0,
+          "std": 36.92681757002624,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 85.15062222222222,
+          "min": 37,
+          "one_based_band": 2,
+          "p01": 43.0,
+          "p99": 243.0,
+          "std": 37.673387895685266,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 85.45355462962964,
+          "min": 31,
+          "one_based_band": 3,
+          "p01": 38.0,
+          "p99": 220.0,
+          "std": 34.879448982833566,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 85.92852037037036,
+          "min": 30,
+          "one_based_band": 4,
+          "p01": 38.0,
+          "p99": 240.0,
+          "std": 38.713168468684785,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 89.35842222222222,
+          "min": 32,
+          "one_based_band": 5,
+          "p01": 38.0,
+          "p99": 253.0,
+          "std": 44.35673499104925,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 91.22688981481481,
+          "min": 30,
+          "one_based_band": 6,
+          "p01": 35.0,
+          "p99": 251.0,
+          "std": 49.83845865219697,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 86.82288055555556,
+          "min": 20,
+          "one_based_band": 7,
+          "p01": 23.0,
+          "p99": 254.0,
+          "std": 59.08681983129972,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 88.43201759259259,
+          "min": 21,
+          "one_based_band": 8,
+          "p01": 23.0,
+          "p99": 254.0,
+          "std": 60.98045748482829,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-6/000001.npy",
+      "global_max": 255,
+      "global_min": 20,
+      "sequence": "data28-6",
+      "sha256": "f1be911835bb750740801826b67b88957df7f02fee6067447e4809063d09bef8",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 84.76796388888889,
+          "min": 40,
+          "one_based_band": 1,
+          "p01": 45.0,
+          "p99": 247.0,
+          "std": 39.43311654611434,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 85.67138518518519,
+          "min": 35,
+          "one_based_band": 2,
+          "p01": 42.0,
+          "p99": 251.0,
+          "std": 40.361616796798806,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 85.01861666666667,
+          "min": 29,
+          "one_based_band": 3,
+          "p01": 37.0,
+          "p99": 234.0,
+          "std": 36.687712037286175,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 86.93127314814815,
+          "min": 31,
+          "one_based_band": 4,
+          "p01": 37.0,
+          "p99": 248.0,
+          "std": 40.71428600569053,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 91.25369814814815,
+          "min": 32,
+          "one_based_band": 5,
+          "p01": 38.0,
+          "p99": 254.0,
+          "std": 45.773324516028175,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 88.09142129629629,
+          "min": 26,
+          "one_based_band": 6,
+          "p01": 35.0,
+          "p99": 243.0,
+          "std": 47.323813327830266,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 85.04498981481481,
+          "min": 19,
+          "one_based_band": 7,
+          "p01": 23.0,
+          "p99": 251.0,
+          "std": 57.58790923280208,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 86.92593148148148,
+          "min": 19,
+          "one_based_band": 8,
+          "p01": 23.0,
+          "p99": 253.0,
+          "std": 59.67498986766916,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-6/000033.npy",
+      "global_max": 255,
+      "global_min": 19,
+      "sequence": "data28-6",
+      "sha256": "834cf625279af78875d88b4cac8c1dfc5f93fcaa03e71566190285c4e1e120cf",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 85.176625,
+          "min": 39,
+          "one_based_band": 1,
+          "p01": 44.0,
+          "p99": 249.0,
+          "std": 41.00873805822235,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 86.19418240740741,
+          "min": 35,
+          "one_based_band": 2,
+          "p01": 40.0,
+          "p99": 252.0,
+          "std": 41.94793185260951,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 85.59525185185186,
+          "min": 29,
+          "one_based_band": 3,
+          "p01": 36.0,
+          "p99": 236.0,
+          "std": 38.09452278180694,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 87.61421111111112,
+          "min": 30,
+          "one_based_band": 4,
+          "p01": 36.0,
+          "p99": 248.0,
+          "std": 42.34223349450971,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 89.55813425925926,
+          "min": 31,
+          "one_based_band": 5,
+          "p01": 36.0,
+          "p99": 254.0,
+          "std": 46.90646166930337,
+          "zero_based_index": 4
+        },
+        {
+          "max": 255,
+          "mean": 87.66588333333333,
+          "min": 27,
+          "one_based_band": 6,
+          "p01": 35.0,
+          "p99": 249.0,
+          "std": 47.67758780618014,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 84.18899166666667,
+          "min": 18,
+          "one_based_band": 7,
+          "p01": 23.0,
+          "p99": 248.0,
+          "std": 57.082624859528266,
+          "zero_based_index": 6
+        },
+        {
+          "max": 255,
+          "mean": 85.8979675925926,
+          "min": 19,
+          "one_based_band": 8,
+          "p01": 23.0,
+          "p99": 251.0,
+          "std": 59.09953933469384,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data28",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/test/data28-6/000065.npy",
+      "global_max": 255,
+      "global_min": 18,
+      "sequence": "data28-6",
+      "sha256": "3d88ec1fcdf6712163d20875ae1e0c44a6abaec6a17461d5529f65206c191bb4",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 35.25660740740741,
+          "min": 15,
+          "one_based_band": 1,
+          "p01": 18.0,
+          "p99": 107.0,
+          "std": 17.657246147894988,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 65.6503425925926,
+          "min": 19,
+          "one_based_band": 2,
+          "p01": 26.0,
+          "p99": 225.0,
+          "std": 32.85974249342927,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 60.02271666666667,
+          "min": 17,
+          "one_based_band": 3,
+          "p01": 27.0,
+          "p99": 201.0,
+          "std": 29.254320995641287,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 50.25919259259259,
+          "min": 15,
+          "one_based_band": 4,
+          "p01": 22.0,
+          "p99": 164.0,
+          "std": 25.741912695057167,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 62.66270648148148,
+          "min": 16,
+          "one_based_band": 5,
+          "p01": 24.0,
+          "p99": 207.0,
+          "std": 31.7136610172872,
+          "zero_based_index": 4
+        },
+        {
+          "max": 242,
+          "mean": 42.37119722222222,
+          "min": 17,
+          "one_based_band": 6,
+          "p01": 24.0,
+          "p99": 109.0,
+          "std": 16.617065152694117,
+          "zero_based_index": 5
+        },
+        {
+          "max": 254,
+          "mean": 54.313887037037034,
+          "min": 17,
+          "one_based_band": 7,
+          "p01": 27.0,
+          "p99": 136.0,
+          "std": 23.560128924264824,
+          "zero_based_index": 6
+        },
+        {
+          "max": 253,
+          "mean": 42.91238240740741,
+          "min": 16,
+          "one_based_band": 8,
+          "p01": 23.0,
+          "p99": 96.0,
+          "std": 16.135033657245074,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-10/000001.npy",
+      "global_max": 255,
+      "global_min": 15,
+      "sequence": "data30-10",
+      "sha256": "0ea438ac0e18bdb6e8297c5ee508283276f8da3ff1b78ac10b59317609fb318f",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 30.613949074074075,
+          "min": 13,
+          "one_based_band": 1,
+          "p01": 15.0,
+          "p99": 107.0,
+          "std": 17.299390827885386,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 55.26986296296296,
+          "min": 17,
+          "one_based_band": 2,
+          "p01": 22.0,
+          "p99": 225.0,
+          "std": 31.84758979629499,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 52.40986203703704,
+          "min": 16,
+          "one_based_band": 3,
+          "p01": 22.0,
+          "p99": 203.0,
+          "std": 28.293263809597583,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 43.587291666666665,
+          "min": 13,
+          "one_based_band": 4,
+          "p01": 18.0,
+          "p99": 163.0,
+          "std": 25.203072758321092,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 52.88904814814815,
+          "min": 14,
+          "one_based_band": 5,
+          "p01": 19.0,
+          "p99": 209.0,
+          "std": 31.05481847954809,
+          "zero_based_index": 4
+        },
+        {
+          "max": 254,
+          "mean": 40.49780555555556,
+          "min": 15,
+          "one_based_band": 6,
+          "p01": 22.0,
+          "p99": 104.0,
+          "std": 15.846492157664802,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 55.274325,
+          "min": 16,
+          "one_based_band": 7,
+          "p01": 26.0,
+          "p99": 131.0,
+          "std": 25.04535312961204,
+          "zero_based_index": 6
+        },
+        {
+          "max": 254,
+          "mean": 43.13708333333334,
+          "min": 15,
+          "one_based_band": 8,
+          "p01": 22.0,
+          "p99": 92.0,
+          "std": 17.198311200804632,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-10/000035.npy",
+      "global_max": 255,
+      "global_min": 13,
+      "sequence": "data30-10",
+      "sha256": "10ad1f8a2774b3b0d79c5884788356725b2d58cc2042eaa2d367455e0439992a",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 253,
+          "mean": 28.5309,
+          "min": 13,
+          "one_based_band": 1,
+          "p01": 15.0,
+          "p99": 90.0,
+          "std": 15.517669820932568,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 51.44840277777778,
+          "min": 17,
+          "one_based_band": 2,
+          "p01": 21.0,
+          "p99": 201.0,
+          "std": 31.351643301853564,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 50.174419444444446,
+          "min": 16,
+          "one_based_band": 3,
+          "p01": 21.0,
+          "p99": 175.0,
+          "std": 27.23439402065363,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 40.7558212962963,
+          "min": 14,
+          "one_based_band": 4,
+          "p01": 17.0,
+          "p99": 139.0,
+          "std": 23.089611859767842,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 48.820062962962965,
+          "min": 14,
+          "one_based_band": 5,
+          "p01": 18.0,
+          "p99": 180.0,
+          "std": 29.676143312801972,
+          "zero_based_index": 4
+        },
+        {
+          "max": 215,
+          "mean": 41.202083333333334,
+          "min": 16,
+          "one_based_band": 6,
+          "p01": 22.0,
+          "p99": 92.0,
+          "std": 14.496406109935203,
+          "zero_based_index": 5
+        },
+        {
+          "max": 250,
+          "mean": 59.75354814814815,
+          "min": 17,
+          "one_based_band": 7,
+          "p01": 26.0,
+          "p99": 132.0,
+          "std": 25.33978748930696,
+          "zero_based_index": 6
+        },
+        {
+          "max": 178,
+          "mean": 47.17990555555556,
+          "min": 16,
+          "one_based_band": 8,
+          "p01": 23.0,
+          "p99": 97.0,
+          "std": 17.669762692823856,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-10/000068.npy",
+      "global_max": 255,
+      "global_min": 13,
+      "sequence": "data30-10",
+      "sha256": "2f293023360db2b3b475c99b697d5ac3665ce14cba77ccc2d62672067bf2e748",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 46.2108712962963,
+          "min": 16,
+          "one_based_band": 1,
+          "p01": 20.0,
+          "p99": 135.0,
+          "std": 21.348517793985188,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 85.86260277777778,
+          "min": 21,
+          "one_based_band": 2,
+          "p01": 30.0,
+          "p99": 239.0,
+          "std": 36.93178487482513,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 82.60714074074075,
+          "min": 21,
+          "one_based_band": 3,
+          "p01": 34.0,
+          "p99": 237.0,
+          "std": 35.15277880763782,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 68.62630740740741,
+          "min": 17,
+          "one_based_band": 4,
+          "p01": 26.0,
+          "p99": 192.0,
+          "std": 30.354480451423818,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 85.19877222222222,
+          "min": 18,
+          "one_based_band": 5,
+          "p01": 28.0,
+          "p99": 230.0,
+          "std": 37.1311945919586,
+          "zero_based_index": 4
+        },
+        {
+          "max": 254,
+          "mean": 54.00446851851852,
+          "min": 19,
+          "one_based_band": 6,
+          "p01": 28.0,
+          "p99": 125.0,
+          "std": 19.114393704719202,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 66.70874907407408,
+          "min": 19,
+          "one_based_band": 7,
+          "p01": 31.0,
+          "p99": 154.0,
+          "std": 25.391496566727753,
+          "zero_based_index": 6
+        },
+        {
+          "max": 208,
+          "mean": 50.26713240740741,
+          "min": 17,
+          "one_based_band": 8,
+          "p01": 25.0,
+          "p99": 111.0,
+          "std": 17.788938992028108,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-2/000001.npy",
+      "global_max": 255,
+      "global_min": 16,
+      "sequence": "data30-2",
+      "sha256": "56e6b3c81972b10f73e8a88c3a4ee8000cb40b8ca3477ed53fe2cbb750333a3d",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 45.90284444444445,
+          "min": 16,
+          "one_based_band": 1,
+          "p01": 20.0,
+          "p99": 118.0,
+          "std": 19.68119227375575,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 85.64058796296297,
+          "min": 21,
+          "one_based_band": 2,
+          "p01": 30.0,
+          "p99": 232.0,
+          "std": 35.62643800641133,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 82.1738212962963,
+          "min": 21,
+          "one_based_band": 3,
+          "p01": 35.0,
+          "p99": 212.0,
+          "std": 32.75823752847166,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 68.22567037037037,
+          "min": 17,
+          "one_based_band": 4,
+          "p01": 26.0,
+          "p99": 168.0,
+          "std": 28.31372535104322,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 84.84098425925926,
+          "min": 19,
+          "one_based_band": 5,
+          "p01": 28.0,
+          "p99": 213.0,
+          "std": 35.219159165538436,
+          "zero_based_index": 4
+        },
+        {
+          "max": 254,
+          "mean": 53.98616481481481,
+          "min": 22,
+          "one_based_band": 6,
+          "p01": 29.0,
+          "p99": 111.0,
+          "std": 17.186810707381245,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 67.16691388888889,
+          "min": 22,
+          "one_based_band": 7,
+          "p01": 33.0,
+          "p99": 144.0,
+          "std": 23.685838516615316,
+          "zero_based_index": 6
+        },
+        {
+          "max": 205,
+          "mean": 50.4889537037037,
+          "min": 19,
+          "one_based_band": 8,
+          "p01": 26.0,
+          "p99": 103.0,
+          "std": 16.516831376510414,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-2/000026.npy",
+      "global_max": 255,
+      "global_min": 16,
+      "sequence": "data30-2",
+      "sha256": "948f4d40c39878d0e1d454dec045b0bf38adab82569919bbebf5173b79e1a475",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 45.176275,
+          "min": 16,
+          "one_based_band": 1,
+          "p01": 19.0,
+          "p99": 110.0,
+          "std": 20.05473967933408,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 84.13679444444445,
+          "min": 20,
+          "one_based_band": 2,
+          "p01": 28.0,
+          "p99": 219.0,
+          "std": 36.70823775069366,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 80.98711851851851,
+          "min": 20,
+          "one_based_band": 3,
+          "p01": 32.0,
+          "p99": 203.0,
+          "std": 33.91496428696268,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 67.17737685185185,
+          "min": 17,
+          "one_based_band": 4,
+          "p01": 24.0,
+          "p99": 162.0,
+          "std": 29.256291147575183,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 83.37868055555556,
+          "min": 18,
+          "one_based_band": 5,
+          "p01": 25.0,
+          "p99": 207.0,
+          "std": 36.57250842276395,
+          "zero_based_index": 4
+        },
+        {
+          "max": 244,
+          "mean": 53.752627777777775,
+          "min": 20,
+          "one_based_band": 6,
+          "p01": 29.0,
+          "p99": 108.0,
+          "std": 17.739645272413995,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 67.54221944444444,
+          "min": 20,
+          "one_based_band": 7,
+          "p01": 33.0,
+          "p99": 148.0,
+          "std": 24.97203919572018,
+          "zero_based_index": 6
+        },
+        {
+          "max": 242,
+          "mean": 50.836752777777775,
+          "min": 18,
+          "one_based_band": 8,
+          "p01": 27.0,
+          "p99": 107.0,
+          "std": 17.453143868655648,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-2/000050.npy",
+      "global_max": 255,
+      "global_min": 16,
+      "sequence": "data30-2",
+      "sha256": "22ad818eaf8a336a2ab1d8c39d283028bf420cb0e749429b0b4b3e58150dcebf",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 43.90522222222222,
+          "min": 15,
+          "one_based_band": 1,
+          "p01": 18.0,
+          "p99": 118.0,
+          "std": 21.314100543716457,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 84.17364537037037,
+          "min": 19,
+          "one_based_band": 2,
+          "p01": 26.0,
+          "p99": 236.0,
+          "std": 40.8156934241323,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 79.19996759259259,
+          "min": 19,
+          "one_based_band": 3,
+          "p01": 28.0,
+          "p99": 218.0,
+          "std": 35.87117633512478,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 65.44964074074075,
+          "min": 16,
+          "one_based_band": 4,
+          "p01": 22.0,
+          "p99": 174.0,
+          "std": 31.195969306659535,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 83.05071203703703,
+          "min": 17,
+          "one_based_band": 5,
+          "p01": 23.0,
+          "p99": 221.0,
+          "std": 40.23896296285896,
+          "zero_based_index": 4
+        },
+        {
+          "max": 242,
+          "mean": 54.34795555555556,
+          "min": 19,
+          "one_based_band": 6,
+          "p01": 29.0,
+          "p99": 112.0,
+          "std": 18.23412046558814,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 70.38458148148148,
+          "min": 19,
+          "one_based_band": 7,
+          "p01": 33.0,
+          "p99": 159.0,
+          "std": 27.643966504847633,
+          "zero_based_index": 6
+        },
+        {
+          "max": 239,
+          "mean": 52.96565833333333,
+          "min": 17,
+          "one_based_band": 8,
+          "p01": 27.0,
+          "p99": 114.0,
+          "std": 19.453890768180564,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-3/000001.npy",
+      "global_max": 255,
+      "global_min": 15,
+      "sequence": "data30-3",
+      "sha256": "33786c53925ede5f784ec419bbd5b8eba8db579d7fa93f0f018291d2029b6056",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 42.318217592592596,
+          "min": 15,
+          "one_based_band": 1,
+          "p01": 17.0,
+          "p99": 112.0,
+          "std": 21.277346838590816,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 83.08385648148148,
+          "min": 20,
+          "one_based_band": 2,
+          "p01": 26.0,
+          "p99": 235.0,
+          "std": 42.159179292842836,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 76.37611481481481,
+          "min": 20,
+          "one_based_band": 3,
+          "p01": 27.0,
+          "p99": 211.0,
+          "std": 36.07290550704436,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 62.86256203703704,
+          "min": 16,
+          "one_based_band": 4,
+          "p01": 21.0,
+          "p99": 167.0,
+          "std": 31.05699448073988,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 79.50073611111111,
+          "min": 17,
+          "one_based_band": 5,
+          "p01": 23.0,
+          "p99": 218.0,
+          "std": 40.54569933597552,
+          "zero_based_index": 4
+        },
+        {
+          "max": 250,
+          "mean": 53.62444537037037,
+          "min": 20,
+          "one_based_band": 6,
+          "p01": 29.0,
+          "p99": 112.0,
+          "std": 17.921092797413248,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 70.48997222222222,
+          "min": 20,
+          "one_based_band": 7,
+          "p01": 33.0,
+          "p99": 155.0,
+          "std": 27.624668883538753,
+          "zero_based_index": 6
+        },
+        {
+          "max": 199,
+          "mean": 53.240685185185185,
+          "min": 17,
+          "one_based_band": 8,
+          "p01": 27.0,
+          "p99": 112.0,
+          "std": 19.449632727489355,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-3/000019.npy",
+      "global_max": 255,
+      "global_min": 15,
+      "sequence": "data30-3",
+      "sha256": "5a73081945a57b586027f6909eada20838127d7aa7125875e2d1a2ac852a7181",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 41.09251481481481,
+          "min": 14,
+          "one_based_band": 1,
+          "p01": 17.0,
+          "p99": 109.0,
+          "std": 21.21901056900529,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 80.04445925925926,
+          "min": 20,
+          "one_based_band": 2,
+          "p01": 26.0,
+          "p99": 229.0,
+          "std": 41.42058326265712,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 73.86352870370371,
+          "min": 20,
+          "one_based_band": 3,
+          "p01": 28.0,
+          "p99": 209.0,
+          "std": 35.42340360280911,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 60.84221296296296,
+          "min": 16,
+          "one_based_band": 4,
+          "p01": 22.0,
+          "p99": 162.0,
+          "std": 30.725018481009098,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 76.70257777777778,
+          "min": 17,
+          "one_based_band": 5,
+          "p01": 23.0,
+          "p99": 209.0,
+          "std": 39.94482680109999,
+          "zero_based_index": 4
+        },
+        {
+          "max": 239,
+          "mean": 52.84913796296296,
+          "min": 19,
+          "one_based_band": 6,
+          "p01": 29.0,
+          "p99": 106.0,
+          "std": 17.644285269820884,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 70.12503703703703,
+          "min": 18,
+          "one_based_band": 7,
+          "p01": 34.0,
+          "p99": 155.0,
+          "std": 27.388482389340616,
+          "zero_based_index": 6
+        },
+        {
+          "max": 200,
+          "mean": 53.189477777777775,
+          "min": 17,
+          "one_based_band": 8,
+          "p01": 27.0,
+          "p99": 111.0,
+          "std": 19.262301793761583,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-3/000036.npy",
+      "global_max": 255,
+      "global_min": 14,
+      "sequence": "data30-3",
+      "sha256": "f8efa5e3213c184488411d367bde1acbdcd70d2cde807a14ef9f244215e1f5b8",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 37.24284814814815,
+          "min": 14,
+          "one_based_band": 1,
+          "p01": 17.0,
+          "p99": 88.0,
+          "std": 19.946027237390368,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 71.89527777777778,
+          "min": 18,
+          "one_based_band": 2,
+          "p01": 25.0,
+          "p99": 208.0,
+          "std": 41.33223786537425,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 68.10064444444444,
+          "min": 18,
+          "one_based_band": 3,
+          "p01": 26.0,
+          "p99": 194.0,
+          "std": 35.14412305792559,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 55.73264351851852,
+          "min": 15,
+          "one_based_band": 4,
+          "p01": 21.0,
+          "p99": 141.0,
+          "std": 29.950003263969936,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 69.38094722222222,
+          "min": 17,
+          "one_based_band": 5,
+          "p01": 22.0,
+          "p99": 188.0,
+          "std": 39.50355092514295,
+          "zero_based_index": 4
+        },
+        {
+          "max": 229,
+          "mean": 52.013548148148146,
+          "min": 19,
+          "one_based_band": 6,
+          "p01": 28.0,
+          "p99": 98.0,
+          "std": 16.828547387948326,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 72.10333055555556,
+          "min": 19,
+          "one_based_band": 7,
+          "p01": 32.0,
+          "p99": 152.0,
+          "std": 27.835468275072813,
+          "zero_based_index": 6
+        },
+        {
+          "max": 186,
+          "mean": 55.194796296296296,
+          "min": 17,
+          "one_based_band": 8,
+          "p01": 27.0,
+          "p99": 110.0,
+          "std": 19.734524287334462,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-4/000001.npy",
+      "global_max": 255,
+      "global_min": 14,
+      "sequence": "data30-4",
+      "sha256": "524ff895495b6374a21b2e72dfb4f7a93f5cd56488b3cc25a3b4bb2bc1bfecf7",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 36.954850925925925,
+          "min": 13,
+          "one_based_band": 1,
+          "p01": 17.0,
+          "p99": 107.0,
+          "std": 20.727349741388814,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 71.55744629629629,
+          "min": 18,
+          "one_based_band": 2,
+          "p01": 25.0,
+          "p99": 234.0,
+          "std": 43.371429769992744,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 68.72093425925927,
+          "min": 18,
+          "one_based_band": 3,
+          "p01": 26.0,
+          "p99": 227.0,
+          "std": 37.76519026114514,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 55.98289259259259,
+          "min": 15,
+          "one_based_band": 4,
+          "p01": 21.0,
+          "p99": 172.0,
+          "std": 31.539050778412438,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 69.29559907407408,
+          "min": 16,
+          "one_based_band": 5,
+          "p01": 23.0,
+          "p99": 221.0,
+          "std": 41.39445272687848,
+          "zero_based_index": 4
+        },
+        {
+          "max": 228,
+          "mean": 52.895297222222226,
+          "min": 18,
+          "one_based_band": 6,
+          "p01": 28.0,
+          "p99": 119.0,
+          "std": 18.17049432954914,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 73.69320277777778,
+          "min": 18,
+          "one_based_band": 7,
+          "p01": 32.0,
+          "p99": 160.0,
+          "std": 28.88702403972836,
+          "zero_based_index": 6
+        },
+        {
+          "max": 187,
+          "mean": 56.537841666666665,
+          "min": 16,
+          "one_based_band": 8,
+          "p01": 26.0,
+          "p99": 115.0,
+          "std": 20.541851034758032,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-4/000026.npy",
+      "global_max": 255,
+      "global_min": 13,
+      "sequence": "data30-4",
+      "sha256": "70890df870d4d3a6103e338166c518d68e3d4a752f3acfb85b8b82b5a213ce82",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 254,
+          "mean": 35.43705277777778,
+          "min": 15,
+          "one_based_band": 1,
+          "p01": 18.0,
+          "p99": 107.0,
+          "std": 19.770264865003693,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 68.53981851851852,
+          "min": 19,
+          "one_based_band": 2,
+          "p01": 26.0,
+          "p99": 241.0,
+          "std": 42.38316799509445,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 66.81092685185185,
+          "min": 19,
+          "one_based_band": 3,
+          "p01": 27.0,
+          "p99": 229.0,
+          "std": 37.4082978076144,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 54.40258796296296,
+          "min": 15,
+          "one_based_band": 4,
+          "p01": 22.0,
+          "p99": 182.0,
+          "std": 31.03404620506329,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 67.02781296296297,
+          "min": 17,
+          "one_based_band": 5,
+          "p01": 24.0,
+          "p99": 236.0,
+          "std": 40.857612470743575,
+          "zero_based_index": 4
+        },
+        {
+          "max": 231,
+          "mean": 52.51416944444444,
+          "min": 19,
+          "one_based_band": 6,
+          "p01": 28.0,
+          "p99": 128.0,
+          "std": 18.723578400394867,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 73.32653796296296,
+          "min": 18,
+          "one_based_band": 7,
+          "p01": 33.0,
+          "p99": 161.0,
+          "std": 29.040897595355574,
+          "zero_based_index": 6
+        },
+        {
+          "max": 193,
+          "mean": 56.69287685185185,
+          "min": 16,
+          "one_based_band": 8,
+          "p01": 27.0,
+          "p99": 116.0,
+          "std": 20.824610493925768,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-4/000050.npy",
+      "global_max": 255,
+      "global_min": 15,
+      "sequence": "data30-4",
+      "sha256": "f6a40ceb714e7ca1a8e4722ec5ab6cb4bc66b06ab206fb298d0b86c6a477ee13",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 254,
+          "mean": 34.34229722222222,
+          "min": 15,
+          "one_based_band": 1,
+          "p01": 18.0,
+          "p99": 105.0,
+          "std": 18.549785019733395,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 66.30251111111112,
+          "min": 19,
+          "one_based_band": 2,
+          "p01": 25.0,
+          "p99": 238.0,
+          "std": 41.26943454626433,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 65.2497712962963,
+          "min": 18,
+          "one_based_band": 3,
+          "p01": 27.0,
+          "p99": 226.0,
+          "std": 36.65794836305539,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 53.00842222222222,
+          "min": 16,
+          "one_based_band": 4,
+          "p01": 22.0,
+          "p99": 181.0,
+          "std": 30.30748794213188,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 65.08380833333334,
+          "min": 16,
+          "one_based_band": 5,
+          "p01": 23.0,
+          "p99": 235.0,
+          "std": 40.277175588482926,
+          "zero_based_index": 4
+        },
+        {
+          "max": 231,
+          "mean": 52.40330925925926,
+          "min": 19,
+          "one_based_band": 6,
+          "p01": 28.0,
+          "p99": 128.0,
+          "std": 18.890136387874684,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 74.10693981481481,
+          "min": 18,
+          "one_based_band": 7,
+          "p01": 33.0,
+          "p99": 163.0,
+          "std": 30.360159810034297,
+          "zero_based_index": 6
+        },
+        {
+          "max": 193,
+          "mean": 57.380855555555556,
+          "min": 17,
+          "one_based_band": 8,
+          "p01": 27.0,
+          "p99": 118.0,
+          "std": 21.78299614993366,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-5/000001.npy",
+      "global_max": 255,
+      "global_min": 15,
+      "sequence": "data30-5",
+      "sha256": "f41ee84348c7b2e48d4e1f112761b88748ac4ad4afaca7d9abe3d950a3545234",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 248,
+          "mean": 33.92148518518518,
+          "min": 15,
+          "one_based_band": 1,
+          "p01": 18.0,
+          "p99": 113.0,
+          "std": 18.93642669022392,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 66.15132685185185,
+          "min": 20,
+          "one_based_band": 2,
+          "p01": 25.0,
+          "p99": 254.0,
+          "std": 43.88585424668962,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 66.32593888888889,
+          "min": 19,
+          "one_based_band": 3,
+          "p01": 27.0,
+          "p99": 238.0,
+          "std": 40.34210080268556,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 53.36066203703704,
+          "min": 16,
+          "one_based_band": 4,
+          "p01": 22.0,
+          "p99": 195.0,
+          "std": 32.37420583505634,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 65.12209629629629,
+          "min": 16,
+          "one_based_band": 5,
+          "p01": 23.0,
+          "p99": 248.0,
+          "std": 42.62533262489947,
+          "zero_based_index": 4
+        },
+        {
+          "max": 230,
+          "mean": 53.33952685185185,
+          "min": 20,
+          "one_based_band": 6,
+          "p01": 28.0,
+          "p99": 136.0,
+          "std": 20.200035759003494,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 76.53092685185185,
+          "min": 20,
+          "one_based_band": 7,
+          "p01": 33.0,
+          "p99": 171.0,
+          "std": 32.831724622352425,
+          "zero_based_index": 6
+        },
+        {
+          "max": 192,
+          "mean": 59.34057685185185,
+          "min": 17,
+          "one_based_band": 8,
+          "p01": 27.0,
+          "p99": 122.0,
+          "std": 23.57613429580661,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-5/000036.npy",
+      "global_max": 255,
+      "global_min": 15,
+      "sequence": "data30-5",
+      "sha256": "358a44d9fff9085b49dd094f9a407ac434478e537a19e73d2f3e87ec9fcae8e3",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 241,
+          "mean": 35.33126018518519,
+          "min": 16,
+          "one_based_band": 1,
+          "p01": 18.0,
+          "p99": 109.0,
+          "std": 17.358809456981348,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 69.40879166666667,
+          "min": 21,
+          "one_based_band": 2,
+          "p01": 26.0,
+          "p99": 249.0,
+          "std": 40.77318172164882,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 67.77728888888889,
+          "min": 22,
+          "one_based_band": 3,
+          "p01": 30.0,
+          "p99": 228.0,
+          "std": 36.69953579459508,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 55.024600925925924,
+          "min": 17,
+          "one_based_band": 4,
+          "p01": 23.0,
+          "p99": 187.0,
+          "std": 29.72514516330625,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 68.28008796296297,
+          "min": 18,
+          "one_based_band": 5,
+          "p01": 23.0,
+          "p99": 239.0,
+          "std": 39.48615427509631,
+          "zero_based_index": 4
+        },
+        {
+          "max": 217,
+          "mean": 52.28912037037037,
+          "min": 23,
+          "one_based_band": 6,
+          "p01": 31.0,
+          "p99": 130.0,
+          "std": 17.835956145765195,
+          "zero_based_index": 5
+        },
+        {
+          "max": 255,
+          "mean": 73.57776018518518,
+          "min": 25,
+          "one_based_band": 7,
+          "p01": 35.0,
+          "p99": 164.0,
+          "std": 29.97371295265927,
+          "zero_based_index": 6
+        },
+        {
+          "max": 185,
+          "mean": 57.04471111111111,
+          "min": 22,
+          "one_based_band": 8,
+          "p01": 29.0,
+          "p99": 118.0,
+          "std": 21.681863537807324,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-5/000070.npy",
+      "global_max": 255,
+      "global_min": 16,
+      "sequence": "data30-5",
+      "sha256": "c169f9d47221c9b5dda22c4b5705ac622f6e38cf94b60006d9a8987f3e850b23",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 224,
+          "mean": 31.932835185185183,
+          "min": 13,
+          "one_based_band": 1,
+          "p01": 16.0,
+          "p99": 77.0,
+          "std": 14.055121183406547,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 61.78920277777778,
+          "min": 17,
+          "one_based_band": 2,
+          "p01": 23.0,
+          "p99": 176.0,
+          "std": 32.83632392885558,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 58.74123796296296,
+          "min": 16,
+          "one_based_band": 3,
+          "p01": 24.0,
+          "p99": 165.0,
+          "std": 28.35876882130182,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 47.66394722222222,
+          "min": 14,
+          "one_based_band": 4,
+          "p01": 19.0,
+          "p99": 138.0,
+          "std": 24.194170575302728,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 58.84728055555556,
+          "min": 15,
+          "one_based_band": 5,
+          "p01": 21.0,
+          "p99": 181.0,
+          "std": 32.5375073015884,
+          "zero_based_index": 4
+        },
+        {
+          "max": 204,
+          "mean": 43.69307685185185,
+          "min": 16,
+          "one_based_band": 6,
+          "p01": 23.0,
+          "p99": 95.0,
+          "std": 15.02413345734435,
+          "zero_based_index": 5
+        },
+        {
+          "max": 242,
+          "mean": 59.33189814814815,
+          "min": 18,
+          "one_based_band": 7,
+          "p01": 26.0,
+          "p99": 134.0,
+          "std": 23.92365397561965,
+          "zero_based_index": 6
+        },
+        {
+          "max": 164,
+          "mean": 47.44982685185185,
+          "min": 16,
+          "one_based_band": 8,
+          "p01": 23.0,
+          "p99": 97.0,
+          "std": 16.52137435060966,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-9/000001.npy",
+      "global_max": 255,
+      "global_min": 13,
+      "sequence": "data30-9",
+      "sha256": "fb3d678177e0a82e438cc6a7b993e2f060ce6eb96cf305c4ac291d3ef8888880",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 245,
+          "mean": 31.771562962962964,
+          "min": 13,
+          "one_based_band": 1,
+          "p01": 17.0,
+          "p99": 82.0,
+          "std": 15.020133828425543,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 60.402828703703705,
+          "min": 17,
+          "one_based_band": 2,
+          "p01": 23.0,
+          "p99": 185.0,
+          "std": 32.78710090137514,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 57.64491666666667,
+          "min": 16,
+          "one_based_band": 3,
+          "p01": 25.0,
+          "p99": 173.0,
+          "std": 28.44205348717159,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 46.36507129629629,
+          "min": 14,
+          "one_based_band": 4,
+          "p01": 20.0,
+          "p99": 150.0,
+          "std": 24.054415698895852,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 56.72863425925926,
+          "min": 15,
+          "one_based_band": 5,
+          "p01": 22.0,
+          "p99": 198.0,
+          "std": 31.494827183816334,
+          "zero_based_index": 4
+        },
+        {
+          "max": 217,
+          "mean": 43.805794444444444,
+          "min": 16,
+          "one_based_band": 6,
+          "p01": 24.0,
+          "p99": 104.0,
+          "std": 15.43958305599384,
+          "zero_based_index": 5
+        },
+        {
+          "max": 254,
+          "mean": 60.46158425925926,
+          "min": 16,
+          "one_based_band": 7,
+          "p01": 27.0,
+          "p99": 136.0,
+          "std": 25.112333405035827,
+          "zero_based_index": 6
+        },
+        {
+          "max": 175,
+          "mean": 48.25106296296296,
+          "min": 15,
+          "one_based_band": 8,
+          "p01": 23.0,
+          "p99": 98.0,
+          "std": 17.359539345199146,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-9/000019.npy",
+      "global_max": 255,
+      "global_min": 13,
+      "sequence": "data30-9",
+      "sha256": "d8e8e686317f0fd086a28478f0ad74f15260b0fc099a512b9832e49dfba292bb",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    },
+    {
+      "channels": [
+        {
+          "max": 255,
+          "mean": 32.211327777777775,
+          "min": 13,
+          "one_based_band": 1,
+          "p01": 17.0,
+          "p99": 96.0,
+          "std": 17.091207231919388,
+          "zero_based_index": 0
+        },
+        {
+          "max": 255,
+          "mean": 59.50752962962963,
+          "min": 16,
+          "one_based_band": 2,
+          "p01": 25.0,
+          "p99": 210.0,
+          "std": 33.7346848484345,
+          "zero_based_index": 1
+        },
+        {
+          "max": 255,
+          "mean": 56.37068981481482,
+          "min": 14,
+          "one_based_band": 3,
+          "p01": 26.0,
+          "p99": 189.0,
+          "std": 29.348232566918455,
+          "zero_based_index": 2
+        },
+        {
+          "max": 255,
+          "mean": 46.0942787037037,
+          "min": 13,
+          "one_based_band": 4,
+          "p01": 21.0,
+          "p99": 159.0,
+          "std": 25.566482714246785,
+          "zero_based_index": 3
+        },
+        {
+          "max": 255,
+          "mean": 56.37812037037037,
+          "min": 14,
+          "one_based_band": 5,
+          "p01": 23.0,
+          "p99": 211.0,
+          "std": 32.43547227993679,
+          "zero_based_index": 4
+        },
+        {
+          "max": 224,
+          "mean": 43.31964814814815,
+          "min": 14,
+          "one_based_band": 6,
+          "p01": 23.0,
+          "p99": 113.0,
+          "std": 16.790313760394607,
+          "zero_based_index": 5
+        },
+        {
+          "max": 254,
+          "mean": 59.6075,
+          "min": 15,
+          "one_based_band": 7,
+          "p01": 27.0,
+          "p99": 145.0,
+          "std": 27.15430893523162,
+          "zero_based_index": 6
+        },
+        {
+          "max": 212,
+          "mean": 47.231563888888886,
+          "min": 13,
+          "one_based_band": 8,
+          "p01": 23.0,
+          "p99": 104.0,
+          "std": 18.703065687964788,
+          "zero_based_index": 7
+        }
+      ],
+      "dtype": "uint8",
+      "family": "data30",
+      "file": "<DATA_CACHE>/raw/MMOT/extracted/confirmatory_data30/data30-9/000037.npy",
+      "global_max": 255,
+      "global_min": 13,
+      "sequence": "data30-9",
+      "sha256": "578302979016327406586c10bf83af36e0b1ab383cff1ac962e6007c3ca7f188",
+      "shape": [
+        900,
+        1200,
+        8
+      ]
+    }
+  ],
+  "status": "FAIL_HISTORICAL_CHANNEL_SELECTION_REQUIRES_CORRECTED_RERUN"
+}

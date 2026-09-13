@@ -1,0 +1,4 @@
+descriptors,instance_count,rejected_invalid_crops,runtime_seconds_median_instance,runtime_seconds_sum,sampled_crops,tracker
+13836,263,0,0.21374238468706608,248.31660787481815,29281,bytetrack
+8150,263,0,0.16020113229751587,131.6376708317548,15819,ocsort
+5663,263,0,0.10378713067620993,132.88537962641567,15490,deepocsort

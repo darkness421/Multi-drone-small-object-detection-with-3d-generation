@@ -1,0 +1,11 @@
+{
+  "attempt": 1,
+  "status": "FAILED_BEFORE_TRACKER_RERUN",
+  "failure_stage": "tracker_config_serialization",
+  "error": "AttributeError: ByteTrack object has no attribute frame_rate",
+  "cause": "frame_rate is accepted by the constructor but is not retained as an instance attribute in BoxMOT commit 6edfa8ad7dc2f24b19a41c0058fc53d8d2c4e8ec",
+  "scientific_outputs_generated": false,
+  "historical_outputs_modified": false,
+  "failed_script_sha256": "82c9e1fe443a26841bf46d83745fcf6cde87487ed06c59e8f28061d860498006",
+  "repair": "Record absent constructor-only attributes explicitly instead of dereferencing them."
+}

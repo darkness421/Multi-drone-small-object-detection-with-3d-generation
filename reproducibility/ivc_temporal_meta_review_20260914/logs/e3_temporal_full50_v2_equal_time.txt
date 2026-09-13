@@ -1,0 +1,23 @@
+	Command being timed: "env CUDA_VISIBLE_DEVICES=1 PYTHONPATH=<FROZEN_WORKSPACE>/third_party/mmot_official/TrackByDetection/ultralytics:<FROZEN_WORKSPACE>/third_party/trackeval_official:<FROZEN_WORKSPACE>/third_party/boxmot_official <PYTHON_ENV>/bin/python <EXPERIMENT_ROOT>/scripts/run_mmot_real_detection_temporal_cached.py --benchmark-script <EXPERIMENT_ROOT>/scripts/run_full50_linker_benchmark.py --workspace <FROZEN_WORKSPACE> --detection-dir <EXPERIMENT_ROOT>/results_raw/e3_detector_full50_v1 --detector-manifest <EXPERIMENT_ROOT>/results_raw/e3_detector_full50_v1/detector_checkpoint_manifest.json --reid-checkpoint <FROZEN_WORKSPACE>/assets/reid_r50_6e_mot17-4bf6b63d.pth --aflink-root <EXPERIMENT_ROOT>/third_party/StrongSORT --aflink-checkpoint <EXPERIMENT_ROOT>/assets/AFLink_epoch20.pth --output-dir <EXPERIMENT_ROOT>/results_raw/e3_temporal_full50_v2_equal --tracker-cache-dir <EXPERIMENT_ROOT>/results_raw/e3_temporal_full50_v1 --descriptor-cache-dir <EXPERIMENT_ROOT>/results_raw/e3_temporal_full50_v1 --family-root legacy12 <DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/legacy12 --family-root confirmation38 <DATA_CACHE>/raw/MMOT/extracted/test_meta_review_split/confirmation38 --trackers bytetrack ocsort deepocsort --device cuda:0 --batch-size 128 --aflink-batch-size 512 --skip-pooled-aggregate"
+	User time (seconds): 126.37
+	System time (seconds): 3.70
+	Percent of CPU this job got: 105%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:03.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2097752
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 493805
+	Voluntary context switches: 29263
+	Involuntary context switches: 80819
+	Swaps: 0
+	File system inputs: 22744
+	File system outputs: 17616
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

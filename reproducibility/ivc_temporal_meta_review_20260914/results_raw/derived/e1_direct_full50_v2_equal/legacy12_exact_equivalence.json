@@ -1,0 +1,50 @@
+{
+  "candidate": {
+    "family": "legacy12",
+    "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_full50_v2_equal/results/linker_comparison_per_sequence.csv",
+    "rows": 180,
+    "sha256": "06d99f81076edc4f295460f012a9a49f29b68301351d65a1f2d4e4e74bb9e8cb"
+  },
+  "key_columns": [
+    "sequence",
+    "tracker",
+    "method"
+  ],
+  "key_sets_match": true,
+  "maximum_absolute_difference": {
+    "AssA": 0.0,
+    "DetA": 0.0,
+    "FN": 0.0,
+    "FP": 0.0,
+    "Frag": 0.0,
+    "HOTA": 0.0,
+    "IDF1": 0.0,
+    "IDSW": 0.0,
+    "MOTA": 0.0,
+    "TP": 0.0,
+    "predicted_boxes": 0.0,
+    "valid_gt_boxes": 0.0
+  },
+  "mismatches": [],
+  "numeric_columns": [
+    "HOTA",
+    "AssA",
+    "DetA",
+    "IDF1",
+    "MOTA",
+    "IDSW",
+    "FP",
+    "FN",
+    "TP",
+    "Frag",
+    "predicted_boxes",
+    "valid_gt_boxes"
+  ],
+  "reference": {
+    "path": "<EXPERIMENT_ROOT>/results_raw/e1_direct_12_v1/results/linker_comparison_per_sequence.csv",
+    "rows": 180,
+    "sha256": "d2c4c4a1b5b8caf628bc60a9de9a30499fdda3c0c4f74d9ef363fbd49ded3a88"
+  },
+  "status": "PASS",
+  "tolerance": 0.0
+}

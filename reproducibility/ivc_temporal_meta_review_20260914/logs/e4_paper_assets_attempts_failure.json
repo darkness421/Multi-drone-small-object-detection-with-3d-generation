@@ -1,0 +1,26 @@
+{
+  "status": "RECOVERED",
+  "scientific_outputs_changed": false,
+  "attempts": [
+    {
+      "stage": "paper-table assembly",
+      "status": "FAILED_BEFORE_FINAL_MANIFEST",
+      "reason": "The temporal ablation CSV does not contain the controlled partial-Hungarian row; that row is stored in the main aggregate CSV.",
+      "recovery": "Read the partial-Hungarian result from the frozen aggregate CSV while retaining all ablation rows from temporal_ablation.csv."
+    },
+    {
+      "stage": "strict JSON serialization",
+      "status": "FAILED_BEFORE_FINAL_MANIFEST",
+      "reason": "Invalid AFLink sequence variants are represented as NaN in the source CSV, which strict JSON does not permit.",
+      "recovery": "Map source NaN values to JSON null. No score was imputed and invalid AFLink aggregates remain N/A."
+    },
+    {
+      "stage": "corrected table-generator rerun",
+      "status": "FAILED_BEFORE_EXECUTION",
+      "reason": "The first rerun referenced a stale, nonexistent .venv/bin/python path.",
+      "recovery": "Run with the verified <PYTHON_ENV>/bin/python interpreter."
+    }
+  ],
+  "completed_output": "results_raw/paper_ready/manifest.json",
+  "completed_status": "COMPLETE"
+}
