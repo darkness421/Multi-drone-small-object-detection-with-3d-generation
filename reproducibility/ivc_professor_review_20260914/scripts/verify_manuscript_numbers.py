@@ -20,6 +20,16 @@ METHOD_LABELS = {
 }
 TRACKERS = ("bytetrack", "ocsort", "deepocsort")
 PROTOCOLS = ("oracle_aabb", "official_detector")
+OPERATIONAL_METHODS = (
+    "no_refinement",
+    "aflink_cached_overlap_safe",
+    "com3d_reciprocal_guard",
+)
+STATIC_ASSIGNMENT_METHODS = (
+    "geometry_greedy",
+    "geometry_reid_greedy_guard",
+    "geometry_reid_hungarian",
+)
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -104,9 +114,12 @@ def main() -> int:
             (row["protocol"], row["tracker"], row["method"]), normalized
         )
 
-    # Main compact table: one method row carries all three trackers per protocol.
+    # Main compact table: operational rows carry all three trackers per protocol.
+    # Static assignment controls remain numerical appendix rows and are intentionally
+    # excluded from the compact operational presentation.
     table_rows = tex_rows(paper_root / "ivc_tables/temporal/main_refinement_gains.tex")
-    for method, label in METHOD_LABELS.items():
+    for method in OPERATIONAL_METHODS:
+        label = METHOD_LABELS[method]
         for protocol_index, protocol in enumerate(PROTOCOLS):
             row = find_one(table_rows, label, protocol_index)
             expected: list[str] = []
@@ -120,6 +133,26 @@ def main() -> int:
                 bool(row) and has_in_order(row, expected),
                 " | ".join(expected),
             )
+
+    for method in STATIC_ASSIGNMENT_METHODS:
+        label = METHOD_LABELS[method]
+        check(
+            f"main table excludes static control {method}",
+            not any(f"& {label} &" in row for row in table_rows),
+            f"{label} absent from compact operational table",
+        )
+
+    appendix_static_text = "\n".join(
+        (paper_root / "ivc_tables/temporal" / filename).read_text(encoding="utf-8")
+        for filename in ("oracle_full50.tex", "detector_full50.tex")
+    )
+    for method in STATIC_ASSIGNMENT_METHODS:
+        label = METHOD_LABELS[method]
+        check(
+            f"appendix retains static control {method}",
+            appendix_static_text.count(label) == 6,
+            f"six {label} rows across oracle and detector appendix tables",
+        )
 
     # Full tables include HOTA and AssA. Method occurrences follow tracker order.
     for protocol, filename in (

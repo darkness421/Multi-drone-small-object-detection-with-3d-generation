@@ -633,7 +633,7 @@ does support a narrower claim: the deterministic, box-preserving refiner improve
 equal-sequence means over no refinement under all six upstream/input conditions,
 while exposing reproducible assignment behavior and explicit transfer limits.
 
-## Full-50 main comparison
+## Full-50 complete comparison
 
 {markdown_main_table(main_rows)}
 
@@ -794,7 +794,7 @@ Report generation:
 | Location | Previous reading | Verified replacement |
 | --- | --- | --- |
 | Abstract/Results | None-to-CoM3D comparison could read as overall superiority | State gains over unchanged upstream trajectories and disclose stronger same-input linker rows |
-| Main comparison | Only None and CoM3D in the main table | Restore None, geometry greedy, Geometry+ReID greedy, partial Hungarian, AFLink with validity adapter, and CoM3D |
+| Comparison layout | Operational and static-assignment rows combined in one main table | Keep None, AFLink+VA, and CoM3D-ACE in the operational main table; retain every static control and paired interval in the explicitly linked appendix |
 | Reciprocal ranking | Geometry-first order presented without a controlled ranking diagnosis | Report that common-cost reciprocal outperforms historical ranking in all six IDF1/risk comparisons |
 | Component guard | Presented as an active merge-prevention module | Retain as a defensive assertion; one-shot strict-time reciprocal paths make it structurally redundant here |
 | AFLink | Official aggregate marked N/A for duplicate identities | Explain native post-remap deduplication deletes boxes; compare a separately named no-GT box-preserving adapter |
@@ -803,7 +803,6 @@ Report generation:
 | Target training | Could include the official MMOT-trained detector | Restrict no-target-training statement to the refiner and fixed BaseReID descriptor |
 | M3OT | Broad cue-based explanation | State exact opportunity/rank diagnostics and disclose oracle-GT crop-admission protocol |
 | Figures 1/2 | Could read as evaluated cross-view/active-routing evidence | Keep author figures but explicitly label motivation/system context outside the temporal quantitative claim |
-| AI assistance | Prior disclosure absent | Add an accurate Elsevier-style declaration and Methods note covering code audit and manuscript assistance |
 """
     (args.output_dir / "manuscript_claim_diff.md").write_text(claim_diff, encoding="utf-8")
 
@@ -881,8 +880,9 @@ Report generation:
   오연결, greedy/reciprocal/Hungarian 결과를 비교했다.
 - P5: **부분 해결.** 주요 linker 대비 paired sequence CI를 계산했다. 공식 metadata에
   source-flight mapping이 없어 block bootstrap은 수행하지 않았다.
-- P6: **부분 해결/원고 반영.** 본 보고서 수치를 근거로 main comparison, AFLink,
-  guard, M3OT, confirmation scope와 AI-use 문구를 수정한다. 저자 제작 Fig. 1/2
+- P6: **부분 해결/원고 반영.** 본 보고서 수치를 근거로 운영형 main comparison과
+  별도 static-assignment appendix, AFLink, guard, M3OT 및 confirmation scope를
+  수정한다. 저자 제작 Fig. 1/2
   파일은 보존하고 캡션과 본문에서 motivation/system context로 범위를 제한한다.
 
 ## 2. AFLink failure stage, 원인, raw 및 adapter 결과
@@ -925,8 +925,10 @@ fixed pixel/MOT17 appearance cue의 domain mismatch가 함께 남으므로, 새�
 
 ## 6. 원고 수정과 수치 변경 근거
 
-Main Results에 여섯 비교군을 복원하고, controlled ranking 진단과 paired CI를 부록에
-추가한다. AFLink는 native와 `+ common validity adapter`를 구분한다. Guard는 assertion으로
+Main Results에는 None, AFLink+VA, CoM3D-ACE의 운영형 비교를 배치하고, geometry
+greedy, Geometry+ReID greedy, partial Hungarian을 포함한 전체 동일 입력 비교와
+paired CI는 명시적으로 연결된 부록에 보존한다. AFLink는 native와
+`+ common validity adapter`를 구분한다. Guard는 assertion으로
 정정하고, “all 50 sequences improve”를 “the equal-sequence mean over 50 improves”로
 제한한다. Confirmation38은 외부 독립성이 아니라 locally pre-specified partition으로
 표현한다. M3OT oracle crop admission과 실패 분석을 명시한다. 표 수치는

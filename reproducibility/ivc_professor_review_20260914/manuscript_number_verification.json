@@ -15,36 +15,6 @@
       "detail": "38.32 | 10,324 | 36.46 | 4,263 | 63.09 | 1,370"
     },
     {
-      "name": "main table oracle_aabb/geometry_greedy",
-      "passed": true,
-      "detail": "51.02 | 15,484 | 45.41 | 4,122 | 83.69 | 1,294"
-    },
-    {
-      "name": "main table official_detector/geometry_greedy",
-      "passed": true,
-      "detail": "40.76 | 7,908 | 38.14 | 2,959 | 64.01 | 1,008"
-    },
-    {
-      "name": "main table oracle_aabb/geometry_reid_greedy_guard",
-      "passed": true,
-      "detail": "51.80 | 15,064 | 46.25 | 3,481 | 83.99 | 1,149"
-    },
-    {
-      "name": "main table official_detector/geometry_reid_greedy_guard",
-      "passed": true,
-      "detail": "41.10 | 7,711 | 38.76 | 2,585 | 64.15 | 942"
-    },
-    {
-      "name": "main table oracle_aabb/geometry_reid_hungarian",
-      "passed": true,
-      "detail": "50.78 | 16,462 | 46.19 | 3,547 | 84.00 | 1,174"
-    },
-    {
-      "name": "main table official_detector/geometry_reid_hungarian",
-      "passed": true,
-      "detail": "40.56 | 8,405 | 38.74 | 2,668 | 64.17 | 957"
-    },
-    {
       "name": "main table oracle_aabb/aflink_cached_overlap_safe",
       "passed": true,
       "detail": "47.70 | 20,025 | 43.33 | 6,082 | 81.93 | 1,919"
@@ -63,6 +33,36 @@
       "name": "main table official_detector/com3d_reciprocal_guard",
       "passed": true,
       "detail": "39.97 | 8,935 | 38.09 | 3,204 | 64.08 | 1,046"
+    },
+    {
+      "name": "main table excludes static control geometry_greedy",
+      "passed": true,
+      "detail": "Geometry greedy absent from compact operational table"
+    },
+    {
+      "name": "main table excludes static control geometry_reid_greedy_guard",
+      "passed": true,
+      "detail": "Geo.+ReID greedy absent from compact operational table"
+    },
+    {
+      "name": "main table excludes static control geometry_reid_hungarian",
+      "passed": true,
+      "detail": "Partial Hung. absent from compact operational table"
+    },
+    {
+      "name": "appendix retains static control geometry_greedy",
+      "passed": true,
+      "detail": "six Geometry greedy rows across oracle and detector appendix tables"
+    },
+    {
+      "name": "appendix retains static control geometry_reid_greedy_guard",
+      "passed": true,
+      "detail": "six Geo.+ReID greedy rows across oracle and detector appendix tables"
+    },
+    {
+      "name": "appendix retains static control geometry_reid_hungarian",
+      "passed": true,
+      "detail": "six Partial Hung. rows across oracle and detector appendix tables"
     },
     {
       "name": "full table oracle_aabb/bytetrack/no_refinement",

@@ -15,9 +15,9 @@
   오연결, greedy/reciprocal/Hungarian 결과를 비교했다.
 - P5: **부분 해결.** 주요 linker 대비 paired sequence CI를 계산했다. 공식 metadata에
   source-flight mapping이 없어 block bootstrap은 수행하지 않았다.
-- P6: **부분 해결/원고 반영 완료.** 본 보고서 수치를 근거로 main comparison,
-  AFLink, guard, M3OT와 confirmation scope를 수정했다. AI-use 선언은 사용자의
-  최종 명시 지시에 따라 원고에서 제외했다. 저자 제작
+- P6: **부분 해결/원고 반영 완료.** 본 보고서 수치를 근거로 운영형 main
+  comparison과 별도 static-assignment appendix, AFLink, guard, M3OT 및
+  confirmation scope를 수정했다. 저자 제작
   Fig. 1/2 파일은 보존하고 캡션과 본문에서 motivation/system context로 범위를
   제한했다. 따라서 교수님이 요청한 Fig. 1의 temporal before/after 교체 자체는
   범위에서 제외되어 부분 해결로 남는다.
@@ -62,12 +62,13 @@ fixed pixel/MOT17 appearance cue의 domain mismatch가 함께 남으므로, 새�
 
 ## 6. 원고 수정과 수치 변경 근거
 
-Main Results에 여섯 비교군을 복원하고, controlled ranking 진단과 paired CI를 부록에
-추가했다. AFLink는 native와 `+ common validity adapter`를 구분했다. Guard는 assertion으로
+Main Results에는 None, AFLink+VA, CoM3D-ACE의 운영형 비교를 배치하고, geometry
+greedy, Geometry+ReID greedy, partial Hungarian을 포함한 전체 동일 입력 비교와
+paired CI는 명시적으로 연결된 부록에 보존했다. AFLink는 native와
+`+ common validity adapter`를 구분했다. Guard는 assertion으로
 정정하고, “all 50 sequences improve”를 “the equal-sequence mean over 50 improves”로
 제한했다. Confirmation38은 외부 독립성이 아니라 locally pre-specified partition으로
-표현했다. M3OT oracle crop admission과 실패 분석을 명시했다. 사용자의 최종 지시에
-따라 AI-use 선언과 Methods의 관련 문장은 포함하지 않았다. 표 수치는
+표현했다. M3OT oracle crop admission과 실패 분석을 명시했다. 표 수치는
 `main_comparison.csv`, `paired_linker_deltas.csv`, `m3ot_linker_comparison.csv`의
 full-precision 값에서 한 번만 반올림했다. `verify_manuscript_numbers.py`가 주요 LaTeX
 표와 초록/본문 delta 94개를 원시 CSV에 대조했고 94/94가 통과했다. Docker의 고정

@@ -8,7 +8,7 @@ does support a narrower claim: the deterministic, box-preserving refiner improve
 equal-sequence means over no refinement under all six upstream/input conditions,
 while exposing reproducible assignment behavior and explicit transfer limits.
 
-## Full-50 main comparison
+## Full-50 complete comparison
 
 | Input | Tracker | Refiner | HOTA | AssA | IDF1 | IDSW |
 | --- | --- | --- | ---: | ---: | ---: | ---: |

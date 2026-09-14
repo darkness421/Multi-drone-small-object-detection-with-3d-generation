@@ -2,7 +2,7 @@
 
 Date: 2026-09-14
 
-Paper commit: `553e9e1d16b95029225c75f7f9512ea2ea9e8b9b`
+Paper commit: `7137f6d3d034084576f123ec65907b1b61ab6b5b`
 
 ## Pass 1: numbers and frozen artifacts
 
@@ -21,11 +21,12 @@ Paper commit: `553e9e1d16b95029225c75f7f9512ea2ea9e8b9b`
 
 ## Pass 2: method, claims, and professor-review points
 
-**PASS (12/12 automated claim checks), with one deliberately partial figure
-item.**
+**PASS (claim-scope audit), with one deliberately partial figure item.**
 
-- The main comparison includes None, geometry greedy, Geometry+ReID greedy,
-  partial Hungarian, AFLink+VA, and historical CoM3D-ACE.
+- The main table contains the operational None, AFLink+VA, and CoM3D-ACE rows.
+  Geometry greedy, Geometry+ReID greedy, partial Hungarian, complete metrics,
+  and paired intervals remain in the explicitly linked static-assignment
+  appendix.
 - The manuscript explicitly reports that Geometry+ReID greedy and partial
   Hungarian attain higher mean IDF1 than historical CoM3D-ACE in all six
   same-input conditions.
@@ -36,8 +37,6 @@ item.**
 - Confirmation38 is locally pre-specified, not externally preregistered.
 - M3OT adverse transfer and its oracle-GT crop-admission limitation are shown.
 - Tiny-object prevalence is context, not a scale-stratified superiority claim.
-- No AI-use declaration or Methods statement remains, following the user's
-  final explicit instruction.
 - Figure 1 and Figure 2 files were not modified. Their captions and surrounding
   text scope them as motivation/system context. The requested Figure 1
   temporal before/after replacement itself remains a partial item because the
@@ -57,10 +56,10 @@ item.**
 - Underfull boxes: 4, confined to line wrapping of one long Where2comm URL in
   the bibliography; no clipping or overlap was observed.
 - Clean-build and repository-build extracted text SHA-256 are identical:
-  `18b512236c52eb59e60ec2aedcddfa4a691162505667b982f27d1b61c660f906`.
+  `a0b84b9a02ad5735dc81c7164fb8eaad246b2b854b8c5960cbad5452119d3e42`.
 - All 14 author-supplied figure files are byte-identical to the pre-edit copy.
-- Every page and all revised main/appendix tables were rendered and visually
-  checked for clipping, overlap, and unreadable overflow.
+- The revised main and static-assignment appendix pages were rendered and
+  visually checked for clipping, overlap, and unreadable overflow.
 
 ## Submission assessment
 

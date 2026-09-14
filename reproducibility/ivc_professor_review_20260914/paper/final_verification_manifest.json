@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-14T13:22:30+09:00",
+  "generated_at": "2026-09-14T15:33:57+09:00",
   "paper_repository": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync",
-  "paper_commit": "553e9e1d16b95029225c75f7f9512ea2ea9e8b9b",
+  "paper_commit": "7137f6d3d034084576f123ec65907b1b61ab6b5b",
   "base_commit_before_revision": "fa9c4329de036705864fc00ced1d40798a66fa7a",
   "review_pdf": {
     "requested_sha256": "7a04b4d4aa7a6c1f1462aca97a5d9346548c72792c4313b48d0f87756734aab6",
@@ -10,8 +10,8 @@
   },
   "revised_pdf": {
     "path": "paper/CoM3D_ACE_professor_review_revised.pdf",
-    "sha256": "56ae3af246b7fe3de992d2d4de875e6bce9ae74b3380c3ebabfe8ba51e76fff9",
-    "bytes": 8574490,
+    "sha256": "83b207101456de4990d4f8e4b50744af8d3db4fb0a89f4986c56981f6f34ca1f",
+    "bytes": 8575080,
     "pages": 27
   },
   "compile": {
@@ -27,19 +27,17 @@
     "status": "PASS",
     "checks_passed": 94,
     "checks_total": 94,
-    "manifest_sha256": "6c68fe1a4ed7b1540ac9a92dde45bee76c85f9111541af0d9dc7b2a35d8d22f3"
+    "manifest_sha256": "acca1ad64d51f92c46250799236fe0541b79447df248808e6f33822fcc529972"
   },
   "executed_scripts": {
     "run_cached_solver_audit.py": "0298d0eb730464ac3415601d65f8b44a0c860521a927989d8dfcc3a81e546bfe",
     "run_m3ot_linker_diagnostic.py": "e8aa25de538d503fad0a5656590e676d116392d41a8166a0f3681cbcd36f9935",
-    "build_review_reports.py": "992c2dac5586e3800326cc5d66b238b9caac29c3051dc7cf9cb2967116344785",
-    "verify_manuscript_numbers.py": "8cea9e9228feff83e7ff001d8706965c823e0de7207cf3683c0d582957aa934d"
+    "build_review_reports.py": "6b90eea4021057f6cb30ee67764326a933a01c79b28f9510bb2a66e5d2db073b",
+    "verify_manuscript_numbers.py": "78b8798ab218bde9ec79c835a175b46e51e3c602fbd0462fe338a6a4fe9e44b0"
   },
   "raw_manifests": {
     "mmot_cached_solver_audit_v1": "78af58f39458b0fd6078e32a95207b937742d9bb6d33d931c4f93e2b3412b1da",
     "m3ot_linker_diagnostic_v2": "00f0e6aa98f637d8221a79e0371d3628c491af073b6a850e3864149662c7f724"
   },
-  "figure_files_modified": false,
-  "ai_use_declaration_included": false,
-  "ai_declaration_note": "Excluded under the user's final explicit instruction."
+  "figure_files_modified": false
 }
