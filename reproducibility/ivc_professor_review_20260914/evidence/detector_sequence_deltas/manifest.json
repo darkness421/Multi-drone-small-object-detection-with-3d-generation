@@ -1,0 +1,236 @@
+{
+  "aggregation": "50 per-sequence differences; panel means are equal-sequence means",
+  "experiment_status": "rendered from completed frozen results; no new training or tracking",
+  "input_condition": "one shared official MMOT YOLO11L-3ch detector cache",
+  "operation": "IDF1(CoM3D-ACE) - IDF1(no refinement), per sequence",
+  "outputs": [
+    "detector_sequence_idf1_deltas.csv",
+    "mmot_detector_sequence_idf1_delta.png",
+    "mmot_detector_sequence_idf1_delta.pdf"
+  ],
+  "sequence_order": [
+    {
+      "family": "legacy12",
+      "sequence": "data28-1"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data28-2"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data28-3"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data28-4"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data28-5"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data28-6"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data30-2"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data30-3"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data30-4"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data30-5"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data30-9"
+    },
+    {
+      "family": "legacy12",
+      "sequence": "data30-10"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data23-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data24-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data27-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data31-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data33-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data34-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data34-2"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data34-3"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data36-4"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data36-5"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data36-10"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data36-11"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data36-12"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data36-13"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data37-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data37-2"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data37-10"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data37-11"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data37-12"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data39-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data39-2"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data39-3"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data39-6"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data40-3"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data40-4"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data40-5"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data41-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data42-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data42-2"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data42-3"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data46-11"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data46-12"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data47-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data47-2"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data47-3"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data47-4"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data48-1"
+    },
+    {
+      "family": "confirmation38",
+      "sequence": "data49-2"
+    }
+  ],
+  "source_csv": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v2_equal/results/detector_input_temporal_per_sequence.csv",
+  "source_sha256": "ac91eac94afbb041b098a39238eadf544275389aa56696a145e1c446b04fe8ba",
+  "summary": {
+    "bytetrack": {
+      "improved": 41,
+      "mean_delta_idf1_pp": 1.651060598727621,
+      "tied": 5,
+      "worsened": 4
+    },
+    "deepocsort": {
+      "improved": 32,
+      "mean_delta_idf1_pp": 0.99785231959172,
+      "tied": 9,
+      "worsened": 9
+    },
+    "ocsort": {
+      "improved": 45,
+      "mean_delta_idf1_pp": 1.6234924683519756,
+      "tied": 3,
+      "worsened": 2
+    }
+  },
+  "unit": "percentage points"
+}

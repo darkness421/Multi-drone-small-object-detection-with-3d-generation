@@ -1,0 +1,7 @@
+case,family,sequence,tracker,class_name,frame,local_prediction_id,posthoc_gt_id,one_to_one_iou,plain_crop
+correct_link,confirmation38,data49-2,ocsort,car,10,3,2,0.9110652699625661,correct_link/frame_010_pred_3_gt_2_crop.png
+correct_link,confirmation38,data49-2,ocsort,car,22,1,2,0.9426500611451419,correct_link/frame_022_pred_1_gt_2_crop.png
+correct_link,confirmation38,data49-2,ocsort,car,35,28,2,0.9222806145471788,correct_link/frame_035_pred_28_gt_2_crop.png
+false_merge,confirmation38,data37-10,bytetrack,car,90,99,16,0.9589380370418533,false_merge/frame_090_pred_99_gt_16_crop.png
+false_merge,confirmation38,data37-10,bytetrack,car,102,49,14,0.9198057643898653,false_merge/frame_102_pred_49_gt_14_crop.png
+false_merge,confirmation38,data37-10,bytetrack,car,136,123,14,0.947497086157096,false_merge/frame_136_pred_123_gt_14_crop.png

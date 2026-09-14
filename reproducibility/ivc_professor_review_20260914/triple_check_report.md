@@ -2,7 +2,7 @@
 
 Date: 2026-09-14
 
-Paper commit: `51a93e0a7dca9c99d2115c87162de3fd167130de`
+Paper commit: `da05de1a1a17e48f66789682c6654fabec1c351d`
 
 ## Pass 1: numbers and frozen artifacts
 
@@ -18,36 +18,37 @@ Paper commit: `51a93e0a7dca9c99d2115c87162de3fd167130de`
   or guard/no-guard output differences.
 - AFLink audit: 13 overlap contexts and 15 boxes removed by native
   post-remap deduplication; the no-GT validity adapter preserves all boxes.
+- The added result figures were rendered from completed frozen outputs. No
+  detector, tracker, descriptor, threshold-search, or training run was added.
+- A fresh rerun reproduced both figure CSVs and PNGs byte-for-byte. Rasterized
+  pages from the regenerated vector PDFs were also byte-identical; PDF container
+  hashes differ across runs because of embedded creation metadata.
 
 ## Pass 2: method, claims, and professor-review points
 
 **PASS (claim-scope audit).**
 
-- The main Table 2 contains None, Geometry greedy, Geometry+ReID greedy,
-  partial Hungarian, AFLink+VA, and CoM3D-ACE under the same frozen-tracklet
-  inputs. HOTA/AssA detail remains in Appendix B.
-- The former Table B.10 ranking-versus-assignment diagnostic is now main
-  Table 4 with its original label retained. Appendix Table B.10 now reports
-  paired intervals against both static controls and AFLink+VA.
-- The manuscript explicitly reports that Geometry+ReID greedy and partial
-  Hungarian attain higher mean IDF1 than fixed CoM3D-ACE in all six
-  same-input conditions, while every AFLink+VA interval favors CoM3D-ACE.
-- The retained claim is limited to deterministic box-preserving refinement,
-  improvements over no refinement and AFLink+VA, and an auditable diagnostic.
-- The component guard is described as a defensive assertion, not an active
-  accuracy module.
-- Confirmation38 is locally pre-specified, not externally preregistered.
-- Table C.12 defines conditional link error over auditable accepted links,
-  reports the auditable share, and retains unknown links in coverage.
-- The six-point appearance-gate grid is linked as a descriptive artifact, not
-  a test-selected operating point.
-- M3OT adverse transfer and the exact oracle-GT descriptor-crop admission,
-  scoring, and post-hoc label uses are shown.
-- Tiny-object prevalence is context, not a scale-stratified superiority claim.
-- Figure 1 now connects poorly resolved aerial targets to within-stream
-  temporal identity fragmentation. Figure 2 shows only the evaluated path:
-  frozen tracker outputs, EvidenceToken adaptation, candidate construction,
-  linker comparison, ID-only relabeling, and improvement/failure audit.
+- Main Table 2 now has one role: improvement over unchanged tracker output and
+  the validated AFLink+VA adapter under identical frozen observations.
+- Main Table 4 separately compares alternative temporal tracklet linkers under
+  the same inputs. Geometry+ReID greedy and partial Hungarian remain visible
+  and have higher mean IDF1 in all six conditions.
+- Figure 3 expands the detector-input means into all 50 sequence-level IDF1
+  changes. ByteTrack/OC-SORT/Deep OC-SORT improve on 41/45/32 sequences, tie on
+  5/3/9, and worsen on 4/2/9; equal-sequence means are +1.65/+1.62/+1.00 pp.
+- Figure 4 uses immutable tracker predictions and accepted-link traces. It
+  retains one correct CoM3D-ACE edge and one false merge for which partial
+  Hungarian selects the correct predecessor. GT is used only for the post-hoc
+  one-to-one same-class IoU audit.
+- `ID-preserving` was replaced by observation-preserving identity refinement,
+  and the former static-assignment wording was corrected to temporal-linker
+  comparison. Internal labels were retained to avoid broken references.
+- The M3OT gate-development scope and oracle-GT crop-admission diagnostic are
+  explicitly separated from MMOT fine-tuning and detector-input claims.
+- The contribution remains bounded to deterministic observation-preserving
+  refinement, improvements over no refinement and AFLink+VA, and an auditable
+  success/failure diagnostic. Universal temporal-linker superiority is not
+  claimed.
 
 ## Pass 3: submission build and layout
 
@@ -56,28 +57,31 @@ Paper commit: `51a93e0a7dca9c99d2115c87162de3fd167130de`
 - A clean directory with no prior auxiliary files compiled successfully using
   `com3d-ace-latex:20260906` and `latexmk -pdf -interaction=nonstopmode
   -halt-on-error main.tex`.
-- Final PDF: 28 pages; all five authors and two corresponding-author marks are
+- Final PDF: 32 pages; all five authors and two corresponding-author marks are
   present.
 - Undefined citations/references: 0.
 - Overfull boxes: 0.
 - Underfull boxes: 4, confined to line wrapping of one long Where2comm URL in
   the bibliography; no clipping or overlap was observed.
-- Clean-build and repository-build extracted text SHA-256 are identical:
-  `35a4977eb50e816a6fff25a4a667ab5c0b06a9805f9bd55f4e3092b19701570f`.
-- Figure 1 and Figure 2 were intentionally replaced to match the evaluated
-  temporal task; the remaining figure files were not changed in this revision.
-- Pages containing Figures 1--2 and Tables 2, 4, B.10, C.12--C.13, and D.14
-  were rendered and visually checked for clipping, overlap, and unreadable
-  overflow.
+- Final PDF SHA-256: `6bcf768f4a53321ac05fe4b8c344fa5520c829b443039e5d13f5feae555e006f`;
+  extracted-text SHA-256:
+  `0f14e0291e70becda04c775f2169c46c1b5a149948d7dbac348de8c9a1837c08`.
+- Pages containing Figures 1--4 and Tables 2 and 4 were rendered and visually
+  checked. Figure 1/2 raster files were not edited in this revision; the new
+  result figures have no clipping, overlap, or unreadable overflow.
 
 ## Submission assessment
 
-The revised manuscript is internally consistent and build-ready. The professor
-review materially changed the paper from an implied superiority claim to a
-bounded, reproducible refinement-and-diagnostic study. Strong same-task
-baselines and the adverse M3OT result remain visible. The remaining
-unverified items require unavailable external evidence or new protocols: the
-exact review PDF identified by SHA-256, source-flight metadata for block
-bootstrap, external timestamp evidence for confirmation38, official
-GIAOTracker code/weights, and detector-only M3OT transfer. They are disclosed
-as limitations and are not represented as completed results.
+The primary evidence is now visible before the boundary analysis: Table 2 and
+Figure 3 establish broad gains over unchanged trajectories and AFLink+VA,
+while Figure 4 shows what a verified accepted edge changes in real predictions.
+The manuscript also keeps the stronger same-task linkers, a false-merge case,
+and adverse M3OT transfer visible. It is internally consistent and build-ready
+as a bounded refinement-and-diagnostic study, but it does not establish that
+CoM3D-ACE is the most accurate temporal linker.
+
+The remaining unverified items require unavailable external evidence or new
+protocols: the exact review PDF identified by SHA-256, source-flight metadata
+for block bootstrap, external timestamp evidence for confirmation38, official
+GIAOTracker code/weights, and detector-only M3OT transfer. They are not
+represented as completed results.

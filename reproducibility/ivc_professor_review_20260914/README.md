@@ -19,9 +19,16 @@ threshold, or overwrite historical outputs.
   paper-facing aggregates derived from the raw outputs.
 - `professor_review_resolution.md`: the required seven-part review response.
 - `triple_check_report.md`: final numerical, claim-scope, and clean-build audit.
-- `manuscript_number_verification.{md,json}`: 94 source-to-LaTeX checks.
+- `manuscript_number_verification.{md,json}`: 100 source-to-LaTeX checks.
+- `evidence/detector_sequence_deltas/`: all 50 detector-input sequence-level
+  CoM3D-ACE-minus-no-refinement IDF1 values, a source hash, and the generated
+  paper figure.
+- `evidence/detector_temporal_cases/`: six verified MMOT observations, exact
+  accepted-edge records, final output IDs, post-hoc IoU audits, and the
+  generated success/failure figure.
 - `scripts/`: the executed audit, report, M3OT diagnostic, and manuscript
-  verification entry points.
+  verification entry points, including reproducible rendering of both result
+  figures from frozen artifacts.
 - `paper/`: the compiled revised manuscript and its verification manifest.
 
 ## Verification

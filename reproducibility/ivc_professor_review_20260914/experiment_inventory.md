@@ -10,6 +10,7 @@
 | P3 ranking/solver control | Complete | Frozen tracklets/descriptors; no network rerun | 3,300 sequence rows, 33,466 edge decisions, risk/runtime CSVs |
 | P4 M3OT failure diagnostic | Complete | Frozen development/held-out inputs | 80 sequence-method rows and 118 casebook rows |
 | P5 paired linker CI | Complete | MMOT per-sequence results | Paired 10,000-resample intervals |
+| P6 result visualization | Complete | Frozen detector-input per-sequence CSV, tracker caches, accepted-link trace, and MMOT frames/GT | 50-sequence delta figure, verified success/failure figure, source crops, and manifests |
 | MMOT source-flight block CI | Not executable | Official release exposes no per-sequence source-flight grouping | No inferred grouping or block CI |
 | New detector/tracker/training run | Excluded | Not required for the cache-controlled review | Not run |
 
@@ -23,7 +24,7 @@
 - Coverage denominator: source tracklets having at least one strictly later,
   frame-disjoint successor within 30 frames before geometry/appearance gates.
 - Ground truth: tracking metrics and post-hoc MMOT edge labels only. M3OT is a
-  separate historical oracle-box diagnostic whose crop admission uses IoU >= 0.9
+  separate historical oracle-box diagnostic whose crop-admission rule uses IoU >= 0.9
   to oracle GT, as recorded in its manifest.
 
 ## Commands
@@ -44,4 +45,16 @@ Report generation:
 
 ```text
 python /tmp/com3d_professor_review_20260914/scripts/build_review_reports.py [paths recorded in build_and_results_manifest.json]
+```
+
+Detector-input sequence-level delta figure:
+
+```text
+python scripts/render_detector_sequence_deltas.py --per-sequence-csv /path/to/e3_temporal_full50_v2_equal/results/detector_input_temporal_per_sequence.csv --output-dir evidence/detector_sequence_deltas
+```
+
+Verified detector-input temporal cases:
+
+```text
+python scripts/render_detector_temporal_cases.py --accepted-links /path/to/e3_temporal_full50_v2_equal/results/accepted_links.csv --per-sequence-csv /path/to/e3_temporal_full50_v2_equal/results/detector_input_temporal_per_sequence.csv --tracker-cache-dir /path/to/e3_temporal_full50_v1 --family-root legacy12 /path/to/MMOT/legacy12 --family-root confirmation38 /path/to/MMOT/confirmation38 --output-dir evidence/detector_temporal_cases
 ```

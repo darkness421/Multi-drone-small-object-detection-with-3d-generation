@@ -1,0 +1,443 @@
+{
+  "accepted_links": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v2_equal/results/accepted_links.csv",
+  "accepted_links_sha256": "de7f0bbd5dbdaad0e77018b1ea56b624a8f53aa008b15f4ade897e74c04e496d",
+  "cases": [
+    {
+      "cache_path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v1/tracker_outputs/confirmation38/data49-2/car/ocsort.jsonl.gz",
+      "cache_sha256": "6d061b17694ede113885e8998dac53d6ae0f4b19ea4386d83c5900a662959e35",
+      "class_name": "car",
+      "com3d_edge": [
+        3,
+        28
+      ],
+      "com3d_edge_record": {
+        "aflink_cost": "",
+        "aflink_probability": "",
+        "class_name": "car",
+        "controlled_cost": "0.5118620739789607",
+        "cosine_distance": "0.026745736598968506",
+        "destination_gt_purity": "1.0",
+        "destination_majority_gt_identity": "2",
+        "earlier": "3",
+        "endpoint_center_distance_pixels": "33.720523830050944",
+        "endpoint_top_left_distance_pixels": "28.43649214174257",
+        "family": "confirmation38",
+        "gap": "25",
+        "later": "28",
+        "method": "com3d_reciprocal_guard",
+        "posthoc_gt_correctness": "correct",
+        "sequence": "data49-2",
+        "source_gt_purity": "1.0",
+        "source_majority_gt_identity": "2",
+        "tracker": "ocsort"
+      },
+      "delta_idf1_pp": {
+        "com3d_reciprocal_guard": 1.9199346405228752,
+        "geometry_reid_hungarian": 2.4101307189542496
+      },
+      "expected_com3d_correctness": "correct",
+      "expected_partial_correctness": "correct",
+      "family": "confirmation38",
+      "final_ids": {
+        "com3d_reciprocal_guard": {
+          "1": 1,
+          "3": 3,
+          "28": 3
+        },
+        "geometry_reid_hungarian": {
+          "1": 1,
+          "3": 3,
+          "28": 1
+        }
+      },
+      "interpretation": "CoM3D-ACE correctly joins tracker fragments 3 and 28 for actor 2; the intervening fragment 1 remains a separate component. Partial-H instead joins fragments 1 and 28.",
+      "key": "correct_link",
+      "observations": [
+        {
+          "frame": 10,
+          "gt": {
+            "frame": 10,
+            "h": 56.0,
+            "id": 2,
+            "w": 97.0,
+            "x": 707.0,
+            "y": 748.0
+          },
+          "gt_box_in_crop": [
+            151.0,
+            123.0,
+            97.0,
+            56.0
+          ],
+          "gt_id": 2,
+          "image_path": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_full50/data49-2/000010.npy",
+          "image_sha256": "c83d3ba3ef9be4f575c04ce53ee74af45f0bc205dd28aa70452011715265b52f",
+          "iou": 0.9110652699625661,
+          "plain_crop": "correct_link/frame_010_pred_3_gt_2_crop.png",
+          "prediction": {
+            "class_id": 0,
+            "class_name": "car",
+            "conf": 0.9539480209350586,
+            "family": "confirmation38",
+            "frame": 10,
+            "h": 59.715087890625,
+            "id": 3,
+            "sequence": "data49-2",
+            "tracker": "ocsort",
+            "visibility": 1.0,
+            "w": 99.844970703125,
+            "x": 706.0587158203125,
+            "y": 745.8502807617188
+          },
+          "prediction_box_in_crop": [
+            150.0587158203125,
+            120.85028076171875,
+            99.844970703125,
+            59.715087890625
+          ],
+          "track_id": 3
+        },
+        {
+          "frame": 22,
+          "gt": {
+            "frame": 22,
+            "h": 56.0,
+            "id": 2,
+            "w": 92.0,
+            "x": 720.0,
+            "y": 766.0
+          },
+          "gt_box_in_crop": [
+            142.0,
+            127.0,
+            92.0,
+            56.0
+          ],
+          "gt_id": 2,
+          "image_path": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_full50/data49-2/000022.npy",
+          "image_sha256": "6d6c66f1eb2a2c68d8ef66b82f2d0efa40e45314699e87e2b02ce9fe756052c2",
+          "iou": 0.9426500611451419,
+          "plain_crop": "correct_link/frame_022_pred_1_gt_2_crop.png",
+          "prediction": {
+            "class_id": 0,
+            "class_name": "car",
+            "conf": 0.9545190334320068,
+            "family": "confirmation38",
+            "frame": 22,
+            "h": 57.37939453125,
+            "id": 1,
+            "sequence": "data49-2",
+            "tracker": "ocsort",
+            "visibility": 1.0,
+            "w": 94.2529296875,
+            "x": 720.4962158203125,
+            "y": 764.6339721679688
+          },
+          "prediction_box_in_crop": [
+            142.4962158203125,
+            125.63397216796875,
+            94.2529296875,
+            57.37939453125
+          ],
+          "track_id": 1
+        },
+        {
+          "frame": 35,
+          "gt": {
+            "frame": 35,
+            "h": 52.0,
+            "id": 2,
+            "w": 86.0,
+            "x": 678.0,
+            "y": 751.0
+          },
+          "gt_box_in_crop": [
+            133.0,
+            97.0,
+            86.0,
+            52.0
+          ],
+          "gt_id": 2,
+          "image_path": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_full50/data49-2/000035.npy",
+          "image_sha256": "ba3df8388c175a6f5bcac2982659c14fe16b52caec4ae83cc77a110ad241df48",
+          "iou": 0.9222806145471788,
+          "plain_crop": "correct_link/frame_035_pred_28_gt_2_crop.png",
+          "prediction": {
+            "class_id": 0,
+            "class_name": "car",
+            "conf": 0.9590676426887512,
+            "family": "confirmation38",
+            "frame": 35,
+            "h": 54.564453125,
+            "id": 28,
+            "sequence": "data49-2",
+            "tracker": "ocsort",
+            "visibility": 1.0,
+            "w": 88.8646240234375,
+            "x": 677.841796875,
+            "y": 749.3772583007812
+          },
+          "prediction_box_in_crop": [
+            132.841796875,
+            95.37725830078125,
+            88.8646240234375,
+            54.564453125
+          ],
+          "track_id": 28
+        }
+      ],
+      "panel": "(a) Correct accepted edge",
+      "partial_edge": [
+        1,
+        28
+      ],
+      "partial_edge_record": {
+        "aflink_cost": "",
+        "aflink_probability": "",
+        "class_name": "car",
+        "controlled_cost": "0.27409638799719377",
+        "cosine_distance": "0.01198667287826538",
+        "destination_gt_purity": "1.0",
+        "destination_majority_gt_identity": "2",
+        "earlier": "1",
+        "endpoint_center_distance_pixels": "35.695013991854985",
+        "endpoint_top_left_distance_pixels": "35.646429261245494",
+        "family": "confirmation38",
+        "gap": "4",
+        "later": "28",
+        "method": "geometry_reid_hungarian",
+        "posthoc_gt_correctness": "correct",
+        "sequence": "data49-2",
+        "source_gt_purity": "1.0",
+        "source_majority_gt_identity": "2",
+        "tracker": "ocsort"
+      },
+      "sequence": "data49-2",
+      "tracker": "ocsort"
+    },
+    {
+      "cache_path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v1/tracker_outputs/confirmation38/data37-10/car/bytetrack.jsonl.gz",
+      "cache_sha256": "394d689050166ef1818f6e11b96184ef22fe36a6892d7c9f9fa11791948f9fbf",
+      "class_name": "car",
+      "com3d_edge": [
+        99,
+        123
+      ],
+      "com3d_edge_record": {
+        "aflink_cost": "",
+        "aflink_probability": "",
+        "class_name": "car",
+        "controlled_cost": "0.49643643171269297",
+        "cosine_distance": "0.1901242733001709",
+        "destination_gt_purity": "1.0",
+        "destination_majority_gt_identity": "14",
+        "earlier": "99",
+        "endpoint_center_distance_pixels": "25.05589446089633",
+        "endpoint_top_left_distance_pixels": "27.795638747517124",
+        "family": "confirmation38",
+        "gap": "12",
+        "later": "123",
+        "method": "com3d_reciprocal_guard",
+        "posthoc_gt_correctness": "false",
+        "sequence": "data37-10",
+        "source_gt_purity": "1.0",
+        "source_majority_gt_identity": "16",
+        "tracker": "bytetrack"
+      },
+      "delta_idf1_pp": {
+        "com3d_reciprocal_guard": -0.3070745246250084,
+        "geometry_reid_hungarian": 1.7007204440770067
+      },
+      "expected_com3d_correctness": "false",
+      "expected_partial_correctness": "correct",
+      "family": "confirmation38",
+      "final_ids": {
+        "com3d_reciprocal_guard": {
+          "49": 49,
+          "99": 99,
+          "123": 99
+        },
+        "geometry_reid_hungarian": {
+          "49": 49,
+          "99": 99,
+          "123": 49
+        }
+      },
+      "interpretation": "CoM3D-ACE assigns fragment 123 to the wrong predecessor 99; Partial-H assigns fragment 123 to same-actor predecessor 49.",
+      "key": "false_merge",
+      "observations": [
+        {
+          "frame": 90,
+          "gt": {
+            "frame": 90,
+            "h": 84.0,
+            "id": 16,
+            "w": 91.0,
+            "x": 553.0,
+            "y": 791.0
+          },
+          "gt_box_in_crop": [
+            137.0,
+            184.0,
+            91.0,
+            84.0
+          ],
+          "gt_id": 16,
+          "image_path": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_full50/data37-10/000090.npy",
+          "image_sha256": "f59d1b1e2da7045719edb62f588794e433a4a7553d6e9eae54059dfb8e10c029",
+          "iou": 0.9589380370418533,
+          "plain_crop": "false_merge/frame_090_pred_99_gt_16_crop.png",
+          "prediction": {
+            "class_id": 0,
+            "class_name": "car",
+            "conf": 0.9504421353340149,
+            "family": "confirmation38",
+            "frame": 90,
+            "h": 85.6917724609375,
+            "id": 99,
+            "sequence": "data37-10",
+            "tracker": "bytetrack",
+            "visibility": 1.0,
+            "w": 90.327392578125,
+            "x": 553.7730102539062,
+            "y": 791.5336303710938
+          },
+          "prediction_box_in_crop": [
+            137.77301025390625,
+            184.53363037109375,
+            90.327392578125,
+            85.6917724609375
+          ],
+          "track_id": 99
+        },
+        {
+          "frame": 102,
+          "gt": {
+            "frame": 102,
+            "h": 90.0,
+            "id": 14,
+            "w": 58.0,
+            "x": 581.0,
+            "y": 825.0
+          },
+          "gt_box_in_crop": [
+            115.0,
+            233.0,
+            58.0,
+            90.0
+          ],
+          "gt_id": 14,
+          "image_path": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_full50/data37-10/000102.npy",
+          "image_sha256": "e78feeb0326ef08db802898f83a4d2b73c098c3831dd53f14f40bc8a97a3ab28",
+          "iou": 0.9198057643898653,
+          "plain_crop": "false_merge/frame_102_pred_49_gt_14_crop.png",
+          "prediction": {
+            "class_id": 0,
+            "class_name": "car",
+            "conf": 0.9370987415313721,
+            "family": "confirmation38",
+            "frame": 102,
+            "h": 88.5335693359375,
+            "id": 49,
+            "sequence": "data37-10",
+            "tracker": "bytetrack",
+            "visibility": 1.0,
+            "w": 58.2738037109375,
+            "x": 582.5490112304688,
+            "y": 824.5572509765625
+          },
+          "prediction_box_in_crop": [
+            116.54901123046875,
+            232.5572509765625,
+            58.2738037109375,
+            88.5335693359375
+          ],
+          "track_id": 49
+        },
+        {
+          "frame": 136,
+          "gt": {
+            "frame": 136,
+            "h": 96.0,
+            "id": 14,
+            "w": 66.0,
+            "x": 836.0,
+            "y": 279.0
+          },
+          "gt_box_in_crop": [
+            123.0,
+            119.0,
+            66.0,
+            96.0
+          ],
+          "gt_id": 14,
+          "image_path": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_full50/data37-10/000136.npy",
+          "image_sha256": "ceaf6ce47b7a26cb5d4d85f902dd8adbe2ad5ba54b51b8aa8091cabace628f73",
+          "iou": 0.947497086157096,
+          "plain_crop": "false_merge/frame_136_pred_123_gt_14_crop.png",
+          "prediction": {
+            "class_id": 0,
+            "class_name": "car",
+            "conf": 0.95478355884552,
+            "family": "confirmation38",
+            "frame": 136,
+            "h": 97.778076171875,
+            "id": 123,
+            "sequence": "data37-10",
+            "tracker": "bytetrack",
+            "visibility": 1.0,
+            "w": 68.3905029296875,
+            "x": 834.9468383789062,
+            "y": 277.6053466796875
+          },
+          "prediction_box_in_crop": [
+            121.94683837890625,
+            117.6053466796875,
+            68.3905029296875,
+            97.778076171875
+          ],
+          "track_id": 123
+        }
+      ],
+      "panel": "(b) Failure case",
+      "partial_edge": [
+        49,
+        123
+      ],
+      "partial_edge_record": {
+        "aflink_cost": "",
+        "aflink_probability": "",
+        "class_name": "car",
+        "controlled_cost": "0.4817893262392299",
+        "cosine_distance": "0.12451684474945068",
+        "destination_gt_purity": "1.0",
+        "destination_majority_gt_identity": "14",
+        "earlier": "49",
+        "endpoint_center_distance_pixels": "49.33381729207364",
+        "endpoint_top_left_distance_pixels": "79.23131743340807",
+        "family": "confirmation38",
+        "gap": "4",
+        "later": "123",
+        "method": "geometry_reid_hungarian",
+        "posthoc_gt_correctness": "correct",
+        "sequence": "data37-10",
+        "source_gt_purity": "1.0",
+        "source_majority_gt_identity": "14",
+        "tracker": "bytetrack"
+      },
+      "sequence": "data37-10",
+      "tracker": "bytetrack"
+    }
+  ],
+  "channel_policy": "Raw HWC bands [4,2,1] (zero-based) displayed as RGB.",
+  "experiment_status": "rendered from frozen predictions and link traces; no new training or tracking",
+  "gt_use": "Post-hoc one-to-one same-class IoU>=0.9 audit and dashed figure labels only; GT is not used by either linker.",
+  "outputs": [
+    "mmot_detector_temporal_cases.png",
+    "mmot_detector_temporal_cases.pdf",
+    "case_observations.csv"
+  ],
+  "per_sequence_metrics": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v2_equal/results/detector_input_temporal_per_sequence.csv",
+  "per_sequence_metrics_sha256": "ac91eac94afbb041b098a39238eadf544275389aa56696a145e1c446b04fe8ba",
+  "selection_note": "The correct case exposes a verified CoM3D-ACE accepted edge across frozen tracker fragments. The failure case exposes a verified false CoM3D-ACE edge for which Partial-H chose a correct alternative predecessor. Representative displayed observations are high-IoU points within the linked tracklets; accepted-edge records retain the actual endpoint frames and gaps."
+}
