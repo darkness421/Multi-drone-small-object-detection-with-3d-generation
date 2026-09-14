@@ -1,0 +1,7 @@
+protocol,tracker,upstream_prediction_boxes,refiner_input_rows,no_refinement_output_rows,valid_gt_boxes,FP_total,FN_total,MOTA_equal_sequence_mean,area_height_aspect_filter_added_by_adapter,track_confirmation
+oracle_aabb,bytetrack,123132,123132,123132,196194,310,73372,46.124629032135296,False,Frozen tracker-specific output; settings recorded in manuscript Table 1
+oracle_aabb,ocsort,90458,90458,90458,196194,0,105736,37.41651413877301,False,Frozen tracker-specific output; settings recorded in manuscript Table 1
+oracle_aabb,deepocsort,174064,174064,174064,196194,0,22130,80.27084974644677,False,Frozen tracker-specific output; settings recorded in manuscript Table 1
+official_detector,bytetrack,104545,104545,104545,196194,12727,104376,28.830907660110967,False,Frozen tracker-specific output; settings recorded in manuscript Table 1
+official_detector,ocsort,85564,85564,85564,196194,7846,118476,26.949922767249664,False,Frozen tracker-specific output; settings recorded in manuscript Table 1
+official_detector,deepocsort,135798,135798,135798,196194,12281,72677,49.776326938471676,False,Frozen tracker-specific output; settings recorded in manuscript Table 1

@@ -1,0 +1,25 @@
+protocol,tracker,stage_or_adapter,display_name,input_rows,output_rows,row_delta,invalid_sequences,box_preserving,valid_common_box_protocol,HOTA_equal_sequence_mean,AssA_equal_sequence_mean,IDF1_equal_sequence_mean,IDSW_total,accepted_correct,accepted_false,accepted_unknown
+official_detector,bytetrack,aflink_cached_native_dedup,AFLink native deduplication,104545,104541,-4,3,False,False,34.721362583544135,42.441758024508005,38.53276099433515,10297,17,15,68
+official_detector,bytetrack,aflink_cached_native_saved,AFLink native saved output,104545,104541,-4,50,False,False,34.72032008783662,42.44211904851241,38.532309178517615,10297,17,15,68
+official_detector,bytetrack,aflink_cached_no_dedup,AFLink before native deduplication,104545,104545,0,3,True,False,34.72127393034568,42.44153054595538,38.53276099433515,10297,17,15,68
+official_detector,bytetrack,aflink_cached_overlap_safe,AFLink + common validity adapter,104545,104545,0,0,True,True,34.72773971294424,42.45347200189254,38.532514274337174,10297,17,14,65
+official_detector,deepocsort,aflink_cached_native_dedup,AFLink native deduplication,135798,135798,0,0,True,True,54.00470611995418,67.1576702969488,63.3339045732378,1342,6,11,47
+official_detector,deepocsort,aflink_cached_native_saved,AFLink native saved output,135798,135798,0,50,True,False,54.00371947163857,67.15498708462839,63.333373723825645,1342,6,11,47
+official_detector,deepocsort,aflink_cached_no_dedup,AFLink before native deduplication,135798,135798,0,0,True,True,54.00470611995418,67.1576702969488,63.3339045732378,1342,6,11,47
+official_detector,deepocsort,aflink_cached_overlap_safe,AFLink + common validity adapter,135798,135798,0,0,True,True,54.00470611995418,67.1576702969488,63.3339045732378,1342,6,11,47
+official_detector,ocsort,aflink_cached_native_dedup,AFLink native deduplication,85564,85563,-1,1,False,False,36.03617387355354,47.9850426993196,36.71009335183169,4239,25,18,24
+official_detector,ocsort,aflink_cached_native_saved,AFLink native saved output,85564,85563,-1,50,False,False,36.03540783063913,47.98284190575427,36.71004091320032,4239,25,18,24
+official_detector,ocsort,aflink_cached_no_dedup,AFLink before native deduplication,85564,85564,0,1,True,False,36.036035873382744,47.9850426993196,36.71009335183169,4239,25,18,24
+official_detector,ocsort,aflink_cached_overlap_safe,AFLink + common validity adapter,85564,85564,0,0,True,True,36.02005634074804,47.953885136830124,36.68569653404391,4240,24,18,24
+oracle_aabb,bytetrack,aflink_cached_native_dedup,AFLink native deduplication,123132,123129,-3,2,False,False,44.30296739452729,44.879475921874906,47.6979910434447,20025,35,64,29
+oracle_aabb,bytetrack,aflink_cached_native_saved,AFLink native saved output,123132,123129,-3,50,False,False,44.303206536061914,44.88102234231247,47.6979910434447,20025,35,64,29
+oracle_aabb,bytetrack,aflink_cached_no_dedup,AFLink before native deduplication,123132,123132,0,2,True,False,44.303020532789894,44.87935941119587,47.698217955176034,20025,35,64,29
+oracle_aabb,bytetrack,aflink_cached_overlap_safe,AFLink + common validity adapter,123132,123132,0,0,True,True,44.30302797490076,44.879375204929865,47.698379417452905,20025,35,62,28
+oracle_aabb,deepocsort,aflink_cached_native_dedup,AFLink native deduplication,174064,174060,-4,4,False,False,81.5366242353033,82.46680271053323,81.92412700825582,1919,45,70,0
+oracle_aabb,deepocsort,aflink_cached_native_saved,AFLink native saved output,174064,174060,-4,28,False,False,81.5366242353033,82.46680271053323,81.92412700825582,1919,45,70,0
+oracle_aabb,deepocsort,aflink_cached_no_dedup,AFLink before native deduplication,174064,174064,0,4,True,False,81.53682666288755,82.46627608621786,81.92412700825582,1919,45,70,0
+oracle_aabb,deepocsort,aflink_cached_overlap_safe,AFLink + common validity adapter,174064,174064,0,0,True,True,81.54485723780357,82.48213458559117,81.93252715746323,1919,45,66,0
+oracle_aabb,ocsort,aflink_cached_native_dedup,AFLink native deduplication,90458,90455,-3,3,False,False,45.118825439394485,51.883228596350506,43.320981841683164,6082,39,28,0
+oracle_aabb,ocsort,aflink_cached_native_saved,AFLink native saved output,90458,90455,-3,27,False,False,45.118825439394485,51.883228596350506,43.320981841683164,6082,39,28,0
+oracle_aabb,ocsort,aflink_cached_no_dedup,AFLink before native deduplication,90458,90458,0,3,True,False,45.119111006214816,51.88286363778836,43.320981841683164,6082,39,28,0
+oracle_aabb,ocsort,aflink_cached_overlap_safe,AFLink + common validity adapter,90458,90458,0,0,True,True,45.137819910108526,51.91934674425183,43.32956772478262,6082,39,25,0

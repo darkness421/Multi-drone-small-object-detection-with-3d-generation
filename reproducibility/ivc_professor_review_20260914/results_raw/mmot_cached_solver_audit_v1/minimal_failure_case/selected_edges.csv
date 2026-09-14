@@ -1,0 +1,2 @@
+aflink_cost,aflink_probability,class_name,earlier,endpoint_top_left_distance_pixels,family,gap,later,protocol,sequence,tracker
+0.03511554002761841,0.9648844599723816,car,21,32.015621185302734,legacy12,0,51,oracle_aabb,data30-3,deepocsort

@@ -1,0 +1,37 @@
+{
+  "cached_assignment_scope": "Official model/checkpoint scores and assignments were reused; the network was not rerun.",
+  "checkpoint_path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/assets/AFLink_epoch20.pth",
+  "checkpoint_sha256": "b35cbeddd3acc48fece820bd640640e6bfb1f5fbf570aa79af26c6a38958daa4",
+  "class_id_scope": "Class-local numeric IDs are namespaced before evaluator combination; unscoped numeric reuse across classes is not an evaluator collision.",
+  "common_validity_adapter": "Reject an AFLink-selected merge when the source and destination components have overlapping frame support; preserve all boxes; use no GT.",
+  "dropped_boxes_by_protocol": {
+    "official_detector": 5,
+    "oracle_aabb": 10
+  },
+  "execution_parameters": {
+    "interpolation": false,
+    "thrP": 0.05,
+    "thrS": 75,
+    "thrT": [
+      0,
+      30
+    ]
+  },
+  "failure_contexts_by_protocol": {
+    "official_detector": 4,
+    "oracle_aabb": 9
+  },
+  "minimal_failure_case": "/tmp/com3d_professor_review_20260914/results_raw/mmot_cached_solver_audit_v1/minimal_failure_case",
+  "native_behavior": "After ID remapping, native deduplicate keeps the first row for each (frame, ID), deleting boxes when a merge creates overlap.",
+  "native_deduplicate_call_line": 107,
+  "native_dropped_boxes": 15,
+  "native_failure_contexts": 13,
+  "native_save_format": "%d,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%d",
+  "source_commit": "ee995076da5083e28d0da1f885297df62705ebd7",
+  "source_diff_from_commit": "",
+  "source_path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/third_party/StrongSORT/AFLink/AppFreeLink.py",
+  "source_repository": "https://github.com/dyhBUPT/StrongSORT",
+  "source_sha256": "7646054a3cf3539c3ae6b6e2c0e336dcdec1e4235414937fbbb6d98e29fad058",
+  "stage_audit": "/tmp/com3d_professor_review_20260914/results_raw/mmot_cached_solver_audit_v1/aflink_stage_audit.csv",
+  "status": "VERIFIED_FROM_FROZEN_SOURCE_AND_CACHED_ASSIGNMENTS"
+}

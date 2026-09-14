@@ -1,0 +1,40 @@
+{
+  "class_name": "car",
+  "family": "legacy12",
+  "input_rows": 1438,
+  "native_drop_rows": [
+    {
+      "class_id": 0,
+      "conf": 1.0,
+      "frame": 10,
+      "h": 58.0,
+      "id": 21,
+      "visibility": 1.0,
+      "w": 55.0,
+      "x": 698.0,
+      "y": 854.0
+    }
+  ],
+  "native_dropped_boxes": 1,
+  "overlap_safe_rejected_edges": [
+    {
+      "aflink_cost": 0.03511554002761841,
+      "aflink_probability": 0.9648844599723816,
+      "earlier": 21,
+      "endpoint_top_left_distance_pixels": 32.015621185302734,
+      "gap": 0,
+      "later": 51,
+      "overlap_frames": [
+        10
+      ],
+      "rejection": "component_frame_overlap"
+    }
+  ],
+  "post_remap_duplicates": 1,
+  "protocol": "oracle_aabb",
+  "relevant_frames": [
+    10
+  ],
+  "sequence": "data30-3",
+  "tracker": "deepocsort"
+}

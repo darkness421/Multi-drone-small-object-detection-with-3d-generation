@@ -1,0 +1,335 @@
+{
+  "aflink": {
+    "cached_assignment_scope": "Official model/checkpoint scores and assignments were reused; the network was not rerun.",
+    "checkpoint_path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/assets/AFLink_epoch20.pth",
+    "checkpoint_sha256": "b35cbeddd3acc48fece820bd640640e6bfb1f5fbf570aa79af26c6a38958daa4",
+    "class_id_scope": "Class-local numeric IDs are namespaced before evaluator combination; unscoped numeric reuse across classes is not an evaluator collision.",
+    "common_validity_adapter": "Reject an AFLink-selected merge when the source and destination components have overlapping frame support; preserve all boxes; use no GT.",
+    "dropped_boxes_by_protocol": {
+      "official_detector": 5,
+      "oracle_aabb": 10
+    },
+    "execution_parameters": {
+      "interpolation": false,
+      "thrP": 0.05,
+      "thrS": 75,
+      "thrT": [
+        0,
+        30
+      ]
+    },
+    "failure_contexts_by_protocol": {
+      "official_detector": 4,
+      "oracle_aabb": 9
+    },
+    "minimal_failure_case": "/tmp/com3d_professor_review_20260914/results_raw/mmot_cached_solver_audit_v1/minimal_failure_case",
+    "native_behavior": "After ID remapping, native deduplicate keeps the first row for each (frame, ID), deleting boxes when a merge creates overlap.",
+    "native_deduplicate_call_line": 107,
+    "native_dropped_boxes": 15,
+    "native_failure_contexts": 13,
+    "native_save_format": "%d,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%d",
+    "source_commit": "ee995076da5083e28d0da1f885297df62705ebd7",
+    "source_diff_from_commit": "",
+    "source_path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/third_party/StrongSORT/AFLink/AppFreeLink.py",
+    "source_repository": "https://github.com/dyhBUPT/StrongSORT",
+    "source_sha256": "7646054a3cf3539c3ae6b6e2c0e336dcdec1e4235414937fbbb6d98e29fad058",
+    "stage_audit": "/tmp/com3d_professor_review_20260914/results_raw/mmot_cached_solver_audit_v1/aflink_stage_audit.csv",
+    "status": "VERIFIED_FROM_FROZEN_SOURCE_AND_CACHED_ASSIGNMENTS"
+  },
+  "block_bootstrap": {
+    "official_readme_sha256": "ef9a84ac3233ffbc37b262f14a3e5f839356760d8ff6659e24faaea6c36d02c3",
+    "reason": "Official release metadata inspected locally does not map released sequence IDs to source flights; prefixes were not treated as flight IDs.",
+    "status": "NOT_EXECUTED"
+  },
+  "channel_and_cache_linkage": {
+    "channel_audit": {
+      "path": "/home/oem/projects/multi-uav-marine-city/reproducibility/ivc_temporal_meta_review_20260914/results_raw/e0/channel_audit.json",
+      "sha256": "5a5fbddb5f0831e605bf50a054b09ffe12166bc53a4aef451e4c33620162241a"
+    },
+    "channel_policy": "zero-based [4,2,1] -> RGB",
+    "detector_checkpoint_manifest": {
+      "path": "/home/oem/projects/multi-uav-marine-city/reproducibility/ivc_temporal_meta_review_20260914/results_raw/e3_detector_full50_v1/detector_checkpoint_manifest.json",
+      "sha256": "a9f3cfd3b160c65f01571e920742d0c9876076b8466c6eec1c3f276125f3ee9f"
+    },
+    "detector_result_manifest": {
+      "path": "/home/oem/projects/multi-uav-marine-city/reproducibility/ivc_temporal_meta_review_20260914/results_raw/e3_temporal_full50_v2_equal/manifest.json",
+      "sha256": "0d46775eed38bb02424eff0d39953276d70d128283cc10cb3526d2b46a52200a"
+    },
+    "oracle_result_manifest": {
+      "path": "/home/oem/projects/multi-uav-marine-city/reproducibility/ivc_temporal_meta_review_20260914/results_raw/e1_direct_full50_v2_equal/manifest.json",
+      "sha256": "bbfb9d060f957e068c7bc44d2e225d76696ceff87c27e02ecb10f2027a28a089"
+    }
+  },
+  "confirmation_partition": {
+    "external_preregistration_or_independent_timestamp": false,
+    "split_manifest": "/home/oem/projects/multi-uav-marine-city/reproducibility/ivc_temporal_meta_review_20260914/results_raw/e1_full50_split/manifest.json",
+    "split_manifest_sha256": "b05307a8ddf70cd300a8262045df390e10f40d880276d81675b1f0de72ab6b4a",
+    "status": "pre-specified local reporting partition"
+  },
+  "historical_results": {
+    "detector": {
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v2_equal/results/detector_input_temporal_results.csv",
+      "sha256": "26d1fc9352a218386c335ac676e2ce8d233d7694860a9cdb74b752466da2ba6b"
+    },
+    "max_reproduction_abs_difference": 2.842170943040401e-14,
+    "oracle": {
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v2_equal/results/linker_comparison_aggregate.csv",
+      "sha256": "786b2ccba5782bc749c2b87a5575a4479463f0a43c89aa5e9e11d4d1552215e6"
+    }
+  },
+  "m3ot_diagnostic": {
+    "checkpoint": {
+      "checkpoint_meta": {
+        "CLASSES": null,
+        "config": "dataset_type = 'ReIDDataset'\nimg_norm_cfg = dict(\n    mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)\ntrain_pipeline = [\n    dict(type='LoadMultiImagesFromFile', to_float32=True),\n    dict(\n        type='SeqResize',\n        img_scale=(128, 256),\n        share_params=False,\n        keep_ratio=False,\n        bbox_clip_border=False,\n        override=False),\n    dict(\n        type='SeqRandomFlip',\n        share_params=False,\n        flip_ratio=0.5,\n        direction='horizontal'),\n    dict(\n        type='SeqNormalize',\n        mean=[123.675, 116.28, 103.53],\n        std=[58.395, 57.12, 57.375],\n        to_rgb=True),\n    dict(type='VideoCollect', keys=['img', 'gt_label']),\n    dict(type='ReIDFormatBundle')\n]\ntest_pipeline = [\n    dict(type='LoadImageFromFile'),\n    dict(type='Resize', img_scale=(128, 256), keep_ratio=False),\n    dict(\n        type='Normalize',\n        mean=[123.675, 116.28, 103.53],\n        std=[58.395, 57.12, 57.375],\n        to_rgb=True),\n    dict(type='ImageToTensor', keys=['img']),\n    dict(type='Collect', keys=['img'], meta_keys=[])\n]\ndata = dict(\n    samples_per_gpu=1,\n    workers_per_gpu=2,\n    train=dict(\n        type='ReIDDataset',\n        triplet_sampler=dict(num_ids=8, ins_per_id=4),\n        data_prefix='data/MOT17/reid/img',\n        ann_file='data/MOT17/reid/meta/train_80.txt',\n        pipeline=[\n            dict(type='LoadMultiImagesFromFile', to_float32=True),\n            dict(\n                type='SeqResize',\n                img_scale=(128, 256),\n                share_params=False,\n                keep_ratio=False,\n                bbox_clip_border=False,\n                override=False),\n            dict(\n                type='SeqRandomFlip',\n                share_params=False,\n                flip_ratio=0.5,\n                direction='horizontal'),\n            dict(\n                type='SeqNormalize',\n                mean=[123.675, 116.28, 103.53],\n                std=[58.395, 57.12, 57.375],\n                to_rgb=True),\n            dict(type='VideoCollect', keys=['img', 'gt_label']),\n            dict(type='ReIDFormatBundle')\n        ]),\n    val=dict(\n        type='ReIDDataset',\n        triplet_sampler=None,\n        data_prefix='data/MOT17/reid/img',\n        ann_file='data/MOT17/reid/meta/val_20.txt',\n        pipeline=[\n            dict(type='LoadImageFromFile'),\n            dict(type='Resize', img_scale=(128, 256), keep_ratio=False),\n            dict(\n                type='Normalize',\n                mean=[123.675, 116.28, 103.53],\n                std=[58.395, 57.12, 57.375],\n                to_rgb=True),\n            dict(type='ImageToTensor', keys=['img']),\n            dict(type='Collect', keys=['img'], meta_keys=[])\n        ]),\n    test=dict(\n        type='ReIDDataset',\n        triplet_sampler=None,\n        data_prefix='data/MOT17/reid/img',\n        ann_file='data/MOT17/reid/meta/val_20.txt',\n        pipeline=[\n            dict(type='LoadImageFromFile'),\n            dict(type='Resize', img_scale=(128, 256), keep_ratio=False),\n            dict(\n                type='Normalize',\n                mean=[123.675, 116.28, 103.53],\n                std=[58.395, 57.12, 57.375],\n                to_rgb=True),\n            dict(type='ImageToTensor', keys=['img']),\n            dict(type='Collect', keys=['img'], meta_keys=[])\n        ]))\nevaluation = dict(interval=1, metric='mAP')\noptimizer = dict(type='SGD', lr=0.1, momentum=0.9, weight_decay=0.0001)\noptimizer_config = dict(grad_clip=None)\ncheckpoint_config = dict(interval=1)\nlog_config = dict(interval=50, hooks=[dict(type='TextLoggerHook')])\ndist_params = dict(backend='nccl')\nlog_level = 'INFO'\nload_from = 'https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_batch256_imagenet_20200708-cfb998bf.pth'\nresume_from = None\nworkflow = [('train', 1)]\nUSE_MMCLS = True\nmodel = dict(\n    type='BaseReID',\n    backbone=dict(\n        type='ResNet',\n        depth=50,\n        num_stages=4,\n        out_indices=(3, ),\n        style='pytorch'),\n    neck=dict(type='GlobalAveragePooling', kernel_size=(8, 4), stride=1),\n    head=dict(\n        type='LinearReIDHead',\n        num_fcs=1,\n        in_channels=2048,\n        fc_channels=1024,\n        out_channels=128,\n        num_classes=378,\n        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),\n        loss_pairwise=dict(type='TripletLoss', margin=0.3, loss_weight=1.0),\n        norm_cfg=dict(type='BN1d'),\n        act_cfg=dict(type='ReLU')))\nlr_config = dict(\n    policy='step',\n    warmup='linear',\n    warmup_iters=1000,\n    warmup_ratio=0.001,\n    step=[5])\ntotal_epochs = 6\nwork_dir = '/mnt/lustre/shensanjing/code/mmtracking/work_dirs/resnet50_b32*8_MOT17_06291108'\ngpu_ids = range(0, 1)\nseed = None\n",
+        "env_info": "sys.platform: linux\nPython: 3.7.6 (default, Jan  8 2020, 19:59:22) [GCC 7.3.0]\nCUDA available: True\nGPU 0,1,2,3,4,5,6,7: TITAN Xp\nCUDA_HOME: /mnt/lustre/share/polaris/dep/cuda-9.0-cudnn7.6.5\nNVCC: Cuda compilation tools, release 9.0, V9.0.176\nGCC: gcc (GCC) 5.4.0\nPyTorch: 1.5.0\nPyTorch compiling details: PyTorch built with:\n  - GCC 5.4\n  - C++ Version: 201402\n  - Intel(R) Math Kernel Library Version 2020.0.1 Product Build 20200208 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v0.21.1 (Git Hash 912ce228837d1ce28e1a61806118835de03f5751)\n  - OpenMP 201307 (a.k.a. OpenMP 4.0)\n  - NNPACK is enabled\n  - CPU capability usage: AVX2\n  - CUDA Runtime 9.0\n  - NVCC architecture flags: -gencode;arch=compute_52,code=sm_52;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_70,code=compute_70\n  - CuDNN 7.6.5\n  - Magma 2.5.0\n  - Build settings: BLAS=MKL, BUILD_TYPE=Release, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -fopenmp -DNDEBUG -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DUSE_INTERNAL_THREADPOOL_IMPL -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, USE_CUDA=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=ON, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_STATIC_DISPATCH=OFF, \n\nTorchVision: 0.6.0\nOpenCV: 4.2.0\nMMCV: 1.3.3\nMMCV Compiler: GCC 5.4\nMMCV CUDA Compiler: 9.0\nMMTracking: 0.5.2+7bb2fcc",
+        "epoch": 6,
+        "hook_msgs": {
+          "last_ckpt": "/mnt/lustre/shensanjing/code/mmtracking/work_dirs/resnet50_b32*8_MOT17_06291108/epoch_5.pth"
+        },
+        "iter": 48000,
+        "mmcv_version": "1.3.3",
+        "mmtrack_version": "0.5.2",
+        "seed": null,
+        "time": "Tue Jun 29 14:01:55 2021"
+      },
+      "ignored_training_only_keys": [
+        "head.bn.bias",
+        "head.bn.num_batches_tracked",
+        "head.bn.running_mean",
+        "head.bn.running_var",
+        "head.bn.weight",
+        "head.classifier.bias",
+        "head.classifier.weight"
+      ],
+      "sha256": "4bf6b63d49235973033c47f77bc9b94a54bdd222bd3f484b4e484aba580254c1",
+      "url": "https://download.openmmlab.com/mmtracking/mot/reid/reid_r50_6e_mot17-4bf6b63d.pth"
+    },
+    "claim_scope": "Fixed M3OT development/held-out diagnostic; no retuning or dataset-specific exception",
+    "command": "/tmp/com3d_professor_review_20260914/scripts/run_m3ot_linker_diagnostic.py --workspace /mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal --val-manifest /mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/val_development_manifest.json --val-results /mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/val_policy_results_v2.json --test-manifest /mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/test_final_manifest.json --test-results /mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/test_locked_results.json --checkpoint /mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal/assets/reid_r50_6e_mot17-4bf6b63d.pth --output-dir /tmp/com3d_professor_review_20260914/results_raw/m3ot_linker_diagnostic_v2 --device cpu --threads 8",
+    "configuration_selection": {
+      "development": true,
+      "held_out": false,
+      "held_out_threshold_tuning": false
+    },
+    "environment": {
+      "device": "cpu",
+      "executable": "/mnt/ssd2/meme_comparison/environments/accv_m3ot/bin/python",
+      "platform": "Linux-6.8.0-40-generic-x86_64-with-glibc2.35",
+      "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+      "threads": 8,
+      "torch": "2.9.1+cu128"
+    },
+    "fixed_thresholds": {
+      "appearance_cosine_distance": 0.3,
+      "geometry_radius_pixels": 55.0,
+      "maximum_gap_frames": 30,
+      "partial_hungarian_unmatched_cost": 1.0
+    },
+    "ground_truth_use": "oracle-box tracker input, descriptor crop admission, metrics, and post-hoc diagnostics",
+    "historical_descriptor_admission": "Tracker observations with IoU >= 0.9 to oracle GT are attached to image crops before fixed BaseReID encoding; this reproduces the historical oracle-box diagnostic and is not a detector-input protocol.",
+    "inputs": {
+      "/mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/test_final_manifest.json": "355984ed55fbd66e6a0726b3ec28eb18791efd92e2c212af788fbfe670c1db53",
+      "/mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/test_locked_results.json": "3e0b0d8c0f87c20f8a32453cbcb001bce6a3b64ebaf27dc8d739d6b38f57d02d",
+      "/mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/val_development_manifest.json": "099e6bab562938fb4e0696898dd07a4047e42753b573fe34ba3793094d0f5a7c",
+      "/mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/val_policy_results_v2.json": "6788a00f2a71c7ee3e60bc3388ae941fc8cde23eeec74e72d7f8618bd043c212",
+      "/mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal/assets/reid_r50_6e_mot17-4bf6b63d.pth": "4bf6b63d49235973033c47f77bc9b94a54bdd222bd3f484b4e484aba580254c1",
+      "/mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal/scripts/run_m3ot_ambiguity_aware.py": "a4bca409a0517c8101a542810ed4cda25b53fc7ed49c14e1dff8964024a4f464",
+      "/mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal/scripts/run_m3ot_temporal_evidence.py": "3bdebd8e31fea0ac44395dcfffd89122d9178e583581f35b2e4cfbc1fce5789f"
+    },
+    "methods": [
+      "no_refinement",
+      "historical_geometry_first_reciprocal",
+      "controlled_cost_greedy",
+      "controlled_cost_reciprocal",
+      "controlled_cost_partial_hungarian"
+    ],
+    "outputs": {
+      "descriptor_runtime.csv": {
+        "bytes": 4348,
+        "sha256": "306c750eec4de831fd5008c8931a7796df44ad816a9fd5f58b518c501bd9ceaa"
+      },
+      "m3ot_edge_casebook.csv": {
+        "bytes": 35104,
+        "sha256": "13987cf6846ad7240232dcfe0e3772bc45059e73fdbaa3a9fd8f58d07f84aa29"
+      },
+      "m3ot_linker_comparison.csv": {
+        "bytes": 3827,
+        "sha256": "86d749ae50cf0fdd15888941ff7bbe98901534276fb0eb51b94b2b6ac0fc3072"
+      },
+      "m3ot_linker_per_sequence.csv": {
+        "bytes": 14589,
+        "sha256": "bdd0d38cab53a69e387b30c190fd47027825456b9ba57cda0426d720dcc61f02"
+      },
+      "reproduction_check.csv": {
+        "bytes": 1077,
+        "sha256": "de9b07c51c0ef4281c9986e56bdb38478f8605d7c0fb33f3d69aa78a09beaf8e"
+      }
+    },
+    "reproduction_instances": 16,
+    "reproduction_passed": true,
+    "runtime_seconds": 61.7077679913491,
+    "script_sha256": "e8aa25de538d503fad0a5656590e676d116392d41a8166a0f3681cbcd36f9935",
+    "status": "COMPLETE"
+  },
+  "mmot_audit": {
+    "aflink": {
+      "assignment_source": "cached official-model/checkpoint scores and selected edges",
+      "failure_contexts": 13,
+      "native_stage_replication": "ID remap followed by unique (frame, ID) first-row retention",
+      "overlap_safe_adapter": "reject selected component merges with any frame-support overlap; no GT used"
+    },
+    "appearance_grid": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3
+    ],
+    "claim_scope": "Cache-only controlled MMOT assignment, AFLink stage, risk-coverage, runtime, and reciprocal-invariant audit. No detector, tracker, or descriptor network was executed.",
+    "command": "/tmp/com3d_professor_review_20260914/scripts/run_cached_solver_audit.py --benchmark-script /home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/scripts/run_full50_linker_benchmark.py --workspace /mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal --oracle-cache-dir /home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v1 --detector-cache-dir /home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v1 --oracle-accepted-links /home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v2_equal/results/accepted_links.csv --detector-accepted-links /home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v2_equal/results/accepted_links.csv --family-root legacy12 /mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_meta_review_split/legacy12 --family-root confirmation38 /mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_meta_review_split/confirmation38 --output-dir /tmp/com3d_professor_review_20260914/results_raw/mmot_cached_solver_audit_v1 --repeats 5",
+    "coverage_denominator": "source tracklets with at least one strictly later non-overlapping tracklet within 30 released frames, before geometry/appearance gates",
+    "environment": {
+      "cuda_used": false,
+      "executable": "/mnt/ssd2/meme_comparison/environments/accv_m3ot/bin/python",
+      "numpy": "2.2.6",
+      "platform": "Linux-6.8.0-40-generic-x86_64-with-glibc2.35",
+      "processor": "x86_64",
+      "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+      "scipy": "1.15.3"
+    },
+    "fixed_thresholds": {
+      "appearance_cosine_distance": 0.3,
+      "geometry_radius_pixels": 55.0,
+      "hungarian_unmatched_cost": 1.0,
+      "maximum_gap_frames": 30
+    },
+    "ground_truth_use": "metrics and post-hoc edge audit only; no threshold selection",
+    "inputs": {
+      "benchmark_script": {
+        "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/scripts/run_full50_linker_benchmark.py",
+        "sha256": "4d240fd1f1339ea67ec28d0f79a6993c41421636452789a5f8ef1a8693ce94eb"
+      },
+      "detector_accepted_links": {
+        "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v2_equal/results/accepted_links.csv",
+        "sha256": "de7f0bbd5dbdaad0e77018b1ea56b624a8f53aa008b15f4ade897e74c04e496d"
+      },
+      "detector_cache": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v1",
+      "families": {
+        "confirmation38": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_meta_review_split/confirmation38",
+        "legacy12": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_meta_review_split/legacy12"
+      },
+      "mmot_source": {
+        "path": "/mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal/scripts/run_mmot_locked_temporal.py",
+        "sha256": "0c8402bebab7ab2a00a733eea1b4b7ae93d8e8949721ece19bbee1349adc98ba"
+      },
+      "oracle_accepted_links": {
+        "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v2_equal/results/accepted_links.csv",
+        "sha256": "8536db9db5cadac5445af3a1faa455f3f6b6270e52ab0a41326069041efcd784"
+      },
+      "oracle_cache": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v1"
+    },
+    "methods": [
+      "no_refinement",
+      "geometry_greedy",
+      "geometry_reid_greedy_guard",
+      "com3d_reciprocal_guard",
+      "geometry_reid_hungarian",
+      "controlled_cost_greedy",
+      "controlled_cost_reciprocal",
+      "aflink_cached_no_dedup",
+      "aflink_cached_native_dedup",
+      "aflink_cached_native_saved",
+      "aflink_cached_overlap_safe"
+    ],
+    "outputs": {
+      "aflink_failure_summary.csv": {
+        "bytes": 971,
+        "sha256": "7a3e99278e5749b0ef08813533b9c96d23f5c51ac12640d1a02765bbf880fd62"
+      },
+      "aflink_stage_audit.csv": {
+        "bytes": 37260,
+        "sha256": "6fa80b6739a1b9022379d4f7f3a189650b4a1f558cafc7f8180bff15fc5f9e00"
+      },
+      "edge_decision_trace.csv": {
+        "bytes": 7247471,
+        "sha256": "835bec874ba95b16822181ec72d1aff4c18967884af9ee273cb1ca82ca35b056"
+      },
+      "property_test_results.json": {
+        "bytes": 526,
+        "sha256": "5f1d1194a4cd741e7743b4f68f27f692e9e94eefc4674f5f6631ef7fe1347181"
+      },
+      "reciprocal_property_instances.csv": {
+        "bytes": 162061,
+        "sha256": "2230d0b687ac5c342fd5cdd39d766be7d746855642fee1ece94d6114ca0fe8ff"
+      },
+      "refiner_runtime.csv": {
+        "bytes": 2529121,
+        "sha256": "984f07db434ca4e00c96e8e9dc705cbe87bf3f22bbbb875d5ceca72487455f9a"
+      },
+      "risk_coverage.csv": {
+        "bytes": 34155,
+        "sha256": "362ec0a5361fa132caec529bb45147e15323fdf97e0cf4eabd8385028b36bb1e"
+      },
+      "solver_cost_control.csv": {
+        "bytes": 22021,
+        "sha256": "f0e7526a7428a18b36d80264ef7ac9ca825aac4dddc81c192a414ef60f144f58"
+      },
+      "solver_metrics_aggregate.csv": {
+        "bytes": 22021,
+        "sha256": "f0e7526a7428a18b36d80264ef7ac9ca825aac4dddc81c192a414ef60f144f58"
+      },
+      "solver_metrics_per_sequence.csv": {
+        "bytes": 748558,
+        "sha256": "3ac777d948b6da746c19fa1b27db1dd05b74afff017a3caaff7b7501b07e949c"
+      }
+    },
+    "property_summary": {
+      "component_guard_rejections": 0,
+      "cycle_instances": 0,
+      "guard_output_difference_instances": 0,
+      "input_duplicate_instances": 0,
+      "instances": 1989,
+      "interpretation": "For the implemented one-shot reciprocal graph, strict temporal edges and degree at most one form disjoint directed paths. The overlap guard is a defensive validation assertion, not an independently active MMOT module.",
+      "maximum_observed_indegree": 1,
+      "maximum_observed_outdegree": 1,
+      "status": "PASS",
+      "strict_time_order_violations": 0
+    },
+    "risk_methods": [
+      "geometry_reid_greedy_guard",
+      "com3d_reciprocal_guard",
+      "controlled_cost_reciprocal",
+      "geometry_reid_hungarian"
+    ],
+    "runtime_protocol": {
+      "aflink_model_scoring_included": false,
+      "candidate_graph_reused": true,
+      "descriptor_extraction_included": false,
+      "peak_memory": "tracemalloc peak for one additional solver call",
+      "timed_repeats": 5,
+      "timer": "time.perf_counter_ns",
+      "warmup_calls_per_method_instance": 1
+    },
+    "runtime_seconds": 584.620516247116,
+    "script_sha256": "0298d0eb730464ac3415601d65f8b44a0c860521a927989d8dfcc3a81e546bfe",
+    "status": "COMPLETE"
+  },
+  "paper_source": {
+    "commit_before_revision": "fa9c4329de036705864fc00ced1d40798a66fa7a",
+    "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync",
+    "pre_revision_pdf": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/main.pdf",
+    "pre_revision_pdf_sha256": "88eb435789f41d97425027027878bd2210e2744e265d9825a5b3216ec09bdee8"
+  },
+  "report_builder": {
+    "path": "/tmp/com3d_professor_review_20260914/scripts/build_review_reports.py",
+    "sha256": "992c2dac5586e3800326cc5d66b238b9caac29c3051dc7cf9cb2967116344785"
+  },
+  "review_target": {
+    "available_locally": false,
+    "expected_sha256": "7a04b4d4aa7a6c1f1462aca97a5d9346548c72792c4313b48d0f87756734aab6",
+    "filename": "_ELSEVIER_CoM3D_ACE__Ambiguity_Aware_Cross_View_Evidence_Routing_for_Cooperative_UAV_Small_Object_Perception(20260914-010039).pdf"
+  },
+  "status": "COMPLETE_WITH_TARGET_PDF_LINKAGE_LIMIT"
+}

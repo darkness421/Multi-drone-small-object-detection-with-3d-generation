@@ -1,0 +1,17 @@
+accepted_edges_exact_match,baseline_max_metric_abs_diff,historical_max_metric_abs_diff,observed_accepted_edges,sequence,split,stored_accepted_edges,tracker
+True,0.0,0.0,3,M3OT/1/ir/val/1-08T,development,3,bytetrack
+True,0.0,0.0,5,M3OT/1/ir/val/1-08T,development,5,ocsort
+True,0.0,0.0,2,M3OT/1/rgb/val/1-08,development,2,bytetrack
+True,0.0,0.0,3,M3OT/1/rgb/val/1-08,development,3,ocsort
+True,0.0,0.0,8,M3OT/2/ir/val/2-08T,development,8,bytetrack
+True,0.0,0.0,9,M3OT/2/ir/val/2-08T,development,9,ocsort
+True,0.0,0.0,0,M3OT/2/rgb/val/2-08,development,0,bytetrack
+True,0.0,0.0,0,M3OT/2/rgb/val/2-08,development,0,ocsort
+True,0.0,0.0,2,M3OT/1/ir/test/1-03T,held_out,2,bytetrack
+True,0.0,0.0,1,M3OT/1/ir/test/1-03T,held_out,1,ocsort
+True,0.0,0.0,0,M3OT/1/rgb/test/1-03,held_out,0,bytetrack
+True,0.0,0.0,0,M3OT/1/rgb/test/1-03,held_out,0,ocsort
+True,0.0,0.0,4,M3OT/2/ir/test/2-03T,held_out,4,bytetrack
+True,0.0,0.0,2,M3OT/2/ir/test/2-03T,held_out,2,ocsort
+True,0.0,0.0,1,M3OT/2/rgb/test/2-03,held_out,1,bytetrack
+True,0.0,0.0,0,M3OT/2/rgb/test/2-03,held_out,0,ocsort

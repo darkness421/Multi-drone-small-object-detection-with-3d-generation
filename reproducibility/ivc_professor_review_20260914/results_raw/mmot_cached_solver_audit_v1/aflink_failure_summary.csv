@@ -1,0 +1,14 @@
+class_name,family,native_dropped_boxes,overlap_safe_accepted_edges,overlap_safe_rejected_edges,protocol,selected_edges,sequence,tracker
+car,legacy12,1,0,1,oracle_aabb,1,data30-3,deepocsort
+pedestrian,confirmation38,2,39,2,oracle_aabb,41,data34-1,bytetrack
+pedestrian,confirmation38,1,1,1,oracle_aabb,2,data36-10,bytetrack
+pedestrian,confirmation38,1,24,1,oracle_aabb,25,data36-10,deepocsort
+pedestrian,confirmation38,1,5,1,oracle_aabb,6,data37-1,deepocsort
+car,confirmation38,1,1,1,oracle_aabb,2,data37-10,ocsort
+car,confirmation38,1,4,1,oracle_aabb,5,data37-11,ocsort
+car,confirmation38,1,0,1,oracle_aabb,1,data37-11,deepocsort
+pedestrian,confirmation38,1,1,1,oracle_aabb,2,data37-2,ocsort
+pedestrian,confirmation38,2,29,2,official_detector,31,data34-1,bytetrack
+car,confirmation38,1,3,1,official_detector,4,data37-10,bytetrack
+car,confirmation38,1,1,1,official_detector,2,data37-10,ocsort
+bike,confirmation38,1,2,1,official_detector,3,data46-11,bytetrack

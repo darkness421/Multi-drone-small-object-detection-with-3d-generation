@@ -1,0 +1,12 @@
+{
+  "component_guard_rejections": 0,
+  "cycle_instances": 0,
+  "guard_output_difference_instances": 0,
+  "input_duplicate_instances": 0,
+  "instances": 1989,
+  "interpretation": "For the implemented one-shot reciprocal graph, strict temporal edges and degree at most one form disjoint directed paths. The overlap guard is a defensive validation assertion, not an independently active MMOT module.",
+  "maximum_observed_indegree": 1,
+  "maximum_observed_outdegree": 1,
+  "status": "PASS",
+  "strict_time_order_violations": 0
+}
