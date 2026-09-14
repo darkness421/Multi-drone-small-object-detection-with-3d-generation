@@ -18,18 +18,12 @@ METHOD_LABELS = {
     "aflink_cached_overlap_safe": "AFLink+VA",
     "com3d_reciprocal_guard": "CoM3D-ACE",
 }
+MAIN_METHOD_LABELS = {
+    **METHOD_LABELS,
+    "geometry_greedy": "Geo. greedy",
+}
 TRACKERS = ("bytetrack", "ocsort", "deepocsort")
 PROTOCOLS = ("oracle_aabb", "official_detector")
-OPERATIONAL_METHODS = (
-    "no_refinement",
-    "aflink_cached_overlap_safe",
-    "com3d_reciprocal_guard",
-)
-STATIC_ASSIGNMENT_METHODS = (
-    "geometry_greedy",
-    "geometry_reid_greedy_guard",
-    "geometry_reid_hungarian",
-)
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -114,12 +108,10 @@ def main() -> int:
             (row["protocol"], row["tracker"], row["method"]), normalized
         )
 
-    # Main compact table: operational rows carry all three trackers per protocol.
-    # Static assignment controls remain numerical appendix rows and are intentionally
-    # excluded from the compact operational presentation.
+    # Main compact table: all principal same-input linkers carry all three trackers
+    # per protocol. Detailed appendix tables add HOTA and AssA.
     table_rows = tex_rows(paper_root / "ivc_tables/temporal/main_refinement_gains.tex")
-    for method in OPERATIONAL_METHODS:
-        label = METHOD_LABELS[method]
+    for method, label in MAIN_METHOD_LABELS.items():
         for protocol_index, protocol in enumerate(PROTOCOLS):
             row = find_one(table_rows, label, protocol_index)
             expected: list[str] = []
@@ -133,26 +125,6 @@ def main() -> int:
                 bool(row) and has_in_order(row, expected),
                 " | ".join(expected),
             )
-
-    for method in STATIC_ASSIGNMENT_METHODS:
-        label = METHOD_LABELS[method]
-        check(
-            f"main table excludes static control {method}",
-            not any(f"& {label} &" in row for row in table_rows),
-            f"{label} absent from compact operational table",
-        )
-
-    appendix_static_text = "\n".join(
-        (paper_root / "ivc_tables/temporal" / filename).read_text(encoding="utf-8")
-        for filename in ("oracle_full50.tex", "detector_full50.tex")
-    )
-    for method in STATIC_ASSIGNMENT_METHODS:
-        label = METHOD_LABELS[method]
-        check(
-            f"appendix retains static control {method}",
-            appendix_static_text.count(label) == 6,
-            f"six {label} rows across oracle and detector appendix tables",
-        )
 
     # Full tables include HOTA and AssA. Method occurrences follow tracker order.
     for protocol, filename in (
@@ -204,7 +176,7 @@ def main() -> int:
                 " | ".join(expected),
             )
 
-    # Paired all-50 intervals against the two principal competing linkers.
+    # Paired all-50 intervals against static controls and AFLink+VA.
     paired_lookup = {
         (row["protocol"], row["tracker"], row["comparator"]): row
         for row in read_csv(report_root / "paired_linker_deltas.csv")
@@ -213,7 +185,11 @@ def main() -> int:
     paired_text = (paper_root / "ivc_tables/temporal/paired_key_linkers.tex").read_text(encoding="utf-8")
     for protocol in PROTOCOLS:
         for tracker in TRACKERS:
-            for comparator in ("geometry_reid_greedy_guard", "geometry_reid_hungarian"):
+            for comparator in (
+                "geometry_reid_greedy_guard",
+                "geometry_reid_hungarian",
+                "aflink_cached_overlap_safe",
+            ):
                 source = paired_lookup[(protocol, tracker, comparator)]
                 expected = (
                     f"{signed2(source['delta_IDF1_mean'])}"
@@ -240,11 +216,16 @@ def main() -> int:
         for tracker in TRACKERS:
             for method in ("com3d_reciprocal_guard", "controlled_cost_reciprocal"):
                 source = risk_lookup[(protocol, tracker, method)]
+                auditable = float(source["accepted_known"]) / float(source["accepted_total"])
                 expected = [
                     f"{100 * float(source['all_accepted_coverage']):.1f}\\%",
+                    f"{100 * auditable:.1f}\\%",
                     f"{100 * float(source['known_link_error_rate']):.1f}\\%",
-                    f"{integer(source['accepted_correct'])}/{integer(source['accepted_false'])}",
-                    integer(source["accepted_unknown"]),
+                    (
+                        f"{integer(source['accepted_correct'])}/"
+                        f"{integer(source['accepted_false'])}/"
+                        f"{integer(source['accepted_unknown'])}"
+                    ),
                 ]
                 check(
                     f"link audit {protocol}/{tracker}/{method}",

@@ -1,7 +1,7 @@
 {
   "status": "PASS",
-  "checks_total": 94,
-  "checks_passed": 94,
+  "checks_total": 100,
+  "checks_passed": 100,
   "checks_failed": 0,
   "checks": [
     {
@@ -13,6 +13,36 @@
       "name": "main table official_detector/no_refinement",
       "passed": true,
       "detail": "38.32 | 10,324 | 36.46 | 4,263 | 63.09 | 1,370"
+    },
+    {
+      "name": "main table oracle_aabb/geometry_greedy",
+      "passed": true,
+      "detail": "51.02 | 15,484 | 45.41 | 4,122 | 83.69 | 1,294"
+    },
+    {
+      "name": "main table official_detector/geometry_greedy",
+      "passed": true,
+      "detail": "40.76 | 7,908 | 38.14 | 2,959 | 64.01 | 1,008"
+    },
+    {
+      "name": "main table oracle_aabb/geometry_reid_greedy_guard",
+      "passed": true,
+      "detail": "51.80 | 15,064 | 46.25 | 3,481 | 83.99 | 1,149"
+    },
+    {
+      "name": "main table official_detector/geometry_reid_greedy_guard",
+      "passed": true,
+      "detail": "41.10 | 7,711 | 38.76 | 2,585 | 64.15 | 942"
+    },
+    {
+      "name": "main table oracle_aabb/geometry_reid_hungarian",
+      "passed": true,
+      "detail": "50.78 | 16,462 | 46.19 | 3,547 | 84.00 | 1,174"
+    },
+    {
+      "name": "main table official_detector/geometry_reid_hungarian",
+      "passed": true,
+      "detail": "40.56 | 8,405 | 38.74 | 2,668 | 64.17 | 957"
     },
     {
       "name": "main table oracle_aabb/aflink_cached_overlap_safe",
@@ -33,36 +63,6 @@
       "name": "main table official_detector/com3d_reciprocal_guard",
       "passed": true,
       "detail": "39.97 | 8,935 | 38.09 | 3,204 | 64.08 | 1,046"
-    },
-    {
-      "name": "main table excludes static control geometry_greedy",
-      "passed": true,
-      "detail": "Geometry greedy absent from compact operational table"
-    },
-    {
-      "name": "main table excludes static control geometry_reid_greedy_guard",
-      "passed": true,
-      "detail": "Geo.+ReID greedy absent from compact operational table"
-    },
-    {
-      "name": "main table excludes static control geometry_reid_hungarian",
-      "passed": true,
-      "detail": "Partial Hung. absent from compact operational table"
-    },
-    {
-      "name": "appendix retains static control geometry_greedy",
-      "passed": true,
-      "detail": "six Geometry greedy rows across oracle and detector appendix tables"
-    },
-    {
-      "name": "appendix retains static control geometry_reid_greedy_guard",
-      "passed": true,
-      "detail": "six Geo.+ReID greedy rows across oracle and detector appendix tables"
-    },
-    {
-      "name": "appendix retains static control geometry_reid_hungarian",
-      "passed": true,
-      "detail": "six Partial Hung. rows across oracle and detector appendix tables"
     },
     {
       "name": "full table oracle_aabb/bytetrack/no_refinement",
@@ -285,6 +285,11 @@
       "detail": "-1.07 [-1.37,-0.79]"
     },
     {
+      "name": "paired CI oracle_aabb/bytetrack/aflink_cached_overlap_safe",
+      "passed": true,
+      "detail": "+2.02 [+1.58,+2.51]"
+    },
+    {
       "name": "paired CI oracle_aabb/ocsort/geometry_reid_greedy_guard",
       "passed": true,
       "detail": "-1.00 [-1.38,-0.66]"
@@ -293,6 +298,11 @@
       "name": "paired CI oracle_aabb/ocsort/geometry_reid_hungarian",
       "passed": true,
       "detail": "-0.93 [-1.36,-0.57]"
+    },
+    {
+      "name": "paired CI oracle_aabb/ocsort/aflink_cached_overlap_safe",
+      "passed": true,
+      "detail": "+1.92 [+1.44,+2.47]"
     },
     {
       "name": "paired CI oracle_aabb/deepocsort/geometry_reid_greedy_guard",
@@ -305,6 +315,11 @@
       "detail": "-0.33 [-0.51,-0.17]"
     },
     {
+      "name": "paired CI oracle_aabb/deepocsort/aflink_cached_overlap_safe",
+      "passed": true,
+      "detail": "+1.74 [+0.96,+2.73]"
+    },
+    {
       "name": "paired CI official_detector/bytetrack/geometry_reid_greedy_guard",
       "passed": true,
       "detail": "-1.14 [-1.85,-0.60]"
@@ -313,6 +328,11 @@
       "name": "paired CI official_detector/bytetrack/geometry_reid_hungarian",
       "passed": true,
       "detail": "-0.60 [-0.82,-0.40]"
+    },
+    {
+      "name": "paired CI official_detector/bytetrack/aflink_cached_overlap_safe",
+      "passed": true,
+      "detail": "+1.43 [+1.05,+1.86]"
     },
     {
       "name": "paired CI official_detector/ocsort/geometry_reid_greedy_guard",
@@ -325,6 +345,11 @@
       "detail": "-0.66 [-0.99,-0.40]"
     },
     {
+      "name": "paired CI official_detector/ocsort/aflink_cached_overlap_safe",
+      "passed": true,
+      "detail": "+1.40 [+1.05,+1.77]"
+    },
+    {
       "name": "paired CI official_detector/deepocsort/geometry_reid_greedy_guard",
       "passed": true,
       "detail": "-0.06 [-0.14,+0.01]"
@@ -335,64 +360,69 @@
       "detail": "-0.09 [-0.19,+0.01]"
     },
     {
+      "name": "paired CI official_detector/deepocsort/aflink_cached_overlap_safe",
+      "passed": true,
+      "detail": "+0.75 [+0.38,+1.22]"
+    },
+    {
       "name": "link audit oracle_aabb/bytetrack/com3d_reciprocal_guard",
       "passed": true,
-      "detail": "36.6\\% | 44.6\\% | 317/255 | 3,909"
+      "detail": "36.6\\% | 12.8\\% | 44.6\\% | 317/255/3,909"
     },
     {
       "name": "link audit oracle_aabb/bytetrack/controlled_cost_reciprocal",
       "passed": true,
-      "detail": "39.8\\% | 43.2\\% | 369/281 | 4,226"
+      "detail": "39.8\\% | 13.3\\% | 43.2\\% | 369/281/4,226"
     },
     {
       "name": "link audit oracle_aabb/ocsort/com3d_reciprocal_guard",
       "passed": true,
-      "detail": "37.9\\% | 35.1\\% | 1,661/899 | 0"
+      "detail": "37.9\\% | 100.0\\% | 35.1\\% | 1,661/899/0"
     },
     {
       "name": "link audit oracle_aabb/ocsort/controlled_cost_reciprocal",
       "passed": true,
-      "detail": "42.1\\% | 21.2\\% | 2,239/602 | 0"
+      "detail": "42.1\\% | 100.0\\% | 21.2\\% | 2,239/602/0"
     },
     {
       "name": "link audit oracle_aabb/deepocsort/com3d_reciprocal_guard",
       "passed": true,
-      "detail": "26.1\\% | 39.2\\% | 575/371 | 0"
+      "detail": "26.1\\% | 100.0\\% | 39.2\\% | 575/371/0"
     },
     {
       "name": "link audit oracle_aabb/deepocsort/controlled_cost_reciprocal",
       "passed": true,
-      "detail": "27.4\\% | 29.0\\% | 704/287 | 0"
+      "detail": "27.4\\% | 100.0\\% | 29.0\\% | 704/287/0"
     },
     {
       "name": "link audit official_detector/bytetrack/com3d_reciprocal_guard",
       "passed": true,
-      "detail": "34.4\\% | 29.7\\% | 97/41 | 2,796"
+      "detail": "34.4\\% | 4.7\\% | 29.7\\% | 97/41/2,796"
     },
     {
       "name": "link audit official_detector/bytetrack/controlled_cost_reciprocal",
       "passed": true,
-      "detail": "37.2\\% | 24.8\\% | 106/35 | 3,033"
+      "detail": "37.2\\% | 4.4\\% | 24.8\\% | 106/35/3,033"
     },
     {
       "name": "link audit official_detector/ocsort/com3d_reciprocal_guard",
       "passed": true,
-      "detail": "35.4\\% | 38.9\\% | 173/110 | 1,766"
+      "detail": "35.4\\% | 13.8\\% | 38.9\\% | 173/110/1,766"
     },
     {
       "name": "link audit official_detector/ocsort/controlled_cost_reciprocal",
       "passed": true,
-      "detail": "39.0\\% | 31.6\\% | 206/95 | 1,954"
+      "detail": "39.0\\% | 13.3\\% | 31.6\\% | 206/95/1,954"
     },
     {
       "name": "link audit official_detector/deepocsort/com3d_reciprocal_guard",
       "passed": true,
-      "detail": "21.7\\% | 32.3\\% | 42/20 | 675"
+      "detail": "21.7\\% | 8.4\\% | 32.3\\% | 42/20/675"
     },
     {
       "name": "link audit official_detector/deepocsort/controlled_cost_reciprocal",
       "passed": true,
-      "detail": "22.1\\% | 28.8\\% | 47/19 | 686"
+      "detail": "22.1\\% | 8.8\\% | 28.8\\% | 47/19/686"
     },
     {
       "name": "M3OT metrics development/bytetrack",

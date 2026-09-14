@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-14T15:33:57+09:00",
+  "generated_at": "2026-09-14T16:39:09+09:00",
   "paper_repository": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync",
-  "paper_commit": "7137f6d3d034084576f123ec65907b1b61ab6b5b",
+  "paper_commit": "51a93e0a7dca9c99d2115c87162de3fd167130de",
   "base_commit_before_revision": "fa9c4329de036705864fc00ced1d40798a66fa7a",
   "review_pdf": {
     "requested_sha256": "7a04b4d4aa7a6c1f1462aca97a5d9346548c72792c4313b48d0f87756734aab6",
@@ -10,9 +10,10 @@
   },
   "revised_pdf": {
     "path": "paper/CoM3D_ACE_professor_review_revised.pdf",
-    "sha256": "83b207101456de4990d4f8e4b50744af8d3db4fb0a89f4986c56981f6f34ca1f",
-    "bytes": 8575080,
-    "pages": 27
+    "sha256": "17b96043b0812f90d62d81f58d8103aa1e9b86552833162652cd8e0f0d55f5f5",
+    "bytes": 3287030,
+    "pages": 28,
+    "extracted_text_sha256": "35a4977eb50e816a6fff25a4a667ab5c0b06a9805f9bd55f4e3092b19701570f"
   },
   "compile": {
     "image": "com3d-ace-latex:20260906",
@@ -25,19 +26,28 @@
   },
   "manuscript_number_verification": {
     "status": "PASS",
-    "checks_passed": 94,
-    "checks_total": 94,
-    "manifest_sha256": "acca1ad64d51f92c46250799236fe0541b79447df248808e6f33822fcc529972"
+    "checks_passed": 100,
+    "checks_total": 100,
+    "manifest_sha256": "503a7b0b97b9cb647bb79b042b847b75983dd322565fa086df3b61e1def29080"
   },
   "executed_scripts": {
     "run_cached_solver_audit.py": "0298d0eb730464ac3415601d65f8b44a0c860521a927989d8dfcc3a81e546bfe",
     "run_m3ot_linker_diagnostic.py": "e8aa25de538d503fad0a5656590e676d116392d41a8166a0f3681cbcd36f9935",
     "build_review_reports.py": "6b90eea4021057f6cb30ee67764326a933a01c79b28f9510bb2a66e5d2db073b",
-    "verify_manuscript_numbers.py": "78b8798ab218bde9ec79c835a175b46e51e3c602fbd0462fe338a6a4fe9e44b0"
+    "verify_manuscript_numbers.py": "4c4c2df4bdd11aa99ff252163f721e7b2bf44d1e865e7ede7b7f161a572b01e1"
   },
   "raw_manifests": {
     "mmot_cached_solver_audit_v1": "78af58f39458b0fd6078e32a95207b937742d9bb6d33d931c4f93e2b3412b1da",
     "m3ot_linker_diagnostic_v2": "00f0e6aa98f637d8221a79e0371d3628c491af073b6a850e3864149662c7f724"
   },
-  "figure_files_modified": false
+  "figure_files_modified": {
+    "figures/figure1.png": "cb103c5033a5ecec24e74e14c3e7d594f84d151d7c8f9dac0fcdd915f3074f16",
+    "figures/figure2.png": "4f859718c28a55ee0108c1d711f952036f19110bf6ba108ca378d33a2e105004"
+  },
+  "table_number_mapping": {
+    "old_Table_B.10_controlled_solver": "Table_4",
+    "paired_key_linkers": "Table_B.10",
+    "error_coverage_fixed": "Table_C.12",
+    "m3ot_transfer": "Table_D.14"
+  }
 }

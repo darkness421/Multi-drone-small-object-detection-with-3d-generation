@@ -13,14 +13,13 @@
   CPU solver 시간/메모리를 산출했다. 사후 threshold 선택은 하지 않았다.
 - P4: **해결.** M3OT 16개 기존 인스턴스를 오차 0으로 재현하고 기회 손실,
   오연결, greedy/reciprocal/Hungarian 결과를 비교했다.
-- P5: **부분 해결.** 주요 linker 대비 paired sequence CI를 계산했다. 공식 metadata에
-  source-flight mapping이 없어 block bootstrap은 수행하지 않았다.
-- P6: **부분 해결/원고 반영 완료.** 본 보고서 수치를 근거로 운영형 main
-  comparison과 별도 static-assignment appendix, AFLink, guard, M3OT 및
-  confirmation scope를 수정했다. 저자 제작
-  Fig. 1/2 파일은 보존하고 캡션과 본문에서 motivation/system context로 범위를
-  제한했다. 따라서 교수님이 요청한 Fig. 1의 temporal before/after 교체 자체는
-  범위에서 제외되어 부분 해결로 남는다.
+- P5: **부분 해결.** 주요 static linker 및 AFLink+VA 대비 paired sequence CI를
+  계산해 원고에 연결했다. 공식 metadata에 source-flight mapping이 없어 block
+  bootstrap은 수행하지 않았다.
+- P6: **해결.** main Table 2에 전체 주요 linker를 통합하고, ranking/solver
+  진단을 main Table 4로 이동했다. AFLink, guard, M3OT, confirmation scope 및
+  조건부 link-error 분모를 수정했다. Fig. 1/2도 평가된 temporal task에 맞춰
+  교체했다.
 
 ## 2. AFLink failure stage, 원인, raw 및 adapter 결과
 
@@ -43,14 +42,16 @@ validation으로만 유지한다.
 
 ## 4. 주요 linker 대비 정확도, risk, 비용과 주장 근거
 
-Historical CoM3D는 None보다 6개 조건의 평균 IDF1을 모두 개선한다. 그러나
+Fixed CoM3D-ACE는 None보다 6개 조건의 평균 IDF1을 모두 개선한다. 그러나
 Geometry+ReID greedy와 partial Hungarian보다 IDF1이 6개 모두 낮다. Common scalar
-cost를 쓴 reciprocal은 historical ranking보다 6개 모두 IDF1이 높고, 고정 0.30에서
-coverage도 높으며 known-link error도 낮다. Reciprocal solver의 CPU 시간/peak memory는
+cost를 쓴 reciprocal은 geometry-first ranking보다 6개 모두 IDF1이 높고, 고정
+0.30에서 coverage도 높으며 조건부 link error도 낮다. 이 error는 auditable
+accepted link에만 계산되며 detector 입력의 auditable share는 4.4--13.8%다.
+Reciprocal solver의 CPU 시간/peak memory는
 Hungarian보다 대체로 작지만 descriptor/candidate 비용에 비해 절대 차이가 작다.
-따라서 historical rule의 최고 정확도·최적 risk·실질 end-to-end 비용 우위는
+따라서 fixed rule의 최고 정확도·최적 risk·실질 end-to-end 비용 우위는
 입증되지 않았다. 유지 가능한 핵심 주장은 box-preserving deterministic refinement와
-None 대비 평균 개선, 명시적 failure audit이다.
+None 및 AFLink+VA 대비 평균 개선, 명시적 failure audit이다.
 
 ## 5. M3OT 원인과 재설계 필요성
 
@@ -62,17 +63,21 @@ fixed pixel/MOT17 appearance cue의 domain mismatch가 함께 남으므로, 새�
 
 ## 6. 원고 수정과 수치 변경 근거
 
-Main Results에는 None, AFLink+VA, CoM3D-ACE의 운영형 비교를 배치하고, geometry
-greedy, Geometry+ReID greedy, partial Hungarian을 포함한 전체 동일 입력 비교와
-paired CI는 명시적으로 연결된 부록에 보존했다. AFLink는 native와
+Main Table 2에는 None, geometry greedy, Geometry+ReID greedy, partial Hungarian,
+AFLink+VA, CoM3D-ACE를 같은 frozen-tracklet 조건으로 배치했다. 이전 Table B.10은
+본문 Table 4로 이동했고, 이전 paired table은 AFLink+VA CI를 추가해 새 Table B.10이
+됐다. 기존 `\label{}`과 `\ref{}`를 유지해 번호는 LaTeX가 자동 갱신했다. AFLink는 native와
 `+ common validity adapter`를 구분했다. Guard는 assertion으로
 정정하고, “all 50 sequences improve”를 “the equal-sequence mean over 50 improves”로
 제한했다. Confirmation38은 외부 독립성이 아니라 locally pre-specified partition으로
-표현했다. M3OT oracle crop admission과 실패 분석을 명시했다. 표 수치는
+표현했다. Table C.12에는 auditable 비율과 unknown 분모를 추가했고, descriptive
+appearance-gate grid를 실제 CSV에 연결했다. M3OT oracle crop admission과 실패
+분석을 명시했다. Fig. 1/2는 평가하지 않은 active/cross-view 블록 대신 temporal
+fragmentation과 실제 평가 pipeline을 보여주도록 교체했다. 표 수치는
 `main_comparison.csv`, `paired_linker_deltas.csv`, `m3ot_linker_comparison.csv`의
 full-precision 값에서 한 번만 반올림했다. `verify_manuscript_numbers.py`가 주요 LaTeX
-표와 초록/본문 delta 94개를 원시 CSV에 대조했고 94/94가 통과했다. Docker의 고정
-LaTeX 환경에서 27쪽 PDF를 생성했으며 unresolved citation/reference와 overfull box는
+표와 초록/본문 delta 100개를 원시 CSV에 대조했고 100/100이 통과했다. Docker의 고정
+LaTeX 환경에서 28쪽 PDF를 생성했으며 unresolved citation/reference와 overfull box는
 0개다. 참고문헌 URL에서 생기는 underfull box 경고 4개만 남는다.
 
 ## 7. 독립 검증 미완료 사항과 필요한 산출물

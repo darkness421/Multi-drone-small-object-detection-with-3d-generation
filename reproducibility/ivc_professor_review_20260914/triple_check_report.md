@@ -2,14 +2,14 @@
 
 Date: 2026-09-14
 
-Paper commit: `7137f6d3d034084576f123ec65907b1b61ab6b5b`
+Paper commit: `51a93e0a7dca9c99d2115c87162de3fd167130de`
 
 ## Pass 1: numbers and frozen artifacts
 
 **PASS**
 
-- `verify_manuscript_numbers.py`: 94/94 source-to-LaTeX checks passed.
-- MMOT historical reproduction: 216 metric/count checks; maximum absolute
+- `verify_manuscript_numbers.py`: 100/100 source-to-LaTeX checks passed.
+- Frozen MMOT result reproduction: 216 metric/count checks; maximum absolute
   floating-point difference `2.842170943040401e-14`.
 - M3OT reproduction: 16 sequence/tracker/split checks; metric difference 0 and
   accepted-edge sets exactly matched.
@@ -21,26 +21,33 @@ Paper commit: `7137f6d3d034084576f123ec65907b1b61ab6b5b`
 
 ## Pass 2: method, claims, and professor-review points
 
-**PASS (claim-scope audit), with one deliberately partial figure item.**
+**PASS (claim-scope audit).**
 
-- The main table contains the operational None, AFLink+VA, and CoM3D-ACE rows.
-  Geometry greedy, Geometry+ReID greedy, partial Hungarian, complete metrics,
-  and paired intervals remain in the explicitly linked static-assignment
-  appendix.
+- The main Table 2 contains None, Geometry greedy, Geometry+ReID greedy,
+  partial Hungarian, AFLink+VA, and CoM3D-ACE under the same frozen-tracklet
+  inputs. HOTA/AssA detail remains in Appendix B.
+- The former Table B.10 ranking-versus-assignment diagnostic is now main
+  Table 4 with its original label retained. Appendix Table B.10 now reports
+  paired intervals against both static controls and AFLink+VA.
 - The manuscript explicitly reports that Geometry+ReID greedy and partial
-  Hungarian attain higher mean IDF1 than historical CoM3D-ACE in all six
-  same-input conditions.
+  Hungarian attain higher mean IDF1 than fixed CoM3D-ACE in all six
+  same-input conditions, while every AFLink+VA interval favors CoM3D-ACE.
 - The retained claim is limited to deterministic box-preserving refinement,
   improvements over no refinement and AFLink+VA, and an auditable diagnostic.
 - The component guard is described as a defensive assertion, not an active
   accuracy module.
 - Confirmation38 is locally pre-specified, not externally preregistered.
-- M3OT adverse transfer and its oracle-GT crop-admission limitation are shown.
+- Table C.12 defines conditional link error over auditable accepted links,
+  reports the auditable share, and retains unknown links in coverage.
+- The six-point appearance-gate grid is linked as a descriptive artifact, not
+  a test-selected operating point.
+- M3OT adverse transfer and the exact oracle-GT descriptor-crop admission,
+  scoring, and post-hoc label uses are shown.
 - Tiny-object prevalence is context, not a scale-stratified superiority claim.
-- Figure 1 and Figure 2 files were not modified. Their captions and surrounding
-  text scope them as motivation/system context. The requested Figure 1
-  temporal before/after replacement itself remains a partial item because the
-  author-supplied figure was preserved.
+- Figure 1 now connects poorly resolved aerial targets to within-stream
+  temporal identity fragmentation. Figure 2 shows only the evaluated path:
+  frozen tracker outputs, EvidenceToken adaptation, candidate construction,
+  linker comparison, ID-only relabeling, and improvement/failure audit.
 
 ## Pass 3: submission build and layout
 
@@ -49,23 +56,26 @@ Paper commit: `7137f6d3d034084576f123ec65907b1b61ab6b5b`
 - A clean directory with no prior auxiliary files compiled successfully using
   `com3d-ace-latex:20260906` and `latexmk -pdf -interaction=nonstopmode
   -halt-on-error main.tex`.
-- Final PDF: 27 pages; all five authors and two corresponding-author marks are
+- Final PDF: 28 pages; all five authors and two corresponding-author marks are
   present.
 - Undefined citations/references: 0.
 - Overfull boxes: 0.
 - Underfull boxes: 4, confined to line wrapping of one long Where2comm URL in
   the bibliography; no clipping or overlap was observed.
 - Clean-build and repository-build extracted text SHA-256 are identical:
-  `a0b84b9a02ad5735dc81c7164fb8eaad246b2b854b8c5960cbad5452119d3e42`.
-- All 14 author-supplied figure files are byte-identical to the pre-edit copy.
-- The revised main and static-assignment appendix pages were rendered and
-  visually checked for clipping, overlap, and unreadable overflow.
+  `35a4977eb50e816a6fff25a4a667ab5c0b06a9805f9bd55f4e3092b19701570f`.
+- Figure 1 and Figure 2 were intentionally replaced to match the evaluated
+  temporal task; the remaining figure files were not changed in this revision.
+- Pages containing Figures 1--2 and Tables 2, 4, B.10, C.12--C.13, and D.14
+  were rendered and visually checked for clipping, overlap, and unreadable
+  overflow.
 
 ## Submission assessment
 
 The revised manuscript is internally consistent and build-ready. The professor
 review materially changed the paper from an implied superiority claim to a
-bounded, reproducible refinement-and-diagnostic study. The remaining
+bounded, reproducible refinement-and-diagnostic study. Strong same-task
+baselines and the adverse M3OT result remain visible. The remaining
 unverified items require unavailable external evidence or new protocols: the
 exact review PDF identified by SHA-256, source-flight metadata for block
 bootstrap, external timestamp evidence for confirmation38, official
