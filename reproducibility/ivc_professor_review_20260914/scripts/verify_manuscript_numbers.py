@@ -18,10 +18,6 @@ METHOD_LABELS = {
     "aflink_cached_overlap_safe": "AFLink+VA",
     "com3d_reciprocal_guard": "CoM3D-ACE",
 }
-MAIN_METHOD_LABELS = {
-    **METHOD_LABELS,
-    "geometry_greedy": "Geo. greedy",
-}
 TRACKERS = ("bytetrack", "ocsort", "deepocsort")
 PROTOCOLS = ("oracle_aabb", "official_detector")
 
@@ -48,10 +44,13 @@ def signed2(value: str | float) -> str:
     return f"{number:+.2f}" if number >= 0 else f"{number:.2f}"
 
 
-def tex_rows(path: Path) -> list[str]:
-    text = path.read_text(encoding="utf-8")
+def tex_rows_from_text(text: str) -> list[str]:
     text = re.sub(r"\\textbf\{([^{}]*)\}", r"\1", text)
     return [re.sub(r"\s+", " ", row).strip() for row in text.split(r"\\")]
+
+
+def tex_rows(path: Path) -> list[str]:
+    return tex_rows_from_text(path.read_text(encoding="utf-8"))
 
 
 def has_in_order(row: str, tokens: list[str]) -> bool:
@@ -108,20 +107,99 @@ def main() -> int:
             (row["protocol"], row["tracker"], row["method"]), normalized
         )
 
-    # Main compact table: all principal same-input linkers carry all three trackers
-    # per protocol. Detailed appendix tables add HOTA and AssA.
-    table_rows = tex_rows(paper_root / "ivc_tables/temporal/main_refinement_gains.tex")
-    for method, label in MAIN_METHOD_LABELS.items():
-        for protocol_index, protocol in enumerate(PROTOCOLS):
-            row = find_one(table_rows, label, protocol_index)
-            expected: list[str] = []
-            for tracker in TRACKERS:
-                source = main_lookup[(protocol, tracker, method)]
-                expected.extend(
-                    [f2(source["IDF1_equal_sequence_mean"]), integer(source["IDSW_total"])]
-                )
+    paired_lookup = {
+        (row["protocol"], row["tracker"], row["comparator"]): row
+        for row in read_csv(report_root / "paired_linker_deltas.csv")
+        if row["scope"] == "all50"
+    }
+
+    # Primary table: the same frozen tracklets under None, AFLink+VA, and
+    # CoM3D-ACE, together with paired gains and total IDSW change.
+    primary_text = (
+        paper_root / "ivc_tables/temporal/main_refinement_gains.tex"
+    ).read_text(encoding="utf-8")
+    primary_panels = primary_text.split(r"\par\smallskip")
+    none_rows = [
+        row.replace("$", "")
+        for row in tex_rows_from_text(primary_panels[0] if primary_panels else "")
+        if re.search(r"& (?:ByteTrack|OC-SORT|Deep OC-SORT) &", row)
+    ]
+    aflink_rows = [
+        row.replace("$", "")
+        for row in tex_rows_from_text(
+            primary_panels[1] if len(primary_panels) > 1 else ""
+        )
+        if re.search(r"& (?:ByteTrack|OC-SORT|Deep OC-SORT) &", row)
+    ]
+    for protocol_index, protocol in enumerate(PROTOCOLS):
+        for tracker_index, tracker in enumerate(TRACKERS):
+            row_index = protocol_index * 3 + tracker_index
+            none_row = none_rows[row_index] if len(none_rows) >= 6 else ""
+            aflink_row = aflink_rows[row_index] if len(aflink_rows) >= 6 else ""
+            none = main_lookup[(protocol, tracker, "no_refinement")]
+            aflink = main_lookup[(protocol, tracker, "aflink_cached_overlap_safe")]
+            proposed = main_lookup[(protocol, tracker, "com3d_reciprocal_guard")]
+            versus_none = paired_lookup[(protocol, tracker, "no_refinement")]
+            versus_aflink = paired_lookup[(protocol, tracker, "aflink_cached_overlap_safe")]
+            expected_none = [
+                f2(none["IDF1_equal_sequence_mean"]),
+                f2(proposed["IDF1_equal_sequence_mean"]),
+                (
+                    f"{signed2(versus_none['delta_IDF1_mean'])} "
+                    f"[{signed2(versus_none['delta_IDF1_ci_low'])},"
+                    f"{signed2(versus_none['delta_IDF1_ci_high'])}]"
+                ),
+                integer(versus_none["delta_IDSW_total"]),
+            ]
+            expected_aflink = [
+                f2(aflink["IDF1_equal_sequence_mean"]),
+                f2(proposed["IDF1_equal_sequence_mean"]),
+                (
+                    f"{signed2(versus_aflink['delta_IDF1_mean'])} "
+                    f"[{signed2(versus_aflink['delta_IDF1_ci_low'])},"
+                    f"{signed2(versus_aflink['delta_IDF1_ci_high'])}]"
+                ),
+            ]
             check(
-                f"main table {protocol}/{method}",
+                f"primary table {protocol}/{tracker}",
+                bool(none_row)
+                and bool(aflink_row)
+                and has_in_order(none_row, expected_none)
+                and has_in_order(aflink_row, expected_aflink),
+                "None panel: "
+                + " | ".join(expected_none)
+                + "; AFLink panel: "
+                + " | ".join(expected_aflink),
+            )
+
+    # Static controls remain visible in a dedicated main-table boundary.
+    static_rows = tex_rows(
+        paper_root / "ivc_tables/temporal/static_assignment_boundary.tex"
+    )
+    static_data_rows = [
+        row
+        for row in static_rows
+        if re.search(r"& (?:ByteTrack|OC-SORT|Deep OC-SORT) &", row)
+    ]
+    static_methods = (
+        "com3d_reciprocal_guard",
+        "geometry_greedy",
+        "geometry_reid_greedy_guard",
+        "geometry_reid_hungarian",
+    )
+    for protocol_index, protocol in enumerate(PROTOCOLS):
+        for tracker_index, tracker in enumerate(TRACKERS):
+            row = (
+                static_data_rows[protocol_index * 3 + tracker_index]
+                if len(static_data_rows) >= 6
+                else ""
+            )
+            expected = [
+                f2(main_lookup[(protocol, tracker, method)]["IDF1_equal_sequence_mean"])
+                for method in static_methods
+            ]
+            check(
+                f"static boundary {protocol}/{tracker}",
                 bool(row) and has_in_order(row, expected),
                 " | ".join(expected),
             )
@@ -177,11 +255,6 @@ def main() -> int:
             )
 
     # Paired all-50 intervals against static controls and AFLink+VA.
-    paired_lookup = {
-        (row["protocol"], row["tracker"], row["comparator"]): row
-        for row in read_csv(report_root / "paired_linker_deltas.csv")
-        if row["scope"] == "all50"
-    }
     paired_text = (paper_root / "ivc_tables/temporal/paired_key_linkers.tex").read_text(encoding="utf-8")
     for protocol in PROTOCOLS:
         for tracker in TRACKERS:
