@@ -1,0 +1,62 @@
+{
+  "cache_protocols": {
+    "official_detector": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v1",
+    "oracle_aabb": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v1"
+  },
+  "claim_scope": "Exploratory ACE-V retest on already exposed MMOT 50 sequences",
+  "environment": {
+    "numpy": "2.2.6",
+    "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]"
+  },
+  "family_roots": {
+    "confirmation38": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_meta_review_split/confirmation38",
+    "legacy12": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test_meta_review_split/legacy12"
+  },
+  "fresh_confirmation": false,
+  "ground_truth_use": "metrics and post-hoc edge labels only",
+  "inputs": {
+    "/mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal/scripts/run_mmot_locked_temporal.py": "0c8402bebab7ab2a00a733eea1b4b7ae93d8e8949721ece19bbee1349adc98ba",
+    "reproducibility/ace_v_pilot_20260915/results_raw/m3ot_direct_crop_v1/selected_config.json": "c5d5fb8c2a25b879342b78ebf08aebef9c9b62f2de5432243617906e344ca394",
+    "reproducibility/ace_v_pilot_20260915/scripts/ace_v_core.py": "f1251c492c8365d92ce33a20d226735019c86e1744c6bd98d4d585533c5f6a75",
+    "reproducibility/ivc_professor_review_20260914/scripts/run_cached_solver_audit.py": "0298d0eb730464ac3415601d65f8b44a0c860521a927989d8dfcc3a81e546bfe",
+    "reproducibility/ivc_temporal_meta_review_20260914/scripts/run_full50_linker_benchmark.py": "4d240fd1f1339ea67ec28d0f79a6993c41421636452789a5f8ef1a8693ce94eb"
+  },
+  "outputs": {
+    "accepted_link_audit.csv.gz": {
+      "bytes": 10353007,
+      "sha256": "a3e2256e9c7be2915e2cc3c2e8e51ea4a0b8fb156a22d76a5ef77a2abe3ab38d",
+      "uncompressed_sha256": "221c8a5dd01c0df2f0971ea7feb6cd3f2d68900fd9f707daccb6217841885791"
+    },
+    "hybrid_results_aggregate.csv": {
+      "bytes": 23120,
+      "sha256": "c51975b8c6704093e741c5565bb22a815b386602037c9c48dadcb372e45d370b"
+    },
+    "hybrid_results_per_sequence.csv": {
+      "bytes": 809488,
+      "sha256": "ed05284605f939c164b1b013a271be8438223671a4e2c64750a95ee028c15475"
+    },
+    "link_audit_label_quality.csv": {
+      "bytes": 9786,
+      "sha256": "01b9022443f8a22708ea784c0513bb21af6d52e67aae5f87b16a75efe54fe26e"
+    },
+    "paired_comparisons.csv": {
+      "bytes": 7529,
+      "sha256": "b6296742393cec9d93eba6a6d505c5ba52023cea8e3571e21358997912b65681"
+    },
+    "runtime_breakdown.csv": {
+      "bytes": 3114583,
+      "sha256": "babe1f1a91da50be83d1065b93dd7c2c9abc8d95cd60d37ca842cc12263a315a"
+    },
+    "verification_features.csv": {
+      "bytes": 27317325,
+      "sha256": "f6e38de1f62378bd567b3e975f5f20049323c31d81b05af0a1e57d7edddbdc84"
+    }
+  },
+  "runtime_seconds": 461.3576995944604,
+  "selected_config": {
+    "tau_a": 0.1,
+    "tau_m": 4.0
+  },
+  "selected_config_sha256": "c5d5fb8c2a25b879342b78ebf08aebef9c9b62f2de5432243617906e344ca394",
+  "status": "COMPLETE"
+}

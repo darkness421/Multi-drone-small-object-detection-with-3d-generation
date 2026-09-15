@@ -1,0 +1,299 @@
+{
+  "availability": {
+    "direct_tracker_box_m3ot_action": "generated_from_frozen_tracker_boxes_without_GT_crop_admission",
+    "direct_tracker_box_m3ot_descriptors": true,
+    "direct_tracker_box_mmot_descriptors": true,
+    "fresh_independent_confirmation_set": false
+  },
+  "data_roots": {
+    "m3ot": {
+      "development_role": "configuration_selection",
+      "exists": true,
+      "held_out_role": "exposed_exploratory_retest",
+      "path": "/mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware"
+    },
+    "mmot": {
+      "exists": true,
+      "path": "/mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav"
+    }
+  },
+  "environment": {
+    "cuda_available_now": false,
+    "cuda_device_now": null,
+    "executable": "/mnt/ssd2/meme_comparison/environments/accv_m3ot/bin/python3.10",
+    "numpy": "2.2.6",
+    "platform": "Linux-6.8.0-40-generic-x86_64-with-glibc2.35",
+    "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+    "recorded_original_cuda": {
+      "available_during_cache_generation": true,
+      "device": "NVIDIA GeForce RTX 5090",
+      "torch": "2.9.1+cu128"
+    },
+    "scipy": "1.15.3",
+    "torch": "2.9.1+cu128"
+  },
+  "fixed_protocol": {
+    "candidate": {
+      "maximum_appearance_cosine_distance": 0.3,
+      "maximum_endpoint_center_distance_pixels": 55.0,
+      "maximum_gap_frames": 30,
+      "same_class": true,
+      "strict_forward_time": true
+    },
+    "controlled_cost": "mean(dxy/55, dapp/0.30, gap/30)",
+    "partial_hungarian_pair_null_cost": 1.0,
+    "reid_checkpoint_sha256": "4bf6b63d49235973033c47f77bc9b94a54bdd222bd3f484b4e484aba580254c1"
+  },
+  "frozen_caches": {
+    "m3ot_direct_tracker_crop": {
+      "bytes": 2788864,
+      "exists": true,
+      "family_file_counts": {
+        "development": 16,
+        "held_out": 16
+      },
+      "file_count": 42,
+      "path": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/m3ot_direct_crop_v1",
+      "sha256_tree": "b075c1d2c9bd10cdc2a587f7da29486c2e6c70056a542e197f08b23337461aa1",
+      "suffix_counts": {
+        ".csv": 8,
+        ".gz": 16,
+        ".json": 2,
+        ".npz": 16
+      },
+      "tracker_file_counts": {
+        "bytetrack": 8,
+        "ocsort": 8
+      }
+    },
+    "m3ot_historical_gt_admission_diagnostic": {
+      "bytes": 432656,
+      "exists": true,
+      "family_file_counts": {
+        "development": 8,
+        "held_out": 8
+      },
+      "file_count": 22,
+      "path": "/tmp/com3d-ace-v-20260915/reproducibility/ivc_professor_review_20260914/results_raw/m3ot_linker_diagnostic_v2",
+      "sha256_tree": "f04683e8f00a06c9f263153666d2902089b76ee29b04dcb9dd6ec0dc0e9ba198",
+      "suffix_counts": {
+        ".csv": 5,
+        ".json": 1,
+        ".npz": 16
+      },
+      "tracker_file_counts": {
+        "bytetrack": 8,
+        "ocsort": 8
+      }
+    },
+    "mmot_ace_v_exploratory_retest": {
+      "bytes": 41637950,
+      "exists": true,
+      "family_file_counts": {},
+      "file_count": 8,
+      "path": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/mmot_full50_v1",
+      "sha256_tree": "46652951a6a99ae819ad54892b7e86368929477ca6cec89fd4f15b5762e1473f",
+      "suffix_counts": {
+        ".csv": 6,
+        ".gz": 1,
+        ".json": 1
+      },
+      "tracker_file_counts": {}
+    },
+    "mmot_cached_solver_audit": {
+      "bytes": 10818968,
+      "exists": true,
+      "family_file_counts": {},
+      "file_count": 17,
+      "path": "/tmp/com3d-ace-v-20260915/reproducibility/ivc_professor_review_20260914/results_raw/mmot_cached_solver_audit_v1",
+      "sha256_tree": "813ab1655f42d93e0c738e31d496a2c8a77c45531b3c3aea234ffb1454793434",
+      "suffix_counts": {
+        ".csv": 14,
+        ".json": 3
+      },
+      "tracker_file_counts": {}
+    },
+    "mmot_detector_input": {
+      "bytes": 30508284,
+      "exists": true,
+      "family_file_counts": {
+        "confirmation38": 1824,
+        "legacy12": 576
+      },
+      "file_count": 2400,
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v1",
+      "sha256_tree": "e6adb479d6385c4584625a180cd1255cc20385944b04e9d6d0dbb39f48ff252c",
+      "suffix_counts": {
+        ".gz": 1200,
+        ".npz": 1200
+      },
+      "tracker_file_counts": {
+        "bytetrack": 400,
+        "deepocsort": 400,
+        "ocsort": 400
+      }
+    },
+    "mmot_detector_results": {
+      "bytes": 8948147,
+      "exists": true,
+      "family_file_counts": {},
+      "file_count": 9,
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v2_equal",
+      "sha256_tree": "6c1bb5bca688dcecf67d5e04dd35728edcdc60ad33a4e384b415faf205ac2db4",
+      "suffix_counts": {
+        ".csv": 8,
+        ".json": 1
+      },
+      "tracker_file_counts": {}
+    },
+    "mmot_oracle_aabb": {
+      "bytes": 26526488,
+      "exists": true,
+      "family_file_counts": {
+        "confirmation38": 1128,
+        "legacy12": 450
+      },
+      "file_count": 1578,
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v1",
+      "sha256_tree": "d6aad894e2a329a30cf47fed767c8f39e8cfc63881adf96733e025303a2bba3d",
+      "suffix_counts": {
+        ".gz": 789,
+        ".npz": 789
+      },
+      "tracker_file_counts": {
+        "bytetrack": 263,
+        "deepocsort": 263,
+        "ocsort": 263
+      }
+    },
+    "mmot_oracle_results": {
+      "bytes": 228037990,
+      "exists": true,
+      "family_file_counts": {},
+      "file_count": 11,
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v2_equal",
+      "sha256_tree": "3920722f07c842aaae55cbc97247ccee9241e351fcbc5511c8a9cc39c55bc5c2",
+      "suffix_counts": {
+        ".csv": 10,
+        ".json": 1
+      },
+      "tracker_file_counts": {}
+    }
+  },
+  "inventory_version": 1,
+  "key_files": {
+    "cached_solver_audit_script": {
+      "bytes": 48365,
+      "exists": true,
+      "path": "/tmp/com3d-ace-v-20260915/reproducibility/ivc_professor_review_20260914/scripts/run_cached_solver_audit.py",
+      "sha256": "0298d0eb730464ac3415601d65f8b44a0c860521a927989d8dfcc3a81e546bfe"
+    },
+    "detector_metrics": {
+      "bytes": 132188,
+      "exists": true,
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v2_equal/results/detector_input_temporal_per_sequence.csv",
+      "sha256": "ac91eac94afbb041b098a39238eadf544275389aa56696a145e1c446b04fe8ba"
+    },
+    "detector_result_manifest": {
+      "bytes": 15746,
+      "exists": true,
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e3_temporal_full50_v2_equal/manifest.json",
+      "sha256": "73ff44aa51fdfee15af8b528fbbb0043a3ad741695be727f3a57f50b062320b8"
+    },
+    "edge_decision_trace": {
+      "bytes": 7247471,
+      "exists": true,
+      "path": "/tmp/com3d-ace-v-20260915/reproducibility/ivc_professor_review_20260914/results_raw/mmot_cached_solver_audit_v1/edge_decision_trace.csv",
+      "sha256": "835bec874ba95b16822181ec72d1aff4c18967884af9ee273cb1ca82ca35b056"
+    },
+    "legacy_benchmark_script": {
+      "bytes": 50830,
+      "exists": true,
+      "path": "/tmp/com3d-ace-v-20260915/reproducibility/ivc_temporal_meta_review_20260914/scripts/run_full50_linker_benchmark.py",
+      "sha256": "4d240fd1f1339ea67ec28d0f79a6993c41421636452789a5f8ef1a8693ce94eb"
+    },
+    "m3ot_development_manifest": {
+      "bytes": 2002,
+      "exists": true,
+      "path": "/mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/val_development_manifest.json",
+      "sha256": "099e6bab562938fb4e0696898dd07a4047e42753b573fe34ba3793094d0f5a7c"
+    },
+    "m3ot_held_out_manifest": {
+      "bytes": 2040,
+      "exists": true,
+      "path": "/mnt/ssd2/meme_comparison/runs/accv2026_rebuttal/results/rebuttal_r3/m3ot_ambiguity_aware/test_final_manifest.json",
+      "sha256": "355984ed55fbd66e6a0726b3ec28eb18791efd92e2c212af788fbfe670c1db53"
+    },
+    "m3ot_historical_manifest": {
+      "bytes": 12151,
+      "exists": true,
+      "path": "/tmp/com3d-ace-v-20260915/reproducibility/ivc_professor_review_20260914/results_raw/m3ot_linker_diagnostic_v2/manifest.json",
+      "sha256": "00f0e6aa98f637d8221a79e0371d3628c491af073b6a850e3864149662c7f724"
+    },
+    "mmot_evaluator_entrypoint": {
+      "bytes": 17260,
+      "exists": true,
+      "path": "/mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal/scripts/run_mmot_locked_temporal.py",
+      "sha256": "0c8402bebab7ab2a00a733eea1b4b7ae93d8e8949721ece19bbee1349adc98ba"
+    },
+    "oracle_metrics": {
+      "bytes": 130554,
+      "exists": true,
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v2_equal/results/linker_comparison_per_sequence.csv",
+      "sha256": "06d99f81076edc4f295460f012a9a49f29b68301351d65a1f2d4e4e74bb9e8cb"
+    },
+    "oracle_result_manifest": {
+      "bytes": 17426,
+      "exists": true,
+      "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v2_equal/manifest.json",
+      "sha256": "8d8cc61192bccce00721847c9acf014262ebc719d91d0ceffa138f152e1d3ab3"
+    },
+    "paper_bibliography": {
+      "bytes": 30029,
+      "exists": true,
+      "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/main.bib",
+      "sha256": "3353ae188a9da22bcea7ddffbb5f91789c4ad5a0a6758c96707cdc2b3d7b01e3"
+    },
+    "paper_introduction": {
+      "bytes": 4784,
+      "exists": true,
+      "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/ivc_sections/01_introduction.tex",
+      "sha256": "49f30a4a70d5837232553e793b59cbde49e60800443b7213acac30c118da35be"
+    },
+    "paper_main": {
+      "bytes": 2054,
+      "exists": true,
+      "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/main.tex",
+      "sha256": "e6b00c50b85aab7b900df672f82ba28423164657e0af1e00954edc57f4939a8e"
+    },
+    "paper_related_work": {
+      "bytes": 4516,
+      "exists": true,
+      "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/ivc_sections/02_related_work.tex",
+      "sha256": "f5fe9f850dacc112ae7916d232cb8793cad9a52c744b715b5a49699332ea08ae"
+    },
+    "reid_checkpoint": {
+      "bytes": 103435942,
+      "exists": true,
+      "path": "/mnt/ssd2/meme_comparison/workspace/accv2026_rebuttal/assets/reid_r50_6e_mot17-4bf6b63d.pth",
+      "sha256": "4bf6b63d49235973033c47f77bc9b94a54bdd222bd3f484b4e484aba580254c1"
+    },
+    "solver_metrics": {
+      "bytes": 748558,
+      "exists": true,
+      "path": "/tmp/com3d-ace-v-20260915/reproducibility/ivc_professor_review_20260914/results_raw/mmot_cached_solver_audit_v1/solver_metrics_per_sequence.csv",
+      "sha256": "3ac777d948b6da746c19fa1b27db1dd05b74afff017a3caaff7b7501b07e949c"
+    }
+  },
+  "paper_source": {
+    "commit": "6b90601415ff51620cedb132aa6c70db3063aa7c",
+    "repository": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync",
+    "tracked_files_modified": false
+  },
+  "source": {
+    "branch": "ace-v-pilot-20260915",
+    "frozen_base_commit": "2a033849f1746604db774c95537f0400b5e513a2",
+    "repository": "/home/oem/projects/multi-uav-marine-city",
+    "worktree": "/tmp/com3d-ace-v-20260915"
+  }
+}

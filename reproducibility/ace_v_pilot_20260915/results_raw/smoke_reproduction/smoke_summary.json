@@ -1,0 +1,42 @@
+{
+  "class_namespace_policy": "Tracker IDs are class-local; metric-data concatenation offsets each class namespace before sequence-level evaluation.",
+  "invariant_rows": 336,
+  "metric_comparisons": 756,
+  "metric_mismatches": 0,
+  "sequence": "data28-1",
+  "status": "PASS",
+  "symmetric_partial_hungarian_instances": 48,
+  "symmetric_partial_hungarian_mismatches": 0,
+  "synthetic_evaluator_tests": {
+    "class": "car",
+    "global_id_permutation": {
+      "AssA": 100.0,
+      "DetA": 100.0,
+      "FN": 0,
+      "FP": 0,
+      "Frag": 23,
+      "HOTA": 100.0,
+      "IDF1": 100.0,
+      "IDSW": 0,
+      "MOTA": 100.0,
+      "TP": 3223,
+      "predicted_boxes": 3223,
+      "valid_gt_boxes": 3223
+    },
+    "passed": true,
+    "perfect_prediction": {
+      "AssA": 100.0,
+      "DetA": 100.0,
+      "FN": 0,
+      "FP": 0,
+      "Frag": 23,
+      "HOTA": 100.0,
+      "IDF1": 100.0,
+      "IDSW": 0,
+      "MOTA": 100.0,
+      "TP": 3223,
+      "predicted_boxes": 3223,
+      "valid_gt_boxes": 3223
+    }
+  }
+}

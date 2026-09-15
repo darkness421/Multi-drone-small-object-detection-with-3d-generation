@@ -1,0 +1,7 @@
+{
+  "development_manifest_sha256": "099e6bab562938fb4e0696898dd07a4047e42753b573fe34ba3793094d0f5a7c",
+  "selected_before_held_out_manifest_load": true,
+  "selection_rule": "max equal-sequence/tracker mean IDF1, then fewer false links, lower runtime, lower thresholds",
+  "tau_a": 0.1,
+  "tau_m": 4.0
+}

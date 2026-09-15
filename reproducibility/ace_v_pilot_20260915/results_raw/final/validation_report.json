@@ -1,0 +1,244 @@
+{
+  "checks": [
+    {
+      "check": "sha256:m3ot_direct_crop_v1/accepted_link_audit.csv",
+      "expected": "9d2e005cba306fd0b20a246117329febfea1a5ecd7427b0218b78a34df1cd605",
+      "observed": "9d2e005cba306fd0b20a246117329febfea1a5ecd7427b0218b78a34df1cd605",
+      "passed": true
+    },
+    {
+      "check": "sha256:m3ot_direct_crop_v1/candidate_recall.csv",
+      "expected": "fd4efd8ea73887f8d6a7c8f5e1255456631e03dd903320d917a622004405498d",
+      "observed": "fd4efd8ea73887f8d6a7c8f5e1255456631e03dd903320d917a622004405498d",
+      "passed": true
+    },
+    {
+      "check": "sha256:m3ot_direct_crop_v1/development_selection.csv",
+      "expected": "9fef098d1a8297aef8991db382b62825a3d5a030d4af74c50aa26173cca57e53",
+      "observed": "9fef098d1a8297aef8991db382b62825a3d5a030d4af74c50aa26173cca57e53",
+      "passed": true
+    },
+    {
+      "check": "sha256:m3ot_direct_crop_v1/hybrid_results_aggregate.csv",
+      "expected": "1547d989ea99ac62b8bd1b65fe2c4bb898ba21409ffcec7d7b9d98e450f51fd4",
+      "observed": "1547d989ea99ac62b8bd1b65fe2c4bb898ba21409ffcec7d7b9d98e450f51fd4",
+      "passed": true
+    },
+    {
+      "check": "sha256:m3ot_direct_crop_v1/hybrid_results_per_sequence.csv",
+      "expected": "958386133c76776146fd6285cd4bea8076b7a5058c4120443db11b3519ef89a5",
+      "observed": "958386133c76776146fd6285cd4bea8076b7a5058c4120443db11b3519ef89a5",
+      "passed": true
+    },
+    {
+      "check": "sha256:m3ot_direct_crop_v1/m3ot_direct_crop_diagnostic.csv",
+      "expected": "d2308d8ed6babff1ee1b61ea7c17a5e54974266b7133fa0e912658ddf28b9298",
+      "observed": "d2308d8ed6babff1ee1b61ea7c17a5e54974266b7133fa0e912658ddf28b9298",
+      "passed": true
+    },
+    {
+      "check": "sha256:m3ot_direct_crop_v1/runtime_breakdown.csv",
+      "expected": "384a63343000c160fa2b7eae1c200a2125d62676718aacbe24d6df6a12d4ea50",
+      "observed": "384a63343000c160fa2b7eae1c200a2125d62676718aacbe24d6df6a12d4ea50",
+      "passed": true
+    },
+    {
+      "check": "sha256:m3ot_direct_crop_v1/selected_config.json",
+      "expected": "c5d5fb8c2a25b879342b78ebf08aebef9c9b62f2de5432243617906e344ca394",
+      "observed": "c5d5fb8c2a25b879342b78ebf08aebef9c9b62f2de5432243617906e344ca394",
+      "passed": true
+    },
+    {
+      "check": "sha256:m3ot_direct_crop_v1/verification_features.csv",
+      "expected": "72e3b71fc7487cace83a66ac64b81aa4a5f5b911755250543ae594786882c77f",
+      "observed": "72e3b71fc7487cace83a66ac64b81aa4a5f5b911755250543ae594786882c77f",
+      "passed": true
+    },
+    {
+      "check": "sha256:mmot_full50_v1/accepted_link_audit.csv.gz",
+      "expected": "a3e2256e9c7be2915e2cc3c2e8e51ea4a0b8fb156a22d76a5ef77a2abe3ab38d",
+      "observed": "a3e2256e9c7be2915e2cc3c2e8e51ea4a0b8fb156a22d76a5ef77a2abe3ab38d",
+      "passed": true
+    },
+    {
+      "check": "uncompressed_sha256:mmot_full50_v1/accepted_link_audit.csv.gz",
+      "expected": "221c8a5dd01c0df2f0971ea7feb6cd3f2d68900fd9f707daccb6217841885791",
+      "observed": "221c8a5dd01c0df2f0971ea7feb6cd3f2d68900fd9f707daccb6217841885791",
+      "passed": true
+    },
+    {
+      "check": "sha256:mmot_full50_v1/hybrid_results_aggregate.csv",
+      "expected": "c51975b8c6704093e741c5565bb22a815b386602037c9c48dadcb372e45d370b",
+      "observed": "c51975b8c6704093e741c5565bb22a815b386602037c9c48dadcb372e45d370b",
+      "passed": true
+    },
+    {
+      "check": "sha256:mmot_full50_v1/hybrid_results_per_sequence.csv",
+      "expected": "ed05284605f939c164b1b013a271be8438223671a4e2c64750a95ee028c15475",
+      "observed": "ed05284605f939c164b1b013a271be8438223671a4e2c64750a95ee028c15475",
+      "passed": true
+    },
+    {
+      "check": "sha256:mmot_full50_v1/link_audit_label_quality.csv",
+      "expected": "01b9022443f8a22708ea784c0513bb21af6d52e67aae5f87b16a75efe54fe26e",
+      "observed": "01b9022443f8a22708ea784c0513bb21af6d52e67aae5f87b16a75efe54fe26e",
+      "passed": true
+    },
+    {
+      "check": "sha256:mmot_full50_v1/paired_comparisons.csv",
+      "expected": "b6296742393cec9d93eba6a6d505c5ba52023cea8e3571e21358997912b65681",
+      "observed": "b6296742393cec9d93eba6a6d505c5ba52023cea8e3571e21358997912b65681",
+      "passed": true
+    },
+    {
+      "check": "sha256:mmot_full50_v1/runtime_breakdown.csv",
+      "expected": "babe1f1a91da50be83d1065b93dd7c2c9abc8d95cd60d37ca842cc12263a315a",
+      "observed": "babe1f1a91da50be83d1065b93dd7c2c9abc8d95cd60d37ca842cc12263a315a",
+      "passed": true
+    },
+    {
+      "check": "sha256:mmot_full50_v1/verification_features.csv",
+      "expected": "f6e38de1f62378bd567b3e975f5f20049323c31d81b05af0a1e57d7edddbdc84",
+      "observed": "f6e38de1f62378bd567b3e975f5f20049323c31d81b05af0a1e57d7edddbdc84",
+      "passed": true
+    },
+    {
+      "check": "required:artifact_inventory.json",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/artifact_inventory.json",
+      "passed": true
+    },
+    {
+      "check": "required:protocol_freeze.yaml",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/protocol_freeze.yaml",
+      "passed": true
+    },
+    {
+      "check": "required:baseline_reproduction.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/final/baseline_reproduction.csv",
+      "passed": true
+    },
+    {
+      "check": "required:complementarity_by_condition.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/complementarity/complementarity_by_condition.csv",
+      "passed": true
+    },
+    {
+      "check": "required:disagreement_edges.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/complementarity/disagreement_edges.csv",
+      "passed": true
+    },
+    {
+      "check": "required:verification_features.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/mmot_full50_v1/verification_features.csv",
+      "passed": true
+    },
+    {
+      "check": "required:development_selection.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/m3ot_direct_crop_v1/development_selection.csv",
+      "passed": true
+    },
+    {
+      "check": "required:hybrid_results_per_sequence.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/mmot_full50_v1/hybrid_results_per_sequence.csv",
+      "passed": true
+    },
+    {
+      "check": "required:paired_comparisons.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/final/paired_comparisons.csv",
+      "passed": true
+    },
+    {
+      "check": "required:link_audit_label_quality.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/mmot_full50_v1/link_audit_label_quality.csv",
+      "passed": true
+    },
+    {
+      "check": "required:candidate_recall.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/m3ot_direct_crop_v1/candidate_recall.csv",
+      "passed": true
+    },
+    {
+      "check": "required:m3ot_direct_crop_diagnostic.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/m3ot_direct_crop_v1/m3ot_direct_crop_diagnostic.csv",
+      "passed": true
+    },
+    {
+      "check": "required:runtime_breakdown.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/mmot_full50_v1/runtime_breakdown.csv",
+      "passed": true
+    },
+    {
+      "check": "required:reference_audit.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/final/reference_audit.csv",
+      "passed": true
+    },
+    {
+      "check": "required:RESULTS_DECISION.md",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/final/RESULTS_DECISION.md",
+      "passed": true
+    },
+    {
+      "check": "baseline_reproduction_420_of_420",
+      "expected": "rows=420, passed=420",
+      "observed": "rows=420, passed=420",
+      "passed": true
+    },
+    {
+      "check": "no_unsupported_success_claim",
+      "expected": false,
+      "observed": false,
+      "passed": true
+    },
+    {
+      "check": "no_figure_replacement",
+      "expected": false,
+      "observed": false,
+      "passed": true
+    },
+    {
+      "check": "reference_scope_audit",
+      "expected": {
+        "add": 4,
+        "keep": 26,
+        "remove": 12,
+        "rows": 42
+      },
+      "observed": {
+        "add": 4,
+        "keep": 26,
+        "remove": 12,
+        "rows": 42
+      },
+      "passed": true
+    },
+    {
+      "check": "nonempty_primary_outputs",
+      "expected": "all counts > 0",
+      "observed": {
+        "m3ot_hybrid_per_sequence": 632,
+        "mmot_accepted_link_audit": 183513,
+        "mmot_hybrid_per_sequence": 3600,
+        "mmot_verification_features": 76976
+      },
+      "passed": true
+    }
+  ],
+  "checks_passed": 37,
+  "checks_total": 37,
+  "status": "PASS"
+}

@@ -1,0 +1,123 @@
+protocol_name: ace_v_bounded_pilot
+protocol_version: 1
+frozen_at: "2026-09-15T21:46:53+09:00"
+source_commit: 2a033849f1746604db774c95537f0400b5e513a2
+branch: ace-v-pilot-20260915
+status: frozen_before_new_result_inspection
+
+scope:
+  input_unit: atomic_tracker_tracklet
+  output_change: identity_remap_only
+  detector_training: prohibited
+  tracker_training: prohibited
+  existing_outputs_overwrite: prohibited
+  ground_truth_use:
+    - evaluation
+    - post_hoc_link_audit
+  ground_truth_candidate_screening: prohibited
+
+candidate_graph:
+  same_class: true
+  strict_forward_time: true
+  maximum_gap_frames: 30
+  maximum_endpoint_center_distance_pixels: 55.0
+  maximum_appearance_cosine_distance: 0.30
+  controlled_cost: "mean(dxy/55, dapp/0.30, gap/30)"
+  invalid_descriptor_policy: retain_node_without_candidate_edge
+
+partial_assignment:
+  pair_null_cost: 1.0
+  outgoing_null_cost: 0.5
+  incoming_null_cost: 0.5
+  maximum_predecessors: 1
+  maximum_successors: 1
+  deterministic_tie_break:
+    - controlled_cost
+    - gap
+    - source_track_id
+    - destination_track_id
+
+evidence_features:
+  alternative_competition:
+    outgoing_margin: "best_alternative_outgoing_cost - edge_cost"
+    incoming_margin: "best_alternative_incoming_cost - edge_cost"
+    ambiguity: "max(0, -min(outgoing_margin, incoming_margin))"
+    alternatives_include_null: true
+  motion:
+    source_samples: last_3_distinct_frames
+    destination_samples: first_3_distinct_frames
+    fit: independent_linear_least_squares_xy_over_actual_frame_index
+    comparison_time: midpoint_between_source_end_and_destination_start
+    normalization: mean_source_destination_endpoint_box_diagonal
+    minimum_distinct_frames_per_tracklet: 2
+    missing_is_zero_residual: false
+
+verifiers:
+  V_off: pass_all_screened_edges
+  V_margin: "ambiguity <= tau_a"
+  V_motion: "motion_available ? motion_residual <= tau_m : pass"
+  V_full: "ambiguity <= tau_a and (motion_available ? motion_residual <= tau_m : outgoing_margin > 0 and incoming_margin > 0)"
+  post_filter_only: filter_baseline_selected_edges_without_reassignment
+  verify_and_reassign: filter_all_candidates_then_rerun_same_solver
+  soft_information_control: "mean(controlled_cost, min(ambiguity/0.10,1), motion_available ? min(motion_residual/8,1) : 1)"
+
+bounded_grid:
+  endpoint_samples: 3
+  tau_a: [0.00, 0.05, 0.10]
+  tau_m: [1.0, 2.0, 4.0, 8.0]
+  maximum_full_configurations: 12
+  no_test_driven_expansion: true
+
+solvers:
+  - controlled_partial_hungarian
+  - path_constrained_greedy
+  - legacy_branching_greedy
+
+development:
+  dataset: M3OT
+  split: val
+  sequence_count: 4
+  descriptors: direct_tracker_box_crops
+  crop_admission_uses_ground_truth: false
+  selection_metric: equal_sequence_mean_IDF1
+  tie_break:
+    - fewer_false_links
+    - lower_runtime
+    - lower_tau_a
+    - lower_tau_m
+  tracker_pool:
+    - bytetrack
+    - ocsort
+
+exploratory_retest:
+  - dataset: MMOT
+    split: exposed_full50
+    sequence_count: 50
+    trackers: [bytetrack, ocsort, deepocsort]
+  - dataset: M3OT
+    split: exposed_held_out_test
+    sequence_count: 4
+    trackers: [bytetrack, ocsort]
+  fresh_confirmation_available: false
+
+metrics:
+  trajectory: [IDF1, HOTA, AssA, IDSW, FP, FN]
+  link_audit: [correct, false, unknown, auditable_fraction, conditional_error]
+  runtime: wall_clock_seconds
+  bootstrap:
+    resamples: 10000
+    seed: 20260915
+    unit: released_sequence_with_all_trackers_and_variants_paired
+
+success_rule:
+  primary: controlled_partial_hungarian_plus_V_beats_controlled_partial_hungarian
+  replication: same_direction_improvement_with_path_constrained_greedy
+  practical_effect_floor_idf1_pp: 0.30
+  disallow_success_by_coverage_collapse: true
+  fresh_confirmation_claim_allowed: false
+
+figure_policy:
+  preserve_existing_verified_figures: true
+  create_result_figure_only_if_success_rule_met: true
+  retain_plot_script_and_source_csv: true
+  manuscript_replacement_requires_verified_improvement: true

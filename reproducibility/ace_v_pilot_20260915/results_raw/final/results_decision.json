@@ -1,0 +1,28 @@
+{
+  "baseline_reproduction_passed": true,
+  "candidate_recall": {
+    "development": {
+      "appearance_gate": 0,
+      "entered": 28,
+      "geometry_gate": 6,
+      "missing_descriptor": 0,
+      "total": 34
+    },
+    "held_out": {
+      "appearance_gate": 0,
+      "entered": 3,
+      "geometry_gate": 5,
+      "missing_descriptor": 0,
+      "total": 8
+    }
+  },
+  "fresh_confirmation": false,
+  "manuscript_claim": "NO-GO",
+  "practical_effect_floor_idf1_pp": 0.3,
+  "replace_figure": false,
+  "selected_config": {
+    "tau_a": 0.1,
+    "tau_m": 4.0
+  },
+  "success": false
+}
