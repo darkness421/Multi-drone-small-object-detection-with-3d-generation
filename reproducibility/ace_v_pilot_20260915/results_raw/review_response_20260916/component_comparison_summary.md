@@ -5,7 +5,7 @@ All cells are equal-sequence mean IDF1 changes in percentage points. MMOT and M3
 | Contrast | M3OT dev | M3OT held-out | MMOT oracle | MMOT detector |
 | --- | ---: | ---: | ---: | ---: |
 | H+full-V reassign - H | +0.067 | +0.995 | -0.210 | -0.066 |
-| G+full-V reassign - G | +0.152 | +0.000 | -0.160 | -0.020 |
+| P-G+full-V reassign - P-G | +0.152 | +0.000 | -0.160 | -0.020 |
 | H+margin-only - H | -0.085 | +0.995 | -0.048 | -0.019 |
 | H+motion-only - H | +0.152 | +0.995 | +0.003 | +0.028 |
 | H+same-cue soft cost - H | -0.022 | +0.514 | -0.013 | -0.030 |

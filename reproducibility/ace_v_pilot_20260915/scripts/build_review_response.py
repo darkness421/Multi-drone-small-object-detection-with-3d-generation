@@ -37,7 +37,7 @@ CONTRASTS = (
         "greedy_full_verifier",
         "path_g_full_reassign",
         "path_g",
-        "Path-constrained greedy + same full verifier/reassignment minus greedy",
+        "P-G (controlled-cost path-constrained greedy) + same full verifier/reassignment minus P-G",
     ),
     (
         "margin_only",
@@ -393,13 +393,13 @@ def status_rows() -> list[dict]:
             "scope_note": "Same cached candidates and controlled cost; GT is evaluation/post-hoc only.",
         },
         {
-            "item": "Geometry+ReID greedy alone vs greedy + identical verifier",
+            "item": "P-G alone vs P-G + identical verifier",
             **common,
             "methods": "path_g vs path_g_full_reassign",
             "code": "scripts/ace_v_core.py; scripts/run_ace_v_mmot.py; scripts/run_ace_v_m3ot.py",
             "result_csv": f"{mmot_csv}; {m3ot_csv}",
             "execution_manifest": "results_raw/mmot_full50_v1/manifest.json; results_raw/m3ot_direct_crop_v1/manifest.json",
-            "scope_note": "Path-constrained Geometry+ReID greedy receives the same V_full gate.",
+            "scope_note": "Controlled-cost path-constrained greedy (P-G) receives the same V_full gate.",
         },
         {
             "item": "Margin-only / motion-only / same-cue cost-only controls",
@@ -440,7 +440,7 @@ def build_component_markdown(output_dir: Path, summary: list[dict]) -> None:
     )
     contrast_labels = {
         "hungarian_full_verifier": "H+full-V reassign - H",
-        "greedy_full_verifier": "G+full-V reassign - G",
+        "greedy_full_verifier": "P-G+full-V reassign - P-G",
         "margin_only": "H+margin-only - H",
         "motion_only": "H+motion-only - H",
         "same_cue_cost_only": "H+same-cue soft cost - H",
@@ -493,7 +493,7 @@ def build_latex_table(output_dir: Path, summary: list[dict]) -> None:
     lines = [
         "\\begin{tabular}{lrr}",
         "\\toprule",
-        "Input & H+V $-$ H & G+V $-$ G \\\\",
+        "Input & H+V $-$ H & P-G+V $-$ P-G \\\\",
         "\\midrule",
     ]
     for label, dataset, protocol in settings:
@@ -531,7 +531,7 @@ def build_status_markdown(output_dir: Path, summary: list[dict], equivalence: li
         "| Requested item | Status | Evidence |",
         "| --- | --- | --- |",
         "| Hungarian alone vs Hungarian + evidence verifier | 완료 | `cost_h` vs `cost_h_full_reassign` |",
-        "| Geometry+ReID greedy alone vs greedy + same verifier | 완료 | `path_g` vs `path_g_full_reassign` |",
+        "| P-G alone vs P-G + same verifier | 완료 | `path_g` vs `path_g_full_reassign` |",
         "| Margin-only / motion-only / same-cue cost-only | 완료 | Three component methods in per-sequence CSV |",
         "| Post-filter-only vs verification then reassignment | 완료 | `cost_h_full_postfilter` vs `cost_h_full_reassign` |",
         "| M3OT direct tracker-box crop control | 완료 (범위 제한) | Crop admission is GT-free; upstream detections remain oracle boxes |",
@@ -543,7 +543,7 @@ def build_status_markdown(output_dir: Path, summary: list[dict], equivalence: li
         "",
         "## Primary result",
         "",
-        "| Input | H+V - H IDF1 | G+V - G IDF1 |",
+        "| Input | H+V - H IDF1 | P-G+V - P-G IDF1 |",
         "| --- | ---: | ---: |",
     ]
     for name, h_row, g_row in primary_rows:

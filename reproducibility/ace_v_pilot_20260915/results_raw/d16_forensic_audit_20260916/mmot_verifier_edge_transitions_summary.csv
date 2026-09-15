@@ -1,0 +1,17 @@
+protocol,tracker,base_solver,sequence_rows,sequence_count,audit_label,base_edges,postfilter_edges,reassigned_edges,base_correct_rejected_by_verifier,base_false_removed_by_verifier,base_unresolved_rejected_by_verifier,reassignment_added_correct,reassignment_added_false,reassignment_added_unresolved,reassignment_dropped_postfilter_correct,reassignment_dropped_postfilter_false,reassignment_dropped_postfilter_unresolved
+official_detector,all_trackers,H,150,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,7569,5912,6310,10,29,1618,8,8,511,0,2,127
+official_detector,all_trackers,P-G,150,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,7269,6238,6284,3,12,1016,1,1,52,0,0,8
+official_detector,bytetrack,H,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,4058,3095,3357,3,7,953,4,3,357,0,0,102
+official_detector,bytetrack,P-G,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,3866,3314,3338,1,1,550,1,0,27,0,0,4
+official_detector,deepocsort,H,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,887,626,661,0,5,256,1,1,45,0,0,12
+official_detector,deepocsort,P-G,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,850,645,658,0,2,203,0,0,17,0,0,4
+official_detector,ocsort,H,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,2624,2191,2292,7,17,409,3,4,109,0,2,13
+official_detector,ocsort,P-G,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,2553,2279,2288,2,9,263,0,1,8,0,0,0
+oracle_aabb,all_trackers,H,150,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,11134,8402,9082,387,584,1761,95,200,654,34,43,192
+oracle_aabb,all_trackers,P-G,150,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,10659,8936,9022,230,449,1044,14,30,47,0,0,5
+oracle_aabb,bytetrack,H,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,6606,4767,5266,34,102,1703,28,61,638,18,24,186
+oracle_aabb,bytetrack,P-G,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,6248,5170,5216,17,53,1008,1,4,46,0,0,5
+oracle_aabb,deepocsort,H,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,1183,880,940,97,204,2,24,51,0,7,7,1
+oracle_aabb,deepocsort,P-G,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,1150,907,936,70,171,2,9,20,0,0,0,0
+oracle_aabb,ocsort,H,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,3345,2755,2876,256,278,56,43,88,16,9,12,5
+oracle_aabb,ocsort,P-G,50,50,post-hoc majority actor at IoU>=0.9; majority ties excluded,3261,2859,2870,143,225,34,4,6,1,0,0,0

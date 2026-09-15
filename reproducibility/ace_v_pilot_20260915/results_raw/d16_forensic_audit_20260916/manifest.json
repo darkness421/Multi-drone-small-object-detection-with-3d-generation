@@ -1,0 +1,63 @@
+{
+  "experiment_commit": "9cd5fb8c319e40cb3f25b469f0bf8dbb8e63bc0b",
+  "historical_scheduler_id_available": false,
+  "historical_stdout_stderr_available": false,
+  "input_sha256": {
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/protocol_freeze.yaml": "1d44d219c42d3fdc1fbf1704c486f7ccc10f47886fe856929b58306dde5083b8",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/m3ot_direct_crop_v1/hybrid_results_per_sequence.csv": "958386133c76776146fd6285cd4bea8076b7a5058c4120443db11b3519ef89a5",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/m3ot_direct_crop_v1/m3ot_direct_crop_diagnostic.csv": "d2308d8ed6babff1ee1b61ea7c17a5e54974266b7133fa0e912658ddf28b9298",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/m3ot_direct_crop_v1/manifest.json": "d681ef980fb9af647b768ffff6cc5800f02fba821b59fd4ccd1e3208a05a7571",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/m3ot_direct_crop_v1/selected_config.json": "c5d5fb8c2a25b879342b78ebf08aebef9c9b62f2de5432243617906e344ca394",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/mmot_full50_v1/accepted_link_audit.csv.gz": "a3e2256e9c7be2915e2cc3c2e8e51ea4a0b8fb156a22d76a5ef77a2abe3ab38d",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/mmot_full50_v1/hybrid_results_per_sequence.csv": "ed05284605f939c164b1b013a271be8438223671a4e2c64750a95ee028c15475",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/mmot_full50_v1/manifest.json": "3db3a4f63c996fb130c344c68bfdf3e4ffaa93c21079b304422b77c1b387d4ad",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/mmot_full50_v1/verification_features.csv": "f6e38de1f62378bd567b3e975f5f20049323c31d81b05af0a1e57d7edddbdc84",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/base_off_equivalence.csv": "50b929b0de92daf0d4df9ad0017636847aeeb32df8e56aba40c4e826de8aafb5",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/requested_contrasts_per_sequence.csv": "61e0fa0be3d26b0cfa747af9d28278b7ecfc78415c572fb82f50220614526f5c",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/requested_contrasts_summary.csv": "ac1dd8bae6d8aa3d85c0ebdcc6bf79553f82c4f7410f5762d34b976e39bde364",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ivc_professor_review_20260914/results_raw/m3ot_linker_diagnostic_v2/m3ot_linker_per_sequence.csv": "bdd0d38cab53a69e387b30c190fd47027825456b9ba57cda0426d720dcc61f02",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ivc_professor_review_20260914/results_raw/m3ot_linker_diagnostic_v2/manifest.json": "00f0e6aa98f637d8221a79e0371d3628c491af073b6a850e3864149662c7f724",
+    "/tmp/com3d-ace-v-20260915/reproducibility/ivc_professor_review_20260914/results_raw/mmot_cached_solver_audit_v1/solver_metrics_per_sequence.csv": "3ac777d948b6da746c19fa1b27db1dd05b74afff017a3caaff7b7501b07e949c"
+  },
+  "new_experiment_executed": false,
+  "output_sha256": {
+    "d16_absolute_metrics_by_tracker.csv": "3808b3c818093badb161dc56abf6b456e4cb869c3cbc1fa1daa98860fbaa184e",
+    "d16_absolute_metrics_per_sequence.csv": "14fe300982114cba87dfe502d406fd6f064a2ed39a349749cbf1bcb3312d3137",
+    "d16_absolute_results.md": "719602616b02b45606b9a7595ac2b4f0e915c63122d4f736906c0c81eaba6b25",
+    "d16_forensic_report.md": "4617ba6f8d7763759b5b971681ec46e61d73027bb5a8334aface59aceb1a42a2",
+    "d16_provenance.md": "77c029f69280fe73bd3a1953716cce3dce25cac317f11a116955b0a253938ef8",
+    "d16_sequence_inventory.csv": "129945683ac0b37d180bcc8643742714b9218f58a35f08af252f82f52cfc23ff",
+    "g_lineage_audit.md": "3b2d892e8282555c86cfef12016a34cb3296a46677ab48734c14364460b9ed3d",
+    "g_metric_lineage_per_sequence.csv": "d0e3248f840ad352d75cef9eb85f9f833873947b4cb5db6d36ed6f70278757bd",
+    "g_partition_equivalence_by_class.csv": "84b97e3c2397433857164e6ddb1645aa340b03cadfe9f16c2de99f5007f1fa1f",
+    "g_partition_equivalence_summary.csv": "158257f20c3e2c6998ff8b2f15e6bc3c7d72d710c915427a0ffd29b4ff0c4dd1",
+    "m3ot_gt_admission_vs_direct_per_sequence.csv": "2fdb5becbfb936f9fd5e2e9d5398695f40f44b6b3484e9d3552b32c7848a11ba",
+    "m3ot_gt_admission_vs_direct_summary.csv": "879beaf4d5fcc84a9f4f0da671a57cac6c08afb1da17dd179494b2fa620a4947",
+    "m3ot_preprocessing_audit.md": "d8a18a119d284146cf80087ecbde3a50e3e0ede5e2c89bfe04a3fbbc07488eb6",
+    "mmot_edge_transition_audit.md": "5022dac8acd5efccc66f0fc5cadf7905391b57cbc0eaeacbfee931da872070b3",
+    "mmot_verifier_edge_transitions_per_sequence.csv": "31f72fafc898ec58ec8f462f3cce7b99486abd36282cda6653fb221cd4c74510",
+    "mmot_verifier_edge_transitions_summary.csv": "57adf8040ab3d48edc059d2df46b2b29ee9e921650f92f4e77bc2ea379f6dc7d",
+    "verifier_implementation_audit.md": "2f908eb1db9b8daf0c703aef59f98e54b87bf9605ffd5bce36a7decceef97458"
+  },
+  "paper_table_commit": "20fa424e51420e0aa20c3dfc4edeeda81096dd71",
+  "review_pack_commit": "a98cac208fc1638966202ac8658356b78ccf753f",
+  "row_counts": {
+    "d16_absolute_metrics_by_tracker.csv": 60,
+    "d16_absolute_metrics_per_sequence.csv": 1896,
+    "d16_sequence_inventory.csv": 4,
+    "g_metric_lineage_per_sequence.csv": 300,
+    "g_partition_equivalence_by_class.csv": 1989,
+    "g_partition_equivalence_summary.csv": 6,
+    "m3ot_gt_admission_vs_direct_per_sequence.csv": 64,
+    "m3ot_gt_admission_vs_direct_summary.csv": 16,
+    "mmot_verifier_edge_transitions_per_sequence.csv": 600,
+    "mmot_verifier_edge_transitions_summary.csv": 16
+  },
+  "selected_config": {
+    "tau_a": 0.1,
+    "tau_m": 4.0
+  },
+  "source_result_files_modified": false,
+  "status": "COMPLETE_FORENSIC_AUDIT",
+  "threshold_selection_or_tuning_performed": false
+}

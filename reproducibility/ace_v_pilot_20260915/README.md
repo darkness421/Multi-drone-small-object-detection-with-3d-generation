@@ -45,6 +45,22 @@ experiment with:
 python reproducibility/ace_v_pilot_20260915/scripts/build_review_response.py
 ```
 
+The Table D.16 forensic pack in
+`results_raw/d16_forensic_audit_20260916/` expands the compact table into
+absolute tracker-level and sequence-level IDF1, AssA, and IDSW results. It also
+audits verifier edge transitions, M3OT descriptor admission, `V_off`
+equivalence, and the final ID partitions produced by the distinct greedy
+controls. Generate it from the immutable caches without rerunning an experiment
+with:
+
+```bash
+python reproducibility/ace_v_pilot_20260915/scripts/build_d16_forensic_audit.py
+```
+
+The audit establishes that D.16's controlled-cost path-constrained greedy
+control (`P-G`) is not Table 4's cosine-ranked component-merging
+`Geo.+ReID-G`; the names must remain distinct.
+
 The manuscript reference reconciliation is recorded by title and DOI in
 `results_raw/final/reference_audit.csv`; its version counts, inclusion
 decisions, and claim-level citation links are summarized in

@@ -323,20 +323,20 @@
     },
     {
       "check": "review_sha256:component_comparison_summary.md",
-      "expected": "328b7e904cd14ffdbc227ea0b291e818f0dd08be779427af298b4f31590ccfe7",
-      "observed": "328b7e904cd14ffdbc227ea0b291e818f0dd08be779427af298b4f31590ccfe7",
+      "expected": "73499db7d38040b7f84348453ecd9375e602b510e1b5d057a251531c6d1ff664",
+      "observed": "73499db7d38040b7f84348453ecd9375e602b510e1b5d057a251531c6d1ff664",
       "passed": true
     },
     {
       "check": "review_sha256:experiment_status.csv",
-      "expected": "2f8c5e86403dcfecf7f82d73b8dc3481b6e9f08af12c4ae964c9bf668c245a4b",
-      "observed": "2f8c5e86403dcfecf7f82d73b8dc3481b6e9f08af12c4ae964c9bf668c245a4b",
+      "expected": "51bac98351910334cb5ecd96be2b3b821ea7e9a92b896d6791f8a4466be5de68",
+      "observed": "51bac98351910334cb5ecd96be2b3b821ea7e9a92b896d6791f8a4466be5de68",
       "passed": true
     },
     {
       "check": "review_sha256:experiment_status.md",
-      "expected": "72fccc462310e7ba21b5d0c700c29286b30b9af13ca6dc0fc1769e07d7058a56",
-      "observed": "72fccc462310e7ba21b5d0c700c29286b30b9af13ca6dc0fc1769e07d7058a56",
+      "expected": "08b17eca68a119de77246c9a82a00bcc7bd74eed35920690a10eec45e9df58cf",
+      "observed": "08b17eca68a119de77246c9a82a00bcc7bd74eed35920690a10eec45e9df58cf",
       "passed": true
     },
     {
@@ -347,8 +347,8 @@
     },
     {
       "check": "review_sha256:paper_table_ace_v_strong_linker.tex",
-      "expected": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891",
-      "observed": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891",
+      "expected": "5e5b9d4480306841d1fae230ae180e100127c33f0f7783cf6dd3b2887728c391",
+      "observed": "5e5b9d4480306841d1fae230ae180e100127c33f0f7783cf6dd3b2887728c391",
       "passed": true
     },
     {
@@ -365,14 +365,14 @@
     },
     {
       "check": "review_sha256:requested_contrasts_per_sequence.csv",
-      "expected": "bc00642f93f6db986521814a1fe9f3768aae38134ea6fd0b7548b6de4dd9a121",
-      "observed": "bc00642f93f6db986521814a1fe9f3768aae38134ea6fd0b7548b6de4dd9a121",
+      "expected": "61e0fa0be3d26b0cfa747af9d28278b7ecfc78415c572fb82f50220614526f5c",
+      "observed": "61e0fa0be3d26b0cfa747af9d28278b7ecfc78415c572fb82f50220614526f5c",
       "passed": true
     },
     {
       "check": "review_sha256:requested_contrasts_summary.csv",
-      "expected": "3c6c07da1b367ae3782c58891aff55daa83dd1734e913dc72411cd132b54b453",
-      "observed": "3c6c07da1b367ae3782c58891aff55daa83dd1734e913dc72411cd132b54b453",
+      "expected": "ac1dd8bae6d8aa3d85c0ebdcc6bf79553f82c4f7410f5762d34b976e39bde364",
+      "observed": "ac1dd8bae6d8aa3d85c0ebdcc6bf79553f82c4f7410f5762d34b976e39bde364",
       "passed": true
     },
     {
@@ -453,8 +453,8 @@
     },
     {
       "check": "generated_table_matches_manuscript",
-      "expected": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891",
-      "observed": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891",
+      "expected": "5e5b9d4480306841d1fae230ae180e100127c33f0f7783cf6dd3b2887728c391",
+      "observed": "5e5b9d4480306841d1fae230ae180e100127c33f0f7783cf6dd3b2887728c391",
       "passed": true
     }
   ],

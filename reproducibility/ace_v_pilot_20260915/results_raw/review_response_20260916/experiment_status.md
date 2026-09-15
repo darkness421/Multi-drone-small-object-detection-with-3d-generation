@@ -7,7 +7,7 @@ Generated from committed result CSVs without rerunning the experiment or changin
 | Requested item | Status | Evidence |
 | --- | --- | --- |
 | Hungarian alone vs Hungarian + evidence verifier | 완료 | `cost_h` vs `cost_h_full_reassign` |
-| Geometry+ReID greedy alone vs greedy + same verifier | 완료 | `path_g` vs `path_g_full_reassign` |
+| P-G alone vs P-G + same verifier | 완료 | `path_g` vs `path_g_full_reassign` |
 | Margin-only / motion-only / same-cue cost-only | 완료 | Three component methods in per-sequence CSV |
 | Post-filter-only vs verification then reassignment | 완료 | `cost_h_full_postfilter` vs `cost_h_full_reassign` |
 | M3OT direct tracker-box crop control | 완료 (범위 제한) | Crop admission is GT-free; upstream detections remain oracle boxes |
@@ -19,7 +19,7 @@ Recorded runtime: MMOT 461.358 s; M3OT 175.341 s.
 
 ## Primary result
 
-| Input | H+V - H IDF1 | G+V - G IDF1 |
+| Input | H+V - H IDF1 | P-G+V - P-G IDF1 |
 | --- | ---: | ---: |
 | M3OT development | +0.067 pp | +0.152 pp |
 | M3OT exposed held-out | +0.995 pp | +0.000 pp |

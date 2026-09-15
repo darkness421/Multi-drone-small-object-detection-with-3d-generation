@@ -1,0 +1,7 @@
+protocol,tracker,class_instances,candidate_bearing_class_instances,table4_vs_d16_same_edge_sets_all,table4_vs_d16_same_partitions_all,table4_vs_d16_same_edge_sets_candidate_bearing,table4_vs_d16_same_partitions_candidate_bearing,cost_g_vs_d16_same_edge_sets_candidate_bearing,cost_g_vs_d16_same_partitions_candidate_bearing
+official_detector,bytetrack,400,156,310,319,66,75,79,82
+official_detector,deepocsort,400,93,358,365,51,58,74,76
+official_detector,ocsort,400,150,317,339,67,89,96,109
+oracle_aabb,bytetrack,263,154,162,166,53,57,66,69
+oracle_aabb,deepocsort,263,90,229,239,56,66,68,74
+oracle_aabb,ocsort,263,160,161,191,58,88,88,103
