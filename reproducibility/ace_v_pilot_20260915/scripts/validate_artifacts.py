@@ -86,6 +86,7 @@ def main() -> int:
         "m3ot_direct_crop_diagnostic.csv": ACE_ROOT / "results_raw/m3ot_direct_crop_v1/m3ot_direct_crop_diagnostic.csv",
         "runtime_breakdown.csv": ACE_ROOT / "results_raw/mmot_full50_v1/runtime_breakdown.csv",
         "reference_audit.csv": final / "reference_audit.csv",
+        "reference_audit_summary.md": final / "reference_audit_summary.md",
         "RESULTS_DECISION.md": final / "RESULTS_DECISION.md",
     }
     for name, path in required.items():
@@ -113,12 +114,28 @@ def main() -> int:
         },
     ])
     reference_rows = list(csv.DictReader((final / "reference_audit.csv").open()))
-    decisions = {name: sum(row["decision"] == name for row in reference_rows) for name in ("keep", "add", "remove")}
+    decisions = {
+        name: sum(row["decision"] == name for row in reference_rows)
+        for name in ("keep", "restore", "add", "remove")
+    }
+    compiled_count = sum(row["final_pdf"] == "yes" for row in reference_rows)
+    source_count = sum(row["final_source_tree"] == "yes" for row in reference_rows)
     checks.append({
         "check": "reference_scope_audit",
-        "passed": len(reference_rows) == 42 and decisions == {"keep": 26, "add": 4, "remove": 12},
-        "observed": {"rows": len(reference_rows), **decisions},
-        "expected": {"rows": 42, "keep": 26, "add": 4, "remove": 12},
+        "passed": (
+            len(reference_rows) == 49
+            and decisions == {"keep": 22, "restore": 1, "add": 11, "remove": 15}
+            and compiled_count == 34
+            and source_count == 37
+        ),
+        "observed": {
+            "rows": len(reference_rows), "compiled": compiled_count,
+            "source_tree": source_count, **decisions,
+        },
+        "expected": {
+            "rows": 49, "compiled": 34, "source_tree": 37,
+            "keep": 22, "restore": 1, "add": 11, "remove": 15,
+        },
     })
     row_counts = {
         "mmot_hybrid_per_sequence": csv_rows(ACE_ROOT / "results_raw/mmot_full50_v1/hybrid_results_per_sequence.csv"),

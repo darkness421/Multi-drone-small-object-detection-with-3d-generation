@@ -187,6 +187,12 @@
       "passed": true
     },
     {
+      "check": "required:reference_audit_summary.md",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/final/reference_audit_summary.md",
+      "passed": true
+    },
+    {
       "check": "required:RESULTS_DECISION.md",
       "expected": "regular file",
       "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/final/RESULTS_DECISION.md",
@@ -213,16 +219,22 @@
     {
       "check": "reference_scope_audit",
       "expected": {
-        "add": 4,
-        "keep": 26,
-        "remove": 12,
-        "rows": 42
+        "add": 11,
+        "compiled": 34,
+        "keep": 22,
+        "remove": 15,
+        "restore": 1,
+        "rows": 49,
+        "source_tree": 37
       },
       "observed": {
-        "add": 4,
-        "keep": 26,
-        "remove": 12,
-        "rows": 42
+        "add": 11,
+        "compiled": 34,
+        "keep": 22,
+        "remove": 15,
+        "restore": 1,
+        "rows": 49,
+        "source_tree": 37
       },
       "passed": true
     },
@@ -238,7 +250,7 @@
       "passed": true
     }
   ],
-  "checks_passed": 37,
-  "checks_total": 37,
+  "checks_passed": 38,
+  "checks_total": 38,
   "status": "PASS"
 }

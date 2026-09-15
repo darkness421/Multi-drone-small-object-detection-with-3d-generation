@@ -31,3 +31,8 @@ The concise scientific interpretation is in `experiment_report.md`; the
 machine-checkable decision and primary contrasts are in
 `results_raw/final/results_decision.json` and
 `results_raw/final/paired_comparisons.csv`.
+
+The manuscript reference reconciliation is recorded by title and DOI in
+`results_raw/final/reference_audit.csv`; its version counts, inclusion
+decisions, and claim-level citation links are summarized in
+`results_raw/final/reference_audit_summary.md`.

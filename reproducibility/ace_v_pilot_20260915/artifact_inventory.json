@@ -20,17 +20,17 @@
   "environment": {
     "cuda_available_now": false,
     "cuda_device_now": null,
-    "executable": "/mnt/ssd2/meme_comparison/environments/accv_m3ot/bin/python3.10",
-    "numpy": "2.2.6",
+    "executable": "/home/oem/anaconda3/bin/python",
+    "numpy": "2.1.3",
     "platform": "Linux-6.8.0-40-generic-x86_64-with-glibc2.35",
-    "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+    "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:09:02) [GCC 11.2.0]",
     "recorded_original_cuda": {
       "available_during_cache_generation": true,
       "device": "NVIDIA GeForce RTX 5090",
       "torch": "2.9.1+cu128"
     },
     "scipy": "1.15.3",
-    "torch": "2.9.1+cu128"
+    "torch": "2.6.0"
   },
   "fixed_protocol": {
     "candidate": {
@@ -249,10 +249,10 @@
       "sha256": "8d8cc61192bccce00721847c9acf014262ebc719d91d0ceffa138f152e1d3ab3"
     },
     "paper_bibliography": {
-      "bytes": 30029,
+      "bytes": 33744,
       "exists": true,
       "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/main.bib",
-      "sha256": "3353ae188a9da22bcea7ddffbb5f91789c4ad5a0a6758c96707cdc2b3d7b01e3"
+      "sha256": "4d560d9a37967755617f04f294d6e443d0c176949f054a97ed62751df2269352"
     },
     "paper_introduction": {
       "bytes": 4784,
@@ -267,10 +267,10 @@
       "sha256": "e6b00c50b85aab7b900df672f82ba28423164657e0af1e00954edc57f4939a8e"
     },
     "paper_related_work": {
-      "bytes": 4516,
+      "bytes": 5675,
       "exists": true,
       "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/ivc_sections/02_related_work.tex",
-      "sha256": "f5fe9f850dacc112ae7916d232cb8793cad9a52c744b715b5a49699332ea08ae"
+      "sha256": "b922c0961be62fac26933f3b362a46abe4c274081600b01845ac13fee7904f9e"
     },
     "reid_checkpoint": {
       "bytes": 103435942,
@@ -286,7 +286,7 @@
     }
   },
   "paper_source": {
-    "commit": "6b90601415ff51620cedb132aa6c70db3063aa7c",
+    "commit": "c57e6f5b7ec343bc5715b8d092248f56678f0b5d",
     "repository": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync",
     "tracked_files_modified": false
   },
