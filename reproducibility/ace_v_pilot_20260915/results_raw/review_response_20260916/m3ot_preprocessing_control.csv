@@ -1,0 +1,4 @@
+split,sequence_tracker_cases,tracker_observations,admitted_direct_tracker_boxes,tracklets_total,tracklets_with_direct_crops,direct_crop_tracklet_coverage,crop_admission_uses_gt,upstream_tracker_input,scope_note
+development,8,53856,53856,353,353,1.0,False,oracle_box,Crop admission and descriptors use tracker boxes only; the upstream M3OT tracker run still uses oracle-box detections.
+held_out,8,9570,9570,163,163,1.0,False,oracle_box,Crop admission and descriptors use tracker boxes only; the upstream M3OT tracker run still uses oracle-box detections.
+all,16,63426,63426,516,516,1.0,False,oracle_box,Crop admission and descriptors use tracker boxes only; the upstream M3OT tracker run still uses oracle-box detections.

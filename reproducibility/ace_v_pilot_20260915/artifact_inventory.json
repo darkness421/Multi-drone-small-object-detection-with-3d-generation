@@ -248,6 +248,18 @@
       "path": "/home/oem/projects/multi-uav-marine-city/outputs/experiments/ivc_temporal_meta_review_20260913/results_raw/e1_direct_full50_v2_equal/manifest.json",
       "sha256": "8d8cc61192bccce00721847c9acf014262ebc719d91d0ceffa138f152e1d3ab3"
     },
+    "paper_ace_v_table": {
+      "bytes": 269,
+      "exists": true,
+      "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/ivc_tables/temporal/ace_v_strong_linker.tex",
+      "sha256": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891"
+    },
+    "paper_appendix": {
+      "bytes": 8887,
+      "exists": true,
+      "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/ivc_sections/09_appendix.tex",
+      "sha256": "4efe46dbcb5c0a9a0794e0f55a144fa406114fb989cefa232d0642d656b97182"
+    },
     "paper_bibliography": {
       "bytes": 33744,
       "exists": true,
@@ -260,11 +272,23 @@
       "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/ivc_sections/01_introduction.tex",
       "sha256": "49f30a4a70d5837232553e793b59cbde49e60800443b7213acac30c118da35be"
     },
+    "paper_limitations": {
+      "bytes": 3358,
+      "exists": true,
+      "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/ivc_sections/08_limitations.tex",
+      "sha256": "bcb6599364d5409cc24f96407ec5fcd92f1b990b3512ce6d09ccdc6362f89aec"
+    },
     "paper_main": {
       "bytes": 2054,
       "exists": true,
       "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/main.tex",
       "sha256": "e6b00c50b85aab7b900df672f82ba28423164657e0af1e00954edc57f4939a8e"
+    },
+    "paper_pdf": {
+      "bytes": 3658374,
+      "exists": true,
+      "path": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync/main.pdf",
+      "sha256": "1299ec1f2ca29087837303b4907f1859499dc84f7888556638adaecabf0cc31d"
     },
     "paper_related_work": {
       "bytes": 5675,
@@ -286,7 +310,7 @@
     }
   },
   "paper_source": {
-    "commit": "c57e6f5b7ec343bc5715b8d092248f56678f0b5d",
+    "commit": "7c2812977808931709323e07c665e718897c4e09",
     "repository": "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/workspace/com3d_ace_ivc_overleaf_sync",
     "tracked_files_modified": false
   },

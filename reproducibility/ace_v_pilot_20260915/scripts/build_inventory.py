@@ -141,6 +141,10 @@ def main() -> int:
         "paper_bibliography": PAPER / "main.bib",
         "paper_introduction": PAPER / "ivc_sections/01_introduction.tex",
         "paper_related_work": PAPER / "ivc_sections/02_related_work.tex",
+        "paper_limitations": PAPER / "ivc_sections/08_limitations.tex",
+        "paper_appendix": PAPER / "ivc_sections/09_appendix.tex",
+        "paper_ace_v_table": PAPER / "ivc_tables/temporal/ace_v_strong_linker.tex",
+        "paper_pdf": PAPER / "main.pdf",
     }
 
     try:

@@ -12,6 +12,10 @@ from pathlib import Path
 
 
 ACE_ROOT = Path(__file__).resolve().parents[1]
+PAPER_ROOT = Path(
+    "/home/oem/projects/deepfake/Ourmethod/_checkpoint/meme_comparison/"
+    "workspace/com3d_ace_ivc_overleaf_sync"
+)
 
 
 def digest_stream(handle) -> str:
@@ -64,6 +68,7 @@ def main() -> int:
     )
     args = parser.parse_args()
     final = ACE_ROOT / "results_raw/final"
+    review = ACE_ROOT / "results_raw/review_response_20260916"
     checks = []
     for directory in (
         ACE_ROOT / "results_raw/m3ot_direct_crop_v1",
@@ -88,6 +93,17 @@ def main() -> int:
         "reference_audit.csv": final / "reference_audit.csv",
         "reference_audit_summary.md": final / "reference_audit_summary.md",
         "RESULTS_DECISION.md": final / "RESULTS_DECISION.md",
+        "review_manifest.json": review / "manifest.json",
+        "experiment_status.csv": review / "experiment_status.csv",
+        "experiment_status.md": review / "experiment_status.md",
+        "requested_contrasts_per_sequence.csv": review / "requested_contrasts_per_sequence.csv",
+        "requested_contrasts_summary.csv": review / "requested_contrasts_summary.csv",
+        "component_comparison_summary.md": review / "component_comparison_summary.md",
+        "paper_table_ace_v_strong_linker.tex": review / "paper_table_ace_v_strong_linker.tex",
+        "base_off_equivalence.csv": review / "base_off_equivalence.csv",
+        "m3ot_preprocessing_control.csv": review / "m3ot_preprocessing_control.csv",
+        "reproduction_commands.md": review / "reproduction_commands.md",
+        "professor_review_resolution.md": review / "professor_review_resolution.md",
     }
     for name, path in required.items():
         checks.append({
@@ -147,6 +163,105 @@ def main() -> int:
         "check": "nonempty_primary_outputs",
         "passed": all(value > 0 for value in row_counts.values()),
         "observed": row_counts, "expected": "all counts > 0",
+    })
+
+    review_manifest = json.loads((review / "manifest.json").read_text(encoding="utf-8"))
+    for name, expected in review_manifest["output_sha256"].items():
+        path = review / name
+        observed = digest(path) if path.is_file() else None
+        checks.append({
+            "check": f"review_sha256:{name}",
+            "passed": observed == expected,
+            "observed": observed,
+            "expected": expected,
+        })
+    statuses = list(csv.DictReader((review / "experiment_status.csv").open()))
+    checks.append({
+        "check": "five_requested_items_complete",
+        "passed": (
+            len(statuses) == 5
+            and all(row["status"] == "완료" for row in statuses)
+            and all(row["currently_running"] == "False" for row in statuses)
+            and all(row["historical_job_id"] == "not_persisted" for row in statuses)
+        ),
+        "observed": {
+            "rows": len(statuses),
+            "complete": sum(row["status"] == "완료" for row in statuses),
+            "running": sum(row["currently_running"] == "True" for row in statuses),
+        },
+        "expected": {"rows": 5, "complete": 5, "running": 0},
+    })
+    requested_rows = list(csv.DictReader((review / "requested_contrasts_per_sequence.csv").open()))
+    requested_summary = list(csv.DictReader((review / "requested_contrasts_summary.csv").open()))
+    equivalence = list(csv.DictReader((review / "base_off_equivalence.csv").open()))
+    controls = list(csv.DictReader((review / "m3ot_preprocessing_control.csv").open()))
+    checks.extend([
+        {
+            "check": "requested_contrast_row_counts",
+            "passed": len(requested_rows) == 2212 and len(requested_summary) == 98,
+            "observed": {"per_sequence": len(requested_rows), "summary": len(requested_summary)},
+            "expected": {"per_sequence": 2212, "summary": 98},
+        },
+        {
+            "check": "V_off_cached_equivalence",
+            "passed": (
+                len(equivalence) == 1630
+                and all(row["selected_pairs_identical"] == "True" for row in equivalence)
+            ),
+            "observed": {
+                "instances": len(equivalence),
+                "identical": sum(row["selected_pairs_identical"] == "True" for row in equivalence),
+            },
+            "expected": {"instances": 1630, "identical": 1630},
+        },
+        {
+            "check": "m3ot_crop_control_scope",
+            "passed": (
+                len(controls) == 3
+                and all(row["crop_admission_uses_gt"] == "False" for row in controls)
+                and all(row["upstream_tracker_input"] == "oracle_box" for row in controls)
+            ),
+            "observed": {
+                "rows": len(controls),
+                "gt_free_crop_rows": sum(row["crop_admission_uses_gt"] == "False" for row in controls),
+                "oracle_upstream_rows": sum(row["upstream_tracker_input"] == "oracle_box" for row in controls),
+            },
+            "expected": {"rows": 3, "gt_free_crop_rows": 3, "oracle_upstream_rows": 3},
+        },
+    ])
+    primary_expected = {
+        ("M3OT", "development", "hungarian_full_verifier"): 0.06709455808979925,
+        ("M3OT", "development", "greedy_full_verifier"): 0.15228881125145577,
+        ("M3OT", "held_out", "hungarian_full_verifier"): 0.9954699040613821,
+        ("M3OT", "held_out", "greedy_full_verifier"): 0.0,
+        ("MMOT", "oracle_aabb", "hungarian_full_verifier"): -0.20957878125533963,
+        ("MMOT", "oracle_aabb", "greedy_full_verifier"): -0.15992642351573802,
+        ("MMOT", "official_detector", "hungarian_full_verifier"): -0.06644832059660011,
+        ("MMOT", "official_detector", "greedy_full_verifier"): -0.020323526493398324,
+    }
+    summary_lookup = {
+        (row["dataset"], row["protocol"], row["contrast"]): float(row["mean_delta_IDF1_pp"])
+        for row in requested_summary if row["tracker"] == "all_trackers_sequence_mean"
+    }
+    checks.append({
+        "check": "primary_strong_linker_deltas",
+        "passed": all(
+            key in summary_lookup and abs(summary_lookup[key] - expected) <= 1e-12
+            for key, expected in primary_expected.items()
+        ),
+        "observed": {"|".join(key): summary_lookup.get(key) for key in primary_expected},
+        "expected": {"|".join(key): value for key, value in primary_expected.items()},
+    })
+    generated_table = review / "paper_table_ace_v_strong_linker.tex"
+    manuscript_table = PAPER_ROOT / "ivc_tables/temporal/ace_v_strong_linker.tex"
+    checks.append({
+        "check": "generated_table_matches_manuscript",
+        "passed": (
+            manuscript_table.is_file()
+            and digest(generated_table) == digest(manuscript_table)
+        ),
+        "observed": digest(manuscript_table) if manuscript_table.is_file() else None,
+        "expected": digest(generated_table),
     })
 
     payload = {

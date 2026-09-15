@@ -199,6 +199,72 @@
       "passed": true
     },
     {
+      "check": "required:review_manifest.json",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/manifest.json",
+      "passed": true
+    },
+    {
+      "check": "required:experiment_status.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/experiment_status.csv",
+      "passed": true
+    },
+    {
+      "check": "required:experiment_status.md",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/experiment_status.md",
+      "passed": true
+    },
+    {
+      "check": "required:requested_contrasts_per_sequence.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/requested_contrasts_per_sequence.csv",
+      "passed": true
+    },
+    {
+      "check": "required:requested_contrasts_summary.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/requested_contrasts_summary.csv",
+      "passed": true
+    },
+    {
+      "check": "required:component_comparison_summary.md",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/component_comparison_summary.md",
+      "passed": true
+    },
+    {
+      "check": "required:paper_table_ace_v_strong_linker.tex",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/paper_table_ace_v_strong_linker.tex",
+      "passed": true
+    },
+    {
+      "check": "required:base_off_equivalence.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/base_off_equivalence.csv",
+      "passed": true
+    },
+    {
+      "check": "required:m3ot_preprocessing_control.csv",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/m3ot_preprocessing_control.csv",
+      "passed": true
+    },
+    {
+      "check": "required:reproduction_commands.md",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/reproduction_commands.md",
+      "passed": true
+    },
+    {
+      "check": "required:professor_review_resolution.md",
+      "expected": "regular file",
+      "observed": "/tmp/com3d-ace-v-20260915/reproducibility/ace_v_pilot_20260915/results_raw/review_response_20260916/professor_review_resolution.md",
+      "passed": true
+    },
+    {
       "check": "baseline_reproduction_420_of_420",
       "expected": "rows=420, passed=420",
       "observed": "rows=420, passed=420",
@@ -248,9 +314,151 @@
         "mmot_verification_features": 76976
       },
       "passed": true
+    },
+    {
+      "check": "review_sha256:base_off_equivalence.csv",
+      "expected": "50b929b0de92daf0d4df9ad0017636847aeeb32df8e56aba40c4e826de8aafb5",
+      "observed": "50b929b0de92daf0d4df9ad0017636847aeeb32df8e56aba40c4e826de8aafb5",
+      "passed": true
+    },
+    {
+      "check": "review_sha256:component_comparison_summary.md",
+      "expected": "328b7e904cd14ffdbc227ea0b291e818f0dd08be779427af298b4f31590ccfe7",
+      "observed": "328b7e904cd14ffdbc227ea0b291e818f0dd08be779427af298b4f31590ccfe7",
+      "passed": true
+    },
+    {
+      "check": "review_sha256:experiment_status.csv",
+      "expected": "2f8c5e86403dcfecf7f82d73b8dc3481b6e9f08af12c4ae964c9bf668c245a4b",
+      "observed": "2f8c5e86403dcfecf7f82d73b8dc3481b6e9f08af12c4ae964c9bf668c245a4b",
+      "passed": true
+    },
+    {
+      "check": "review_sha256:experiment_status.md",
+      "expected": "72fccc462310e7ba21b5d0c700c29286b30b9af13ca6dc0fc1769e07d7058a56",
+      "observed": "72fccc462310e7ba21b5d0c700c29286b30b9af13ca6dc0fc1769e07d7058a56",
+      "passed": true
+    },
+    {
+      "check": "review_sha256:m3ot_preprocessing_control.csv",
+      "expected": "4039f4cc8e0516ea56e1d44289cd2656d33bfb92dc091fc9ff2461684c4db21b",
+      "observed": "4039f4cc8e0516ea56e1d44289cd2656d33bfb92dc091fc9ff2461684c4db21b",
+      "passed": true
+    },
+    {
+      "check": "review_sha256:paper_table_ace_v_strong_linker.tex",
+      "expected": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891",
+      "observed": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891",
+      "passed": true
+    },
+    {
+      "check": "review_sha256:professor_review_resolution.md",
+      "expected": "6cbac9b8a33dfa0adc5bc25f3554f640fa009d61c6fdb8b2506daf59e02d71eb",
+      "observed": "6cbac9b8a33dfa0adc5bc25f3554f640fa009d61c6fdb8b2506daf59e02d71eb",
+      "passed": true
+    },
+    {
+      "check": "review_sha256:reproduction_commands.md",
+      "expected": "da99669426c0e0ca7bfc645a1dc53dcb8236ad0fa80f529ea875c41f257cebfc",
+      "observed": "da99669426c0e0ca7bfc645a1dc53dcb8236ad0fa80f529ea875c41f257cebfc",
+      "passed": true
+    },
+    {
+      "check": "review_sha256:requested_contrasts_per_sequence.csv",
+      "expected": "bc00642f93f6db986521814a1fe9f3768aae38134ea6fd0b7548b6de4dd9a121",
+      "observed": "bc00642f93f6db986521814a1fe9f3768aae38134ea6fd0b7548b6de4dd9a121",
+      "passed": true
+    },
+    {
+      "check": "review_sha256:requested_contrasts_summary.csv",
+      "expected": "3c6c07da1b367ae3782c58891aff55daa83dd1734e913dc72411cd132b54b453",
+      "observed": "3c6c07da1b367ae3782c58891aff55daa83dd1734e913dc72411cd132b54b453",
+      "passed": true
+    },
+    {
+      "check": "five_requested_items_complete",
+      "expected": {
+        "complete": 5,
+        "rows": 5,
+        "running": 0
+      },
+      "observed": {
+        "complete": 5,
+        "rows": 5,
+        "running": 0
+      },
+      "passed": true
+    },
+    {
+      "check": "requested_contrast_row_counts",
+      "expected": {
+        "per_sequence": 2212,
+        "summary": 98
+      },
+      "observed": {
+        "per_sequence": 2212,
+        "summary": 98
+      },
+      "passed": true
+    },
+    {
+      "check": "V_off_cached_equivalence",
+      "expected": {
+        "identical": 1630,
+        "instances": 1630
+      },
+      "observed": {
+        "identical": 1630,
+        "instances": 1630
+      },
+      "passed": true
+    },
+    {
+      "check": "m3ot_crop_control_scope",
+      "expected": {
+        "gt_free_crop_rows": 3,
+        "oracle_upstream_rows": 3,
+        "rows": 3
+      },
+      "observed": {
+        "gt_free_crop_rows": 3,
+        "oracle_upstream_rows": 3,
+        "rows": 3
+      },
+      "passed": true
+    },
+    {
+      "check": "primary_strong_linker_deltas",
+      "expected": {
+        "M3OT|development|greedy_full_verifier": 0.15228881125145577,
+        "M3OT|development|hungarian_full_verifier": 0.06709455808979925,
+        "M3OT|held_out|greedy_full_verifier": 0.0,
+        "M3OT|held_out|hungarian_full_verifier": 0.9954699040613821,
+        "MMOT|official_detector|greedy_full_verifier": -0.020323526493398324,
+        "MMOT|official_detector|hungarian_full_verifier": -0.06644832059660011,
+        "MMOT|oracle_aabb|greedy_full_verifier": -0.15992642351573802,
+        "MMOT|oracle_aabb|hungarian_full_verifier": -0.20957878125533963
+      },
+      "observed": {
+        "M3OT|development|greedy_full_verifier": 0.15228881125145577,
+        "M3OT|development|hungarian_full_verifier": 0.06709455808979925,
+        "M3OT|held_out|greedy_full_verifier": 0.0,
+        "M3OT|held_out|hungarian_full_verifier": 0.9954699040613821,
+        "MMOT|official_detector|greedy_full_verifier": -0.020323526493398324,
+        "MMOT|official_detector|hungarian_full_verifier": -0.06644832059660011,
+        "MMOT|oracle_aabb|greedy_full_verifier": -0.15992642351573802,
+        "MMOT|oracle_aabb|hungarian_full_verifier": -0.20957878125533963
+      },
+      "passed": true
+    },
+    {
+      "check": "generated_table_matches_manuscript",
+      "expected": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891",
+      "observed": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891",
+      "passed": true
     }
   ],
-  "checks_passed": 38,
-  "checks_total": 38,
+  "checks_passed": 65,
+  "checks_total": 65,
   "status": "PASS"
 }

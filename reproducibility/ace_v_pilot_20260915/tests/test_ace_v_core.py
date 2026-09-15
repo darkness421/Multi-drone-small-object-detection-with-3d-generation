@@ -72,6 +72,31 @@ class AceVCoreTests(unittest.TestCase):
         self.assertEqual([CORE.pair(item) for item in selected], [(1, 3)])
         CORE.assert_path_constraints(selected)
 
+    def test_verifier_off_reproduces_both_base_solvers(self):
+        values = [
+            {
+                **edge(1, 3, 0.1),
+                "competition_ambiguity": 1.0,
+                "motion_available": False,
+            },
+            {
+                **edge(1, 4, 0.2),
+                "competition_ambiguity": 1.0,
+                "motion_available": False,
+            },
+            {
+                **edge(2, 3, 0.15),
+                "competition_ambiguity": 1.0,
+                "motion_available": False,
+            },
+        ]
+        verifier_off = CORE.filter_edges(values, "V_off", 0.0, 0.0)
+        for solver in (CORE.partial_hungarian, CORE.path_constrained_greedy):
+            self.assertEqual(
+                [CORE.pair(item) for item in solver(values)],
+                [CORE.pair(item) for item in solver(verifier_off)],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

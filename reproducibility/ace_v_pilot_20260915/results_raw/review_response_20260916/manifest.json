@@ -1,0 +1,43 @@
+{
+  "experiment_commit": "9cd5fb8c319e40cb3f25b469f0bf8dbb8e63bc0b",
+  "historical_scheduler_job_id_available": false,
+  "historical_stdout_log_available": false,
+  "input_sha256": {
+    "protocol_freeze.yaml": "1d44d219c42d3fdc1fbf1704c486f7ccc10f47886fe856929b58306dde5083b8",
+    "results_raw/m3ot_direct_crop_v1/hybrid_results_per_sequence.csv": "958386133c76776146fd6285cd4bea8076b7a5058c4120443db11b3519ef89a5",
+    "results_raw/m3ot_direct_crop_v1/m3ot_direct_crop_diagnostic.csv": "d2308d8ed6babff1ee1b61ea7c17a5e54974266b7133fa0e912658ddf28b9298",
+    "results_raw/m3ot_direct_crop_v1/manifest.json": "d681ef980fb9af647b768ffff6cc5800f02fba821b59fd4ccd1e3208a05a7571",
+    "results_raw/m3ot_direct_crop_v1/selected_config.json": "c5d5fb8c2a25b879342b78ebf08aebef9c9b62f2de5432243617906e344ca394",
+    "results_raw/m3ot_direct_crop_v1/verification_features.csv": "72e3b71fc7487cace83a66ac64b81aa4a5f5b911755250543ae594786882c77f",
+    "results_raw/mmot_full50_v1/hybrid_results_per_sequence.csv": "ed05284605f939c164b1b013a271be8438223671a4e2c64750a95ee028c15475",
+    "results_raw/mmot_full50_v1/manifest.json": "3db3a4f63c996fb130c344c68bfdf3e4ffaa93c21079b304422b77c1b387d4ad",
+    "results_raw/mmot_full50_v1/verification_features.csv": "f6e38de1f62378bd567b3e975f5f20049323c31d81b05af0a1e57d7edddbdc84",
+    "scripts/ace_v_core.py": "727ad13ae4e678239f660157e8df4ed7c695d8219758c17ab438a4448a9897cb"
+  },
+  "new_experiment_executed": false,
+  "output_sha256": {
+    "base_off_equivalence.csv": "50b929b0de92daf0d4df9ad0017636847aeeb32df8e56aba40c4e826de8aafb5",
+    "component_comparison_summary.md": "328b7e904cd14ffdbc227ea0b291e818f0dd08be779427af298b4f31590ccfe7",
+    "experiment_status.csv": "2f8c5e86403dcfecf7f82d73b8dc3481b6e9f08af12c4ae964c9bf668c245a4b",
+    "experiment_status.md": "72fccc462310e7ba21b5d0c700c29286b30b9af13ca6dc0fc1769e07d7058a56",
+    "m3ot_preprocessing_control.csv": "4039f4cc8e0516ea56e1d44289cd2656d33bfb92dc091fc9ff2461684c4db21b",
+    "paper_table_ace_v_strong_linker.tex": "6691550a265d2811ceaf37f5fbb6b29398627624672b52f88e34ad955c404891",
+    "professor_review_resolution.md": "6cbac9b8a33dfa0adc5bc25f3554f640fa009d61c6fdb8b2506daf59e02d71eb",
+    "reproduction_commands.md": "da99669426c0e0ca7bfc645a1dc53dcb8236ad0fa80f529ea875c41f257cebfc",
+    "requested_contrasts_per_sequence.csv": "bc00642f93f6db986521814a1fe9f3768aae38134ea6fd0b7548b6de4dd9a121",
+    "requested_contrasts_summary.csv": "3c6c07da1b367ae3782c58891aff55daa83dd1734e913dc72411cd132b54b453"
+  },
+  "row_counts": {
+    "base_off_equivalence": 1630,
+    "experiment_status": 5,
+    "m3ot_preprocessing_control": 3,
+    "requested_contrasts_per_sequence": 2212,
+    "requested_contrasts_summary": 98
+  },
+  "selected_config": {
+    "tau_a": 0.1,
+    "tau_m": 4.0
+  },
+  "source_results_reused": true,
+  "status": "COMPLETE_POSTHOC_AUDIT"
+}
