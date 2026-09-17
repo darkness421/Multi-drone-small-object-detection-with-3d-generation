@@ -1,130 +1,28 @@
-# CoM3D-ACE
+# REGR: Reciprocal Evidence-Graph Refinement for Aerial Multi-Object Tracking
 
-CoM3D-ACE is a cooperative multi-UAV perception research codebase for small-object detection, multi-view evidence construction, neural 3D validation, and ambiguity-aware re-observation in a MarineCity-style UAV scenario.
+This branch contains the code and experiment records associated with the REGR manuscript. REGR is a deterministic post-tracking refinement method: it links compatible frozen tracklets through reciprocal predecessor-successor selection and changes only their identity labels. Boxes, classes, confidence scores, and observation counts are preserved.
 
-The repository is organized for reproducible implementation work: detector training/evaluation, simulation capture utilities, evidence graph construction, 3D reconstruction runners, and compact experiment summaries.
+## Start here
 
-## Implemented Components
+- [Reproducibility guide](docs/REGR_REPRODUCIBILITY.md): implementation entry points, manuscript-to-artifact mapping, dependencies, and historical method names.
+- [Complete MMOT comparison](reproducibility/ivc_professor_review_20260914/main_comparison.csv): all six linkers, three upstream trackers, and both input conditions.
+- [Paired comparisons](reproducibility/ivc_professor_review_20260914/paired_linker_deltas.csv): sequence-bootstrap differences.
+- [Qualitative evidence](reproducibility/ivc_professor_review_20260914/evidence/detector_temporal_cases/): observations and provenance for the success/failure examples.
 
-| Area | Implementation |
-| --- | --- |
-| Detector training | Ultralytics YOLO/RT-DETR wrappers, VisDrone/TinyPerson/UAVDT-oriented configs, tmux queue scripts |
-| Proposed detector | SAFR-YOLO / `P2P4-SelfAttnFR` modules and ablation configs |
-| Evaluation | Metric collection, seed summaries, p-values, detector tables, ROC/qualitative/activation utilities |
-| Evidence graph | EvidenceToken generation, cross-view grouping, support/conflict/missing-evidence links |
-| 3D validation | MarineCity RGB/depth/pose export, Nerfacto/Instant-NGP/3DGS-style runner registry, depth point-cloud checks |
-| Reasoning | AeroGraph/ACE-style rule and prompt interfaces for ambiguity diagnosis and re-observation decisions |
-| Simulation | Isaac/Cesium MarineCity scene setup, multi-UAV camera capture helpers, Windows and Ubuntu separated workflows |
+## Paper scope
 
-## Current Detector Snapshot
+The evaluation uses all 50 MMOT test sequences with frozen ByteTrack, OC-SORT, and Deep OC-SORT outputs, under common oracle AABBs and one shared official detector cache. REGR improves mean IDF1 over no refinement and AFLink with a box-preserving validity adapter in all six settings. Complete comparisons and the held-out M3OT diagnostic are retained in the experiment records.
 
-The main completed detector protocol is VisDrone2019-DET validation at image size `1280` with seeds `42`, `123`, and `2026`.
+The current manuscript concerns within-stream temporal identity refinement. Earlier detector, static cross-view, 3D, and re-observation experiments belong to the project's history and are outside this paper's contribution.
 
-| Method | AP | AP50 | F1 | Params | GFLOPs |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| SAFR-YOLO / P2P4-SelfAttnFR | `0.3822 +/- 0.0007` | `0.6052 +/- 0.0012` | `0.6273` | `20.82M` | `109.30` |
-| YOLOv11l reference | `0.3777 +/- 0.0004` | `0.5981 +/- 0.0011` | `0.6248` | `25.32M` | `109.10` |
+## Version and naming
 
-Primary detector result files:
+This `regr-paper` branch starts from experiment commit `2a033849f1746604db774c95537f0400b5e513a2` on `server-baseline-pipeline`. The REGR documentation update preserves the recorded algorithms, thresholds, and results. The later `ace-v-pilot-20260915` branch is a separate exploratory study.
 
-- `outputs/reports/final_detector_table_preview.csv`
-- `outputs/reports/final_detector_table_preview.md`
-- `outputs/reports/final_detector_tables/main_1280_completed_3seed.csv`
-- `outputs/experiments/final_p2p4_selfattnfr_ablation_summary.csv`
+The frozen result key `com3d_reciprocal_guard` identifies the rule called **REGR** in the manuscript. Historical filenames and CSV labels remain unchanged so that hashes and result provenance remain traceable. See the guide for all comparator names.
 
-## Repository Layout
+## Access and dependencies
 
-```text
-configs/             Dataset, detector, experiment, simulation, and automation configs
-data/, datasets/     Dataset converters and lightweight schema/sample files
-detectors/           YOLO/RT-DETR runners, SAFR-YOLO modules, detector wrappers
-evaluation/          Metric collection, statistics, ROC-AUC, qualitative and activation analysis
-evidence/            EvidenceToken generation, crops, uncertainty, visualization helpers
-alignment/           Cross-view and cross-resolution matching costs
-graph/               Evidence graph construction utilities
-ambiguity/           Ambiguity scoring and diagnostic helpers
-generative3d/        Neural 3D runner registry and external runner interface
-simulation/isaac/    MarineCity Isaac/Cesium scene and capture utilities
-scripts/             Report builders, preparation scripts, and experiment orchestration
-scripts/ubuntu/      Ubuntu/tmux server runners and live monitoring helpers
-paper/               Publication tables and final figure assets
-outputs/             Small CSV/JSON/PNG summaries only; no raw runs or weights
-```
+This documentation was prepared on 2026-09-17 while the repository was private. Anonymous access requires a public release. Raw datasets, full tracker/detector caches, pretrained checkpoints, and third-party source checkouts are not bundled; their revisions and hashes are recorded in the reproducibility directories.
 
-## Setup And Checks
-
-Ubuntu server:
-
-```bash
-cd /home/oem/projects/multi-uav-marine-city
-bash scripts/ubuntu/check_env.sh
-bash scripts/ubuntu/check_dataset_ready.sh
-```
-
-Python module checks:
-
-```bash
-python -m scripts.check_env
-python -m py_compile detectors/train_yolo.py detectors/ultralytics_runner.py evaluation/collect_detector_metrics.py
-```
-
-Windows/Isaac setup is documented separately:
-
-- `docs/WINDOWS_MARINECITY_ISAAC_SETUP.md`
-- `isaac/README.md`
-
-## Detector Experiments
-
-Baseline and proposed detector runs are launched through tmux scripts so long jobs remain visible and resumable:
-
-```bash
-bash scripts/ubuntu/train_visdrone_baselines_tmux.sh
-bash scripts/ubuntu/train_proposed_ablation_after_session.sh
-bash scripts/ubuntu/watch_live_training_scoreboard.sh
-```
-
-Result collection and tables:
-
-```bash
-bash scripts/ubuntu/collect_server_results.sh
-python scripts/build_final_ablation_paper_artifacts.py
-python scripts/build_server_report_figures.py
-```
-
-## MarineCity / 3D / Reasoner Workflow
-
-The MarineCity stack uses real or simulated multi-UAV captures, detector outputs, evidence graph construction, and 3D validation artifacts.
-
-Key entry points:
-
-- `simulation/isaac/marinecity_plan.py`
-- `simulation/isaac/export_rgb_depth_pose.py`
-- `scripts/export_marinecity_neural3d_dataset.py`
-- `scripts/build_marinecity_depth_pointcloud_smoke.py`
-- `scripts/check_marinecity_system_integration.py`
-- `scripts/build_marinecity_detector_reasoner_smoke_artifacts.py`
-
-Compact outputs are stored under:
-
-- `outputs/experiments/3d_generation/`
-- `outputs/reports/live/marinecity_*`
-- `paper/figures/results/marinecity_system/`
-
-## Git Policy
-
-Commit and push:
-
-- source code
-- configs
-- documentation needed to run the implementation
-- compact CSV/JSON summaries
-- final PNG/PDF figures and LaTeX/CSV publication tables
-
-Do not commit or push:
-
-- raw datasets
-- detector weights or checkpoints
-- raw training run directories
-- cache folders
-- large logs
-- temporary queue folders
+For the former project overview, see the [archived README](docs/archive/CoM3D_ACE_README.md).
