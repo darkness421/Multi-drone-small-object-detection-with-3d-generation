@@ -1,3 +1,23 @@
+# REGR: Reciprocal Evidence-Graph Refinement for Aerial Multi-Object Tracking
+
+The current manuscript studies deterministic temporal identity refinement of frozen aerial tracklets. The paper code and experiment records are on the **[`regr-paper` branch](https://github.com/darkness421/Multi-drone-small-object-detection-with-3d-generation/tree/regr-paper)**.
+
+- [Paper overview and scope](https://github.com/darkness421/Multi-drone-small-object-detection-with-3d-generation/tree/regr-paper#readme)
+- [Implementation and reproducibility guide](https://github.com/darkness421/Multi-drone-small-object-detection-with-3d-generation/blob/regr-paper/docs/REGR_REPRODUCIBILITY.md)
+- [Complete MMOT comparison](https://github.com/darkness421/Multi-drone-small-object-detection-with-3d-generation/blob/regr-paper/reproducibility/ivc_professor_review_20260914/main_comparison.csv)
+- [Qualitative examples and provenance](https://github.com/darkness421/Multi-drone-small-object-detection-with-3d-generation/tree/regr-paper/reproducibility/ivc_professor_review_20260914/evidence/detector_temporal_cases)
+
+REGR links compatible tracklets through reciprocal predecessor-successor selection while preserving boxes, classes, scores, and observation counts. The study evaluates all 50 MMOT test sequences with three upstream trackers under oracle and detector inputs. Historical result keys retain the name `com3d_reciprocal_guard`; the guide explains their correspondence to REGR.
+
+The repository name reflects earlier multi-UAV and 3D project work. The default `main` branch retains that older scaffold; use `regr-paper` for the current manuscript. Its experiment baseline is commit `2a033849f1746604db774c95537f0400b5e513a2` on `server-baseline-pipeline`.
+
+As of 2026-09-17 this repository is private. Anonymous reviewer access requires a public release. Raw datasets, full caches, checkpoints, and external source workspaces are not bundled.
+
+---
+
+<details>
+<summary>Earlier project setup (legacy main-branch scaffold)</summary>
+
 # Multi-UAV Small Object Detection
 
 This repository contains code and configuration files for a multi-UAV small
@@ -52,3 +72,5 @@ multi-view fusion mode, and uncertainty-driven re-observation options.
    UAV camera rigs, and export synchronized frames with camera poses.
 4. Use the structures in `src/multi_uav_pipeline/` to load mission metadata and
    pass it to downstream detection, fusion, and re-observation modules.
+
+</details>
