@@ -1,0 +1,38 @@
+{
+  "development_dataset": "official MMOT train, frozen six-sequence subset",
+  "development_sequences": [
+    "data23-3",
+    "data30-8",
+    "data44-3",
+    "data52-6",
+    "data46-5",
+    "data51-5"
+  ],
+  "development_trackers": [
+    "bytetrack",
+    "ocsort"
+  ],
+  "frozen_before_test_evaluation": true,
+  "selected_method": "regr_temporal_risk_05",
+  "selection_metric": "equal-sequence mean IDF1 averaged across ByteTrack and OC-SORT",
+  "fixed_parameters": {
+    "appearance_cosine_gate": 0.3,
+    "geometry_radius_pixels": 55.0,
+    "maximum_gap_frames": 30,
+    "normalized_gap_weight": 0.05,
+    "reciprocal_consensus_bonus": 0.005
+  },
+  "development_result": {
+    "mean_IDF1": 46.55548334177344,
+    "delta_vs_regr_v1_pp": 2.7074805806727227,
+    "delta_vs_geometry_reid_greedy_pp": 0.029878199692745966,
+    "total_IDSW": 1012
+  },
+  "sha256": {
+    "enhancement_core": "21914349332229c1e79d29159444ff1762e95732cdfea83e32b07c21f6e01ffe",
+    "selected_method_record": "b15038a5e2eb2dc79593827ff66dae0b9b079d8f7ea34d3237509824a33c37f1",
+    "development_download_manifest": "d060c1dbb4f7fa7e972153fb11eddaa5b3f9b9ae42ff9fd5a95b5505b1d7e1db"
+  },
+  "test_policy": "Run the frozen method once. Do not retune on MMOT test or M3OT held-out results.",
+  "interpretation": "MMOT test and M3OT held-out were previously inspected and are exploratory retests, not fresh confirmation."
+}

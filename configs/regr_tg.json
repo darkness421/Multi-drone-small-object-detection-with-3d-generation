@@ -1,0 +1,11 @@
+{
+  "method": "regr-tg",
+  "maximum_gap_frames": 30,
+  "geometry_radius_pixels": 55.0,
+  "appearance_cosine_gate": 0.3,
+  "normalized_gap_weight": 0.05,
+  "reciprocal_consensus_bonus": 0.005,
+  "sparse_consensus_boundary": 5,
+  "minimum_motion_coverage": 0.8,
+  "maximum_motion_residual_to_endpoint_ratio": 1.0
+}

@@ -1,0 +1,6 @@
+{
+  "claim_scope": "M3OT development selection diagnostic",
+  "descriptor_crop_admission": "direct tracker-box observations without GT admission",
+  "sequence_count": 4,
+  "status": "COMPLETE"
+}

@@ -1,0 +1,6 @@
+manuscript_item,public_artifact,scope,claim_boundary
+Table 2,reproducibility/verified_tables/mmot_test50_summary.csv,MMOT test-50 equal-sequence means,Same frozen tracklets within each tracker/input condition
+Supplementary Table S2,reproducibility/results/mmot_oracle/metrics_aggregate.csv,MMOT oracle-AABB test-50,Oracle-box temporal association diagnostic
+Supplementary Table S3,reproducibility/results/mmot_detector/metrics_aggregate.csv,MMOT shared-detector test-50,One shared detector cache across refiners
+Supplementary Table S4,reproducibility/verified_tables/mmot_test50_paired_ci.csv,Paired sequence bootstrap,Sequence is the resampling unit
+Supplementary Table S8,reproducibility/verified_tables/m3ot_transfer_summary.csv,M3OT development and held-out,Exposed held-out exploratory retest

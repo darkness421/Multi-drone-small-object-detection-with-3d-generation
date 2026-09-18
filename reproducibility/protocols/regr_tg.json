@@ -1,0 +1,48 @@
+{
+  "frozen_before_transfer_guard_test_evaluation": true,
+  "selected_method": "regr_t_reliable_motion_min5",
+  "paper_name": "REGR-TG",
+  "selection_data": {
+    "mmot": "official MMOT train, frozen six-sequence development subset",
+    "m3ot": "official M3OT validation split, four sequences"
+  },
+  "selection_rule": [
+    "retain only methods that improve REGR v1 on both MMOT development trackers",
+    "retain only methods that improve no refinement on both M3OT development trackers",
+    "minimize post-hoc M3OT development false links",
+    "break ties by higher MMOT development equal-tracker mean IDF1"
+  ],
+  "fixed_parameters": {
+    "maximum_gap_frames": 30,
+    "geometry_radius_pixels": 55.0,
+    "appearance_cosine_gate": 0.3,
+    "normalized_gap_weight": 0.05,
+    "reciprocal_consensus_bonus": 0.005,
+    "sparse_consensus_boundary": 5,
+    "minimum_motion_coverage": 0.8,
+    "maximum_motion_residual_to_endpoint_ratio": 1.0
+  },
+  "development_results": {
+    "mmot": {
+      "bytetrack_IDF1": 46.87234635447097,
+      "ocsort_IDF1": 44.59126138850463,
+      "equal_tracker_mean_IDF1": 45.7318038714878,
+      "delta_vs_regr_v1_mean_pp": 1.8838011108150794,
+      "delta_vs_geometry_reid_greedy_mean_pp": -0.7938012705928882
+    },
+    "m3ot": {
+      "bytetrack_IDF1": 98.92777258958655,
+      "ocsort_IDF1": 98.32558290030127,
+      "accepted_correct": 28,
+      "accepted_false": 3,
+      "accepted_unknown": 2
+    }
+  },
+  "sha256": {
+    "enhancement_core_v2": "33241939025f895d0b3f28d802bb49de87f0a18fd66c059c39909bf912d1768a",
+    "mmot_development_aggregate": "73ba839aabd078d86934ee6d1efbe7e168932fdd5560e439b0f95c48a539c652",
+    "m3ot_development_aggregate": "f8fcd27142afbd1bbdc68e52204050aee2834b3c7807d75db3d81b698e05cd63"
+  },
+  "evaluation_policy": "Run the frozen method once on MMOT test-50 and M3OT held-out. Do not retune after observing those results.",
+  "interpretation": "MMOT test and M3OT held-out had been exposed by prior REGR work, so these are exploratory retests rather than fresh independent confirmation."
+}
