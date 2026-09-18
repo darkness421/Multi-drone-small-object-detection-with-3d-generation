@@ -185,7 +185,7 @@ def duplicate_frame_identity_count(predictions: dict[int, list[dict]]) -> int:
 def refine(
     predictions: dict[int, list[dict]],
     descriptors: dict[int, np.ndarray],
-    method: str = "regr-tg",
+    method: str = "regr",
 ) -> tuple[dict[int, list[dict]], dict]:
     """Run one frozen refiner and return relabeled observations plus audit."""
     candidates = build_candidates(predictions, descriptors)

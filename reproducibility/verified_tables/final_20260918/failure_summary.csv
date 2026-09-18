@@ -1,0 +1,16 @@
+audit_stage,category,count,dataset
+candidate_graph,absent_from_candidate_builder,8,MMOT-dev6
+candidate_graph,available_in_fixed_graph,324,MMOT-dev6
+candidate_graph,removed_by_fixed_gates,139,MMOT-dev6
+decision,correct_candidate_accepted,307,MMOT-dev6
+decision,correct_candidate_lost_to_competing_false_edge,29,MMOT-dev6
+decision,correct_candidate_lost_to_component_or_order,101,MMOT-dev6
+decision,false_candidate_passed_and_accepted,76,MMOT-dev6
+decision,guard_removed_false_candidate,2,MMOT-dev6
+candidate_graph,absent_from_candidate_builder,4,M3OT-dev08
+candidate_graph,available_in_fixed_graph,28,M3OT-dev08
+candidate_graph,removed_by_fixed_gates,6,M3OT-dev08
+decision,correct_candidate_accepted,27,M3OT-dev08
+decision,false_candidate_passed_and_accepted,3,M3OT-dev08
+decision,guard_removed_correct_candidate,1,M3OT-dev08
+decision,guard_removed_false_candidate,8,M3OT-dev08

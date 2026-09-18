@@ -1,0 +1,16 @@
+{
+  "dimensions": [
+    "gap",
+    "object_size",
+    "motion_reliability",
+    "reciprocal_support"
+  ],
+  "gt_use": "post-hoc correct/false/unknown labels only",
+  "inference_evidence": "gap, tracker-box area, motion confidence, and reciprocal support",
+  "methods": [
+    "regr_final_no_motion",
+    "regr_final"
+  ],
+  "scope": "accepted-link audit; not conditional tracking metrics",
+  "status": "COMPLETE"
+}

@@ -1,0 +1,38 @@
+{
+  "protocol_id": "regr_ab_dev_search_20260918_stage2_v1",
+  "frozen_before_stage2_search": true,
+  "expansion_reason": "The initial A configurations changed both the motion rule and the assignment solver, while the initial B configurations changed both the baseline score and abstention. The stage-2 controls preserve the legacy temporal ordering and vary only candidate-specific motion gating; two matched-score Hungarian controls isolate the solver.",
+  "development_data": {
+    "mmot_sequences": ["data23-3", "data30-8", "data44-3", "data52-6", "data46-5", "data51-5"],
+    "mmot_trackers": ["bytetrack", "ocsort"],
+    "m3ot_scene": "08",
+    "m3ot_streams": ["1-08", "1-08T", "2-08", "2-08T"],
+    "m3ot_trackers": ["bytetrack", "ocsort"]
+  },
+  "fixed_candidate_graph": {
+    "maximum_gap_frames": 30,
+    "geometry_radius_pixels": 55.0,
+    "appearance_cosine_gate": 0.30
+  },
+  "strong_baseline_envelope": ["geometry_reid_greedy", "partial_hungarian_u100"],
+  "selection_rule": [
+    "Use the unchanged stage-1 rule: maximize the smaller MMOT-development and M3OT-development IDF1 delta against the per-tracker strong-baseline envelope.",
+    "Break ties by mean delta, lower total IDSW, lower graph-stage runtime, and lexical method name.",
+    "Do not inspect MMOT test50 or the seven M3OT confirmation scenes while selecting."
+  ],
+  "shared_activation": {
+    "reciprocal_consensus_count_below": 5,
+    "reliable_motion_edge_fraction_at_least": 0.80,
+    "fallback": "preserve_all_fixed-gate_candidates_and_legacy_temporal_order"
+  },
+  "configurations": [
+    {"name": "s2_t_cond_w3_endpoint_c50_r100", "family": "A2_CONDITIONAL", "solver": "greedy", "window": 3, "motion_normalization": "endpoint", "motion_confidence_min": 0.50, "motion_ratio_max": 1.00, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "s2_t_cond_w3_endpoint_c50_r150", "family": "A2_CONDITIONAL", "solver": "greedy", "window": 3, "motion_normalization": "endpoint", "motion_confidence_min": 0.50, "motion_ratio_max": 1.50, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "s2_t_cond_w3_endpoint_c50_r200", "family": "A2_CONDITIONAL", "solver": "greedy", "window": 3, "motion_normalization": "endpoint", "motion_confidence_min": 0.50, "motion_ratio_max": 2.00, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "s2_t_cond_w5_endpoint_c50_r100", "family": "A2_CONDITIONAL", "solver": "greedy", "window": 5, "motion_normalization": "endpoint", "motion_confidence_min": 0.50, "motion_ratio_max": 1.00, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "s2_t_cond_w3_scale_c50_r100", "family": "A2_CONDITIONAL", "solver": "greedy", "window": 3, "motion_normalization": "object_scale", "motion_confidence_min": 0.50, "motion_ratio_max": 1.00, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "s2_t_cond_w3_endpoint_c35_r100", "family": "A2_CONDITIONAL", "solver": "greedy", "window": 3, "motion_normalization": "endpoint", "motion_confidence_min": 0.35, "motion_ratio_max": 1.00, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "s2_h_cond_w3_endpoint_c50_r100", "family": "A2_CONDITIONAL", "solver": "hungarian", "window": 3, "motion_normalization": "endpoint", "motion_confidence_min": 0.50, "motion_ratio_max": 1.00, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "s2_h_cond_w3_endpoint_c50_r150", "family": "A2_CONDITIONAL", "solver": "hungarian", "window": 3, "motion_normalization": "endpoint", "motion_confidence_min": 0.50, "motion_ratio_max": 1.50, "unmatched_cost": 1.0, "competition_margin": 0.0}
+  ]
+}

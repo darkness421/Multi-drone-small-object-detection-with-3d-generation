@@ -2,34 +2,26 @@
 
 ## Level 1: Algorithm Smoke Test
 
-The synthetic example exercises candidate construction, REGR-TG selection,
+The synthetic example exercises candidate construction, final REGR selection,
 component merging, and observation-preservation checks without external data:
 
 ```bash
 regr-refine --predictions examples/predictions.jsonl \
-  --descriptors examples/descriptors.json --method regr-tg \
+  --descriptors examples/descriptors.json --method regr \
   --output-dir outputs/smoke
 ```
 
 ## Level 2: Paper-Number Verification
 
-The repository includes MMOT aggregate and sequence-level metrics plus M3OT
-development and held-out rows. Verify the headline calculations with:
+The repository includes sequence-level MMOT oracle/detector results, scene-level
+M3OT results, paired intervals, ablations, link audits, failure categories, and
+runtime summaries under `reproducibility/results/final_20260918/` and
+`reproducibility/verified_tables/final_20260918/`.
 
-```bash
-python scripts/verify_reported_results.py
-```
-
-Regenerate the paper-facing summary CSVs from those result directories with:
-
-```bash
-python scripts/summarize_results.py \
-  --oracle-dir reproducibility/results/mmot_oracle \
-  --detector-dir reproducibility/results/mmot_detector \
-  --m3ot-development-dir reproducibility/results/m3ot_development \
-  --m3ot-heldout-dir reproducibility/results/m3ot_heldout \
-  --output-dir outputs/verified_tables
-```
+The raw benchmark caches are not redistributed, so exact table regeneration
+uses `scripts/summarize_final_results.py` after the three frozen result
+directories and AFLink audit CSVs are supplied. The checked-in CSVs permit an
+independent audit of every displayed aggregate without those private caches.
 
 ## Level 3: Frozen-Cache Replay
 
@@ -55,7 +47,17 @@ validated on a clean machine.
   post-hoc edge labels.
 - MMOT detector: one shared official detector cache is used by all trackers and
   refiners; GT is used for evaluation and post-hoc audit only.
-- M3OT transfer: upstream inputs are oracle AABBs. The released transfer-guard
-  run uses direct tracker-box descriptor crops without GT crop admission.
+- M3OT confirmation/retest: upstream inputs are oracle AABBs. Descriptor crops
+  are taken directly from tracker boxes without GT identity in inference. The
+  seven scenes were examined in earlier diagnostics and are not described as a
+  pristine independent test.
 - No GT identity enters candidate construction, ranking, motion estimation, or
   final relabeling.
+
+## Unexecuted Evaluations
+
+No M3OT detector-input or VisDrone-MOT result is included. The verified machine
+had no functioning CUDA driver, the M3OT common detector-tracklet cache did not
+exist, and the local VisDrone-MOT directory was empty. The exact blockers are
+recorded in `docs/EXPERIMENT_INVENTORY_20260918.md`; no inferred or placeholder
+metrics replace those missing runs.

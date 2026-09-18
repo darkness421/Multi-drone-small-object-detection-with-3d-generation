@@ -1,0 +1,143 @@
+panel,tracker,method,dimension,bin,accepted_links,correct,false,unknown,auditable_link_precision
+m3ot_oracle,bytetrack,regr_final,gap,1-5 frames,83,47,35,1,0.573170731707317
+m3ot_oracle,bytetrack,regr_final,gap,16-30 frames,20,0,18,2,0.0
+m3ot_oracle,bytetrack,regr_final,gap,6-15 frames,24,1,21,2,0.045454545454545456
+m3ot_oracle,bytetrack,regr_final,motion_reliability,reliable,123,48,74,1,0.39344262295081966
+m3ot_oracle,bytetrack,regr_final,motion_reliability,uninformative,4,0,0,4,N/A
+m3ot_oracle,bytetrack,regr_final,object_size,tiny (<32^2 px),127,48,74,5,0.39344262295081966
+m3ot_oracle,bytetrack,regr_final,reciprocal_support,consensus,60,29,29,2,0.5
+m3ot_oracle,bytetrack,regr_final,reciprocal_support,non-consensus,67,19,45,3,0.296875
+m3ot_oracle,bytetrack,regr_final_no_motion,gap,1-5 frames,103,54,46,3,0.54
+m3ot_oracle,bytetrack,regr_final_no_motion,gap,16-30 frames,25,0,23,2,0.0
+m3ot_oracle,bytetrack,regr_final_no_motion,gap,6-15 frames,31,1,28,2,0.034482758620689655
+m3ot_oracle,bytetrack,regr_final_no_motion,motion_reliability,reliable,155,55,97,3,0.3618421052631579
+m3ot_oracle,bytetrack,regr_final_no_motion,motion_reliability,uninformative,4,0,0,4,N/A
+m3ot_oracle,bytetrack,regr_final_no_motion,object_size,tiny (<32^2 px),159,55,97,7,0.3618421052631579
+m3ot_oracle,bytetrack,regr_final_no_motion,reciprocal_support,consensus,74,31,41,2,0.4305555555555556
+m3ot_oracle,bytetrack,regr_final_no_motion,reciprocal_support,non-consensus,85,24,56,5,0.3
+m3ot_oracle,ocsort,regr_final,gap,1-5 frames,87,53,34,0,0.6091954022988506
+m3ot_oracle,ocsort,regr_final,gap,16-30 frames,10,0,10,0,0.0
+m3ot_oracle,ocsort,regr_final,gap,6-15 frames,15,5,10,0,0.3333333333333333
+m3ot_oracle,ocsort,regr_final,motion_reliability,reliable,111,58,53,0,0.5225225225225225
+m3ot_oracle,ocsort,regr_final,motion_reliability,uninformative,1,0,1,0,0.0
+m3ot_oracle,ocsort,regr_final,object_size,tiny (<32^2 px),112,58,54,0,0.5178571428571429
+m3ot_oracle,ocsort,regr_final,reciprocal_support,consensus,38,19,19,0,0.5
+m3ot_oracle,ocsort,regr_final,reciprocal_support,non-consensus,74,39,35,0,0.527027027027027
+m3ot_oracle,ocsort,regr_final_no_motion,gap,1-5 frames,111,55,56,0,0.4954954954954955
+m3ot_oracle,ocsort,regr_final_no_motion,gap,16-30 frames,22,0,22,0,0.0
+m3ot_oracle,ocsort,regr_final_no_motion,gap,6-15 frames,30,6,24,0,0.2
+m3ot_oracle,ocsort,regr_final_no_motion,motion_reliability,reliable,162,61,101,0,0.3765432098765432
+m3ot_oracle,ocsort,regr_final_no_motion,motion_reliability,uninformative,1,0,1,0,0.0
+m3ot_oracle,ocsort,regr_final_no_motion,object_size,tiny (<32^2 px),163,61,102,0,0.37423312883435583
+m3ot_oracle,ocsort,regr_final_no_motion,reciprocal_support,consensus,63,22,41,0,0.3492063492063492
+m3ot_oracle,ocsort,regr_final_no_motion,reciprocal_support,non-consensus,100,39,61,0,0.39
+mmot_detector,bytetrack,regr_final,gap,1-5 frames,2616,101,14,2501,0.8782608695652174
+mmot_detector,bytetrack,regr_final,gap,16-30 frames,522,4,10,508,0.2857142857142857
+mmot_detector,bytetrack,regr_final,gap,6-15 frames,1231,17,16,1198,0.5151515151515151
+mmot_detector,bytetrack,regr_final,motion_reliability,reliable,706,81,29,596,0.7363636363636363
+mmot_detector,bytetrack,regr_final,motion_reliability,uninformative,3663,41,11,3611,0.7884615384615384
+mmot_detector,bytetrack,regr_final,object_size,small (32^2-96^2 px),622,102,35,485,0.7445255474452555
+mmot_detector,bytetrack,regr_final,object_size,tiny (<32^2 px),3747,20,5,3722,0.8
+mmot_detector,bytetrack,regr_final,reciprocal_support,consensus,1483,84,22,1377,0.7924528301886793
+mmot_detector,bytetrack,regr_final,reciprocal_support,non-consensus,2886,38,18,2830,0.6785714285714286
+mmot_detector,bytetrack,regr_final_no_motion,gap,1-5 frames,2614,101,14,2499,0.8782608695652174
+mmot_detector,bytetrack,regr_final_no_motion,gap,16-30 frames,526,6,10,510,0.375
+mmot_detector,bytetrack,regr_final_no_motion,gap,6-15 frames,1234,17,16,1201,0.5151515151515151
+mmot_detector,bytetrack,regr_final_no_motion,motion_reliability,reliable,711,83,29,599,0.7410714285714286
+mmot_detector,bytetrack,regr_final_no_motion,motion_reliability,uninformative,3663,41,11,3611,0.7884615384615384
+mmot_detector,bytetrack,regr_final_no_motion,object_size,small (32^2-96^2 px),627,104,35,488,0.7482014388489209
+mmot_detector,bytetrack,regr_final_no_motion,object_size,tiny (<32^2 px),3747,20,5,3722,0.8
+mmot_detector,bytetrack,regr_final_no_motion,reciprocal_support,consensus,1486,84,22,1380,0.7924528301886793
+mmot_detector,bytetrack,regr_final_no_motion,reciprocal_support,non-consensus,2888,40,18,2830,0.6896551724137931
+mmot_detector,deepocsort,regr_final,gap,1-5 frames,535,32,6,497,0.8421052631578947
+mmot_detector,deepocsort,regr_final,gap,16-30 frames,121,2,3,116,0.4
+mmot_detector,deepocsort,regr_final,gap,6-15 frames,243,10,10,223,0.5
+mmot_detector,deepocsort,regr_final,motion_reliability,reliable,61,11,12,38,0.4782608695652174
+mmot_detector,deepocsort,regr_final,motion_reliability,uninformative,838,33,7,798,0.825
+mmot_detector,deepocsort,regr_final,object_size,small (32^2-96^2 px),101,23,16,62,0.5897435897435898
+mmot_detector,deepocsort,regr_final,object_size,tiny (<32^2 px),798,21,3,774,0.875
+mmot_detector,deepocsort,regr_final,reciprocal_support,consensus,448,39,12,397,0.7647058823529411
+mmot_detector,deepocsort,regr_final,reciprocal_support,non-consensus,451,5,7,439,0.4166666666666667
+mmot_detector,deepocsort,regr_final_no_motion,gap,1-5 frames,535,32,6,497,0.8421052631578947
+mmot_detector,deepocsort,regr_final_no_motion,gap,16-30 frames,123,3,4,116,0.42857142857142855
+mmot_detector,deepocsort,regr_final_no_motion,gap,6-15 frames,243,10,10,223,0.5
+mmot_detector,deepocsort,regr_final_no_motion,motion_reliability,reliable,63,12,13,38,0.48
+mmot_detector,deepocsort,regr_final_no_motion,motion_reliability,uninformative,838,33,7,798,0.825
+mmot_detector,deepocsort,regr_final_no_motion,object_size,small (32^2-96^2 px),103,24,17,62,0.5853658536585366
+mmot_detector,deepocsort,regr_final_no_motion,object_size,tiny (<32^2 px),798,21,3,774,0.875
+mmot_detector,deepocsort,regr_final_no_motion,reciprocal_support,consensus,449,40,12,397,0.7692307692307693
+mmot_detector,deepocsort,regr_final_no_motion,reciprocal_support,non-consensus,452,5,8,439,0.38461538461538464
+mmot_detector,ocsort,regr_final,gap,1-5 frames,1911,164,47,1700,0.7772511848341233
+mmot_detector,ocsort,regr_final,gap,16-30 frames,266,12,27,227,0.3076923076923077
+mmot_detector,ocsort,regr_final,gap,6-15 frames,495,43,46,406,0.48314606741573035
+mmot_detector,ocsort,regr_final,motion_reliability,reliable,238,73,39,126,0.6517857142857143
+mmot_detector,ocsort,regr_final,motion_reliability,uninformative,2434,146,81,2207,0.6431718061674009
+mmot_detector,ocsort,regr_final,object_size,small (32^2-96^2 px),541,191,102,248,0.6518771331058021
+mmot_detector,ocsort,regr_final,object_size,tiny (<32^2 px),2131,28,18,2085,0.6086956521739131
+mmot_detector,ocsort,regr_final,reciprocal_support,consensus,1218,157,62,999,0.7168949771689498
+mmot_detector,ocsort,regr_final,reciprocal_support,non-consensus,1454,62,58,1334,0.5166666666666667
+mmot_detector,ocsort,regr_final_no_motion,gap,1-5 frames,1912,164,47,1701,0.7772511848341233
+mmot_detector,ocsort,regr_final_no_motion,gap,16-30 frames,266,12,27,227,0.3076923076923077
+mmot_detector,ocsort,regr_final_no_motion,gap,6-15 frames,497,43,47,407,0.4777777777777778
+mmot_detector,ocsort,regr_final_no_motion,motion_reliability,reliable,241,73,40,128,0.6460176991150443
+mmot_detector,ocsort,regr_final_no_motion,motion_reliability,uninformative,2434,146,81,2207,0.6431718061674009
+mmot_detector,ocsort,regr_final_no_motion,object_size,small (32^2-96^2 px),542,191,103,248,0.6496598639455783
+mmot_detector,ocsort,regr_final_no_motion,object_size,tiny (<32^2 px),2133,28,18,2087,0.6086956521739131
+mmot_detector,ocsort,regr_final_no_motion,reciprocal_support,consensus,1221,157,63,1001,0.7136363636363636
+mmot_detector,ocsort,regr_final_no_motion,reciprocal_support,non-consensus,1454,62,58,1334,0.5166666666666667
+mmot_oracle,bytetrack,regr_final,gap,1-5 frames,4608,359,264,3985,0.5762439807383628
+mmot_oracle,bytetrack,regr_final,gap,16-30 frames,740,34,103,603,0.24817518248175183
+mmot_oracle,bytetrack,regr_final,gap,6-15 frames,1882,104,202,1576,0.33986928104575165
+mmot_oracle,bytetrack,regr_final,motion_reliability,reliable,792,197,121,474,0.6194968553459119
+mmot_oracle,bytetrack,regr_final,motion_reliability,uninformative,6438,300,448,5690,0.40106951871657753
+mmot_oracle,bytetrack,regr_final,object_size,larger (>=96^2 px),1,0,0,1,N/A
+mmot_oracle,bytetrack,regr_final,object_size,small (32^2-96^2 px),459,169,65,225,0.7222222222222222
+mmot_oracle,bytetrack,regr_final,object_size,tiny (<32^2 px),6770,328,504,5938,0.3942307692307692
+mmot_oracle,bytetrack,regr_final,reciprocal_support,consensus,1931,240,56,1635,0.8108108108108109
+mmot_oracle,bytetrack,regr_final,reciprocal_support,non-consensus,5299,257,513,4529,0.33376623376623377
+mmot_oracle,bytetrack,regr_final_no_motion,gap,1-5 frames,4610,359,266,3985,0.5744
+mmot_oracle,bytetrack,regr_final_no_motion,gap,16-30 frames,744,35,105,604,0.25
+mmot_oracle,bytetrack,regr_final_no_motion,gap,6-15 frames,1887,106,205,1576,0.3408360128617363
+mmot_oracle,bytetrack,regr_final_no_motion,motion_reliability,reliable,803,200,128,475,0.6097560975609756
+mmot_oracle,bytetrack,regr_final_no_motion,motion_reliability,uninformative,6438,300,448,5690,0.40106951871657753
+mmot_oracle,bytetrack,regr_final_no_motion,object_size,larger (>=96^2 px),1,0,0,1,N/A
+mmot_oracle,bytetrack,regr_final_no_motion,object_size,small (32^2-96^2 px),470,172,72,226,0.7049180327868853
+mmot_oracle,bytetrack,regr_final_no_motion,object_size,tiny (<32^2 px),6770,328,504,5938,0.3942307692307692
+mmot_oracle,bytetrack,regr_final_no_motion,reciprocal_support,consensus,1936,241,59,1636,0.8033333333333333
+mmot_oracle,bytetrack,regr_final_no_motion,reciprocal_support,non-consensus,5305,259,517,4529,0.3337628865979381
+mmot_oracle,deepocsort,regr_final,gap,1-5 frames,843,667,176,0,0.7912218268090154
+mmot_oracle,deepocsort,regr_final,gap,16-30 frames,113,15,98,0,0.13274336283185842
+mmot_oracle,deepocsort,regr_final,gap,6-15 frames,246,115,131,0,0.46747967479674796
+mmot_oracle,deepocsort,regr_final,motion_reliability,reliable,46,24,22,0,0.5217391304347826
+mmot_oracle,deepocsort,regr_final,motion_reliability,uninformative,1156,773,383,0,0.6686851211072664
+mmot_oracle,deepocsort,regr_final,object_size,small (32^2-96^2 px),60,39,21,0,0.65
+mmot_oracle,deepocsort,regr_final,object_size,tiny (<32^2 px),1142,758,384,0,0.6637478108581436
+mmot_oracle,deepocsort,regr_final,reciprocal_support,consensus,562,464,98,0,0.8256227758007118
+mmot_oracle,deepocsort,regr_final,reciprocal_support,non-consensus,640,333,307,0,0.5203125
+mmot_oracle,deepocsort,regr_final_no_motion,gap,1-5 frames,842,667,175,0,0.7921615201900237
+mmot_oracle,deepocsort,regr_final_no_motion,gap,16-30 frames,114,15,99,0,0.13157894736842105
+mmot_oracle,deepocsort,regr_final_no_motion,gap,6-15 frames,249,115,134,0,0.46184738955823296
+mmot_oracle,deepocsort,regr_final_no_motion,motion_reliability,reliable,49,24,25,0,0.4897959183673469
+mmot_oracle,deepocsort,regr_final_no_motion,motion_reliability,uninformative,1156,773,383,0,0.6686851211072664
+mmot_oracle,deepocsort,regr_final_no_motion,object_size,small (32^2-96^2 px),63,39,24,0,0.6190476190476191
+mmot_oracle,deepocsort,regr_final_no_motion,object_size,tiny (<32^2 px),1142,758,384,0,0.6637478108581436
+mmot_oracle,deepocsort,regr_final_no_motion,reciprocal_support,consensus,565,464,101,0,0.8212389380530973
+mmot_oracle,deepocsort,regr_final_no_motion,reciprocal_support,non-consensus,640,333,307,0,0.5203125
+mmot_oracle,ocsort,regr_final,gap,1-5 frames,2495,2102,393,0,0.8424849699398798
+mmot_oracle,ocsort,regr_final,gap,16-30 frames,307,84,223,0,0.2736156351791531
+mmot_oracle,ocsort,regr_final,gap,6-15 frames,614,340,274,0,0.5537459283387622
+mmot_oracle,ocsort,regr_final,motion_reliability,reliable,268,173,95,0,0.6455223880597015
+mmot_oracle,ocsort,regr_final,motion_reliability,uninformative,3148,2353,795,0,0.7474587039390089
+mmot_oracle,ocsort,regr_final,object_size,small (32^2-96^2 px),561,395,166,0,0.7040998217468806
+mmot_oracle,ocsort,regr_final,object_size,tiny (<32^2 px),2855,2131,724,0,0.7464098073555167
+mmot_oracle,ocsort,regr_final,reciprocal_support,consensus,1400,1152,248,0,0.8228571428571428
+mmot_oracle,ocsort,regr_final,reciprocal_support,non-consensus,2016,1374,642,0,0.6815476190476191
+mmot_oracle,ocsort,regr_final_no_motion,gap,1-5 frames,2496,2103,393,0,0.8425480769230769
+mmot_oracle,ocsort,regr_final_no_motion,gap,16-30 frames,308,84,224,0,0.2727272727272727
+mmot_oracle,ocsort,regr_final_no_motion,gap,6-15 frames,616,341,275,0,0.5535714285714286
+mmot_oracle,ocsort,regr_final_no_motion,motion_reliability,reliable,272,175,97,0,0.6433823529411765
+mmot_oracle,ocsort,regr_final_no_motion,motion_reliability,uninformative,3148,2353,795,0,0.7474587039390089
+mmot_oracle,ocsort,regr_final_no_motion,object_size,small (32^2-96^2 px),564,396,168,0,0.7021276595744681
+mmot_oracle,ocsort,regr_final_no_motion,object_size,tiny (<32^2 px),2856,2132,724,0,0.7464985994397759
+mmot_oracle,ocsort,regr_final_no_motion,reciprocal_support,consensus,1403,1154,249,0,0.8225231646471846
+mmot_oracle,ocsort,regr_final_no_motion,reciprocal_support,non-consensus,2017,1374,643,0,0.6812097174020822

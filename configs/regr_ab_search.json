@@ -1,0 +1,83 @@
+{
+  "protocol_id": "regr_ab_dev_search_20260918_v1",
+  "frozen_before_search": true,
+  "development_data": {
+    "mmot_sequences": [
+      "data23-3",
+      "data30-8",
+      "data44-3",
+      "data52-6",
+      "data46-5",
+      "data51-5"
+    ],
+    "mmot_trackers": ["bytetrack", "ocsort"],
+    "m3ot_scene": "08",
+    "m3ot_streams": ["1-08", "1-08T", "2-08", "2-08T"],
+    "m3ot_trackers": ["bytetrack", "ocsort"]
+  },
+  "fixed_candidate_graph": {
+    "maximum_gap_frames": 30,
+    "geometry_radius_pixels": 55.0,
+    "appearance_cosine_gate": 0.30
+  },
+  "strong_baseline_envelope": [
+    "geometry_reid_greedy",
+    "partial_hungarian_u100"
+  ],
+  "selection_rule": [
+    "For each candidate, compute its MMOT-development IDF1 delta against the better fixed baseline for each tracker, then average the two tracker deltas.",
+    "Compute the analogous M3OT-development delta after averaging the four streams within each tracker.",
+    "Maximize the smaller of the MMOT and M3OT deltas.",
+    "Break ties by the mean of the two deltas, then lower total IDSW, then lower graph-stage runtime, then lexical method name.",
+    "Do not inspect MMOT test50 or M3OT scene01/02/04/05/06/07/09 while selecting."
+  ],
+  "common_cost": {
+    "appearance_weight": 0.50,
+    "geometry_weight": 0.25,
+    "gap_weight": 0.10,
+    "motion_weight": 0.15
+  },
+  "motion_confidence": {
+    "minimum_points": 3,
+    "confidence_components": [
+      "window support",
+      "frame-span support",
+      "leave-one-endpoint prediction error",
+      "linear-fit RMSE",
+      "successive-velocity variation"
+    ],
+    "short_tracklet_fallback": "motion_uninformative",
+    "irregular_interval_policy": "least_squares_on_actual_frame_indices"
+  },
+  "budgets": {
+    "A": 6,
+    "B": 6,
+    "AB": 8,
+    "C": 0
+  },
+  "configurations": [
+    {"name": "a_w3_endpoint_c50", "family": "A", "solver": "hungarian", "window": 3, "motion_normalization": "endpoint", "motion_confidence_min": 0.50, "motion_ratio_max": 1.0, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "a_w5_endpoint_c50", "family": "A", "solver": "hungarian", "window": 5, "motion_normalization": "endpoint", "motion_confidence_min": 0.50, "motion_ratio_max": 1.0, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "a_w3_scale_c50", "family": "A", "solver": "hungarian", "window": 3, "motion_normalization": "object_scale", "motion_confidence_min": 0.50, "motion_ratio_max": 1.0, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "a_w5_scale_c50", "family": "A", "solver": "hungarian", "window": 5, "motion_normalization": "object_scale", "motion_confidence_min": 0.50, "motion_ratio_max": 1.0, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "a_w5_scale_c35", "family": "A", "solver": "hungarian", "window": 5, "motion_normalization": "object_scale", "motion_confidence_min": 0.35, "motion_ratio_max": 1.0, "unmatched_cost": 1.0, "competition_margin": 0.0},
+    {"name": "a_w5_scale_c65", "family": "A", "solver": "hungarian", "window": 5, "motion_normalization": "object_scale", "motion_confidence_min": 0.65, "motion_ratio_max": 1.0, "unmatched_cost": 1.0, "competition_margin": 0.0},
+
+    {"name": "b_h_u100_m000", "family": "B", "solver": "hungarian", "window": 0, "motion_normalization": "none", "motion_confidence_min": 1.0, "motion_ratio_max": 0.0, "unmatched_cost": 1.00, "competition_margin": 0.00},
+    {"name": "b_h_u080_m000", "family": "B", "solver": "hungarian", "window": 0, "motion_normalization": "none", "motion_confidence_min": 1.0, "motion_ratio_max": 0.0, "unmatched_cost": 0.80, "competition_margin": 0.00},
+    {"name": "b_h_u070_m000", "family": "B", "solver": "hungarian", "window": 0, "motion_normalization": "none", "motion_confidence_min": 1.0, "motion_ratio_max": 0.0, "unmatched_cost": 0.70, "competition_margin": 0.00},
+    {"name": "b_h_u080_m003", "family": "B", "solver": "hungarian", "window": 0, "motion_normalization": "none", "motion_confidence_min": 1.0, "motion_ratio_max": 0.0, "unmatched_cost": 0.80, "competition_margin": 0.03},
+    {"name": "b_h_u080_m005", "family": "B", "solver": "hungarian", "window": 0, "motion_normalization": "none", "motion_confidence_min": 1.0, "motion_ratio_max": 0.0, "unmatched_cost": 0.80, "competition_margin": 0.05},
+    {"name": "b_g_u080_m003", "family": "B", "solver": "greedy", "window": 0, "motion_normalization": "none", "motion_confidence_min": 1.0, "motion_ratio_max": 0.0, "unmatched_cost": 0.80, "competition_margin": 0.03},
+
+    {"name": "ab_w3_scale_c35_u080_m000", "family": "AB", "solver": "hungarian", "window": 3, "motion_normalization": "object_scale", "motion_confidence_min": 0.35, "motion_ratio_max": 2.0, "unmatched_cost": 0.80, "competition_margin": 0.00},
+    {"name": "ab_w3_scale_c50_u080_m003", "family": "AB", "solver": "hungarian", "window": 3, "motion_normalization": "object_scale", "motion_confidence_min": 0.50, "motion_ratio_max": 2.0, "unmatched_cost": 0.80, "competition_margin": 0.03},
+    {"name": "ab_w5_scale_c35_u080_m003", "family": "AB", "solver": "hungarian", "window": 5, "motion_normalization": "object_scale", "motion_confidence_min": 0.35, "motion_ratio_max": 2.0, "unmatched_cost": 0.80, "competition_margin": 0.03},
+    {"name": "ab_w5_scale_c50_u080_m003", "family": "AB", "solver": "hungarian", "window": 5, "motion_normalization": "object_scale", "motion_confidence_min": 0.50, "motion_ratio_max": 2.0, "unmatched_cost": 0.80, "competition_margin": 0.03},
+    {"name": "ab_w5_scale_c65_u080_m003", "family": "AB", "solver": "hungarian", "window": 5, "motion_normalization": "object_scale", "motion_confidence_min": 0.65, "motion_ratio_max": 2.0, "unmatched_cost": 0.80, "competition_margin": 0.03},
+    {"name": "ab_w5_endpoint_c50_u080_m003", "family": "AB", "solver": "hungarian", "window": 5, "motion_normalization": "endpoint", "motion_confidence_min": 0.50, "motion_ratio_max": 2.0, "unmatched_cost": 0.80, "competition_margin": 0.03},
+    {"name": "ab_w5_scale_c50_u070_m002", "family": "AB", "solver": "hungarian", "window": 5, "motion_normalization": "object_scale", "motion_confidence_min": 0.50, "motion_ratio_max": 2.0, "unmatched_cost": 0.70, "competition_margin": 0.02},
+    {"name": "ab_w5_scale_c50_u090_m005", "family": "AB", "solver": "hungarian", "window": 5, "motion_normalization": "object_scale", "motion_confidence_min": 0.50, "motion_ratio_max": 2.0, "unmatched_cost": 0.90, "competition_margin": 0.05}
+  ],
+  "appearance_C_policy": "Do not run C unless the development failure audit shows appearance aggregation is the dominant avoidable error and common crop data are available."
+}

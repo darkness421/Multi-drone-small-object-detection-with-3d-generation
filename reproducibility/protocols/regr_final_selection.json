@@ -1,0 +1,61 @@
+{
+  "baseline_values": {
+    "m3ot_bytetrack": {
+      "IDF1": 98.62319496708363,
+      "method": "partial_hungarian_u100"
+    },
+    "m3ot_ocsort": {
+      "IDF1": 98.32558290030127,
+      "method": "partial_hungarian_u100"
+    },
+    "mmot_bytetrack": {
+      "IDF1": 47.67012799104674,
+      "method": "geometry_reid_greedy"
+    },
+    "mmot_ocsort": {
+      "IDF1": 45.381082293114645,
+      "method": "geometry_reid_greedy"
+    }
+  },
+  "input_sha256": {
+    "config": "7e4c8cd9496a5c232b92495c59145554b8fa323ad3910d849f2970297c0764a5",
+    "core": "a9dcc51c2de04ccfe96053795992e35c69c1096be14562f65a32e234b15331d1",
+    "m3ot_metrics": "da2646d9dd1f7a71a0c9bf1af3dbf9c6799577dfc3e19fd7d11e10fa1d2b4a28",
+    "m3ot_runtime": "da62c4ac84601d53e066237a6c2372a713e630caf2db4fc2ba99bff1d9fdb7d4",
+    "mmot_metrics": "73717b8518da7cb497efb4ee96aba6b533d7c962f3625350d932ae44decf64e2",
+    "mmot_runtime": "eb960589b357ff1b5d0aa1befc28b366e25fe68afcbf8ff57579b40e1cba3bed"
+  },
+  "protocol_id": "regr_ab_dev_search_20260918_stage2_v1",
+  "selected_configuration": {
+    "competition_margin": 0.0,
+    "family": "A2_CONDITIONAL",
+    "motion_confidence_min": 0.5,
+    "motion_normalization": "object_scale",
+    "motion_ratio_max": 1.0,
+    "name": "s2_t_cond_w3_scale_c50_r100",
+    "solver": "greedy",
+    "unmatched_cost": 1.0,
+    "window": 3
+  },
+  "selected_method": "s2_t_cond_w3_scale_c50_r100",
+  "selection_metrics": {
+    "family": "A2_CONDITIONAL",
+    "m3ot_bytetrack_idf1": 98.90537717616722,
+    "m3ot_delta_idf1_pp": 0.12788455409276622,
+    "m3ot_ocsort_idf1": 98.29916979940322,
+    "mean_delta_idf1_pp": 0.09962826485956455,
+    "mean_graph_stage_ms": 7.172711812499999,
+    "method": "s2_t_cond_w3_scale_c50_r100",
+    "minimum_delta_idf1_pp": 0.07137197562636288,
+    "mmot_bytetrack_idf1": 47.812871942299466,
+    "mmot_delta_idf1_pp": 0.07137197562636288,
+    "mmot_ocsort_idf1": 45.381082293114645,
+    "rank": 1,
+    "total_idsw": 1025
+  },
+  "status": "FROZEN_BEFORE_CONFIRMATION_EVALUATION",
+  "strong_baseline_envelope": [
+    "geometry_reid_greedy",
+    "partial_hungarian_u100"
+  ]
+}

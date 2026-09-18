@@ -34,7 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--predictions", type=Path, required=True)
     parser.add_argument("--descriptors", type=Path, required=True)
-    parser.add_argument("--method", choices=PAPER_METHODS, default="regr-tg")
+    parser.add_argument("--method", choices=PAPER_METHODS, default="regr")
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args(argv)
 

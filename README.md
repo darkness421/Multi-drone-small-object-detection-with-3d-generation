@@ -3,65 +3,82 @@
 This repository is the public release candidate for **REGR**, a deterministic
 post-tracking method for within-stream aerial multi-object tracking. REGR reads
 frozen tracker outputs, builds same-class temporal candidate edges, and changes
-only identity labels. It does not add, remove, or interpolate observations.
+only identity labels. It never adds, removes, or interpolates observations.
 
-The release is intentionally narrower than the earlier development project.
-It contains the temporal refiner evaluated in the paper, cache-replay tools,
-tests, protocol locks, and result tables. It does not present detector design,
-cross-camera identity, 3D reconstruction, or active re-observation as evaluated
-REGR capabilities.
+The release is intentionally narrower than the original development project.
+It contains the final refiner, cache-replay tools, protocol locks, tests, and
+paper-facing result tables. Detector design, cross-camera identity, 3D
+reconstruction, and active re-observation are outside the evaluated scope.
 
 > Publication gate: the authors have not yet selected a project-level license.
-> The source is organized and committed for review, but public redistribution
-> remains blocked until `LICENSE-STATUS.md` is resolved.
+> The source is organized for review, but public redistribution remains blocked
+> until `LICENSE-STATUS.md` is resolved.
 
-The intended GitHub repository name is `REGR-Aerial-MOT`. Publication and
-repository-transition gates are listed in `GITHUB_RELEASE_CHECKLIST.md`.
+## Final Method
 
-## Method Variants
+The public method name is `regr`; `regr_final` is its experiment-artifact
+alias. It was selected on the pre-registered MMOT development subset and M3OT
+scene 08 before confirmation evaluation.
 
-| Public name | Artifact name | Role |
-| --- | --- | --- |
-| `none` | `no_refinement` | Frozen upstream tracker output |
-| `geometry-reid-greedy` | `geometry_reid_greedy_guard` | Strong same-input deterministic control |
-| `regr-v1` | `regr_v1` | Geometry-first reciprocal rule |
-| `regr-t` | `regr_temporal_risk_05` | Development-selected temporal-risk ranking |
-| `regr-tg` | `regr_t_reliable_motion_min5` | REGR-T plus development-frozen reliable-motion abstention |
+1. Candidate edges have a gap of 1--30 frames, endpoint distance at most 55
+   native-image pixels, cosine distance at most 0.30, equal class, and no
+   overlapping frame support.
+2. The deterministic temporal score is cosine distance plus
+   `0.05 * gap / 30`, with a 0.005 bonus for geometry/appearance reciprocal
+   consensus.
+3. Source-forward and destination-backward motion are fit from three endpoint
+   observations using their actual frame indices. Holdout error, fit RMSE,
+   velocity variation, support, and temporal span form a candidate-specific
+   confidence in `[0, 1]`. Two-point tracklets are uninformative.
+4. The motion guard activates only when reciprocal consensus is sparse
+   (`< 5` edges) and at least 80% of gated candidates have confidence at least
+   0.50. When active, only reliable candidates whose mean bidirectional
+   residual exceeds one geometric-mean endpoint box diagonal are rejected;
+   unreliable motion does not force acceptance or rejection.
+5. Remaining edges are greedily merged in temporal-score order. A merge that
+   would place the same output identity twice in one frame is rejected.
 
-All variants use the same maximum 30-frame gap, 55-pixel endpoint radius, and
-0.30 cosine-distance gate. REGR-T uses a normalized gap weight of 0.05 and a
-reciprocal-consensus bonus of 0.005. REGR-TG activates motion abstention only
-when fewer than five consensus edges are present and motion is available for at
-least 80% of gated edges; the maximum motion-residual/endpoint-distance ratio
-is 1.0.
+`configs/regr_final.json` is the canonical parameter record. Earlier
+`regr-v1`, `regr-t`, and `regr-tg` names remain available for development-history
+reproduction and are not presented as three current methods.
 
-## Reported Scope
+## What The Evaluation Supports
 
-On all 50 MMOT test sequences, REGR-TG improves equal-sequence-mean IDF1 over
-no refinement in all six tracker/input conditions. The gains are 3.75, 2.93,
-and 2.36 percentage points with oracle AABBs and 2.45, 2.11, and 1.01 points
-with the shared official detector cache. Five of the six gains exceed 2 points,
-and all six paired sequence-bootstrap intervals are above zero.
+All values below come from frozen upstream outputs and are reported as
+equal-sequence means for MMOT and equal-scene means after four-stream averaging
+for M3OT.
 
-REGR-T is within 0.055 IDF1 points of Geometry+ReID greedy in every MMOT
-condition. Five paired intervals include zero; detector-input ByteTrack is the
-only strictly positive interval. This supports near parity under the evaluated
-conditions, not uniform superiority.
+- On MMOT oracle inputs, final REGR changes IDF1 from 47.44 to 51.87 for
+  ByteTrack, 42.96 to 46.25 for OC-SORT, and 81.49 to 84.00 for Deep OC-SORT.
+  Against each tracker's stronger Geometry+ReID/partial-Hungarian control, the
+  differences are `+0.072`, `-0.000`, and `-0.004` percentage points.
+- On the shared MMOT detector cache, final REGR changes IDF1 from 38.32 to
+  41.11, 36.46 to 38.75, and 63.09 to 64.15. Differences from the stronger
+  control are `+0.008`, `-0.012`, and `-0.021` points. The OC-SORT paired
+  interval is slightly negative; the other strong-control intervals include
+  zero.
+- On seven M3OT oracle scene groups, final REGR reaches 95.47 IDF1 with
+  ByteTrack and 95.42 with OC-SORT. This is `+0.656` and `+1.391` points over
+  the same temporal rule without candidate-specific motion, but only `+0.017`
+  and `+0.397` over the stronger partial-Hungarian control; those latter
+  intervals include zero.
 
-On four M3OT held-out streams, REGR-TG changes IDF1 from 96.77 to 98.30 for
-ByteTrack and from 95.39 to 95.47 for OC-SORT. These streams had been examined
-in an earlier failure diagnostic, so the result is exploratory transfer
-evidence, not fresh independent confirmation or broad generalization.
+These results support observation-preserving gains over no refinement and a
+reduction of the prior M3OT transfer failure while preserving near-parity with
+strong MMOT controls. They do **not** establish universal superiority over
+assignment baselines or broad cross-dataset generalization. The seven M3OT
+scenes were used in earlier diagnostics and are a fixed confirmation/retest,
+not a pristine independent test. M3OT detector-input and VisDrone-MOT results
+are not claimed because the required common caches were unavailable in the
+verified environment.
 
-Recompute these statements from the released sequence-level CSVs:
-
-```bash
-python scripts/verify_reported_results.py
-```
+Paper-facing aggregates, paired intervals, ablations, accepted-link audits,
+failure categories, and phase timings are under
+`reproducibility/verified_tables/final_20260918/`.
 
 ## Installation
 
-Core cache replay requires Python 3.10 or newer and NumPy:
+Core final-method replay requires Python 3.10 or newer and NumPy:
 
 ```bash
 python -m venv .venv
@@ -70,42 +87,48 @@ python -m pip install --upgrade pip
 python -m pip install -e '.[dev]'
 ```
 
-The optional full benchmark environment also uses PyTorch, SciPy, Pillow,
-BoxMOT, TrackEval, and the frozen OpenMMLab BaseReID checkpoint. Exact external
-revisions and checkpoint hashes are listed in `THIRD_PARTY_NOTICES.md`.
+Install the optional evaluation dependencies when running partial-Hungarian
+controls or the full benchmark adapters:
+
+```bash
+python -m pip install -e '.[evaluation,dev]'
+```
+
+The external benchmark environment additionally uses BoxMOT, TrackEval, and a
+frozen OpenMMLab BaseReID checkpoint. Exact external revisions and checkpoint
+hashes are documented in `THIRD_PARTY_NOTICES.md`.
 
 ## Quick Smoke Run
 
-The included synthetic example needs no dataset, model weight, or GPU:
+The included synthetic example needs no dataset, checkpoint, or GPU:
 
 ```bash
 regr-refine \
   --predictions examples/predictions.jsonl \
   --descriptors examples/descriptors.json \
-  --method regr-tg \
+  --method regr \
   --output-dir outputs/smoke
 ```
 
 The output directory contains:
 
-- `refined.jsonl`: the same observations with final identity labels;
+- `refined.jsonl`: unchanged observations with final identity labels;
 - `accepted_edges.csv` and `rejected_edges.csv`: auditable graph decisions;
 - `manifest.json`: method mapping, fixed parameters, input hashes, and
   observation-preservation checks.
 
 The cache schema is documented in `docs/CACHE_FORMAT.md`.
 
-## Tests And Release Audit
+## Verification
 
 ```bash
 python -m pytest -q
-python scripts/verify_reported_results.py
 python scripts/check_public_release.py
 python scripts/build_release_manifest.py
 ```
 
-The non-strict audit intentionally reports one warning until a project license
-is selected. Before publication, add the approved `LICENSE` and run:
+The non-strict release audit intentionally reports one warning until a project
+license is selected. Before publication, add the approved `LICENSE` and run:
 
 ```bash
 python scripts/check_public_release.py --strict-publication
@@ -115,17 +138,17 @@ python scripts/check_public_release.py --strict-publication
 
 | Path | Purpose |
 | --- | --- |
-| `regr/_artifact_core.py` | Immutable experiment implementation, including development candidates |
-| `regr/core.py` | Stable public names for the five reported operating points |
-| `regr/graph.py` | Candidate construction, union, and output invariants |
+| `regr/confidence.py` | Final motion-confidence rule, development controls, and ablations |
+| `regr/core.py` | Stable public method names and final `regr` entrypoint |
+| `regr/graph.py` | Candidate construction, component-safe merging, and output invariants |
 | `regr/cli.py` | Portable cache-replay command |
-| `reproducibility/protocols/` | Development/test freeze records |
-| `reproducibility/results/` | Released aggregate and sequence-level metrics |
-| `reproducibility/verified_tables/` | Paper-facing summary and paired-CI CSVs |
-| `scripts/summarize_results.py` | Regenerates paper-facing summaries from result directories |
-| `scripts/verify_reported_results.py` | Checks the numerical claims above |
+| `configs/regr_final.json` | Frozen final parameters and selection provenance |
+| `reproducibility/protocols/` | Development/confirmation freeze records |
+| `reproducibility/verified_tables/final_20260918/` | Verified paper-facing CSVs and manifests |
+| `scripts/run_*_confidence_search.py` | MMOT/M3OT cache evaluation entrypoints |
+| `scripts/summarize_final_results.py` | Aggregate, paired-CI, and link-effect generation |
+| `scripts/profile_regr_final.py` | Exact-output graph-phase profiling |
 | `tests/` | Algorithm, invariant, CLI, and result-regression tests |
-| `ci/github-actions.yml` | CI template; activate it at publication as described in the release checklist |
 
 ## Data And Checkpoints
 
@@ -134,16 +157,17 @@ and M3OT from their official sources and comply with their terms:
 
 - MMOT: https://github.com/Annzstbl/MMOT
 - M3OT: https://github.com/M3OT/M3OT
+- VisDrone: https://github.com/VisDrone/VisDrone-Dataset
 
-The frozen BaseReID checkpoint used for the paper is documented by source URL
-and SHA-256 in `THIRD_PARTY_NOTICES.md`. Store all private or downloaded assets
-outside the repository and pass their paths through CLI arguments.
+Store private/downloaded assets outside the repository and pass their paths to
+the experiment scripts. Ground-truth identity is used only for development
+metric selection, final evaluation, and post-hoc edge audit; it never enters
+candidate construction, motion confidence, ranking, or relabeling.
 
-## Reproducibility Boundaries
+## Reproducibility Boundary
 
 The checked-in sequence-level CSVs support paper-number verification without
-redistributing datasets or tracker caches. Full raw-data regeneration requires
-the official datasets, external tracking/evaluation dependencies, and frozen
-tracker/descriptor caches. `docs/REPRODUCIBILITY.md` distinguishes cache replay,
-metric verification, and full regeneration so that a partial release is not
-mistaken for an end-to-end benchmark package.
+redistributing datasets or tracker caches. Full dataset-to-cache regeneration
+requires official data, external tracking/evaluation dependencies, and frozen
+tracker/descriptor caches. `docs/REPRODUCIBILITY.md` distinguishes smoke replay,
+paper-number verification, cache replay, and full regeneration.

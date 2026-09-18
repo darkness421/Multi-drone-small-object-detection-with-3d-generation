@@ -1,20 +1,21 @@
-"""Public names and entrypoint for the frozen REGR selection rules.
+"""Public names and entrypoint for frozen REGR selection rules.
 
-The underlying artifact module is the implementation used for the reported
-REGR-T and REGR-TG evaluations. This wrapper gives the paper variants concise
-names without changing their selection behavior.
+``regr`` is the final development-selected method reported in the revised
+paper. Earlier v1/T/TG names remain available only to reproduce the development
+history; their implementation and thresholds are not silently changed.
 """
 
 from __future__ import annotations
 
 from collections.abc import Callable
 
-from . import _artifact_core
+from . import _artifact_core, confidence
 
 
 PAPER_METHODS = (
     "none",
     "geometry-reid-greedy",
+    "regr",
     "regr-v1",
     "regr-t",
     "regr-tg",
@@ -23,6 +24,7 @@ PAPER_METHODS = (
 _ARTIFACT_METHODS = {
     "none": "no_refinement",
     "geometry-reid-greedy": "geometry_reid_greedy_guard",
+    "regr": "regr_final",
     "regr-v1": "regr_v1",
     "regr-t": "regr_temporal_risk_05",
     "regr-tg": "regr_t_reliable_motion_min5",
@@ -36,7 +38,10 @@ PAPER_PARAMETERS = {
     "reciprocal_consensus_bonus": _artifact_core.RECIPROCAL_SUPPORT_BONUS,
     "sparse_consensus_boundary": 5,
     "minimum_motion_coverage": 0.80,
-    "maximum_motion_residual_to_endpoint_ratio": 1.0,
+    "motion_fit_window_observations": 3,
+    "motion_confidence_minimum": 0.50,
+    "motion_normalization": "geometric_mean_endpoint_box_diagonal",
+    "maximum_normalized_motion_residual": 1.0,
 }
 
 
@@ -68,11 +73,16 @@ def select_edges(
         dictionary describing the selected rule and edge counts.
     """
     artifact_method = resolve_method(method)
-    proposed, sort_key, details = _artifact_core.select(
-        artifact_method,
-        predictions,
-        candidates,
-    )
+    if method == "regr":
+        proposed, sort_key, details = confidence.select(
+            artifact_method, predictions, candidates
+        )
+    else:
+        proposed, sort_key, details = _artifact_core.select(
+            artifact_method,
+            predictions,
+            candidates,
+        )
     return proposed, sort_key, {
         "paper_method": method,
         "artifact_method": artifact_method,
