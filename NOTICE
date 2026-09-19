@@ -1,0 +1,24 @@
+THIRD-PARTY NOTICE
+
+This repository does not bundle third-party repositories, datasets, images,
+tracker caches, or model weights. Optional evaluation workflows use externally
+obtained components under their own copyright and license terms.
+
+BoxMOT
+Revision: 6edfa8ad7dc2f24b19a41c0058fc53d8d2c4e8ec
+Purpose: ByteTrack, OC-SORT, and Deep OC-SORT integration
+Source: https://github.com/mikel-brostrom/boxmot
+
+TrackEval
+Revision: 12c8791b303e0a0b50f753af204249e622d0281a
+Purpose: tracking metric evaluation
+Source: https://github.com/JonathonLuiten/TrackEval
+
+OpenMMLab MOT17 ResNet-50 ReID checkpoint
+SHA-256: 4bf6b63d49235973033c47f77bc9b94a54bdd222bd3f484b4e484aba580254c1
+Purpose: frozen tracklet descriptors
+Source: https://download.openmmlab.com/mmtracking/mot/reid/reid_r50_6e_mot17-4bf6b63d.pth
+
+Users are responsible for obtaining all external assets from their official
+sources and complying with the corresponding terms. This notice does not grant
+a project-level software license.

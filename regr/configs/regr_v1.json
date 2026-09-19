@@ -1,0 +1,7 @@
+{
+  "method": "regr-v1",
+  "maximum_gap_frames": 30,
+  "geometry_radius_pixels": 55.0,
+  "appearance_cosine_gate": 0.3,
+  "ranking": "geometry-first reciprocal"
+}

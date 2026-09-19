@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "regr-aerial-mot"
+version = "0.1.0"
+description = "Reciprocal evidence-graph refinement for frozen aerial MOT tracklets."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26,<3",
+]
+
+[project.optional-dependencies]
+evaluation = [
+  "Pillow>=10,<12",
+  "scipy>=1.10,<2",
+  "torch>=2.1",
+]
+dev = [
+  "pytest>=8,<9",
+  "scipy>=1.10,<2",
+]
+
+[project.scripts]
+regr-refine = "regr.cli:main"
+
+[tool.setuptools]
+packages = ["regr"]
+
+[tool.setuptools.package-data]
+regr = ["configs/*.json"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

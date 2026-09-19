@@ -1,0 +1,9 @@
+{
+  "method": "regr-t",
+  "maximum_gap_frames": 30,
+  "geometry_radius_pixels": 55.0,
+  "appearance_cosine_gate": 0.3,
+  "normalized_gap_weight": 0.05,
+  "reciprocal_consensus_bonus": 0.005,
+  "ranking": "temporal risk over all gated candidates"
+}

@@ -1,0 +1,53 @@
+{
+  "method": "regr_final",
+  "public_name": "regr",
+  "protocol_id": "regr_ab_dev_search_20260918_stage2_v1",
+  "frozen_before_confirmation": true,
+  "candidate_graph": {
+    "maximum_gap_frames": 30,
+    "geometry_radius_pixels": 55.0,
+    "appearance_cosine_gate": 0.3,
+    "same_class_only": true,
+    "forward_time_only": true
+  },
+  "temporal_order": {
+    "appearance_cosine_weight": 1.0,
+    "normalized_gap_weight": 0.05,
+    "reciprocal_consensus_bonus": 0.005,
+    "tie_break": [
+      "appearance_cosine_distance",
+      "gap_frames",
+      "source_track_id",
+      "destination_track_id"
+    ]
+  },
+  "candidate_motion": {
+    "fit": "least_squares_constant_velocity",
+    "window_observations": 3,
+    "uses_actual_frame_indices": true,
+    "directions": ["source_forward", "destination_backward"],
+    "internal_checks": [
+      "endpoint_holdout_error",
+      "fit_rmse",
+      "step_velocity_variation",
+      "observation_support",
+      "frame_span"
+    ],
+    "confidence_minimum": 0.5,
+    "two_point_fallback": "uninformative",
+    "residual": "mean_bidirectional_endpoint_prediction_error_pixels",
+    "normalizer": "geometric_mean_endpoint_box_diagonal_pixels",
+    "maximum_normalized_residual": 1.0
+  },
+  "conditional_activation": {
+    "reciprocal_consensus_count_below": 5,
+    "reliable_motion_edge_fraction_at_least": 0.8,
+    "inactive_fallback": "retain_all_fixed_gate_candidates"
+  },
+  "merge": {
+    "solver": "deterministic_greedy",
+    "component_frame_overlap": "reject",
+    "output_change": "identity_labels_only"
+  },
+  "ground_truth_identity_used_by_inference": false
+}

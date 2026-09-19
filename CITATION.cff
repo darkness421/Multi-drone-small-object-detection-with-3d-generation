@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, cite the associated REGR paper."
+title: "REGR: Reciprocal Evidence-Graph Refinement for Aerial Multi-Object Tracking"
+type: software
+version: 0.1.0
+authors:
+  - family-names: Park
+    given-names: Jong-Chan
+  - family-names: Lim
+    given-names: So-Hee
+  - family-names: Park
+    given-names: Sujin
+  - family-names: Choi
+    given-names: Sang-Min
+  - family-names: Kim
+    given-names: Gun-Woo
+repository-code: "https://github.com/darkness421/Multi-drone-small-object-detection-with-3d-generation"
