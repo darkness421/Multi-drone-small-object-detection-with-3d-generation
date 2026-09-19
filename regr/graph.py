@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from collections import Counter, defaultdict
 from collections.abc import Callable
+from typing import cast
 
 import numpy as np
 
-from .core import PAPER_PARAMETERS, select_edges
+from .core import PARAMETERS, select_edges
 
 
 def _tracklets(
@@ -96,9 +97,9 @@ def build_candidates(
                     "cosine_distance": appearance,
                     "controlled_cost": (
                         (
-                            geometry / PAPER_PARAMETERS["geometry_radius_pixels"]
-                            + appearance / PAPER_PARAMETERS["appearance_cosine_gate"]
-                            + gap / PAPER_PARAMETERS["maximum_gap_frames"]
+                            geometry / cast(float, PARAMETERS["geometry_radius_pixels"])
+                            + appearance / cast(float, PARAMETERS["appearance_cosine_gate"])
+                            + gap / cast(int, PARAMETERS["maximum_gap_frames"])
                         )
                         / 3.0
                         if appearance is not None

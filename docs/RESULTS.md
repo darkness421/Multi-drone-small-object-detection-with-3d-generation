@@ -12,7 +12,7 @@ Against the stronger Geometry+ReID or partial-Hungarian control, however, the
 IDF1 differences range only from `-0.021` to `+0.072` percentage points. The
 method is therefore reported as near the strong-control envelope, not uniformly
 superior. Paired 20,000-resample sequence-bootstrap results are in
-`final_20260918/paired_idf1.csv`.
+`final/paired_idf1.csv`.
 
 ## M3OT Oracle Confirmation/Retest
 
@@ -26,9 +26,16 @@ external confirmation.
 
 ## Source Files
 
-- `reproducibility/results/final_20260918/mmot_oracle/metrics_per_sequence.csv`
-- `reproducibility/results/final_20260918/mmot_detector/metrics_per_sequence.csv`
-- `reproducibility/results/final_20260918/m3ot_oracle/metrics_per_scene_group.csv`
-- `reproducibility/verified_tables/final_20260918/main_comparison.csv`
-- `reproducibility/verified_tables/final_20260918/ablation.csv`
-- `reproducibility/verified_tables/final_20260918/guard_link_effect.csv`
+- `reproducibility/results/final/mmot_oracle/metrics_per_sequence.csv`
+- `reproducibility/results/final/mmot_detector/metrics_per_sequence.csv`
+- `reproducibility/results/final/m3ot_oracle/metrics_per_scene_group.csv`
+- `reproducibility/verified_tables/final/main_comparison.csv`
+- `reproducibility/verified_tables/final/ablation.csv`
+- `reproducibility/verified_tables/final/guard_link_effect.csv`
+
+## Evaluation Boundary
+
+M3OT detector-input and VisDrone-MOT evaluations are not reported because the
+common frozen caches required for same-input comparison were unavailable. The
+released tables contain only completed evaluations; no placeholder rows are
+used for unexecuted conditions.

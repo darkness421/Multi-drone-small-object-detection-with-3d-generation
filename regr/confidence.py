@@ -11,7 +11,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 import json
 import math
-from pathlib import Path
+from importlib.resources import files
 from typing import Callable
 
 import numpy as np
@@ -21,10 +21,13 @@ MAX_GAP = 30
 GEOMETRY_RADIUS = 55.0
 APPEARANCE_DISTANCE = 0.30
 
-SEARCH_CONFIG_PATH = Path(__file__).resolve().parents[1] / "configs" / "regr_ab_search.json"
-SEARCH_PROTOCOL = json.loads(SEARCH_CONFIG_PATH.read_text(encoding="utf-8"))
-STAGE2_CONFIG_PATH = Path(__file__).resolve().parents[1] / "configs" / "regr_ab_stage2_search.json"
-STAGE2_PROTOCOL = json.loads(STAGE2_CONFIG_PATH.read_text(encoding="utf-8"))
+CONFIG_ROOT = files("regr").joinpath("configs")
+SEARCH_PROTOCOL = json.loads(
+    CONFIG_ROOT.joinpath("regr_ab_search.json").read_text(encoding="utf-8")
+)
+STAGE2_PROTOCOL = json.loads(
+    CONFIG_ROOT.joinpath("regr_ab_stage2_search.json").read_text(encoding="utf-8")
+)
 SEARCH_SPECS = {
     row["name"]: row
     for protocol in (SEARCH_PROTOCOL, STAGE2_PROTOCOL)

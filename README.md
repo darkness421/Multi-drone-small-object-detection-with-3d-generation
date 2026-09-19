@@ -1,24 +1,19 @@
 # REGR: Reciprocal Evidence-Graph Refinement for Aerial MOT
 
-This repository is the public release candidate for **REGR**, a deterministic
+This repository contains the reference implementation of **REGR**, a deterministic
 post-tracking method for within-stream aerial multi-object tracking. REGR reads
 frozen tracker outputs, builds same-class temporal candidate edges, and changes
 only identity labels. It never adds, removes, or interpolates observations.
 
-The release is intentionally narrower than the original development project.
-It contains the final refiner, cache-replay tools, protocol locks, tests, and
-paper-facing result tables. Detector design, cross-camera identity, 3D
+The implementation contains the final refiner, cache-replay tools, frozen
+protocols, tests, and result tables. Detector design, cross-camera identity, 3D
 reconstruction, and active re-observation are outside the evaluated scope.
-
-> Publication gate: the authors have not yet selected a project-level license.
-> The source is organized for review, but public redistribution remains blocked
-> until `LICENSE-STATUS.md` is resolved.
 
 ## Final Method
 
-The public method name is `regr`; `regr_final` is its experiment-artifact
-alias. It was selected on the pre-registered MMOT development subset and M3OT
-scene 08 before confirmation evaluation.
+The public method name is `regr`; `regr_final` is the corresponding frozen
+implementation name. It was selected on the pre-registered MMOT development
+subset and M3OT scene 08 before confirmation evaluation.
 
 1. Candidate edges have a gap of 1--30 frames, endpoint distance at most 55
    native-image pixels, cosine distance at most 0.30, equal class, and no
@@ -38,9 +33,9 @@ scene 08 before confirmation evaluation.
 5. Remaining edges are greedily merged in temporal-score order. A merge that
    would place the same output identity twice in one frame is rejected.
 
-`configs/regr_final.json` is the canonical parameter record. Earlier
-`regr-v1`, `regr-t`, and `regr-tg` names remain available for development-history
-reproduction and are not presented as three current methods.
+`regr/configs/regr_final.json` is the canonical parameter record. Earlier
+`regr-v1`, `regr-t`, and `regr-tg` remain available for reproducing the reported
+ablations and are not presented as three current methods.
 
 ## What The Evaluation Supports
 
@@ -72,9 +67,9 @@ not a pristine independent test. M3OT detector-input and VisDrone-MOT results
 are not claimed because the required common caches were unavailable in the
 verified environment.
 
-Paper-facing aggregates, paired intervals, ablations, accepted-link audits,
+Reported aggregates, paired intervals, ablations, accepted-link audits,
 failure categories, and phase timings are under
-`reproducibility/verified_tables/final_20260918/`.
+`reproducibility/verified_tables/final/`.
 
 ## Installation
 
@@ -124,11 +119,11 @@ The cache schema is documented in `docs/CACHE_FORMAT.md`.
 ```bash
 python -m pytest -q
 python scripts/check_public_release.py
-python scripts/build_release_manifest.py
+python scripts/verify_reported_results.py
 ```
 
-The non-strict release audit intentionally reports one warning until a project
-license is selected. Before publication, add the approved `LICENSE` and run:
+The release audit reports one warning until the authors add an approved
+project-level `LICENSE`. Use strict mode before announcing an open-source release:
 
 ```bash
 python scripts/check_public_release.py --strict-publication
@@ -142,11 +137,12 @@ python scripts/check_public_release.py --strict-publication
 | `regr/core.py` | Stable public method names and final `regr` entrypoint |
 | `regr/graph.py` | Candidate construction, component-safe merging, and output invariants |
 | `regr/cli.py` | Portable cache-replay command |
-| `configs/regr_final.json` | Frozen final parameters and selection provenance |
+| `regr/configs/regr_final.json` | Frozen final parameters and selection provenance |
 | `reproducibility/protocols/` | Development/confirmation freeze records |
-| `reproducibility/verified_tables/final_20260918/` | Verified paper-facing CSVs and manifests |
+| `reproducibility/verified_tables/final/` | Verified reported CSVs and manifests |
 | `scripts/run_*_confidence_search.py` | MMOT/M3OT cache evaluation entrypoints |
-| `scripts/summarize_final_results.py` | Aggregate, paired-CI, and link-effect generation |
+| `scripts/summarize_results.py` | Aggregate, paired-CI, and link-effect generation |
+| `scripts/summarize_prior_variants.py` | Retained v1/T/TG summary generation |
 | `scripts/profile_regr_final.py` | Exact-output graph-phase profiling |
 | `tests/` | Algorithm, invariant, CLI, and result-regression tests |
 
@@ -171,3 +167,9 @@ redistributing datasets or tracker caches. Full dataset-to-cache regeneration
 requires official data, external tracking/evaluation dependencies, and frozen
 tracker/descriptor caches. `docs/REPRODUCIBILITY.md` distinguishes smoke replay,
 paper-number verification, cache replay, and full regeneration.
+
+## License
+
+No project-level license has been granted yet. Source availability does not by
+itself grant permission to copy, modify, or redistribute the software. The
+authors will add the approved license before announcing an open-source release.

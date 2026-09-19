@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from regr import _artifact_core as core
+from regr import variants as core
 
 
 def edge(source, destination, appearance, geometry, gap):

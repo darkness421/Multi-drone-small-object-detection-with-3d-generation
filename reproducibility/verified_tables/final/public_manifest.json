@@ -1,6 +1,6 @@
 {
   "status": "COMPLETE",
-  "paper_method_alias": "regr_final",
+  "method": "regr_final",
   "selected_method": "s2_t_cond_w3_scale_c50_r100",
   "aggregation": {
     "mmot": "equal-sequence means over 50 sequences; IDSW summed",

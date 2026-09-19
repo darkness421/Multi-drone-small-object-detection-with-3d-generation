@@ -1,92 +1,83 @@
 #!/usr/bin/env python3
-"""Verify the headline REGR-T and REGR-TG claims from released CSV rows."""
+"""Verify headline REGR values against the released final tables."""
 
 from __future__ import annotations
 
 import csv
 import json
-from collections import defaultdict
+import math
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TABLES = ROOT / "reproducibility" / "verified_tables"
+TABLES = ROOT / "reproducibility" / "verified_tables" / "final"
 
 
-def read_csv(path: Path) -> list[dict]:
+def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle))
 
 
+def close(actual: str, expected: float, *, tolerance: float = 1e-9) -> bool:
+    return math.isclose(float(actual), expected, rel_tol=0.0, abs_tol=tolerance)
+
+
 def main() -> int:
-    mmot = read_csv(TABLES / "mmot_test50_summary.csv")
-    paired = read_csv(TABLES / "mmot_test50_paired_ci.csv")
-    m3ot = read_csv(TABLES / "m3ot_transfer_summary.csv")
-
-    by_key = {
-        (row["input"], row["tracker"], row["method"]): row
-        for row in mmot
+    comparison = read_csv(TABLES / "main_comparison.csv")
+    paired = read_csv(TABLES / "paired_idf1.csv")
+    final_rows = {
+        (row["panel"], row["tracker"]): row
+        for row in comparison
+        if row["method"] == "regr_final"
     }
-    selected = "regr_t_reliable_motion_min5"
-    ranking = "regr_temporal_risk_05"
-    greedy = "geometry_reid_greedy_guard"
-    trackers = ("bytetrack", "ocsort", "deepocsort")
-    inputs = ("oracle_aabb", "official_detector")
+    expected = {
+        ("mmot_oracle", "bytetrack"): (51.87209858498237, 0.0721241129428094),
+        ("mmot_oracle", "ocsort"): (46.24956208335191, -0.00012992590615823474),
+        ("mmot_oracle", "deepocsort"): (83.99717469521244, -0.004334189806954214),
+        ("mmot_detector", "bytetrack"): (41.112227061657705, 0.008167290309060604),
+        ("mmot_detector", "ocsort"): (38.75215456704899, -0.012205252837489411),
+        ("mmot_detector", "deepocsort"): (64.15066121938067, -0.021163169036682916),
+        ("m3ot_oracle", "bytetrack"): (95.47200616427683, 0.016622309122993784),
+        ("m3ot_oracle", "ocsort"): (95.41822505851617, 0.39730585673927976),
+    }
 
-    gains = []
-    ranking_gaps = []
-    for input_name in inputs:
-        for tracker in trackers:
-            selected_row = by_key[(input_name, tracker, selected)]
-            none_row = by_key[(input_name, tracker, "no_refinement")]
-            ranking_row = by_key[(input_name, tracker, ranking)]
-            greedy_row = by_key[(input_name, tracker, greedy)]
-            gains.append(float(selected_row["IDF1"]) - float(none_row["IDF1"]))
-            ranking_gaps.append(float(ranking_row["IDF1"]) - float(greedy_row["IDF1"]))
+    checks: list[bool] = [set(final_rows) == set(expected)]
+    for key, (idf1, delta) in expected.items():
+        row = final_rows[key]
+        checks.extend(
+            (
+                close(row["IDF1"], idf1),
+                close(row["delta_vs_strong_IDF1_pp"], delta),
+            )
+        )
 
-    selected_vs_none = [
-        row
+    paired_lookup = {
+        (row["panel"], row["tracker"], row["comparison"]): row
         for row in paired
-        if row["method"] == selected and row["baseline"] == "no_refinement"
-    ]
-    all_intervals_positive = len(selected_vs_none) == 6 and all(
-        float(row["ci95_low"]) > 0.0 for row in selected_vs_none
-    )
-
-    m3ot_lookup = {
-        (row["split"], row["tracker"], row["method"]): row for row in m3ot
     }
-    m3ot_deltas = {
-        tracker: (
-            float(m3ot_lookup[("held_out", tracker, selected)]["IDF1"])
-            - float(m3ot_lookup[("held_out", tracker, "no_refinement")]["IDF1"])
+    motion_deltas = {
+        tracker: float(
+            paired_lookup[
+                ("m3ot_oracle", tracker, "regr_final-minus-regr_final_no_motion")
+            ]["mean_delta_IDF1_pp"]
         )
         for tracker in ("bytetrack", "ocsort")
     }
+    checks.extend(
+        (
+            close(str(motion_deltas["bytetrack"]), 0.6564885700006126),
+            close(str(motion_deltas["ocsort"]), 1.3909881665033907),
+            len(paired) == 32,
+        )
+    )
 
     report = {
-        "mmot_regr_tg_gain_pp": gains,
-        "mmot_regr_tg_positive_conditions": sum(value > 0.0 for value in gains),
-        "mmot_regr_tg_conditions_above_2pp": sum(value > 2.0 for value in gains),
-        "mmot_regr_tg_all_paired_ci_low_above_zero": all_intervals_positive,
-        "mmot_regr_t_minus_greedy_pp": ranking_gaps,
-        "mmot_regr_t_max_abs_gap_to_greedy_pp": max(abs(value) for value in ranking_gaps),
-        "m3ot_heldout_regr_tg_delta_pp": m3ot_deltas,
-        "claim_boundary": (
-            "M3OT streams were exposed by an earlier diagnostic; positive deltas are "
-            "exploratory transfer evidence, not fresh independent confirmation."
-        ),
+        "final_rows_verified": len(final_rows),
+        "m3ot_motion_delta_idf1_pp": motion_deltas,
+        "paired_rows_verified": len(paired),
+        "status": "PASS" if all(checks) else "FAIL",
     }
     print(json.dumps(report, indent=2, sort_keys=True))
-
-    checks = (
-        report["mmot_regr_tg_positive_conditions"] == 6,
-        report["mmot_regr_tg_conditions_above_2pp"] == 5,
-        report["mmot_regr_tg_all_paired_ci_low_above_zero"],
-        report["mmot_regr_t_max_abs_gap_to_greedy_pp"] <= 0.0551,
-        m3ot_deltas["bytetrack"] > 1.5,
-        m3ot_deltas["ocsort"] > 0.0,
-    )
     return 0 if all(checks) else 1
 
 

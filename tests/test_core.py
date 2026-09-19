@@ -20,7 +20,7 @@ def sample_descriptors():
     return {1: np.asarray([1.0, 0.0]), 2: np.asarray([0.99995, 0.01])}
 
 
-def test_public_names_resolve_to_frozen_artifact_methods():
+def test_public_names_resolve_to_frozen_implementations():
     assert resolve_method("regr-v1") == "regr_v1"
     assert resolve_method("regr-t") == "regr_temporal_risk_05"
     assert resolve_method("regr-tg") == "regr_t_reliable_motion_min5"

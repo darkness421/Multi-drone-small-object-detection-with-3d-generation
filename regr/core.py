@@ -1,4 +1,4 @@
-"""Public names and entrypoint for frozen REGR selection rules.
+"""Stable method names and entrypoint for frozen REGR selection rules.
 
 ``regr`` is the final development-selected method reported in the revised
 paper. Earlier v1/T/TG names remain available only to reproduce the development
@@ -9,10 +9,10 @@ from __future__ import annotations
 
 from collections.abc import Callable
 
-from . import _artifact_core, confidence
+from . import confidence, variants
 
 
-PAPER_METHODS = (
+METHODS = (
     "none",
     "geometry-reid-greedy",
     "regr",
@@ -21,7 +21,7 @@ PAPER_METHODS = (
     "regr-tg",
 )
 
-_ARTIFACT_METHODS = {
+_IMPLEMENTATIONS = {
     "none": "no_refinement",
     "geometry-reid-greedy": "geometry_reid_greedy_guard",
     "regr": "regr_final",
@@ -30,12 +30,12 @@ _ARTIFACT_METHODS = {
     "regr-tg": "regr_t_reliable_motion_min5",
 }
 
-PAPER_PARAMETERS = {
+PARAMETERS = {
     "maximum_gap_frames": 30,
-    "geometry_radius_pixels": _artifact_core.GEOMETRY_RADIUS,
-    "appearance_cosine_gate": _artifact_core.APPEARANCE_DISTANCE,
+    "geometry_radius_pixels": variants.GEOMETRY_RADIUS,
+    "appearance_cosine_gate": variants.APPEARANCE_DISTANCE,
     "normalized_gap_weight": 0.05,
-    "reciprocal_consensus_bonus": _artifact_core.RECIPROCAL_SUPPORT_BONUS,
+    "reciprocal_consensus_bonus": variants.RECIPROCAL_SUPPORT_BONUS,
     "sparse_consensus_boundary": 5,
     "minimum_motion_coverage": 0.80,
     "motion_fit_window_observations": 3,
@@ -46,11 +46,11 @@ PAPER_PARAMETERS = {
 
 
 def resolve_method(method: str) -> str:
-    """Return the immutable artifact method name for a public paper name."""
+    """Return the frozen implementation name for a public method name."""
     try:
-        return _ARTIFACT_METHODS[method]
+        return _IMPLEMENTATIONS[method]
     except KeyError as exc:
-        choices = ", ".join(PAPER_METHODS)
+        choices = ", ".join(METHODS)
         raise ValueError(f"unknown method {method!r}; choose one of: {choices}") from exc
 
 
@@ -62,7 +62,7 @@ def select_edges(
     """Select candidate edges using one frozen paper operating point.
 
     Args:
-        method: One of :data:`PAPER_METHODS`.
+        method: One of :data:`METHODS`.
         predictions: Frame-indexed tracker observations. Coordinates are in
             native image pixels.
         candidates: Directed temporal edges produced by
@@ -72,19 +72,19 @@ def select_edges(
         Proposed edges, their deterministic union ordering, and an audit
         dictionary describing the selected rule and edge counts.
     """
-    artifact_method = resolve_method(method)
+    implementation = resolve_method(method)
     if method == "regr":
         proposed, sort_key, details = confidence.select(
-            artifact_method, predictions, candidates
+            implementation, predictions, candidates
         )
     else:
-        proposed, sort_key, details = _artifact_core.select(
-            artifact_method,
+        proposed, sort_key, details = variants.select(
+            implementation,
             predictions,
             candidates,
         )
     return proposed, sort_key, {
-        "paper_method": method,
-        "artifact_method": artifact_method,
+        "method": method,
+        "implementation": implementation,
         **details,
     }

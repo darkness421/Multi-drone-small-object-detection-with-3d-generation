@@ -14,5 +14,5 @@ The package links to but does not redistribute MMOT, M3OT, images, tracker
 caches, pretrained weights, or simulator assets. Users must obtain each asset
 from its official source and comply with its current terms.
 
-The project-level license is unresolved. This notice is not a license grant;
-see `LICENSE-STATUS.md`.
+This notice does not grant a project-level license. See the License section in
+`README.md` for the current release status.

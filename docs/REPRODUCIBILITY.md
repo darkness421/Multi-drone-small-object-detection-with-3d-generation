@@ -15,11 +15,17 @@ regr-refine --predictions examples/predictions.jsonl \
 
 The repository includes sequence-level MMOT oracle/detector results, scene-level
 M3OT results, paired intervals, ablations, link audits, failure categories, and
-runtime summaries under `reproducibility/results/final_20260918/` and
-`reproducibility/verified_tables/final_20260918/`.
+runtime summaries under `reproducibility/results/final/` and
+`reproducibility/verified_tables/final/`.
+
+Earlier v1/T/TG results remain under `reproducibility/results/prior_variants/`
+with their corresponding summaries under
+`reproducibility/verified_tables/prior_variants/`. They are retained for
+auditability and are not substituted for the selected final method. Rebuild
+those summaries with `scripts/summarize_prior_variants.py`.
 
 The raw benchmark caches are not redistributed, so exact table regeneration
-uses `scripts/summarize_final_results.py` after the three frozen result
+uses `scripts/summarize_results.py` after the three frozen result
 directories and AFLink audit CSVs are supplied. The checked-in CSVs permit an
 independent audit of every displayed aggregate without those private caches.
 
@@ -35,10 +41,10 @@ or threshold from the MMOT test or exposed M3OT held-out results.
 Full regeneration additionally requires official MMOT/M3OT data, BoxMOT at the
 recorded revision, TrackEval at the recorded revision, the BaseReID checkpoint,
 and the original upstream tracker settings. Those third-party assets are not
-vendored. The public release candidate currently exposes the refiner and
-paper-number audit; dataset-to-cache orchestration remains dependency-gated and
-must not be described as a one-command reproduction until it is independently
-validated on a clean machine.
+vendored. This repository exposes the refiner and paper-number audit;
+dataset-to-cache orchestration remains dependency-gated and must not be
+described as a one-command reproduction until it is independently validated on
+a clean machine.
 
 ## Ground-Truth Use
 
@@ -56,8 +62,7 @@ validated on a clean machine.
 
 ## Unexecuted Evaluations
 
-No M3OT detector-input or VisDrone-MOT result is included. The verified machine
-had no functioning CUDA driver, the M3OT common detector-tracklet cache did not
-exist, and the local VisDrone-MOT directory was empty. The exact blockers are
-recorded in `docs/EXPERIMENT_INVENTORY_20260918.md`; no inferred or placeholder
-metrics replace those missing runs.
+No M3OT detector-input or VisDrone-MOT result is included. The evaluation
+environment did not contain a common M3OT detector-tracklet cache or a prepared
+VisDrone-MOT tracker/descriptor cache. No inferred or placeholder metrics
+replace those unexecuted evaluations.

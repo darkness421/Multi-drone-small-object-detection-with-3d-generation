@@ -7,7 +7,7 @@ import csv
 import hashlib
 from pathlib import Path
 
-from .core import PAPER_METHODS, PAPER_PARAMETERS
+from .core import METHODS, PARAMETERS
 from .graph import refine
 from .io import load_descriptors, load_predictions, write_json, write_predictions
 
@@ -34,7 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--predictions", type=Path, required=True)
     parser.add_argument("--descriptors", type=Path, required=True)
-    parser.add_argument("--method", choices=PAPER_METHODS, default="regr")
+    parser.add_argument("--method", choices=METHODS, default="regr")
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args(argv)
 
@@ -54,7 +54,7 @@ def main(argv: list[str] | None = None) -> int:
         {
             "status": "COMPLETE",
             "method": args.method,
-            "paper_parameters": PAPER_PARAMETERS,
+            "parameters": PARAMETERS,
             "inputs": {
                 "predictions": {"path": str(args.predictions), "sha256": sha256(args.predictions)},
                 "descriptors": {"path": str(args.descriptors), "sha256": sha256(args.descriptors)},

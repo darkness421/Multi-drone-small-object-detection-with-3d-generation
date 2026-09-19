@@ -28,6 +28,9 @@ regr-refine = "regr.cli:main"
 [tool.setuptools]
 packages = ["regr"]
 
+[tool.setuptools.package-data]
+regr = ["configs/*.json"]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic REGR-T variants with development-only abstention guards."""
+"""Deterministic REGR variants used by baseline and ablation experiments."""
 
 from __future__ import annotations
 
@@ -183,9 +183,9 @@ def motion_key(edge: dict) -> tuple:
 
 
 def ordered_union(*groups: list[dict]) -> tuple[list[dict], dict[tuple[int, int], int]]:
-    output = []
-    priority = {}
-    seen = set()
+    output: list[dict] = []
+    priority: dict[tuple[int, int], int] = {}
+    seen: set[tuple[int, int]] = set()
     for rank, group in enumerate(groups):
         for edge in group:
             identity = edge_id(edge)
@@ -196,7 +196,11 @@ def ordered_union(*groups: list[dict]) -> tuple[list[dict], dict[tuple[int, int]
     return output, priority
 
 
-def select(method: str, predictions: dict[int, list[dict]], candidates: list[dict]):
+def select(
+    method: str,
+    predictions: dict[int, list[dict]],
+    candidates: list[dict],
+) -> tuple[list[dict], Callable[[dict], tuple], dict[str, object]]:
     """Return proposed edges, deterministic union order, and audit details."""
     if method == "no_refinement":
         return [], appearance_key, {"gated_edges": 0, "proposed_edges": 0}
@@ -207,6 +211,7 @@ def select(method: str, predictions: dict[int, list[dict]], candidates: list[dic
     appearance = reciprocal(gated, appearance_key)
     controlled = reciprocal(gated, cost_key)
     motion = reciprocal(gated, motion_key)
+    details: dict[str, object]
 
     if method == "geometry_reid_greedy_guard":
         proposed = gated

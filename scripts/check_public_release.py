@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -43,6 +44,7 @@ BLOCKED_SUFFIXES = {
     ".zip",
 }
 BLOCKED_PARTS = {
+    ".agents",
     ".git",
     ".idea",
     ".pytest_cache",
@@ -65,18 +67,34 @@ class AuditResult:
     files_checked: int = 0
 
 
+def release_files(root: Path) -> list[Path]:
+    """Return tracked files in a checkout, or all files in an exported tree."""
+    if (root / ".git").exists():
+        completed = subprocess.run(
+            ["git", "ls-files", "-z"],
+            cwd=root,
+            check=True,
+            capture_output=True,
+        )
+        return [
+            root / entry.decode("utf-8")
+            for entry in completed.stdout.split(b"\0")
+            if entry and (root / entry.decode("utf-8")).is_file()
+        ]
+    return [path for path in root.rglob("*") if path.is_file()]
+
+
 def audit(root: Path, *, strict_publication: bool = False) -> AuditResult:
     root = root.resolve()
     result = AuditResult()
     required = {
+        ".github/workflows/ci.yml",
         "CITATION.cff",
-        "GITHUB_RELEASE_CHECKLIST.md",
-        "LICENSE-STATUS.md",
         "README.md",
-        "RELEASE_MANIFEST.json",
-        "SHA256SUMS",
         "THIRD_PARTY_NOTICES.md",
-        "ci/github-actions.yml",
+        "regr/configs/regr_final.json",
+        "docs/REPRODUCIBILITY.md",
+        "docs/RESULTS.md",
         "pyproject.toml",
         "regr/core.py",
         "regr/graph.py",
@@ -96,13 +114,12 @@ def audit(root: Path, *, strict_publication: bool = False) -> AuditResult:
         ("credential in URL", re.compile(r"https?://[^\s/:]+:[^\s/@]+@")),
     )
     authoring_trace = re.compile(
-        r"\b(?:co" + "dex|chat" + "gpt|response to reviewer|internal work plan)\b",
+        r"\b(?:assistant transcript|model prompt|response to reviewer|"
+        r"internal work plan|revision instruction)\b",
         re.IGNORECASE,
     )
 
-    for path in sorted(root.rglob("*")):
-        if not path.is_file():
-            continue
+    for path in sorted(release_files(root)):
         relative = path.relative_to(root)
         if ".git" in relative.parts:
             continue
