@@ -79,6 +79,12 @@ Core final-method replay requires Python 3.10 or newer and NumPy:
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
+python -m pip install -e .
+```
+
+Install the development dependencies before running the complete test suite:
+
+```bash
 python -m pip install -e '.[dev]'
 ```
 
