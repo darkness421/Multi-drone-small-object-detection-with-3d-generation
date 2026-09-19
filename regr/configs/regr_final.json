@@ -2,7 +2,6 @@
   "method": "regr_final",
   "public_name": "regr",
   "protocol_id": "regr_ab_dev_search_20260918_stage2_v1",
-  "selection_record": "reproducibility/protocols/regr_final_selection.json",
   "frozen_before_confirmation": true,
   "candidate_graph": {
     "maximum_gap_frames": 30,

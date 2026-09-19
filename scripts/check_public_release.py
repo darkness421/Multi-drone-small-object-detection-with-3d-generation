@@ -27,8 +27,15 @@ TEXT_SUFFIXES = {
 BLOCKED_SUFFIXES = {
     ".7z",
     ".avi",
+    ".bmp",
     ".ckpt",
+    ".csv",
+    ".doc",
+    ".docx",
     ".engine",
+    ".gif",
+    ".jpeg",
+    ".jpg",
     ".mkv",
     ".mov",
     ".mp4",
@@ -36,11 +43,22 @@ BLOCKED_SUFFIXES = {
     ".p12",
     ".pem",
     ".pfx",
+    ".pdf",
+    ".png",
+    ".ppt",
+    ".pptx",
     ".pth",
     ".pt",
     ".safetensors",
+    ".svg",
     ".tar",
+    ".tif",
+    ".tiff",
     ".tgz",
+    ".tsv",
+    ".webp",
+    ".xls",
+    ".xlsx",
     ".zip",
 }
 BLOCKED_PARTS = {
@@ -51,7 +69,11 @@ BLOCKED_PARTS = {
     ".venv",
     ".vscode",
     "__pycache__",
+    "docs",
+    "figures",
     "outputs",
+    "reproducibility",
+    "results",
     "runs",
     "third_party",
     "weights",
@@ -90,15 +112,12 @@ def audit(root: Path, *, strict_publication: bool = False) -> AuditResult:
     required = {
         ".github/workflows/ci.yml",
         "CITATION.cff",
+        "NOTICE",
         "README.md",
-        "THIRD_PARTY_NOTICES.md",
         "regr/configs/regr_final.json",
-        "docs/REPRODUCIBILITY.md",
-        "docs/RESULTS.md",
         "pyproject.toml",
         "regr/core.py",
         "regr/graph.py",
-        "reproducibility/paper_table_map.csv",
     }
     for relative in sorted(required):
         if not (root / relative).is_file():
@@ -131,8 +150,10 @@ def audit(root: Path, *, strict_publication: bool = False) -> AuditResult:
             )
             continue
         result.files_checked += 1
+        if path.suffix.lower() == ".md" and relative != Path("README.md"):
+            result.errors.append(f"unexpected Markdown document: {relative}")
         if path.suffix.lower() in BLOCKED_SUFFIXES:
-            result.errors.append(f"blocked binary asset: {relative}")
+            result.errors.append(f"blocked release artifact: {relative}")
         if path.stat().st_size > MAX_FILE_BYTES:
             result.errors.append(f"file exceeds 10 MiB: {relative}")
         if path.resolve() == SELF or path.suffix.lower() not in TEXT_SUFFIXES:

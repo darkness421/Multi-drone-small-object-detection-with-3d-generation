@@ -1,9 +1,0 @@
-panel,tracker,base_links,final_links,removed_correct,removed_false,removed_unknown,added_correct,added_false,added_unknown
-mmot_oracle,bytetrack,7241,7230,4,7,1,1,0,0
-mmot_oracle,deepocsort,1205,1202,0,4,0,0,1,0
-mmot_oracle,ocsort,3420,3416,2,2,0,0,0,0
-mmot_detector,bytetrack,4374,4369,2,0,5,0,0,2
-mmot_detector,deepocsort,901,899,1,1,0,0,0,0
-mmot_detector,ocsort,2675,2672,0,1,2,0,0,0
-m3ot_oracle,bytetrack,159,127,8,26,2,1,3,0
-m3ot_oracle,ocsort,163,112,12,54,0,9,6,0

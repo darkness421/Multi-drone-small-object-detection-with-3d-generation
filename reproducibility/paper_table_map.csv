@@ -1,9 +1,0 @@
-manuscript_item,public_artifact,scope,claim_boundary
-Main comparison,reproducibility/verified_tables/final/main_comparison.csv,MMOT oracle and detector plus M3OT oracle panels,Inputs and aggregation units are not pooled across panels
-Component ablation,reproducibility/verified_tables/final/ablation.csv,Final REGR module controls,All variants use the same frozen upstream inputs
-Paired intervals,reproducibility/verified_tables/final/paired_idf1.csv,Sequence- or scene-paired IDF1 differences,MMOT resamples sequences and M3OT resamples scene groups
-Accepted-link audit,reproducibility/verified_tables/final/guard_link_effect.csv,Post-hoc correct false and unknown link changes,Ground-truth actor labels are used only after inference
-Runtime,reproducibility/verified_tables/final/phase_runtime_summary.csv,Graph-stage replay on frozen MMOT caches,Does not include detector tracker or descriptor extraction time
-Complete MMOT oracle,reproducibility/results/final/mmot_oracle/metrics_per_sequence.csv,50 MMOT sequences,Equal-sequence aggregation in reported tables
-Complete MMOT detector,reproducibility/results/final/mmot_detector/metrics_per_sequence.csv,50 MMOT sequences with a shared detector cache,All refiners receive identical tracker outputs
-Complete M3OT oracle,reproducibility/results/final/m3ot_oracle/metrics_per_scene_group.csv,Seven four-stream scene groups,Previously examined scenes are not independent confirmation
