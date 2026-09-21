@@ -1,0 +1,14 @@
+{
+  "attempt": 1,
+  "failure_stage": "post-optimization/pre-results-registry",
+  "model_step_completed": true,
+  "preserved_outputs": [
+    "smoke_metrics.json",
+    "per_sequence_metrics.csv",
+    "global_per_sequence_partial.csv"
+  ],
+  "status": "FAILED",
+  "error_type": "ValueError",
+  "error": "Relative config path was passed to Path.relative_to(repository_root).",
+  "resolution": "Resolve config and output paths before reading or recording them; rerun as attempt_02_success."
+}

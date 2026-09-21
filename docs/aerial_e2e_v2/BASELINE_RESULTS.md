@@ -34,5 +34,19 @@ result is valid, but it must not be presented as a newly rerun detector result.
 
 B2 has no scientific accuracy result yet. `tools/run_aerial_e2e_b2_smoke.py`
 checks model shapes, a finite joint loss, one optimizer step, registry writing,
-and per-sequence provenance on two real MMOT frames. Its loss and latency are
-reported only as smoke diagnostics.
+and per-sequence provenance on two real MMOT frames. Attempt 02 passed with 40
+positive grid cells and a loss change from 3.753854 to 3.436416. The CPU timing
+from this two-frame run includes the train step and is not a detector/tracker
+latency benchmark. See `B2_SMOKE_TEST_REPORT.md` for the exact scope and paths.
+
+## Baseline gate
+
+- B0: not reproduced end to end; compatible MOT inputs and a working GPU are
+  required.
+- B1: tracking-cache replay is validated; fresh detector metrics remain blocked
+  by the missing official checkpoint and raw detector prediction cache.
+- B2: implementation and logging smoke passed; detection and tracking accuracy
+  remain unmeasured.
+
+V2-01 must not start until the unavailable B0/B1 assets and GPU gate are
+resolved, or the protocol is explicitly revised with a documented substitute.

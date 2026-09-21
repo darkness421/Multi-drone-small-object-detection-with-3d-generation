@@ -1,0 +1,42 @@
+{
+  "config": "configs/e2e/b2_minimal_smoke.yaml",
+  "config_sha256": "4768b4df8186479b7ad73e7e237dc922b62c7306547812215949c390e5274b19",
+  "cuda_available": false,
+  "dataset": "MMOT",
+  "device": "cpu",
+  "elapsed_seconds": 0.029515111818909645,
+  "feature_grid": [
+    32,
+    32
+  ],
+  "frame_tensor_shape": [
+    1,
+    2,
+    3,
+    256,
+    256
+  ],
+  "frames": [
+    "000001.npy",
+    "000002.npy"
+  ],
+  "git_commit": "1cddcf56ce3f6ea622cbd10cea9968656663ce06",
+  "latency_ms_per_frame_including_train_step": 14.757555909454823,
+  "loss_after_one_step": 3.436415910720825,
+  "loss_before": 3.7538535594940186,
+  "loss_components_after": {
+    "box": 0.11732907593250275,
+    "classification": 1.9895191192626953,
+    "identity": 0.7999446392059326,
+    "objectness": 0.6602652072906494,
+    "total": 3.436415910720825
+  },
+  "parameters": 66279,
+  "peak_gpu_memory_bytes": 0,
+  "positive_grid_cells": 40,
+  "scope": "infrastructure smoke only; not a scientific baseline result",
+  "sequence": "data28-1",
+  "split": "official test sequence used only for pipeline smoke; no model selection",
+  "status": "PASS",
+  "torch": "2.6.0"
+}

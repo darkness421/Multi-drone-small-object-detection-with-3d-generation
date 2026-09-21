@@ -1,0 +1,7 @@
+{
+  "command": "/home/oem/anaconda3/bin/python tools/run_aerial_e2e_b2_smoke.py --config configs/e2e/b2_minimal_smoke.yaml --output-dir outputs/aerial_e2e_v2/b2_smoke_seed42",
+  "failure": "ModuleNotFoundError: No module named 'aerial_e2e_v2'",
+  "stage": "pre-data-load",
+  "status": "FAILED",
+  "timestamp_local": "2026-09-21T19:28:00+09:00"
+}

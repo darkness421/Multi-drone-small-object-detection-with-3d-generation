@@ -8,12 +8,17 @@ import csv
 import hashlib
 import json
 import subprocess
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
 import torch
 import yaml
+
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+if str(REPOSITORY_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPOSITORY_ROOT))
 
 from aerial_e2e_v2 import B2Scaffold, compute_b2_loss
 from aerial_e2e_v2.mmot_smoke import build_dense_targets, load_sequence_pair
@@ -48,8 +53,10 @@ def main() -> int:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
-    config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
-    root = Path(__file__).resolve().parents[1]
+    root = REPOSITORY_ROOT
+    config_path = args.config.resolve()
+    output_dir = args.output_dir.resolve()
+    config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     sequence = Path(config["data"]["sequence_dir"])
     seed = int(config["seed"])
     torch.manual_seed(seed)
@@ -91,7 +98,7 @@ def main() -> int:
     positive_cells = int(targets.objectness.sum().item())
     peak_memory = int(torch.cuda.max_memory_allocated(device)) if device.type == "cuda" else 0
 
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
     metrics = {
         "status": "PASS" if torch.isfinite(after_losses["total"]) else "FAIL",
         "scope": "infrastructure smoke only; not a scientific baseline result",
@@ -113,12 +120,12 @@ def main() -> int:
         "device": str(device),
         "cuda_available": torch.cuda.is_available(),
         "peak_gpu_memory_bytes": peak_memory,
-        "config": str(args.config),
-        "config_sha256": sha256(args.config),
+        "config": str(config_path.relative_to(root)),
+        "config_sha256": sha256(config_path),
         "git_commit": git_head(root),
         "torch": torch.__version__,
     }
-    (args.output_dir / "smoke_metrics.json").write_text(
+    (output_dir / "smoke_metrics.json").write_text(
         json.dumps(metrics, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     per_sequence = {
@@ -133,7 +140,7 @@ def main() -> int:
         "latency_ms_per_frame_including_train_step": metrics["latency_ms_per_frame_including_train_step"],
         "status": metrics["status"],
     }
-    write_per_sequence(args.output_dir / "per_sequence_metrics.csv", per_sequence)
+    write_per_sequence(output_dir / "per_sequence_metrics.csv", per_sequence)
     append_fixed_row(
         root / config["registry"]["per_sequence_csv"],
         list(per_sequence),
@@ -155,7 +162,7 @@ def main() -> int:
             "latency_ms": metrics["latency_ms_per_frame_including_train_step"],
             "gpu_memory": peak_memory,
             "Params": parameters,
-            "config_path": str(args.config.relative_to(root)),
+            "config_path": str(config_path.relative_to(root)),
             "checkpoint_path": "",
             "git_commit": metrics["git_commit"],
             "status": "smoke_pass" if metrics["status"] == "PASS" else "smoke_fail",

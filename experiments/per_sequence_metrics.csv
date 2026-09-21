@@ -1,0 +1,2 @@
+experiment_id,dataset,split,sequence,frames,loss_before,loss_after_one_step,positive_grid_cells,latency_ms_per_frame_including_train_step,status
+b2_minimal_mmot_two_frame_smoke_seed42,MMOT,test_pipeline_smoke_only,data28-1,000001.npy;000002.npy,3.7538535594940186,3.436415910720825,40,14.757555909454823,PASS
