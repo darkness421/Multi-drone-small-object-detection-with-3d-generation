@@ -1,0 +1,29 @@
+experiment_id: b2_minimal_mmot_two_frame_smoke_seed42
+seed: 42
+
+model:
+  name: B2Scaffold
+  num_classes: 8
+  embedding_dim: 32
+  proposed_v2_modules: []
+
+data:
+  dataset: MMOT
+  split: official_test_pipeline_smoke_only
+  sequence_dir: /mnt/ssd2/meme_comparison/data_cache/accv2026_rebuttal_real_uav/raw/MMOT/extracted/test/data28-1
+  image_size: 256
+  original_size: [900, 1200]
+  spectral_bands_zero_based_bgr: [1, 2, 4]
+  frames: 2
+
+optimizer:
+  name: AdamW
+  lr: 0.001
+  steps: 1
+
+runtime:
+  device: cpu
+
+registry:
+  results_csv: experiments/results.csv
+  per_sequence_csv: experiments/per_sequence_metrics.csv
