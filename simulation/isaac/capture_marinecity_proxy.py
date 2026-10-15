@@ -1,9 +1,8 @@
-"""Tiny real-capture smoke test for the MarineCity proxy USD stage."""
+"""Capture RGB and detector GT directly from the MarineCity proxy USD stage."""
 
 from __future__ import annotations
 
 import argparse
-import asyncio
 import json
 import os
 from pathlib import Path
@@ -24,19 +23,188 @@ def _wait_updates(simulation_app: Any, count: int = 8) -> None:
         simulation_app.update()
 
 
-async def _capture_frames_async(rep: Any, frame_count: int) -> None:
-    import omni.kit.app  # type: ignore
+def _open_stage_checked(
+    simulation_app: Any,
+    context: Any,
+    stage_path: Path,
+    camera_specs: list[dict[str, Any]],
+    attempts: int = 12,
+) -> None:
+    """Open a freshly written stage after Kit startup and verify its cameras."""
 
-    for _ in range(10):
-        await omni.kit.app.get_app().next_update_async()
-    for _ in range(max(frame_count, 1)):
-        await rep.orchestrator.step_async(rt_subframes=16, delta_time=0.0, pause_timeline=False)
-    await rep.orchestrator.wait_until_complete_async()
-    for _ in range(2):
-        await omni.kit.app.get_app().next_update_async()
+    for attempt in range(1, attempts + 1):
+        _wait_updates(simulation_app, 12)
+        opened = bool(context.open_stage(str(stage_path)))
+        _log(f"stage open attempt {attempt}/{attempts}: opened={opened}")
+        if not opened:
+            continue
+
+        _wait_updates(simulation_app, 16)
+        stage = context.get_stage()
+        missing = [
+            spec["source_camera_prim"]
+            for spec in camera_specs
+            if stage is None or not stage.GetPrimAtPath(spec["source_camera_prim"]).IsValid()
+        ]
+        if not missing:
+            return
+        _log(f"stage opened but camera prims are not ready: {missing}")
+
+    raise RuntimeError(
+        f"failed to open {stage_path} with valid camera prims after {attempts} attempts"
+    )
 
 
-def capture_proxy(config: dict[str, Any], out_dir: Path, active_gpu: int | None = None, frame_count: int = 1) -> dict[str, Any]:
+def _jsonable(value: Any) -> Any:
+    """Convert Replicator/Numpy values to lossless-enough JSON primitives."""
+
+    import numpy as np
+
+    if isinstance(value, np.ndarray):
+        if value.dtype.names:
+            return [
+                {name: _jsonable(row[name]) for name in value.dtype.names}
+                for row in value
+            ]
+        return value.tolist()
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, dict):
+        return {str(key): _jsonable(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_jsonable(item) for item in value]
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return value
+
+
+def _capture_direct(
+    rep: Any,
+    simulation_app: Any,
+    render_products: list[Any],
+    camera_specs: list[dict[str, Any]],
+    out_dir: Path,
+    frame_count: int,
+) -> dict[str, Any]:
+    """Capture data by reading attached annotators instead of relying on writer flushes."""
+
+    import numpy as np
+    from PIL import Image
+
+    bundles: list[dict[str, Any]] = []
+    for render_product in render_products:
+        rgb = rep.AnnotatorRegistry.get_annotator("rgb")
+        bbox = rep.AnnotatorRegistry.get_annotator("bounding_box_2d_tight")
+        camera = rep.AnnotatorRegistry.get_annotator("camera_params")
+        rgb.attach(render_product)
+        bbox.attach(render_product)
+        camera.attach(render_product)
+        bundles.append({"rgb": rgb, "bbox": bbox, "camera": camera})
+
+    rep.orchestrator.set_capture_on_play(False)
+
+    records: list[dict[str, Any]] = []
+    for frame_index in range(max(frame_count, 1)):
+        _log(f"direct capture frame {frame_index + 1}/{max(frame_count, 1)}")
+        rgba_payloads: list[Any] = []
+        for capture_attempt in range(1, 4):
+            _log(f"stepping Replicator graph attempt {capture_attempt}/3")
+            rep.orchestrator.step(rt_subframes=4)
+            _log("Replicator step complete")
+            rep.orchestrator.wait_until_complete()
+            _wait_updates(simulation_app, 8)
+            rgba_payloads = [np.asarray(bundle["rgb"].get_data()) for bundle in bundles]
+            shapes = [tuple(payload.shape) for payload in rgba_payloads]
+            _log(f"RGB shapes after attempt {capture_attempt}: {shapes}")
+            if all(
+                payload.ndim == 3 and payload.shape[2] >= 3 and payload.size > 0
+                for payload in rgba_payloads
+            ):
+                break
+            _log("render data not ready; advancing Kit before retry")
+            _wait_updates(simulation_app, 24)
+        else:
+            raise RuntimeError(
+                "RGB annotators remained empty after three synchronized capture attempts: "
+                f"{[tuple(payload.shape) for payload in rgba_payloads]}"
+            )
+
+        for camera_index, (spec, bundle, rgba) in enumerate(
+            zip(camera_specs, bundles, rgba_payloads)
+        ):
+            camera_dir = out_dir / "direct" / spec["uav_id"]
+            camera_dir.mkdir(parents=True, exist_ok=True)
+
+            _log(f"RGB ready for {spec['uav_id']}: shape={rgba.shape}")
+            rgb_path = camera_dir / f"rgb_{frame_index:04d}.png"
+            Image.fromarray(rgba[:, :, :3].astype(np.uint8), mode="RGB").save(rgb_path)
+
+            _log(f"reading 2D boxes for {spec['uav_id']}")
+            bbox_data = bundle["bbox"].get_data()
+            bbox_path = camera_dir / f"bbox2d_tight_{frame_index:04d}.json"
+            bbox_path.write_text(
+                json.dumps(_jsonable(bbox_data), indent=2, ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            _log(f"reading camera parameters for {spec['uav_id']}")
+            camera_data = bundle["camera"].get_data()
+            camera_path = camera_dir / f"camera_params_{frame_index:04d}.json"
+            camera_path.write_text(
+                json.dumps(_jsonable(camera_data), indent=2, ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            data_payload = bbox_data.get("data", []) if isinstance(bbox_data, dict) else bbox_data
+            bbox_count = int(len(data_payload))
+            records.append(
+                {
+                    "camera_index": camera_index,
+                    "uav_id": spec["uav_id"],
+                    "frame_index": frame_index,
+                    "rgb_path": str(rgb_path.relative_to(out_dir)),
+                    "bbox_path": str(bbox_path.relative_to(out_dir)),
+                    "camera_params_path": str(camera_path.relative_to(out_dir)),
+                    "rgb_shape": list(rgba.shape),
+                    "rgb_min": int(rgba[:, :, :3].min()),
+                    "rgb_max": int(rgba[:, :, :3].max()),
+                    "rgb_mean": float(rgba[:, :, :3].mean()),
+                    "bbox_count": bbox_count,
+                }
+            )
+
+    rep.orchestrator.wait_until_complete()
+    for bundle in bundles:
+        bundle["rgb"].detach()
+        bundle["bbox"].detach()
+        bundle["camera"].detach()
+    _wait_updates(simulation_app, 2)
+
+    expected = len(camera_specs) * max(frame_count, 1)
+    rgb_count = len(list((out_dir / "direct").glob("*/rgb_*.png")))
+    bbox_count = len(list((out_dir / "direct").glob("*/bbox2d_tight_*.json")))
+    camera_count = len(list((out_dir / "direct").glob("*/camera_params_*.json")))
+    if (rgb_count, bbox_count, camera_count) != (expected, expected, expected):
+        raise RuntimeError(
+            "direct capture validation failed: "
+            f"expected={expected}, rgb={rgb_count}, bbox={bbox_count}, camera={camera_count}"
+        )
+
+    return {
+        "expected_camera_frames": expected,
+        "rgb_file_count": rgb_count,
+        "bbox_file_count": bbox_count,
+        "camera_params_file_count": camera_count,
+        "records": records,
+    }
+
+
+def capture_proxy(
+    config: dict[str, Any],
+    out_dir: Path,
+    active_gpu: int | None = None,
+    frame_count: int = 1,
+) -> dict[str, Any]:
     _log(f"starting Isaac SimulationApp active_gpu={active_gpu}")
     simulation_app = start_isaac_simulation_app(active_gpu=active_gpu)
     _log("SimulationApp started")
@@ -51,16 +219,11 @@ def capture_proxy(config: dict[str, Any], out_dir: Path, active_gpu: int | None 
         stage_summary = build_stage(config, stage_path)
         _log(
             "USD stage built "
-            f"objects={stage_summary.get('object_count')} cutout_overlays={stage_summary.get('cutout_overlay_count', 0)}"
+            f"objects={stage_summary.get('object_count')} "
+            f"cutout_overlays={stage_summary.get('cutout_overlay_count', 0)}"
         )
         write_capture_plan(build_capture_plan(config), out_dir / "capture_plan.json")
         write_replicator_template(config, out_dir / "isaac_replicator_capture_template.py")
-
-        _log("opening USD stage")
-        omni.usd.get_context().open_stage(str(stage_path))
-        _log("USD stage open requested; waiting for updates")
-        _wait_updates(simulation_app, 12)
-        _log("stage update wait complete")
 
         width = int(config.get("camera", {}).get("width", 1280))
         height = int(config.get("camera", {}).get("height", 720))
@@ -74,38 +237,37 @@ def capture_proxy(config: dict[str, Any], out_dir: Path, active_gpu: int | None 
                     "capture_position_xyz_m": [float(x), float(y), float(z)],
                 }
             )
+
+        _log("opening USD stage")
+        _open_stage_checked(simulation_app, omni.usd.get_context(), stage_path, camera_specs)
+        _log("USD stage and camera prims verified")
+
         _log(f"creating {len(camera_specs)} render products at {width}x{height}")
         render_products = [
-            rep.create.render_product(spec["source_camera_prim"], (width, height), name=f"rp_{idx + 1:02d}")
-            for idx, spec in enumerate(camera_specs)
+            rep.create.render_product(
+                spec["source_camera_prim"],
+                (width, height),
+                name=f"rp_{index + 1:02d}",
+            )
+            for index, spec in enumerate(camera_specs)
         ]
 
-        _log("initializing BasicWriter")
-        writer = rep.WriterRegistry.get("BasicWriter")
-        writer.initialize(
-            output_dir=str(out_dir / "replicator"),
-            rgb=True,
-            distance_to_camera=True,
-            bounding_box_2d_tight=True,
-            bounding_box_3d=True,
-            semantic_segmentation=True,
-            instance_segmentation=True,
-            camera_params=True,
+        _log(f"capturing {frame_count} frame(s) through direct annotators")
+        direct_summary = _capture_direct(
+            rep,
+            simulation_app,
+            render_products,
+            camera_specs,
+            out_dir,
+            frame_count,
         )
-        _log("attaching writer")
-        writer.attach(render_products)
-        _log("previewing replicator graph")
-        rep.orchestrator.preview()
-        _log(f"capturing {frame_count} frame(s)")
-        asyncio.get_event_loop().run_until_complete(_capture_frames_async(rep, frame_count))
-        _log("capture complete; detaching writer")
-        writer.detach()
-        _wait_updates(simulation_app, 4)
-        _log("final update wait complete")
+        _log("direct annotator capture complete")
 
-        files = sorted(str(path.relative_to(out_dir)) for path in out_dir.rglob("*") if path.is_file())
+        files = sorted(
+            str(path.relative_to(out_dir)) for path in out_dir.rglob("*") if path.is_file()
+        )
         summary = {
-            "status": "proxy_capture_smoke_complete",
+            "status": "proxy_direct_capture_complete",
             "stage_path": str(stage_path),
             "output_dir": str(out_dir),
             "camera_count": len(camera_specs),
@@ -113,11 +275,14 @@ def capture_proxy(config: dict[str, Any], out_dir: Path, active_gpu: int | None 
             "render_resolution": [width, height],
             "capture_cameras": camera_specs,
             "file_count": len(files),
-            "files": files[:120],
+            "files": files[:160],
+            "direct_capture": direct_summary,
             "stage_summary": stage_summary,
         }
-        (out_dir / "proxy_capture_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
-        _log(f"wrote summary with {len(files)} files")
+        (out_dir / "proxy_capture_summary.json").write_text(
+            json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+        _log(f"wrote validated summary with {len(files)} files")
         return summary
     finally:
         _log("closing SimulationApp")
@@ -125,18 +290,29 @@ def capture_proxy(config: dict[str, Any], out_dir: Path, active_gpu: int | None 
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Capture a tiny Replicator smoke export from the MarineCity proxy stage.")
+    parser = argparse.ArgumentParser(
+        description="Capture validated RGB and detector GT from the MarineCity proxy stage."
+    )
     parser.add_argument("--config", default="configs/sim/marinecity_isaac_stage1.yaml")
     parser.add_argument("--out-dir", default="/tmp/com3d_isaac_proxy_capture")
     parser.add_argument("--frames", type=int, default=1)
     parser.add_argument(
         "--active-gpu",
         type=int,
-        default=int(os.environ["ISAAC_ACTIVE_GPU"]) if os.environ.get("ISAAC_ACTIVE_GPU") else None,
+        default=(
+            int(os.environ["ISAAC_ACTIVE_GPU"])
+            if os.environ.get("ISAAC_ACTIVE_GPU")
+            else None
+        ),
     )
     args = parser.parse_args()
 
-    summary = capture_proxy(load_config(args.config), Path(args.out_dir), active_gpu=args.active_gpu, frame_count=args.frames)
+    summary = capture_proxy(
+        load_config(args.config),
+        Path(args.out_dir),
+        active_gpu=args.active_gpu,
+        frame_count=args.frames,
+    )
     print(f"Proxy capture status: {summary['status']}")
     print(f"Output dir: {summary['output_dir']}")
     print(f"Files: {summary['file_count']}")

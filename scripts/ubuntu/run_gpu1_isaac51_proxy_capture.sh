@@ -65,5 +65,16 @@ summary_file="$(find "$HOST_OUT" -maxdepth 1 -name '*summary.json' -print -quit)
 if [[ -n "$summary_file" ]]; then
   echo "Capture summary: $summary_file" | tee -a "$log_file"
 else
-  echo "Capture summary: no summary JSON found in $HOST_OUT" | tee -a "$log_file"
+  echo "Capture failed validation: no summary JSON found in $HOST_OUT" | tee -a "$log_file"
+  exit 1
 fi
+
+expected_count=$((FRAMES * 3))
+rgb_count="$(find "$HOST_OUT/direct" -type f -name 'rgb_*.png' 2>/dev/null | wc -l)"
+bbox_count="$(find "$HOST_OUT/direct" -type f -name 'bbox2d_tight_*.json' 2>/dev/null | wc -l)"
+camera_count="$(find "$HOST_OUT/direct" -type f -name 'camera_params_*.json' 2>/dev/null | wc -l)"
+if [[ "$rgb_count" -ne "$expected_count" || "$bbox_count" -ne "$expected_count" || "$camera_count" -ne "$expected_count" ]]; then
+  echo "Capture failed validation: expected=$expected_count rgb=$rgb_count bbox=$bbox_count camera=$camera_count" | tee -a "$log_file"
+  exit 1
+fi
+echo "Validated direct capture: rgb=$rgb_count bbox=$bbox_count camera=$camera_count" | tee -a "$log_file"
