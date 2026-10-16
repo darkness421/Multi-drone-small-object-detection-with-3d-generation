@@ -1,0 +1,70 @@
+name: marinecity_visual_gt_pilot
+dataset_name: CoM3D-MarineCity-VisualGT-Pilot
+output_root: /tmp/dove_visual_gt_pilot
+
+scene:
+  name: CoM3D-MarineCity-VisualGT-Pilot
+  area: synthetic_proxy_only
+  digital_twin:
+    engine: NVIDIA Isaac Sim
+    current_stage: corrected_uv_proxy_pilot
+  origin:
+    latitude_deg: 35.1569
+    longitude_deg: 129.1456
+    height_m: 80.0
+
+map:
+  proxy_extent_m: [240, 180]
+  road_width_m: 18
+  coastal_axis: east_west
+  building_count: 14
+
+camera:
+  width: 1280
+  height: 720
+  focal_px: 780
+  horizontal_aperture_mm: 20.955
+  output_format: png
+
+capture:
+  default_uav_count: 4
+  timestamps: [0.0]
+  altitudes_m: [35, 45, 55, 65]
+  view_angles: [nadir, front_oblique, side_view, rear_oblique]
+  weather: [clear]
+  lighting: [day]
+  radius_scale: 0.5
+  export_rgb: true
+  export_2d_bbox: true
+  export_camera_params: true
+
+scenes:
+  - scene_id: visual_gt_dense_intersection
+    description: Corrected-UV synthetic pilot with four candidate viewpoints.
+    uav_count: 4
+    object_density: dense
+
+objects:
+  classes:
+    - sedan
+    - pickup
+    - van
+    - ambulance
+    - police_car
+    - truck
+    - pedestrian
+    - worker
+    - small_boat
+    - debris
+  ambiguity_pairs:
+    - [sedan, van]
+    - [van, pickup]
+    - [pedestrian, worker]
+
+cutout_overlays:
+  enabled: true
+  connect_uv: true
+  manifest: outputs/isaac_assets/visdrone_cutouts_min24/manifest.json
+  z_offset_m: 0.06
+  length_scale: 1.04
+  width_scale: 1.08

@@ -23,6 +23,55 @@ def _wait_updates(simulation_app: Any, count: int = 8) -> None:
         simulation_app.update()
 
 
+def _scene_variant_transform(
+    variant_index: int, strategy: str = "legacy"
+) -> tuple[float, float, float]:
+    """Return a deterministic transform without changing legacy captures."""
+
+    if variant_index < 0:
+        raise ValueError("variant_index must be non-negative")
+    if variant_index == 0:
+        return 0.0, 0.0, 0.0
+    if strategy == "legacy":
+        return (
+            float(((variant_index * 17) % 31) - 15),
+            float(((variant_index * 7) % 13) - 6),
+            float(((variant_index * 11) % 11) - 5),
+        )
+    if strategy == "balanced":
+        return (
+            float((variant_index * 47) % 360),
+            float(((variant_index * 7) % 23) - 11),
+            float(((variant_index * 11) % 29) - 14),
+        )
+    raise ValueError(f"unknown scene variant strategy: {strategy}")
+
+
+def _apply_scene_variant(
+    stage: Any, variant_index: int, strategy: str = "legacy"
+) -> dict[str, float | int | str]:
+    """Move the full object layout deterministically between synthetic scenes."""
+
+    from pxr import Gf, UsdGeom
+
+    angle_deg, offset_x, offset_y = _scene_variant_transform(variant_index, strategy)
+    for prim_path in ("/World/Objects", "/World/CutoutOverlays"):
+        prim = stage.GetPrimAtPath(prim_path)
+        if not prim.IsValid():
+            continue
+        xformable = UsdGeom.Xformable(prim)
+        xformable.ClearXformOpOrder()
+        xformable.AddTranslateOp().Set(Gf.Vec3d(offset_x, offset_y, 0.0))
+        xformable.AddRotateZOp().Set(angle_deg)
+    return {
+        "scene_variant_index": variant_index,
+        "scene_variant_strategy": strategy,
+        "object_layout_rotation_deg": angle_deg,
+        "object_layout_offset_x_m": offset_x,
+        "object_layout_offset_y_m": offset_y,
+    }
+
+
 def _open_stage_checked(
     simulation_app: Any,
     context: Any,
@@ -85,6 +134,9 @@ def _capture_direct(
     camera_specs: list[dict[str, Any]],
     out_dir: Path,
     frame_count: int,
+    stage: Any,
+    scene_variant_count: int = 1,
+    scene_variant_strategy: str = "legacy",
 ) -> dict[str, Any]:
     """Capture data by reading attached annotators instead of relying on writer flushes."""
 
@@ -105,6 +157,12 @@ def _capture_direct(
 
     records: list[dict[str, Any]] = []
     for frame_index in range(max(frame_count, 1)):
+        variant = _apply_scene_variant(
+            stage,
+            frame_index % max(scene_variant_count, 1),
+            strategy=scene_variant_strategy,
+        )
+        _wait_updates(simulation_app, 4)
         _log(f"direct capture frame {frame_index + 1}/{max(frame_count, 1)}")
         rgba_payloads: list[Any] = []
         for capture_attempt in range(1, 4):
@@ -170,6 +228,7 @@ def _capture_direct(
                     "rgb_max": int(rgba[:, :, :3].max()),
                     "rgb_mean": float(rgba[:, :, :3].mean()),
                     "bbox_count": bbox_count,
+                    **variant,
                 }
             )
 
@@ -204,6 +263,8 @@ def capture_proxy(
     out_dir: Path,
     active_gpu: int | None = None,
     frame_count: int = 1,
+    scene_variant_count: int = 1,
+    scene_variant_strategy: str = "legacy",
 ) -> dict[str, Any]:
     _log(f"starting Isaac SimulationApp active_gpu={active_gpu}")
     simulation_app = start_isaac_simulation_app(active_gpu=active_gpu)
@@ -239,8 +300,12 @@ def capture_proxy(
             )
 
         _log("opening USD stage")
-        _open_stage_checked(simulation_app, omni.usd.get_context(), stage_path, camera_specs)
+        context = omni.usd.get_context()
+        _open_stage_checked(simulation_app, context, stage_path, camera_specs)
         _log("USD stage and camera prims verified")
+        stage = context.get_stage()
+        if stage is None:
+            raise RuntimeError("USD stage unavailable after successful open")
 
         _log(f"creating {len(camera_specs)} render products at {width}x{height}")
         render_products = [
@@ -260,6 +325,9 @@ def capture_proxy(
             camera_specs,
             out_dir,
             frame_count,
+            stage,
+            scene_variant_count=scene_variant_count,
+            scene_variant_strategy=scene_variant_strategy,
         )
         _log("direct annotator capture complete")
 
@@ -272,6 +340,8 @@ def capture_proxy(
             "output_dir": str(out_dir),
             "camera_count": len(camera_specs),
             "frame_count": frame_count,
+            "scene_variant_count": scene_variant_count,
+            "scene_variant_strategy": scene_variant_strategy,
             "render_resolution": [width, height],
             "capture_cameras": camera_specs,
             "file_count": len(files),
@@ -297,6 +367,24 @@ def main() -> None:
     parser.add_argument("--out-dir", default="/tmp/com3d_isaac_proxy_capture")
     parser.add_argument("--frames", type=int, default=1)
     parser.add_argument(
+        "--scene-variants",
+        type=int,
+        default=1,
+        help="Deterministic object-layout variants captured as separate frames.",
+    )
+    parser.add_argument(
+        "--scene-variant-strategy",
+        choices=("legacy", "balanced"),
+        default="legacy",
+        help="Keep legacy transforms or use broad 2D translations and rotations.",
+    )
+    parser.add_argument(
+        "--connect-uv",
+        choices=("config", "on", "off"),
+        default="config",
+        help="Override cutout UV wiring for a controlled render A/B test.",
+    )
+    parser.add_argument(
         "--active-gpu",
         type=int,
         default=(
@@ -307,11 +395,20 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    config = load_config(args.config)
+    if args.connect_uv != "config":
+        config.setdefault("cutout_overlays", {})["connect_uv"] = args.connect_uv == "on"
+
+    if args.scene_variants < 1:
+        parser.error("--scene-variants must be at least 1")
+    frame_count = args.scene_variants if args.scene_variants > 1 else args.frames
     summary = capture_proxy(
-        load_config(args.config),
+        config,
         Path(args.out_dir),
         active_gpu=args.active_gpu,
-        frame_count=args.frames,
+        frame_count=frame_count,
+        scene_variant_count=args.scene_variants,
+        scene_variant_strategy=args.scene_variant_strategy,
     )
     print(f"Proxy capture status: {summary['status']}")
     print(f"Output dir: {summary['output_dir']}")

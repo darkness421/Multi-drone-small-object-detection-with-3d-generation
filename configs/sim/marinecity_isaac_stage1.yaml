@@ -26,6 +26,7 @@ camera:
   width: 1280
   height: 720
   focal_px: 780
+  horizontal_aperture_mm: 20.955
   output_format: png
 
 capture:
@@ -70,6 +71,7 @@ objects:
 
 cutout_overlays:
   enabled: true
+  connect_uv: true
   manifest: outputs/isaac_assets/visdrone_cutouts_min24/manifest.json
   z_offset_m: 0.06
   length_scale: 1.04

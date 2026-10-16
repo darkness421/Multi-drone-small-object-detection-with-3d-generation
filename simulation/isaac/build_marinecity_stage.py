@@ -173,7 +173,23 @@ def _group_cutouts_by_class(items: list[dict[str, Any]]) -> dict[str, list[dict[
     return grouped
 
 
-def _texture_material(stage: Any, material_path: str, texture_path: str) -> Any:
+def _focal_length_mm(
+    focal_px: float,
+    image_width_px: int,
+    horizontal_aperture_mm: float,
+) -> float:
+    if focal_px <= 0 or image_width_px <= 0 or horizontal_aperture_mm <= 0:
+        raise ValueError("focal length inputs must be positive")
+    return float(focal_px) * float(horizontal_aperture_mm) / float(image_width_px)
+
+
+def _texture_material(
+    stage: Any,
+    material_path: str,
+    texture_path: str,
+    *,
+    connect_uv: bool = True,
+) -> Any:
     from pxr import Sdf, UsdShade
 
     material = UsdShade.Material.Define(stage, Sdf.Path(material_path))
@@ -188,6 +204,15 @@ def _texture_material(stage: Any, material_path: str, texture_path: str) -> Any:
     texture.CreateInput("wrapS", Sdf.ValueTypeNames.Token).Set("clamp")
     texture.CreateInput("wrapT", Sdf.ValueTypeNames.Token).Set("clamp")
     texture.CreateOutput("rgb", Sdf.ValueTypeNames.Float3)
+
+    if connect_uv:
+        reader = UsdShade.Shader.Define(stage, Sdf.Path(f"{material_path}/PrimvarReader_st"))
+        reader.CreateIdAttr("UsdPrimvarReader_float2")
+        reader.CreateInput("varname", Sdf.ValueTypeNames.Token).Set("st")
+        reader.CreateOutput("result", Sdf.ValueTypeNames.Float2)
+        texture.CreateInput("st", Sdf.ValueTypeNames.Float2).ConnectToSource(
+            reader.ConnectableAPI(), "result"
+        )
 
     shader.CreateInput("diffuseColor", Sdf.ValueTypeNames.Color3f).ConnectToSource(texture.ConnectableAPI(), "rgb")
     material.CreateSurfaceOutput().ConnectToSource(shader.ConnectableAPI(), "surface")
@@ -318,6 +343,7 @@ def _build_cutout_overlays(stage: Any, config: dict[str, Any], objects: list[dic
     z_offset = float(cutout_cfg.get("z_offset_m", 0.06))
     length_scale = float(cutout_cfg.get("length_scale", 1.04))
     width_scale = float(cutout_cfg.get("width_scale", 1.08))
+    connect_uv = bool(cutout_cfg.get("connect_uv", True))
 
     for obj in objects:
         object_id = str(obj["object_id"])
@@ -336,7 +362,12 @@ def _build_cutout_overlays(stage: Any, config: dict[str, Any], objects: list[dic
         yaw = float(obj["yaw_deg"])
         top_z = z + (height * 0.52) + z_offset
         overlay_root = f"/World/CutoutOverlays/{_safe_name(object_id)}_{_safe_name(cutout_class)}"
-        material = _texture_material(stage, f"{overlay_root}/Material", str(item["cutout_path"]))
+        material = _texture_material(
+            stage,
+            f"{overlay_root}/Material",
+            str(item["cutout_path"]),
+            connect_uv=connect_uv,
+        )
         prim = _textured_top_plane(
             stage,
             f"{overlay_root}/Plane",
@@ -362,6 +393,7 @@ def _build_cutout_overlays(stage: Any, config: dict[str, Any], objects: list[dic
                 "position_xyz_m": [x, y, top_z],
                 "size_xy_m": [max(length * length_scale, 0.8), max(width * width_scale, 0.5)],
                 "yaw_deg": yaw,
+                "texture_coordinates_connected": connect_uv,
             }
         )
     return overlays
@@ -376,6 +408,13 @@ def _build_uavs(stage: Any, config: dict[str, Any]) -> list[dict[str, Any]]:
         by_uav.setdefault(view.uav_id, view)
 
     UsdGeom.Xform.Define(stage, Sdf.Path("/World/UAVs"))
+    camera_cfg = config.get("camera", {})
+    image_width = int(camera_cfg.get("width", 1280))
+    image_height = int(camera_cfg.get("height", 720))
+    focal_px = float(camera_cfg.get("focal_px", 780))
+    horizontal_aperture_mm = float(camera_cfg.get("horizontal_aperture_mm", 20.955))
+    vertical_aperture_mm = horizontal_aperture_mm * image_height / image_width
+    focal_length_mm = _focal_length_mm(focal_px, image_width, horizontal_aperture_mm)
     uavs = []
     for uav_id, view in sorted(by_uav.items()):
         pose = view.uav_pose
@@ -385,8 +424,9 @@ def _build_uavs(stage: Any, config: dict[str, Any]) -> list[dict[str, Any]]:
         _metadata(body, uav_id=uav_id, role="uav_body", view_angle=view.view_angle, altitude_m=float(view.altitude_m))
 
         camera = UsdGeom.Camera.Define(stage, Sdf.Path(f"{uav_root}/Camera"))
-        camera.CreateFocalLengthAttr(float(config.get("camera", {}).get("focal_px", 780)) / 40.0)
-        camera.CreateHorizontalApertureAttr(20.955)
+        camera.CreateFocalLengthAttr(focal_length_mm)
+        camera.CreateHorizontalApertureAttr(horizontal_aperture_mm)
+        camera.CreateVerticalApertureAttr(vertical_aperture_mm)
         _set_camera_look_at(camera.GetPrim(), (pose.x, pose.y, pose.z - 0.35))
         _metadata(camera.GetPrim(), uav_id=uav_id, role="rgb_depth_camera", view_angle=view.view_angle, altitude_m=float(view.altitude_m))
 
@@ -397,6 +437,12 @@ def _build_uavs(stage: Any, config: dict[str, Any]) -> list[dict[str, Any]]:
                 "altitude_m": view.altitude_m,
                 "pose_xyz_rpy": [pose.x, pose.y, pose.z, pose.roll, pose.pitch, pose.yaw],
                 "camera_prim": f"{uav_root}/Camera",
+                "look_at_target_xyz_m": [0.0, 0.0, 0.0],
+                "configured_focal_px": focal_px,
+                "focal_length_mm": focal_length_mm,
+                "horizontal_aperture_mm": horizontal_aperture_mm,
+                "vertical_aperture_mm": vertical_aperture_mm,
+                "render_resolution": [image_width, image_height],
             }
         )
     return uavs
@@ -438,6 +484,9 @@ def build_stage(config: dict[str, Any], out_usd: Path) -> dict[str, Any]:
         "uav_count": len(uavs),
         "object_count": len(objects),
         "cutout_overlay_count": len(cutout_overlays),
+        "texture_coordinates_connected": bool(
+            config.get("cutout_overlays", {}).get("connect_uv", True)
+        ),
         "uavs": uavs,
         "objects": objects,
         "cutout_overlays": cutout_overlays,

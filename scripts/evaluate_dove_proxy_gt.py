@@ -16,6 +16,7 @@ import math
 import random
 import sys
 import time
+from collections import defaultdict
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -225,6 +226,28 @@ def _range_to_origin(camera_record: Mapping[str, Any]) -> float:
     return math.sqrt(x * x + y * y + z * z)
 
 
+def _box_inside_image(box: list[float], width: int, height: int) -> bool:
+    x1, y1, x2, y2 = box
+    return (
+        0.0 <= x1 < x2 <= float(width)
+        and 0.0 <= y1 < y2 <= float(height)
+    )
+
+
+def _same_outcome(a: Mapping[str, Any], b: Mapping[str, Any]) -> bool:
+    return math.isclose(
+        float(a["recall_at_iou50"]),
+        float(b["recall_at_iou50"]),
+        rel_tol=0.0,
+        abs_tol=1.0e-12,
+    ) and math.isclose(
+        float(a["f1_at_iou50"]),
+        float(b["f1_at_iou50"]),
+        rel_tol=0.0,
+        abs_tol=1.0e-12,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--capture-dir", required=True)
@@ -253,16 +276,44 @@ def main() -> None:
     detector_classes = {_canonical(name) for name in model_names.values()}
 
     camera_meta = {row["uav_id"]: row for row in summary["capture_cameras"]}
+    capture_records = summary["direct_capture"]["records"]
+    gt_by_record: dict[tuple[str, int], list[dict[str, Any]]] = {}
+    benchmark_classes: set[str] = set()
+    for record in capture_records:
+        key = (str(record["uav_id"]), int(record["frame_index"]))
+        gt_rows = load_deduplicated_gt(capture_dir / record["bbox_path"])
+        gt_by_record[key] = gt_rows
+        benchmark_classes.update(row["canonical"] for row in gt_rows)
+    evaluation_classes = sorted(benchmark_classes & detector_classes)
+    if not evaluation_classes:
+        raise RuntimeError(
+            "capture and detector have no shared target classes: "
+            f"capture={sorted(benchmark_classes)}, detector={sorted(detector_classes)}"
+        )
+
     rows = []
     prediction_rows = []
+    coordinate_rows = []
     started = time.perf_counter()
-    for record in summary["direct_capture"]["records"]:
+    for record in capture_records:
         uav_id = record["uav_id"]
         rgb_path = capture_dir / record["rgb_path"]
         bbox_path = capture_dir / record["bbox_path"]
-        gt_all = load_deduplicated_gt(bbox_path)
-        evaluation_classes = sorted({row["canonical"] for row in gt_all} & detector_classes)
+        gt_all = gt_by_record[(str(uav_id), int(record["frame_index"]))]
         gt = [row for row in gt_all if row["canonical"] in evaluation_classes]
+        with Image.open(rgb_path) as image:
+            image_width, image_height = image.size
+        expected_width, expected_height = summary["render_resolution"]
+        if (image_width, image_height) != (expected_width, expected_height):
+            raise RuntimeError(
+                f"render resolution mismatch for {rgb_path}: "
+                f"image={(image_width, image_height)}, manifest={(expected_width, expected_height)}"
+            )
+        invalid_gt = [
+            row for row in gt if not _box_inside_image(row["xyxy"], image_width, image_height)
+        ]
+        if invalid_gt:
+            raise RuntimeError(f"{uav_id} has {len(invalid_gt)} GT boxes outside the saved RGB frame")
 
         infer_started = time.perf_counter()
         tokens = wrapper.predict(rgb_path, {"image_id": rgb_path.stem, "uav_id": uav_id})
@@ -280,8 +331,18 @@ def main() -> None:
                 }
             )
         predictions = [row for row in predictions_all if row["canonical"] in evaluation_classes]
+        invalid_predictions = [
+            row
+            for row in predictions
+            if not _box_inside_image(row["xyxy"], image_width, image_height)
+        ]
+        if invalid_predictions:
+            raise RuntimeError(
+                f"{uav_id} has {len(invalid_predictions)} predictions outside the saved RGB frame"
+            )
         metrics = _match(gt, predictions, args.iou_threshold)
-        max_confidence = max((row["confidence"] for row in predictions_all), default=0.0)
+        max_confidence_all = max((row["confidence"] for row in predictions_all), default=0.0)
+        max_confidence = max((row["confidence"] for row in predictions), default=0.0)
         row = {
             "uav_id": uav_id,
             "frame_index": record["frame_index"],
@@ -292,9 +353,15 @@ def main() -> None:
             "gt_count_evaluable": len(gt),
             "unsupported_gt_count": len(gt_all) - len(gt),
             "evaluation_classes": ";".join(evaluation_classes),
+            "gt_present_classes": ";".join(sorted({item["canonical"] for item in gt})),
             "prediction_count_all": len(predictions_all),
             "prediction_count_evaluable": len(predictions),
             "max_detector_confidence": max_confidence,
+            "max_detector_confidence_all_classes": max_confidence_all,
+            "image_width": image_width,
+            "image_height": image_height,
+            "gt_boxes_inside_image": True,
+            "prediction_boxes_inside_image": True,
             "tp": metrics["tp"],
             "fp": metrics["fp"],
             "fn": metrics["fn"],
@@ -306,49 +373,111 @@ def main() -> None:
         }
         rows.append(row)
         for index, prediction in enumerate(predictions_all):
-            prediction_rows.append({"uav_id": uav_id, "prediction_index": index, **prediction})
-        _draw_overlay(rgb_path, gt, predictions, output_dir / "overlays" / f"{uav_id}.png")
-
-    by_uav = {row["uav_id"]: row for row in rows}
-    ordered = sorted(rows, key=lambda row: row["uav_id"])
-    oracle = max(
-        ordered,
-        key=lambda row: (
-            row["recall_at_iou50"],
-            row["f1_at_iou50"],
-            -row["range_to_origin_m"],
-            row["uav_id"],
-        ),
-    )
-    geometry = min(ordered, key=lambda row: (row["range_to_origin_m"], row["uav_id"]))
-    detector_proxy = max(
-        ordered, key=lambda row: (row["max_detector_confidence"], row["uav_id"])
-    )
-    rng = random.Random(args.seed)
-    policies = {
-        "FIXED_FIRST": ordered[0],
-        "DETERMINISTIC_RANDOM": rng.choice(ordered),
-        "GEOMETRY_MIN_RANGE": geometry,
-        "DETECTOR_CONFIDENCE_PROXY": detector_proxy,
-        "GT_RECALL_ORACLE": oracle,
-    }
-    policy_rows = []
-    for method, selected in policies.items():
-        policy_rows.append(
-            {
-                "method": method,
-                "selected_uav_id": selected["uav_id"],
-                "selected_recall_at_iou50": selected["recall_at_iou50"],
-                "selected_f1_at_iou50": selected["f1_at_iou50"],
-                "oracle_uav_id": oracle["uav_id"],
-                "oracle_recall_at_iou50": oracle["recall_at_iou50"],
-                "recall_regret": oracle["recall_at_iou50"] - selected["recall_at_iou50"],
-                "ground_truth_outcome": True,
-            }
+            prediction_rows.append(
+                {
+                    "uav_id": uav_id,
+                    "frame_index": record["frame_index"],
+                    "prediction_index": index,
+                    "in_benchmark_class_set": prediction["canonical"] in evaluation_classes,
+                    **prediction,
+                }
+            )
+        for source, boxes in (("gt", gt), ("prediction", predictions)):
+            for index, item in enumerate(boxes):
+                x1, y1, x2, y2 = item["xyxy"]
+                coordinate_rows.append(
+                    {
+                        "uav_id": uav_id,
+                        "frame_index": record["frame_index"],
+                        "source": source,
+                        "index": index,
+                        "canonical": item["canonical"],
+                        "x1": x1,
+                        "y1": y1,
+                        "x2": x2,
+                        "y2": y2,
+                        "image_width": image_width,
+                        "image_height": image_height,
+                        "inside_saved_image": _box_inside_image(
+                            item["xyxy"], image_width, image_height
+                        ),
+                    }
+                )
+        _draw_overlay(
+            rgb_path,
+            gt,
+            predictions,
+            output_dir / "overlays" / f"frame_{int(record['frame_index']):04d}_{uav_id}.png",
         )
 
+    grouped_rows: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        grouped_rows[int(row["frame_index"])].append(row)
+    policy_rows = []
+    oracle_ties_by_frame = []
+    for frame_index, frame_rows in sorted(grouped_rows.items()):
+        ordered = sorted(frame_rows, key=lambda row: row["uav_id"])
+        deterministic_oracle = max(
+            ordered,
+            key=lambda row: (
+                row["recall_at_iou50"],
+                row["f1_at_iou50"],
+                -row["range_to_origin_m"],
+                row["uav_id"],
+            ),
+        )
+        oracle_ties = [row for row in ordered if _same_outcome(row, deterministic_oracle)]
+        oracle_tied_uav_ids = sorted(row["uav_id"] for row in oracle_ties)
+        oracle_ties_by_frame.append(
+            {"frame_index": frame_index, "uav_ids": oracle_tied_uav_ids}
+        )
+        oracle = min(
+            oracle_ties, key=lambda row: (row["range_to_origin_m"], row["uav_id"])
+        )
+        geometry = min(
+            ordered, key=lambda row: (row["range_to_origin_m"], row["uav_id"])
+        )
+        detector_proxy = max(
+            ordered, key=lambda row: (row["max_detector_confidence"], row["uav_id"])
+        )
+        rng = random.Random(f"{args.seed}:{frame_index}")
+        policies = {
+            "FIXED_FIRST": ordered[0],
+            "DETERMINISTIC_RANDOM": rng.choice(ordered),
+            "GEOMETRY_MIN_RANGE": geometry,
+            "DETECTOR_CONFIDENCE_PROXY": detector_proxy,
+            "GT_RECALL_ORACLE": oracle,
+        }
+        for method, selected in policies.items():
+            policy_rows.append(
+                {
+                    "frame_index": frame_index,
+                    "method": method,
+                    "selected_uav_id": selected["uav_id"],
+                    "selected_recall_at_iou50": selected["recall_at_iou50"],
+                    "selected_f1_at_iou50": selected["f1_at_iou50"],
+                    "oracle_uav_id": oracle["uav_id"],
+                    "oracle_tied_uav_ids": ";".join(oracle_tied_uav_ids),
+                    "oracle_tie_count": len(oracle_ties),
+                    "oracle_match_tie_aware": selected["uav_id"] in oracle_tied_uav_ids,
+                    "oracle_recall_at_iou50": oracle["recall_at_iou50"],
+                    "recall_regret": (
+                        oracle["recall_at_iou50"] - selected["recall_at_iou50"]
+                    ),
+                    "ground_truth_outcome": True,
+                }
+            )
+
+    uniform_random_expectation = {
+        "expected_recall_at_iou50": sum(row["recall_at_iou50"] for row in rows)
+        / len(rows),
+        "expected_f1_at_iou50": sum(row["f1_at_iou50"] for row in rows) / len(rows),
+        "expected_max_detector_confidence": sum(row["max_detector_confidence"] for row in rows)
+        / len(rows),
+    }
     _write_csv(output_dir / "detector_gt_per_view.csv", rows)
     _write_csv(output_dir / "detector_predictions.csv", prediction_rows)
+    _write_csv(output_dir / "bbox_coordinate_audit.csv", coordinate_rows)
     _write_csv(output_dir / "view_selection.csv", policy_rows)
 
     result = {
@@ -362,15 +491,22 @@ def main() -> None:
         "iou_threshold": args.iou_threshold,
         "imgsz": args.imgsz,
         "seed": args.seed,
-        "camera_count": len(rows),
+        "camera_count": len(camera_meta),
+        "action_observation_count": len(rows),
+        "scene_variant_count": len(grouped_rows),
+        "benchmark_classes": evaluation_classes,
+        "oracle_ties_by_frame": oracle_ties_by_frame,
+        "uniform_random_expectation": uniform_random_expectation,
         "elapsed_seconds": time.perf_counter() - started,
         "per_view": rows,
         "view_selection": policy_rows,
         "limitations": [
             "The scene uses proxy geometry, not the final Cesium digital twin.",
             "Cutouts are derived from VisDrone training imagery and overlap the detector domain.",
-            "Three views of one synthetic scene are a smoke test, not a benchmark.",
+            f"{len(grouped_rows)} deterministic variants of one synthetic proxy scene are a smoke test, not a benchmark.",
             "Unsupported proxy classes are excluded and counted explicitly.",
+            "The target class set is fixed once across the full capture, not per image.",
+            "Tied best views are all counted as oracle matches; a deterministic representative is retained only for file compatibility.",
         ],
     }
     (output_dir / "summary.json").write_text(
@@ -383,22 +519,27 @@ def main() -> None:
         "이 평가는 실제 GT를 읽지만 proxy geometry와 VisDrone-derived cutout을 사용한 파이프라인 smoke test입니다.",
         "실제 도시, 독립 일반화, detector SOTA 근거로 사용할 수 없습니다.",
         "",
-        "| View | GT evaluable | Pred | Precision@.5 | Recall@.5 | F1@.5 |",
+        "| Scene variant | View | GT evaluable | Pred | Precision@.5 | Recall@.5 | F1@.5 |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ]
     for row in rows:
         lines.append(
-            f"| {row['uav_id']} | {row['gt_count_evaluable']} | {row['prediction_count_evaluable']} | "
+            f"| {row['frame_index']} | {row['uav_id']} | {row['gt_count_evaluable']} | {row['prediction_count_evaluable']} | "
             f"{row['precision_at_iou50']:.4f} | {row['recall_at_iou50']:.4f} | {row['f1_at_iou50']:.4f} |"
         )
     lines.extend(["", "## View selection", ""])
     for row in policy_rows:
         lines.append(
-            f"- {row['method']}: {row['selected_uav_id']}, recall={row['selected_recall_at_iou50']:.4f}, "
+            f"- variant {row['frame_index']} / {row['method']}: {row['selected_uav_id']}, "
+            f"recall={row['selected_recall_at_iou50']:.4f}, "
             f"oracle regret={row['recall_regret']:.4f}"
         )
     (output_dir / "SUMMARY_KO.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(json.dumps({"status": result["status"], "output_dir": str(output_dir)}))
+    completion = {"status": result["status"], "output_dir": str(output_dir)}
+    (output_dir / "run.log").write_text(
+        json.dumps(completion, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    print(json.dumps(completion))
 
 
 if __name__ == "__main__":
